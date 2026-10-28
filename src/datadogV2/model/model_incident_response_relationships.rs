@@ -30,6 +30,9 @@ pub struct IncidentResponseRelationships {
     /// Relationship to impacts.
     #[serde(rename = "impacts")]
     pub impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts>,
+    /// Relationship to an incident type.
+    #[serde(rename = "incident_type")]
+    pub incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType>,
     /// A relationship reference for multiple integration metadata objects.
     #[serde(rename = "integrations")]
     pub integrations: Option<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas>,
@@ -58,6 +61,7 @@ impl IncidentResponseRelationships {
             created_by_user: None,
             declared_by_user: None,
             impacts: None,
+            incident_type: None,
             integrations: None,
             last_modified_by_user: None,
             responders: None,
@@ -98,6 +102,14 @@ impl IncidentResponseRelationships {
         value: crate::datadogV2::model::RelationshipToIncidentImpacts,
     ) -> Self {
         self.impacts = Some(value);
+        self
+    }
+
+    pub fn incident_type(
+        mut self,
+        value: crate::datadogV2::model::RelationshipToIncidentType,
+    ) -> Self {
+        self.incident_type = Some(value);
         self
     }
 
@@ -176,6 +188,8 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                     None;
                 let mut impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts> =
                     None;
+                let mut incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType> =
+                    None;
                 let mut integrations: Option<
                     crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
                 > = None;
@@ -226,6 +240,13 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                             }
                             impacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "incident_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "integrations" => {
                             if v.is_null() {
                                 continue;
@@ -267,6 +288,7 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                     created_by_user,
                     declared_by_user,
                     impacts,
+                    incident_type,
                     integrations,
                     last_modified_by_user,
                     responders,

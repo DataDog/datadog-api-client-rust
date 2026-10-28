@@ -363,6 +363,39 @@ impl ListIncidentPostmortemTemplatesOptionalParams {
     }
 }
 
+/// ListIncidentRespondersOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_responders`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListIncidentRespondersOptionalParams {
+    /// Comma-separated related resource types to include. Supported values are `users` and `role_assignments`.
+    pub include: Option<Vec<crate::datadogV2::model::IncidentResponderRelatedObject>>,
+    /// Maximum number of responders to return per page.
+    pub page_limit: Option<i64>,
+    /// The offset of the first responder to return.
+    pub page_offset: Option<i64>,
+}
+
+impl ListIncidentRespondersOptionalParams {
+    /// Comma-separated related resource types to include. Supported values are `users` and `role_assignments`.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::IncidentResponderRelatedObject>,
+    ) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Maximum number of responders to return per page.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// The offset of the first responder to return.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+}
+
 /// ListIncidentRulesOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -10157,12 +10190,13 @@ impl IncidentsAPI {
     pub async fn list_incident_responders(
         &self,
         incident_id: String,
+        params: ListIncidentRespondersOptionalParams,
     ) -> Result<
         crate::datadogV2::model::IncidentRespondersResponse,
         datadog::Error<ListIncidentRespondersError>,
     > {
         match self
-            .list_incident_responders_with_http_info(incident_id)
+            .list_incident_responders_with_http_info(incident_id, params)
             .await
         {
             Ok(response_content) => {
@@ -10182,6 +10216,7 @@ impl IncidentsAPI {
     pub async fn list_incident_responders_with_http_info(
         &self,
         incident_id: String,
+        params: ListIncidentRespondersOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::IncidentRespondersResponse>,
         datadog::Error<ListIncidentRespondersError>,
@@ -10197,6 +10232,11 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let include = params.include;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -10206,6 +10246,26 @@ impl IncidentsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
