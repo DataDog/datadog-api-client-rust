@@ -14,6 +14,12 @@ pub struct GetDataObservabilityMonitorRunStatusResponseAttributes {
     /// Error message describing why the monitor run failed. Only present when status is error.
     #[serde(rename = "error_message")]
     pub error_message: Option<String>,
+    /// The number of the monitor's groups in each state, once the run has finished.
+    #[serde(rename = "group_counts")]
+    pub group_counts: Option<std::collections::BTreeMap<String, i64>>,
+    /// The first 1,000 of the monitor's groups that are not ok, once the run has finished. List the monitor's groups for all of them.
+    #[serde(rename = "groups")]
+    pub groups: Option<Vec<crate::datadogV2::model::DataObservabilityMonitorRunGroup>>,
     /// The status of a data observability monitor run.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::DataObservabilityMonitorRunStatus,
@@ -30,6 +36,8 @@ impl GetDataObservabilityMonitorRunStatusResponseAttributes {
     ) -> GetDataObservabilityMonitorRunStatusResponseAttributes {
         GetDataObservabilityMonitorRunStatusResponseAttributes {
             error_message: None,
+            group_counts: None,
+            groups: None,
             status,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -38,6 +46,19 @@ impl GetDataObservabilityMonitorRunStatusResponseAttributes {
 
     pub fn error_message(mut self, value: String) -> Self {
         self.error_message = Some(value);
+        self
+    }
+
+    pub fn group_counts(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
+        self.group_counts = Some(value);
+        self
+    }
+
+    pub fn groups(
+        mut self,
+        value: Vec<crate::datadogV2::model::DataObservabilityMonitorRunGroup>,
+    ) -> Self {
+        self.groups = Some(value);
         self
     }
 
@@ -68,6 +89,10 @@ impl<'de> Deserialize<'de> for GetDataObservabilityMonitorRunStatusResponseAttri
                 M: MapAccess<'a>,
             {
                 let mut error_message: Option<String> = None;
+                let mut group_counts: Option<std::collections::BTreeMap<String, i64>> = None;
+                let mut groups: Option<
+                    Vec<crate::datadogV2::model::DataObservabilityMonitorRunGroup>,
+                > = None;
                 let mut status: Option<crate::datadogV2::model::DataObservabilityMonitorRunStatus> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -84,6 +109,19 @@ impl<'de> Deserialize<'de> for GetDataObservabilityMonitorRunStatusResponseAttri
                             }
                             error_message =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "group_counts" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_counts =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "groups" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -107,6 +145,8 @@ impl<'de> Deserialize<'de> for GetDataObservabilityMonitorRunStatusResponseAttri
 
                 let content = GetDataObservabilityMonitorRunStatusResponseAttributes {
                     error_message,
+                    group_counts,
+                    groups,
                     status,
                     additional_properties,
                     _unparsed,
