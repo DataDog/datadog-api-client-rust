@@ -2643,6 +2643,15 @@ pub enum GetSecurityMonitoringRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSecurityMonitoringRuleProposalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_rule_proposal`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityMonitoringRuleProposalError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetSecurityMonitoringSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_signal`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -3149,6 +3158,15 @@ pub enum SendSecurityMonitoringNotificationPreviewError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum StartSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// StartSecurityMonitoringRuleProposalError is a struct for typed errors of method [`SecurityMonitoringAPI::start_security_monitoring_rule_proposal`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum StartSecurityMonitoringRuleProposalError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -8591,6 +8609,7 @@ impl SecurityMonitoringAPI {
     /// rule. To load more rules, add them with the add resources endpoint before starting the
     /// batch migration. A batch migration can hold up to 1000 resources. The response does not
     /// include the created resources: list the resources of the batch migration to retrieve them.
+    /// Alternatively, use the start-a-rule-proposal endpoint to get a single proposed rule.
     pub async fn create_security_monitoring_batch_migration(
         &self,
         body: crate::datadogV2::model::SecurityMonitoringBatchMigrationCreateRequest,
@@ -8620,6 +8639,7 @@ impl SecurityMonitoringAPI {
     /// rule. To load more rules, add them with the add resources endpoint before starting the
     /// batch migration. A batch migration can hold up to 1000 resources. The response does not
     /// include the created resources: list the resources of the batch migration to retrieve them.
+    /// Alternatively, use the start-a-rule-proposal endpoint to get a single proposed rule.
     pub async fn create_security_monitoring_batch_migration_with_http_info(
         &self,
         body: crate::datadogV2::model::SecurityMonitoringBatchMigrationCreateRequest,
@@ -17582,6 +17602,142 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSecurityMonitoringRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the status of a rule proposal started with the start-a-rule-proposal endpoint.
+    /// While the status is `pending` or `in_progress`, the proposed rule is still being
+    /// generated. Poll this endpoint again later. If the status is `completed`, the response's `rule` field contains
+    /// the proposed Cloud SIEM detection rule. If the status is `failed`, the response's `error` field contains
+    /// the reason a rule could not be generated.
+    ///
+    /// This endpoint does not create or modify any detection rules in Cloud SIEM. To create the
+    /// proposed rule, use the create-a-detection-rule endpoint.
+    pub async fn get_security_monitoring_rule_proposal(
+        &self,
+        proposal_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringRuleProposalResponse,
+        datadog::Error<GetSecurityMonitoringRuleProposalError>,
+    > {
+        match self
+            .get_security_monitoring_rule_proposal_with_http_info(proposal_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the status of a rule proposal started with the start-a-rule-proposal endpoint.
+    /// While the status is `pending` or `in_progress`, the proposed rule is still being
+    /// generated. Poll this endpoint again later. If the status is `completed`, the response's `rule` field contains
+    /// the proposed Cloud SIEM detection rule. If the status is `failed`, the response's `error` field contains
+    /// the reason a rule could not be generated.
+    ///
+    /// This endpoint does not create or modify any detection rules in Cloud SIEM. To create the
+    /// proposed rule, use the create-a-detection-rule endpoint.
+    pub async fn get_security_monitoring_rule_proposal_with_http_info(
+        &self,
+        proposal_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleProposalResponse>,
+        datadog::Error<GetSecurityMonitoringRuleProposalError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_security_monitoring_rule_proposal";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_monitoring_rule_proposal' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/rules/proposals/{proposal_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            proposal_id = datadog::urlencode(proposal_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringRuleProposalResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityMonitoringRuleProposalError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -27134,6 +27290,198 @@ impl SecurityMonitoringAPI {
             })
         } else {
             let local_entity: Option<StartSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Start generating a proposed Cloud SIEM detection rule from a natural-language
+    /// description, or from an SPL or KQL rule. The proposal is based on your organization's
+    /// log sources, log fields, and existing detection rules. When logs from the matching
+    /// source are available, the proposed query is tested against your recent logs.
+    ///
+    /// The proposed rule is generated asynchronously. This endpoint returns a proposal `id`
+    /// with the status `pending`. To get the proposed rule, pass this `id` to the get-a-rule-proposal
+    /// endpoint and poll the endpoint until the status is `completed` or `failed`. A proposal
+    /// usually takes a few minutes, and up to 10 minutes.
+    ///
+    /// This endpoint does not create or modify any detection rules in Cloud SIEM. To translate
+    /// many rules at once, use batch migrations instead.
+    pub async fn start_security_monitoring_rule_proposal(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleProposalStartRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringRuleProposalStartResponse,
+        datadog::Error<StartSecurityMonitoringRuleProposalError>,
+    > {
+        match self
+            .start_security_monitoring_rule_proposal_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Start generating a proposed Cloud SIEM detection rule from a natural-language
+    /// description, or from an SPL or KQL rule. The proposal is based on your organization's
+    /// log sources, log fields, and existing detection rules. When logs from the matching
+    /// source are available, the proposed query is tested against your recent logs.
+    ///
+    /// The proposed rule is generated asynchronously. This endpoint returns a proposal `id`
+    /// with the status `pending`. To get the proposed rule, pass this `id` to the get-a-rule-proposal
+    /// endpoint and poll the endpoint until the status is `completed` or `failed`. A proposal
+    /// usually takes a few minutes, and up to 10 minutes.
+    ///
+    /// This endpoint does not create or modify any detection rules in Cloud SIEM. To translate
+    /// many rules at once, use batch migrations instead.
+    pub async fn start_security_monitoring_rule_proposal_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleProposalStartRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringRuleProposalStartResponse,
+        >,
+        datadog::Error<StartSecurityMonitoringRuleProposalError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.start_security_monitoring_rule_proposal";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.start_security_monitoring_rule_proposal' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/rules/proposals",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringRuleProposalStartResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<StartSecurityMonitoringRuleProposalError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
