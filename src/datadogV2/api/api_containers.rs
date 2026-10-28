@@ -11,13 +11,22 @@ use serde::{Deserialize, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainersOptionalParams {
-    /// Comma-separated list of tags to filter containers by.
+    /// Comma-separated `key:value` tags. A container must match every tag. Wildcards, negation
+    /// (`-key:value`), spaces, and `IN (...)` are not supported. To cover several hosts, make one
+    /// request per host.
     pub filter_tags: Option<String>,
-    /// Comma-separated list of tags to group containers by.
+    /// Comma-separated list of up to three tag keys to group containers by. Returns `container_group`
+    /// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
+    /// Containers with multiple values for a grouping tag can appear in multiple groups.
+    /// Summing group counts can overcount distinct containers.
     pub group_by: Option<String>,
-    /// Attribute to sort containers by.
+    /// Attribute to sort individual containers by: `name`, `created_at`, `started_at`, `state`,
+    /// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
+    /// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
+    /// Ignored when `group_by` is specified.
     pub sort: Option<String>,
-    /// Maximum number of results returned.
+    /// Maximum number of results returned. For grouped results, defaults to `100` with a maximum
+    /// of `1000` groups.
     pub page_size: Option<i32>,
     /// String to query the next page of results.
     /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
@@ -25,22 +34,31 @@ pub struct ListContainersOptionalParams {
 }
 
 impl ListContainersOptionalParams {
-    /// Comma-separated list of tags to filter containers by.
+    /// Comma-separated `key:value` tags. A container must match every tag. Wildcards, negation
+    /// (`-key:value`), spaces, and `IN (...)` are not supported. To cover several hosts, make one
+    /// request per host.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
-    /// Comma-separated list of tags to group containers by.
+    /// Comma-separated list of up to three tag keys to group containers by. Returns `container_group`
+    /// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
+    /// Containers with multiple values for a grouping tag can appear in multiple groups.
+    /// Summing group counts can overcount distinct containers.
     pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
-    /// Attribute to sort containers by.
+    /// Attribute to sort individual containers by: `name`, `created_at`, `started_at`, `state`,
+    /// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
+    /// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
+    /// Ignored when `group_by` is specified.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
-    /// Maximum number of results returned.
+    /// Maximum number of results returned. For grouped results, defaults to `100` with a maximum
+    /// of `1000` groups.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
@@ -61,7 +79,8 @@ pub enum ListContainersError {
     UnknownValue(serde_json::Value),
 }
 
-/// The Containers API allows you to query container data for your organization. See the [Container Monitoring page](<https://docs.datadoghq.com/containers/>) for more information.
+/// The Containers API allows you to query container data for your organization.
+/// See the [Container Monitoring page](<https://docs.datadoghq.com/containers/>) for more information.
 #[derive(Debug, Clone)]
 pub struct ContainersAPI {
     config: datadog::Configuration,
@@ -135,7 +154,11 @@ impl ContainersAPI {
         Self { config, client }
     }
 
-    /// Get all containers for your organization.
+    /// Get all containers for your organization. Use `group_by` to return container groups with counts.
+    /// Grouped results are limited by `page[size]` and do not support pagination.
+    ///
+    /// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
+    /// or `/api/v2/query/timeseries`.
     pub async fn list_containers(
         &self,
         params: ListContainersOptionalParams,
@@ -189,7 +212,11 @@ impl ContainersAPI {
         }
     }
 
-    /// Get all containers for your organization.
+    /// Get all containers for your organization. Use `group_by` to return container groups with counts.
+    /// Grouped results are limited by `page[size]` and do not support pagination.
+    ///
+    /// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
+    /// or `/api/v2/query/timeseries`.
     pub async fn list_containers_with_http_info(
         &self,
         params: ListContainersOptionalParams,

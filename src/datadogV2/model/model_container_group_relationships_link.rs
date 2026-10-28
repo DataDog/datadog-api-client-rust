@@ -11,7 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerGroupRelationshipsLink {
-    /// Links data.
+    /// This array is always empty, even when the group includes containers. To retrieve the containers
+    /// in this group, make a new request to this endpoint with the `filter[tags]` value from
+    /// `links.related`, using your site's API host.
     #[serde(rename = "data")]
     pub data: Option<Vec<String>>,
     /// Links attributes.
