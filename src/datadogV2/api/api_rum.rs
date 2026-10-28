@@ -154,6 +154,64 @@ impl DeleteSourcemapsOptionalParams {
     }
 }
 
+/// GetRUMApplicationsOptionalParams is a struct for passing parameters to the method [`RUMAPI::get_rum_applications`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetRUMApplicationsOptionalParams {
+    /// Only return applications for which RUM event processing is enabled (`true`) or not (`false`).
+    pub filter_rum_enabled: Option<bool>,
+    /// Only return applications for which Product Analytics is enabled (`true`) or not (`false`).
+    pub filter_product_analytics_enabled: Option<bool>,
+    /// Only return applications that run in error focused mode (`true`) or not (`false`).
+    pub filter_error_focused_mode_enabled: Option<bool>,
+    /// Only return applications that have an SDK remote configuration (`true`) or not (`false`).
+    pub filter_remote_config_enabled: Option<bool>,
+    /// Only return applications with this RUM event processing state.
+    pub filter_rum_event_processing_state: Option<crate::datadogV2::model::RUMEventProcessingState>,
+    /// Only return applications with this Product Analytics retention state.
+    pub filter_product_analytics_retention_state:
+        Option<crate::datadogV2::model::RUMProductAnalyticsRetentionState>,
+}
+
+impl GetRUMApplicationsOptionalParams {
+    /// Only return applications for which RUM event processing is enabled (`true`) or not (`false`).
+    pub fn filter_rum_enabled(mut self, value: bool) -> Self {
+        self.filter_rum_enabled = Some(value);
+        self
+    }
+    /// Only return applications for which Product Analytics is enabled (`true`) or not (`false`).
+    pub fn filter_product_analytics_enabled(mut self, value: bool) -> Self {
+        self.filter_product_analytics_enabled = Some(value);
+        self
+    }
+    /// Only return applications that run in error focused mode (`true`) or not (`false`).
+    pub fn filter_error_focused_mode_enabled(mut self, value: bool) -> Self {
+        self.filter_error_focused_mode_enabled = Some(value);
+        self
+    }
+    /// Only return applications that have an SDK remote configuration (`true`) or not (`false`).
+    pub fn filter_remote_config_enabled(mut self, value: bool) -> Self {
+        self.filter_remote_config_enabled = Some(value);
+        self
+    }
+    /// Only return applications with this RUM event processing state.
+    pub fn filter_rum_event_processing_state(
+        mut self,
+        value: crate::datadogV2::model::RUMEventProcessingState,
+    ) -> Self {
+        self.filter_rum_event_processing_state = Some(value);
+        self
+    }
+    /// Only return applications with this Product Analytics retention state.
+    pub fn filter_product_analytics_retention_state(
+        mut self,
+        value: crate::datadogV2::model::RUMProductAnalyticsRetentionState,
+    ) -> Self {
+        self.filter_product_analytics_retention_state = Some(value);
+        self
+    }
+}
+
 /// GetSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::get_sourcemaps`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -197,47 +255,47 @@ impl GetSourcemapsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRUMEventsOptionalParams {
-    /// Search query following RUM syntax.
+    /// Search query following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>). Defaults to `*`.
     pub filter_query: Option<String>,
-    /// Minimum timestamp for requested events.
-    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
-    /// Maximum timestamp for requested events.
-    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
-    /// Order of events in results.
+    /// Minimum time for requested events, inclusive. Accepts date math (for example `now-15m`), an ISO 8601 date, or a timestamp in milliseconds. Defaults to `now-15m`.
+    pub filter_from: Option<String>,
+    /// Maximum time for requested events. Accepts the same formats as `filter[from]`. Defaults to `now`.
+    pub filter_to: Option<String>,
+    /// Order of events in results, by event timestamp.
     pub sort: Option<crate::datadogV2::model::RUMSort>,
-    /// List following results with a cursor provided in the previous query.
+    /// Cursor to get the next page of results, taken from `meta.page.after` or `links.next` of the previous response. Use it with the same other parameters.
     pub page_cursor: Option<String>,
-    /// Maximum number of events in the response.
+    /// Maximum number of events in the response. Between 1 and 1000.
     pub page_limit: Option<i32>,
 }
 
 impl ListRUMEventsOptionalParams {
-    /// Search query following RUM syntax.
+    /// Search query following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>). Defaults to `*`.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
-    /// Minimum timestamp for requested events.
-    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+    /// Minimum time for requested events, inclusive. Accepts date math (for example `now-15m`), an ISO 8601 date, or a timestamp in milliseconds. Defaults to `now-15m`.
+    pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
-    /// Maximum timestamp for requested events.
-    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+    /// Maximum time for requested events. Accepts the same formats as `filter[from]`. Defaults to `now`.
+    pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
     }
-    /// Order of events in results.
+    /// Order of events in results, by event timestamp.
     pub fn sort(mut self, value: crate::datadogV2::model::RUMSort) -> Self {
         self.sort = Some(value);
         self
     }
-    /// List following results with a cursor provided in the previous query.
+    /// Cursor to get the next page of results, taken from `meta.page.after` or `links.next` of the previous response. Use it with the same other parameters.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
-    /// Maximum number of events in the response.
+    /// Maximum number of events in the response. Between 1 and 1000.
     pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
         self
@@ -597,6 +655,7 @@ pub enum AggregateRUMEventsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateRUMApplicationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -632,6 +691,7 @@ pub enum GetRUMApplicationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRUMApplicationsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -692,8 +752,8 @@ pub enum SearchRUMEventsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateRUMApplicationError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -771,7 +831,11 @@ impl RUMAPI {
         Self { config, client }
     }
 
-    /// The API endpoint to aggregate RUM events into buckets of computed metrics and timeseries.
+    /// Aggregate RUM events into buckets of computed metrics and timeseries. Use this endpoint for counts, percentiles, top-N breakdowns and timeseries. To read individual events, use `SearchRUMEvents` or `ListRUMEvents`.
+    ///
+    /// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`... in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
+    ///
+    /// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn aggregate_rum_events(
         &self,
         body: crate::datadogV2::model::RUMAggregateRequest,
@@ -793,7 +857,11 @@ impl RUMAPI {
         }
     }
 
-    /// The API endpoint to aggregate RUM events into buckets of computed metrics and timeseries.
+    /// Aggregate RUM events into buckets of computed metrics and timeseries. Use this endpoint for counts, percentiles, top-N breakdowns and timeseries. To read individual events, use `SearchRUMEvents` or `ListRUMEvents`.
+    ///
+    /// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`... in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
+    ///
+    /// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn aggregate_rum_events_with_http_info(
         &self,
         body: crate::datadogV2::model::RUMAggregateRequest,
@@ -927,6 +995,8 @@ impl RUMAPI {
     }
 
     /// Create a new RUM application in your organization.
+    /// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`, use both to initialize the RUM SDK.
+    /// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
     pub async fn create_rum_application(
         &self,
         body: crate::datadogV2::model::RUMApplicationCreateRequest,
@@ -949,6 +1019,8 @@ impl RUMAPI {
     }
 
     /// Create a new RUM application in your organization.
+    /// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`, use both to initialize the RUM SDK.
+    /// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
     pub async fn create_rum_application_with_http_info(
         &self,
         body: crate::datadogV2::model::RUMApplicationCreateRequest,
@@ -1082,6 +1154,8 @@ impl RUMAPI {
     }
 
     /// Delete an existing RUM application in your organization.
+    /// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application ID cannot be reused or re-enabled through the API.
+    /// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
     pub async fn delete_rum_application(
         &self,
         id: String,
@@ -1093,6 +1167,8 @@ impl RUMAPI {
     }
 
     /// Delete an existing RUM application in your organization.
+    /// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application ID cannot be reused or re-enabled through the API.
+    /// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
     pub async fn delete_rum_application_with_http_info(
         &self,
         id: String,
@@ -1415,6 +1491,7 @@ impl RUMAPI {
     }
 
     /// Get the RUM application with given ID in your organization.
+    /// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
     pub async fn get_rum_application(
         &self,
         id: String,
@@ -1437,6 +1514,7 @@ impl RUMAPI {
     }
 
     /// Get the RUM application with given ID in your organization.
+    /// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
     pub async fn get_rum_application_with_http_info(
         &self,
         id: String,
@@ -1523,14 +1601,17 @@ impl RUMAPI {
         }
     }
 
-    /// List all the RUM applications in your organization.
+    /// List the enabled RUM applications of your organization. Applications deleted with `DeleteRUMApplication` are not returned.
+    /// The response is not paginated and does not include the `client_token`, use `GetRUMApplication` to retrieve it.
+    /// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
     pub async fn get_rum_applications(
         &self,
+        params: GetRUMApplicationsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::RUMApplicationsResponse,
         datadog::Error<GetRUMApplicationsError>,
     > {
-        match self.get_rum_applications_with_http_info().await {
+        match self.get_rum_applications_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1544,15 +1625,27 @@ impl RUMAPI {
         }
     }
 
-    /// List all the RUM applications in your organization.
+    /// List the enabled RUM applications of your organization. Applications deleted with `DeleteRUMApplication` are not returned.
+    /// The response is not paginated and does not include the `client_token`, use `GetRUMApplication` to retrieve it.
+    /// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
     pub async fn get_rum_applications_with_http_info(
         &self,
+        params: GetRUMApplicationsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::RUMApplicationsResponse>,
         datadog::Error<GetRUMApplicationsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_applications";
+
+        // unbox and build optional parameters
+        let filter_rum_enabled = params.filter_rum_enabled;
+        let filter_product_analytics_enabled = params.filter_product_analytics_enabled;
+        let filter_error_focused_mode_enabled = params.filter_error_focused_mode_enabled;
+        let filter_remote_config_enabled = params.filter_remote_config_enabled;
+        let filter_rum_event_processing_state = params.filter_rum_event_processing_state;
+        let filter_product_analytics_retention_state =
+            params.filter_product_analytics_retention_state;
 
         let local_client = &self.client;
 
@@ -1562,6 +1655,41 @@ impl RUMAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_rum_enabled {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rum_enabled]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_product_analytics_enabled {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[product_analytics_enabled]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_error_focused_mode_enabled {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[error_focused_mode_enabled]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_remote_config_enabled {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[remote_config_enabled]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_rum_event_processing_state {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[rum_event_processing_state]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_product_analytics_retention_state {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[product_analytics_retention_state]",
+                &local_query_param.to_string(),
+            )]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -1993,12 +2121,14 @@ impl RUMAPI {
         }
     }
 
-    /// List endpoint returns events that match a RUM search query.
-    /// [Results are paginated][1].
+    /// Returns the RUM events that match a RUM search query within a time range. Use this endpoint to see your latest RUM events with a simple query. For long filters, use `SearchRUMEvents`. To compute counts, percentiles or timeseries, use `AggregateRUMEvents`.
     ///
-    /// Use this endpoint to see your latest RUM events.
+    /// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the last 15 minutes are searched.
+    ///
+    /// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
     ///
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn list_rum_events(
         &self,
         params: ListRUMEventsOptionalParams,
@@ -2052,12 +2182,14 @@ impl RUMAPI {
         }
     }
 
-    /// List endpoint returns events that match a RUM search query.
-    /// [Results are paginated][1].
+    /// Returns the RUM events that match a RUM search query within a time range. Use this endpoint to see your latest RUM events with a simple query. For long filters, use `SearchRUMEvents`. To compute counts, percentiles or timeseries, use `AggregateRUMEvents`.
     ///
-    /// Use this endpoint to see your latest RUM events.
+    /// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the last 15 minutes are searched.
+    ///
+    /// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
     ///
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn list_rum_events_with_http_info(
         &self,
         params: ListRUMEventsOptionalParams,
@@ -2090,16 +2222,12 @@ impl RUMAPI {
                 local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[from]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder =
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[to]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder =
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =
@@ -2843,12 +2971,14 @@ impl RUMAPI {
         }
     }
 
-    /// List endpoint returns RUM events that match a RUM search query.
-    /// [Results are paginated][1].
+    /// Returns the RUM events that match a RUM search query within a time range, as a list of individual events. Use this endpoint when the filter is too long for a query string, or to set `options`. To compute counts, percentiles or timeseries instead of reading events, use `AggregateRUMEvents`.
     ///
-    /// Use this endpoint to build complex RUM events filtering and search.
+    /// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates and timestamps in milliseconds.
+    ///
+    /// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
     ///
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn search_rum_events(
         &self,
         body: crate::datadogV2::model::RUMSearchEventsRequest,
@@ -2905,12 +3035,14 @@ impl RUMAPI {
         }
     }
 
-    /// List endpoint returns RUM events that match a RUM search query.
-    /// [Results are paginated][1].
+    /// Returns the RUM events that match a RUM search query within a time range, as a list of individual events. Use this endpoint when the filter is too long for a query string, or to set `options`. To compute counts, percentiles or timeseries instead of reading events, use `AggregateRUMEvents`.
     ///
-    /// Use this endpoint to build complex RUM events filtering and search.
+    /// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates and timestamps in milliseconds.
+    ///
+    /// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
     ///
     /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
     pub async fn search_rum_events_with_http_info(
         &self,
         body: crate::datadogV2::model::RUMSearchEventsRequest,
@@ -3043,6 +3175,7 @@ impl RUMAPI {
     }
 
     /// Update the RUM application with given ID in your organization.
+    /// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
     pub async fn update_rum_application(
         &self,
         id: String,
@@ -3066,6 +3199,7 @@ impl RUMAPI {
     }
 
     /// Update the RUM application with given ID in your organization.
+    /// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
     pub async fn update_rum_application_with_http_info(
         &self,
         id: String,

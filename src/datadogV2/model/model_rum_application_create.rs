@@ -12,6 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMApplicationCreate {
     /// RUM application creation attributes.
+    /// When `rum_event_processing_state` is omitted, it defaults to `ALL`. When `product_analytics_retention_state` is omitted, Product Analytics is not enabled. Setting it to `MAX` requires the `product_analytics_apps_write` permission.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RUMApplicationCreateAttributes,
     /// RUM application creation type.

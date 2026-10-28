@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMApplicationUpdate {
-    /// RUM application update attributes.
+    /// RUM application update attributes. Only the attributes you provide are changed, omitted attributes keep their current value.
+    /// Changing `product_analytics_retention_state` or `product_analytics_replay_sample_rate` requires the `product_analytics_apps_write` permission.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::RUMApplicationUpdateAttributes>,
     /// RUM application ID.

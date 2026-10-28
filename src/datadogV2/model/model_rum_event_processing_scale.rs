@@ -14,7 +14,7 @@ pub struct RUMEventProcessingScale {
     /// Timestamp in milliseconds when this scale was last modified.
     #[serde(rename = "last_modified_at")]
     pub last_modified_at: Option<i64>,
-    /// Configures which RUM events are processed and stored for the application.
+    /// Configures which RUM events are processed and stored for the application. Defaults to `ALL` when creating an application.
     #[serde(rename = "state")]
     pub state: Option<crate::datadogV2::model::RUMEventProcessingState>,
     #[serde(flatten)]
