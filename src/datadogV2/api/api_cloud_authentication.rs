@@ -241,7 +241,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/aws/persona_mapping",
+            "{}/api/v2/wif/aws/persona_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -408,7 +408,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/intake_mapping",
+            "{}/api/v2/wif/github/intake_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -576,7 +576,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/persona_mapping",
+            "{}/api/v2/wif/github/persona_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -731,7 +731,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/aws/persona_mapping/{persona_mapping_id}",
+            "{}/api/v2/wif/aws/persona_mapping/{persona_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
@@ -832,7 +832,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/intake_mapping/{intake_mapping_id}",
+            "{}/api/v2/wif/github/intake_mapping/{intake_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             intake_mapping_id = datadog::urlencode(intake_mapping_id)
         );
@@ -935,7 +935,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/persona_mapping/{persona_mapping_id}",
+            "{}/api/v2/wif/github/persona_mapping/{persona_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
@@ -1048,7 +1048,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/aws/persona_mapping/{persona_mapping_id}",
+            "{}/api/v2/wif/aws/persona_mapping/{persona_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
@@ -1169,7 +1169,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/intake_mapping/{intake_mapping_id}",
+            "{}/api/v2/wif/github/intake_mapping/{intake_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             intake_mapping_id = datadog::urlencode(intake_mapping_id)
         );
@@ -1291,7 +1291,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/persona_mapping/{persona_mapping_id}",
+            "{}/api/v2/wif/github/persona_mapping/{persona_mapping_id}",
             local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
@@ -1411,7 +1411,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/aws/persona_mapping",
+            "{}/api/v2/wif/aws/persona_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -1529,7 +1529,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/intake_mapping",
+            "{}/api/v2/wif/github/intake_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -1648,7 +1648,7 @@ impl CloudAuthenticationAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/cloud_auth/github/persona_mapping",
+            "{}/api/v2/wif/github/persona_mapping",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
