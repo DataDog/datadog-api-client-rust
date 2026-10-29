@@ -6,20 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The compute rule to compute the RUM-based metric.
+/// The compute rule to compute the RUM-based metric. It is set at creation and only `include_percentiles` can be updated afterwards.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricCompute {
     /// The type of aggregation to use.
+    /// `count` counts the matching events. `distribution` aggregates the values found at `path`.
     #[serde(rename = "aggregation_type")]
     pub aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType,
-    /// Toggle to include or exclude percentile aggregations for distribution metrics.
-    /// Only present when `aggregation_type` is `distribution`.
+    /// Toggle to include or exclude percentile aggregations (p50, p75, p90, p95, p99) for distribution metrics.
+    /// Required when `aggregation_type` is `distribution`, and must be omitted otherwise.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
-    /// The path to the value the RUM-based metric will aggregate on.
-    /// Only present when `aggregation_type` is `distribution`.
+    /// The path of the numeric RUM event attribute the metric aggregates on.
+    /// Only valid when `aggregation_type` is `distribution`.
     #[serde(rename = "path")]
     pub path: Option<String>,
     #[serde(flatten)]

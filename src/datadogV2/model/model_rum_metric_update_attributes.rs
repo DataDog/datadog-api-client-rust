@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The RUM-based metric properties that will be updated.
+/// The RUM-based metric properties that will be updated. Omitted properties keep their current value.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricUpdateAttributes {
-    /// The compute rule to compute the RUM-based metric.
+    /// The compute rule properties that can be updated. Only valid for metrics whose `aggregation_type` is `distribution`.
     #[serde(rename = "compute")]
     pub compute: Option<crate::datadogV2::model::RumMetricUpdateCompute>,
-    /// The RUM-based metric filter. Events matching this filter will be aggregated in this metric.
+    /// The RUM-based metric filter. Events matching this filter will be aggregated in this metric. The `event_type` filter is added automatically.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::RumMetricFilter>,
-    /// The rules for the group by.
+    /// The rules to group the metric by. When provided, replaces all the existing group by rules.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>>,
     #[serde(flatten)]

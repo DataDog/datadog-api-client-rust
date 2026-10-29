@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The RUM-based metric filter. Events matching this filter will be aggregated in this metric.
+/// The RUM-based metric filter. Events matching this filter will be aggregated in this metric. The `event_type` filter is added automatically.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricFilter {
-    /// The search query - following the RUM search syntax.
+    /// The search query, following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>).
+    /// Do not include a `@type` filter, it is derived from `event_type`.
+    /// It must not contain invisible or control characters such as non-breaking or zero-width spaces.
+    /// When updating a metric, an empty query leaves the filter unchanged.
     #[serde(rename = "query")]
     pub query: String,
     #[serde(flatten)]

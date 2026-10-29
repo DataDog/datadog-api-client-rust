@@ -6,18 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The new RUM-based metric properties.
+/// The RUM-based metric properties to update. `id` is required by the API and must match the `metric_id` path parameter.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricUpdateData {
-    /// The RUM-based metric properties that will be updated.
+    /// The RUM-based metric properties that will be updated. Omitted properties keep their current value.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RumMetricUpdateAttributes,
     /// The name of the RUM-based metric.
+    /// On creation, it must be 1 to 200 characters long, contain only ASCII letters, digits, underscores, and periods, start with a letter, and not start with `rum.measure` or `rum.investigate`.
+    /// It cannot be changed after creation.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The type of the resource. The value should always be rum_metrics.
+    /// The type of the resource. The value must be `rum_metrics`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RumMetricType,
     #[serde(flatten)]

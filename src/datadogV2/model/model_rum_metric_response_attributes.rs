@@ -11,19 +11,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricResponseAttributes {
-    /// The compute rule to compute the RUM-based metric.
+    /// The compute rule of the RUM-based metric.
     #[serde(rename = "compute")]
     pub compute: Option<crate::datadogV2::model::RumMetricResponseCompute>,
-    /// The type of RUM events to filter on.
+    /// The type of RUM events the metric is generated from. It is set at creation and cannot be changed.
     #[serde(rename = "event_type")]
     pub event_type: Option<crate::datadogV2::model::RumMetricEventType>,
-    /// The RUM-based metric filter. RUM events matching this filter will be aggregated in this metric.
+    /// The RUM-based metric filter. RUM events matching this filter are aggregated in this metric. Omitted if the metric only filters on the event type.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::RumMetricResponseFilter>,
-    /// The rules for the group by.
+    /// The rules the metric is grouped by. Omitted if the metric is not grouped.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::RumMetricResponseGroupBy>>,
-    /// The rule to count updatable events. Is only set if `event_type` is `session` or `view`.
+    /// The rule to count updatable events. Only present if `event_type` is `session` or `view`, and absent on older metrics created before this setting existed.
     #[serde(rename = "uniqueness")]
     pub uniqueness: Option<crate::datadogV2::model::RumMetricResponseUniqueness>,
     #[serde(flatten)]
