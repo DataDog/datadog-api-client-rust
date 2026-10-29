@@ -265,6 +265,43 @@ impl ListOnCallEscalationPoliciesOptionalParams {
     }
 }
 
+/// ListOnCallPagesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_on_call_pages`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListOnCallPagesOptionalParams {
+    /// Number of On-Call Pages to return per page of results. The maximum allowed value is 1000.
+    pub page_size: Option<i64>,
+    /// Page of results to return, starting at 0. `page[number]` multiplied by `page[size]` must be less than 50000.
+    pub page_number: Option<i64>,
+    /// Search query to filter Pages. Supports filters such as `status`, `urgency`, `team`, `service`, and `tags`, for example `status:triggered`.
+    pub filter_query: Option<String>,
+    /// Sort Pages by the given field. Only one field is allowed.
+    pub sort: Option<crate::datadogV2::model::OnCallPagesSort>,
+}
+
+impl ListOnCallPagesOptionalParams {
+    /// Number of On-Call Pages to return per page of results. The maximum allowed value is 1000.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Page of results to return, starting at 0. `page[number]` multiplied by `page[size]` must be less than 50000.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Search query to filter Pages. Supports filters such as `status`, `urgency`, `team`, `service`, and `tags`, for example `status:triggered`.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Sort Pages by the given field. Only one field is allowed.
+    pub fn sort(mut self, value: crate::datadogV2::model::OnCallPagesSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// ListOnCallSchedulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_on_call_schedules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -500,6 +537,15 @@ pub enum GetOnCallEscalationPolicyError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetOnCallPageError is a struct for typed errors of method [`OnCallAPI::get_on_call_page`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetOnCallPageError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetOnCallScheduleError is a struct for typed errors of method [`OnCallAPI::get_on_call_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -560,6 +606,15 @@ pub enum GetUserNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOnCallEscalationPoliciesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListOnCallPagesError is a struct for typed errors of method [`OnCallAPI::list_on_call_pages`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListOnCallPagesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2113,6 +2168,113 @@ impl OnCallAPI {
         }
     }
 
+    /// Get the details of an On-Call Page.
+    pub async fn get_on_call_page(
+        &self,
+        page_id: String,
+    ) -> Result<crate::datadogV2::model::OnCallPageResponse, datadog::Error<GetOnCallPageError>>
+    {
+        match self.get_on_call_page_with_http_info(page_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of an On-Call Page.
+    pub async fn get_on_call_page_with_http_info(
+        &self,
+        page_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::OnCallPageResponse>,
+        datadog::Error<GetOnCallPageError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_on_call_page";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/pages/{page_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            page_id = datadog::urlencode(page_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::OnCallPageResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetOnCallPageError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get an On-Call schedule
     pub async fn get_on_call_schedule(
         &self,
@@ -3151,6 +3313,170 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<ListOnCallEscalationPoliciesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a paginated list of On-Call Pages, optionally filtered by a search query and sorted by a field.
+    pub async fn list_on_call_pages(
+        &self,
+        params: ListOnCallPagesOptionalParams,
+    ) -> Result<crate::datadogV2::model::OnCallPagesResponse, datadog::Error<ListOnCallPagesError>>
+    {
+        match self.list_on_call_pages_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_on_call_pages_with_pagination(
+        &self,
+        mut params: ListOnCallPagesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::OnCallPageData,
+            datadog::Error<ListOnCallPagesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_on_call_pages(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// Retrieve a paginated list of On-Call Pages, optionally filtered by a search query and sorted by a field.
+    pub async fn list_on_call_pages_with_http_info(
+        &self,
+        params: ListOnCallPagesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::OnCallPagesResponse>,
+        datadog::Error<ListOnCallPagesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_on_call_pages";
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_query = params.filter_query;
+        let sort = params.sort;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/pages",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::OnCallPagesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListOnCallPagesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

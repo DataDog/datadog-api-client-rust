@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RoutingRuleEscalationPolicyAction {
-    /// The number of minutes before an acknowledged page is re-triggered.
+    /// The number of minutes before an acknowledged Page is re-triggered.
     #[serde(rename = "ack_timeout_minutes")]
     pub ack_timeout_minutes: Option<i64>,
     /// The ID of the escalation policy to route to.

@@ -14,7 +14,7 @@ pub struct EscalationPolicyDataAttributes {
     /// Specifies the name of the escalation policy.
     #[serde(rename = "name")]
     pub name: String,
-    /// Indicates whether the page is automatically resolved when the policy ends.
+    /// Indicates whether the Page is automatically resolved when the policy ends.
     #[serde(rename = "resolve_page_on_policy_end")]
     pub resolve_page_on_policy_end: Option<bool>,
     /// Specifies how many times the escalation sequence is retried if there is no response.

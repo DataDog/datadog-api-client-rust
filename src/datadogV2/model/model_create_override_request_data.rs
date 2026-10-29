@@ -17,7 +17,7 @@ pub struct CreateOverrideRequestData {
     /// Relationships to set when creating an on-call schedule override.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CreateOverrideRequestRelationships>,
-    /// Indicates that the resource is of type 'overrides'.
+    /// Indicates that the resource is of type `overrides`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OverrideDataType,
     #[serde(flatten)]

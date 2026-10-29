@@ -17,7 +17,7 @@ pub struct CreateOnCallNotificationRuleRequestData {
     /// Relationship object for creating a notification rule
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::OnCallNotificationRuleRelationships>,
-    /// Indicates that the resource is of type 'notification_rules'.
+    /// Indicates that the resource is of type `notification_rules`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OnCallNotificationRuleType,
     #[serde(flatten)]
