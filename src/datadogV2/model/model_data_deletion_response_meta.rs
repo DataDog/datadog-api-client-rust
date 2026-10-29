@@ -11,12 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DataDeletionResponseMeta {
+    /// Number of additional deletion requests the current organization can create before reaching the concurrency limit. Requests with a `pending`, `in_progress`, or `deleting` status count toward the limit. This field is returned only when listing deletion requests, and is omitted if the value cannot be determined.
+    #[serde(rename = "available_slots")]
+    pub available_slots: Option<i64>,
     /// The total deletion requests created by product.
     #[serde(rename = "count_product")]
     pub count_product: Option<std::collections::BTreeMap<String, i64>>,
     /// The total deletion requests created by status.
     #[serde(rename = "count_status")]
     pub count_status: Option<std::collections::BTreeMap<String, i64>>,
+    /// Maximum number of deletion requests with a `pending`, `in_progress`, or `deleting` status that the current organization can have at the same time. This field is returned only when listing deletion requests, and is omitted if the value cannot be determined.
+    #[serde(rename = "max_concurrent_requests")]
+    pub max_concurrent_requests: Option<i64>,
     /// The next page when searching deletion requests created in the current organization.
     #[serde(rename = "next_page")]
     pub next_page: Option<String>,
@@ -36,14 +42,21 @@ pub struct DataDeletionResponseMeta {
 impl DataDeletionResponseMeta {
     pub fn new() -> DataDeletionResponseMeta {
         DataDeletionResponseMeta {
+            available_slots: None,
             count_product: None,
             count_status: None,
+            max_concurrent_requests: None,
             next_page: None,
             product: None,
             request_status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn available_slots(mut self, value: i64) -> Self {
+        self.available_slots = Some(value);
+        self
     }
 
     pub fn count_product(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
@@ -53,6 +66,11 @@ impl DataDeletionResponseMeta {
 
     pub fn count_status(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
         self.count_status = Some(value);
+        self
+    }
+
+    pub fn max_concurrent_requests(mut self, value: i64) -> Self {
+        self.max_concurrent_requests = Some(value);
         self
     }
 
@@ -103,8 +121,10 @@ impl<'de> Deserialize<'de> for DataDeletionResponseMeta {
             where
                 M: MapAccess<'a>,
             {
+                let mut available_slots: Option<i64> = None;
                 let mut count_product: Option<std::collections::BTreeMap<String, i64>> = None;
                 let mut count_status: Option<std::collections::BTreeMap<String, i64>> = None;
+                let mut max_concurrent_requests: Option<i64> = None;
                 let mut next_page: Option<String> = None;
                 let mut product: Option<String> = None;
                 let mut request_status: Option<String> = None;
@@ -116,6 +136,13 @@ impl<'de> Deserialize<'de> for DataDeletionResponseMeta {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "available_slots" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            available_slots =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "count_product" => {
                             if v.is_null() {
                                 continue;
@@ -128,6 +155,13 @@ impl<'de> Deserialize<'de> for DataDeletionResponseMeta {
                                 continue;
                             }
                             count_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "max_concurrent_requests" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            max_concurrent_requests =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "next_page" => {
@@ -158,8 +192,10 @@ impl<'de> Deserialize<'de> for DataDeletionResponseMeta {
                 }
 
                 let content = DataDeletionResponseMeta {
+                    available_slots,
                     count_product,
                     count_status,
+                    max_concurrent_requests,
                     next_page,
                     product,
                     request_status,

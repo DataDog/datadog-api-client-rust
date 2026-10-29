@@ -44,6 +44,9 @@ pub struct DataDeletionResponseItemAttributes {
     /// Query for creating a data deletion request.
     #[serde(rename = "query")]
     pub query: String,
+    /// Time when the recovery period for the deletion request ends. Before this time, you can cancel the request and recover the data. After this time, permanent deletion begins, and the status changes to `deleting` within a few minutes. This field is returned only for `in_progress` requests when listing deletion requests, and is omitted if the value cannot be determined.
+    #[serde(rename = "recoverable_until")]
+    pub recoverable_until: Option<String>,
     /// The source of the deletion request.
     #[serde(rename = "source")]
     pub source: Option<String>,
@@ -97,6 +100,7 @@ impl DataDeletionResponseItemAttributes {
             org_id,
             product,
             query,
+            recoverable_until: None,
             source: None,
             starting_at,
             status,
@@ -120,6 +124,11 @@ impl DataDeletionResponseItemAttributes {
 
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
+        self
+    }
+
+    pub fn recoverable_until(mut self, value: String) -> Self {
+        self.recoverable_until = Some(value);
         self
     }
 
@@ -165,6 +174,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 let mut org_id: Option<i64> = None;
                 let mut product: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut recoverable_until: Option<String> = None;
                 let mut source: Option<String> = None;
                 let mut starting_at: Option<String> = None;
                 let mut status: Option<String> = None;
@@ -223,6 +233,13 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                         }
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "recoverable_until" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            recoverable_until =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "source" => {
                             if v.is_null() {
@@ -283,6 +300,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                     org_id,
                     product,
                     query,
+                    recoverable_until,
                     source,
                     starting_at,
                     status,
