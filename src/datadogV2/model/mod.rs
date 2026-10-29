@@ -14402,8 +14402,6 @@ pub mod model_sensitive_data_scanner_rule;
 pub use self::model_sensitive_data_scanner_rule::SensitiveDataScannerRule;
 pub mod model_sensitive_data_scanner_get_config_included_item;
 pub use self::model_sensitive_data_scanner_get_config_included_item::SensitiveDataScannerGetConfigIncludedItem;
-pub mod model_sensitive_data_scanner_meta;
-pub use self::model_sensitive_data_scanner_meta::SensitiveDataScannerMeta;
 pub mod model_sensitive_data_scanner_config_request;
 pub use self::model_sensitive_data_scanner_config_request::SensitiveDataScannerConfigRequest;
 pub mod model_sensitive_data_scanner_reorder_config;

@@ -11,9 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SensitiveDataScannerGroupDeleteResponse {
-    /// Meta payload containing information about the API.
+    /// Always `null`.
+    #[serde(rename = "data", default, with = "::serde_with::rust::double_option")]
+    pub data: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
+    /// Meta response. Always an empty object.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+    pub meta: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,16 +27,22 @@ pub struct SensitiveDataScannerGroupDeleteResponse {
 impl SensitiveDataScannerGroupDeleteResponse {
     pub fn new() -> SensitiveDataScannerGroupDeleteResponse {
         SensitiveDataScannerGroupDeleteResponse {
+            data: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn meta(
+    pub fn data(
         mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
+        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     ) -> Self {
+        self.data = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.meta = Some(value);
         self
     }
@@ -70,8 +79,10 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupDeleteResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly> =
-                    None;
+                let mut data: Option<
+                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
+                > = None;
+                let mut meta: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,6 +91,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupDeleteResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "meta" => {
                             if v.is_null() {
                                 continue;
@@ -95,6 +109,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupDeleteResponse {
                 }
 
                 let content = SensitiveDataScannerGroupDeleteResponse {
+                    data,
                     meta,
                     additional_properties,
                     _unparsed,

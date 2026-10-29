@@ -14,9 +14,9 @@ pub struct SensitiveDataScannerCreateGroupResponse {
     /// Response data related to the creation of a group.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::SensitiveDataScannerGroupResponse>,
-    /// Meta payload containing information about the API.
+    /// Meta response. Always an empty object.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly>,
+    pub meta: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -42,10 +42,7 @@ impl SensitiveDataScannerCreateGroupResponse {
         self
     }
 
-    pub fn meta(
-        mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly,
-    ) -> Self {
+    pub fn meta(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.meta = Some(value);
         self
     }
@@ -84,8 +81,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerCreateGroupResponse {
             {
                 let mut data: Option<crate::datadogV2::model::SensitiveDataScannerGroupResponse> =
                     None;
-                let mut meta: Option<crate::datadogV2::model::SensitiveDataScannerMetaVersionOnly> =
-                    None;
+                let mut meta: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
