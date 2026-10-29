@@ -432,6 +432,7 @@ impl Default for Configuration {
                 "v2.get_security_monitoring_integration_config".to_owned(),
                 false,
             ),
+            ("v2.get_security_monitoring_rule_proposal".to_owned(), false),
             ("v2.get_signal_entities".to_owned(), false),
             ("v2.get_single_entity_context".to_owned(), false),
             ("v2.get_static_analysis_default_rulesets".to_owned(), false),
@@ -521,6 +522,10 @@ impl Default for Configuration {
             ),
             (
                 "v2.start_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
+            (
+                "v2.start_security_monitoring_rule_proposal".to_owned(),
                 false,
             ),
             ("v2.update_findings_assignee".to_owned(), false),

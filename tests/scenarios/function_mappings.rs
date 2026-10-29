@@ -4269,6 +4269,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_bulk_convert_existing_security_monitoring_rules,
     );
     world.function_mappings.insert(
+        "v2.StartSecurityMonitoringRuleProposal".into(),
+        test_v2_start_security_monitoring_rule_proposal,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityMonitoringRuleProposal".into(),
+        test_v2_get_security_monitoring_rule_proposal,
+    );
+    world.function_mappings.insert(
         "v2.TestSecurityMonitoringRule".into(),
         test_v2_test_security_monitoring_rule,
     );
@@ -32045,6 +32053,65 @@ fn test_v2_bulk_convert_existing_security_monitoring_rules(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.bulk_convert_existing_security_monitoring_rules_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_start_security_monitoring_rule_proposal(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.start_security_monitoring_rule_proposal_with_http_info(body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_monitoring_rule_proposal(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let proposal_id =
+        serde_json::from_value(_parameters.get("proposal_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_security_monitoring_rule_proposal_with_http_info(proposal_id)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
