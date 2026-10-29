@@ -1,0 +1,36 @@
+// Reroute On-Call Page returns "No Content." response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_on_call_paging::OnCallPagingAPI;
+use datadog_api_client::datadogV2::model::CreatePageRequestDataAttributesTarget;
+use datadog_api_client::datadogV2::model::OnCallPageTargetType;
+use datadog_api_client::datadogV2::model::RerouteOnCallPageRequest;
+use datadog_api_client::datadogV2::model::RerouteOnCallPageRequestData;
+use datadog_api_client::datadogV2::model::RerouteOnCallPageRequestDataAttributes;
+use datadog_api_client::datadogV2::model::RerouteOnCallPageRequestDataType;
+use uuid::Uuid;
+
+#[tokio::main]
+async fn main() {
+    let body = RerouteOnCallPageRequest::new(RerouteOnCallPageRequestData::new(
+        RerouteOnCallPageRequestDataAttributes::new(
+            CreatePageRequestDataAttributesTarget::new()
+                .identifier("my-team".to_string())
+                .type_(OnCallPageTargetType::TEAM_HANDLE),
+        )
+        .comment("Rerouting to the database team.".to_string()),
+        RerouteOnCallPageRequestDataType::REROUTE,
+    ));
+    let configuration = datadog::Configuration::new();
+    let api = OnCallPagingAPI::with_config(configuration);
+    let resp = api
+        .reroute_on_call_page(
+            Uuid::parse_str("15e74b8b-f865-48d0-bcc5-453323ed2c8f").expect("invalid UUID"),
+            body,
+        )
+        .await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
