@@ -62679,6 +62679,9 @@ fn test_v2_delete_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let mapkind = serde_json::from_value(_parameters.get("mapkind").unwrap().clone()).unwrap();
     let dry_run = serde_json::from_value(_parameters.get("dry_run").unwrap().clone()).unwrap();
+    let symbol_type = _parameters
+        .get("symbol_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_service = _parameters
         .get("filter[service]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -62734,6 +62737,7 @@ fn test_v2_delete_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .get("filter[file_hash]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_rum::DeleteSourcemapsOptionalParams::default();
+    params.symbol_type = symbol_type;
     params.filter_service = filter_service;
     params.filter_version = filter_version;
     params.filter_variant = filter_variant;
@@ -62823,6 +62827,9 @@ fn test_v2_list_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let mapkind = _parameters
         .get("mapkind")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let symbol_type = _parameters
+        .get("symbol_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_after = _parameters
         .get("page[after]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -62889,6 +62896,7 @@ fn test_v2_list_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let mut params = datadogV2::api_rum::ListSourcemapsOptionalParams::default();
     params.search_by = search_by;
     params.mapkind = mapkind;
+    params.symbol_type = symbol_type;
     params.page_after = page_after;
     params.page_size = page_size;
     params.page_number = page_number;
@@ -62936,6 +62944,9 @@ fn test_v2_restore_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let mapkind = serde_json::from_value(_parameters.get("mapkind").unwrap().clone()).unwrap();
     let dry_run = serde_json::from_value(_parameters.get("dry_run").unwrap().clone()).unwrap();
+    let symbol_type = _parameters
+        .get("symbol_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_service = _parameters
         .get("filter[service]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -62991,6 +63002,7 @@ fn test_v2_restore_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<St
         .get("filter[file_hash]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_rum::RestoreSourcemapsOptionalParams::default();
+    params.symbol_type = symbol_type;
     params.filter_service = filter_service;
     params.filter_version = filter_version;
     params.filter_variant = filter_variant;
