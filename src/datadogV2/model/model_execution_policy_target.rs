@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A target this policy is scoped to, expressed as a set of Agent tags.
+/// A target this policy is scoped to, expressed as a set of tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExecutionPolicyTarget {
-    /// The Agent tags identifying the target.
+    /// The tags identifying the target.
     #[serde(rename = "agent_tags")]
     pub agent_tags: Vec<String>,
     /// A human-readable name for the target.

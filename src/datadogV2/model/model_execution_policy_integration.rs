@@ -10,6 +10,7 @@ pub enum ExecutionPolicyIntegration {
     INTEGRATION_KUBERNETES,
     INTEGRATION_SCRIPT,
     INTEGRATION_REMOTE_ACTION,
+    INTEGRATION_SLACK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for ExecutionPolicyIntegration {
             Self::INTEGRATION_KUBERNETES => String::from("INTEGRATION_KUBERNETES"),
             Self::INTEGRATION_SCRIPT => String::from("INTEGRATION_SCRIPT"),
             Self::INTEGRATION_REMOTE_ACTION => String::from("INTEGRATION_REMOTE_ACTION"),
+            Self::INTEGRATION_SLACK => String::from("INTEGRATION_SLACK"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for ExecutionPolicyIntegration {
             "INTEGRATION_KUBERNETES" => Self::INTEGRATION_KUBERNETES,
             "INTEGRATION_SCRIPT" => Self::INTEGRATION_SCRIPT,
             "INTEGRATION_REMOTE_ACTION" => Self::INTEGRATION_REMOTE_ACTION,
+            "INTEGRATION_SLACK" => Self::INTEGRATION_SLACK,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
