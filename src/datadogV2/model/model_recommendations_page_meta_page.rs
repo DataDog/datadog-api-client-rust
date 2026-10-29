@@ -17,7 +17,7 @@ pub struct RecommendationsPageMetaPage {
     /// Opaque token used to fetch the next page; absent on the last page.
     #[serde(rename = "next_page_token")]
     pub next_page_token: Option<String>,
-    /// Number of items returned in this page (1–10000).
+    /// Number of items returned in this page (1–5000).
     #[serde(rename = "page_size")]
     pub page_size: Option<i32>,
     /// Pagination token echoed back from the request.

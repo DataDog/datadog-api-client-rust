@@ -16,13 +16,15 @@ pub struct RecommendationsFilterRequestDataAttributes {
     /// is empty, it defaults to `*`. Scope, view, and pagination still apply.
     #[serde(rename = "filter")]
     pub filter: Option<String>,
-    /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations or `*` for both.
+    /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations
+    /// or `*` for both.
     #[serde(rename = "scope")]
     pub scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope>,
     /// Ordered list of sort clauses applied to the result set.
     #[serde(rename = "sort")]
     pub sort: Option<Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>>,
-    /// Active view name (for example, `active`, `dismissed`, `open`, `in-progress`, or `completed`).
+    /// Status view to return: `all`, `active` (not dismissed), `dismissed`, `open`, `in-progress`,
+    /// or `completed`. Defaults to `all`, which returns recommendations in every status.
     #[serde(rename = "view")]
     pub view: Option<String>,
     #[serde(flatten)]
