@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Restricts where the policy applies. At most one of `kubernetes`, `scripts`,
-/// or `remote_action_rshell` can be set. An empty object means the policy has
-/// no scope restriction.
+/// Restricts where the policy applies. At most one scope type can be set,
+/// and it must match the action pattern's integration. An empty object means
+/// the policy has no scope restriction.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -23,6 +23,9 @@ pub struct ExecutionPolicyScope {
     /// Restricts the policy to specific scripts.
     #[serde(rename = "scripts")]
     pub scripts: Option<crate::datadogV2::model::ExecutionPolicyScriptScope>,
+    /// Restricts the policy to specific Slack private channel names.
+    #[serde(rename = "slack")]
+    pub slack: Option<crate::datadogV2::model::ExecutionPolicySlackScope>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,6 +39,7 @@ impl ExecutionPolicyScope {
             kubernetes: None,
             remote_action_rshell: None,
             scripts: None,
+            slack: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -59,6 +63,11 @@ impl ExecutionPolicyScope {
 
     pub fn scripts(mut self, value: crate::datadogV2::model::ExecutionPolicyScriptScope) -> Self {
         self.scripts = Some(value);
+        self
+    }
+
+    pub fn slack(mut self, value: crate::datadogV2::model::ExecutionPolicySlackScope) -> Self {
+        self.slack = Some(value);
         self
     }
 
@@ -101,6 +110,7 @@ impl<'de> Deserialize<'de> for ExecutionPolicyScope {
                     crate::datadogV2::model::ExecutionPolicyRemoteActionRshellScope,
                 > = None;
                 let mut scripts: Option<crate::datadogV2::model::ExecutionPolicyScriptScope> = None;
+                let mut slack: Option<crate::datadogV2::model::ExecutionPolicySlackScope> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -128,6 +138,12 @@ impl<'de> Deserialize<'de> for ExecutionPolicyScope {
                             }
                             scripts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "slack" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slack = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -140,6 +156,7 @@ impl<'de> Deserialize<'de> for ExecutionPolicyScope {
                     kubernetes,
                     remote_action_rshell,
                     scripts,
+                    slack,
                     additional_properties,
                     _unparsed,
                 };

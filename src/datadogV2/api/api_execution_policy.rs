@@ -132,9 +132,8 @@ pub enum UpdateExecutionPolicyError {
 }
 
 /// Execution policies control which actions Datadog Action Platform is allowed to run
-/// against your infrastructure, and where. Each policy pairs an effect (allow or deny)
-/// with a pattern of actions, and can scope that decision to specific Kubernetes
-/// namespaces, scripts, or remote shell paths.
+/// and where. Each policy pairs an effect (allow or deny) with a pattern of actions,
+/// and can scope that decision to specific resources.
 #[derive(Debug, Clone)]
 pub struct ExecutionPolicyAPI {
     config: datadog::Configuration,
