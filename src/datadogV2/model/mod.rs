@@ -6624,6 +6624,8 @@ pub mod model_aws_namespace_filters_include_only;
 pub use self::model_aws_namespace_filters_include_only::AWSNamespaceFiltersIncludeOnly;
 pub mod model_aws_namespace_filters;
 pub use self::model_aws_namespace_filters::AWSNamespaceFilters;
+pub mod model_aws_resource_type_tag_filter;
+pub use self::model_aws_resource_type_tag_filter::AWSResourceTypeTagFilter;
 pub mod model_aws_namespace_tag_filter;
 pub use self::model_aws_namespace_tag_filter::AWSNamespaceTagFilter;
 pub mod model_aws_resources_config;

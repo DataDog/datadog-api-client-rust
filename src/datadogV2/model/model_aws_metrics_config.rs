@@ -33,7 +33,12 @@ pub struct AWSMetricsConfig {
     /// AWS Metrics namespace filters. Defaults to `exclude_only`.
     #[serde(rename = "namespace_filters")]
     pub namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters>,
+    /// AWS Metrics collection resource type tag filters list. Defaults to `[]`.
+    #[serde(rename = "resource_type_tag_filters")]
+    pub resource_type_tag_filters: Option<Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>>,
     /// AWS Metrics collection tag filters list. Defaults to `[]`.
+    /// Deprecated in favor of `resource_type_tag_filters`. The two fields are mutually exclusive on an account.
+    #[deprecated]
     #[serde(rename = "tag_filters")]
     pub tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>>,
     #[serde(flatten)]
@@ -45,6 +50,7 @@ pub struct AWSMetricsConfig {
 
 impl AWSMetricsConfig {
     pub fn new() -> AWSMetricsConfig {
+        #[allow(deprecated)]
         AWSMetricsConfig {
             automute_enabled: None,
             collect_cloudwatch_alarms: None,
@@ -53,37 +59,44 @@ impl AWSMetricsConfig {
             enabled: None,
             metric_name_filters: None,
             namespace_filters: None,
+            resource_type_tag_filters: None,
             tag_filters: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn automute_enabled(mut self, value: bool) -> Self {
         self.automute_enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn collect_cloudwatch_alarms(mut self, value: bool) -> Self {
         self.collect_cloudwatch_alarms = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn collect_custom_metrics(mut self, value: bool) -> Self {
         self.collect_custom_metrics = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn collect_service_quotas(mut self, value: bool) -> Self {
         self.collect_service_quotas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metric_name_filters(
         mut self,
         value: Vec<crate::datadogV2::model::AWSMetricNameFilters>,
@@ -92,6 +105,7 @@ impl AWSMetricsConfig {
         self
     }
 
+    #[allow(deprecated)]
     pub fn namespace_filters(
         mut self,
         value: crate::datadogV2::model::AWSNamespaceFilters,
@@ -100,6 +114,16 @@ impl AWSMetricsConfig {
         self
     }
 
+    #[allow(deprecated)]
+    pub fn resource_type_tag_filters(
+        mut self,
+        value: Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>,
+    ) -> Self {
+        self.resource_type_tag_filters = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tag_filters(
         mut self,
         value: Vec<crate::datadogV2::model::AWSNamespaceTagFilter>,
@@ -150,6 +174,9 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                 > = None;
                 let mut namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters> =
                     None;
+                let mut resource_type_tag_filters: Option<
+                    Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>,
+                > = None;
                 let mut tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -216,6 +243,13 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                                 }
                             }
                         }
+                        "resource_type_tag_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_type_tag_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tag_filters" => {
                             if v.is_null() {
                                 continue;
@@ -231,6 +265,7 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = AWSMetricsConfig {
                     automute_enabled,
                     collect_cloudwatch_alarms,
@@ -239,6 +274,7 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                     enabled,
                     metric_name_filters,
                     namespace_filters,
+                    resource_type_tag_filters,
                     tag_filters,
                     additional_properties,
                     _unparsed,
