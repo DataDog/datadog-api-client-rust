@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerGroupAttributes {
-    /// Number of containers in the group.
+    /// Number of containers in the group. A container with multiple values for a grouping tag can appear in multiple groups. Summing group counts can overcount distinct containers.
     #[serde(rename = "count")]
     pub count: Option<i64>,
     /// Tags from the group name parsed in key/value format.
