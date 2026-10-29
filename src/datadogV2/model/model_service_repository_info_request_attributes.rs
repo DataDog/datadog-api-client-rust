@@ -11,12 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceRepositoryInfoRequestAttributes {
-    /// The name of the service.
+    /// The debug ID of a JavaScript source map, in UUID format. Alternative to `service` and `version`.
+    #[serde(rename = "debug_id")]
+    pub debug_id: Option<uuid::Uuid>,
+    /// The name of the service. Required with `version` when `debug_id` is not set.
     #[serde(rename = "service")]
-    pub service: String,
-    /// The version of the service.
+    pub service: Option<String>,
+    /// The version of the service. Required with `service` when `debug_id` is not set.
     #[serde(rename = "version")]
-    pub version: String,
+    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,13 +28,29 @@ pub struct ServiceRepositoryInfoRequestAttributes {
 }
 
 impl ServiceRepositoryInfoRequestAttributes {
-    pub fn new(service: String, version: String) -> ServiceRepositoryInfoRequestAttributes {
+    pub fn new() -> ServiceRepositoryInfoRequestAttributes {
         ServiceRepositoryInfoRequestAttributes {
-            service,
-            version,
+            debug_id: None,
+            service: None,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn debug_id(mut self, value: uuid::Uuid) -> Self {
+        self.debug_id = Some(value);
+        self
+    }
+
+    pub fn service(mut self, value: String) -> Self {
+        self.service = Some(value);
+        self
+    }
+
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -40,6 +59,12 @@ impl ServiceRepositoryInfoRequestAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for ServiceRepositoryInfoRequestAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -60,6 +85,7 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut debug_id: Option<uuid::Uuid> = None;
                 let mut service: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -70,10 +96,22 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "debug_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            debug_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -83,10 +121,9 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoRequestAttributes {
                         }
                     }
                 }
-                let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
-                let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
                 let content = ServiceRepositoryInfoRequestAttributes {
+                    debug_id,
                     service,
                     version,
                     additional_properties,

@@ -14632,6 +14632,8 @@ pub mod model_create_snapshot_data_attributes_response;
 pub use self::model_create_snapshot_data_attributes_response::CreateSnapshotDataAttributesResponse;
 pub mod model_sourcemap_map_kind;
 pub use self::model_sourcemap_map_kind::SourcemapMapKind;
+pub mod model_sourcemap_symbol_type;
+pub use self::model_sourcemap_symbol_type::SourcemapSymbolType;
 pub mod model_sourcemaps_response;
 pub use self::model_sourcemaps_response::SourcemapsResponse;
 pub mod model_js_sourcemap_data;

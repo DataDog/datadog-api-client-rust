@@ -17,17 +17,25 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteSourcemapsOptionalParams {
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+    /// `wasm` with `symbol_type=sourcemap`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -59,14 +67,23 @@ pub struct DeleteSourcemapsOptionalParams {
 }
 
 impl DeleteSourcemapsOptionalParams {
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
+        self.symbol_type = Some(value);
+        self
+    }
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+    /// `wasm` with `symbol_type=sourcemap`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
         self
@@ -81,7 +98,9 @@ impl DeleteSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -255,6 +274,10 @@ pub struct ListSourcemapsOptionalParams {
     pub search_by: Option<crate::datadogV2::model::SourcemapSearchBy>,
     /// The type of source map. Defaults to `js`.
     pub mapkind: Option<crate::datadogV2::model::SourcemapMapKind>,
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Cursor for the next page of a JavaScript listing. Use the value from
     /// `meta.page.next_cursor` and keep the same search mode and filters.
     /// Omit on the first request. Not supported for other map kinds or for
@@ -267,18 +290,22 @@ pub struct ListSourcemapsOptionalParams {
     /// default to page 1 when pagination parameters are omitted.
     pub page_number: Option<i64>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds. Also required for `js` unless
+    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`. Also required for `js` unless
     /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds. Also required for `js` unless
+    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`. Also required for `js` unless
     /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -325,6 +352,13 @@ impl ListSourcemapsOptionalParams {
         self.mapkind = Some(value);
         self
     }
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
+        self.symbol_type = Some(value);
+        self
+    }
     /// Cursor for the next page of a JavaScript listing. Use the value from
     /// `meta.page.next_cursor` and keep the same search mode and filters.
     /// Omit on the first request. Not supported for other map kinds or for
@@ -346,14 +380,16 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// Filter by service names (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds. Also required for `js` unless
+    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`. Also required for `js` unless
     /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds. Also required for `js` unless
+    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`. Also required for `js` unless
     /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
@@ -369,7 +405,9 @@ impl ListSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -448,17 +486,25 @@ impl ListSourcemapsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct RestoreSourcemapsOptionalParams {
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+    /// `wasm` with `symbol_type=sourcemap`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -490,14 +536,23 @@ pub struct RestoreSourcemapsOptionalParams {
 }
 
 impl RestoreSourcemapsOptionalParams {
+    /// WASM symbol representation. Only supported for `mapkind=wasm`.
+    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+    /// requires `filter[service]` and `filter[version]`.
+    pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
+        self.symbol_type = Some(value);
+        self
+    }
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+    /// `symbol_type=sourcemap`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+    /// `wasm` with `symbol_type=sourcemap`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
         self
@@ -512,7 +567,9 @@ impl RestoreSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
+    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+    /// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -1220,6 +1277,7 @@ impl RUMAPI {
         }
 
         // unbox and build optional parameters
+        let symbol_type = params.symbol_type;
         let filter_service = params.filter_service;
         let filter_version = params.filter_version;
         let filter_variant = params.filter_variant;
@@ -1250,6 +1308,10 @@ impl RUMAPI {
 
         local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
         local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        if let Some(ref local_query_param) = symbol_type {
+            local_req_builder =
+                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
+        };
         if let Some(ref local) = filter_service {
             for param in local {
                 local_req_builder =
@@ -1629,7 +1691,8 @@ impl RUMAPI {
         }
     }
 
-    /// Returns the repository URL and commit SHA associated with a given service and version.
+    /// Returns the repository URL and commit SHA associated with a debug ID or a given service and version.
+    /// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
     pub async fn get_service_repository_info(
         &self,
         body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
@@ -1651,7 +1714,8 @@ impl RUMAPI {
         }
     }
 
-    /// Returns the repository URL and commit SHA associated with a given service and version.
+    /// Returns the repository URL and commit SHA associated with a debug ID or a given service and version.
+    /// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
     pub async fn get_service_repository_info_with_http_info(
         &self,
         body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
@@ -2383,6 +2447,7 @@ impl RUMAPI {
         // unbox and build optional parameters
         let search_by = params.search_by;
         let mapkind = params.mapkind;
+        let symbol_type = params.symbol_type;
         let page_after = params.page_after;
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -2421,6 +2486,10 @@ impl RUMAPI {
         if let Some(ref local_query_param) = mapkind {
             local_req_builder =
                 local_req_builder.query(&[("mapkind", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = symbol_type {
+            local_req_builder =
+                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = page_after {
             local_req_builder =
@@ -2649,6 +2718,7 @@ impl RUMAPI {
         }
 
         // unbox and build optional parameters
+        let symbol_type = params.symbol_type;
         let filter_service = params.filter_service;
         let filter_version = params.filter_version;
         let filter_variant = params.filter_variant;
@@ -2679,6 +2749,10 @@ impl RUMAPI {
 
         local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
         local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        if let Some(ref local_query_param) = symbol_type {
+            local_req_builder =
+                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
+        };
         if let Some(ref local) = filter_service {
             for param in local {
                 local_req_builder =

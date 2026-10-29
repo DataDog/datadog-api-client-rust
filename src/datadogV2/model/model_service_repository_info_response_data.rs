@@ -14,7 +14,7 @@ pub struct ServiceRepositoryInfoResponseData {
     /// Attributes of the service repository information.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ServiceRepositoryInfoResponseAttributes,
-    /// The identifier composed of the service name and version.
+    /// The identifier composed of the service name and version, or the debug ID when the lookup was made by debug ID.
     #[serde(rename = "id")]
     pub id: String,
     /// The resource type for service repository info objects.
