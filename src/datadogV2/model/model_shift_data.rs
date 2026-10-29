@@ -20,7 +20,7 @@ pub struct ShiftData {
     /// Relationships for an on-call shift.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::ShiftDataRelationships>,
-    /// Indicates that the resource is of type 'shifts'.
+    /// Indicates that the resource is of type `shifts`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ShiftDataType,
     #[serde(flatten)]

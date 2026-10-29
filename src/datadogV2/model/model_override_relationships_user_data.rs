@@ -14,7 +14,7 @@ pub struct OverrideRelationshipsUserData {
     /// The unique identifier of the user.
     #[serde(rename = "id")]
     pub id: String,
-    /// Indicates that the related resource is of type 'users'.
+    /// Indicates that the related resource is of type `users`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OverrideRelationshipsUserDataType,
     #[serde(flatten)]

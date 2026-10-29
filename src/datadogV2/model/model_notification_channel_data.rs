@@ -17,7 +17,7 @@ pub struct NotificationChannelData {
     /// Unique identifier for the channel
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Indicates that the resource is of type 'notification_channels'.
+    /// Indicates that the resource is of type `notification_channels`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::NotificationChannelType,
     #[serde(flatten)]

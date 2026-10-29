@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Reroutes the page to another team, which then evaluates it against its own routing rules. Each routing rule can include this action only once. It can be combined only with `send_slack_message` and `send_teams_message` actions. It can't be used with `escalation_policy` or `workflow` actions, or when the routing rule sets `policy_id`.
+/// Reroutes the Page to another team, which then evaluates it against its own routing rules. Each routing rule can include this action only once. It can be combined only with `send_slack_message` and `send_teams_message` actions. It can't be used with `escalation_policy` or `workflow` actions, or when the routing rule sets `policy_id`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RoutingRuleRerouteToTeamAction {
-    /// The ID of the team to reroute the page to.
+    /// The ID of the team to reroute the Page to.
     #[serde(rename = "destination_team_id")]
     pub destination_team_id: uuid::Uuid,
-    /// Indicates that the action reroutes the page to another team's routing rules.
+    /// Indicates that the action reroutes the Page to another team's routing rules.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RoutingRuleRerouteToTeamActionType,
     #[serde(flatten)]

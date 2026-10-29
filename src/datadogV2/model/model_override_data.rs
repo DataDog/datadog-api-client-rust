@@ -20,7 +20,7 @@ pub struct OverrideData {
     /// Relationships for an on-call schedule override.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::OverrideRelationships>,
-    /// Indicates that the resource is of type 'overrides'.
+    /// Indicates that the resource is of type `overrides`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OverrideDataType,
     #[serde(flatten)]

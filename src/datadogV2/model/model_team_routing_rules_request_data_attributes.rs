@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamRoutingRulesRequestDataAttributes {
-    /// A list of routing rule items that define how incoming pages should be handled.
+    /// A list of routing rule items that define how incoming Pages should be handled.
     #[serde(rename = "rules")]
     pub rules: Option<Vec<crate::datadogV2::model::TeamRoutingRulesRequestRule>>,
     #[serde(flatten)]
