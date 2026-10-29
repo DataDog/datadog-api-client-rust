@@ -13,7 +13,7 @@ use datadog_api_client::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfi
 use datadog_api_client::datadogV2::model::AWSLogSourceTagFilter;
 use datadog_api_client::datadogV2::model::AWSLogsConfig;
 use datadog_api_client::datadogV2::model::AWSMetricsConfig;
-use datadog_api_client::datadogV2::model::AWSNamespaceTagFilter;
+use datadog_api_client::datadogV2::model::AWSResourceTypeTagFilter;
 use datadog_api_client::datadogV2::model::AWSResourcesConfig;
 use datadog_api_client::datadogV2::model::AWSTracesConfig;
 
@@ -60,11 +60,11 @@ async fn main() {
                             .collect_cloudwatch_alarms(true)
                             .collect_custom_metrics(true)
                             .enabled(true)
-                            .tag_filters(
+                            .resource_type_tag_filters(
                                 vec![
-                                    AWSNamespaceTagFilter::new()
-                                        .namespace("AWS/EC2".to_string())
-                                        .tags(Some(vec!["key:value".to_string()]))
+                                    AWSResourceTypeTagFilter::new("env:staging".to_string())
+                                        .resource_types(vec!["instance".to_string()])
+                                        .service("ec2".to_string())
                                 ],
                             ),
                     )
