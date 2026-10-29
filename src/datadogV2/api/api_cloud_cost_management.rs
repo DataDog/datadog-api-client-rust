@@ -612,15 +612,15 @@ impl ListCustomCostsFilesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchCostRecommendationsOptionalParams {
-    /// Number of results per page (1–10000).
-    pub page_size: Option<String>,
+    /// Number of results per page, from 1 to 5000. Defaults to 50.
+    pub page_size: Option<i32>,
     /// Pagination token from a previous response.
     pub page_token: Option<String>,
 }
 
 impl SearchCostRecommendationsOptionalParams {
-    /// Number of results per page (1–10000).
-    pub fn page_size(mut self, value: String) -> Self {
+    /// Number of results per page, from 1 to 5000. Defaults to 50.
+    pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
@@ -1147,6 +1147,7 @@ pub enum ReorderTagPipelinesRulesetsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchCostRecommendationsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
