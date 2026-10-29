@@ -32,7 +32,7 @@ pub struct GCPSTSServiceAccountAttributes {
     #[deprecated]
     #[serde(rename = "host_filters")]
     pub host_filters: Option<Vec<String>>,
-    /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
+    /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled or is_org_folder_resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
     /// When enabled, Datadog collects metrics where location is explicitly stated as "global" or where location information cannot be deduced from GCP labels.
