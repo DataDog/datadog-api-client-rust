@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SensitiveDataScannerReorderGroupsResponse {
-    /// Meta response containing information about the API.
+    /// Meta response. Always an empty object.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta>,
+    pub meta: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,7 +30,7 @@ impl SensitiveDataScannerReorderGroupsResponse {
         }
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::SensitiveDataScannerMeta) -> Self {
+    pub fn meta(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.meta = Some(value);
         self
     }
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerReorderGroupsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut meta: Option<crate::datadogV2::model::SensitiveDataScannerMeta> = None;
+                let mut meta: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
