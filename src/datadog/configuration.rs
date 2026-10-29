@@ -388,7 +388,6 @@ impl Default for Configuration {
             ("v2.get_historical_job".to_owned(), false),
             ("v2.get_indicator_of_compromise".to_owned(), false),
             ("v2.get_matching_signals".to_owned(), false),
-            ("v2.get_rule_version_history".to_owned(), false),
             ("v2.get_secrets_rules".to_owned(), false),
             (
                 "v2.get_security_findings_automation_default_inbox_rule".to_owned(),
@@ -513,7 +512,6 @@ impl Default for Configuration {
                 "v2.reorder_security_findings_automation_ticket_creation_rules".to_owned(),
                 false,
             ),
-            ("v2.restore_security_monitoring_rule".to_owned(), false),
             ("v2.run_historical_job".to_owned(), false),
             (
                 "v2.search_security_monitoring_histsignals".to_owned(),

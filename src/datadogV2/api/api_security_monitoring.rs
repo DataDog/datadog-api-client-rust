@@ -15402,14 +15402,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rule_version_history";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_rule_version_history' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -26021,14 +26013,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.restore_security_monitoring_rule";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.restore_security_monitoring_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
