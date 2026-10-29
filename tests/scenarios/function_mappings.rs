@@ -5453,6 +5453,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.StopExposureSchedule".into(),
         test_v2_stop_exposure_schedule,
     );
+    world.function_mappings.insert(
+        "v2.ListFeatureFlagHistory".into(),
+        test_v2_list_feature_flag_history,
+    );
+    world.function_mappings.insert(
+        "v2.ExportFeatureFlagHistory".into(),
+        test_v2_export_feature_flag_history,
+    );
     world
         .function_mappings
         .insert("v2.GetSavedFilter".into(), test_v2_get_saved_filter);
@@ -42587,6 +42595,127 @@ fn test_v2_stop_exposure_schedule(world: &mut DatadogWorld, _parameters: &HashMa
     let exposure_schedule_id =
         serde_json::from_value(_parameters.get("exposure_schedule_id").unwrap().clone()).unwrap();
     let response = match block_on(api.stop_exposure_schedule_with_http_info(exposure_schedule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_feature_flag_history(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let start_date = _parameters
+        .get("start_date")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end_date = _parameters
+        .get("end_date")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let teams = _parameters
+        .get("teams")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let feature_flag_id = _parameters
+        .get("feature_flag_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let environment_id = _parameters
+        .get("environment_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_suggestion_events = _parameters
+        .get("include_suggestion_events")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_feature_flags::ListFeatureFlagHistoryOptionalParams::default();
+    params.start_date = start_date;
+    params.end_date = end_date;
+    params.teams = teams;
+    params.tags = tags;
+    params.feature_flag_id = feature_flag_id;
+    params.environment_id = environment_id;
+    params.include_suggestion_events = include_suggestion_events;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    let response = match block_on(api.list_feature_flag_history_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_export_feature_flag_history(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let start_date = _parameters
+        .get("start_date")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end_date = _parameters
+        .get("end_date")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let teams = _parameters
+        .get("teams")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let feature_flag_id = _parameters
+        .get("feature_flag_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let environment_id = _parameters
+        .get("environment_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_suggestion_events = _parameters
+        .get("include_suggestion_events")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_feature_flags::ExportFeatureFlagHistoryOptionalParams::default();
+    params.start_date = start_date;
+    params.end_date = end_date;
+    params.teams = teams;
+    params.tags = tags;
+    params.feature_flag_id = feature_flag_id;
+    params.environment_id = environment_id;
+    params.include_suggestion_events = include_suggestion_events;
+    let response = match block_on(api.export_feature_flag_history_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
