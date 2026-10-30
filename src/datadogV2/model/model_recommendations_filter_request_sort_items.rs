@@ -14,9 +14,9 @@ pub struct RecommendationsFilterRequestSortItems {
     /// Field to sort by (for example, `@potential_daily_savings`).
     #[serde(rename = "expression")]
     pub expression: Option<String>,
-    /// Sort direction, either `ASC` or `DESC`.
+    /// Sort direction, either `ASC` or `DESC` (case-insensitive).
     #[serde(rename = "order")]
-    pub order: Option<String>,
+    pub order: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,10 +25,10 @@ pub struct RecommendationsFilterRequestSortItems {
 }
 
 impl RecommendationsFilterRequestSortItems {
-    pub fn new() -> RecommendationsFilterRequestSortItems {
+    pub fn new(order: String) -> RecommendationsFilterRequestSortItems {
         RecommendationsFilterRequestSortItems {
             expression: None,
-            order: None,
+            order,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,23 +39,12 @@ impl RecommendationsFilterRequestSortItems {
         self
     }
 
-    pub fn order(mut self, value: String) -> Self {
-        self.order = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for RecommendationsFilterRequestSortItems {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -93,9 +82,6 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestSortItems {
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "order" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             order = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -105,6 +91,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestSortItems {
                         }
                     }
                 }
+                let order = order.ok_or_else(|| M::Error::missing_field("order"))?;
 
                 let content = RecommendationsFilterRequestSortItems {
                     expression,
