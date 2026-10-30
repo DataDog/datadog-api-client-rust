@@ -23,7 +23,7 @@ pub struct ContainerImageFlavor {
     /// Operating System version supported by the Container Image.
     #[serde(rename = "os_version")]
     pub os_version: Option<String>,
-    /// Size of the platform-specific Container Image.
+    /// Size of the platform-specific Container Image in bytes.
     #[serde(rename = "size")]
     pub size: Option<i64>,
     #[serde(flatten)]
