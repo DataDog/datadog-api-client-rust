@@ -18,7 +18,7 @@ use uuid::Uuid;
 async fn main() {
     let body = RUMOperationUpdateRequest::new(RUMOperationUpdateRequestData::new(
         RUMOperationRequestAttributes::new(
-            RUMOperationJourneyRum::new(vec![RUMOperationJourneyStep::new(
+            RUMOperationJourneyRum::new(Some(vec![RUMOperationJourneyStep::new(
                 RUMOperationJourneyStepType::START,
             )
             .composite(
@@ -32,7 +32,7 @@ async fn main() {
             )
             .nodes(vec![RUMOperationJourneyNode::new(
                 "@type:action @action.type:click".to_string(),
-            )])]),
+            )])])),
             "checkout_completed".to_string(),
             vec!["team:checkout".to_string()],
         )

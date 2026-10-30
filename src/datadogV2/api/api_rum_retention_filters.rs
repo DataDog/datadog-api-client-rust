@@ -39,6 +39,7 @@ pub enum DeleteExclusionFilterError {
 #[serde(untagged)]
 pub enum DeleteRetentionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -55,6 +56,7 @@ pub enum GetExclusionFilterError {
 #[serde(untagged)]
 pub enum GetPermanentRetentionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -63,6 +65,7 @@ pub enum GetPermanentRetentionFilterError {
 #[serde(untagged)]
 pub enum GetRetentionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -111,6 +114,7 @@ pub enum UpdateExclusionFilterError {
 #[serde(untagged)]
 pub enum UpdatePermanentRetentionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -119,6 +123,7 @@ pub enum UpdatePermanentRetentionFilterError {
 #[serde(untagged)]
 pub enum UpdateRetentionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
