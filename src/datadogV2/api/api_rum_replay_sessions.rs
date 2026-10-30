@@ -15,7 +15,8 @@ pub struct GetSegmentsOptionalParams {
     pub ts: Option<i64>,
     /// Maximum size in bytes for the segment list.
     pub max_list_size: Option<i64>,
-    /// Paging token for pagination.
+    /// Token of the next page from the `X-Paging` header of the previous response.
+    /// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
     pub paging: Option<String>,
 }
 
@@ -35,7 +36,8 @@ impl GetSegmentsOptionalParams {
         self.max_list_size = Some(value);
         self
     }
-    /// Paging token for pagination.
+    /// Token of the next page from the `X-Paging` header of the previous response.
+    /// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
     pub fn paging(mut self, value: String) -> Self {
         self.paging = Some(value);
         self
@@ -50,7 +52,8 @@ pub enum GetSegmentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// Retrieve segments for RUM replay sessions. Access session replay data stored in event platform or blob storage.
+/// Retrieve segments for RUM replay sessions.
+/// Access session replay data stored in event platform or blob storage.
 #[derive(Debug, Clone)]
 pub struct RumReplaySessionsAPI {
     config: datadog::Configuration,
