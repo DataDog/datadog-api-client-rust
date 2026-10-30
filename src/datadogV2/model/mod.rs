@@ -10326,6 +10326,8 @@ pub mod model_routing_rule_attributes;
 pub use self::model_routing_rule_attributes::RoutingRuleAttributes;
 pub mod model_send_slack_message_action;
 pub use self::model_send_slack_message_action::SendSlackMessageAction;
+pub mod model_send_slack_message_action_customizable_content;
+pub use self::model_send_slack_message_action_customizable_content::SendSlackMessageActionCustomizableContent;
 pub mod model_send_slack_message_action_type;
 pub use self::model_send_slack_message_action_type::SendSlackMessageActionType;
 pub mod model_send_teams_message_action;
