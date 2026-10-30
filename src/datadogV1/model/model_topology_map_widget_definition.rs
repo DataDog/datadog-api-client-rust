@@ -14,6 +14,9 @@ pub enum TopologyMapWidgetDefinition {
     TopologyMapWidgetDefinitionServiceMap(
         Box<crate::datadogV1::model::TopologyMapWidgetDefinitionServiceMap>,
     ),
+    TopologyMapWidgetDefinitionCustom(
+        Box<crate::datadogV1::model::TopologyMapWidgetDefinitionCustom>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,6 +40,14 @@ impl<'de> Deserialize<'de> for TopologyMapWidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(TopologyMapWidgetDefinition::TopologyMapWidgetDefinitionServiceMap(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::TopologyMapWidgetDefinitionCustom>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(TopologyMapWidgetDefinition::TopologyMapWidgetDefinitionCustom(_v));
             }
         }
 
