@@ -4822,6 +4822,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_monthly_cost_attribution,
     );
     world.function_mappings.insert(
+        "v2.ListTemporaryGrantRequests".into(),
+        test_v2_list_temporary_grant_requests,
+    );
+    world.function_mappings.insert(
+        "v2.ListTemporaryGrantRequestsWithPagination".into(),
+        test_v2_list_temporary_grant_requests_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.GetTemporaryGrantRequest".into(),
+        test_v2_get_temporary_grant_request,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTemporaryGrantRequest".into(),
+        test_v2_update_temporary_grant_request,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteRequestedTemporaryGrant".into(),
+        test_v2_delete_requested_temporary_grant,
+    );
+    world.function_mappings.insert(
         "v2.GetUsageApplicationSecurityMonitoring".into(),
         test_v2_get_usage_application_security_monitoring,
     );
@@ -4876,6 +4896,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetUsageSummaryAvailableFields".into(),
         test_v2_get_usage_summary_available_fields,
+    );
+    world.function_mappings.insert(
+        "v2.ListMyTemporaryGrantRequests".into(),
+        test_v2_list_my_temporary_grant_requests,
+    );
+    world.function_mappings.insert(
+        "v2.ListMyTemporaryGrantRequestsWithPagination".into(),
+        test_v2_list_my_temporary_grant_requests_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTemporaryGrantRequest".into(),
+        test_v2_create_temporary_grant_request,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTemporaryGrantRequest".into(),
+        test_v2_delete_temporary_grant_request,
+    );
+    world.function_mappings.insert(
+        "v2.GetMyTemporaryGrantRequest".into(),
+        test_v2_get_my_temporary_grant_request,
     );
     world.function_mappings.insert(
         "v2.GetUsageAttributionTypes".into(),
@@ -36707,6 +36747,194 @@ fn test_v2_get_monthly_cost_attribution(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_temporary_grant_requests(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_requested_by_user_id = _parameters
+        .get("filter[requested_by_user_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::ListTemporaryGrantRequestsOptionalParams::default();
+    params.filter_status = filter_status;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    params.filter_requested_by_user_id = filter_requested_by_user_id;
+    let response = match block_on(api.list_temporary_grant_requests_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_temporary_grant_requests_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_requested_by_user_id = _parameters
+        .get("filter[requested_by_user_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::ListTemporaryGrantRequestsOptionalParams::default();
+    params.filter_status = filter_status;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    params.filter_requested_by_user_id = filter_requested_by_user_id;
+    let response = api.list_temporary_grant_requests_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_get_temporary_grant_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let request_id =
+        serde_json::from_value(_parameters.get("request_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_temporary_grant_request_with_http_info(request_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_temporary_grant_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let request_id =
+        serde_json::from_value(_parameters.get("request_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_temporary_grant_request_with_http_info(request_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_requested_temporary_grant(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let request_id =
+        serde_json::from_value(_parameters.get("request_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_requested_temporary_grant_with_http_info(request_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_usage_application_security_monitoring(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -37291,6 +37519,183 @@ fn test_v2_get_usage_summary_available_fields(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_usage_summary_available_fields_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_my_temporary_grant_requests(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::ListMyTemporaryGrantRequestsOptionalParams::default();
+    params.filter_status = filter_status;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.list_my_temporary_grant_requests_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_my_temporary_grant_requests_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::ListMyTemporaryGrantRequestsOptionalParams::default();
+    params.filter_status = filter_status;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    let response = api.list_my_temporary_grant_requests_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_create_temporary_grant_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_temporary_grant_request_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_temporary_grant_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let request_id =
+        serde_json::from_value(_parameters.get("request_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_temporary_grant_request_with_http_info(request_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_my_temporary_grant_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let request_id =
+        serde_json::from_value(_parameters.get("request_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_my_temporary_grant_request_with_http_info(request_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
