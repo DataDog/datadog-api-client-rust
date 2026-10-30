@@ -10,6 +10,136 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ExportFeatureFlagHistoryOptionalParams is a struct for passing parameters to the method [`FeatureFlagsAPI::export_feature_flag_history`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ExportFeatureFlagHistoryOptionalParams {
+    /// Only include changes made after this time, for example `2026-01-01T00:00:00Z`. Omit for no lower bound.
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Only include changes made before this time, for example `2026-02-01T00:00:00Z`. Omit for no upper bound. Must be after `start_date` when both are set.
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Only include changes to flags that belong to at least one of these teams. Use team handles without the `team:` prefix, as repeated parameters, such as `teams=checkout&teams=payments`. Handles from `teams` and `team:<handle>` values from `tags` are treated as one set. Handles that are empty, have surrounding white space, or include the `team:` prefix return a `400 Bad Request` error.
+    pub teams: Option<Vec<String>>,
+    /// Only include changes to flags that have all of these exact tags, as repeated parameters, such as `tags=env:prod&tags=tier:1`. Values of the form `team:<handle>` match any selected team and are combined with `teams`. Empty values are ignored.
+    pub tags: Option<Vec<String>>,
+    /// Only include changes to this feature flag.
+    pub feature_flag_id: Option<uuid::Uuid>,
+    /// Only include changes to this environment. Changes to the flag itself, which have no environment, are always included.
+    pub environment_id: Option<uuid::Uuid>,
+    /// Also include review events for change requests that needed approval: rejected requests and requests still pending review. Applies only to organizations with flag approvals enabled.
+    pub include_suggestion_events: Option<bool>,
+}
+
+impl ExportFeatureFlagHistoryOptionalParams {
+    /// Only include changes made after this time, for example `2026-01-01T00:00:00Z`. Omit for no lower bound.
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.start_date = Some(value);
+        self
+    }
+    /// Only include changes made before this time, for example `2026-02-01T00:00:00Z`. Omit for no upper bound. Must be after `start_date` when both are set.
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.end_date = Some(value);
+        self
+    }
+    /// Only include changes to flags that belong to at least one of these teams. Use team handles without the `team:` prefix, as repeated parameters, such as `teams=checkout&teams=payments`. Handles from `teams` and `team:<handle>` values from `tags` are treated as one set. Handles that are empty, have surrounding white space, or include the `team:` prefix return a `400 Bad Request` error.
+    pub fn teams(mut self, value: Vec<String>) -> Self {
+        self.teams = Some(value);
+        self
+    }
+    /// Only include changes to flags that have all of these exact tags, as repeated parameters, such as `tags=env:prod&tags=tier:1`. Values of the form `team:<handle>` match any selected team and are combined with `teams`. Empty values are ignored.
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Only include changes to this feature flag.
+    pub fn feature_flag_id(mut self, value: uuid::Uuid) -> Self {
+        self.feature_flag_id = Some(value);
+        self
+    }
+    /// Only include changes to this environment. Changes to the flag itself, which have no environment, are always included.
+    pub fn environment_id(mut self, value: uuid::Uuid) -> Self {
+        self.environment_id = Some(value);
+        self
+    }
+    /// Also include review events for change requests that needed approval: rejected requests and requests still pending review. Applies only to organizations with flag approvals enabled.
+    pub fn include_suggestion_events(mut self, value: bool) -> Self {
+        self.include_suggestion_events = Some(value);
+        self
+    }
+}
+
+/// ListFeatureFlagHistoryOptionalParams is a struct for passing parameters to the method [`FeatureFlagsAPI::list_feature_flag_history`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListFeatureFlagHistoryOptionalParams {
+    /// Only include changes made after this time, for example `2026-01-01T00:00:00Z`. Omit for no lower bound.
+    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Only include changes made before this time, for example `2026-02-01T00:00:00Z`. Omit for no upper bound. Must be after `start_date` when both are set.
+    pub end_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Only include changes to flags that belong to at least one of these teams. Use team handles without the `team:` prefix, as repeated parameters, such as `teams=checkout&teams=payments`. Handles from `teams` and `team:<handle>` values from `tags` are treated as one set. Handles that are empty, have surrounding white space, or include the `team:` prefix return a `400 Bad Request` error.
+    pub teams: Option<Vec<String>>,
+    /// Only include changes to flags that have all of these exact tags, as repeated parameters, such as `tags=env:prod&tags=tier:1`. Values of the form `team:<handle>` match any selected team and are combined with `teams`. Empty values are ignored.
+    pub tags: Option<Vec<String>>,
+    /// Only include changes to this feature flag.
+    pub feature_flag_id: Option<uuid::Uuid>,
+    /// Only include changes to this environment. Changes to the flag itself, which have no environment, are always included.
+    pub environment_id: Option<uuid::Uuid>,
+    /// Also include review events for change requests that needed approval: rejected requests and requests still pending review. Applies only to organizations with flag approvals enabled.
+    pub include_suggestion_events: Option<bool>,
+    /// Maximum number of events to return. Defaults to `25`. Values above `50` return `50` events. Non-positive or empty values use the default. A non-integer value returns a `400 Bad Request` error.
+    pub page_limit: Option<i64>,
+    /// Number of matching events to skip before returning results. Defaults to `0`. Negative or empty values are set to `0`. A non-integer value returns a `400 Bad Request` error.
+    pub page_offset: Option<i64>,
+}
+
+impl ListFeatureFlagHistoryOptionalParams {
+    /// Only include changes made after this time, for example `2026-01-01T00:00:00Z`. Omit for no lower bound.
+    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.start_date = Some(value);
+        self
+    }
+    /// Only include changes made before this time, for example `2026-02-01T00:00:00Z`. Omit for no upper bound. Must be after `start_date` when both are set.
+    pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.end_date = Some(value);
+        self
+    }
+    /// Only include changes to flags that belong to at least one of these teams. Use team handles without the `team:` prefix, as repeated parameters, such as `teams=checkout&teams=payments`. Handles from `teams` and `team:<handle>` values from `tags` are treated as one set. Handles that are empty, have surrounding white space, or include the `team:` prefix return a `400 Bad Request` error.
+    pub fn teams(mut self, value: Vec<String>) -> Self {
+        self.teams = Some(value);
+        self
+    }
+    /// Only include changes to flags that have all of these exact tags, as repeated parameters, such as `tags=env:prod&tags=tier:1`. Values of the form `team:<handle>` match any selected team and are combined with `teams`. Empty values are ignored.
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Only include changes to this feature flag.
+    pub fn feature_flag_id(mut self, value: uuid::Uuid) -> Self {
+        self.feature_flag_id = Some(value);
+        self
+    }
+    /// Only include changes to this environment. Changes to the flag itself, which have no environment, are always included.
+    pub fn environment_id(mut self, value: uuid::Uuid) -> Self {
+        self.environment_id = Some(value);
+        self
+    }
+    /// Also include review events for change requests that needed approval: rejected requests and requests still pending review. Applies only to organizations with flag approvals enabled.
+    pub fn include_suggestion_events(mut self, value: bool) -> Self {
+        self.include_suggestion_events = Some(value);
+        self
+    }
+    /// Maximum number of events to return. Defaults to `25`. Values above `50` return `50` events. Non-positive or empty values use the default. A non-integer value returns a `400 Bad Request` error.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Number of matching events to skip before returning results. Defaults to `0`. Negative or empty values are set to `0`. A non-integer value returns a `400 Bad Request` error.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+}
+
 /// ListFeatureFlagsOptionalParams is a struct for passing parameters to the method [`FeatureFlagsAPI::list_feature_flags`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -263,6 +393,15 @@ pub enum EnableFeatureFlagEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+/// ExportFeatureFlagHistoryError is a struct for typed errors of method [`FeatureFlagsAPI::export_feature_flag_history`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExportFeatureFlagHistoryError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::get_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -283,6 +422,15 @@ pub enum GetFeatureFlagsEnvironmentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSavedFilterError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListFeatureFlagHistoryError is a struct for typed errors of method [`FeatureFlagsAPI::list_feature_flag_history`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFeatureFlagHistoryError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -1603,6 +1751,168 @@ impl FeatureFlagsAPI {
         }
     }
 
+    /// Exports the organization's feature flag change events as a CSV file, newest first, without pagination.
+    /// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
+    /// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
+    ///
+    /// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
+    /// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
+    /// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
+    /// narrow the date range.
+    pub async fn export_feature_flag_history(
+        &self,
+        params: ExportFeatureFlagHistoryOptionalParams,
+    ) -> Result<String, datadog::Error<ExportFeatureFlagHistoryError>> {
+        match self
+            .export_feature_flag_history_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Exports the organization's feature flag change events as a CSV file, newest first, without pagination.
+    /// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
+    /// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
+    ///
+    /// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
+    /// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
+    /// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
+    /// narrow the date range.
+    pub async fn export_feature_flag_history_with_http_info(
+        &self,
+        params: ExportFeatureFlagHistoryOptionalParams,
+    ) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportFeatureFlagHistoryError>>
+    {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.export_feature_flag_history";
+
+        // unbox and build optional parameters
+        let start_date = params.start_date;
+        let end_date = params.end_date;
+        let teams = params.teams;
+        let tags = params.tags;
+        let feature_flag_id = params.feature_flag_id;
+        let environment_id = params.environment_id;
+        let include_suggestion_events = params.include_suggestion_events;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/history/export",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = start_date {
+            local_req_builder = local_req_builder.query(&[(
+                "start_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = end_date {
+            local_req_builder = local_req_builder.query(&[(
+                "end_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local) = teams {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = tags {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = feature_flag_id {
+            local_req_builder =
+                local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = environment_id {
+            local_req_builder =
+                local_req_builder.query(&[("environment_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_suggestion_events {
+            local_req_builder = local_req_builder
+                .query(&[("include_suggestion_events", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<String>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ExportFeatureFlagHistoryError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Returns the details of a specific feature flag
     /// including variants and environment status.
     pub async fn get_feature_flag(
@@ -1929,6 +2239,174 @@ impl FeatureFlagsAPI {
             };
         } else {
             let local_entity: Option<GetSavedFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns the organization's feature flag change events, newest first.
+    /// Each event includes a readable description of the change.
+    /// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
+    /// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
+    pub async fn list_feature_flag_history(
+        &self,
+        params: ListFeatureFlagHistoryOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListFeatureFlagHistoryResponse,
+        datadog::Error<ListFeatureFlagHistoryError>,
+    > {
+        match self.list_feature_flag_history_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns the organization's feature flag change events, newest first.
+    /// Each event includes a readable description of the change.
+    /// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
+    /// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
+    pub async fn list_feature_flag_history_with_http_info(
+        &self,
+        params: ListFeatureFlagHistoryOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListFeatureFlagHistoryResponse>,
+        datadog::Error<ListFeatureFlagHistoryError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_feature_flag_history";
+
+        // unbox and build optional parameters
+        let start_date = params.start_date;
+        let end_date = params.end_date;
+        let teams = params.teams;
+        let tags = params.tags;
+        let feature_flag_id = params.feature_flag_id;
+        let environment_id = params.environment_id;
+        let include_suggestion_events = params.include_suggestion_events;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/history",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = start_date {
+            local_req_builder = local_req_builder.query(&[(
+                "start_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = end_date {
+            local_req_builder = local_req_builder.query(&[(
+                "end_date",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local) = teams {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = tags {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = feature_flag_id {
+            local_req_builder =
+                local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = environment_id {
+            local_req_builder =
+                local_req_builder.query(&[("environment_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_suggestion_events {
+            local_req_builder = local_req_builder
+                .query(&[("include_suggestion_events", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListFeatureFlagHistoryResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFeatureFlagHistoryError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
