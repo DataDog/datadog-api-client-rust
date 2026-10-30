@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomCostsFileMetadataWithContent {
+    /// Whether the Custom Costs file contains the costs of an AI provider.
+    #[serde(rename = "ai_provider")]
+    pub ai_provider: Option<bool>,
     /// Total cost in the cost file.
     #[serde(rename = "billed_cost")]
     pub billed_cost: Option<f64>,
@@ -48,6 +51,7 @@ pub struct CustomCostsFileMetadataWithContent {
 impl CustomCostsFileMetadataWithContent {
     pub fn new() -> CustomCostsFileMetadataWithContent {
         CustomCostsFileMetadataWithContent {
+            ai_provider: None,
             billed_cost: None,
             billing_currency: None,
             charge_period: None,
@@ -60,6 +64,11 @@ impl CustomCostsFileMetadataWithContent {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn ai_provider(mut self, value: bool) -> Self {
+        self.ai_provider = Some(value);
+        self
     }
 
     pub fn billed_cost(mut self, value: f64) -> Self {
@@ -142,6 +151,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
             where
                 M: MapAccess<'a>,
             {
+                let mut ai_provider: Option<bool> = None;
                 let mut billed_cost: Option<f64> = None;
                 let mut billing_currency: Option<String> = None;
                 let mut charge_period: Option<
@@ -162,6 +172,13 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "ai_provider" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_provider =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "billed_cost" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -231,6 +248,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                 }
 
                 let content = CustomCostsFileMetadataWithContent {
+                    ai_provider,
                     billed_cost,
                     billing_currency,
                     charge_period,
