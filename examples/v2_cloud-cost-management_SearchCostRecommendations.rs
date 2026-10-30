@@ -18,9 +18,10 @@ async fn main() {
         .attributes(
             RecommendationsFilterRequestDataAttributes::new()
                 .scope(RecommendationsFilterRequestScope::CCM)
-                .sort(vec![RecommendationsFilterRequestSortItems::new()
-                    .expression("@potential_daily_savings".to_string())
-                    .order("DESC".to_string())]),
+                .sort(vec![RecommendationsFilterRequestSortItems::new(
+                    "DESC".to_string(),
+                )
+                .expression("@potential_daily_savings".to_string())]),
         )
         .id("@resource_table:aws_ec2_instance".to_string()),
     );
