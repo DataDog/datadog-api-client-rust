@@ -75,6 +75,10 @@ pub struct StatusPageDataAttributes {
     /// The type of the status page controlling how the status page is accessed.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesType>,
+    /// The layout of components on the status page. Defaults to `list`. `grid` requires `visualization_type` to be `component_name_only`; changing `visualization_type` to any other value resets the layout to `list`.
+    #[serde(rename = "visualization_layout")]
+    pub visualization_layout:
+        Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout>,
     /// The visualization type of the status page.
     #[serde(rename = "visualization_type")]
     pub visualization_type:
@@ -105,6 +109,7 @@ impl StatusPageDataAttributes {
             slack_subscriptions_enabled: None,
             subscriptions_enabled: None,
             type_: None,
+            visualization_layout: None,
             visualization_type: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -197,6 +202,14 @@ impl StatusPageDataAttributes {
         self
     }
 
+    pub fn visualization_layout(
+        mut self,
+        value: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout,
+    ) -> Self {
+        self.visualization_layout = Some(value);
+        self
+    }
+
     pub fn visualization_type(
         mut self,
         value: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
@@ -257,6 +270,7 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                 let mut type_: Option<
                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
                 > = None;
+                let mut visualization_layout: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout> = None;
                 let mut visualization_type: Option<
                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
                 > = None;
@@ -369,6 +383,21 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                                 }
                             }
                         }
+                        "visualization_layout" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            visualization_layout =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _visualization_layout) = visualization_layout {
+                                match _visualization_layout {
+                                    crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout::UnparsedObject(_visualization_layout) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "visualization_type" => {
                             if v.is_null() {
                                 continue;
@@ -409,6 +438,7 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                     slack_subscriptions_enabled,
                     subscriptions_enabled,
                     type_,
+                    visualization_layout,
                     visualization_type,
                     additional_properties,
                     _unparsed,
