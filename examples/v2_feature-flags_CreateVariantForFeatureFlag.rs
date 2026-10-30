@@ -2,15 +2,21 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_feature_flags::FeatureFlagsAPI;
 use datadog_api_client::datadogV2::model::CreateVariant;
+use datadog_api_client::datadogV2::model::CreateVariantData;
+use datadog_api_client::datadogV2::model::CreateVariantRequest;
+use datadog_api_client::datadogV2::model::VariantDataType;
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let body = CreateVariant::new(
-        "variant-abc123".to_string(),
-        "Variant ABC123".to_string(),
-        "true".to_string(),
-    );
+    let body = CreateVariantRequest::new(CreateVariantData::new(
+        CreateVariant::new(
+            "variant-abc123".to_string(),
+            "Variant ABC123".to_string(),
+            "true".to_string(),
+        ),
+        VariantDataType::VARIANTS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = FeatureFlagsAPI::with_config(configuration);
     let resp = api

@@ -1,14 +1,23 @@
 // Update a variant returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_feature_flags::FeatureFlagsAPI;
+use datadog_api_client::datadogV2::model::UpdateVariantAttributes;
+use datadog_api_client::datadogV2::model::UpdateVariantData;
 use datadog_api_client::datadogV2::model::UpdateVariantRequest;
+use datadog_api_client::datadogV2::model::VariantDataType;
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let body = UpdateVariantRequest::new()
-        .name("Variant ABC123 Updated".to_string())
-        .value("new_value".to_string());
+    let body = UpdateVariantRequest::new(
+        UpdateVariantData::new(
+            UpdateVariantAttributes::new()
+                .name("Variant ABC123 Updated".to_string())
+                .value("new_value".to_string()),
+            VariantDataType::VARIANTS,
+        )
+        .id(Uuid::parse_str("550e8400-e29b-41d4-a716-446655440002").expect("invalid UUID")),
+    );
     let configuration = datadog::Configuration::new();
     let api = FeatureFlagsAPI::with_config(configuration);
     let resp = api

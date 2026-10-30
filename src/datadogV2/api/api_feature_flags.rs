@@ -1063,9 +1063,11 @@ impl FeatureFlagsAPI {
     pub async fn create_variant_for_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateVariant,
-    ) -> Result<crate::datadogV2::model::Variant, datadog::Error<CreateVariantForFeatureFlagError>>
-    {
+        body: crate::datadogV2::model::CreateVariantRequest,
+    ) -> Result<
+        crate::datadogV2::model::VariantResponse,
+        datadog::Error<CreateVariantForFeatureFlagError>,
+    > {
         match self
             .create_variant_for_feature_flag_with_http_info(feature_flag_id, body)
             .await
@@ -1093,9 +1095,9 @@ impl FeatureFlagsAPI {
     pub async fn create_variant_for_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateVariant,
+        body: crate::datadogV2::model::CreateVariantRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Variant>,
+        datadog::ResponseContent<crate::datadogV2::model::VariantResponse>,
         datadog::Error<CreateVariantForFeatureFlagError>,
     > {
         let local_configuration = &self.config;
@@ -1200,7 +1202,7 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::Variant>(&local_content) {
+            match serde_json::from_str::<crate::datadogV2::model::VariantResponse>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -3534,21 +3536,12 @@ impl FeatureFlagsAPI {
         feature_flag_id: uuid::Uuid,
         variant_id: uuid::Uuid,
         body: crate::datadogV2::model::UpdateVariantRequest,
-    ) -> Result<crate::datadogV2::model::Variant, datadog::Error<UpdateVariantForFeatureFlagError>>
-    {
+    ) -> Result<(), datadog::Error<UpdateVariantForFeatureFlagError>> {
         match self
             .update_variant_for_feature_flag_with_http_info(feature_flag_id, variant_id, body)
             .await
         {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
+            Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
@@ -3561,10 +3554,8 @@ impl FeatureFlagsAPI {
         feature_flag_id: uuid::Uuid,
         variant_id: uuid::Uuid,
         body: crate::datadogV2::model::UpdateVariantRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Variant>,
-        datadog::Error<UpdateVariantForFeatureFlagError>,
-    > {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateVariantForFeatureFlagError>>
+    {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_variant_for_feature_flag";
 
@@ -3582,7 +3573,7 @@ impl FeatureFlagsAPI {
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3668,16 +3659,11 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::Variant>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
         } else {
             let local_entity: Option<UpdateVariantForFeatureFlagError> =
                 serde_json::from_str(&local_content).ok();
