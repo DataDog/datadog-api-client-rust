@@ -11,7 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerImageGroupImagesRelationshipsLink {
-    /// Links data.
+    /// This array is always empty, even when the group includes images. To retrieve the images in
+    /// this group, make a new request without `group_by`, using the `filter[tags]` value from
+    /// `links.related` and your site's API host. The tags must satisfy `filter[tags]` syntax restrictions.
     #[serde(rename = "data")]
     pub data: Option<Vec<String>>,
     /// Links attributes.
