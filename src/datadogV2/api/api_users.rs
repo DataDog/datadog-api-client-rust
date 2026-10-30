@@ -34,6 +34,9 @@ pub struct ListUsersOptionalParams {
     /// Comma separated list, with possible values `Active`, `Pending`, and `Disabled`.
     /// Defaults to no filtering.
     pub filter_status: Option<String>,
+    /// Filter on the exact user handle. This filter also returns Datadog-managed users,
+    /// which the list otherwise excludes. Defaults to no filtering.
+    pub filter_handle: Option<String>,
 }
 
 impl ListUsersOptionalParams {
@@ -70,6 +73,12 @@ impl ListUsersOptionalParams {
     /// Defaults to no filtering.
     pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
+        self
+    }
+    /// Filter on the exact user handle. This filter also returns Datadog-managed users,
+    /// which the list otherwise excludes. Defaults to no filtering.
+    pub fn filter_handle(mut self, value: String) -> Self {
+        self.filter_handle = Some(value);
         self
     }
 }
@@ -1485,6 +1494,7 @@ impl UsersAPI {
         let sort_dir = params.sort_dir;
         let filter = params.filter;
         let filter_status = params.filter_status;
+        let filter_handle = params.filter_handle;
 
         let local_client = &self.client;
 
@@ -1518,6 +1528,10 @@ impl UsersAPI {
         if let Some(ref local_query_param) = filter_status {
             local_req_builder =
                 local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_handle {
+            local_req_builder =
+                local_req_builder.query(&[("filter[handle]", &local_query_param.to_string())]);
         };
 
         // build headers
