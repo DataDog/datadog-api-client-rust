@@ -17,7 +17,7 @@ pub struct LLMObsCustomEvalConfigTarget {
     /// Whether the evaluator is active for the target application.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// Scope at which to evaluate spans.
+    /// Scope at which to evaluate spans. `trace_fan_out` requires `llm_judge_config.target_query`.
     #[serde(rename = "eval_scope")]
     pub eval_scope: Option<crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope>,
     /// Experiment project IDs this evaluator is scoped to.

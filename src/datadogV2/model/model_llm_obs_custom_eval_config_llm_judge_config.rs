@@ -39,7 +39,7 @@ pub struct LLMObsCustomEvalConfigLLMJudgeConfig {
         with = "::serde_with::rust::double_option"
     )]
     pub modified_library_prompt_template: Option<Option<bool>>,
-    /// JSON schema describing the expected output format of the LLM judge.
+    /// JSON schema describing the expected output format of the LLM judge. Omit for a `deterministic` evaluator.
     #[serde(
         rename = "output_schema",
         default,
@@ -49,7 +49,7 @@ pub struct LLMObsCustomEvalConfigLLMJudgeConfig {
     /// Output parsing type for a custom LLM judge evaluator.
     #[serde(rename = "parsing_type")]
     pub parsing_type: Option<crate::datadogV2::model::LLMObsCustomEvalConfigParsingType>,
-    /// List of messages forming the LLM judge prompt template.
+    /// List of messages forming the LLM judge prompt template. Omit for a `deterministic` evaluator.
     #[serde(rename = "prompt_template")]
     pub prompt_template: Option<Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>>,
     /// Query used to extract the target value to evaluate.
@@ -59,7 +59,7 @@ pub struct LLMObsCustomEvalConfigLLMJudgeConfig {
         with = "::serde_with::rust::double_option"
     )]
     pub target_query: Option<Option<String>>,
-    /// User-provided function applied to post-process the JSON output of the LLM judge.
+    /// User-provided JavaScript function applied to post-process the JSON output of the LLM judge. For a `deterministic` evaluator it is the evaluator itself: it receives the evaluated span (span scope), `{spans}` (trace scope), or `{session_id, traces}` (session scope), and its return value sets the result. A boolean, number, string or object becomes a boolean, score, categorical or JSON metric; `null` skips the evaluation; and `{value, assessment, reasoning, metadata}` also sets pass or fail, reasoning, and metadata.
     #[serde(
         rename = "user_specified_json_post_processing_function",
         default,

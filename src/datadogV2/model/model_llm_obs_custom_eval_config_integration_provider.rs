@@ -13,6 +13,11 @@ pub enum LLMObsCustomEvalConfigIntegrationProvider {
     AZURE_OPENAI,
     VERTEX_AI,
     LLM_PROXY,
+    DETERMINISTIC,
+    TYPESAFE,
+    DATADOG,
+    DATADOG_AI_GATEWAY,
+    INSIGHTS_SPONSORED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -20,11 +25,16 @@ impl ToString for LLMObsCustomEvalConfigIntegrationProvider {
     fn to_string(&self) -> String {
         match self {
             Self::OPENAI => String::from("openai"),
-            Self::AMAZON_BEDROCK => String::from("amazon-bedrock"),
+            Self::AMAZON_BEDROCK => String::from("amazon_bedrock"),
             Self::ANTHROPIC => String::from("anthropic"),
-            Self::AZURE_OPENAI => String::from("azure-openai"),
-            Self::VERTEX_AI => String::from("vertex-ai"),
-            Self::LLM_PROXY => String::from("llm-proxy"),
+            Self::AZURE_OPENAI => String::from("azure_openai"),
+            Self::VERTEX_AI => String::from("vertex_ai"),
+            Self::LLM_PROXY => String::from("llmproxy"),
+            Self::DETERMINISTIC => String::from("deterministic"),
+            Self::TYPESAFE => String::from("typesafe"),
+            Self::DATADOG => String::from("datadog"),
+            Self::DATADOG_AI_GATEWAY => String::from("datadog_ai_gateway"),
+            Self::INSIGHTS_SPONSORED => String::from("insights_sponsored"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -50,11 +60,16 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigIntegrationProvider {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "openai" => Self::OPENAI,
-            "amazon-bedrock" => Self::AMAZON_BEDROCK,
+            "amazon_bedrock" => Self::AMAZON_BEDROCK,
             "anthropic" => Self::ANTHROPIC,
-            "azure-openai" => Self::AZURE_OPENAI,
-            "vertex-ai" => Self::VERTEX_AI,
-            "llm-proxy" => Self::LLM_PROXY,
+            "azure_openai" => Self::AZURE_OPENAI,
+            "vertex_ai" => Self::VERTEX_AI,
+            "llmproxy" => Self::LLM_PROXY,
+            "deterministic" => Self::DETERMINISTIC,
+            "typesafe" => Self::TYPESAFE,
+            "datadog" => Self::DATADOG,
+            "datadog_ai_gateway" => Self::DATADOG_AI_GATEWAY,
+            "insights_sponsored" => Self::INSIGHTS_SPONSORED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

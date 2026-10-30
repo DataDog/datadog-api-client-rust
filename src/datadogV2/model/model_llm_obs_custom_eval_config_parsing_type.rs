@@ -10,6 +10,7 @@ pub enum LLMObsCustomEvalConfigParsingType {
     STRUCTURED_OUTPUT,
     JSON,
     KEYWORD_SEARCH,
+    TYPED_QUESTIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for LLMObsCustomEvalConfigParsingType {
             Self::STRUCTURED_OUTPUT => String::from("structured_output"),
             Self::JSON => String::from("json"),
             Self::KEYWORD_SEARCH => String::from("keyword_search"),
+            Self::TYPED_QUESTIONS => String::from("typed_questions"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigParsingType {
             "structured_output" => Self::STRUCTURED_OUTPUT,
             "json" => Self::JSON,
             "keyword_search" => Self::KEYWORD_SEARCH,
+            "typed_questions" => Self::TYPED_QUESTIONS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
