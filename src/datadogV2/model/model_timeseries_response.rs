@@ -14,6 +14,9 @@ pub struct TimeseriesResponse {
     /// The object describing a timeseries response.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::TimeseriesResponseAttributes>,
+    /// The identifier of the timeseries response resource.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// The type of the resource. The value should always be timeseries_response.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::TimeseriesFormulaResponseType>,
@@ -28,6 +31,7 @@ impl TimeseriesResponse {
     pub fn new() -> TimeseriesResponse {
         TimeseriesResponse {
             attributes: None,
+            id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,6 +43,11 @@ impl TimeseriesResponse {
         value: crate::datadogV2::model::TimeseriesResponseAttributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -81,6 +90,7 @@ impl<'de> Deserialize<'de> for TimeseriesResponse {
             {
                 let mut attributes: Option<crate::datadogV2::model::TimeseriesResponseAttributes> =
                     None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::TimeseriesFormulaResponseType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -96,6 +106,12 @@ impl<'de> Deserialize<'de> for TimeseriesResponse {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -121,6 +137,7 @@ impl<'de> Deserialize<'de> for TimeseriesResponse {
 
                 let content = TimeseriesResponse {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
