@@ -8886,6 +8886,8 @@ pub mod model_monitor_notification_rule_filter_scope;
 pub use self::model_monitor_notification_rule_filter_scope::MonitorNotificationRuleFilterScope;
 pub mod model_monitor_notification_rule_filter;
 pub use self::model_monitor_notification_rule_filter::MonitorNotificationRuleFilter;
+pub mod model_monitor_notification_rule_options;
+pub use self::model_monitor_notification_rule_options::MonitorNotificationRuleOptions;
 pub mod model_monitor_notification_rule_relationships;
 pub use self::model_monitor_notification_rule_relationships::MonitorNotificationRuleRelationships;
 pub mod model_monitor_notification_rule_relationships_created_by;
