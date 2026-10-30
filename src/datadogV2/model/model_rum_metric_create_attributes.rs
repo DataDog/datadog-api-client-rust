@@ -11,19 +11,20 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricCreateAttributes {
-    /// The compute rule to compute the RUM-based metric.
+    /// The compute rule to compute the RUM-based metric. It is set at creation and only `include_percentiles` can be updated afterwards.
     #[serde(rename = "compute")]
     pub compute: crate::datadogV2::model::RumMetricCompute,
-    /// The type of RUM events to filter on.
+    /// The type of RUM events the metric is generated from. It is set at creation and cannot be changed.
     #[serde(rename = "event_type")]
     pub event_type: crate::datadogV2::model::RumMetricEventType,
-    /// The RUM-based metric filter. Events matching this filter will be aggregated in this metric.
+    /// The RUM-based metric filter. Events matching this filter will be aggregated in this metric. The `event_type` filter is added automatically.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::RumMetricFilter>,
-    /// The rules for the group by.
+    /// The rules to group the metric by. Each rule creates a tag on the generated metric. If omitted, the metric is not grouped.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>>,
-    /// The rule to count updatable events. Is only set if `event_type` is `sessions` or `views`.
+    /// The rule to count updatable events.
+    /// Required when `event_type` is `session` or `view`, and must be omitted for other event types. It cannot be changed after creation.
     #[serde(rename = "uniqueness")]
     pub uniqueness: Option<crate::datadogV2::model::RumMetricUniqueness>,
     #[serde(flatten)]
