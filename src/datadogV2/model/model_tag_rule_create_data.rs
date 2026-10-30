@@ -14,7 +14,7 @@ pub struct TagRuleCreateData {
     /// Attributes that can be supplied when creating a tag rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TagRuleCreateAttributes,
-    /// JSON:API resource type for a tag rule.
+    /// JSON:API resource type for a tag rule. Responses use the legacy `tag_policy` value.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]

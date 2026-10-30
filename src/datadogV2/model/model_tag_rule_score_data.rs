@@ -17,7 +17,7 @@ pub struct TagRuleScoreData {
     /// The unique identifier of the compliance score resource.
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API resource type for a tag rule compliance score.
+    /// JSON:API resource type for a tag rule compliance score. Responses use the legacy `tag_policy_score` value.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleScoreResourceType,
     #[serde(flatten)]
