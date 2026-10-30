@@ -1,6 +1,7 @@
 // Upload Custom Costs file returns "Accepted" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::api_cloud_cost_management::UploadCustomCostsFileOptionalParams;
 use datadog_api_client::datadogV2::model::CustomCostsFileLineItem;
 
 #[tokio::main]
@@ -13,7 +14,9 @@ async fn main() {
         .charge_period_start("2023-02-01".to_string())];
     let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
-    let resp = api.upload_custom_costs_file(body).await;
+    let resp = api
+        .upload_custom_costs_file(body, UploadCustomCostsFileOptionalParams::default())
+        .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
