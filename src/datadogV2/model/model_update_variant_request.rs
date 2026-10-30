@@ -11,12 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateVariantRequest {
-    /// The display name of the variant.
-    #[serde(rename = "name")]
-    pub name: Option<String>,
-    /// The value of the variant as a string.
-    #[serde(rename = "value")]
-    pub value: Option<String>,
+    /// Data for updating a variant.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::UpdateVariantData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,23 +22,12 @@ pub struct UpdateVariantRequest {
 }
 
 impl UpdateVariantRequest {
-    pub fn new() -> UpdateVariantRequest {
+    pub fn new(data: crate::datadogV2::model::UpdateVariantData) -> UpdateVariantRequest {
         UpdateVariantRequest {
-            name: None,
-            value: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
-    pub fn value(mut self, value: String) -> Self {
-        self.value = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -50,12 +36,6 @@ impl UpdateVariantRequest {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for UpdateVariantRequest {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -76,8 +56,7 @@ impl<'de> Deserialize<'de> for UpdateVariantRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut name: Option<String> = None;
-                let mut value: Option<String> = None;
+                let mut data: Option<crate::datadogV2::model::UpdateVariantData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +65,8 @@ impl<'de> Deserialize<'de> for UpdateVariantRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "value" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -105,10 +75,10 @@ impl<'de> Deserialize<'de> for UpdateVariantRequest {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = UpdateVariantRequest {
-                    name,
-                    value,
+                    data,
                     additional_properties,
                     _unparsed,
                 };
