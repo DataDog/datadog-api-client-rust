@@ -57,6 +57,7 @@ pub struct ApiInstances {
     pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
     pub v2_api_agent_health: Option<datadogV2::api_agent_health::AgentHealthAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
+    pub v2_api_ai_guard: Option<datadogV2::api_ai_guard::AIGuardAPI>,
     pub v2_api_delivery_performance:
         Option<datadogV2::api_delivery_performance::DeliveryPerformanceAPI>,
     pub v2_api_annotations: Option<datadogV2::api_annotations::AnnotationsAPI>,
@@ -658,6 +659,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "AIGuard" => {
+            world.api_instances.v2_api_ai_guard =
+                Some(datadogV2::api_ai_guard::AIGuardAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
         }
         "DeliveryPerformance" => {
             world.api_instances.v2_api_delivery_performance = Some(
@@ -2951,6 +2959,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetAwsOnDemandTask".into(),
         test_v2_get_aws_on_demand_task,
+    );
+    world.function_mappings.insert(
+        "v2.EvaluateAIGuardRequest".into(),
+        test_v2_evaluate_ai_guard_request,
     );
     world.function_mappings.insert(
         "v2.CreateAIImpactUserActivity".into(),
@@ -20418,6 +20430,34 @@ fn test_v2_get_aws_on_demand_task(world: &mut DatadogWorld, _parameters: &HashMa
         .expect("api instance not found");
     let task_id = serde_json::from_value(_parameters.get("task_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_aws_on_demand_task_with_http_info(task_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_evaluate_ai_guard_request(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_guard
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.evaluate_ai_guard_request_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -8,6 +8,7 @@ pub use self::api::api_actions_datastores;
 pub use self::api::api_agent_health;
 pub use self::api::api_agent_observability;
 pub use self::api::api_agentless_scanning;
+pub use self::api::api_ai_guard;
 pub use self::api::api_annotations;
 pub use self::api::api_api_management;
 pub use self::api::api_apm;
