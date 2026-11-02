@@ -35547,7 +35547,13 @@ fn test_v2_upload_custom_costs_file(
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.upload_custom_costs_file_with_http_info(body)) {
+    let ai_provider = _parameters
+        .get("ai_provider")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::UploadCustomCostsFileOptionalParams::default();
+    params.ai_provider = ai_provider;
+    let response = match block_on(api.upload_custom_costs_file_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
