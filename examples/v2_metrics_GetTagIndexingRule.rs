@@ -6,8 +6,7 @@ use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 async fn main() {
     // there is a valid "tag_indexing_rule" in the system
     let tag_indexing_rule_data_id = std::env::var("TAG_INDEXING_RULE_DATA_ID").unwrap();
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.get_tag_indexing_rule", true);
+    let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .get_tag_indexing_rule(tag_indexing_rule_data_id.clone())
