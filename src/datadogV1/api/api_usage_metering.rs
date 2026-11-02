@@ -163,7 +163,8 @@ impl GetMonthlyCustomReportsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]`.
-    /// Must be omitted or equal to `start_month`. Requests spanning multiple months are not supported.
+    /// If omitted or different from `start_month`, it is treated as equal to `start_month`.
+    /// Only usage for `start_month` is returned; this parameter does not extend the requested range.
     pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
@@ -184,7 +185,8 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
 
 impl GetMonthlyUsageAttributionOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to month: `[YYYY-MM]`.
-    /// Must be omitted or equal to `start_month`. Requests spanning multiple months are not supported.
+    /// If omitted or different from `start_month`, it is treated as equal to `start_month`.
+    /// Only usage for `start_month` is returned; this parameter does not extend the requested range.
     pub fn end_month(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_month = Some(value);
         self
@@ -1880,9 +1882,9 @@ impl UsageMeteringAPI {
     ///
     /// **Note**: All `estimated_*` usage types will be deprecated on February 1, 2027.
     ///
-    /// Each request supports a single month. Set `start_month` to the month to retrieve, and either omit
-    /// `end_month` or set it to the same value as `start_month`. To retrieve multiple months, make a separate
-    /// request for each month.
+    /// Each request returns usage for the month specified by `start_month`. If `end_month` is omitted
+    /// or differs from `start_month`, it is treated as equal to `start_month`.
+    /// To retrieve multiple months, make a separate request for each month.
     ///
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
@@ -1927,9 +1929,9 @@ impl UsageMeteringAPI {
     ///
     /// **Note**: All `estimated_*` usage types will be deprecated on February 1, 2027.
     ///
-    /// Each request supports a single month. Set `start_month` to the month to retrieve, and either omit
-    /// `end_month` or set it to the same value as `start_month`. To retrieve multiple months, make a separate
-    /// request for each month.
+    /// Each request returns usage for the month specified by `start_month`. If `end_month` is omitted
+    /// or differs from `start_month`, it is treated as equal to `start_month`.
+    /// To retrieve multiple months, make a separate request for each month.
     ///
     /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
     /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
