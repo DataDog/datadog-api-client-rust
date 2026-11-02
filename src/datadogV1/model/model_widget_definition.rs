@@ -30,6 +30,7 @@ pub enum WidgetDefinition {
     HostMapWidgetDefinition(Box<crate::datadogV1::model::HostMapWidgetDefinition>),
     IFrameWidgetDefinition(Box<crate::datadogV1::model::IFrameWidgetDefinition>),
     ImageWidgetDefinition(Box<crate::datadogV1::model::ImageWidgetDefinition>),
+    JourneyMapWidgetDefinition(Box<crate::datadogV1::model::JourneyMapWidgetDefinition>),
     ListStreamWidgetDefinition(Box<crate::datadogV1::model::ListStreamWidgetDefinition>),
     LogStreamWidgetDefinition(Box<crate::datadogV1::model::LogStreamWidgetDefinition>),
     MonitorSummaryWidgetDefinition(Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>),
@@ -213,6 +214,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         ) {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::ImageWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::JourneyMapWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::JourneyMapWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
