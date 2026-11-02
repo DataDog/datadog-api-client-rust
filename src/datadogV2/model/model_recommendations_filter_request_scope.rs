@@ -10,6 +10,7 @@ pub enum RecommendationsFilterRequestScope {
     CCM,
     EXPERIMENT,
     ALL,
+    EMPTY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for RecommendationsFilterRequestScope {
             Self::CCM => String::from("ccm"),
             Self::EXPERIMENT => String::from("experiment"),
             Self::ALL => String::from("*"),
+            Self::EMPTY => String::from(""),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestScope {
             "ccm" => Self::CCM,
             "experiment" => Self::EXPERIMENT,
             "*" => Self::ALL,
+            "" => Self::EMPTY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

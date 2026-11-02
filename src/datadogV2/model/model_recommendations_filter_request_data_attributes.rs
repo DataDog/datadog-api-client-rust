@@ -17,7 +17,7 @@ pub struct RecommendationsFilterRequestDataAttributes {
     #[serde(rename = "filter")]
     pub filter: Option<String>,
     /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations
-    /// or `*` for both.
+    /// or `*` for both. An empty value is treated as `ccm`.
     #[serde(rename = "scope")]
     pub scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope>,
     /// Ordered list of sort clauses applied to the result set.
