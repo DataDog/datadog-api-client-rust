@@ -14,7 +14,8 @@ pub struct ContainerImage {
     /// Attributes for a Container Image.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ContainerImageAttributes>,
-    /// Container Image ID.
+    /// Opaque Container Image ID. Often contains a registry, repository, and digest, but the format
+    /// varies by collection source. Preserve the returned value rather than constructing an ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Type of Container Image.

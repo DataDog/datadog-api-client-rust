@@ -14,10 +14,12 @@ pub struct ContainerImageMetaPage {
     /// The cursor used to get the current results, if any.
     #[serde(rename = "cursor")]
     pub cursor: Option<String>,
-    /// Number of results returned
+    /// Maximum number of results requested.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
-    /// The cursor used to get the next results, if any.
+    /// The cursor used to get the next results, if any. To make the next request, use the same
+    /// parameters with the addition of `page[cursor]`. Always empty for grouped results, even
+    /// when additional groups exist.
     #[serde(rename = "next_cursor")]
     pub next_cursor: Option<String>,
     /// The cursor used to get the previous results, if any.
@@ -27,7 +29,7 @@ pub struct ContainerImageMetaPage {
         with = "::serde_with::rust::double_option"
     )]
     pub prev_cursor: Option<Option<String>>,
-    /// Total number of records that match the query.
+    /// Total number of images that match the query. Always `0` for grouped results.
     #[serde(rename = "total")]
     pub total: Option<i64>,
     /// Type of Container Image pagination.

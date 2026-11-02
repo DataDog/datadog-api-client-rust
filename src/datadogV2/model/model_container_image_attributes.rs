@@ -14,11 +14,12 @@ pub struct ContainerImageAttributes {
     /// Number of containers running the image.
     #[serde(rename = "container_count")]
     pub container_count: Option<i64>,
-    /// List of platform-specific images associated with the image record.
-    /// The list contains more than 1 entry for multi-architecture images.
+    /// Platform-specific image metadata, including size in bytes and available build and operating
+    /// system details. Use these objects to associate sizes with platforms when platform information is available.
     #[serde(rename = "image_flavors")]
     pub image_flavors: Option<Vec<crate::datadogV2::model::ContainerImageFlavor>>,
-    /// List of image tags associated with the Container Image.
+    /// Image version tags, such as `latest` or `v1.2.3`. Tags can change; use the returned `id` to
+    /// identify an image record. The corresponding filter and grouping key is `image_tag`.
     #[serde(rename = "image_tags")]
     pub image_tags: Option<Vec<String>>,
     /// List of build times associated with the Container Image.
@@ -40,29 +41,31 @@ pub struct ContainerImageAttributes {
     /// Time the image was pushed to the container registry.
     #[serde(rename = "published_at")]
     pub published_at: Option<String>,
-    /// Registry the Container Image was pushed to.
+    /// Registry where the image is stored. Use the `image_registry` tag key for filtering and grouping.
     #[serde(rename = "registry")]
     pub registry: Option<String>,
-    /// Digest of the compressed image manifest.
+    /// Digest of the compressed image manifest. Use the `repo_digest` tag key to filter by this value.
     #[serde(rename = "repo_digest")]
     pub repo_digest: Option<String>,
-    /// Repository where the Container Image is stored in.
+    /// Repository where the image is stored. Use the `image_repository` tag key for filtering and grouping.
     #[serde(rename = "repository")]
     pub repository: Option<String>,
     /// Short version of the Container Image name.
     #[serde(rename = "short_image")]
     pub short_image: Option<String>,
-    /// List of size for each platform-specific image associated with the image record.
-    /// The list contains more than 1 entry for multi-architecture images.
+    /// Reported sizes in bytes of platform-specific images, with multiple values possible for multi-architecture images.
+    /// Use `image_flavors` for available platform associations; use `size` as the sort key.
     #[serde(rename = "sizes")]
     pub sizes: Option<Vec<i64>>,
-    /// List of sources where the Container Image was collected from.
+    /// Collection sources, such as `live_containers`, `image_check`, `aws_ecr`, or `agentless_scanner`.
     #[serde(rename = "sources")]
     pub sources: Option<Vec<String>>,
-    /// List of tags associated with the Container Image.
+    /// Image tags in `key:value` form, such as `image_registry:docker.io` or `status:running`.
+    /// Use tag keys in `group_by`. Tags used in `filter[tags]` must satisfy its syntax restrictions.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Vulnerability counts associated with the Container Image.
+    /// Vulnerability counts by severity, when available. An absent `vulnerability_count` does not mean
+    /// the image has no vulnerabilities.
     #[serde(rename = "vulnerability_count")]
     pub vulnerability_count: Option<crate::datadogV2::model::ContainerImageVulnerabilities>,
     #[serde(flatten)]

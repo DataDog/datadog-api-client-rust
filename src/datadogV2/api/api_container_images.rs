@@ -11,42 +11,66 @@ use serde::{Deserialize, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainerImagesOptionalParams {
-    /// Comma-separated list of tags to filter Container Images by.
+    /// Comma-separated `key:value` tags. An image must match every tag. Wildcards, negation
+    /// (`-key:value`), spaces, and `IN (...)` are not supported. Use keys such as `image_registry`
+    /// and `image_tag`. To match any of several values of the same key, make one request per value.
     pub filter_tags: Option<String>,
-    /// Comma-separated list of tags to group Container Images by.
+    /// Comma-separated list of up to three tag keys, such as `image_registry,image_tag`. Returns
+    /// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
+    /// not support pagination. Images missing a grouping key are excluded. An image with multiple
+    /// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
+    /// Compare counts only within the returned groups; they do not establish the most common tags
+    /// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
+    /// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
+    /// use `meta.pagination.total` from a query without grouping.
     pub group_by: Option<String>,
-    /// Attribute to sort Container Images by.
+    /// Attribute to sort individual images by, such as `size` or `container_count`.
+    /// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
+    /// descending order, such as `-size`. Ignored when `group_by` is specified.
     pub sort: Option<String>,
-    /// Maximum number of results returned.
+    /// Maximum number of results returned. Grouped queries default to `100`, with a maximum of `1000` groups.
+    /// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
     pub page_size: Option<i32>,
-    /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+    /// Opaque cursor from `meta.pagination.next_cursor` for individual images. Keep the same filters
+    /// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
     pub page_cursor: Option<String>,
 }
 
 impl ListContainerImagesOptionalParams {
-    /// Comma-separated list of tags to filter Container Images by.
+    /// Comma-separated `key:value` tags. An image must match every tag. Wildcards, negation
+    /// (`-key:value`), spaces, and `IN (...)` are not supported. Use keys such as `image_registry`
+    /// and `image_tag`. To match any of several values of the same key, make one request per value.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
-    /// Comma-separated list of tags to group Container Images by.
+    /// Comma-separated list of up to three tag keys, such as `image_registry,image_tag`. Returns
+    /// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
+    /// not support pagination. Images missing a grouping key are excluded. An image with multiple
+    /// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
+    /// Compare counts only within the returned groups; they do not establish the most common tags
+    /// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
+    /// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
+    /// use `meta.pagination.total` from a query without grouping.
     pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
-    /// Attribute to sort Container Images by.
+    /// Attribute to sort individual images by, such as `size` or `container_count`.
+    /// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
+    /// descending order, such as `-size`. Ignored when `group_by` is specified.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
-    /// Maximum number of results returned.
+    /// Maximum number of results returned. Grouped queries default to `100`, with a maximum of `1000` groups.
+    /// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
-    /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+    /// Opaque cursor from `meta.pagination.next_cursor` for individual images. Keep the same filters
+    /// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
@@ -135,7 +159,12 @@ impl ContainerImagesAPI {
         Self { config, client }
     }
 
-    /// Get all Container Images for your organization.
+    /// Get all container images for your organization. This endpoint queries current
+    /// inventory and does not support time-range parameters.
+    ///
+    /// Use `group_by` to return image groups with counts. Grouped results are limited
+    /// by `page[size]`, may be incomplete, and do not support pagination.
+    ///
     /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_container_images(
         &self,
@@ -195,7 +224,12 @@ impl ContainerImagesAPI {
         }
     }
 
-    /// Get all Container Images for your organization.
+    /// Get all container images for your organization. This endpoint queries current
+    /// inventory and does not support time-range parameters.
+    ///
+    /// Use `group_by` to return image groups with counts. Grouped results are limited
+    /// by `page[size]`, may be incomplete, and do not support pagination.
+    ///
     /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
     pub async fn list_container_images_with_http_info(
         &self,

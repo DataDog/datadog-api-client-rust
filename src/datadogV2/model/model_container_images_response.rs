@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// List of Container Images.
+/// List of Container Images or Container Image groups.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerImagesResponse {
-    /// Array of Container Image objects.
+    /// Array of `container_image` objects, or `container_image_group` objects when `group_by` is specified.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::ContainerImageItem>>,
     /// Pagination links.

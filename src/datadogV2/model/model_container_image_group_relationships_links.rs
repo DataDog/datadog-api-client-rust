@@ -11,7 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerImageGroupRelationshipsLinks {
-    /// Link to related Container Images.
+    /// Link containing the original filters combined with the group tags, without `group_by`.
+    /// Use its `filter[tags]` value in a new request to your site's API host. The tags must satisfy
+    /// `filter[tags]` syntax restrictions.
     #[serde(rename = "related")]
     pub related: Option<String>,
     #[serde(flatten)]

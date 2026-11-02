@@ -11,7 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContainerImageGroupAttributes {
-    /// Number of Container Images in the group.
+    /// Number of images in the group. An image with multiple values for a grouping tag can appear
+    /// in multiple groups. Images missing a grouping key are excluded. Summing group counts does
+    /// not give a reliable inventory total.
     #[serde(rename = "count")]
     pub count: Option<i64>,
     /// Name of the Container Image group.

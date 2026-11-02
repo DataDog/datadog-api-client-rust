@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Vulnerability counts associated with the Container Image.
+/// Vulnerability counts by severity, when available. An absent `vulnerability_count` does not mean
+/// the image has no vulnerabilities.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
