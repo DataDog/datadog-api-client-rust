@@ -17,11 +17,11 @@ pub struct LLMObsCustomEvalConfigLLMProvider {
     /// Integration account identifier.
     #[serde(rename = "integration_account_id")]
     pub integration_account_id: Option<String>,
-    /// Name of the LLM integration provider.
+    /// Name of the LLM integration provider. Use `deterministic` for a code evaluator, which runs `llm_judge_config.user_specified_json_post_processing_function` instead of calling an LLM. `insights_sponsored` is returned for evaluators that Datadog manages and cannot be set.
     #[serde(rename = "integration_provider")]
     pub integration_provider:
         Option<crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider>,
-    /// Name of the LLM model.
+    /// Name of the LLM model. Use `javascript` for a `deterministic` evaluator.
     #[serde(rename = "model_name")]
     pub model_name: Option<String>,
     /// Google Vertex AI-specific options for LLM provider configuration.

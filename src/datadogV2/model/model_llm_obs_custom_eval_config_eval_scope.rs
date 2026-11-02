@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LLMObsCustomEvalConfigEvalScope {
     SPAN,
     TRACE,
+    TRACE_FAN_OUT,
     SESSION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -18,6 +19,7 @@ impl ToString for LLMObsCustomEvalConfigEvalScope {
         match self {
             Self::SPAN => String::from("span"),
             Self::TRACE => String::from("trace"),
+            Self::TRACE_FAN_OUT => String::from("trace_fan_out"),
             Self::SESSION => String::from("session"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -45,6 +47,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigEvalScope {
         Ok(match s.as_str() {
             "span" => Self::SPAN,
             "trace" => Self::TRACE,
+            "trace_fan_out" => Self::TRACE_FAN_OUT,
             "session" => Self::SESSION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
