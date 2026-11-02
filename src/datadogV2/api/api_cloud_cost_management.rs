@@ -631,6 +631,22 @@ impl SearchCostRecommendationsOptionalParams {
     }
 }
 
+/// UploadCustomCostsFileOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::upload_custom_costs_file`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UploadCustomCostsFileOptionalParams {
+    /// Whether the uploaded file contains the costs of an AI provider.
+    pub ai_provider: Option<bool>,
+}
+
+impl UploadCustomCostsFileOptionalParams {
+    /// Whether the uploaded file contains the costs of an AI provider.
+    pub fn ai_provider(mut self, value: bool) -> Self {
+        self.ai_provider = Some(value);
+        self
+    }
+}
+
 /// CreateCostAWSCURConfigError is a struct for typed errors of method [`CloudCostManagementAPI::create_cost_awscur_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -10277,11 +10293,15 @@ impl CloudCostManagementAPI {
     pub async fn upload_custom_costs_file(
         &self,
         body: Vec<crate::datadogV2::model::CustomCostsFileLineItem>,
+        params: UploadCustomCostsFileOptionalParams,
     ) -> Result<
         crate::datadogV2::model::CustomCostsFileUploadResponse,
         datadog::Error<UploadCustomCostsFileError>,
     > {
-        match self.upload_custom_costs_file_with_http_info(body).await {
+        match self
+            .upload_custom_costs_file_with_http_info(body, params)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -10299,12 +10319,16 @@ impl CloudCostManagementAPI {
     pub async fn upload_custom_costs_file_with_http_info(
         &self,
         body: Vec<crate::datadogV2::model::CustomCostsFileLineItem>,
+        params: UploadCustomCostsFileOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::CustomCostsFileUploadResponse>,
         datadog::Error<UploadCustomCostsFileError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upload_custom_costs_file";
+
+        // unbox and build optional parameters
+        let ai_provider = params.ai_provider;
 
         let local_client = &self.client;
 
@@ -10314,6 +10338,11 @@ impl CloudCostManagementAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = ai_provider {
+            local_req_builder =
+                local_req_builder.query(&[("ai_provider", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
