@@ -17,7 +17,7 @@ pub struct FacetInfoRequestData {
     /// Unique identifier for the facet info request resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Users facet info request resource type.
+    /// Facet info request resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::FacetInfoRequestDataType,
     #[serde(flatten)]

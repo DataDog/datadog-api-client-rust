@@ -11,12 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponseDataAttributesResultRange {
-    /// The maximum observed value for the numeric facet attribute.
-    #[serde(rename = "max")]
-    pub max: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// The minimum observed value for the numeric facet attribute.
-    #[serde(rename = "min")]
-    pub min: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// The maximum observed value for the numeric facet attribute. Null when no records match.
+    #[serde(rename = "max", default, with = "::serde_with::rust::double_option")]
+    pub max: Option<Option<f64>>,
+    /// The minimum observed value for the numeric facet attribute. Null when no records match.
+    #[serde(rename = "min", default, with = "::serde_with::rust::double_option")]
+    pub min: Option<Option<f64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,12 +34,12 @@ impl FacetInfoResponseDataAttributesResultRange {
         }
     }
 
-    pub fn max(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+    pub fn max(mut self, value: Option<f64>) -> Self {
         self.max = Some(value);
         self
     }
 
-    pub fn min(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+    pub fn min(mut self, value: Option<f64>) -> Self {
         self.min = Some(value);
         self
     }
@@ -76,8 +76,8 @@ impl<'de> Deserialize<'de> for FacetInfoResponseDataAttributesResultRange {
             where
                 M: MapAccess<'a>,
             {
-                let mut max: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
-                let mut min: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut max: Option<Option<f64>> = None;
+                let mut min: Option<Option<f64>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,13 +87,13 @@ impl<'de> Deserialize<'de> for FacetInfoResponseDataAttributesResultRange {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "max" => {
-                            if v.is_null() {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             max = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "min" => {
-                            if v.is_null() {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
