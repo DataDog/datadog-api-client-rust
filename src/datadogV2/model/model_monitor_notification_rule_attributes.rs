@@ -28,6 +28,9 @@ pub struct MonitorNotificationRuleAttributes {
     /// A list of recipients to notify. Uses the same format as the monitor `message` field. Must not start with an '@'. Cannot be used with `conditional_recipients`.
     #[serde(rename = "recipients")]
     pub recipients: Option<Vec<String>>,
+    /// Additional options for the monitor notification rule.
+    #[serde(rename = "rule_options")]
+    pub rule_options: Option<crate::datadogV2::model::MonitorNotificationRuleOptions>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -41,6 +44,7 @@ impl MonitorNotificationRuleAttributes {
             filter: None,
             name,
             recipients: None,
+            rule_options: None,
             _unparsed: false,
         }
     }
@@ -68,6 +72,14 @@ impl MonitorNotificationRuleAttributes {
 
     pub fn recipients(mut self, value: Vec<String>) -> Self {
         self.recipients = Some(value);
+        self
+    }
+
+    pub fn rule_options(
+        mut self,
+        value: crate::datadogV2::model::MonitorNotificationRuleOptions,
+    ) -> Self {
+        self.rule_options = Some(value);
         self
     }
 }
@@ -99,6 +111,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                     None;
                 let mut name: Option<String> = None;
                 let mut recipients: Option<Vec<String>> = None;
+                let mut rule_options: Option<
+                    crate::datadogV2::model::MonitorNotificationRuleOptions,
+                > = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,6 +155,13 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                             }
                             recipients = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rule_options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rule_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             return Err(serde::de::Error::custom(
                                 "Additional properties not allowed",
@@ -155,6 +177,7 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                     filter,
                     name,
                     recipients,
+                    rule_options,
                     _unparsed,
                 };
 
