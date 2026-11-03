@@ -14,7 +14,7 @@ pub struct AllocationDataResponse {
     /// Targeting rule (allocation) details for a feature flag environment.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::Allocation,
-    /// The unique identifier of the targeting rule allocation.
+    /// The unique identifier of the targeting rule allocation. Use this ID with the allocation management endpoints, such as `/api/v2/allocations/{allocation_id}`. It is not included in SDK evaluation results or exposure events.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// The resource type.
