@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum IncidentRelatedObject {
     USERS,
     ATTACHMENTS,
+    RESPONDERS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for IncidentRelatedObject {
         match self {
             Self::USERS => String::from("users"),
             Self::ATTACHMENTS => String::from("attachments"),
+            Self::RESPONDERS => String::from("responders"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for IncidentRelatedObject {
         Ok(match s.as_str() {
             "users" => Self::USERS,
             "attachments" => Self::ATTACHMENTS,
+            "responders" => Self::RESPONDERS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
