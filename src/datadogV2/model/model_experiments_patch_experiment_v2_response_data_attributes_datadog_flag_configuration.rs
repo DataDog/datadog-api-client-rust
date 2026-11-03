@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfiguration {
-    /// Key of the feature flag allocation linked to the experiment.
+    /// Key of the feature flag allocation linked to the experiment. Matches the allocation key that SDKs report in flag evaluation results and exposure events.
     #[serde(rename = "allocation_key")]
     pub allocation_key: Option<String>,
     /// Datadog measure and filters used to select analyzed subjects.

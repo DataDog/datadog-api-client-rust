@@ -18,7 +18,7 @@ pub struct AllocationExposureSchedule {
         with = "::serde_with::rust::double_option"
     )]
     pub absolute_start_time: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// The targeting rule allocation ID this progressive rollout belongs to.
+    /// The unique identifier (UUID) of the targeting rule allocation this progressive rollout belongs to. This is not the allocation key that SDKs report in evaluation results and exposure events.
     #[serde(rename = "allocation_id")]
     pub allocation_id: uuid::Uuid,
     /// The control variant ID used for experiment comparisons.

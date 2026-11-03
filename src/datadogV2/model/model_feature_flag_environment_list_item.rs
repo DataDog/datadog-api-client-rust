@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FeatureFlagEnvironmentListItem {
-    /// The allocation key used for the default variant.
+    /// A system-generated allocation key, in the format `allocation-default-<hash>`, that SDKs report in flag evaluation results and exposure events when a subject receives the environment's default variant because no targeting rule matched. It has no corresponding allocation ID and cannot be used with the allocation endpoints.
     #[serde(rename = "default_allocation_key")]
     pub default_allocation_key: Option<String>,
     /// The ID of the default variant for this environment.
@@ -36,7 +36,7 @@ pub struct FeatureFlagEnvironmentListItem {
     /// Indicates whether feature flag evaluation events include original targeting identifiers and full evaluation context.
     #[serde(rename = "observe_full_evaluation_data")]
     pub observe_full_evaluation_data: Option<bool>,
-    /// The allocation key used for the override variant.
+    /// A system-generated allocation key, in the format `allocation-override-<hash>`, that SDKs report in flag evaluation results and exposure events when the environment's override variant is served. It has no corresponding allocation ID and cannot be used with the allocation endpoints.
     #[serde(rename = "override_allocation_key")]
     pub override_allocation_key: Option<String>,
     /// The ID of the override variant for this environment.

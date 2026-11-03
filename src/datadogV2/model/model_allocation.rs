@@ -30,10 +30,10 @@ pub struct Allocation {
     /// Guardrail metrics associated with this targeting rule allocation.
     #[serde(rename = "guardrail_metrics")]
     pub guardrail_metrics: Vec<crate::datadogV2::model::GuardrailMetric>,
-    /// The unique identifier of the targeting rule allocation.
+    /// The unique identifier of the targeting rule allocation. Use this ID with the allocation management endpoints, such as `/api/v2/allocations/{allocation_id}`. It is not included in SDK evaluation results or exposure events.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
-    /// The unique key of the targeting rule allocation.
+    /// The unique key of the targeting rule allocation. SDKs report this key in flag evaluation results and exposure events to indicate which targeting rule assigned the variant. Use it to match evaluation or experiment data to this rule.
     #[serde(rename = "key")]
     pub key: String,
     /// The display name of the targeting rule.
