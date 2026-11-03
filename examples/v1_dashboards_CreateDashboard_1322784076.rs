@@ -87,7 +87,7 @@ async fn main() {
                                         ),
                                     ),
                                 )
-                                .label_column(HeatgridLabelColumn::new(HeatgridLabelColumnWidth::M))
+                                .label_column(HeatgridLabelColumn::new().width(HeatgridLabelColumnWidth::M))
                                 .legend(HeatgridLegend::new().show_caption(true)),
                         ),
                     ),

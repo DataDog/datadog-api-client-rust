@@ -20,7 +20,7 @@ pub struct HeatgridWidgetDefinition {
     /// Description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Configuration of the group label column.
+    /// Configuration of the group label column. Its width is sized automatically when omitted.
     #[serde(rename = "label_column")]
     pub label_column: Option<crate::datadogV1::model::HeatgridLabelColumn>,
     /// Legend configuration for the heatgrid widget.

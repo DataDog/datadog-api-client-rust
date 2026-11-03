@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A color and optional lower threshold for a discrete bin.
+/// A color, optional lower threshold, and optional label for a discrete bin.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct HeatgridColorBin {
     /// A color string, or two color strings for the light and dark themes, in that order.
     #[serde(rename = "color")]
     pub color: crate::datadogV1::model::HeatgridColor,
+    /// Name of the bin.
+    #[serde(rename = "label")]
+    pub label: Option<String>,
     /// Inclusive lower bound. Omit for the first bin.
     #[serde(rename = "lower_bound")]
     pub lower_bound: Option<f64>,
@@ -26,9 +29,15 @@ impl HeatgridColorBin {
     pub fn new(color: crate::datadogV1::model::HeatgridColor) -> HeatgridColorBin {
         HeatgridColorBin {
             color,
+            label: None,
             lower_bound: None,
             _unparsed: false,
         }
+    }
+
+    pub fn label(mut self, value: String) -> Self {
+        self.label = Some(value);
+        self
     }
 
     pub fn lower_bound(mut self, value: f64) -> Self {
@@ -55,6 +64,7 @@ impl<'de> Deserialize<'de> for HeatgridColorBin {
                 M: MapAccess<'a>,
             {
                 let mut color: Option<crate::datadogV1::model::HeatgridColor> = None;
+                let mut label: Option<String> = None;
                 let mut lower_bound: Option<f64> = None;
                 let mut _unparsed = false;
 
@@ -72,6 +82,12 @@ impl<'de> Deserialize<'de> for HeatgridColorBin {
                                     _ => {}
                                 }
                             }
+                        }
+                        "label" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "lower_bound" => {
                             if v.is_null() || v.as_str() == Some("") {
@@ -91,6 +107,7 @@ impl<'de> Deserialize<'de> for HeatgridColorBin {
 
                 let content = HeatgridColorBin {
                     color,
+                    label,
                     lower_bound,
                     _unparsed,
                 };
