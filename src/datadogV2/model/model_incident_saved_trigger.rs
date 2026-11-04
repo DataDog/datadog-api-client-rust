@@ -14,9 +14,13 @@ pub struct IncidentSavedTrigger {
     /// The maximum number of times to execute a workflow for an incident.
     #[serde(rename = "executionLimit")]
     pub execution_limit: Option<crate::datadogV2::model::ExecutionLimit>,
-    /// The type of incident that triggers the workflow.
+    /// The type of incident that triggers the workflow. Deprecated. Use `incidentTypes` instead.
+    #[deprecated]
     #[serde(rename = "incidentType")]
     pub incident_type: Option<String>,
+    /// The types of incidents that trigger the workflow.
+    #[serde(rename = "incidentTypes")]
+    pub incident_types: Option<Vec<String>>,
     /// Whether to execute the workflow serially for an incident.
     #[serde(rename = "serialExecution")]
     pub serial_execution: Option<crate::datadogV2::model::SerialExecution>,
@@ -32,9 +36,11 @@ pub struct IncidentSavedTrigger {
 
 impl IncidentSavedTrigger {
     pub fn new() -> IncidentSavedTrigger {
+        #[allow(deprecated)]
         IncidentSavedTrigger {
             execution_limit: None,
             incident_type: None,
+            incident_types: None,
             serial_execution: None,
             tag_condition: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,21 +48,31 @@ impl IncidentSavedTrigger {
         }
     }
 
+    #[allow(deprecated)]
     pub fn execution_limit(mut self, value: crate::datadogV2::model::ExecutionLimit) -> Self {
         self.execution_limit = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn incident_types(mut self, value: Vec<String>) -> Self {
+        self.incident_types = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn serial_execution(mut self, value: crate::datadogV2::model::SerialExecution) -> Self {
         self.serial_execution = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn tag_condition(mut self, value: crate::datadogV2::model::IncidentCondition) -> Self {
         self.tag_condition = Some(value);
         self
@@ -96,6 +112,7 @@ impl<'de> Deserialize<'de> for IncidentSavedTrigger {
             {
                 let mut execution_limit: Option<crate::datadogV2::model::ExecutionLimit> = None;
                 let mut incident_type: Option<String> = None;
+                let mut incident_types: Option<Vec<String>> = None;
                 let mut serial_execution: Option<crate::datadogV2::model::SerialExecution> = None;
                 let mut tag_condition: Option<crate::datadogV2::model::IncidentCondition> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -120,6 +137,13 @@ impl<'de> Deserialize<'de> for IncidentSavedTrigger {
                             incident_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "incidentTypes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "serialExecution" => {
                             if v.is_null() {
                                 continue;
@@ -142,9 +166,11 @@ impl<'de> Deserialize<'de> for IncidentSavedTrigger {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = IncidentSavedTrigger {
                     execution_limit,
                     incident_type,
+                    incident_types,
                     serial_execution,
                     tag_condition,
                     additional_properties,

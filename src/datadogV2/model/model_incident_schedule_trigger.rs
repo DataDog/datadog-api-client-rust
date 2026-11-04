@@ -11,9 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentScheduleTrigger {
-    /// The type of incident that triggers the workflow.
+    /// The type of incident that triggers the workflow. Deprecated. Use `incidentTypes` instead.
+    #[deprecated]
     #[serde(rename = "incidentType")]
     pub incident_type: Option<String>,
+    /// The types of incidents that trigger the workflow.
+    #[serde(rename = "incidentTypes")]
+    pub incident_types: Option<Vec<String>>,
     /// The recurrence rule for the schedule, expressed as an iCalendar `RRULE` string.
     #[serde(rename = "rrule")]
     pub rrule: String,
@@ -29,8 +33,10 @@ pub struct IncidentScheduleTrigger {
 
 impl IncidentScheduleTrigger {
     pub fn new(rrule: String) -> IncidentScheduleTrigger {
+        #[allow(deprecated)]
         IncidentScheduleTrigger {
             incident_type: None,
+            incident_types: None,
             rrule,
             tag_condition: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -38,11 +44,19 @@ impl IncidentScheduleTrigger {
         }
     }
 
+    #[allow(deprecated)]
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn incident_types(mut self, value: Vec<String>) -> Self {
+        self.incident_types = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tag_condition(mut self, value: crate::datadogV2::model::IncidentCondition) -> Self {
         self.tag_condition = Some(value);
         self
@@ -75,6 +89,7 @@ impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
                 M: MapAccess<'a>,
             {
                 let mut incident_type: Option<String> = None;
+                let mut incident_types: Option<Vec<String>> = None;
                 let mut rrule: Option<String> = None;
                 let mut tag_condition: Option<crate::datadogV2::model::IncidentCondition> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -90,6 +105,13 @@ impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
                                 continue;
                             }
                             incident_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incidentTypes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rrule" => {
@@ -111,8 +133,10 @@ impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
                 }
                 let rrule = rrule.ok_or_else(|| M::Error::missing_field("rrule"))?;
 
+                #[allow(deprecated)]
                 let content = IncidentScheduleTrigger {
                     incident_type,
+                    incident_types,
                     rrule,
                     tag_condition,
                     additional_properties,
