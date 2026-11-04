@@ -11,6 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateConnectionRequestDataAttributes {
+    /// Type-specific configuration of the connection. Only the field matching the connection type is set.
+    #[serde(rename = "details")]
+    pub details: Option<
+        crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
+    >,
     /// List of custom attribute fields to import from the data source.
     #[serde(rename = "fields")]
     pub fields:
@@ -24,6 +29,9 @@ pub struct CreateConnectionRequestDataAttributes {
     /// Additional key-value metadata associated with the connection.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, String>>,
+    /// Display name of the connection.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     /// The type of data source connection (for example, ref_table).
     #[serde(rename = "type")]
     pub type_: String,
@@ -41,14 +49,24 @@ impl CreateConnectionRequestDataAttributes {
         type_: String,
     ) -> CreateConnectionRequestDataAttributes {
         CreateConnectionRequestDataAttributes {
+            details: None,
             fields: None,
             join_attribute,
             join_type,
             metadata: None,
+            name: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn details(
+        mut self,
+        value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
+    ) -> Self {
+        self.details = Some(value);
+        self
     }
 
     pub fn fields(
@@ -61,6 +79,11 @@ impl CreateConnectionRequestDataAttributes {
 
     pub fn metadata(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -90,12 +113,14 @@ impl<'de> Deserialize<'de> for CreateConnectionRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut details: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails> = None;
                 let mut fields: Option<
                     Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>,
                 > = None;
                 let mut join_attribute: Option<String> = None;
                 let mut join_type: Option<String> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut name: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -105,6 +130,12 @@ impl<'de> Deserialize<'de> for CreateConnectionRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "details" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "fields" => {
                             if v.is_null() {
                                 continue;
@@ -124,6 +155,12 @@ impl<'de> Deserialize<'de> for CreateConnectionRequestDataAttributes {
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -140,10 +177,12 @@ impl<'de> Deserialize<'de> for CreateConnectionRequestDataAttributes {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = CreateConnectionRequestDataAttributes {
+                    details,
                     fields,
                     join_attribute,
                     join_type,
                     metadata,
+                    name,
                     type_,
                     additional_properties,
                     _unparsed,

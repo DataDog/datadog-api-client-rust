@@ -17,6 +17,11 @@ pub struct ListConnectionsResponseDataAttributesConnectionsItems {
     /// Identifier of the user who created the connection.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// Type-specific configuration of the connection. Only the field matching the connection type is set.
+    #[serde(rename = "details")]
+    pub details: Option<
+        crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
+    >,
     /// List of custom attribute fields imported from the data source.
     #[serde(rename = "fields")]
     pub fields:
@@ -31,6 +36,9 @@ pub struct ListConnectionsResponseDataAttributesConnectionsItems {
     /// Additional key-value metadata associated with the connection.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, String>>,
+    /// Display name of the connection.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     /// The type of data source connection (for example, ref_table).
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -52,10 +60,12 @@ impl ListConnectionsResponseDataAttributesConnectionsItems {
         ListConnectionsResponseDataAttributesConnectionsItems {
             created_at: None,
             created_by: None,
+            details: None,
             fields: None,
             id: None,
             join: None,
             metadata: None,
+            name: None,
             type_: None,
             updated_at: None,
             updated_by: None,
@@ -71,6 +81,14 @@ impl ListConnectionsResponseDataAttributesConnectionsItems {
 
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
+        self
+    }
+
+    pub fn details(
+        mut self,
+        value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
+    ) -> Self {
+        self.details = Some(value);
         self
     }
 
@@ -97,6 +115,11 @@ impl ListConnectionsResponseDataAttributesConnectionsItems {
 
     pub fn metadata(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -149,12 +172,14 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
+                let mut details: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails> = None;
                 let mut fields: Option<
                     Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut join: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut name: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
@@ -177,6 +202,12 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "details" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fields" => {
                             if v.is_null() {
@@ -201,6 +232,12 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -231,10 +268,12 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                 let content = ListConnectionsResponseDataAttributesConnectionsItems {
                     created_at,
                     created_by,
+                    details,
                     fields,
                     id,
                     join,
                     metadata,
+                    name,
                     type_,
                     updated_at,
                     updated_by,

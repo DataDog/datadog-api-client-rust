@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FacetInfoResponseDataType {
     USERS_FACET_INFO,
+    ACCOUNTS_FACET_INFO,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for FacetInfoResponseDataType {
     fn to_string(&self) -> String {
         match self {
             Self::USERS_FACET_INFO => String::from("users_facet_info"),
+            Self::ACCOUNTS_FACET_INFO => String::from("accounts_facet_info"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for FacetInfoResponseDataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "users_facet_info" => Self::USERS_FACET_INFO,
+            "accounts_facet_info" => Self::ACCOUNTS_FACET_INFO,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

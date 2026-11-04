@@ -23,6 +23,9 @@ pub struct UpdateConnectionRequestDataAttributes {
     pub fields_to_update: Option<
         Vec<crate::datadogV2::model::UpdateConnectionRequestDataAttributesFieldsToUpdateItems>,
     >,
+    /// New display name for the connection.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,6 +39,7 @@ impl UpdateConnectionRequestDataAttributes {
             fields_to_add: None,
             fields_to_delete: None,
             fields_to_update: None,
+            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -61,6 +65,11 @@ impl UpdateConnectionRequestDataAttributes {
         >,
     ) -> Self {
         self.fields_to_update = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -101,6 +110,7 @@ impl<'de> Deserialize<'de> for UpdateConnectionRequestDataAttributes {
                 > = None;
                 let mut fields_to_delete: Option<Vec<String>> = None;
                 let mut fields_to_update: Option<Vec<crate::datadogV2::model::UpdateConnectionRequestDataAttributesFieldsToUpdateItems>> = None;
+                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -130,6 +140,12 @@ impl<'de> Deserialize<'de> for UpdateConnectionRequestDataAttributes {
                             fields_to_update =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -142,6 +158,7 @@ impl<'de> Deserialize<'de> for UpdateConnectionRequestDataAttributes {
                     fields_to_add,
                     fields_to_delete,
                     fields_to_update,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
