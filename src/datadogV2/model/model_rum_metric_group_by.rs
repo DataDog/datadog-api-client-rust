@@ -11,10 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricGroupBy {
-    /// The path to the value the RUM-based metric will be aggregated over.
+    /// The path of the RUM event attribute to group the metric by.
     #[serde(rename = "path")]
     pub path: String,
-    /// Eventual name of the tag that gets created. By default, `path` is used as the tag name.
+    /// Name of the tag that gets created on the metric. By default, `path` is used as the tag name.
+    /// It must be at most 200 characters long, start with a letter, and contain only lowercase letters, digits, underscores, hyphens, colons, periods, and slashes.
     #[serde(rename = "tag_name")]
     pub tag_name: Option<String>,
     #[serde(flatten)]
