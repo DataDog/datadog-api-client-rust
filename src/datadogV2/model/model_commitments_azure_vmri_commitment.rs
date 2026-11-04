@@ -26,6 +26,9 @@ pub struct CommitmentsAzureVMRICommitment {
     /// The Azure meter sub-category for the reservation.
     #[serde(rename = "meter_sub_category")]
     pub meter_sub_category: String,
+    /// The Azure product of the reservation. Omitted when it cannot be classified.
+    #[serde(rename = "product")]
+    pub product: Option<String>,
     /// The Azure region of the Reserved Instance.
     #[serde(rename = "region")]
     pub region: String,
@@ -35,10 +38,10 @@ pub struct CommitmentsAzureVMRICommitment {
     /// Status of an Azure VM Reserved Instance.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::CommitmentsAzureVMRIStatus,
-    /// The term length in years.
-    #[serde(rename = "term_length")]
-    pub term_length: Option<f64>,
-    /// The utilization percentage of the commitment.
+    /// The commitment term in whole months. Omitted when the term is unknown.
+    #[serde(rename = "term_length_months")]
+    pub term_length_months: Option<i64>,
+    /// The utilization percentage of the commitment, from 0 to 100.
     #[serde(rename = "utilization")]
     pub utilization: Option<f64>,
     #[serde(flatten)]
@@ -63,10 +66,11 @@ impl CommitmentsAzureVMRICommitment {
             expiration_date: None,
             instance_type,
             meter_sub_category,
+            product: None,
             region,
             start_date: None,
             status,
-            term_length: None,
+            term_length_months: None,
             utilization: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -78,13 +82,18 @@ impl CommitmentsAzureVMRICommitment {
         self
     }
 
+    pub fn product(mut self, value: String) -> Self {
+        self.product = Some(value);
+        self
+    }
+
     pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
 
-    pub fn term_length(mut self, value: f64) -> Self {
-        self.term_length = Some(value);
+    pub fn term_length_months(mut self, value: i64) -> Self {
+        self.term_length_months = Some(value);
         self
     }
 
@@ -124,10 +133,11 @@ impl<'de> Deserialize<'de> for CommitmentsAzureVMRICommitment {
                 let mut expiration_date: Option<String> = None;
                 let mut instance_type: Option<String> = None;
                 let mut meter_sub_category: Option<String> = None;
+                let mut product: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut start_date: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::CommitmentsAzureVMRIStatus> = None;
-                let mut term_length: Option<f64> = None;
+                let mut term_length_months: Option<i64> = None;
                 let mut utilization: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -160,6 +170,12 @@ impl<'de> Deserialize<'de> for CommitmentsAzureVMRICommitment {
                             meter_sub_category =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "product" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "region" => {
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -180,11 +196,11 @@ impl<'de> Deserialize<'de> for CommitmentsAzureVMRICommitment {
                                 }
                             }
                         }
-                        "term_length" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                        "term_length_months" => {
+                            if v.is_null() {
                                 continue;
                             }
-                            term_length =
+                            term_length_months =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "utilization" => {
@@ -218,10 +234,11 @@ impl<'de> Deserialize<'de> for CommitmentsAzureVMRICommitment {
                     expiration_date,
                     instance_type,
                     meter_sub_category,
+                    product,
                     region,
                     start_date,
                     status,
-                    term_length,
+                    term_length_months,
                     utilization,
                     additional_properties,
                     _unparsed,

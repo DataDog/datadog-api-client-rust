@@ -14,6 +14,10 @@ pub struct CommitmentsListMeta {
     /// Unit metadata for a numeric metric.
     #[serde(rename = "committed_spend_unit")]
     pub committed_spend_unit: Option<crate::datadogV2::model::CommitmentsUnit>,
+    /// Whether Azure cost data lacks the unused cost of some commitments, for example when an export is
+    /// scoped below the billing profile. When `true`, utilization is overstated.
+    #[serde(rename = "unused_cost_unavailable")]
+    pub unused_cost_unavailable: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +29,7 @@ impl CommitmentsListMeta {
     pub fn new() -> CommitmentsListMeta {
         CommitmentsListMeta {
             committed_spend_unit: None,
+            unused_cost_unavailable: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +37,11 @@ impl CommitmentsListMeta {
 
     pub fn committed_spend_unit(mut self, value: crate::datadogV2::model::CommitmentsUnit) -> Self {
         self.committed_spend_unit = Some(value);
+        self
+    }
+
+    pub fn unused_cost_unavailable(mut self, value: bool) -> Self {
+        self.unused_cost_unavailable = Some(value);
         self
     }
 
@@ -69,6 +79,7 @@ impl<'de> Deserialize<'de> for CommitmentsListMeta {
             {
                 let mut committed_spend_unit: Option<crate::datadogV2::model::CommitmentsUnit> =
                     None;
+                let mut unused_cost_unavailable: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -84,6 +95,13 @@ impl<'de> Deserialize<'de> for CommitmentsListMeta {
                             committed_spend_unit =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "unused_cost_unavailable" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            unused_cost_unavailable =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -94,6 +112,7 @@ impl<'de> Deserialize<'de> for CommitmentsListMeta {
 
                 let content = CommitmentsListMeta {
                     committed_spend_unit,
+                    unused_cost_unavailable,
                     additional_properties,
                     _unparsed,
                 };
