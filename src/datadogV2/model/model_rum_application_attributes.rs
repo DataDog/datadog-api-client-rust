@@ -77,7 +77,7 @@ pub struct RUMApplicationAttributes {
     /// List of tags associated with the RUM application.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
+    /// Type of the RUM application. Possible values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`, `react`, `nextjs`, `angular`, `vuejs`, `nuxt`, `tanstack`, `maui`, `salesforce-lwc`, `shopify`, `cpp`, `rum-cpp`, `unreal`.
     #[serde(rename = "type")]
     pub type_: String,
     /// Timestamp in ms of the last update date.

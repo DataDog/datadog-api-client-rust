@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMAggregateSort {
-    /// An aggregation function.
+    /// An aggregation function. `count` counts events and needs no metric. `cardinality` counts the distinct values of the metric. `sum`, `min`, `max`, `avg`, `median` and the percentiles (`pc75` to `pc99`) apply to a numeric metric such as `@view.loading_time`.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<crate::datadogV2::model::RUMAggregationFunction>,
     /// The metric to sort by (only used for `type=measure`).
@@ -20,7 +20,7 @@ pub struct RUMAggregateSort {
     /// The order to use, ascending or descending.
     #[serde(rename = "order")]
     pub order: Option<crate::datadogV2::model::RUMSortOrder>,
-    /// The type of sorting algorithm.
+    /// The type of sorting algorithm. `alphabetical` sorts buckets by the facet value, `measure` sorts them by a computed aggregation.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RUMAggregateSortType>,
     #[serde(flatten)]
