@@ -2,6 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 use datadog_api_client::datadogV2::api_cloud_cost_management::GetCommitmentsCommitmentListOptionalParams;
+use datadog_api_client::datadogV2::model::CommitmentsCommitmentType;
 use datadog_api_client::datadogV2::model::CommitmentsProvider;
 
 #[tokio::main]
@@ -12,10 +13,11 @@ async fn main() {
     let resp = api
         .get_commitments_commitment_list(
             CommitmentsProvider::AWS,
-            "product".to_string(),
-            9223372036854775807,
-            9223372036854775807,
-            GetCommitmentsCommitmentListOptionalParams::default(),
+            "ec2".to_string(),
+            1788220800000,
+            1790812799000,
+            GetCommitmentsCommitmentListOptionalParams::default()
+                .commitment_type(CommitmentsCommitmentType::RESERVED_INSTANCES),
         )
         .await;
     if let Ok(value) = resp {

@@ -27,11 +27,19 @@ pub struct CommitmentsAwsRDSRICommitment {
     #[serde(rename = "is_multi_az")]
     pub is_multi_az: Option<bool>,
     /// The number of Normalized Capacity Units.
-    #[serde(rename = "number_of_nfus")]
-    pub number_of_nfus: Option<f64>,
+    #[serde(
+        rename = "number_of_nfus",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub number_of_nfus: Option<Option<f64>>,
     /// The number of reserved instances.
-    #[serde(rename = "number_of_reservations")]
-    pub number_of_reservations: Option<f64>,
+    #[serde(
+        rename = "number_of_reservations",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub number_of_reservations: Option<Option<f64>>,
     /// The payment option for the Reserved Instance.
     #[serde(rename = "purchase_option")]
     pub purchase_option: String,
@@ -41,10 +49,10 @@ pub struct CommitmentsAwsRDSRICommitment {
     /// The start date of the commitment.
     #[serde(rename = "start_date")]
     pub start_date: Option<String>,
-    /// The term length in years.
-    #[serde(rename = "term_length")]
-    pub term_length: Option<f64>,
-    /// The utilization percentage of the commitment.
+    /// The commitment term in whole months. Omitted when the term is unknown.
+    #[serde(rename = "term_length_months")]
+    pub term_length_months: Option<i64>,
+    /// The utilization percentage of the commitment, from 0 to 100.
     #[serde(rename = "utilization")]
     pub utilization: Option<f64>,
     #[serde(flatten)]
@@ -73,7 +81,7 @@ impl CommitmentsAwsRDSRICommitment {
             purchase_option,
             region,
             start_date: None,
-            term_length: None,
+            term_length_months: None,
             utilization: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -90,12 +98,12 @@ impl CommitmentsAwsRDSRICommitment {
         self
     }
 
-    pub fn number_of_nfus(mut self, value: f64) -> Self {
+    pub fn number_of_nfus(mut self, value: Option<f64>) -> Self {
         self.number_of_nfus = Some(value);
         self
     }
 
-    pub fn number_of_reservations(mut self, value: f64) -> Self {
+    pub fn number_of_reservations(mut self, value: Option<f64>) -> Self {
         self.number_of_reservations = Some(value);
         self
     }
@@ -105,8 +113,8 @@ impl CommitmentsAwsRDSRICommitment {
         self
     }
 
-    pub fn term_length(mut self, value: f64) -> Self {
-        self.term_length = Some(value);
+    pub fn term_length_months(mut self, value: i64) -> Self {
+        self.term_length_months = Some(value);
         self
     }
 
@@ -146,12 +154,12 @@ impl<'de> Deserialize<'de> for CommitmentsAwsRDSRICommitment {
                 let mut expiration_date: Option<String> = None;
                 let mut instance_type: Option<String> = None;
                 let mut is_multi_az: Option<bool> = None;
-                let mut number_of_nfus: Option<f64> = None;
-                let mut number_of_reservations: Option<f64> = None;
+                let mut number_of_nfus: Option<Option<f64>> = None;
+                let mut number_of_reservations: Option<Option<f64>> = None;
                 let mut purchase_option: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut start_date: Option<String> = None;
-                let mut term_length: Option<f64> = None;
+                let mut term_length_months: Option<i64> = None;
                 let mut utilization: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -188,14 +196,14 @@ impl<'de> Deserialize<'de> for CommitmentsAwsRDSRICommitment {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "number_of_nfus" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             number_of_nfus =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "number_of_reservations" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             number_of_reservations =
@@ -214,11 +222,11 @@ impl<'de> Deserialize<'de> for CommitmentsAwsRDSRICommitment {
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "term_length" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                        "term_length_months" => {
+                            if v.is_null() {
                                 continue;
                             }
-                            term_length =
+                            term_length_months =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "utilization" => {
@@ -256,7 +264,7 @@ impl<'de> Deserialize<'de> for CommitmentsAwsRDSRICommitment {
                     purchase_option,
                     region,
                     start_date,
-                    term_length,
+                    term_length_months,
                     utilization,
                     additional_properties,
                     _unparsed,

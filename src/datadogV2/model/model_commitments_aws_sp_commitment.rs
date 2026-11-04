@@ -20,19 +20,25 @@ pub struct CommitmentsAwsSPCommitment {
     /// The expiration date of the commitment.
     #[serde(rename = "expiration_date")]
     pub expiration_date: Option<String>,
+    /// The EC2 instance family covered by the Savings Plan. Returned only for EC2 Instance Savings Plans.
+    #[serde(rename = "instance_type_family")]
+    pub instance_type_family: Option<String>,
     /// The payment option for the Savings Plan.
     #[serde(rename = "purchase_option")]
     pub purchase_option: String,
+    /// The AWS region covered by the Savings Plan. Returned only for EC2 Instance Savings Plans.
+    #[serde(rename = "region")]
+    pub region: Option<String>,
     /// The Savings Plan type.
     #[serde(rename = "savings_plan_type")]
     pub savings_plan_type: String,
     /// The start date of the commitment.
     #[serde(rename = "start_date")]
     pub start_date: Option<String>,
-    /// The term length in years.
-    #[serde(rename = "term_length")]
-    pub term_length: Option<f64>,
-    /// The utilization percentage of the commitment.
+    /// The commitment term in whole months. Omitted when the term is unknown.
+    #[serde(rename = "term_length_months")]
+    pub term_length_months: Option<i64>,
+    /// The utilization percentage of the commitment, from 0 to 100.
     #[serde(rename = "utilization")]
     pub utilization: Option<f64>,
     #[serde(flatten)]
@@ -52,10 +58,12 @@ impl CommitmentsAwsSPCommitment {
             commitment_id,
             committed_spend_per_hour: None,
             expiration_date: None,
+            instance_type_family: None,
             purchase_option,
+            region: None,
             savings_plan_type,
             start_date: None,
-            term_length: None,
+            term_length_months: None,
             utilization: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -72,13 +80,23 @@ impl CommitmentsAwsSPCommitment {
         self
     }
 
+    pub fn instance_type_family(mut self, value: String) -> Self {
+        self.instance_type_family = Some(value);
+        self
+    }
+
+    pub fn region(mut self, value: String) -> Self {
+        self.region = Some(value);
+        self
+    }
+
     pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
 
-    pub fn term_length(mut self, value: f64) -> Self {
-        self.term_length = Some(value);
+    pub fn term_length_months(mut self, value: i64) -> Self {
+        self.term_length_months = Some(value);
         self
     }
 
@@ -116,10 +134,12 @@ impl<'de> Deserialize<'de> for CommitmentsAwsSPCommitment {
                 let mut commitment_id: Option<String> = None;
                 let mut committed_spend_per_hour: Option<f64> = None;
                 let mut expiration_date: Option<String> = None;
+                let mut instance_type_family: Option<String> = None;
                 let mut purchase_option: Option<String> = None;
+                let mut region: Option<String> = None;
                 let mut savings_plan_type: Option<String> = None;
                 let mut start_date: Option<String> = None;
-                let mut term_length: Option<f64> = None;
+                let mut term_length_months: Option<i64> = None;
                 let mut utilization: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -147,9 +167,22 @@ impl<'de> Deserialize<'de> for CommitmentsAwsSPCommitment {
                             expiration_date =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "instance_type_family" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            instance_type_family =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "purchase_option" => {
                             purchase_option =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "region" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "savings_plan_type" => {
                             savings_plan_type =
@@ -161,11 +194,11 @@ impl<'de> Deserialize<'de> for CommitmentsAwsSPCommitment {
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "term_length" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                        "term_length_months" => {
+                            if v.is_null() {
                                 continue;
                             }
-                            term_length =
+                            term_length_months =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "utilization" => {
@@ -193,10 +226,12 @@ impl<'de> Deserialize<'de> for CommitmentsAwsSPCommitment {
                     commitment_id,
                     committed_spend_per_hour,
                     expiration_date,
+                    instance_type_family,
                     purchase_option,
+                    region,
                     savings_plan_type,
                     start_date,
-                    term_length,
+                    term_length_months,
                     utilization,
                     additional_properties,
                     _unparsed,

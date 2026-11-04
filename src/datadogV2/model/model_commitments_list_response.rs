@@ -11,12 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsListResponse {
-    /// Array of commitment items.
-    #[serde(rename = "commitments")]
-    pub commitments: Vec<crate::datadogV2::model::CommitmentsListItem>,
-    /// Metadata for a commitments list response.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::CommitmentsListMeta>,
+    /// The commitments list resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsListResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,19 +23,13 @@ pub struct CommitmentsListResponse {
 
 impl CommitmentsListResponse {
     pub fn new(
-        commitments: Vec<crate::datadogV2::model::CommitmentsListItem>,
+        data: crate::datadogV2::model::CommitmentsListResponseData,
     ) -> CommitmentsListResponse {
         CommitmentsListResponse {
-            commitments,
-            meta: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::CommitmentsListMeta) -> Self {
-        self.meta = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -67,9 +58,7 @@ impl<'de> Deserialize<'de> for CommitmentsListResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut commitments: Option<Vec<crate::datadogV2::model::CommitmentsListItem>> =
-                    None;
-                let mut meta: Option<crate::datadogV2::model::CommitmentsListMeta> = None;
+                let mut data: Option<crate::datadogV2::model::CommitmentsListResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -78,15 +67,8 @@ impl<'de> Deserialize<'de> for CommitmentsListResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "commitments" => {
-                            commitments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -95,12 +77,10 @@ impl<'de> Deserialize<'de> for CommitmentsListResponse {
                         }
                     }
                 }
-                let commitments =
-                    commitments.ok_or_else(|| M::Error::missing_field("commitments"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsListResponse {
-                    commitments,
-                    meta,
+                    data,
                     additional_properties,
                     _unparsed,
                 };
