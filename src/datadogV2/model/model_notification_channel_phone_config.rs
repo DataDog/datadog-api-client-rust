@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct NotificationChannelPhoneConfig {
+    /// Notification methods currently available for this phone number. Omitted when no methods are available.
+    #[serde(rename = "available_notification_types")]
+    pub available_notification_types:
+        Option<Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>>,
     /// The formatted international version of Number (e.g. +33 7 1 23 45 67).
     #[serde(rename = "formatted_number")]
     pub formatted_number: String,
@@ -49,6 +53,7 @@ impl NotificationChannelPhoneConfig {
         verified: bool,
     ) -> NotificationChannelPhoneConfig {
         NotificationChannelPhoneConfig {
+            available_notification_types: None,
             formatted_number,
             number,
             region,
@@ -58,6 +63,14 @@ impl NotificationChannelPhoneConfig {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn available_notification_types(
+        mut self,
+        value: Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>,
+    ) -> Self {
+        self.available_notification_types = Some(value);
+        self
     }
 
     pub fn sms_subscribed_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
@@ -91,6 +104,9 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
             where
                 M: MapAccess<'a>,
             {
+                let mut available_notification_types: Option<
+                    Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>,
+                > = None;
                 let mut formatted_number: Option<String> = None;
                 let mut number: Option<String> = None;
                 let mut region: Option<String> = None;
@@ -106,6 +122,13 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "available_notification_types" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            available_notification_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "formatted_number" => {
                             formatted_number =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -149,6 +172,7 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
                 let verified = verified.ok_or_else(|| M::Error::missing_field("verified"))?;
 
                 let content = NotificationChannelPhoneConfig {
+                    available_notification_types,
                     formatted_number,
                     number,
                     region,

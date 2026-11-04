@@ -20,6 +20,9 @@ pub struct NotificationChannelEmailConfig {
     /// Indicates that the notification channel is an e-mail address
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::NotificationChannelEmailConfigType,
+    /// Whether this email address has been verified.
+    #[serde(rename = "verified")]
+    pub verified: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,9 +40,15 @@ impl NotificationChannelEmailConfig {
             address,
             formats,
             type_,
+            verified: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn verified(mut self, value: bool) -> Self {
+        self.verified = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -74,6 +83,7 @@ impl<'de> Deserialize<'de> for NotificationChannelEmailConfig {
                 > = None;
                 let mut type_: Option<crate::datadogV2::model::NotificationChannelEmailConfigType> =
                     None;
+                let mut verified: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,6 +109,12 @@ impl<'de> Deserialize<'de> for NotificationChannelEmailConfig {
                                 }
                             }
                         }
+                        "verified" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -114,6 +130,7 @@ impl<'de> Deserialize<'de> for NotificationChannelEmailConfig {
                     address,
                     formats,
                     type_,
+                    verified,
                     additional_properties,
                     _unparsed,
                 };
