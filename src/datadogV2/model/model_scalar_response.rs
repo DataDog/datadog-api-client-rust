@@ -14,6 +14,9 @@ pub struct ScalarResponse {
     /// The object describing a scalar response.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ScalarFormulaResponseAtrributes>,
+    /// The identifier of the scalar response resource.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// The type of the resource. The value should always be scalar_response.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ScalarFormulaResponseType>,
@@ -28,6 +31,7 @@ impl ScalarResponse {
     pub fn new() -> ScalarResponse {
         ScalarResponse {
             attributes: None,
+            id: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,6 +43,11 @@ impl ScalarResponse {
         value: crate::datadogV2::model::ScalarFormulaResponseAtrributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -82,6 +91,7 @@ impl<'de> Deserialize<'de> for ScalarResponse {
                 let mut attributes: Option<
                     crate::datadogV2::model::ScalarFormulaResponseAtrributes,
                 > = None;
+                let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::ScalarFormulaResponseType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,6 +106,12 @@ impl<'de> Deserialize<'de> for ScalarResponse {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -121,6 +137,7 @@ impl<'de> Deserialize<'de> for ScalarResponse {
 
                 let content = ScalarResponse {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
