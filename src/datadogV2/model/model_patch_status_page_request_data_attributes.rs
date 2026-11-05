@@ -20,16 +20,22 @@ pub struct PatchStatusPageRequestDataAttributes {
     /// The base64-encoded image data displayed in email notifications sent to status page subscribers.
     #[serde(rename = "email_header_image")]
     pub email_header_image: Option<String>,
+    /// Whether email notifications are enabled for the status page. Must be enabled when `subscriptions_enabled` is `true`.
+    #[serde(rename = "email_notifications_enabled")]
+    pub email_notifications_enabled: Option<bool>,
     /// The base64-encoded image data displayed in the browser tab.
     #[serde(rename = "favicon")]
     pub favicon: Option<String>,
+    /// Whether Microsoft Teams subscriptions are enabled for the status page.
+    #[serde(rename = "ms_teams_subscriptions_enabled")]
+    pub ms_teams_subscriptions_enabled: Option<bool>,
     /// The name of the status page.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// Whether the RSS feed is enabled for the status page.
     #[serde(rename = "rss_feed_enabled")]
     pub rss_feed_enabled: Option<bool>,
-    /// The Slack app icon URL for the status page.
+    /// The base64-encoded image data used as the Slack app icon.
     #[serde(rename = "slack_app_icon")]
     pub slack_app_icon: Option<String>,
     /// Whether Slack subscriptions are enabled for the status page.
@@ -62,7 +68,9 @@ impl PatchStatusPageRequestDataAttributes {
             company_logo: None,
             domain_prefix: None,
             email_header_image: None,
+            email_notifications_enabled: None,
             favicon: None,
+            ms_teams_subscriptions_enabled: None,
             name: None,
             rss_feed_enabled: None,
             slack_app_icon: None,
@@ -91,8 +99,18 @@ impl PatchStatusPageRequestDataAttributes {
         self
     }
 
+    pub fn email_notifications_enabled(mut self, value: bool) -> Self {
+        self.email_notifications_enabled = Some(value);
+        self
+    }
+
     pub fn favicon(mut self, value: String) -> Self {
         self.favicon = Some(value);
+        self
+    }
+
+    pub fn ms_teams_subscriptions_enabled(mut self, value: bool) -> Self {
+        self.ms_teams_subscriptions_enabled = Some(value);
         self
     }
 
@@ -180,7 +198,9 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                 let mut company_logo: Option<String> = None;
                 let mut domain_prefix: Option<String> = None;
                 let mut email_header_image: Option<String> = None;
+                let mut email_notifications_enabled: Option<bool> = None;
                 let mut favicon: Option<String> = None;
+                let mut ms_teams_subscriptions_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut rss_feed_enabled: Option<bool> = None;
                 let mut slack_app_icon: Option<String> = None;
@@ -222,11 +242,25 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                             email_header_image =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "email_notifications_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            email_notifications_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "favicon" => {
                             if v.is_null() {
                                 continue;
                             }
                             favicon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ms_teams_subscriptions_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ms_teams_subscriptions_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -318,7 +352,9 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                     company_logo,
                     domain_prefix,
                     email_header_image,
+                    email_notifications_enabled,
                     favicon,
+                    ms_teams_subscriptions_enabled,
                     name,
                     rss_feed_enabled,
                     slack_app_icon,
