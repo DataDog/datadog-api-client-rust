@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct CircleCIAPIKey {
     /// The `CircleCIAPIKey` `api_token`.
     #[serde(rename = "api_token")]
-    pub api_token: String,
+    pub api_token: crate::datadogV2::model::CircleCIAPIKeyApiToken,
     /// The definition of the `CircleCIAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CircleCIAPIKeyType,
@@ -26,7 +26,7 @@ pub struct CircleCIAPIKey {
 
 impl CircleCIAPIKey {
     pub fn new(
-        api_token: String,
+        api_token: crate::datadogV2::model::CircleCIAPIKeyApiToken,
         type_: crate::datadogV2::model::CircleCIAPIKeyType,
     ) -> CircleCIAPIKey {
         CircleCIAPIKey {
@@ -63,7 +63,7 @@ impl<'de> Deserialize<'de> for CircleCIAPIKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_token: Option<String> = None;
+                let mut api_token: Option<crate::datadogV2::model::CircleCIAPIKeyApiToken> = None;
                 let mut type_: Option<crate::datadogV2::model::CircleCIAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,6 +75,14 @@ impl<'de> Deserialize<'de> for CircleCIAPIKey {
                     match k.as_str() {
                         "api_token" => {
                             api_token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_token) = api_token {
+                                match _api_token {
+                                    crate::datadogV2::model::CircleCIAPIKeyApiToken::UnparsedObject(_api_token) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

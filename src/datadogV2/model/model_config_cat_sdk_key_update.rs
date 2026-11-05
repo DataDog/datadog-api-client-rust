@@ -13,13 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct ConfigCatSDKKeyUpdate {
     /// The `ConfigCatSDKKeyUpdate` `api_password`.
     #[serde(rename = "api_password")]
-    pub api_password: Option<String>,
+    pub api_password: Option<crate::datadogV2::model::ConfigCatSDKKeyUpdateApiPassword>,
     /// The `ConfigCatSDKKeyUpdate` `api_username`.
     #[serde(rename = "api_username")]
-    pub api_username: Option<String>,
+    pub api_username: Option<crate::datadogV2::model::ConfigCatSDKKeyUpdateApiUsername>,
     /// The `ConfigCatSDKKeyUpdate` `sdk_key`.
     #[serde(rename = "sdk_key")]
-    pub sdk_key: Option<String>,
+    pub sdk_key: Option<crate::datadogV2::model::ConfigCatSDKKeyUpdateSdkKey>,
     /// The definition of the `ConfigCatSDKKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ConfigCatSDKKeyType,
@@ -42,17 +42,23 @@ impl ConfigCatSDKKeyUpdate {
         }
     }
 
-    pub fn api_password(mut self, value: String) -> Self {
+    pub fn api_password(
+        mut self,
+        value: crate::datadogV2::model::ConfigCatSDKKeyUpdateApiPassword,
+    ) -> Self {
         self.api_password = Some(value);
         self
     }
 
-    pub fn api_username(mut self, value: String) -> Self {
+    pub fn api_username(
+        mut self,
+        value: crate::datadogV2::model::ConfigCatSDKKeyUpdateApiUsername,
+    ) -> Self {
         self.api_username = Some(value);
         self
     }
 
-    pub fn sdk_key(mut self, value: String) -> Self {
+    pub fn sdk_key(mut self, value: crate::datadogV2::model::ConfigCatSDKKeyUpdateSdkKey) -> Self {
         self.sdk_key = Some(value);
         self
     }
@@ -83,9 +89,14 @@ impl<'de> Deserialize<'de> for ConfigCatSDKKeyUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_password: Option<String> = None;
-                let mut api_username: Option<String> = None;
-                let mut sdk_key: Option<String> = None;
+                let mut api_password: Option<
+                    crate::datadogV2::model::ConfigCatSDKKeyUpdateApiPassword,
+                > = None;
+                let mut api_username: Option<
+                    crate::datadogV2::model::ConfigCatSDKKeyUpdateApiUsername,
+                > = None;
+                let mut sdk_key: Option<crate::datadogV2::model::ConfigCatSDKKeyUpdateSdkKey> =
+                    None;
                 let mut type_: Option<crate::datadogV2::model::ConfigCatSDKKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -101,6 +112,14 @@ impl<'de> Deserialize<'de> for ConfigCatSDKKeyUpdate {
                             }
                             api_password =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_password) = api_password {
+                                match _api_password {
+                                    crate::datadogV2::model::ConfigCatSDKKeyUpdateApiPassword::UnparsedObject(_api_password) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "api_username" => {
                             if v.is_null() {
@@ -108,12 +127,28 @@ impl<'de> Deserialize<'de> for ConfigCatSDKKeyUpdate {
                             }
                             api_username =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_username) = api_username {
+                                match _api_username {
+                                    crate::datadogV2::model::ConfigCatSDKKeyUpdateApiUsername::UnparsedObject(_api_username) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "sdk_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             sdk_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _sdk_key) = sdk_key {
+                                match _sdk_key {
+                                    crate::datadogV2::model::ConfigCatSDKKeyUpdateSdkKey::UnparsedObject(_sdk_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AsanaAccessTokenUpdate {
     /// The `AsanaAccessTokenUpdate` `access_token`.
     #[serde(rename = "access_token")]
-    pub access_token: Option<String>,
+    pub access_token: Option<crate::datadogV2::model::AsanaAccessTokenUpdateAccessToken>,
     /// The definition of the `AsanaAccessToken` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AsanaAccessTokenType,
@@ -34,7 +34,10 @@ impl AsanaAccessTokenUpdate {
         }
     }
 
-    pub fn access_token(mut self, value: String) -> Self {
+    pub fn access_token(
+        mut self,
+        value: crate::datadogV2::model::AsanaAccessTokenUpdateAccessToken,
+    ) -> Self {
         self.access_token = Some(value);
         self
     }
@@ -65,7 +68,9 @@ impl<'de> Deserialize<'de> for AsanaAccessTokenUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut access_token: Option<String> = None;
+                let mut access_token: Option<
+                    crate::datadogV2::model::AsanaAccessTokenUpdateAccessToken,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::AsanaAccessTokenType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -81,6 +86,14 @@ impl<'de> Deserialize<'de> for AsanaAccessTokenUpdate {
                             }
                             access_token =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _access_token) = access_token {
+                                match _access_token {
+                                    crate::datadogV2::model::AsanaAccessTokenUpdateAccessToken::UnparsedObject(_access_token) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

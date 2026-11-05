@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct GCPServiceAccount {
     /// The `GCPServiceAccount` `private_key`.
     #[serde(rename = "private_key")]
-    pub private_key: String,
+    pub private_key: crate::datadogV2::model::GCPServiceAccountPrivateKey,
     /// The `GCPServiceAccount` `service_account_email`.
     #[serde(rename = "service_account_email")]
-    pub service_account_email: String,
+    pub service_account_email: crate::datadogV2::model::GCPServiceAccountServiceAccountEmail,
     /// The definition of the `GCPServiceAccount` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GCPServiceAccountCredentialType,
@@ -29,8 +29,8 @@ pub struct GCPServiceAccount {
 
 impl GCPServiceAccount {
     pub fn new(
-        private_key: String,
-        service_account_email: String,
+        private_key: crate::datadogV2::model::GCPServiceAccountPrivateKey,
+        service_account_email: crate::datadogV2::model::GCPServiceAccountServiceAccountEmail,
         type_: crate::datadogV2::model::GCPServiceAccountCredentialType,
     ) -> GCPServiceAccount {
         GCPServiceAccount {
@@ -68,8 +68,11 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
             where
                 M: MapAccess<'a>,
             {
-                let mut private_key: Option<String> = None;
-                let mut service_account_email: Option<String> = None;
+                let mut private_key: Option<crate::datadogV2::model::GCPServiceAccountPrivateKey> =
+                    None;
+                let mut service_account_email: Option<
+                    crate::datadogV2::model::GCPServiceAccountServiceAccountEmail,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::GCPServiceAccountCredentialType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -83,10 +86,26 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
                         "private_key" => {
                             private_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _private_key) = private_key {
+                                match _private_key {
+                                    crate::datadogV2::model::GCPServiceAccountPrivateKey::UnparsedObject(_private_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "service_account_email" => {
                             service_account_email =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _service_account_email) = service_account_email {
+                                match _service_account_email {
+                                    crate::datadogV2::model::GCPServiceAccountServiceAccountEmail::UnparsedObject(_service_account_email) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

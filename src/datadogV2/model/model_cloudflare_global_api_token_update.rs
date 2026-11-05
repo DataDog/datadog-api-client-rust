@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct CloudflareGlobalAPITokenUpdate {
     /// The `CloudflareGlobalAPITokenUpdate` `auth_email`.
     #[serde(rename = "auth_email")]
-    pub auth_email: Option<String>,
+    pub auth_email: Option<crate::datadogV2::model::CloudflareGlobalAPITokenUpdateAuthEmail>,
     /// The `CloudflareGlobalAPITokenUpdate` `global_api_key`.
     #[serde(rename = "global_api_key")]
-    pub global_api_key: Option<String>,
+    pub global_api_key: Option<crate::datadogV2::model::CloudflareGlobalAPITokenUpdateGlobalApiKey>,
     /// The definition of the `CloudflareGlobalAPIToken` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudflareGlobalAPITokenType,
@@ -40,12 +40,18 @@ impl CloudflareGlobalAPITokenUpdate {
         }
     }
 
-    pub fn auth_email(mut self, value: String) -> Self {
+    pub fn auth_email(
+        mut self,
+        value: crate::datadogV2::model::CloudflareGlobalAPITokenUpdateAuthEmail,
+    ) -> Self {
         self.auth_email = Some(value);
         self
     }
 
-    pub fn global_api_key(mut self, value: String) -> Self {
+    pub fn global_api_key(
+        mut self,
+        value: crate::datadogV2::model::CloudflareGlobalAPITokenUpdateGlobalApiKey,
+    ) -> Self {
         self.global_api_key = Some(value);
         self
     }
@@ -76,8 +82,12 @@ impl<'de> Deserialize<'de> for CloudflareGlobalAPITokenUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_email: Option<String> = None;
-                let mut global_api_key: Option<String> = None;
+                let mut auth_email: Option<
+                    crate::datadogV2::model::CloudflareGlobalAPITokenUpdateAuthEmail,
+                > = None;
+                let mut global_api_key: Option<
+                    crate::datadogV2::model::CloudflareGlobalAPITokenUpdateGlobalApiKey,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::CloudflareGlobalAPITokenType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -92,6 +102,14 @@ impl<'de> Deserialize<'de> for CloudflareGlobalAPITokenUpdate {
                                 continue;
                             }
                             auth_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _auth_email) = auth_email {
+                                match _auth_email {
+                                    crate::datadogV2::model::CloudflareGlobalAPITokenUpdateAuthEmail::UnparsedObject(_auth_email) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "global_api_key" => {
                             if v.is_null() {
@@ -99,6 +117,14 @@ impl<'de> Deserialize<'de> for CloudflareGlobalAPITokenUpdate {
                             }
                             global_api_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _global_api_key) = global_api_key {
+                                match _global_api_key {
+                                    crate::datadogV2::model::CloudflareGlobalAPITokenUpdateGlobalApiKey::UnparsedObject(_global_api_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

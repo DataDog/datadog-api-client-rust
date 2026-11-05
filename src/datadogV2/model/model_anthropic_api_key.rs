@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AnthropicAPIKey {
     /// The `AnthropicAPIKey` `api_token`.
     #[serde(rename = "api_token")]
-    pub api_token: String,
+    pub api_token: crate::datadogV2::model::AnthropicAPIKeyApiToken,
     /// The definition of the `AnthropicAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AnthropicAPIKeyType,
@@ -26,7 +26,7 @@ pub struct AnthropicAPIKey {
 
 impl AnthropicAPIKey {
     pub fn new(
-        api_token: String,
+        api_token: crate::datadogV2::model::AnthropicAPIKeyApiToken,
         type_: crate::datadogV2::model::AnthropicAPIKeyType,
     ) -> AnthropicAPIKey {
         AnthropicAPIKey {
@@ -63,7 +63,7 @@ impl<'de> Deserialize<'de> for AnthropicAPIKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_token: Option<String> = None;
+                let mut api_token: Option<crate::datadogV2::model::AnthropicAPIKeyApiToken> = None;
                 let mut type_: Option<crate::datadogV2::model::AnthropicAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,6 +75,14 @@ impl<'de> Deserialize<'de> for AnthropicAPIKey {
                     match k.as_str() {
                         "api_token" => {
                             api_token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_token) = api_token {
+                                match _api_token {
+                                    crate::datadogV2::model::AnthropicAPIKeyApiToken::UnparsedObject(_api_token) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

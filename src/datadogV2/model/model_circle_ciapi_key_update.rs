@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct CircleCIAPIKeyUpdate {
     /// The `CircleCIAPIKeyUpdate` `api_token`.
     #[serde(rename = "api_token")]
-    pub api_token: Option<String>,
+    pub api_token: Option<crate::datadogV2::model::CircleCIAPIKeyUpdateApiToken>,
     /// The definition of the `CircleCIAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CircleCIAPIKeyType,
@@ -34,7 +34,10 @@ impl CircleCIAPIKeyUpdate {
         }
     }
 
-    pub fn api_token(mut self, value: String) -> Self {
+    pub fn api_token(
+        mut self,
+        value: crate::datadogV2::model::CircleCIAPIKeyUpdateApiToken,
+    ) -> Self {
         self.api_token = Some(value);
         self
     }
@@ -65,7 +68,8 @@ impl<'de> Deserialize<'de> for CircleCIAPIKeyUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_token: Option<String> = None;
+                let mut api_token: Option<crate::datadogV2::model::CircleCIAPIKeyUpdateApiToken> =
+                    None;
                 let mut type_: Option<crate::datadogV2::model::CircleCIAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,6 +84,14 @@ impl<'de> Deserialize<'de> for CircleCIAPIKeyUpdate {
                                 continue;
                             }
                             api_token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_token) = api_token {
+                                match _api_token {
+                                    crate::datadogV2::model::CircleCIAPIKeyUpdateApiToken::UnparsedObject(_api_token) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

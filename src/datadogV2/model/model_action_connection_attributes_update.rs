@@ -11,6 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ActionConnectionAttributesUpdate {
+    /// AWS Secrets Manager settings shared by the credential references on a `DATACENTER` connection. These settings are required whenever a field uses an AWS Secrets Manager reference.
+    #[serde(
+        rename = "external_secrets_manager",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub external_secrets_manager:
+        Option<Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>>,
     /// The definition of `ActionConnectionIntegrationUpdate` object.
     #[serde(rename = "integration")]
     pub integration: Option<crate::datadogV2::model::ActionConnectionIntegrationUpdate>,
@@ -31,12 +39,21 @@ pub struct ActionConnectionAttributesUpdate {
 impl ActionConnectionAttributesUpdate {
     pub fn new() -> ActionConnectionAttributesUpdate {
         ActionConnectionAttributesUpdate {
+            external_secrets_manager: None,
             integration: None,
             name: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn external_secrets_manager(
+        mut self,
+        value: Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>,
+    ) -> Self {
+        self.external_secrets_manager = Some(value);
+        self
     }
 
     pub fn integration(
@@ -89,6 +106,9 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
             where
                 M: MapAccess<'a>,
             {
+                let mut external_secrets_manager: Option<
+                    Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>,
+                > = None;
                 let mut integration: Option<
                     crate::datadogV2::model::ActionConnectionIntegrationUpdate,
                 > = None;
@@ -102,6 +122,10 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "external_secrets_manager" => {
+                            external_secrets_manager =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "integration" => {
                             if v.is_null() {
                                 continue;
@@ -138,6 +162,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
                 }
 
                 let content = ActionConnectionAttributesUpdate {
+                    external_secrets_manager,
                     integration,
                     name,
                     tags,

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SplitAPIKey {
     /// The `SplitAPIKey` `api_key`.
     #[serde(rename = "api_key")]
-    pub api_key: String,
+    pub api_key: crate::datadogV2::model::SplitAPIKeyApiKey,
     /// The definition of the `SplitAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SplitAPIKeyType,
@@ -25,7 +25,10 @@ pub struct SplitAPIKey {
 }
 
 impl SplitAPIKey {
-    pub fn new(api_key: String, type_: crate::datadogV2::model::SplitAPIKeyType) -> SplitAPIKey {
+    pub fn new(
+        api_key: crate::datadogV2::model::SplitAPIKeyApiKey,
+        type_: crate::datadogV2::model::SplitAPIKeyType,
+    ) -> SplitAPIKey {
         SplitAPIKey {
             api_key,
             type_,
@@ -60,7 +63,7 @@ impl<'de> Deserialize<'de> for SplitAPIKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_key: Option<String> = None;
+                let mut api_key: Option<crate::datadogV2::model::SplitAPIKeyApiKey> = None;
                 let mut type_: Option<crate::datadogV2::model::SplitAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -72,6 +75,16 @@ impl<'de> Deserialize<'de> for SplitAPIKey {
                     match k.as_str() {
                         "api_key" => {
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_key) = api_key {
+                                match _api_key {
+                                    crate::datadogV2::model::SplitAPIKeyApiKey::UnparsedObject(
+                                        _api_key,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
