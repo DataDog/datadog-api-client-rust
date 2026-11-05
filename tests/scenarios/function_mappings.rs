@@ -62,6 +62,7 @@ pub struct ApiInstances {
     pub v2_api_audit: Option<datadogV2::api_audit::AuditAPI>,
     pub v2_api_authn_mappings: Option<datadogV2::api_authn_mappings::AuthNMappingsAPI>,
     pub v2_api_bits_ai: Option<datadogV2::api_bits_ai::BitsAIAPI>,
+    pub v2_api_ai_gateway: Option<datadogV2::api_ai_gateway::AIGatewayAPI>,
     pub v2_api_case_management: Option<datadogV2::api_case_management::CaseManagementAPI>,
     pub v2_api_case_management_type: Option<datadogV2::api_case_management_type::CaseManagementTypeAPI>,
     pub v2_api_case_management_attribute: Option<datadogV2::api_case_management_attribute::CaseManagementAttributeAPI>,
@@ -682,6 +683,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "AIGateway" => {
+            world.api_instances.v2_api_ai_gateway = Some(
+                datadogV2::api_ai_gateway::AIGatewayAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "CaseManagement" => {
             world.api_instances.v2_api_case_management = Some(
@@ -3267,6 +3276,214 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetInvestigation".into(), test_v2_get_investigation);
+    world.function_mappings.insert(
+        "v2.ListAiGatewayBudgets".into(),
+        test_v2_list_ai_gateway_budgets,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayBudget".into(),
+        test_v2_create_ai_gateway_budget,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayBudget".into(),
+        test_v2_delete_ai_gateway_budget,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayBudget".into(),
+        test_v2_get_ai_gateway_budget,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayBudget".into(),
+        test_v2_update_ai_gateway_budget,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayBudgetCurrentPeriod".into(),
+        test_v2_get_ai_gateway_budget_current_period,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayBudgetInstances".into(),
+        test_v2_list_ai_gateway_budget_instances,
+    );
+    world.function_mappings.insert(
+        "v2.OverrideAiGatewayBudgetInstanceCapacity".into(),
+        test_v2_override_ai_gateway_budget_instance_capacity,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayBudgetInstanceDimensions".into(),
+        test_v2_list_ai_gateway_budget_instance_dimensions,
+    );
+    world.function_mappings.insert(
+        "v2.ResetAiGatewayBudgetInstanceSpend".into(),
+        test_v2_reset_ai_gateway_budget_instance_spend,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayBudgetInstancesSummary".into(),
+        test_v2_get_ai_gateway_budget_instances_summary,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayDataCaptureConfiguration".into(),
+        test_v2_get_ai_gateway_data_capture_configuration,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayDataCaptureOverride".into(),
+        test_v2_create_ai_gateway_data_capture_override,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayDataCaptureOverride".into(),
+        test_v2_delete_ai_gateway_data_capture_override,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayDataCaptureOverride".into(),
+        test_v2_update_ai_gateway_data_capture_override,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayGovernance".into(),
+        test_v2_get_ai_gateway_governance,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayGovernance".into(),
+        test_v2_update_ai_gateway_governance,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayModelGroups".into(),
+        test_v2_list_ai_gateway_model_groups,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayModelGroup".into(),
+        test_v2_create_ai_gateway_model_group,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayModelGroup".into(),
+        test_v2_delete_ai_gateway_model_group,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayModelGroup".into(),
+        test_v2_get_ai_gateway_model_group,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayModelGroup".into(),
+        test_v2_update_ai_gateway_model_group,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayModelsByCanonical".into(),
+        test_v2_list_ai_gateway_models_by_canonical,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayPolicies".into(),
+        test_v2_list_ai_gateway_policies,
+    );
+    world.function_mappings.insert(
+        "v2.UpsertAiGatewayPolicy".into(),
+        test_v2_upsert_ai_gateway_policy,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayPolicy".into(),
+        test_v2_delete_ai_gateway_policy,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayPolicy".into(),
+        test_v2_get_ai_gateway_policy,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayProviderModels".into(),
+        test_v2_list_ai_gateway_provider_models,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayProviders".into(),
+        test_v2_list_ai_gateway_providers,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayProvider".into(),
+        test_v2_create_ai_gateway_provider,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayProvider".into(),
+        test_v2_delete_ai_gateway_provider,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayProvider".into(),
+        test_v2_get_ai_gateway_provider,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayProvider".into(),
+        test_v2_update_ai_gateway_provider,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayModels".into(),
+        test_v2_list_ai_gateway_models,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayModel".into(),
+        test_v2_create_ai_gateway_model,
+    );
+    world.function_mappings.insert(
+        "v2.BulkCreateAiGatewayModels".into(),
+        test_v2_bulk_create_ai_gateway_models,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayModel".into(),
+        test_v2_delete_ai_gateway_model,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayModel".into(),
+        test_v2_update_ai_gateway_model,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayModelPricing".into(),
+        test_v2_delete_ai_gateway_model_pricing,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayModelPricing".into(),
+        test_v2_get_ai_gateway_model_pricing,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayModelPricing".into(),
+        test_v2_update_ai_gateway_model_pricing,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayRateLimits".into(),
+        test_v2_list_ai_gateway_rate_limits,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayRateLimit".into(),
+        test_v2_create_ai_gateway_rate_limit,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayRateLimitUsage".into(),
+        test_v2_get_ai_gateway_rate_limit_usage,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayRateLimit".into(),
+        test_v2_delete_ai_gateway_rate_limit,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayRateLimit".into(),
+        test_v2_get_ai_gateway_rate_limit,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayRateLimit".into(),
+        test_v2_update_ai_gateway_rate_limit,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAiGatewayRoutingRule".into(),
+        test_v2_delete_ai_gateway_routing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.ListAiGatewayRoutingRules".into(),
+        test_v2_list_ai_gateway_routing_rules,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAiGatewayRoutingRule".into(),
+        test_v2_create_ai_gateway_routing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAiGatewayRoutingRule".into(),
+        test_v2_update_ai_gateway_routing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayRoutingRule".into(),
+        test_v2_get_ai_gateway_routing_rule,
+    );
     world
         .function_mappings
         .insert("v2.SearchCases".into(), test_v2_search_cases);
@@ -23655,6 +23872,1584 @@ fn test_v2_get_investigation(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_investigation_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_budgets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_budgets_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_budget(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_budget_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_budget(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_ai_gateway_budget_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_budget(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_budget_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_budget(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_budget_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_budget_current_period(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_budget_current_period_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_budget_instances(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let window = _parameters
+        .get("window")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let split_dim = _parameters
+        .get("split_dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::ListAiGatewayBudgetInstancesOptionalParams::default();
+    params.window = window;
+    params.split_dim = split_dim;
+    params.sort = sort;
+    params.limit = limit;
+    params.offset = offset;
+    let response = match block_on(api.list_ai_gateway_budget_instances_with_http_info(id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_override_ai_gateway_budget_instance_capacity(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.override_ai_gateway_budget_instance_capacity_with_http_info(id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_budget_instance_dimensions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let window = _parameters
+        .get("window")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let split_dim = _parameters
+        .get("split_dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let dim = _parameters
+        .get("dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let value = _parameters
+        .get("value")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::ListAiGatewayBudgetInstanceDimensionsOptionalParams::default();
+    params.window = window;
+    params.split_dim = split_dim;
+    params.dim = dim;
+    params.query = query;
+    params.value = value;
+    params.limit = limit;
+    let response =
+        match block_on(api.list_ai_gateway_budget_instance_dimensions_with_http_info(id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_reset_ai_gateway_budget_instance_spend(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.reset_ai_gateway_budget_instance_spend_with_http_info(id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_budget_instances_summary(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let window = _parameters
+        .get("window")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let split_dim = _parameters
+        .get("split_dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::GetAiGatewayBudgetInstancesSummaryOptionalParams::default();
+    params.window = window;
+    params.split_dim = split_dim;
+    let response =
+        match block_on(api.get_ai_gateway_budget_instances_summary_with_http_info(id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_data_capture_configuration(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_ai_gateway_data_capture_configuration_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_data_capture_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_data_capture_override_with_http_info(body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_data_capture_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_ai_gateway_data_capture_override_with_http_info(id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_data_capture_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_ai_gateway_data_capture_override_with_http_info(id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_governance(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_ai_gateway_governance_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_governance(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_governance_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_model_groups(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_model_groups_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_model_group(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_model_group_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_model_group(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_ai_gateway_model_group_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_model_group(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_model_group_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_model_group(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_model_group_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_models_by_canonical(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_models_by_canonical_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let user_id = _parameters
+        .get("user_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::ListAiGatewayPoliciesOptionalParams::default();
+    params.user_id = user_id;
+    let response = match block_on(api.list_ai_gateway_policies_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upsert_ai_gateway_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let user_id = _parameters
+        .get("user_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::UpsertAiGatewayPolicyOptionalParams::default();
+    params.user_id = user_id;
+    let response = match block_on(api.upsert_ai_gateway_policy_with_http_info(body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let inbound = serde_json::from_value(_parameters.get("inbound").unwrap().clone()).unwrap();
+    let user_id = _parameters
+        .get("user_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::DeleteAiGatewayPolicyOptionalParams::default();
+    params.user_id = user_id;
+    let response = match block_on(api.delete_ai_gateway_policy_with_http_info(inbound, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let inbound = serde_json::from_value(_parameters.get("inbound").unwrap().clone()).unwrap();
+    let user_id = _parameters
+        .get("user_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::GetAiGatewayPolicyOptionalParams::default();
+    params.user_id = user_id;
+    let response = match block_on(api.get_ai_gateway_policy_with_http_info(inbound, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_provider_models(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let integration_type =
+        serde_json::from_value(_parameters.get("integration_type").unwrap().clone()).unwrap();
+    let integration_account_id =
+        serde_json::from_value(_parameters.get("integration_account_id").unwrap().clone()).unwrap();
+    let project_id = _parameters
+        .get("project_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let location = _parameters
+        .get("location")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let bedrock_region = _parameters
+        .get("bedrock_region")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let foundry_resource_id = _parameters
+        .get("foundry_resource_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::ListAiGatewayProviderModelsOptionalParams::default();
+    params.project_id = project_id;
+    params.location = location;
+    params.bedrock_region = bedrock_region;
+    params.foundry_resource_id = foundry_resource_id;
+    let response = match block_on(api.list_ai_gateway_provider_models_with_http_info(
+        integration_type,
+        integration_account_id,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_providers(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_providers_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_provider(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_provider_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_provider(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let force = _parameters
+        .get("force")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::DeleteAiGatewayProviderOptionalParams::default();
+    params.force = force;
+    let response = match block_on(api.delete_ai_gateway_provider_with_http_info(id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_provider(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_provider_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_provider(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_provider_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_models(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_ai_gateway_models_with_http_info(provider_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_model(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_model_with_http_info(provider_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_bulk_create_ai_gateway_models(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.bulk_create_ai_gateway_models_with_http_info(provider_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_model(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_ai_gateway_model_with_http_info(provider_id, canonical)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_model(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_ai_gateway_model_with_http_info(provider_id, canonical, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_model_pricing(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_ai_gateway_model_pricing_with_http_info(provider_id, canonical),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_model_pricing(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_ai_gateway_model_pricing_with_http_info(provider_id, canonical)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_model_pricing(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_model_pricing_with_http_info(
+        provider_id,
+        canonical,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_rate_limits(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_rate_limits_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_rate_limit(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_rate_limit_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_rate_limit_usage(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_ai_gateway_rate_limit_usage_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_rate_limit(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_ai_gateway_rate_limit_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_rate_limit(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_rate_limit_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_rate_limit(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_rate_limit_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_routing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let slug = serde_json::from_value(_parameters.get("slug").unwrap().clone()).unwrap();
+    let force = _parameters
+        .get("force")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ai_gateway::DeleteAiGatewayRoutingRuleOptionalParams::default();
+    params.force = force;
+    let response = match block_on(api.delete_ai_gateway_routing_rule_with_http_info(slug, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_routing_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ai_gateway_routing_rules_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ai_gateway_routing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_ai_gateway_routing_rule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_routing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let slug = serde_json::from_value(_parameters.get("slug").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ai_gateway_routing_rule_with_http_info(slug, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_routing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let slug = serde_json::from_value(_parameters.get("slug").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ai_gateway_routing_rule_with_http_info(slug)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
