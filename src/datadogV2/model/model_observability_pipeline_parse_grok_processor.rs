@@ -31,9 +31,10 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// The list of Grok parsing rules selected by either source field or include query.
+    /// The list of custom Grok parsing rules selected by either source field or include query. Omit to use only the Datadog library rules.
     #[serde(rename = "rules")]
-    pub rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
+    pub rules:
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>>,
     /// The processor type. The value should always be `parse_grok`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
@@ -49,7 +50,6 @@ impl ObservabilityPipelineParseGrokProcessor {
         enabled: bool,
         id: String,
         include: String,
-        rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
         type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
     ) -> ObservabilityPipelineParseGrokProcessor {
         ObservabilityPipelineParseGrokProcessor {
@@ -59,7 +59,7 @@ impl ObservabilityPipelineParseGrokProcessor {
             field: None,
             id,
             include,
-            rules,
+            rules: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -78,6 +78,14 @@ impl ObservabilityPipelineParseGrokProcessor {
 
     pub fn field(mut self, value: String) -> Self {
         self.field = Some(value);
+        self
+    }
+
+    pub fn rules(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
+    ) -> Self {
+        self.rules = Some(value);
         self
     }
 
@@ -157,6 +165,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rules" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -180,7 +191,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineParseGrokProcessor {

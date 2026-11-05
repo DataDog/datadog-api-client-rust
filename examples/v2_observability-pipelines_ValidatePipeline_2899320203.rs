@@ -58,6 +58,7 @@ async fn main() {
                                 "my-processor-group".to_string(),
                                 "service:my-service".to_string(),
                                 vec!["http-client-source".to_string()],
+                            ).processors(
                                 vec![
                                     ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
                                         Box::new(
