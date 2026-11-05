@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreatePageResponse {
-    /// The information returned after successfully creating a page.
+    /// The information returned after successfully creating a Page.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreatePageResponseData>,
     #[serde(flatten)]
