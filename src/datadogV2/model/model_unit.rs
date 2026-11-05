@@ -14,7 +14,10 @@ pub struct Unit {
     /// Unit family, allows for conversion between units of the same family, for scaling.
     #[serde(rename = "family")]
     pub family: Option<String>,
-    /// Unit name
+    /// The identifier of the unit.
+    #[serde(rename = "id")]
+    pub id: Option<i64>,
+    /// Unit name.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// Plural form of the unit name.
@@ -37,6 +40,7 @@ impl Unit {
     pub fn new() -> Unit {
         Unit {
             family: None,
+            id: None,
             name: None,
             plural: None,
             scale_factor: None,
@@ -48,6 +52,11 @@ impl Unit {
 
     pub fn family(mut self, value: String) -> Self {
         self.family = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: i64) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -104,6 +113,7 @@ impl<'de> Deserialize<'de> for Unit {
                 M: MapAccess<'a>,
             {
                 let mut family: Option<String> = None;
+                let mut id: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut plural: Option<String> = None;
                 let mut scale_factor: Option<f64> = None;
@@ -121,6 +131,12 @@ impl<'de> Deserialize<'de> for Unit {
                                 continue;
                             }
                             family = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -157,6 +173,7 @@ impl<'de> Deserialize<'de> for Unit {
 
                 let content = Unit {
                     family,
+                    id,
                     name,
                     plural,
                     scale_factor,
