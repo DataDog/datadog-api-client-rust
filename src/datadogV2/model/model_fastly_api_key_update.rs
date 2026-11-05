@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct FastlyAPIKeyUpdate {
     /// The `FastlyAPIKeyUpdate` `api_key`.
     #[serde(rename = "api_key")]
-    pub api_key: Option<String>,
+    pub api_key: Option<crate::datadogV2::model::FastlyAPIKeyUpdateApiKey>,
     /// The definition of the `FastlyAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::FastlyAPIKeyType,
@@ -34,7 +34,7 @@ impl FastlyAPIKeyUpdate {
         }
     }
 
-    pub fn api_key(mut self, value: String) -> Self {
+    pub fn api_key(mut self, value: crate::datadogV2::model::FastlyAPIKeyUpdateApiKey) -> Self {
         self.api_key = Some(value);
         self
     }
@@ -65,7 +65,7 @@ impl<'de> Deserialize<'de> for FastlyAPIKeyUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_key: Option<String> = None;
+                let mut api_key: Option<crate::datadogV2::model::FastlyAPIKeyUpdateApiKey> = None;
                 let mut type_: Option<crate::datadogV2::model::FastlyAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,6 +80,14 @@ impl<'de> Deserialize<'de> for FastlyAPIKeyUpdate {
                                 continue;
                             }
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_key) = api_key {
+                                match _api_key {
+                                    crate::datadogV2::model::FastlyAPIKeyUpdateApiKey::UnparsedObject(_api_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

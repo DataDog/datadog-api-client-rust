@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct OktaAPIToken {
     /// The `OktaAPIToken` `api_token`.
     #[serde(rename = "api_token")]
-    pub api_token: String,
+    pub api_token: crate::datadogV2::model::OktaAPITokenApiToken,
     /// The `OktaAPIToken` `domain`.
     #[serde(rename = "domain")]
-    pub domain: String,
+    pub domain: crate::datadogV2::model::OktaAPITokenDomain,
     /// The definition of the `OktaAPIToken` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OktaAPITokenType,
@@ -29,8 +29,8 @@ pub struct OktaAPIToken {
 
 impl OktaAPIToken {
     pub fn new(
-        api_token: String,
-        domain: String,
+        api_token: crate::datadogV2::model::OktaAPITokenApiToken,
+        domain: crate::datadogV2::model::OktaAPITokenDomain,
         type_: crate::datadogV2::model::OktaAPITokenType,
     ) -> OktaAPIToken {
         OktaAPIToken {
@@ -68,8 +68,8 @@ impl<'de> Deserialize<'de> for OktaAPIToken {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_token: Option<String> = None;
-                let mut domain: Option<String> = None;
+                let mut api_token: Option<crate::datadogV2::model::OktaAPITokenApiToken> = None;
+                let mut domain: Option<crate::datadogV2::model::OktaAPITokenDomain> = None;
                 let mut type_: Option<crate::datadogV2::model::OktaAPITokenType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -81,9 +81,27 @@ impl<'de> Deserialize<'de> for OktaAPIToken {
                     match k.as_str() {
                         "api_token" => {
                             api_token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_token) = api_token {
+                                match _api_token {
+                                    crate::datadogV2::model::OktaAPITokenApiToken::UnparsedObject(_api_token) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "domain" => {
                             domain = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _domain) = domain {
+                                match _domain {
+                                    crate::datadogV2::model::OktaAPITokenDomain::UnparsedObject(
+                                        _domain,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

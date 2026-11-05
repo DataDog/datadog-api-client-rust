@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct CloudflareGlobalAPIToken {
     /// The `CloudflareGlobalAPIToken` `auth_email`.
     #[serde(rename = "auth_email")]
-    pub auth_email: String,
+    pub auth_email: crate::datadogV2::model::CloudflareGlobalAPITokenAuthEmail,
     /// The `CloudflareGlobalAPIToken` `global_api_key`.
     #[serde(rename = "global_api_key")]
-    pub global_api_key: String,
+    pub global_api_key: crate::datadogV2::model::CloudflareGlobalAPITokenGlobalApiKey,
     /// The definition of the `CloudflareGlobalAPIToken` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudflareGlobalAPITokenType,
@@ -29,8 +29,8 @@ pub struct CloudflareGlobalAPIToken {
 
 impl CloudflareGlobalAPIToken {
     pub fn new(
-        auth_email: String,
-        global_api_key: String,
+        auth_email: crate::datadogV2::model::CloudflareGlobalAPITokenAuthEmail,
+        global_api_key: crate::datadogV2::model::CloudflareGlobalAPITokenGlobalApiKey,
         type_: crate::datadogV2::model::CloudflareGlobalAPITokenType,
     ) -> CloudflareGlobalAPIToken {
         CloudflareGlobalAPIToken {
@@ -68,8 +68,12 @@ impl<'de> Deserialize<'de> for CloudflareGlobalAPIToken {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_email: Option<String> = None;
-                let mut global_api_key: Option<String> = None;
+                let mut auth_email: Option<
+                    crate::datadogV2::model::CloudflareGlobalAPITokenAuthEmail,
+                > = None;
+                let mut global_api_key: Option<
+                    crate::datadogV2::model::CloudflareGlobalAPITokenGlobalApiKey,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::CloudflareGlobalAPITokenType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -81,10 +85,26 @@ impl<'de> Deserialize<'de> for CloudflareGlobalAPIToken {
                     match k.as_str() {
                         "auth_email" => {
                             auth_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _auth_email) = auth_email {
+                                match _auth_email {
+                                    crate::datadogV2::model::CloudflareGlobalAPITokenAuthEmail::UnparsedObject(_auth_email) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "global_api_key" => {
                             global_api_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _global_api_key) = global_api_key {
+                                match _global_api_key {
+                                    crate::datadogV2::model::CloudflareGlobalAPITokenGlobalApiKey::UnparsedObject(_global_api_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

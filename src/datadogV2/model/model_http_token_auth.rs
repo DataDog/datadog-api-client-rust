@@ -17,6 +17,9 @@ pub struct HTTPTokenAuth {
     /// The `HTTPTokenAuth` `headers`.
     #[serde(rename = "headers")]
     pub headers: Option<Vec<crate::datadogV2::model::HTTPHeader>>,
+    /// HTTP authentication tokens returned by the API. Use `tokens` when creating or updating tokens.
+    #[serde(rename = "http_tokens")]
+    pub http_tokens: Option<Vec<crate::datadogV2::model::HTTPTokenResponse>>,
     /// The `HTTPTokenAuth` `tokens`.
     #[serde(rename = "tokens")]
     pub tokens: Option<Vec<crate::datadogV2::model::HTTPToken>>,
@@ -38,6 +41,7 @@ impl HTTPTokenAuth {
         HTTPTokenAuth {
             body: None,
             headers: None,
+            http_tokens: None,
             tokens: None,
             type_,
             url_parameters: None,
@@ -53,6 +57,11 @@ impl HTTPTokenAuth {
 
     pub fn headers(mut self, value: Vec<crate::datadogV2::model::HTTPHeader>) -> Self {
         self.headers = Some(value);
+        self
+    }
+
+    pub fn http_tokens(mut self, value: Vec<crate::datadogV2::model::HTTPTokenResponse>) -> Self {
+        self.http_tokens = Some(value);
         self
     }
 
@@ -94,6 +103,7 @@ impl<'de> Deserialize<'de> for HTTPTokenAuth {
             {
                 let mut body: Option<crate::datadogV2::model::HTTPBody> = None;
                 let mut headers: Option<Vec<crate::datadogV2::model::HTTPHeader>> = None;
+                let mut http_tokens: Option<Vec<crate::datadogV2::model::HTTPTokenResponse>> = None;
                 let mut tokens: Option<Vec<crate::datadogV2::model::HTTPToken>> = None;
                 let mut type_: Option<crate::datadogV2::model::HTTPTokenAuthType> = None;
                 let mut url_parameters: Option<Vec<crate::datadogV2::model::UrlParam>> = None;
@@ -116,6 +126,13 @@ impl<'de> Deserialize<'de> for HTTPTokenAuth {
                                 continue;
                             }
                             headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "http_tokens" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            http_tokens =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tokens" => {
                             if v.is_null() {
@@ -155,6 +172,7 @@ impl<'de> Deserialize<'de> for HTTPTokenAuth {
                 let content = HTTPTokenAuth {
                     body,
                     headers,
+                    http_tokens,
                     tokens,
                     type_,
                     url_parameters,

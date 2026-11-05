@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct FreshserviceAPIKey {
     /// The `FreshserviceAPIKey` `api_key`.
     #[serde(rename = "api_key")]
-    pub api_key: String,
+    pub api_key: crate::datadogV2::model::FreshserviceAPIKeyApiKey,
     /// The `FreshserviceAPIKey` `domain`.
     #[serde(rename = "domain")]
-    pub domain: String,
+    pub domain: crate::datadogV2::model::FreshserviceAPIKeyDomain,
     /// The definition of the `FreshserviceAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::FreshserviceAPIKeyType,
@@ -29,8 +29,8 @@ pub struct FreshserviceAPIKey {
 
 impl FreshserviceAPIKey {
     pub fn new(
-        api_key: String,
-        domain: String,
+        api_key: crate::datadogV2::model::FreshserviceAPIKeyApiKey,
+        domain: crate::datadogV2::model::FreshserviceAPIKeyDomain,
         type_: crate::datadogV2::model::FreshserviceAPIKeyType,
     ) -> FreshserviceAPIKey {
         FreshserviceAPIKey {
@@ -68,8 +68,8 @@ impl<'de> Deserialize<'de> for FreshserviceAPIKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_key: Option<String> = None;
-                let mut domain: Option<String> = None;
+                let mut api_key: Option<crate::datadogV2::model::FreshserviceAPIKeyApiKey> = None;
+                let mut domain: Option<crate::datadogV2::model::FreshserviceAPIKeyDomain> = None;
                 let mut type_: Option<crate::datadogV2::model::FreshserviceAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -81,9 +81,25 @@ impl<'de> Deserialize<'de> for FreshserviceAPIKey {
                     match k.as_str() {
                         "api_key" => {
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_key) = api_key {
+                                match _api_key {
+                                    crate::datadogV2::model::FreshserviceAPIKeyApiKey::UnparsedObject(_api_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "domain" => {
                             domain = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _domain) = domain {
+                                match _domain {
+                                    crate::datadogV2::model::FreshserviceAPIKeyDomain::UnparsedObject(_domain) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

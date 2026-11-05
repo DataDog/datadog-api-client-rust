@@ -11,6 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ActionConnectionAttributes {
+    /// AWS Secrets Manager settings shared by the credential references on a `DATACENTER` connection. These settings are required whenever a field uses an AWS Secrets Manager reference.
+    #[serde(
+        rename = "external_secrets_manager",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub external_secrets_manager:
+        Option<Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>>,
     /// The definition of `ActionConnectionIntegration` object.
     #[serde(rename = "integration")]
     pub integration: crate::datadogV2::model::ActionConnectionIntegration,
@@ -34,12 +42,21 @@ impl ActionConnectionAttributes {
         name: String,
     ) -> ActionConnectionAttributes {
         ActionConnectionAttributes {
+            external_secrets_manager: None,
             integration,
             name,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn external_secrets_manager(
+        mut self,
+        value: Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>,
+    ) -> Self {
+        self.external_secrets_manager = Some(value);
+        self
     }
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
@@ -73,6 +90,9 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut external_secrets_manager: Option<
+                    Option<crate::datadogV2::model::ActionConnectionAWSSecretsManager>,
+                > = None;
                 let mut integration: Option<crate::datadogV2::model::ActionConnectionIntegration> =
                     None;
                 let mut name: Option<String> = None;
@@ -85,6 +105,10 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "external_secrets_manager" => {
+                            external_secrets_manager =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "integration" => {
                             integration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -118,6 +142,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = ActionConnectionAttributes {
+                    external_secrets_manager,
                     integration,
                     name,
                     tags,

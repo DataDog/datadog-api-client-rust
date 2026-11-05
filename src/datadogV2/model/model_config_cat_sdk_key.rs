@@ -13,13 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct ConfigCatSDKKey {
     /// The `ConfigCatSDKKey` `api_password`.
     #[serde(rename = "api_password")]
-    pub api_password: String,
+    pub api_password: crate::datadogV2::model::ConfigCatSDKKeyApiPassword,
     /// The `ConfigCatSDKKey` `api_username`.
     #[serde(rename = "api_username")]
-    pub api_username: String,
+    pub api_username: crate::datadogV2::model::ConfigCatSDKKeyApiUsername,
     /// The `ConfigCatSDKKey` `sdk_key`.
     #[serde(rename = "sdk_key")]
-    pub sdk_key: String,
+    pub sdk_key: crate::datadogV2::model::ConfigCatSDKKeySdkKey,
     /// The definition of the `ConfigCatSDKKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ConfigCatSDKKeyType,
@@ -32,9 +32,9 @@ pub struct ConfigCatSDKKey {
 
 impl ConfigCatSDKKey {
     pub fn new(
-        api_password: String,
-        api_username: String,
-        sdk_key: String,
+        api_password: crate::datadogV2::model::ConfigCatSDKKeyApiPassword,
+        api_username: crate::datadogV2::model::ConfigCatSDKKeyApiUsername,
+        sdk_key: crate::datadogV2::model::ConfigCatSDKKeySdkKey,
         type_: crate::datadogV2::model::ConfigCatSDKKeyType,
     ) -> ConfigCatSDKKey {
         ConfigCatSDKKey {
@@ -73,9 +73,11 @@ impl<'de> Deserialize<'de> for ConfigCatSDKKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_password: Option<String> = None;
-                let mut api_username: Option<String> = None;
-                let mut sdk_key: Option<String> = None;
+                let mut api_password: Option<crate::datadogV2::model::ConfigCatSDKKeyApiPassword> =
+                    None;
+                let mut api_username: Option<crate::datadogV2::model::ConfigCatSDKKeyApiUsername> =
+                    None;
+                let mut sdk_key: Option<crate::datadogV2::model::ConfigCatSDKKeySdkKey> = None;
                 let mut type_: Option<crate::datadogV2::model::ConfigCatSDKKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -88,13 +90,37 @@ impl<'de> Deserialize<'de> for ConfigCatSDKKey {
                         "api_password" => {
                             api_password =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_password) = api_password {
+                                match _api_password {
+                                    crate::datadogV2::model::ConfigCatSDKKeyApiPassword::UnparsedObject(_api_password) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "api_username" => {
                             api_username =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_username) = api_username {
+                                match _api_username {
+                                    crate::datadogV2::model::ConfigCatSDKKeyApiUsername::UnparsedObject(_api_username) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "sdk_key" => {
                             sdk_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _sdk_key) = sdk_key {
+                                match _sdk_key {
+                                    crate::datadogV2::model::ConfigCatSDKKeySdkKey::UnparsedObject(_sdk_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

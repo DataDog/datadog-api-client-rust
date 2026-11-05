@@ -22,7 +22,7 @@ pub struct HTTPTokenUpdate {
     pub type_: crate::datadogV2::model::TokenType,
     /// The `HTTPToken` `value`.
     #[serde(rename = "value")]
-    pub value: String,
+    pub value: crate::datadogV2::model::HTTPTokenValue,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,7 +34,7 @@ impl HTTPTokenUpdate {
     pub fn new(
         name: String,
         type_: crate::datadogV2::model::TokenType,
-        value: String,
+        value: crate::datadogV2::model::HTTPTokenValue,
     ) -> HTTPTokenUpdate {
         HTTPTokenUpdate {
             deleted: None,
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for HTTPTokenUpdate {
                 let mut deleted: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::TokenType> = None;
-                let mut value: Option<String> = None;
+                let mut value: Option<crate::datadogV2::model::HTTPTokenValue> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -111,6 +111,16 @@ impl<'de> Deserialize<'de> for HTTPTokenUpdate {
                         }
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _value) = value {
+                                match _value {
+                                    crate::datadogV2::model::HTTPTokenValue::UnparsedObject(
+                                        _value,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {

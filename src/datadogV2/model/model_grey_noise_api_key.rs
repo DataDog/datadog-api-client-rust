@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct GreyNoiseAPIKey {
     /// The `GreyNoiseAPIKey` `api_key`.
     #[serde(rename = "api_key")]
-    pub api_key: String,
+    pub api_key: crate::datadogV2::model::GreyNoiseAPIKeyApiKey,
     /// The definition of the `GreyNoiseAPIKey` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GreyNoiseAPIKeyType,
@@ -26,7 +26,7 @@ pub struct GreyNoiseAPIKey {
 
 impl GreyNoiseAPIKey {
     pub fn new(
-        api_key: String,
+        api_key: crate::datadogV2::model::GreyNoiseAPIKeyApiKey,
         type_: crate::datadogV2::model::GreyNoiseAPIKeyType,
     ) -> GreyNoiseAPIKey {
         GreyNoiseAPIKey {
@@ -63,7 +63,7 @@ impl<'de> Deserialize<'de> for GreyNoiseAPIKey {
             where
                 M: MapAccess<'a>,
             {
-                let mut api_key: Option<String> = None;
+                let mut api_key: Option<crate::datadogV2::model::GreyNoiseAPIKeyApiKey> = None;
                 let mut type_: Option<crate::datadogV2::model::GreyNoiseAPIKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,6 +75,14 @@ impl<'de> Deserialize<'de> for GreyNoiseAPIKey {
                     match k.as_str() {
                         "api_key" => {
                             api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _api_key) = api_key {
+                                match _api_key {
+                                    crate::datadogV2::model::GreyNoiseAPIKeyApiKey::UnparsedObject(_api_key) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

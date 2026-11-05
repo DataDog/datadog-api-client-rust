@@ -13,16 +13,16 @@ use std::fmt::{self, Formatter};
 pub struct ServiceNowBasicAuth {
     /// The `ServiceNowBasicAuth` `instance`.
     #[serde(rename = "instance")]
-    pub instance: String,
+    pub instance: crate::datadogV2::model::ServiceNowBasicAuthInstance,
     /// The `ServiceNowBasicAuth` `password`.
     #[serde(rename = "password")]
-    pub password: String,
+    pub password: crate::datadogV2::model::ServiceNowBasicAuthPassword,
     /// The definition of the `ServiceNowBasicAuth` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ServiceNowBasicAuthType,
     /// The `ServiceNowBasicAuth` `username`.
     #[serde(rename = "username")]
-    pub username: String,
+    pub username: crate::datadogV2::model::ServiceNowBasicAuthUsername,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,10 +32,10 @@ pub struct ServiceNowBasicAuth {
 
 impl ServiceNowBasicAuth {
     pub fn new(
-        instance: String,
-        password: String,
+        instance: crate::datadogV2::model::ServiceNowBasicAuthInstance,
+        password: crate::datadogV2::model::ServiceNowBasicAuthPassword,
         type_: crate::datadogV2::model::ServiceNowBasicAuthType,
-        username: String,
+        username: crate::datadogV2::model::ServiceNowBasicAuthUsername,
     ) -> ServiceNowBasicAuth {
         ServiceNowBasicAuth {
             instance,
@@ -73,10 +73,13 @@ impl<'de> Deserialize<'de> for ServiceNowBasicAuth {
             where
                 M: MapAccess<'a>,
             {
-                let mut instance: Option<String> = None;
-                let mut password: Option<String> = None;
+                let mut instance: Option<crate::datadogV2::model::ServiceNowBasicAuthInstance> =
+                    None;
+                let mut password: Option<crate::datadogV2::model::ServiceNowBasicAuthPassword> =
+                    None;
                 let mut type_: Option<crate::datadogV2::model::ServiceNowBasicAuthType> = None;
-                let mut username: Option<String> = None;
+                let mut username: Option<crate::datadogV2::model::ServiceNowBasicAuthUsername> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,9 +90,25 @@ impl<'de> Deserialize<'de> for ServiceNowBasicAuth {
                     match k.as_str() {
                         "instance" => {
                             instance = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _instance) = instance {
+                                match _instance {
+                                    crate::datadogV2::model::ServiceNowBasicAuthInstance::UnparsedObject(_instance) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "password" => {
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _password) = password {
+                                match _password {
+                                    crate::datadogV2::model::ServiceNowBasicAuthPassword::UnparsedObject(_password) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -104,6 +123,14 @@ impl<'de> Deserialize<'de> for ServiceNowBasicAuth {
                         }
                         "username" => {
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _username) = username {
+                                match _username {
+                                    crate::datadogV2::model::ServiceNowBasicAuthUsername::UnparsedObject(_username) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
