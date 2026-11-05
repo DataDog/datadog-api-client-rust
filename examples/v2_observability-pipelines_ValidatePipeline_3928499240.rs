@@ -55,6 +55,7 @@ async fn main() {
                                 "my-processor-group".to_string(),
                                 "service:my-service".to_string(),
                                 vec!["datadog-agent-source".to_string()],
+                            ).processors(
                                 vec![
                                     ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineParseGrokProcessor(
                                         Box::new(
@@ -62,25 +63,28 @@ async fn main() {
                                                 true,
                                                 "parse-grok-processor".to_string(),
                                                 "*".to_string(),
-                                                vec![
-                                                    ObservabilityPipelineParseGrokProcessorRuleItem
-                                                    ::ObservabilityPipelineParseGrokProcessorIncludeRule(
-                                                        Box::new(
-                                                            ObservabilityPipelineParseGrokProcessorIncludeRule::new(
-                                                                "service:foo".to_string(),
-                                                                vec![
-                                                                    ObservabilityPipelineParseGrokProcessorRuleMatchRule
-                                                                    ::new(
-                                                                        "MyParsingRule".to_string(),
-                                                                        "%{word:user}".to_string(),
-                                                                    )
-                                                                ],
-                                                            ),
-                                                        ),
-                                                    )
-                                                ],
                                                 ObservabilityPipelineParseGrokProcessorType::PARSE_GROK,
-                                            ).field("content".to_string()),
+                                            )
+                                                .field("content".to_string())
+                                                .rules(
+                                                    vec![
+                                                        ObservabilityPipelineParseGrokProcessorRuleItem
+                                                        ::ObservabilityPipelineParseGrokProcessorIncludeRule(
+                                                            Box::new(
+                                                                ObservabilityPipelineParseGrokProcessorIncludeRule::new(
+                                                                    "service:foo".to_string(),
+                                                                    vec![
+                                                                        ObservabilityPipelineParseGrokProcessorRuleMatchRule
+                                                                        ::new(
+                                                                            "MyParsingRule".to_string(),
+                                                                            "%{word:user}".to_string(),
+                                                                        )
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        )
+                                                    ],
+                                                ),
                                         ),
                                     )
                                 ],

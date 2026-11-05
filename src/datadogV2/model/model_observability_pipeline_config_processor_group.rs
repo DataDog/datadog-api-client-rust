@@ -26,9 +26,9 @@ pub struct ObservabilityPipelineConfigProcessorGroup {
     /// A list of IDs for components whose output is used as the input for this processor group.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
-    /// Processors applied sequentially within this group. Events flow through each processor in order.
+    /// Processors applied sequentially within this group. Events flow through each processor in order. Omit or use an empty array for a group without processors.
     #[serde(rename = "processors")]
-    pub processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+    pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -42,7 +42,6 @@ impl ObservabilityPipelineConfigProcessorGroup {
         id: String,
         include: String,
         inputs: Vec<String>,
-        processors: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
     ) -> ObservabilityPipelineConfigProcessorGroup {
         ObservabilityPipelineConfigProcessorGroup {
             display_name: None,
@@ -50,7 +49,7 @@ impl ObservabilityPipelineConfigProcessorGroup {
             id,
             include,
             inputs,
-            processors,
+            processors: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,6 +57,14 @@ impl ObservabilityPipelineConfigProcessorGroup {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
+        self
+    }
+
+    pub fn processors(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorItem>,
+    ) -> Self {
+        self.processors = Some(value);
         self
     }
 
@@ -123,6 +130,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "processors" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -136,7 +146,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorGroup {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
-                let processors = processors.ok_or_else(|| M::Error::missing_field("processors"))?;
 
                 let content = ObservabilityPipelineConfigProcessorGroup {
                     display_name,

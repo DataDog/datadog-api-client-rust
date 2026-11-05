@@ -54,6 +54,7 @@ async fn main() {
                                     "my-processor-group".to_string(),
                                     "*".to_string(),
                                     vec!["opentelemetry-source".to_string()],
+                                ).processors(
                                     vec![
                                         ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineFilterProcessor(
                                             Box::new(
