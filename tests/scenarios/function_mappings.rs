@@ -179,6 +179,7 @@ pub struct ApiInstances {
     pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
     pub v2_api_threat_intelligence: Option<datadogV2::api_threat_intelligence::ThreatIntelligenceAPI>,
+    pub v2_api_bits_security_analyst: Option<datadogV2::api_bits_security_analyst::BitsSecurityAnalystAPI>,
     pub v2_api_sensitive_data_scanner: Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
     pub v2_api_service_accounts: Option<datadogV2::api_service_accounts::ServiceAccountsAPI>,
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
@@ -1436,6 +1437,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "BitsSecurityAnalyst" => {
+            world.api_instances.v2_api_bits_security_analyst = Some(datadogV2::api_bits_security_analyst::BitsSecurityAnalystAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "SensitiveDataScanner" => {
             world.api_instances.v2_api_sensitive_data_scanner = Some(datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI::with_client_and_config(
@@ -8171,6 +8178,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.AddSTIXThreatIntel".into(),
         test_v2_add_stix_threat_intel,
+    );
+    world.function_mappings.insert(
+        "v2.ListSecurityAgentInvestigations".into(),
+        test_v2_list_security_agent_investigations,
+    );
+    world.function_mappings.insert(
+        "v2.CountSecurityAgentInvestigations".into(),
+        test_v2_count_security_agent_investigations,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityAgentInvestigation".into(),
+        test_v2_get_security_agent_investigation,
     );
     world
         .function_mappings
@@ -66153,6 +66172,202 @@ fn test_v2_add_stix_threat_intel(world: &mut DatadogWorld, _parameters: &HashMap
     params.content_encoding = content_encoding;
     let response = match block_on(api.add_stix_threat_intel_with_http_info(ti_vendor, body, params))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_security_agent_investigations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let filter_signal_id = _parameters
+        .get("filter[signal_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_title = _parameters
+        .get("filter[title]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_verdict = _parameters
+        .get("filter[verdict]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_state = _parameters
+        .get("filter[state]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_id = _parameters
+        .get("filter[rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_type = _parameters
+        .get("filter[rule_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_signal_severity = _parameters
+        .get("filter[signal_severity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_signal_source = _parameters
+        .get("filter[signal_source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_entity = _parameters
+        .get("filter[entity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_bits_security_analyst::ListSecurityAgentInvestigationsOptionalParams::default();
+    params.filter_signal_id = filter_signal_id;
+    params.filter_title = filter_title;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_verdict = filter_verdict;
+    params.filter_state = filter_state;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_type = filter_rule_type;
+    params.filter_signal_severity = filter_signal_severity;
+    params.filter_signal_source = filter_signal_source;
+    params.filter_tags = filter_tags;
+    params.filter_entity = filter_entity;
+    params.sort = sort;
+    params.page_number = page_number;
+    params.page_size = page_size;
+    let response = match block_on(api.list_security_agent_investigations_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_count_security_agent_investigations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let field = serde_json::from_value(_parameters.get("field").unwrap().clone()).unwrap();
+    let filter_title = _parameters
+        .get("filter[title]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_verdict = _parameters
+        .get("filter[verdict]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_id = _parameters
+        .get("filter[rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_type = _parameters
+        .get("filter[rule_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_signal_severity = _parameters
+        .get("filter[signal_severity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_signal_source = _parameters
+        .get("filter[signal_source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_entity = _parameters
+        .get("filter[entity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_bits_security_analyst::CountSecurityAgentInvestigationsOptionalParams::default();
+    params.filter_title = filter_title;
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_verdict = filter_verdict;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_type = filter_rule_type;
+    params.filter_signal_severity = filter_signal_severity;
+    params.filter_signal_source = filter_signal_source;
+    params.filter_tags = filter_tags;
+    params.filter_entity = filter_entity;
+    let response =
+        match block_on(api.count_security_agent_investigations_with_http_info(field, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_agent_investigation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let investigation_id =
+        serde_json::from_value(_parameters.get("investigation_id").unwrap().clone()).unwrap();
+    let fields_investigations = _parameters
+        .get("fields[investigations]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_bits_security_analyst::GetSecurityAgentInvestigationOptionalParams::default(
+        );
+    params.fields_investigations = fields_investigations;
+    let response = match block_on(
+        api.get_security_agent_investigation_with_http_info(investigation_id, params),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
