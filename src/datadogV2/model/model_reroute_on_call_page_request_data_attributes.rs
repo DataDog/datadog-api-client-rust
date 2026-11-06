@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RerouteOnCallPageRequestDataAttributes {
-    /// An optional comment explaining why the page is being rerouted.
+    /// An optional comment explaining why the Page is being rerouted.
     #[serde(rename = "comment")]
     pub comment: Option<String>,
     /// Information about the target to notify (such as a team or user).
