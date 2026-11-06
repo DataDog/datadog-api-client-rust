@@ -7,7 +7,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorFormulaAndFunctionCostDataSource {
-    METRICS,
     CLOUD_COST,
     DATADOG_USAGE,
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -16,7 +15,6 @@ pub enum MonitorFormulaAndFunctionCostDataSource {
 impl ToString for MonitorFormulaAndFunctionCostDataSource {
     fn to_string(&self) -> String {
         match self {
-            Self::METRICS => String::from("metrics"),
             Self::CLOUD_COST => String::from("cloud_cost"),
             Self::DATADOG_USAGE => String::from("datadog_usage"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -43,7 +41,6 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionCostDataSource {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "metrics" => Self::METRICS,
             "cloud_cost" => Self::CLOUD_COST,
             "datadog_usage" => Self::DATADOG_USAGE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {

@@ -26,6 +26,9 @@ pub enum MonitorFormulaAndFunctionQueryDefinition {
     MonitorFormulaAndFunctionAggregateFilteredQueryDefinition(
         Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition>,
     ),
+    MonitorFormulaAndFunctionMetricQueryDefinition(
+        Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -83,6 +86,14 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionQueryDefinition {
         {
             if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionMetricQueryDefinition(_v));
             }
         }
 
