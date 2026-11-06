@@ -295,6 +295,10 @@ impl Default for Configuration {
             ("v2.get_ai_gateway_policy".to_owned(), false),
             ("v2.get_ai_gateway_provider".to_owned(), false),
             ("v2.get_ai_gateway_rate_limit".to_owned(), false),
+            (
+                "v2.get_ai_gateway_rate_limit_instances_summary".to_owned(),
+                false,
+            ),
             ("v2.get_ai_gateway_rate_limit_usage".to_owned(), false),
             ("v2.get_ai_gateway_routing_rule".to_owned(), false),
             (
@@ -309,6 +313,7 @@ impl Default for Configuration {
             ("v2.list_ai_gateway_policies".to_owned(), false),
             ("v2.list_ai_gateway_provider_models".to_owned(), false),
             ("v2.list_ai_gateway_providers".to_owned(), false),
+            ("v2.list_ai_gateway_rate_limit_instances".to_owned(), false),
             ("v2.list_ai_gateway_rate_limits".to_owned(), false),
             ("v2.list_ai_gateway_routing_rules".to_owned(), false),
             (
