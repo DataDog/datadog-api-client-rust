@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum CreateStatusPageRequestDataAttributesType {
     PUBLIC,
     INTERNAL,
+    PRIVATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for CreateStatusPageRequestDataAttributesType {
         match self {
             Self::PUBLIC => String::from("public"),
             Self::INTERNAL => String::from("internal"),
+            Self::PRIVATE => String::from("private"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributesType {
         Ok(match s.as_str() {
             "public" => Self::PUBLIC,
             "internal" => Self::INTERNAL,
+            "private" => Self::PRIVATE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

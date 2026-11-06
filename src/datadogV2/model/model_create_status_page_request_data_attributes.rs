@@ -18,7 +18,7 @@ pub struct CreateStatusPageRequestDataAttributes {
     #[serde(rename = "components")]
     pub components:
         Option<Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>>,
-    /// The subdomain of the status page's url taking the form `<https://{domain_prefix}.statuspage.datadoghq.com`.> Globally unique across Datadog Status Pages.
+    /// The subdomain of the status page URL. Public pages use `<https://{domain_prefix}.statuspage.datadoghq.com`,> while private pages use `<https://{domain_prefix}.private.statuspage.datadoghq.com`.> Globally unique across Datadog Status Pages.
     #[serde(rename = "domain_prefix")]
     pub domain_prefix: String,
     /// Base64-encoded image data included in email notifications sent to status page subscribers.
@@ -42,7 +42,7 @@ pub struct CreateStatusPageRequestDataAttributes {
     /// Whether users can subscribe to the status page.
     #[serde(rename = "subscriptions_enabled")]
     pub subscriptions_enabled: Option<bool>,
-    /// The type of the status page controlling how the status page is accessed.
+    /// The type of the status page controlling how the status page is accessed. Public pages are accessible to anyone, internal pages are accessible to authenticated users in the Datadog organization, and private pages are accessible only to users matching an allow email access policy and no deny email access policy.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
     /// The layout of components on the status page. Defaults to `list`. `grid` requires `visualization_type` to be `component_name_only`; changing `visualization_type` to any other value resets the layout to `list`.
