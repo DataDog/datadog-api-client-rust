@@ -1,4 +1,4 @@
-// Get a list of metrics returns "Success" response
+// List all metrics with volumes and query activity returns "Success" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_metrics::ListTagConfigurationsOptionalParams;
 use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
@@ -8,7 +8,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
-        .list_tag_configurations(ListTagConfigurationsOptionalParams::default())
+        .list_tag_configurations(ListTagConfigurationsOptionalParams::default().page_size(100))
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

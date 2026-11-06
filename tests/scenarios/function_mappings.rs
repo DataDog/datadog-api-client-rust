@@ -55685,6 +55685,12 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let filter_related_assets = _parameters
         .get("filter[related_assets]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_metrics_id = _parameters
+        .get("filter[metrics.id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_historical_metrics = _parameters
+        .get("filter[historical_metrics]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -55710,6 +55716,8 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
+    params.filter_metrics_id = filter_metrics_id;
+    params.filter_historical_metrics = filter_historical_metrics;
     params.include = include;
     params.sort = sort;
     params.window_seconds = window_seconds;
@@ -55768,6 +55776,12 @@ fn test_v2_list_tag_configurations_with_pagination(
     let filter_related_assets = _parameters
         .get("filter[related_assets]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_metrics_id = _parameters
+        .get("filter[metrics.id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_historical_metrics = _parameters
+        .get("filter[historical_metrics]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -55793,6 +55807,8 @@ fn test_v2_list_tag_configurations_with_pagination(
     params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
+    params.filter_metrics_id = filter_metrics_id;
+    params.filter_historical_metrics = filter_historical_metrics;
     params.include = include;
     params.sort = sort;
     params.window_seconds = window_seconds;
