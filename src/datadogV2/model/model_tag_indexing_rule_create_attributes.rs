@@ -17,10 +17,10 @@ pub struct TagIndexingRuleCreateAttributes {
     /// Metric name prefixes excluded from the rule's scope.
     #[serde(rename = "ignored_metric_name_matches")]
     pub ignored_metric_name_matches: Option<Vec<String>>,
-    /// Metric name prefixes (glob patterns) this rule applies to.
+    /// Metric name prefixes (glob patterns) this rule applies to. At most 50 patterns, each at most 200 characters.
     #[serde(rename = "metric_name_matches")]
     pub metric_name_matches: Vec<String>,
-    /// Human-readable name for the rule.
+    /// Human-readable name for the rule. At most 200 characters.
     #[serde(rename = "name")]
     pub name: String,
     /// Versioned configuration options for a tag indexing rule.
