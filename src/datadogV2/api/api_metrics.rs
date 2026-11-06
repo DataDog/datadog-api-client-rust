@@ -1299,7 +1299,20 @@ impl MetricsAPI {
 
     /// Create a tag indexing rule for the org. `rule_order` is assigned server-side as max+1
     /// among existing rules; use the reorder endpoint to change the evaluation order.
+    /// Every rule that matches a metric applies, in `rule_order`; a rule with
+    /// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
+    /// rules, and a rule with `override_previous_rules` set to `true` replaces them.
     /// Requires the `Manage Tags for Metrics` permission.
+    ///
+    /// Limits:
+    /// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
+    ///   already has 1,000 active rules returns a 403 error with the title
+    ///   `Tag indexing rule limit reached`.
+    /// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
+    ///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
+    /// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
+    ///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
+    ///   400 error.
     pub async fn create_tag_indexing_rule(
         &self,
         body: crate::datadogV2::model::TagIndexingRuleCreateRequest,
@@ -1323,7 +1336,20 @@ impl MetricsAPI {
 
     /// Create a tag indexing rule for the org. `rule_order` is assigned server-side as max+1
     /// among existing rules; use the reorder endpoint to change the evaluation order.
+    /// Every rule that matches a metric applies, in `rule_order`; a rule with
+    /// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
+    /// rules, and a rule with `override_previous_rules` set to `true` replaces them.
     /// Requires the `Manage Tags for Metrics` permission.
+    ///
+    /// Limits:
+    /// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
+    ///   already has 1,000 active rules returns a 403 error with the title
+    ///   `Tag indexing rule limit reached`.
+    /// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
+    ///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
+    /// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
+    ///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
+    ///   400 error.
     pub async fn create_tag_indexing_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::TagIndexingRuleCreateRequest,
@@ -4601,7 +4627,8 @@ impl MetricsAPI {
 
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
     /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
-    /// The UUIDs of all active rules must be provided; omitting any active rule UUID returns a 400 error.
+    /// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
+    /// returns a 400 error.
     /// Requires the `Manage Tags for Metrics` permission.
     pub async fn reorder_tag_indexing_rules(
         &self,
@@ -4615,7 +4642,8 @@ impl MetricsAPI {
 
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
     /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
-    /// The UUIDs of all active rules must be provided; omitting any active rule UUID returns a 400 error.
+    /// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
+    /// returns a 400 error.
     /// Requires the `Manage Tags for Metrics` permission.
     pub async fn reorder_tag_indexing_rules_with_http_info(
         &self,
@@ -5256,7 +5284,10 @@ impl MetricsAPI {
 
     /// Partially update a tag indexing rule. Fields omitted from the request body are left unchanged.
     /// Setting `rule_order` to a value already used by another rule returns 409; use the
-    /// reorder endpoint for atomic re-sequencing. Requires the `Manage Tags for Metrics` permission.
+    /// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
+    /// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
+    /// requests that exceed these limits return a 400 error.
+    /// Requires the `Manage Tags for Metrics` permission.
     pub async fn update_tag_indexing_rule(
         &self,
         id: String,
@@ -5281,7 +5312,10 @@ impl MetricsAPI {
 
     /// Partially update a tag indexing rule. Fields omitted from the request body are left unchanged.
     /// Setting `rule_order` to a value already used by another rule returns 409; use the
-    /// reorder endpoint for atomic re-sequencing. Requires the `Manage Tags for Metrics` permission.
+    /// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
+    /// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
+    /// requests that exceed these limits return a 400 error.
+    /// Requires the `Manage Tags for Metrics` permission.
     pub async fn update_tag_indexing_rule_with_http_info(
         &self,
         id: String,
