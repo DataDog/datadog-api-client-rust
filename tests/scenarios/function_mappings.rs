@@ -3465,6 +3465,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_ai_gateway_rate_limit,
     );
     world.function_mappings.insert(
+        "v2.ListAiGatewayRateLimitInstances".into(),
+        test_v2_list_ai_gateway_rate_limit_instances,
+    );
+    world.function_mappings.insert(
+        "v2.GetAiGatewayRateLimitInstancesSummary".into(),
+        test_v2_get_ai_gateway_rate_limit_instances_summary,
+    );
+    world.function_mappings.insert(
         "v2.DeleteAiGatewayRoutingRule".into(),
         test_v2_delete_ai_gateway_routing_rule,
     );
@@ -25337,6 +25345,89 @@ fn test_v2_update_ai_gateway_rate_limit(
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_ai_gateway_rate_limit_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ai_gateway_rate_limit_instances(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let split_dim = _parameters
+        .get("split_dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::ListAiGatewayRateLimitInstancesOptionalParams::default();
+    params.split_dim = split_dim;
+    params.sort = sort;
+    params.limit = limit;
+    params.offset = offset;
+    let response =
+        match block_on(api.list_ai_gateway_rate_limit_instances_with_http_info(id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_rate_limit_instances_summary(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let split_dim = _parameters
+        .get("split_dim")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ai_gateway::GetAiGatewayRateLimitInstancesSummaryOptionalParams::default();
+    params.split_dim = split_dim;
+    let response = match block_on(
+        api.get_ai_gateway_rate_limit_instances_summary_with_http_info(id, params),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {

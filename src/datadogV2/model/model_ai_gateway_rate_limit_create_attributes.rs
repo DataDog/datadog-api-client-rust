@@ -38,6 +38,13 @@ pub struct AiGatewayRateLimitCreateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub requests_per_minute: Option<Option<i64>>,
+    /// Dimension rules for a template rate limit, which gives each matched user, Team, or value its own allowance with the rule's limits. Can't be combined with user_id, team_id, or tags, and can't be changed after creation. Omit for a rule with one shared allowance.
+    #[serde(
+        rename = "selector",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub selector: Option<Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>>,
     /// Optional scope tags, such as `provider`, `model`, `ml_app`, or custom dimensions. A request matches when it has all of these tags. The reserved metadata keys `name`, `budget_name`, and `span_filter` are rejected.
     #[serde(rename = "tags")]
     pub tags: Option<std::collections::BTreeMap<String, String>>,
@@ -62,6 +69,7 @@ impl AiGatewayRateLimitCreateAttributes {
             name,
             output_tokens_per_minute: None,
             requests_per_minute: None,
+            selector: None,
             tags: None,
             team_id: None,
             user_id: None,
@@ -87,6 +95,14 @@ impl AiGatewayRateLimitCreateAttributes {
 
     pub fn requests_per_minute(mut self, value: Option<i64>) -> Self {
         self.requests_per_minute = Some(value);
+        self
+    }
+
+    pub fn selector(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
+    ) -> Self {
+        self.selector = Some(value);
         self
     }
 
@@ -136,6 +152,9 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                 let mut name: Option<String> = None;
                 let mut output_tokens_per_minute: Option<Option<i64>> = None;
                 let mut requests_per_minute: Option<Option<i64>> = None;
+                let mut selector: Option<
+                    Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
+                > = None;
                 let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut team_id: Option<uuid::Uuid> = None;
                 let mut user_id: Option<uuid::Uuid> = None;
@@ -176,6 +195,9 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                             requests_per_minute =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "selector" => {
+                            selector = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -209,6 +231,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                     name,
                     output_tokens_per_minute,
                     requests_per_minute,
+                    selector,
                     tags,
                     team_id,
                     user_id,

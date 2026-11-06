@@ -98,6 +98,22 @@ impl GetAiGatewayPolicyOptionalParams {
     }
 }
 
+/// GetAiGatewayRateLimitInstancesSummaryOptionalParams is a struct for passing parameters to the method [`AIGatewayAPI::get_ai_gateway_rate_limit_instances_summary`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetAiGatewayRateLimitInstancesSummaryOptionalParams {
+    /// Keep only counters whose split dimension equals a value, written as `<dim>=<value>`, such as `split_dim=user_id=<uuid>&split_dim=model=gpt-4o`. Dimensions use the `split_dims` names `user_id`, `team_id`, `model`, `provider`, and `tag:<key>`. Repeat the parameter to filter on several dimensions; a counter must match all of them. Each dimension may appear once and must be a per-value dimension of the rate limit.
+    pub split_dim: Option<Vec<String>>,
+}
+
+impl GetAiGatewayRateLimitInstancesSummaryOptionalParams {
+    /// Keep only counters whose split dimension equals a value, written as `<dim>=<value>`, such as `split_dim=user_id=<uuid>&split_dim=model=gpt-4o`. Dimensions use the `split_dims` names `user_id`, `team_id`, `model`, `provider`, and `tag:<key>`. Repeat the parameter to filter on several dimensions; a counter must match all of them. Each dimension may appear once and must be a per-value dimension of the rate limit.
+    pub fn split_dim(mut self, value: Vec<String>) -> Self {
+        self.split_dim = Some(value);
+        self
+    }
+}
+
 /// ListAiGatewayBudgetInstanceDimensionsOptionalParams is a struct for passing parameters to the method [`AIGatewayAPI::list_ai_gateway_budget_instance_dimensions`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -242,6 +258,43 @@ impl ListAiGatewayProviderModelsOptionalParams {
     /// ARM resource ID of the Azure AI Foundry resource used for model discovery. Required for Azure AI Foundry integrations.
     pub fn foundry_resource_id(mut self, value: String) -> Self {
         self.foundry_resource_id = Some(value);
+        self
+    }
+}
+
+/// ListAiGatewayRateLimitInstancesOptionalParams is a struct for passing parameters to the method [`AIGatewayAPI::list_ai_gateway_rate_limit_instances`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListAiGatewayRateLimitInstancesOptionalParams {
+    /// Keep only counters whose split dimension equals a value, written as `<dim>=<value>`, such as `split_dim=user_id=<uuid>&split_dim=model=gpt-4o`. Dimensions use the `split_dims` names `user_id`, `team_id`, `model`, `provider`, and `tag:<key>`. Repeat the parameter to filter on several dimensions; a counter must match all of them. Each dimension may appear once and must be a per-value dimension of the rate limit.
+    pub split_dim: Option<Vec<String>>,
+    /// Sort order for rate limit counters.
+    pub sort: Option<crate::datadogV2::model::AiGatewayRateLimitInstanceSort>,
+    /// Maximum number of rate limit counters to return.
+    pub limit: Option<i64>,
+    /// Number of rate limit counters to skip.
+    pub offset: Option<i64>,
+}
+
+impl ListAiGatewayRateLimitInstancesOptionalParams {
+    /// Keep only counters whose split dimension equals a value, written as `<dim>=<value>`, such as `split_dim=user_id=<uuid>&split_dim=model=gpt-4o`. Dimensions use the `split_dims` names `user_id`, `team_id`, `model`, `provider`, and `tag:<key>`. Repeat the parameter to filter on several dimensions; a counter must match all of them. Each dimension may appear once and must be a per-value dimension of the rate limit.
+    pub fn split_dim(mut self, value: Vec<String>) -> Self {
+        self.split_dim = Some(value);
+        self
+    }
+    /// Sort order for rate limit counters.
+    pub fn sort(mut self, value: crate::datadogV2::model::AiGatewayRateLimitInstanceSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Maximum number of rate limit counters to return.
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// Number of rate limit counters to skip.
+    pub fn offset(mut self, value: i64) -> Self {
+        self.offset = Some(value);
         self
     }
 }
@@ -478,6 +531,14 @@ pub enum GetAiGatewayRateLimitError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetAiGatewayRateLimitInstancesSummaryError is a struct for typed errors of method [`AIGatewayAPI::get_ai_gateway_rate_limit_instances_summary`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetAiGatewayRateLimitInstancesSummaryError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetAiGatewayRateLimitUsageError is a struct for typed errors of method [`AIGatewayAPI::get_ai_gateway_rate_limit_usage`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -562,6 +623,14 @@ pub enum ListAiGatewayProviderModelsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAiGatewayProvidersError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListAiGatewayRateLimitInstancesError is a struct for typed errors of method [`AIGatewayAPI::list_ai_gateway_rate_limit_instances`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListAiGatewayRateLimitInstancesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1781,7 +1850,7 @@ impl AIGatewayAPI {
         }
     }
 
-    /// Create a rate limit. All requests matching its scope share one allowance, and every matching rate limit applies. Returns 409 when another active rate limit has the same user, Team, and tags, or when the organization already has the maximum number of rate limits.
+    /// Create a rate limit. All requests matching its scope share one allowance, unless a selector makes it a template, which gives each matched user, Team, or value its own allowance. Every matching rate limit applies. Returns 409 when another active rate limit has the same user, Team, tags, and selector, or when the organization already has the maximum number of rate limits.
     pub async fn create_ai_gateway_rate_limit(
         &self,
         body: crate::datadogV2::model::AiGatewayRateLimitCreateRequest,
@@ -1803,7 +1872,7 @@ impl AIGatewayAPI {
         }
     }
 
-    /// Create a rate limit. All requests matching its scope share one allowance, and every matching rate limit applies. Returns 409 when another active rate limit has the same user, Team, and tags, or when the organization already has the maximum number of rate limits.
+    /// Create a rate limit. All requests matching its scope share one allowance, unless a selector makes it a template, which gives each matched user, Team, or value its own allowance. Every matching rate limit applies. Returns 409 when another active rate limit has the same user, Team, tags, and selector, or when the organization already has the maximum number of rate limits.
     pub async fn create_ai_gateway_rate_limit_with_http_info(
         &self,
         body: crate::datadogV2::model::AiGatewayRateLimitCreateRequest,
@@ -4297,6 +4366,141 @@ impl AIGatewayAPI {
         }
     }
 
+    /// Aggregate a template rate limit's counters, including how many there are, how many are near or at their limit, and the fullest counter's utilization. Use split_dim to aggregate only counters that match every given dimension value.
+    pub async fn get_ai_gateway_rate_limit_instances_summary(
+        &self,
+        id: uuid::Uuid,
+        params: GetAiGatewayRateLimitInstancesSummaryOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::AiGatewayRateLimitInstancesSummaryResponse,
+        datadog::Error<GetAiGatewayRateLimitInstancesSummaryError>,
+    > {
+        match self
+            .get_ai_gateway_rate_limit_instances_summary_with_http_info(id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Aggregate a template rate limit's counters, including how many there are, how many are near or at their limit, and the fullest counter's utilization. Use split_dim to aggregate only counters that match every given dimension value.
+    pub async fn get_ai_gateway_rate_limit_instances_summary_with_http_info(
+        &self,
+        id: uuid::Uuid,
+        params: GetAiGatewayRateLimitInstancesSummaryOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::AiGatewayRateLimitInstancesSummaryResponse,
+        >,
+        datadog::Error<GetAiGatewayRateLimitInstancesSummaryError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_ai_gateway_rate_limit_instances_summary";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_ai_gateway_rate_limit_instances_summary' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let split_dim = params.split_dim;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rate-limits/{id}/instances/summary",
+            local_configuration.get_operation_host(local_operation_id),
+            id = datadog::urlencode(id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = split_dim {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("split_dim", &param.to_string())]);
+            }
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::AiGatewayRateLimitInstancesSummaryResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetAiGatewayRateLimitInstancesSummaryError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get live usage for the organization's rate limits. Returns requests and tokens counted in the rolling one-minute window and requests limited in the last 15 minutes for each enabled rate limit, plus `untracked` (traffic no enforced rate limit covers) and `total` (all gateway traffic).
     pub async fn get_ai_gateway_rate_limit_usage(
         &self,
@@ -5699,6 +5903,154 @@ impl AIGatewayAPI {
             };
         } else {
             let local_entity: Option<ListAiGatewayProvidersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the counters of a template rate limit, one per matched user, Team, or value, with their live usage. Counters appear within a few minutes of their first request and are dropped after 30 days without one. Usage is read for counters seen in the last 20 minutes, at most 200 per request; past that, rows carry usage_known false. A rate limit with one shared allowance returns an empty list.
+    pub async fn list_ai_gateway_rate_limit_instances(
+        &self,
+        id: uuid::Uuid,
+        params: ListAiGatewayRateLimitInstancesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::AiGatewayRateLimitInstanceListResponse,
+        datadog::Error<ListAiGatewayRateLimitInstancesError>,
+    > {
+        match self
+            .list_ai_gateway_rate_limit_instances_with_http_info(id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the counters of a template rate limit, one per matched user, Team, or value, with their live usage. Counters appear within a few minutes of their first request and are dropped after 30 days without one. Usage is read for counters seen in the last 20 minutes, at most 200 per request; past that, rows carry usage_known false. A rate limit with one shared allowance returns an empty list.
+    pub async fn list_ai_gateway_rate_limit_instances_with_http_info(
+        &self,
+        id: uuid::Uuid,
+        params: ListAiGatewayRateLimitInstancesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::AiGatewayRateLimitInstanceListResponse>,
+        datadog::Error<ListAiGatewayRateLimitInstancesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_ai_gateway_rate_limit_instances";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_ai_gateway_rate_limit_instances' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let split_dim = params.split_dim;
+        let sort = params.sort;
+        let limit = params.limit;
+        let offset = params.offset;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rate-limits/{id}/instances",
+            local_configuration.get_operation_host(local_operation_id),
+            id = datadog::urlencode(id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = split_dim {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("split_dim", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::AiGatewayRateLimitInstanceListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListAiGatewayRateLimitInstancesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -7460,7 +7812,7 @@ impl AIGatewayAPI {
         }
     }
 
-    /// Update a rate limit. Only the attributes sent are changed. Scope stays editable, and changes never reset current usage. Returns 409 when the rule was changed concurrently or the new scope duplicates another rule.
+    /// Update a rate limit. Only the attributes sent are changed, and changes never reset current usage. Scope stays editable, except on a template rate limit, whose user_id, team_id, and tags are rejected with 400. Returns 409 when the rule was changed concurrently or the new scope duplicates another rule.
     pub async fn update_ai_gateway_rate_limit(
         &self,
         id: uuid::Uuid,
@@ -7486,7 +7838,7 @@ impl AIGatewayAPI {
         }
     }
 
-    /// Update a rate limit. Only the attributes sent are changed. Scope stays editable, and changes never reset current usage. Returns 409 when the rule was changed concurrently or the new scope duplicates another rule.
+    /// Update a rate limit. Only the attributes sent are changed, and changes never reset current usage. Scope stays editable, except on a template rate limit, whose user_id, team_id, and tags are rejected with 400. Returns 409 when the rule was changed concurrently or the new scope duplicates another rule.
     pub async fn update_ai_gateway_rate_limit_with_http_info(
         &self,
         id: uuid::Uuid,
