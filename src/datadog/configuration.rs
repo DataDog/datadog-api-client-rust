@@ -1171,6 +1171,11 @@ impl Default for Configuration {
                 "v2.create_git_hub_cloud_auth_persona_mapping".to_owned(),
                 false,
             ),
+            (
+                "v2.create_oidc_cloud_auth_persona_mapping".to_owned(),
+                false,
+            ),
+            ("v2.create_oidc_cloud_auth_provider".to_owned(), false),
             ("v2.delete_aws_cloud_auth_intake_mapping".to_owned(), false),
             ("v2.delete_aws_cloud_auth_persona_mapping".to_owned(), false),
             (
@@ -1181,6 +1186,11 @@ impl Default for Configuration {
                 "v2.delete_git_hub_cloud_auth_persona_mapping".to_owned(),
                 false,
             ),
+            (
+                "v2.delete_oidc_cloud_auth_persona_mapping".to_owned(),
+                false,
+            ),
+            ("v2.delete_oidc_cloud_auth_provider".to_owned(), false),
             ("v2.get_aws_cloud_auth_intake_mapping".to_owned(), false),
             ("v2.get_aws_cloud_auth_persona_mapping".to_owned(), false),
             ("v2.get_git_hub_cloud_auth_intake_mapping".to_owned(), false),
@@ -1188,6 +1198,8 @@ impl Default for Configuration {
                 "v2.get_git_hub_cloud_auth_persona_mapping".to_owned(),
                 false,
             ),
+            ("v2.get_oidc_cloud_auth_persona_mapping".to_owned(), false),
+            ("v2.get_oidc_cloud_auth_provider".to_owned(), false),
             ("v2.list_aws_cloud_auth_intake_mappings".to_owned(), false),
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             (
@@ -1198,6 +1210,8 @@ impl Default for Configuration {
                 "v2.list_git_hub_cloud_auth_persona_mappings".to_owned(),
                 false,
             ),
+            ("v2.list_oidc_cloud_auth_persona_mappings".to_owned(), false),
+            ("v2.list_oidc_cloud_auth_providers".to_owned(), false),
         ]);
         let mut auth_keys: HashMap<String, APIKey> = HashMap::new();
         auth_keys.insert(
