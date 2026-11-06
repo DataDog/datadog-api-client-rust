@@ -21,6 +21,7 @@ pub enum ActionConnectionIntegration {
     FreshserviceIntegration(Box<crate::datadogV2::model::FreshserviceIntegration>),
     GCPIntegration(Box<crate::datadogV2::model::GCPIntegration>),
     GeminiIntegration(Box<crate::datadogV2::model::GeminiIntegration>),
+    GithubIntegration(Box<crate::datadogV2::model::GithubIntegration>),
     GitlabIntegration(Box<crate::datadogV2::model::GitlabIntegration>),
     GreyNoiseIntegration(Box<crate::datadogV2::model::GreyNoiseIntegration>),
     HTTPIntegration(Box<crate::datadogV2::model::HTTPIntegration>),
@@ -131,6 +132,13 @@ impl<'de> Deserialize<'de> for ActionConnectionIntegration {
         {
             if !_v._unparsed {
                 return Ok(ActionConnectionIntegration::GeminiIntegration(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::GithubIntegration>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ActionConnectionIntegration::GithubIntegration(_v));
             }
         }
         if let Ok(_v) =
