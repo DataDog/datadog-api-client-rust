@@ -18,7 +18,7 @@ pub struct TagRuleUpdateData {
     /// The unique identifier of the tag rule being updated.
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API resource type for a tag rule.
+    /// JSON:API resource type for a tag rule. Responses use the legacy `tag_policy` value.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]
