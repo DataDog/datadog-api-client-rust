@@ -29,6 +29,38 @@ impl CreateQuotasOptionalParams {
     }
 }
 
+/// DeletePendingQuotaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::delete_pending_quota`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct DeletePendingQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub include_descendants: Option<bool>,
+}
+
+impl DeletePendingQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub fn include_descendants(mut self, value: bool) -> Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
+/// DeleteQuotaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::delete_quota`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct DeleteQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub include_descendants: Option<bool>,
+}
+
+impl DeleteQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub fn include_descendants(mut self, value: bool) -> Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// GetBillingDimensionMappingOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_billing_dimension_mapping`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -294,6 +326,22 @@ impl GetProjectedCostOptionalParams {
     }
 }
 
+/// GetQuotaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_quota`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub include_descendants: Option<bool>,
+}
+
+impl GetQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub fn include_descendants(mut self, value: bool) -> Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// GetUsageApplicationSecurityMonitoringOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -451,6 +499,22 @@ impl ListTemporaryGrantRequestsOptionalParams {
     }
 }
 
+/// UpdateQuotaOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::update_quota`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub include_descendants: Option<bool>,
+}
+
+impl UpdateQuotaOptionalParams {
+    /// Allow access to authorized descendant organizations in the same datacenter. When false, an identifier belonging to any other organization returns 403. Defaults to true for ID-based operations to preserve existing descendant access.
+    pub fn include_descendants(mut self, value: bool) -> Self {
+        self.include_descendants = Some(value);
+        self
+    }
+}
+
 /// CreateQuotasError is a struct for typed errors of method [`UsageMeteringAPI::create_quotas`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -574,6 +638,15 @@ pub enum GetMyTemporaryGrantRequestError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProjectedCostError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetQuotaError is a struct for typed errors of method [`UsageMeteringAPI::get_quota`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetQuotaError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1166,9 +1239,10 @@ impl UsageMeteringAPI {
         &self,
         quota_namespace: String,
         id: String,
+        params: DeletePendingQuotaOptionalParams,
     ) -> Result<(), datadog::Error<DeletePendingQuotaError>> {
         match self
-            .delete_pending_quota_with_http_info(quota_namespace, id)
+            .delete_pending_quota_with_http_info(quota_namespace, id, params)
             .await
         {
             Ok(_) => Ok(()),
@@ -1181,6 +1255,7 @@ impl UsageMeteringAPI {
         &self,
         quota_namespace: String,
         id: String,
+        params: DeletePendingQuotaOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePendingQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_pending_quota";
@@ -1193,6 +1268,9 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let include_descendants = params.include_descendants;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -1203,6 +1281,11 @@ impl UsageMeteringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -1268,8 +1351,12 @@ impl UsageMeteringAPI {
         &self,
         quota_namespace: String,
         id: String,
+        params: DeleteQuotaOptionalParams,
     ) -> Result<(), datadog::Error<DeleteQuotaError>> {
-        match self.delete_quota_with_http_info(quota_namespace, id).await {
+        match self
+            .delete_quota_with_http_info(quota_namespace, id, params)
+            .await
+        {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
@@ -1280,6 +1367,7 @@ impl UsageMeteringAPI {
         &self,
         quota_namespace: String,
         id: String,
+        params: DeleteQuotaOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_quota";
@@ -1292,6 +1380,9 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let include_descendants = params.include_descendants;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -1302,6 +1393,11 @@ impl UsageMeteringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -2861,6 +2957,135 @@ impl UsageMeteringAPI {
         }
     }
 
+    /// Returns the effective configuration of one usage quota by its opaque identifier. Future pending changes are returned separately; a pending change that is already effective is returned as the current limit. The quota must belong to the caller's organization or an authorized descendant in the same datacenter. Set `include_descendants=false` to reject all other organizations. Stored quotas remain readable after the scoped user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
+    pub async fn get_quota(
+        &self,
+        quota_namespace: String,
+        id: String,
+        params: GetQuotaOptionalParams,
+    ) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<GetQuotaError>> {
+        match self
+            .get_quota_with_http_info(quota_namespace, id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns the effective configuration of one usage quota by its opaque identifier. Future pending changes are returned separately; a pending change that is already effective is returned as the current limit. The quota must belong to the caller's organization or an authorized descendant in the same datacenter. Set `include_descendants=false` to reject all other organizations. Stored quotas remain readable after the scoped user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
+    pub async fn get_quota_with_http_info(
+        &self,
+        quota_namespace: String,
+        id: String,
+        params: GetQuotaOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>,
+        datadog::Error<GetQuotaError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_quota";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_quota' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include_descendants = params.include_descendants;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/quotas/{quota_namespace}/{id}",
+            local_configuration.get_operation_host(local_operation_id),
+            quota_namespace = datadog::urlencode(quota_namespace),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::UsageQuotaResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetQuotaError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Read an organization request, justification, decision, and linked grant state. Requires Billing Edit. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
     pub async fn get_temporary_grant_request(
         &self,
@@ -4201,15 +4426,16 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    /// Updates the supplied fields on a usage quota. Setting `enforced=false` clears any pending change atomically, including when enforcement is already disabled. Other immediate updates preserve future pending changes when `pending_usage_limit` is omitted. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
     pub async fn update_quota(
         &self,
         quota_namespace: String,
         id: String,
         body: crate::datadogV2::model::UsageQuotaUpdateRequest,
+        params: UpdateQuotaOptionalParams,
     ) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<UpdateQuotaError>> {
         match self
-            .update_quota_with_http_info(quota_namespace, id, body)
+            .update_quota_with_http_info(quota_namespace, id, body, params)
             .await
         {
             Ok(response_content) => {
@@ -4225,12 +4451,13 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    /// Updates the supplied fields on a usage quota. Setting `enforced=false` clears any pending change atomically, including when enforcement is already disabled. Other immediate updates preserve future pending changes when `pending_usage_limit` is omitted. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
     pub async fn update_quota_with_http_info(
         &self,
         quota_namespace: String,
         id: String,
         body: crate::datadogV2::model::UsageQuotaUpdateRequest,
+        params: UpdateQuotaOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>,
         datadog::Error<UpdateQuotaError>,
@@ -4246,6 +4473,9 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let include_descendants = params.include_descendants;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -4256,6 +4486,11 @@ impl UsageMeteringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_descendants {
+            local_req_builder =
+                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
