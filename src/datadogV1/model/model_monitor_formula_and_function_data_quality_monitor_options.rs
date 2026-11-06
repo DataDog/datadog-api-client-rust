@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
+    /// Number of consecutive runs that must breach before the monitor alerts.
+    /// Only supported by `data-jobs alert` job duration monitors. Defaults to `1`.
+    #[serde(rename = "consecutive_runs")]
+    pub consecutive_runs: Option<i64>,
     /// Crontab expression to override the default schedule.
     #[serde(rename = "crontab_override")]
     pub crontab_override: Option<String>,
@@ -20,6 +24,11 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     /// Custom WHERE clause for the query.
     #[serde(rename = "custom_where")]
     pub custom_where: Option<String>,
+    /// How a `data-jobs alert` job duration monitor detects a breach. Must match the
+    /// `.detection()` call in the monitor query. Required for job duration monitors.
+    #[serde(rename = "detection_type")]
+    pub detection_type:
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType>,
     /// Columns to group results by.
     #[serde(rename = "group_by_columns")]
     pub group_by_columns: Option<Vec<String>>,
@@ -51,9 +60,11 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
 impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
     pub fn new() -> MonitorFormulaAndFunctionDataQualityMonitorOptions {
         MonitorFormulaAndFunctionDataQualityMonitorOptions {
+            consecutive_runs: None,
             crontab_override: None,
             custom_sql: None,
             custom_where: None,
+            detection_type: None,
             group_by_columns: None,
             model_configuration: None,
             model_type_override: None,
@@ -62,6 +73,11 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn consecutive_runs(mut self, value: i64) -> Self {
+        self.consecutive_runs = Some(value);
+        self
     }
 
     pub fn crontab_override(mut self, value: String) -> Self {
@@ -76,6 +92,14 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
 
     pub fn custom_where(mut self, value: String) -> Self {
         self.custom_where = Some(value);
+        self
+    }
+
+    pub fn detection_type(
+        mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType,
+    ) -> Self {
+        self.detection_type = Some(value);
         self
     }
 
@@ -145,9 +169,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
             where
                 M: MapAccess<'a>,
             {
+                let mut consecutive_runs: Option<i64> = None;
                 let mut crontab_override: Option<String> = None;
                 let mut custom_sql: Option<String> = None;
                 let mut custom_where: Option<String> = None;
+                let mut detection_type: Option<
+                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType,
+                > = None;
                 let mut group_by_columns: Option<Vec<String>> = None;
                 let mut model_configuration: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration,
@@ -165,6 +193,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "consecutive_runs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            consecutive_runs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "crontab_override" => {
                             if v.is_null() {
                                 continue;
@@ -184,6 +219,21 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                             }
                             custom_where =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "detection_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            detection_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _detection_type) = detection_type {
+                                match _detection_type {
+                                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType::UnparsedObject(_detection_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "group_by_columns" => {
                             if v.is_null() {
@@ -237,9 +287,11 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                 }
 
                 let content = MonitorFormulaAndFunctionDataQualityMonitorOptions {
+                    consecutive_runs,
                     crontab_override,
                     custom_sql,
                     custom_where,
+                    detection_type,
                     group_by_columns,
                     model_configuration,
                     model_type_override,
