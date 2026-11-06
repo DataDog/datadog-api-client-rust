@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMEventAttributes {
-    /// JSON object of attributes from RUM events.
+    /// JSON object of attributes from RUM events. Attributes are nested by path: the facet `@view.name` used in queries is returned as `attributes.view.name`.
+    /// Common attributes include `type` (the event type: `session`, `view`, `action`, `resource`, `error`, `long_task` or `vital`), `application.id`, `session.id`, `view.id`, `view.name` and `usr.id`. Durations such as `view.time_spent`, `view.loading_time` and `resource.duration` are in nanoseconds.
     #[serde(rename = "attributes")]
     pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The name of the application or service generating RUM events.
@@ -19,10 +20,10 @@ pub struct RUMEventAttributes {
     /// value when you use both products.
     #[serde(rename = "service")]
     pub service: Option<String>,
-    /// Array of tags associated with your event.
+    /// Array of tags associated with your event, in `key:value` format.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Timestamp of your event.
+    /// Timestamp of your event, in ISO 8601 format.
     #[serde(rename = "timestamp")]
     pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]

@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMQueryPageOptions {
-    /// List following results with a cursor provided in the previous query.
+    /// Cursor to get the next page of results, taken from `meta.page.after` of the previous response. Send it with the same `filter` and `sort` as the request that returned it.
     #[serde(rename = "cursor")]
     pub cursor: Option<String>,
-    /// Maximum number of events in the response.
+    /// Maximum number of events in the response. Between 1 and 1000.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
     #[serde(flatten)]

@@ -20,7 +20,7 @@ pub struct RUMResponseMetadata {
     /// The identifier of the request.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
-    /// The status of the response.
+    /// The status of the response. `timeout` means the query did not complete in time and the results are partial.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::RUMResponseStatus>,
     /// A list of warnings (non-fatal errors) encountered. Partial results may return if
