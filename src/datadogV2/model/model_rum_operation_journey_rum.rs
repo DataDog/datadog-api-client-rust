@@ -12,8 +12,10 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationJourneyRum {
     /// The ordered list of steps composing the RUM journey.
+    /// `null` in responses for operations that have no journey defined.
+    #[serialize_always]
     #[serde(rename = "rum_steps")]
-    pub rum_steps: Vec<crate::datadogV2::model::RUMOperationJourneyStep>,
+    pub rum_steps: Option<Vec<crate::datadogV2::model::RUMOperationJourneyStep>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,7 +25,7 @@ pub struct RUMOperationJourneyRum {
 
 impl RUMOperationJourneyRum {
     pub fn new(
-        rum_steps: Vec<crate::datadogV2::model::RUMOperationJourneyStep>,
+        rum_steps: Option<Vec<crate::datadogV2::model::RUMOperationJourneyStep>>,
     ) -> RUMOperationJourneyRum {
         RUMOperationJourneyRum {
             rum_steps,
@@ -58,8 +60,9 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyRum {
             where
                 M: MapAccess<'a>,
             {
-                let mut rum_steps: Option<Vec<crate::datadogV2::model::RUMOperationJourneyStep>> =
-                    None;
+                let mut rum_steps: Option<
+                    Option<Vec<crate::datadogV2::model::RUMOperationJourneyStep>>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

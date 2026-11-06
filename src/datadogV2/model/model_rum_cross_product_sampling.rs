@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumCrossProductSampling {
+    /// Whether the cross-product retention filter for Session Replay is enabled.
+    #[serde(rename = "session_replay_enabled")]
+    pub session_replay_enabled: Option<bool>,
+    /// The sample rate for the Session Replay cross-product retention filter, between 0 and 100.
+    #[serde(rename = "session_replay_sample_rate")]
+    pub session_replay_sample_rate: Option<f64>,
     /// Whether the cross-product retention filter for APM traces is enabled.
     #[serde(rename = "trace_enabled")]
     pub trace_enabled: Option<bool>,
@@ -27,11 +33,23 @@ pub struct RumCrossProductSampling {
 impl RumCrossProductSampling {
     pub fn new() -> RumCrossProductSampling {
         RumCrossProductSampling {
+            session_replay_enabled: None,
+            session_replay_sample_rate: None,
             trace_enabled: None,
             trace_sample_rate: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn session_replay_enabled(mut self, value: bool) -> Self {
+        self.session_replay_enabled = Some(value);
+        self
+    }
+
+    pub fn session_replay_sample_rate(mut self, value: f64) -> Self {
+        self.session_replay_sample_rate = Some(value);
+        self
     }
 
     pub fn trace_enabled(mut self, value: bool) -> Self {
@@ -76,6 +94,8 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
             where
                 M: MapAccess<'a>,
             {
+                let mut session_replay_enabled: Option<bool> = None;
+                let mut session_replay_sample_rate: Option<f64> = None;
                 let mut trace_enabled: Option<bool> = None;
                 let mut trace_sample_rate: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +106,20 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "session_replay_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            session_replay_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "session_replay_sample_rate" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            session_replay_sample_rate =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "trace_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -109,6 +143,8 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
                 }
 
                 let content = RumCrossProductSampling {
+                    session_replay_enabled,
+                    session_replay_sample_rate,
                     trace_enabled,
                     trace_sample_rate,
                     additional_properties,
