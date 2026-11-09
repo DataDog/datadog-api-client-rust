@@ -682,6 +682,7 @@ impl Default for Configuration {
             ("v2.delete_requested_temporary_grant".to_owned(), false),
             ("v2.delete_temporary_grant_request".to_owned(), false),
             ("v2.get_my_temporary_grant_request".to_owned(), false),
+            ("v2.get_quota".to_owned(), false),
             ("v2.get_temporary_grant_request".to_owned(), false),
             ("v2.list_my_temporary_grant_requests".to_owned(), false),
             ("v2.list_quotas".to_owned(), false),

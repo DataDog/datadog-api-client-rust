@@ -1,5 +1,6 @@
 // Update a usage quota returns "OK" response
 use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_usage_metering::UpdateQuotaOptionalParams;
 use datadog_api_client::datadogV2::api_usage_metering::UsageMeteringAPI;
 use datadog_api_client::datadogV2::model::UsageQuotaType;
 use datadog_api_client::datadogV2::model::UsageQuotaUpdateAttributes;
@@ -24,6 +25,7 @@ async fn main() {
             "ai_credits".to_string(),
             "MTIzNB9haV9jcmVkaXRzH3VzZXJfaGFuZGxlOl9fQUxMX18".to_string(),
             body,
+            UpdateQuotaOptionalParams::default(),
         )
         .await;
     if let Ok(value) = resp {
