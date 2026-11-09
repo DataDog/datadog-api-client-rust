@@ -14,10 +14,11 @@ pub struct SpansAggregateBucketAttributes {
     /// The key, value pairs for each group by.
     #[serde(rename = "by")]
     pub by: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// The compute data.
+    /// Map of compute ID (`c0`, `c1`, ... in request order) to the computed value, or to a list of
+    /// `{time, value}` points for a `timeseries` compute.
     #[serde(rename = "compute")]
     pub compute: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// A map of the metric name -> value for regular compute or list of values for a timeseries.
+    /// Not returned by this endpoint. Read the values from `compute` instead.
     #[serde(rename = "computes")]
     pub computes: Option<
         std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>,

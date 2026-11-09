@@ -58,7 +58,8 @@ pub struct APMTraceSpan {
     /// The lower 64 bits of the trace ID, as an unsigned 64-bit integer.
     #[serde(rename = "traceID")]
     pub trace_id: i64,
-    /// The full 128-bit trace ID, encoded as a 32-character hexadecimal string.
+    /// The trace ID as requested: a decimal ID is returned unchanged, and a hexadecimal ID is lowercased and
+    /// left-padded with zeros to 32 characters.
     #[serde(rename = "traceIDFull")]
     pub trace_id_full: String,
     /// The type of the span (for example, `web`, `db`, or `rpc`).
