@@ -603,8 +603,6 @@ impl Default for Configuration {
                 "v2.start_security_monitoring_rule_proposal".to_owned(),
                 false,
             ),
-            ("v2.update_findings_assignee".to_owned(), false),
-            ("v2.update_findings_severity".to_owned(), false),
             (
                 "v2.update_security_findings_automation_due_date_rule".to_owned(),
                 false,
