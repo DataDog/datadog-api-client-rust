@@ -33,6 +33,9 @@ pub struct StatusPageAsIncludedAttributes {
     /// Base64-encoded image data included in email notifications sent to status page subscribers.
     #[serde(rename = "email_header_image")]
     pub email_header_image: Option<String>,
+    /// Whether email notifications are enabled for the status page. Must be enabled when `subscriptions_enabled` is `true`.
+    #[serde(rename = "email_notifications_enabled")]
+    pub email_notifications_enabled: Option<bool>,
     /// Whether the status page is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -42,6 +45,9 @@ pub struct StatusPageAsIncludedAttributes {
     /// Timestamp of when the status page was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Whether Microsoft Teams subscriptions are enabled for the status page.
+    #[serde(rename = "ms_teams_subscriptions_enabled")]
+    pub ms_teams_subscriptions_enabled: Option<bool>,
     /// The name of the status page.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -88,9 +94,11 @@ impl StatusPageAsIncludedAttributes {
             custom_domain_enabled: None,
             domain_prefix: None,
             email_header_image: None,
+            email_notifications_enabled: None,
             enabled: None,
             favicon: None,
             modified_at: None,
+            ms_teams_subscriptions_enabled: None,
             name: None,
             page_url: None,
             rss_feed_enabled: None,
@@ -143,6 +151,11 @@ impl StatusPageAsIncludedAttributes {
         self
     }
 
+    pub fn email_notifications_enabled(mut self, value: bool) -> Self {
+        self.email_notifications_enabled = Some(value);
+        self
+    }
+
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
@@ -155,6 +168,11 @@ impl StatusPageAsIncludedAttributes {
 
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
+        self
+    }
+
+    pub fn ms_teams_subscriptions_enabled(mut self, value: bool) -> Self {
+        self.ms_teams_subscriptions_enabled = Some(value);
         self
     }
 
@@ -253,9 +271,11 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                 let mut custom_domain_enabled: Option<bool> = None;
                 let mut domain_prefix: Option<String> = None;
                 let mut email_header_image: Option<String> = None;
+                let mut email_notifications_enabled: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
                 let mut favicon: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut ms_teams_subscriptions_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut page_url: Option<String> = None;
                 let mut rss_feed_enabled: Option<bool> = None;
@@ -324,6 +344,13 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                             email_header_image =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "email_notifications_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            email_notifications_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             if v.is_null() {
                                 continue;
@@ -341,6 +368,13 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                                 continue;
                             }
                             modified_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ms_teams_subscriptions_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ms_teams_subscriptions_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -443,9 +477,11 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                     custom_domain_enabled,
                     domain_prefix,
                     email_header_image,
+                    email_notifications_enabled,
                     enabled,
                     favicon,
                     modified_at,
+                    ms_teams_subscriptions_enabled,
                     name,
                     page_url,
                     rss_feed_enabled,
