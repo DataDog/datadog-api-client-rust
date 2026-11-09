@@ -14,7 +14,8 @@ pub struct TraceData {
     /// The attributes of a trace returned by the Get trace by ID endpoint.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TraceAttributes,
-    /// The full 128-bit trace ID, encoded as a 32-character hexadecimal string.
+    /// The lower 64 bits of the trace ID, as a decimal string.
+    /// The full trace ID is in each span's `traceIDFull`.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the trace resource. The value is always `trace`.

@@ -80,13 +80,23 @@ impl GetPrunedTraceByIDOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetTraceByIDOptionalParams {
-    /// List of span fields to include in the response. When omitted, every available field is returned.
+    /// Tag keys to keep in each span's `meta` and `metrics`, for example `http.status_code` or `error.message`.
+    /// Each value is matched against tag keys by exact name, with or without a leading `@`.
+    /// Passing `meta` or `metrics` doesn't return the whole map.
+    /// Core span fields such as `service`, `resource`, `name`, `duration`, IDs, and timestamps, and the `env` tag
+    /// in `meta`, are always returned.
+    /// When omitted, all tags are returned.
     /// Values may be passed as repeated query parameters or as a single comma-separated value.
     pub include_fields: Option<Vec<String>>,
 }
 
 impl GetTraceByIDOptionalParams {
-    /// List of span fields to include in the response. When omitted, every available field is returned.
+    /// Tag keys to keep in each span's `meta` and `metrics`, for example `http.status_code` or `error.message`.
+    /// Each value is matched against tag keys by exact name, with or without a leading `@`.
+    /// Passing `meta` or `metrics` doesn't return the whole map.
+    /// Core span fields such as `service`, `resource`, `name`, `duration`, IDs, and timestamps, and the `env` tag
+    /// in `meta`, are always returned.
+    /// When omitted, all tags are returned.
     /// Values may be passed as repeated query parameters or as a single comma-separated value.
     pub fn include_fields(mut self, value: Vec<String>) -> Self {
         self.include_fields = Some(value);
@@ -363,6 +373,7 @@ impl APMTraceAPI {
     /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
     /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
+    /// For very large traces, use Get a pruned trace by ID, or set `include_fields` to keep only the tags you need.
     pub async fn get_trace_by_id(
         &self,
         trace_id: String,
@@ -387,6 +398,7 @@ impl APMTraceAPI {
     /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
     /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
+    /// For very large traces, use Get a pruned trace by ID, or set `include_fields` to keep only the tags you need.
     pub async fn get_trace_by_id_with_http_info(
         &self,
         trace_id: String,

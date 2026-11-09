@@ -58,7 +58,8 @@ pub struct SpansAttributes {
     /// Array of tags associated with your span.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Id of the trace to which the span belongs.
+    /// ID of the trace to which the span belongs: a 32-character hexadecimal string for 128-bit trace IDs,
+    /// or a decimal string for 64-bit trace IDs. Pass it unchanged to Get a trace by ID.
     #[serde(rename = "trace_id")]
     pub trace_id: Option<String>,
     /// The type of the span.
