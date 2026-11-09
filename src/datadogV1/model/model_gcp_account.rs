@@ -45,6 +45,9 @@ pub struct GCPAccount {
     #[deprecated]
     #[serde(rename = "host_filters")]
     pub host_filters: Option<String>,
+    /// The Datadog-assigned ID of the GCP integration account.
+    #[serde(rename = "id")]
+    pub id: Option<uuid::Uuid>,
     /// When enabled, Datadog will activate the Cloud Security Monitoring product for this service account. Note: This requires resource_collection_enabled to be set to true.
     #[serde(rename = "is_cspm_enabled")]
     pub is_cspm_enabled: Option<bool>,
@@ -96,6 +99,7 @@ impl GCPAccount {
             cloud_run_revision_filters: None,
             errors: None,
             host_filters: None,
+            id: None,
             is_cspm_enabled: None,
             is_resource_change_collection_enabled: None,
             is_security_command_center_enabled: None,
@@ -162,6 +166,12 @@ impl GCPAccount {
     #[allow(deprecated)]
     pub fn host_filters(mut self, value: String) -> Self {
         self.host_filters = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -269,6 +279,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                 let mut cloud_run_revision_filters: Option<Vec<String>> = None;
                 let mut errors: Option<Vec<String>> = None;
                 let mut host_filters: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut is_cspm_enabled: Option<bool> = None;
                 let mut is_resource_change_collection_enabled: Option<bool> = None;
                 let mut is_security_command_center_enabled: Option<bool> = None;
@@ -347,6 +358,12 @@ impl<'de> Deserialize<'de> for GCPAccount {
                             }
                             host_filters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_cspm_enabled" => {
                             if v.is_null() {
@@ -434,6 +451,7 @@ impl<'de> Deserialize<'de> for GCPAccount {
                     cloud_run_revision_filters,
                     errors,
                     host_filters,
+                    id,
                     is_cspm_enabled,
                     is_resource_change_collection_enabled,
                     is_security_command_center_enabled,
