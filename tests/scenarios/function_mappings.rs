@@ -8741,6 +8741,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateStatusPage".into(), test_v2_update_status_page);
+    world.function_mappings.insert(
+        "v2.ListEmailAccessPolicies".into(),
+        test_v2_list_email_access_policies,
+    );
+    world.function_mappings.insert(
+        "v2.CreateEmailAccessPolicy".into(),
+        test_v2_create_email_access_policy,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteEmailAccessPolicy".into(),
+        test_v2_delete_email_access_policy,
+    );
     world
         .function_mappings
         .insert("v2.ListComponents".into(), test_v2_list_components);
@@ -71051,6 +71063,104 @@ fn test_v2_update_status_page(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.delete_subscribers = delete_subscribers;
     params.include = include;
     let response = match block_on(api.update_status_page_with_http_info(page_id, body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_email_access_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::ListEmailAccessPoliciesOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.list_email_access_policies_with_http_info(page_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_email_access_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::CreateEmailAccessPolicyOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_email_access_policy_with_http_info(page_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_email_access_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_email_access_policy_with_http_info(page_id, policy_id))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {

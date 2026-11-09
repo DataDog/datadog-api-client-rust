@@ -97,6 +97,22 @@ impl CreateDegradationTemplateOptionalParams {
     }
 }
 
+/// CreateEmailAccessPolicyOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::create_email_access_policy`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateEmailAccessPolicyOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl CreateEmailAccessPolicyOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// CreateMaintenanceOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::create_maintenance`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -350,6 +366,22 @@ impl ListDegradationsOptionalParams {
     /// Optional source ID filter. Returns only degradations whose source matches this ID (for example, an incident ID).
     pub fn filter_source_id(mut self, value: String) -> Self {
         self.filter_source_id = Some(value);
+        self
+    }
+}
+
+/// ListEmailAccessPoliciesOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::list_email_access_policies`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListEmailAccessPoliciesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl ListEmailAccessPoliciesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -622,6 +654,15 @@ pub enum CreateDegradationTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateEmailAccessPolicyError is a struct for typed errors of method [`StatusPagesAPI::create_email_access_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateEmailAccessPolicyError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateMaintenanceError is a struct for typed errors of method [`StatusPagesAPI::create_maintenance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -666,6 +707,15 @@ pub enum DeleteDegradationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDegradationTemplateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteEmailAccessPolicyError is a struct for typed errors of method [`StatusPagesAPI::delete_email_access_policy`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteEmailAccessPolicyError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -762,6 +812,15 @@ pub enum ListDegradationTemplatesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDegradationsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListEmailAccessPoliciesError is a struct for typed errors of method [`StatusPagesAPI::list_email_access_policies`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListEmailAccessPoliciesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1793,6 +1852,177 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Creates an email access policy for a private status page.
+    pub async fn create_email_access_policy(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateStatusPageEmailAccessPolicyRequest,
+        params: CreateEmailAccessPolicyOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::StatusPageEmailAccessPolicyResponse,
+        datadog::Error<CreateEmailAccessPolicyError>,
+    > {
+        match self
+            .create_email_access_policy_with_http_info(page_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Creates an email access policy for a private status page.
+    pub async fn create_email_access_policy_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateStatusPageEmailAccessPolicyRequest,
+        params: CreateEmailAccessPolicyOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::StatusPageEmailAccessPolicyResponse>,
+        datadog::Error<CreateEmailAccessPolicyError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_email_access_policy";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/access_policies/email",
+            local_configuration.get_operation_host(local_operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::StatusPageEmailAccessPolicyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateEmailAccessPolicyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Schedules a new maintenance.
     pub async fn create_maintenance(
         &self,
@@ -2567,6 +2797,100 @@ impl StatusPagesAPI {
             })
         } else {
             let local_entity: Option<DeleteDegradationTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Deletes an email access policy from a private status page.
+    pub async fn delete_email_access_policy(
+        &self,
+        page_id: uuid::Uuid,
+        policy_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteEmailAccessPolicyError>> {
+        match self
+            .delete_email_access_policy_with_http_info(page_id, policy_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes an email access policy from a private status page.
+    pub async fn delete_email_access_policy_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        policy_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteEmailAccessPolicyError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_email_access_policy";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/access_policies/email/{policy_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            policy_id = datadog::urlencode(policy_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteEmailAccessPolicyError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -4051,6 +4375,129 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Lists the email access policies for a private status page.
+    pub async fn list_email_access_policies(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListEmailAccessPoliciesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::StatusPageEmailAccessPolicyArrayResponse,
+        datadog::Error<ListEmailAccessPoliciesError>,
+    > {
+        match self
+            .list_email_access_policies_with_http_info(page_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Lists the email access policies for a private status page.
+    pub async fn list_email_access_policies_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListEmailAccessPoliciesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::StatusPageEmailAccessPolicyArrayResponse>,
+        datadog::Error<ListEmailAccessPoliciesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_email_access_policies";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/access_policies/email",
+            local_configuration.get_operation_host(local_operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::StatusPageEmailAccessPolicyArrayResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListEmailAccessPoliciesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Lists all maintenance templates for a status page.
     pub async fn list_maintenance_templates(
         &self,
@@ -4609,7 +5056,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Publishes a status page. For pages of type `public`, makes the status page available on the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, makes the status page available under the `status-pages/$domain_prefix/view` route within the Datadog organization and requires the `status_pages_internal_page_publish` permission.
+    /// Publishes a status page. For pages of type `public`, makes the status page available on the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, makes the status page available under the `status-pages/$domain_prefix/view` route within the Datadog organization and requires the `status_pages_internal_page_publish` permission. For pages of type `private`, makes the status page available to users authorized by its email access policies and requires the `status_pages_private_page_publish` permission. A private status page must have at least one email access policy before it can be published.
     pub async fn publish_status_page(
         &self,
         page_id: uuid::Uuid,
@@ -4620,7 +5067,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Publishes a status page. For pages of type `public`, makes the status page available on the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, makes the status page available under the `status-pages/$domain_prefix/view` route within the Datadog organization and requires the `status_pages_internal_page_publish` permission.
+    /// Publishes a status page. For pages of type `public`, makes the status page available on the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, makes the status page available under the `status-pages/$domain_prefix/view` route within the Datadog organization and requires the `status_pages_internal_page_publish` permission. For pages of type `private`, makes the status page available to users authorized by its email access policies and requires the `status_pages_private_page_publish` permission. A private status page must have at least one email access policy before it can be published.
     pub async fn publish_status_page_with_http_info(
         &self,
         page_id: uuid::Uuid,
@@ -4795,7 +5242,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Unpublishes a status page. For pages of type `public`, removes the status page from the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, removes the `status-pages/$domain_prefix/view` route from the Datadog organization and requires the `status_pages_internal_page_publish` permission.
+    /// Unpublishes a status page. For pages of type `public`, removes the status page from the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, removes the `status-pages/$domain_prefix/view` route from the Datadog organization and requires the `status_pages_internal_page_publish` permission. For pages of type `private`, removes access to the private status page and requires the `status_pages_private_page_publish` permission.
     pub async fn unpublish_status_page(
         &self,
         page_id: uuid::Uuid,
@@ -4806,7 +5253,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Unpublishes a status page. For pages of type `public`, removes the status page from the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, removes the `status-pages/$domain_prefix/view` route from the Datadog organization and requires the `status_pages_internal_page_publish` permission.
+    /// Unpublishes a status page. For pages of type `public`, removes the status page from the public internet and requires the `status_pages_public_page_publish` permission. For pages of type `internal`, removes the `status-pages/$domain_prefix/view` route from the Datadog organization and requires the `status_pages_internal_page_publish` permission. For pages of type `private`, removes access to the private status page and requires the `status_pages_private_page_publish` permission.
     pub async fn unpublish_status_page_with_http_info(
         &self,
         page_id: uuid::Uuid,
