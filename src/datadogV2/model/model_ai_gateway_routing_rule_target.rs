@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTarget {
+    /// True on the default destination of a classified tier. Omitted on other targets.
+    #[serde(rename = "default")]
+    pub default: Option<bool>,
     /// Saved target row ID. On replacement, retain this ID only within its original route and at most once. A stale or foreign ID is rejected.
     #[serde(rename = "id")]
     pub id: Option<i64>,
@@ -30,6 +33,9 @@ pub struct AiGatewayRoutingRuleTarget {
         with = "::serde_with::rust::double_option"
     )]
     pub reasoning_level: Option<Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>>,
+    /// Describes when the decision model picks this destination. Returned only for destinations of classified tiers, not for the default.
+    #[serde(rename = "rubric")]
+    pub rubric: Option<String>,
     /// Organization-unique resource slug.
     #[serde(rename = "slug")]
     pub slug: Option<String>,
@@ -51,17 +57,24 @@ impl AiGatewayRoutingRuleTarget {
         type_: crate::datadogV2::model::AiGatewayRoutingRuleTargetType,
     ) -> AiGatewayRoutingRuleTarget {
         AiGatewayRoutingRuleTarget {
+            default: None,
             id: None,
             model: None,
             model_id: None,
             provider: None,
             reasoning_level: None,
+            rubric: None,
             slug: None,
             type_,
             weight: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn default(mut self, value: bool) -> Self {
+        self.default = Some(value);
+        self
     }
 
     pub fn id(mut self, value: i64) -> Self {
@@ -89,6 +102,11 @@ impl AiGatewayRoutingRuleTarget {
         value: Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>,
     ) -> Self {
         self.reasoning_level = Some(value);
+        self
+    }
+
+    pub fn rubric(mut self, value: String) -> Self {
+        self.rubric = Some(value);
         self
     }
 
@@ -128,6 +146,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTarget {
             where
                 M: MapAccess<'a>,
             {
+                let mut default: Option<bool> = None;
                 let mut id: Option<i64> = None;
                 let mut model: Option<String> = None;
                 let mut model_id: Option<i64> = None;
@@ -135,6 +154,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTarget {
                 let mut reasoning_level: Option<
                     Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>,
                 > = None;
+                let mut rubric: Option<String> = None;
                 let mut slug: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::AiGatewayRoutingRuleTargetType> =
                     None;
@@ -147,6 +167,12 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTarget {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "default" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             if v.is_null() {
                                 continue;
@@ -183,6 +209,12 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTarget {
                                 }
                             }
                         }
+                        "rubric" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rubric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "slug" => {
                             if v.is_null() {
                                 continue;
@@ -216,11 +248,13 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTarget {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AiGatewayRoutingRuleTarget {
+                    default,
                     id,
                     model,
                     model_id,
                     provider,
                     reasoning_level,
+                    rubric,
                     slug,
                     type_,
                     weight,

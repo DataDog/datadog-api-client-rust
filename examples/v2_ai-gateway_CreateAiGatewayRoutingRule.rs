@@ -3,6 +3,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_ai_gateway::AIGatewayAPI;
 use datadog_api_client::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingReasoningLevel;
+use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleClassifierRequest;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleCreateData;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleCreateRequest;
@@ -18,14 +19,23 @@ async fn main() {
             "coding".to_string(),
             vec![AiGatewayRoutingRuleTierRequest::new(vec![
                 AiGatewayRoutingRuleTargetRequest::new(AiGatewayRoutingRuleTargetType::MODEL)
+                    .default(Some(false))
                     .id(901)
                     .model("gpt-5.2-codex".to_string())
                     .model_id(101)
                     .provider("prod-us".to_string())
                     .reasoning_level(Some(AiGatewayRoutingReasoningLevel::MEDIUM))
+                    .rubric(Some("Writing, reviewing, or debugging code.".to_string()))
                     .slug("coding-fallback".to_string())
                     .weight(Some(70)),
             ])
+            .classifier(Some(
+                AiGatewayRoutingRuleClassifierRequest::new()
+                    .confidence_threshold(Some(0.6 as f64))
+                    .context("Requests come from the internal coding assistant.".to_string())
+                    .model("gpt-6-luna".to_string())
+                    .provider("prod-us".to_string()),
+            ))
             .ordering(Some(AiGatewayNullableRoutingRuleTierOrdering::CONFIGURED))],
         ),
         AiGatewayRoutingRuleType::ROUTING_RULES,
