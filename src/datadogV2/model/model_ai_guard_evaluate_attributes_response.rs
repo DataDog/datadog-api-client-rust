@@ -14,6 +14,11 @@ pub struct AIGuardEvaluateAttributesResponse {
     /// The recommended action for the evaluated conversation.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::AIGuardAction,
+    /// The span tags that tracers should add to the `ai_guard` span. Each item contains a
+    /// backend-defined key and value, and clients should not assume a fixed set of keys.
+    /// Example keys include `ai_guard.evaluate_id` and `ai_guard.evaluation_context`.
+    #[serde(rename = "extra_tags")]
+    pub extra_tags: Option<Vec<crate::datadogV2::model::AIGuardExtraTag>>,
     /// The global threat probability, between `0` and `1`. Included only when computed.
     #[serde(rename = "global_prob")]
     pub global_prob: Option<f64>,
@@ -70,6 +75,7 @@ impl AIGuardEvaluateAttributesResponse {
     ) -> AIGuardEvaluateAttributesResponse {
         AIGuardEvaluateAttributesResponse {
             action,
+            extra_tags: None,
             global_prob: None,
             is_blocking_enabled,
             reason,
@@ -81,6 +87,11 @@ impl AIGuardEvaluateAttributesResponse {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn extra_tags(mut self, value: Vec<crate::datadogV2::model::AIGuardExtraTag>) -> Self {
+        self.extra_tags = Some(value);
+        self
     }
 
     pub fn global_prob(mut self, value: f64) -> Self {
@@ -133,6 +144,7 @@ impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
                 M: MapAccess<'a>,
             {
                 let mut action: Option<crate::datadogV2::model::AIGuardAction> = None;
+                let mut extra_tags: Option<Vec<crate::datadogV2::model::AIGuardExtraTag>> = None;
                 let mut global_prob: Option<f64> = None;
                 let mut is_blocking_enabled: Option<bool> = None;
                 let mut reason: Option<String> = None;
@@ -164,6 +176,12 @@ impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
                                     _ => {}
                                 }
                             }
+                        }
+                        "extra_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extra_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "global_prob" => {
                             if v.is_null() || v.as_str() == Some("") {
@@ -222,6 +240,7 @@ impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
 
                 let content = AIGuardEvaluateAttributesResponse {
                     action,
+                    extra_tags,
                     global_prob,
                     is_blocking_enabled,
                     reason,
