@@ -72,6 +72,7 @@ pub use self::api::api_feature_flags;
 pub use self::api::api_fleet_automation;
 pub use self::api::api_forms;
 pub use self::api::api_gcp_integration;
+pub use self::api::api_git_hub_costs_integration;
 pub use self::api::api_google_chat_integration;
 pub use self::api::api_governance_console;
 pub use self::api::api_high_availability_multi_region;

@@ -71,6 +71,7 @@ pub mod api_feature_flags;
 pub mod api_fleet_automation;
 pub mod api_forms;
 pub mod api_gcp_integration;
+pub mod api_git_hub_costs_integration;
 pub mod api_google_chat_integration;
 pub mod api_governance_console;
 pub mod api_high_availability_multi_region;
