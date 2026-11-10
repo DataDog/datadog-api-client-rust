@@ -11,13 +11,23 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTierRequest {
-    /// How a tier orders its targets. Omitted or null defaults to configured, which preserves target order. The weighted_affinity ordering distributes first-choice assignments by relative target weights and accepts only model targets with an explicit provider, without repeated provider and model pairs in the same tier.
+    /// Decision model that picks the destination of a classified tier.
+    #[serde(
+        rename = "classifier",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub classifier: Option<Option<crate::datadogV2::model::AiGatewayRoutingRuleClassifierRequest>>,
+    /// How a tier orders its targets. Omitted or null defaults to configured, which preserves target order. The weighted_affinity ordering distributes first-choice assignments by relative target weights and accepts only model targets with an explicit provider, without repeated provider and model pairs in the same tier. The classified ordering lets a decision model pick one destination for each request by its rubric. It is allowed only on the first tier, and it needs a classifier and exactly one default destination.
+    ///
+    /// **Note**: Classified routing is in Preview and may not be available for all organizations. Saving a classified tier returns 403 Forbidden unless the feature is enabled for your organization.
     #[serde(
         rename = "ordering",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub ordering: Option<Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>>,
+    /// Targets of the tier. A classified tier accepts only model targets, each with an explicit provider ("*" is not allowed). Exactly one of its targets is the default, and the other 1 to 9 targets are destinations with a rubric.
     #[serde(rename = "targets")]
     pub targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
     #[serde(flatten)]
@@ -32,11 +42,20 @@ impl AiGatewayRoutingRuleTierRequest {
         targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
     ) -> AiGatewayRoutingRuleTierRequest {
         AiGatewayRoutingRuleTierRequest {
+            classifier: None,
             ordering: None,
             targets,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn classifier(
+        mut self,
+        value: Option<crate::datadogV2::model::AiGatewayRoutingRuleClassifierRequest>,
+    ) -> Self {
+        self.classifier = Some(value);
+        self
     }
 
     pub fn ordering(
@@ -73,6 +92,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut classifier: Option<
+                    Option<crate::datadogV2::model::AiGatewayRoutingRuleClassifierRequest>,
+                > = None;
                 let mut ordering: Option<
                     Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>,
                 > = None;
@@ -87,6 +109,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "classifier" => {
+                            classifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "ordering" => {
                             ordering = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _ordering) = ordering {
@@ -111,6 +136,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
                 let targets = targets.ok_or_else(|| M::Error::missing_field("targets"))?;
 
                 let content = AiGatewayRoutingRuleTierRequest {
+                    classifier,
                     ordering,
                     targets,
                     additional_properties,
