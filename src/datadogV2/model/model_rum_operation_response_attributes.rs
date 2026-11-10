@@ -28,9 +28,13 @@ pub struct RUMOperationResponseAttributes {
     /// The timestamp when the RUM operation was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// A Datadog user referenced by a RUM operation.
-    #[serde(rename = "created_by")]
-    pub created_by: Option<crate::datadogV2::model::RUMOperationUser>,
+    /// A Datadog user referenced by a RUM operation. `null` when the user could not be resolved.
+    #[serde(
+        rename = "created_by",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub created_by: Option<Option<crate::datadogV2::model::RUMOperationUser>>,
     /// A description of the RUM operation.
     #[serde(
         rename = "description",
@@ -42,8 +46,12 @@ pub struct RUMOperationResponseAttributes {
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
     /// The list of journey IDs associated with the RUM operation.
-    #[serde(rename = "feature_ids")]
-    pub feature_ids: Option<Vec<String>>,
+    #[serde(
+        rename = "feature_ids",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub feature_ids: Option<Option<Vec<String>>>,
     /// The definition of a RUM operation's journey, used to detect it from RUM events.
     #[serde(rename = "journey_rum")]
     pub journey_rum: crate::datadogV2::model::RUMOperationJourneyRum,
@@ -54,8 +62,9 @@ pub struct RUMOperationResponseAttributes {
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
     /// A list of tags associated with the RUM operation.
+    #[serialize_always]
     #[serde(rename = "tags")]
-    pub tags: Vec<String>,
+    pub tags: Option<Vec<String>>,
     /// The timestamp when the RUM operation was last updated.
     #[serde(
         rename = "updated_at",
@@ -63,9 +72,13 @@ pub struct RUMOperationResponseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub updated_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// A Datadog user referenced by a RUM operation.
-    #[serde(rename = "updated_by")]
-    pub updated_by: Option<crate::datadogV2::model::RUMOperationUser>,
+    /// A Datadog user referenced by a RUM operation. `null` when the user could not be resolved.
+    #[serde(
+        rename = "updated_by",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub updated_by: Option<Option<crate::datadogV2::model::RUMOperationUser>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -77,7 +90,7 @@ impl RUMOperationResponseAttributes {
     pub fn new(
         journey_rum: crate::datadogV2::model::RUMOperationJourneyRum,
         name: String,
-        tags: Vec<String>,
+        tags: Option<Vec<String>>,
     ) -> RUMOperationResponseAttributes {
         RUMOperationResponseAttributes {
             application_id: None,
@@ -113,7 +126,7 @@ impl RUMOperationResponseAttributes {
         self
     }
 
-    pub fn created_by(mut self, value: crate::datadogV2::model::RUMOperationUser) -> Self {
+    pub fn created_by(mut self, value: Option<crate::datadogV2::model::RUMOperationUser>) -> Self {
         self.created_by = Some(value);
         self
     }
@@ -128,7 +141,7 @@ impl RUMOperationResponseAttributes {
         self
     }
 
-    pub fn feature_ids(mut self, value: Vec<String>) -> Self {
+    pub fn feature_ids(mut self, value: Option<Vec<String>>) -> Self {
         self.feature_ids = Some(value);
         self
     }
@@ -143,7 +156,7 @@ impl RUMOperationResponseAttributes {
         self
     }
 
-    pub fn updated_by(mut self, value: crate::datadogV2::model::RUMOperationUser) -> Self {
+    pub fn updated_by(mut self, value: Option<crate::datadogV2::model::RUMOperationUser>) -> Self {
         self.updated_by = Some(value);
         self
     }
@@ -177,16 +190,18 @@ impl<'de> Deserialize<'de> for RUMOperationResponseAttributes {
                 let mut application_id: Option<Option<uuid::Uuid>> = None;
                 let mut category: Option<Option<String>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut created_by: Option<crate::datadogV2::model::RUMOperationUser> = None;
+                let mut created_by: Option<Option<crate::datadogV2::model::RUMOperationUser>> =
+                    None;
                 let mut description: Option<Option<String>> = None;
                 let mut display_name: Option<String> = None;
-                let mut feature_ids: Option<Vec<String>> = None;
+                let mut feature_ids: Option<Option<Vec<String>>> = None;
                 let mut journey_rum: Option<crate::datadogV2::model::RUMOperationJourneyRum> = None;
                 let mut name: Option<String> = None;
                 let mut org_id: Option<i64> = None;
-                let mut tags: Option<Vec<String>> = None;
+                let mut tags: Option<Option<Vec<String>>> = None;
                 let mut updated_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut updated_by: Option<crate::datadogV2::model::RUMOperationUser> = None;
+                let mut updated_by: Option<Option<crate::datadogV2::model::RUMOperationUser>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -209,9 +224,6 @@ impl<'de> Deserialize<'de> for RUMOperationResponseAttributes {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
@@ -226,9 +238,6 @@ impl<'de> Deserialize<'de> for RUMOperationResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "feature_ids" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             feature_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -252,9 +261,6 @@ impl<'de> Deserialize<'de> for RUMOperationResponseAttributes {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "updated_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

@@ -13252,6 +13252,8 @@ pub mod model_rum_operation_user;
 pub use self::model_rum_operation_user::RUMOperationUser;
 pub mod model_rum_operations_list_response;
 pub use self::model_rum_operations_list_response::RUMOperationsListResponse;
+pub mod model_rum_operations_list_response_links;
+pub use self::model_rum_operations_list_response_links::RUMOperationsListResponseLinks;
 pub mod model_rum_operations_list_response_meta;
 pub use self::model_rum_operations_list_response_meta::RUMOperationsListResponseMeta;
 pub mod model_rum_operations_list_response_meta_page;
