@@ -27,6 +27,15 @@ pub enum DeleteConnectionError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteUserProfileError is a struct for typed errors of method [`RumAudienceManagementAPI::delete_user_profile`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteUserProfileError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetAccountFacetInfoError is a struct for typed errors of method [`RumAudienceManagementAPI::get_account_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -399,6 +408,106 @@ impl RumAudienceManagementAPI {
             })
         } else {
             let local_entity: Option<DeleteConnectionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a Product Analytics user profile.
+    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few minutes.
+    /// This only deletes the user profile. To delete the RUM events of the user, use the RUM data deletion API.
+    pub async fn delete_user_profile(
+        &self,
+        user_id: String,
+    ) -> Result<(), datadog::Error<DeleteUserProfileError>> {
+        match self.delete_user_profile_with_http_info(user_id).await {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a Product Analytics user profile.
+    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few minutes.
+    /// This only deletes the user profile. To delete the RUM events of the user, use the RUM data deletion API.
+    pub async fn delete_user_profile_with_http_info(
+        &self,
+        user_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserProfileError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_user_profile";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_user_profile' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/users/{user_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            user_id = datadog::urlencode(user_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteUserProfileError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
