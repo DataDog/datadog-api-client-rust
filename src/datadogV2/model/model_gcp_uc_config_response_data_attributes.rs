@@ -20,6 +20,18 @@ pub struct GcpUcConfigResponseDataAttributes {
     /// The `attributes` `created_at`.
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
+    /// The BigQuery table the committed use discount (CUD) metadata is read from. Only returned when CUD metadata is configured for the account.
+    #[serde(rename = "cud_metadata_config")]
+    pub cud_metadata_config: Option<crate::datadogV2::model::GCPCudMetadataConfig>,
+    /// The error codes reported for the committed use discount (CUD) metadata export. Only returned when CUD metadata is configured for the account.
+    #[serde(rename = "cud_metadata_error_codes")]
+    pub cud_metadata_error_codes: Option<Vec<i32>>,
+    /// The state of the Google Cloud committed use discount (CUD) metadata export. Only returned when CUD metadata is configured for the account.
+    #[serde(rename = "cud_metadata_state")]
+    pub cud_metadata_state: Option<String>,
+    /// The timestamp when the committed use discount (CUD) metadata state was last updated. Only returned when CUD metadata is configured for the account.
+    #[serde(rename = "cud_metadata_status_updated_at")]
+    pub cud_metadata_status_updated_at: Option<String>,
     /// The `attributes` `dataset`.
     #[serde(rename = "dataset")]
     pub dataset: Option<String>,
@@ -67,6 +79,10 @@ impl GcpUcConfigResponseDataAttributes {
             account_id: None,
             bucket_name: None,
             created_at: None,
+            cud_metadata_config: None,
+            cud_metadata_error_codes: None,
+            cud_metadata_state: None,
+            cud_metadata_status_updated_at: None,
             dataset: None,
             error_messages: None,
             export_prefix: None,
@@ -94,6 +110,29 @@ impl GcpUcConfigResponseDataAttributes {
 
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn cud_metadata_config(
+        mut self,
+        value: crate::datadogV2::model::GCPCudMetadataConfig,
+    ) -> Self {
+        self.cud_metadata_config = Some(value);
+        self
+    }
+
+    pub fn cud_metadata_error_codes(mut self, value: Vec<i32>) -> Self {
+        self.cud_metadata_error_codes = Some(value);
+        self
+    }
+
+    pub fn cud_metadata_state(mut self, value: String) -> Self {
+        self.cud_metadata_state = Some(value);
+        self
+    }
+
+    pub fn cud_metadata_status_updated_at(mut self, value: String) -> Self {
+        self.cud_metadata_status_updated_at = Some(value);
         self
     }
 
@@ -182,6 +221,11 @@ impl<'de> Deserialize<'de> for GcpUcConfigResponseDataAttributes {
                 let mut account_id: Option<String> = None;
                 let mut bucket_name: Option<String> = None;
                 let mut created_at: Option<String> = None;
+                let mut cud_metadata_config: Option<crate::datadogV2::model::GCPCudMetadataConfig> =
+                    None;
+                let mut cud_metadata_error_codes: Option<Vec<i32>> = None;
+                let mut cud_metadata_state: Option<String> = None;
+                let mut cud_metadata_status_updated_at: Option<String> = None;
                 let mut dataset: Option<String> = None;
                 let mut error_messages: Option<Option<Vec<String>>> = None;
                 let mut export_prefix: Option<String> = None;
@@ -218,6 +262,34 @@ impl<'de> Deserialize<'de> for GcpUcConfigResponseDataAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cud_metadata_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cud_metadata_config =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cud_metadata_error_codes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cud_metadata_error_codes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cud_metadata_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cud_metadata_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cud_metadata_status_updated_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cud_metadata_status_updated_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dataset" => {
                             if v.is_null() {
@@ -293,6 +365,10 @@ impl<'de> Deserialize<'de> for GcpUcConfigResponseDataAttributes {
                     account_id,
                     bucket_name,
                     created_at,
+                    cud_metadata_config,
+                    cud_metadata_error_codes,
+                    cud_metadata_state,
+                    cud_metadata_status_updated_at,
                     dataset,
                     error_messages,
                     export_prefix,
