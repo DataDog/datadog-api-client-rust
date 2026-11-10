@@ -39280,8 +39280,12 @@ fn test_v2_create_quotas(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let include_descendants = _parameters
         .get("include_descendants")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let create_only = _parameters
+        .get("create_only")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_usage_metering::CreateQuotasOptionalParams::default();
     params.include_descendants = include_descendants;
+    params.create_only = create_only;
     let response = match block_on(api.create_quotas_with_http_info(quota_namespace, body, params)) {
         Ok(response) => response,
         Err(error) => {

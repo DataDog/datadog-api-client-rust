@@ -19,12 +19,19 @@ use std::io::Write;
 pub struct CreateQuotasOptionalParams {
     /// Whether to write every item in the request to the caller's organization and all of its descendant organizations, instead of only the caller's organization. Only descendants in the same data center are supported. For a user-handle scope, the quota is applied only to the caller's organization and to descendant organizations where that user handle exists; the item fails only if the handle exists in none of them.
     pub include_descendants: Option<bool>,
+    /// Create one quota without updating an existing quota. Requires exactly one item that specifies `usage_limit` and `enforced`, omits `pending_usage_limit`, and sets `include_descendants=false`. The quota belongs to the caller's organization. An existing quota returns `409` without being modified.
+    pub create_only: Option<bool>,
 }
 
 impl CreateQuotasOptionalParams {
     /// Whether to write every item in the request to the caller's organization and all of its descendant organizations, instead of only the caller's organization. Only descendants in the same data center are supported. For a user-handle scope, the quota is applied only to the caller's organization and to descendant organizations where that user handle exists; the item fails only if the handle exists in none of them.
     pub fn include_descendants(mut self, value: bool) -> Self {
         self.include_descendants = Some(value);
+        self
+    }
+    /// Create one quota without updating an existing quota. Requires exactly one item that specifies `usage_limit` and `enforced`, omits `pending_usage_limit`, and sets `include_descendants=false`. The quota belongs to the caller's organization. An existing quota returns `409` without being modified.
+    pub fn create_only(mut self, value: bool) -> Self {
+        self.create_only = Some(value);
         self
     }
 }
@@ -830,6 +837,10 @@ impl UsageMeteringAPI {
 
     /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
     /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+    /// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
+    /// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
+    /// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
+    /// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
     /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
     /// accompany an immediate limit or update an existing quota by itself.
     /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
@@ -887,6 +898,10 @@ impl UsageMeteringAPI {
 
     /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
     /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+    /// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
+    /// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
+    /// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
+    /// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
     /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
     /// accompany an immediate limit or update an existing quota by itself.
     /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
@@ -940,6 +955,7 @@ impl UsageMeteringAPI {
 
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
+        let create_only = params.create_only;
 
         let local_client = &self.client;
 
@@ -954,6 +970,10 @@ impl UsageMeteringAPI {
         if let Some(ref local_query_param) = include_descendants {
             local_req_builder =
                 local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = create_only {
+            local_req_builder =
+                local_req_builder.query(&[("create_only", &local_query_param.to_string())]);
         };
 
         // build headers
