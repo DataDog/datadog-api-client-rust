@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 pub struct RUMOperationsListResponse {
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::RUMOperationResponseData>,
+    /// Pagination links for a list of RUM operations.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::RUMOperationsListResponseLinks>,
     /// Metadata for a list of RUM operations.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::RUMOperationsListResponseMeta>,
@@ -29,10 +32,16 @@ impl RUMOperationsListResponse {
     ) -> RUMOperationsListResponse {
         RUMOperationsListResponse {
             data,
+            links: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn links(mut self, value: crate::datadogV2::model::RUMOperationsListResponseLinks) -> Self {
+        self.links = Some(value);
+        self
     }
 
     pub fn meta(mut self, value: crate::datadogV2::model::RUMOperationsListResponseMeta) -> Self {
@@ -67,6 +76,8 @@ impl<'de> Deserialize<'de> for RUMOperationsListResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::RUMOperationResponseData>> = None;
+                let mut links: Option<crate::datadogV2::model::RUMOperationsListResponseLinks> =
+                    None;
                 let mut meta: Option<crate::datadogV2::model::RUMOperationsListResponseMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -78,6 +89,12 @@ impl<'de> Deserialize<'de> for RUMOperationsListResponse {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "meta" => {
                             if v.is_null() {
@@ -96,6 +113,7 @@ impl<'de> Deserialize<'de> for RUMOperationsListResponse {
 
                 let content = RUMOperationsListResponse {
                     data,
+                    links,
                     meta,
                     additional_properties,
                     _unparsed,
