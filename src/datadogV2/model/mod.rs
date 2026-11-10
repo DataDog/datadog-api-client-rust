@@ -1012,6 +1012,8 @@ pub mod model_ai_guard_evaluate_attributes_response;
 pub use self::model_ai_guard_evaluate_attributes_response::AIGuardEvaluateAttributesResponse;
 pub mod model_ai_guard_action;
 pub use self::model_ai_guard_action::AIGuardAction;
+pub mod model_ai_guard_extra_tag;
+pub use self::model_ai_guard_extra_tag::AIGuardExtraTag;
 pub mod model_ai_guard_redaction_replacement;
 pub use self::model_ai_guard_redaction_replacement::AIGuardRedactionReplacement;
 pub mod model_ai_guard_scfw_findings;
