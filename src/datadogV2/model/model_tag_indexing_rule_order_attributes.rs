@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagIndexingRuleOrderAttributes {
-    /// Ordered list of tag indexing rule UUIDs. The server assigns rule_order 1, 2, … matching position in this list.
+    /// Ordered list of tag indexing rule UUIDs. The server assigns rule_order 1, 2, … matching position in this list. Must contain the UUID of every active rule in the org (at most 1,000); omitting any active rule returns a 400 error.
     #[serde(rename = "rule_ids")]
     pub rule_ids: Option<Vec<String>>,
     #[serde(flatten)]
