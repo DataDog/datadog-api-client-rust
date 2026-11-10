@@ -11,8 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RulesValidateQueryRequestDataAttributes {
-    /// The `attributes` `Query`.
-    #[serde(rename = "Query")]
+    /// The tag pipeline rule query to validate, in Datadog tag query syntax: `tag:value` terms combined with `AND`, `OR`, and `NOT`.
+    #[serde(rename = "query")]
     pub query: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
@@ -65,7 +65,7 @@ impl<'de> Deserialize<'de> for RulesValidateQueryRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "Query" => {
+                        "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

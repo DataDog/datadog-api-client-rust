@@ -35,9 +35,21 @@ pub struct ArbitraryRuleResponseDataAttributesStrategy {
     /// The `strategy` `granularity`.
     #[serde(rename = "granularity")]
     pub granularity: Option<String>,
+    /// Only supported for `proportional_timeseries` and `even_timeseries` rules. Creates a synthetic tag from timeseries input rows before `tag_transforms` are applied.
+    #[serde(rename = "mapping_transform")]
+    pub mapping_transform: Option<crate::datadogV2::model::ArbitraryRuleMappingTransform>,
     /// The `strategy` `method`.
     #[serde(rename = "method")]
     pub method: String,
+    /// Tags added to every cost row allocated by the rule.
+    #[serde(rename = "static_tags")]
+    pub static_tags: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>>,
+    /// Integration metrics query used to calculate coverage.
+    #[serde(rename = "supporting_timeseries", default, with = "::serde_with::rust::double_option")]
+    pub supporting_timeseries: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
+    /// Only supported for `proportional_timeseries` and `even_timeseries` rules. Applies tag key renames and tag value transforms to timeseries input rows after `mapping_transform`.
+    #[serde(rename = "tag_transforms")]
+    pub tag_transforms: Option<crate::datadogV2::model::ArbitraryRuleTagTransforms>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -56,7 +68,11 @@ impl ArbitraryRuleResponseDataAttributesStrategy {
             evaluate_grouped_by_filters: None,
             evaluate_grouped_by_tag_keys: None,
             granularity: None,
+            mapping_transform: None,
             method,
+            static_tags: None,
+            supporting_timeseries: None,
+            tag_transforms: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -121,6 +137,38 @@ impl ArbitraryRuleResponseDataAttributesStrategy {
         self
     }
 
+    pub fn mapping_transform(
+        mut self,
+        value: crate::datadogV2::model::ArbitraryRuleMappingTransform,
+    ) -> Self {
+        self.mapping_transform = Some(value);
+        self
+    }
+
+    pub fn static_tags(
+        mut self,
+        value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>,
+    ) -> Self {
+        self.static_tags = Some(value);
+        self
+    }
+
+    pub fn supporting_timeseries(
+        mut self,
+        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    ) -> Self {
+        self.supporting_timeseries = Some(value);
+        self
+    }
+
+    pub fn tag_transforms(
+        mut self,
+        value: crate::datadogV2::model::ArbitraryRuleTagTransforms,
+    ) -> Self {
+        self.tag_transforms = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -157,7 +205,17 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
                 let mut evaluate_grouped_by_filters: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyEvaluateGroupedByFiltersItems>> = None;
                 let mut evaluate_grouped_by_tag_keys: Option<Vec<String>> = None;
                 let mut granularity: Option<String> = None;
+                let mut mapping_transform: Option<
+                    crate::datadogV2::model::ArbitraryRuleMappingTransform,
+                > = None;
                 let mut method: Option<String> = None;
+                let mut static_tags: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>> = None;
+                let mut supporting_timeseries: Option<
+                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
+                > = None;
+                let mut tag_transforms: Option<
+                    crate::datadogV2::model::ArbitraryRuleTagTransforms,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -222,8 +280,33 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
                             granularity =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "mapping_transform" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mapping_transform =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "method" => {
                             method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "static_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            static_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "supporting_timeseries" => {
+                            supporting_timeseries =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tag_transforms" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tag_transforms =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -243,7 +326,11 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
                     evaluate_grouped_by_filters,
                     evaluate_grouped_by_tag_keys,
                     granularity,
+                    mapping_transform,
                     method,
+                    static_tags,
+                    supporting_timeseries,
+                    tag_transforms,
                     additional_properties,
                     _unparsed,
                 };

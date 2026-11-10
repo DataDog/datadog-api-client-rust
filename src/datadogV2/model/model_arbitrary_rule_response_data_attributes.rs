@@ -21,6 +21,9 @@ pub struct ArbitraryRuleResponseDataAttributes {
     /// The `attributes` `enabled`.
     #[serde(rename = "enabled")]
     pub enabled: bool,
+    /// Whether the rule is an out-of-the-box rule provided by Datadog. Omitted when `false`.
+    #[serde(rename = "is_ootb")]
+    pub is_ootb: Option<bool>,
     /// The `attributes` `last_modified_user_uuid`.
     #[serde(rename = "last_modified_user_uuid")]
     pub last_modified_user_uuid: String,
@@ -36,6 +39,10 @@ pub struct ArbitraryRuleResponseDataAttributes {
     /// The `attributes` `rejected`.
     #[serde(rename = "rejected")]
     pub rejected: Option<bool>,
+    /// Rule category. Omitted for custom rules.
+    #[serde(rename = "rule_category")]
+    pub rule_category:
+        Option<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory>,
     /// The `attributes` `rule_name`.
     #[serde(rename = "rule_name")]
     pub rule_name: String,
@@ -48,6 +55,12 @@ pub struct ArbitraryRuleResponseDataAttributes {
     /// The `attributes` `updated`.
     #[serde(rename = "updated")]
     pub updated: chrono::DateTime<chrono::Utc>,
+    /// The first date the rule applies to. Omitted when the rule has no start date.
+    #[serde(rename = "valid_from_date")]
+    pub valid_from_date: Option<String>,
+    /// The last date the rule applies to. Omitted when the rule has no end date.
+    #[serde(rename = "valid_through_date")]
+    pub valid_through_date: Option<String>,
     /// The `attributes` `version`.
     #[serde(rename = "version")]
     pub version: i32,
@@ -78,19 +91,28 @@ impl ArbitraryRuleResponseDataAttributes {
             costs_to_allocate,
             created,
             enabled,
+            is_ootb: None,
             last_modified_user_uuid,
             order_id,
             processing_status: None,
             provider,
             rejected: None,
+            rule_category: None,
             rule_name,
             strategy,
             type_,
             updated,
+            valid_from_date: None,
+            valid_through_date: None,
             version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn is_ootb(mut self, value: bool) -> Self {
+        self.is_ootb = Some(value);
+        self
     }
 
     pub fn processing_status(mut self, value: String) -> Self {
@@ -100,6 +122,24 @@ impl ArbitraryRuleResponseDataAttributes {
 
     pub fn rejected(mut self, value: bool) -> Self {
         self.rejected = Some(value);
+        self
+    }
+
+    pub fn rule_category(
+        mut self,
+        value: crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory,
+    ) -> Self {
+        self.rule_category = Some(value);
+        self
+    }
+
+    pub fn valid_from_date(mut self, value: String) -> Self {
+        self.valid_from_date = Some(value);
+        self
+    }
+
+    pub fn valid_through_date(mut self, value: String) -> Self {
+        self.valid_through_date = Some(value);
         self
     }
 
@@ -132,17 +172,23 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                 let mut costs_to_allocate: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesCostsToAllocateItems>> = None;
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut enabled: Option<bool> = None;
+                let mut is_ootb: Option<bool> = None;
                 let mut last_modified_user_uuid: Option<String> = None;
                 let mut order_id: Option<i64> = None;
                 let mut processing_status: Option<String> = None;
                 let mut provider: Option<Vec<String>> = None;
                 let mut rejected: Option<bool> = None;
+                let mut rule_category: Option<
+                    crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory,
+                > = None;
                 let mut rule_name: Option<String> = None;
                 let mut strategy: Option<
                     crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategy,
                 > = None;
                 let mut type_: Option<String> = None;
                 let mut updated: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut valid_from_date: Option<String> = None;
+                let mut valid_through_date: Option<String> = None;
                 let mut version: Option<i32> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -161,6 +207,12 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                         }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_ootb" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_ootb = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_modified_user_uuid" => {
                             last_modified_user_uuid =
@@ -185,6 +237,21 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                             }
                             rejected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rule_category" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rule_category =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _rule_category) = rule_category {
+                                match _rule_category {
+                                    crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory::UnparsedObject(_rule_category) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "rule_name" => {
                             rule_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -196,6 +263,20 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                         }
                         "updated" => {
                             updated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "valid_from_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            valid_from_date =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "valid_through_date" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            valid_through_date =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -225,15 +306,19 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                     costs_to_allocate,
                     created,
                     enabled,
+                    is_ootb,
                     last_modified_user_uuid,
                     order_id,
                     processing_status,
                     provider,
                     rejected,
+                    rule_category,
                     rule_name,
                     strategy,
                     type_,
                     updated,
+                    valid_from_date,
+                    valid_through_date,
                     version,
                     additional_properties,
                     _unparsed,
