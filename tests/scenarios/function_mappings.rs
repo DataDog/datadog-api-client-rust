@@ -98,6 +98,7 @@ pub struct ApiInstances {
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
     pub v2_api_error_tracking: Option<datadogV2::api_error_tracking::ErrorTrackingAPI>,
+    pub v2_api_end_user_device_monitoring: Option<datadogV2::api_end_user_device_monitoring::EndUserDeviceMonitoringAPI>,
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
     pub v2_api_experiments: Option<datadogV2::api_experiments::ExperimentsAPI>,
     pub v2_api_feature_flags: Option<datadogV2::api_feature_flags::FeatureFlagsAPI>,
@@ -919,6 +920,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "EndUserDeviceMonitoring" => {
+            world.api_instances.v2_api_end_user_device_monitoring = Some(datadogV2::api_end_user_device_monitoring::EndUserDeviceMonitoringAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "Experiments" => {
             world.api_instances.v2_api_experiments = Some(
@@ -5439,6 +5446,12 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateIssueState".into(), test_v2_update_issue_state);
+    world
+        .function_mappings
+        .insert("v2.GetEUDMDevices".into(), test_v2_get_eudm_devices);
+    world
+        .function_mappings
+        .insert("v2.GetEUDMDevice".into(), test_v2_get_eudm_device);
     world
         .function_mappings
         .insert("v2.ListEvents".into(), test_v2_list_events);
@@ -42657,6 +42670,69 @@ fn test_v2_update_issue_state(world: &mut DatadogWorld, _parameters: &HashMap<St
     let issue_id = serde_json::from_value(_parameters.get("issue_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_issue_state_with_http_info(issue_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_eudm_devices(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_end_user_device_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let bssid = _parameters
+        .get("bssid")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_end_user_device_monitoring::GetEUDMDevicesOptionalParams::default();
+    params.bssid = bssid;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.get_eudm_devices_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_eudm_device(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_end_user_device_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let device_id = serde_json::from_value(_parameters.get("device_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_eudm_device_with_http_info(device_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

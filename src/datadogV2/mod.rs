@@ -61,6 +61,7 @@ pub use self::api::api_deployment_gates;
 pub use self::api::api_domain_allowlist;
 pub use self::api::api_downtimes;
 pub use self::api::api_elastic_cloud_integration;
+pub use self::api::api_end_user_device_monitoring;
 pub use self::api::api_entity_integration_configs;
 pub use self::api::api_entity_risk_scores;
 pub use self::api::api_error_tracking;
