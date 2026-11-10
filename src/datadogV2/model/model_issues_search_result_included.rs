@@ -12,6 +12,8 @@ pub enum IssuesSearchResultIncluded {
     IssueCase(Box<crate::datadogV2::model::IssueCase>),
     IssueUser(Box<crate::datadogV2::model::IssueUser>),
     IssueTeam(Box<crate::datadogV2::model::IssueTeam>),
+    IssuePullRequest(Box<crate::datadogV2::model::IssuePullRequest>),
+    IssueWatch(Box<crate::datadogV2::model::IssueWatch>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,6 +48,20 @@ impl<'de> Deserialize<'de> for IssuesSearchResultIncluded {
         {
             if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssueTeam(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IssuePullRequest>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(IssuesSearchResultIncluded::IssuePullRequest(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IssueWatch>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(IssuesSearchResultIncluded::IssueWatch(_v));
             }
         }
 

@@ -8,9 +8,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GetIssueIncludeQueryParameterItem {
     ASSIGNEE,
+    BITS_INVESTIGATION,
     CASE,
-    TEAM_OWNERS,
+    PULL_REQUESTS,
     SAMPLES,
+    TEAM_OWNERS,
+    WATCHES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -18,9 +21,12 @@ impl ToString for GetIssueIncludeQueryParameterItem {
     fn to_string(&self) -> String {
         match self {
             Self::ASSIGNEE => String::from("assignee"),
+            Self::BITS_INVESTIGATION => String::from("bits_investigation"),
             Self::CASE => String::from("case"),
-            Self::TEAM_OWNERS => String::from("team_owners"),
+            Self::PULL_REQUESTS => String::from("pull_requests"),
             Self::SAMPLES => String::from("samples"),
+            Self::TEAM_OWNERS => String::from("team_owners"),
+            Self::WATCHES => String::from("watches"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,9 +52,12 @@ impl<'de> Deserialize<'de> for GetIssueIncludeQueryParameterItem {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "assignee" => Self::ASSIGNEE,
+            "bits_investigation" => Self::BITS_INVESTIGATION,
             "case" => Self::CASE,
-            "team_owners" => Self::TEAM_OWNERS,
+            "pull_requests" => Self::PULL_REQUESTS,
             "samples" => Self::SAMPLES,
+            "team_owners" => Self::TEAM_OWNERS,
+            "watches" => Self::WATCHES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

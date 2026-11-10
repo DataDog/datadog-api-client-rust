@@ -9,8 +9,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SearchIssuesIncludeQueryParameterItem {
     ISSUE,
     ISSUE_ASSIGNEE,
+    ISSUE_BITS_INVESTIGATION,
     ISSUE_CASE,
+    ISSUE_IMPACTED_SESSIONS,
+    ISSUE_IMPACTED_USERS,
+    ISSUE_PULL_REQUESTS,
     ISSUE_TEAM_OWNERS,
+    ISSUE_WATCHES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,8 +24,13 @@ impl ToString for SearchIssuesIncludeQueryParameterItem {
         match self {
             Self::ISSUE => String::from("issue"),
             Self::ISSUE_ASSIGNEE => String::from("issue.assignee"),
+            Self::ISSUE_BITS_INVESTIGATION => String::from("issue.bits_investigation"),
             Self::ISSUE_CASE => String::from("issue.case"),
+            Self::ISSUE_IMPACTED_SESSIONS => String::from("issue.impacted_sessions"),
+            Self::ISSUE_IMPACTED_USERS => String::from("issue.impacted_users"),
+            Self::ISSUE_PULL_REQUESTS => String::from("issue.pull_requests"),
             Self::ISSUE_TEAM_OWNERS => String::from("issue.team_owners"),
+            Self::ISSUE_WATCHES => String::from("issue.watches"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -47,8 +57,13 @@ impl<'de> Deserialize<'de> for SearchIssuesIncludeQueryParameterItem {
         Ok(match s.as_str() {
             "issue" => Self::ISSUE,
             "issue.assignee" => Self::ISSUE_ASSIGNEE,
+            "issue.bits_investigation" => Self::ISSUE_BITS_INVESTIGATION,
             "issue.case" => Self::ISSUE_CASE,
+            "issue.impacted_sessions" => Self::ISSUE_IMPACTED_SESSIONS,
+            "issue.impacted_users" => Self::ISSUE_IMPACTED_USERS,
+            "issue.pull_requests" => Self::ISSUE_PULL_REQUESTS,
             "issue.team_owners" => Self::ISSUE_TEAM_OWNERS,
+            "issue.watches" => Self::ISSUE_WATCHES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
