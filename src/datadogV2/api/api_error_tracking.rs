@@ -14,8 +14,8 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
-    /// Possible values are `assignee`, `case`, `team_owners`, and `samples`.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `bits_investigation`, `case`, `pull_requests`, `samples`, `team_owners`, and `watches`.
+    /// Values must not contain spaces. `case` and `assignee` return nothing, without an error, if the caller lacks the `cases_read` permission.
     pub include: Option<Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>>,
     /// Comma-separated list of biases used to pick the samples returned with `include=samples`.
     /// Requires `include=samples`. Defaults to all biases.
@@ -23,8 +23,8 @@ pub struct GetIssueOptionalParams {
 }
 
 impl GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response.
-    /// Possible values are `assignee`, `case`, `team_owners`, and `samples`.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `bits_investigation`, `case`, `pull_requests`, `samples`, `team_owners`, and `watches`.
+    /// Values must not contain spaces. `case` and `assignee` return nothing, without an error, if the caller lacks the `cases_read` permission.
     pub fn include(
         mut self,
         value: Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>,
@@ -47,12 +47,12 @@ impl GetIssueOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchIssuesOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.case`, and `issue.team_owners`.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.bits_investigation`, `issue.case`, `issue.impacted_sessions`, `issue.impacted_users`, `issue.pull_requests`, `issue.team_owners`, and `issue.watches`.
     pub include: Option<Vec<crate::datadogV2::model::SearchIssuesIncludeQueryParameterItem>>,
 }
 
 impl SearchIssuesOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.case`, and `issue.team_owners`.
+    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `issue`, `issue.assignee`, `issue.bits_investigation`, `issue.case`, `issue.impacted_sessions`, `issue.impacted_users`, `issue.pull_requests`, `issue.team_owners`, and `issue.watches`.
     pub fn include(
         mut self,
         value: Vec<crate::datadogV2::model::SearchIssuesIncludeQueryParameterItem>,
@@ -265,6 +265,7 @@ impl ErrorTrackingAPI {
     }
 
     /// Retrieve the full details for a specific error tracking issue, including attributes and relationships.
+    /// Returns 403 if the caller lacks the `error_tracking_read` permission or does not have access to the issue's data.
     pub async fn get_issue(
         &self,
         issue_id: String,
@@ -285,6 +286,7 @@ impl ErrorTrackingAPI {
     }
 
     /// Retrieve the full details for a specific error tracking issue, including attributes and relationships.
+    /// Returns 403 if the caller lacks the `error_tracking_read` permission or does not have access to the issue's data.
     pub async fn get_issue_with_http_info(
         &self,
         issue_id: String,

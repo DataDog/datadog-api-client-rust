@@ -32,6 +32,7 @@ pub enum IssueLanguage {
     SCALA,
     SWIFT,
     TERRAFORM,
+    TF,
     TYPESCRIPT,
     UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -65,6 +66,7 @@ impl ToString for IssueLanguage {
             Self::SCALA => String::from("SCALA"),
             Self::SWIFT => String::from("SWIFT"),
             Self::TERRAFORM => String::from("TERRAFORM"),
+            Self::TF => String::from("TF"),
             Self::TYPESCRIPT => String::from("TYPESCRIPT"),
             Self::UNKNOWN => String::from("UNKNOWN"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -116,6 +118,7 @@ impl<'de> Deserialize<'de> for IssueLanguage {
             "SCALA" => Self::SCALA,
             "SWIFT" => Self::SWIFT,
             "TERRAFORM" => Self::TERRAFORM,
+            "TF" => Self::TF,
             "TYPESCRIPT" => Self::TYPESCRIPT,
             "UNKNOWN" => Self::UNKNOWN,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {

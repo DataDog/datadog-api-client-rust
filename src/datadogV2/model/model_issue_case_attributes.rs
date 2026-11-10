@@ -51,6 +51,12 @@ pub struct IssueCaseAttributes {
     #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,
+    /// Status group of the work item.
+    #[serde(rename = "status_group")]
+    pub status_group: Option<crate::datadogV2::model::CaseStatusGroup>,
+    /// Status of the work item. Must be one of the existing statuses for the work item's type.
+    #[serde(rename = "status_name")]
+    pub status_name: Option<String>,
     /// Title of the case.
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -81,6 +87,8 @@ impl IssueCaseAttributes {
             modified_at: None,
             priority: None,
             status: None,
+            status_group: None,
+            status_name: None,
             title: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -167,6 +175,18 @@ impl IssueCaseAttributes {
     }
 
     #[allow(deprecated)]
+    pub fn status_group(mut self, value: crate::datadogV2::model::CaseStatusGroup) -> Self {
+        self.status_group = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn status_name(mut self, value: String) -> Self {
+        self.status_name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
@@ -223,6 +243,8 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut status: Option<crate::datadogV2::model::CaseStatus> = None;
+                let mut status_group: Option<crate::datadogV2::model::CaseStatusGroup> = None;
+                let mut status_name: Option<String> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -336,6 +358,30 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                                 }
                             }
                         }
+                        "status_group" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_group =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status_group) = status_group {
+                                match _status_group {
+                                    crate::datadogV2::model::CaseStatusGroup::UnparsedObject(
+                                        _status_group,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "status_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "title" => {
                             if v.is_null() {
                                 continue;
@@ -371,6 +417,8 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                     modified_at,
                     priority,
                     status,
+                    status_group,
+                    status_name,
                     title,
                     type_,
                     additional_properties,

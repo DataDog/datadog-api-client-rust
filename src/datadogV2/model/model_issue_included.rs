@@ -11,6 +11,8 @@ pub enum IssueIncluded {
     IssueCase(Box<crate::datadogV2::model::IssueCase>),
     IssueUser(Box<crate::datadogV2::model::IssueUser>),
     IssueTeam(Box<crate::datadogV2::model::IssueTeam>),
+    IssuePullRequest(Box<crate::datadogV2::model::IssuePullRequest>),
+    IssueWatch(Box<crate::datadogV2::model::IssueWatch>),
     IssueSample(Box<crate::datadogV2::model::IssueSample>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -40,6 +42,20 @@ impl<'de> Deserialize<'de> for IssueIncluded {
         {
             if !_v._unparsed {
                 return Ok(IssueIncluded::IssueTeam(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IssuePullRequest>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(IssueIncluded::IssuePullRequest(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IssueWatch>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(IssueIncluded::IssueWatch(_v));
             }
         }
         if let Ok(_v) =
