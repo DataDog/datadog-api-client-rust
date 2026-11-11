@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyConfigDataAttributes {
+    /// List of Datadog tags applied to data collected from the tenancy.
+    #[serde(rename = "account_tags")]
+    pub account_tags: Option<Vec<String>>,
     /// The identifier of the billing plan associated with the OCI tenancy.
     #[serde(rename = "billing_plan_id")]
     pub billing_plan_id: Option<i32>,
@@ -23,9 +26,21 @@ pub struct TenancyConfigDataAttributes {
     /// The OCID of the OCI compartment used by the Datadog integration stack.
     #[serde(rename = "dd_compartment_id")]
     pub dd_compartment_id: Option<String>,
+    /// The version of the Datadog infrastructure-as-code stack applied to the tenancy (for example, 1.2.0).
+    #[serde(rename = "dd_iac_version")]
+    pub dd_iac_version: Option<String>,
     /// The OCID of the OCI Resource Manager stack used by the Datadog integration.
     #[serde(rename = "dd_stack_id")]
     pub dd_stack_id: Option<String>,
+    /// List of OCI defined tags applied to the Datadog-managed connector hubs.
+    #[serde(rename = "defined_tags")]
+    pub defined_tags: Option<Vec<String>>,
+    /// Whether resource change events collection from OCI is enabled for the tenancy.
+    #[serde(rename = "events_collection_enabled")]
+    pub events_collection_enabled: Option<bool>,
+    /// Access control details for the tenancy configuration, used to determine whether the requesting user can edit it.
+    #[serde(rename = "grace_resource")]
+    pub grace_resource: Option<crate::datadogV2::model::TenancyConfigDataAttributesGraceResource>,
     /// The home region of the OCI tenancy (for example, us-ashburn-1).
     #[serde(rename = "home_region")]
     pub home_region: Option<String>,
@@ -44,6 +59,9 @@ pub struct TenancyConfigDataAttributes {
     /// Whether resource collection from OCI is enabled for the tenancy.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
+    /// Whether service quota collection from OCI is enabled for the tenancy.
+    #[serde(rename = "service_quota_collection_enabled")]
+    pub service_quota_collection_enabled: Option<bool>,
     /// The human-readable name of the OCI tenancy.
     #[serde(rename = "tenancy_name")]
     pub tenancy_name: Option<String>,
@@ -60,22 +78,33 @@ pub struct TenancyConfigDataAttributes {
 impl TenancyConfigDataAttributes {
     pub fn new() -> TenancyConfigDataAttributes {
         TenancyConfigDataAttributes {
+            account_tags: None,
             billing_plan_id: None,
             config_version: None,
             cost_collection_enabled: None,
             dd_compartment_id: None,
+            dd_iac_version: None,
             dd_stack_id: None,
+            defined_tags: None,
+            events_collection_enabled: None,
+            grace_resource: None,
             home_region: None,
             logs_config: None,
             metrics_config: None,
             parent_tenancy_name: None,
             regions_config: None,
             resource_collection_enabled: None,
+            service_quota_collection_enabled: None,
             tenancy_name: None,
             user_ocid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn account_tags(mut self, value: Vec<String>) -> Self {
+        self.account_tags = Some(value);
+        self
     }
 
     pub fn billing_plan_id(mut self, value: i32) -> Self {
@@ -98,8 +127,31 @@ impl TenancyConfigDataAttributes {
         self
     }
 
+    pub fn dd_iac_version(mut self, value: String) -> Self {
+        self.dd_iac_version = Some(value);
+        self
+    }
+
     pub fn dd_stack_id(mut self, value: String) -> Self {
         self.dd_stack_id = Some(value);
+        self
+    }
+
+    pub fn defined_tags(mut self, value: Vec<String>) -> Self {
+        self.defined_tags = Some(value);
+        self
+    }
+
+    pub fn events_collection_enabled(mut self, value: bool) -> Self {
+        self.events_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn grace_resource(
+        mut self,
+        value: crate::datadogV2::model::TenancyConfigDataAttributesGraceResource,
+    ) -> Self {
+        self.grace_resource = Some(value);
         self
     }
 
@@ -139,6 +191,11 @@ impl TenancyConfigDataAttributes {
 
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
+        self
+    }
+
+    pub fn service_quota_collection_enabled(mut self, value: bool) -> Self {
+        self.service_quota_collection_enabled = Some(value);
         self
     }
 
@@ -184,11 +241,18 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_tags: Option<Vec<String>> = None;
                 let mut billing_plan_id: Option<i32> = None;
                 let mut config_version: Option<i64> = None;
                 let mut cost_collection_enabled: Option<bool> = None;
                 let mut dd_compartment_id: Option<String> = None;
+                let mut dd_iac_version: Option<String> = None;
                 let mut dd_stack_id: Option<String> = None;
+                let mut defined_tags: Option<Vec<String>> = None;
+                let mut events_collection_enabled: Option<bool> = None;
+                let mut grace_resource: Option<
+                    crate::datadogV2::model::TenancyConfigDataAttributesGraceResource,
+                > = None;
                 let mut home_region: Option<String> = None;
                 let mut logs_config: Option<
                     crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig,
@@ -201,6 +265,7 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                     crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig,
                 > = None;
                 let mut resource_collection_enabled: Option<bool> = None;
+                let mut service_quota_collection_enabled: Option<bool> = None;
                 let mut tenancy_name: Option<String> = None;
                 let mut user_ocid: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -211,6 +276,13 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "billing_plan_id" => {
                             if v.is_null() {
                                 continue;
@@ -239,11 +311,39 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                             dd_compartment_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "dd_iac_version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dd_iac_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "dd_stack_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             dd_stack_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defined_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            defined_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "events_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            events_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "grace_resource" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            grace_resource =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "home_region" => {
@@ -288,6 +388,13 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                             resource_collection_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "service_quota_collection_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service_quota_collection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tenancy_name" => {
                             if v.is_null() {
                                 continue;
@@ -310,17 +417,23 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                 }
 
                 let content = TenancyConfigDataAttributes {
+                    account_tags,
                     billing_plan_id,
                     config_version,
                     cost_collection_enabled,
                     dd_compartment_id,
+                    dd_iac_version,
                     dd_stack_id,
+                    defined_tags,
+                    events_collection_enabled,
+                    grace_resource,
                     home_region,
                     logs_config,
                     metrics_config,
                     parent_tenancy_name,
                     regions_config,
                     resource_collection_enabled,
+                    service_quota_collection_enabled,
                     tenancy_name,
                     user_ocid,
                     additional_properties,

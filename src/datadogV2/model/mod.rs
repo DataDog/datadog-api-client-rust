@@ -7568,6 +7568,8 @@ pub mod model_tenancy_config_data;
 pub use self::model_tenancy_config_data::TenancyConfigData;
 pub mod model_tenancy_config_data_attributes;
 pub use self::model_tenancy_config_data_attributes::TenancyConfigDataAttributes;
+pub mod model_tenancy_config_data_attributes_grace_resource;
+pub use self::model_tenancy_config_data_attributes_grace_resource::TenancyConfigDataAttributesGraceResource;
 pub mod model_tenancy_config_data_attributes_logs_config;
 pub use self::model_tenancy_config_data_attributes_logs_config::TenancyConfigDataAttributesLogsConfig;
 pub mod model_tenancy_config_data_attributes_metrics_config;

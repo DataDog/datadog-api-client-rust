@@ -20,6 +20,9 @@ pub struct TenancyConfigDataAttributesLogsConfig {
     /// List of OCI service names for which log collection is enabled.
     #[serde(rename = "enabled_services")]
     pub enabled_services: Option<Vec<String>>,
+    /// Map of OCI service names to the resource tag filters that scope log collection for that service.
+    #[serde(rename = "resource_tag_filters")]
+    pub resource_tag_filters: Option<std::collections::BTreeMap<String, Vec<String>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl TenancyConfigDataAttributesLogsConfig {
             compartment_tag_filters: None,
             enabled: None,
             enabled_services: None,
+            resource_tag_filters: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -50,6 +54,14 @@ impl TenancyConfigDataAttributesLogsConfig {
 
     pub fn enabled_services(mut self, value: Vec<String>) -> Self {
         self.enabled_services = Some(value);
+        self
+    }
+
+    pub fn resource_tag_filters(
+        mut self,
+        value: std::collections::BTreeMap<String, Vec<String>>,
+    ) -> Self {
+        self.resource_tag_filters = Some(value);
         self
     }
 
@@ -88,6 +100,9 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesLogsConfig {
                 let mut compartment_tag_filters: Option<Vec<String>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut enabled_services: Option<Vec<String>> = None;
+                let mut resource_tag_filters: Option<
+                    std::collections::BTreeMap<String, Vec<String>>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -116,6 +131,13 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesLogsConfig {
                             enabled_services =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "resource_tag_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_tag_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -128,6 +150,7 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesLogsConfig {
                     compartment_tag_filters,
                     enabled,
                     enabled_services,
+                    resource_tag_filters,
                     additional_properties,
                     _unparsed,
                 };

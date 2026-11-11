@@ -11,15 +11,27 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyConfigDataAttributesRegionsConfig {
-    /// List of OCI regions available for data collection in the tenancy.
-    #[serde(rename = "available")]
-    pub available: Option<Vec<String>>,
-    /// List of OCI regions explicitly disabled for data collection.
-    #[serde(rename = "disabled")]
-    pub disabled: Option<Vec<String>>,
-    /// List of OCI regions enabled for data collection.
-    #[serde(rename = "enabled")]
-    pub enabled: Option<Vec<String>>,
+    /// List of OCI regions available for data collection in the tenancy. Returns `null` when no regions are set.
+    #[serde(
+        rename = "available",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub available: Option<Option<Vec<String>>>,
+    /// List of OCI regions explicitly disabled for data collection. Returns `null` when no regions are set.
+    #[serde(
+        rename = "disabled",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub disabled: Option<Option<Vec<String>>>,
+    /// List of OCI regions enabled for data collection. Returns `null` when no regions are set.
+    #[serde(
+        rename = "enabled",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub enabled: Option<Option<Vec<String>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -38,17 +50,17 @@ impl TenancyConfigDataAttributesRegionsConfig {
         }
     }
 
-    pub fn available(mut self, value: Vec<String>) -> Self {
+    pub fn available(mut self, value: Option<Vec<String>>) -> Self {
         self.available = Some(value);
         self
     }
 
-    pub fn disabled(mut self, value: Vec<String>) -> Self {
+    pub fn disabled(mut self, value: Option<Vec<String>>) -> Self {
         self.disabled = Some(value);
         self
     }
 
-    pub fn enabled(mut self, value: Vec<String>) -> Self {
+    pub fn enabled(mut self, value: Option<Vec<String>>) -> Self {
         self.enabled = Some(value);
         self
     }
@@ -85,9 +97,9 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesRegionsConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut available: Option<Vec<String>> = None;
-                let mut disabled: Option<Vec<String>> = None;
-                let mut enabled: Option<Vec<String>> = None;
+                let mut available: Option<Option<Vec<String>>> = None;
+                let mut disabled: Option<Option<Vec<String>>> = None;
+                let mut enabled: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -97,21 +109,12 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesRegionsConfig {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "available" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             available = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "disabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
