@@ -45,7 +45,7 @@ pub struct DashboardListItem {
     /// Popularity of the dashboard.
     #[serde(rename = "popularity")]
     pub popularity: Option<i32>,
-    /// List of team names representing ownership of a dashboard.
+    /// Tags associated with the dashboard. Supports up to five team tags and two AI tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
     pub tags: Option<Option<Vec<String>>>,
     /// Title of the dashboard.
