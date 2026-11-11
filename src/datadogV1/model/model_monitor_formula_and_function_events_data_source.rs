@@ -17,6 +17,7 @@ pub enum MonitorFormulaAndFunctionEventsDataSource {
     DATABASE_QUERIES,
     NETWORK,
     NETWORK_PATH,
+    LLM_OBSERVABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -33,6 +34,7 @@ impl ToString for MonitorFormulaAndFunctionEventsDataSource {
             Self::DATABASE_QUERIES => String::from("database_queries"),
             Self::NETWORK => String::from("network"),
             Self::NETWORK_PATH => String::from("network_path"),
+            Self::LLM_OBSERVABILITY => String::from("llm_observability"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -67,6 +69,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventsDataSource {
             "database_queries" => Self::DATABASE_QUERIES,
             "network" => Self::NETWORK,
             "network_path" => Self::NETWORK_PATH,
+            "llm_observability" => Self::LLM_OBSERVABILITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
