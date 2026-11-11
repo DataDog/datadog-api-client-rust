@@ -1073,6 +1073,7 @@ impl Default for Configuration {
             ("v2.query_product_analytics_sankey".to_owned(), false),
             ("v2.create_connection".to_owned(), false),
             ("v2.delete_connection".to_owned(), false),
+            ("v2.delete_user_profile".to_owned(), false),
             ("v2.get_account_facet_info".to_owned(), false),
             ("v2.get_mapping".to_owned(), false),
             ("v2.get_user_facet_info".to_owned(), false),
