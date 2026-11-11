@@ -14,6 +14,9 @@ pub struct UpdateFeatureFlagAttributes {
     /// The description of the feature flag.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The distribution channel for the feature flag.
+    #[serde(rename = "distribution_channel")]
+    pub distribution_channel: Option<crate::datadogV2::model::FeatureFlagDistributionChannel>,
     /// JSON schema for validation when value_type is JSON.
     #[serde(
         rename = "json_schema",
@@ -24,6 +27,12 @@ pub struct UpdateFeatureFlagAttributes {
     /// The name of the feature flag.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The lifecycle to set. `ACTIVE` makes the flag temporary; `PERMANENT` excludes it from
+    /// staleness detection. Either value clears any snooze; omit the field to keep the lifecycle.
+    /// Do not copy the top-level `staleness_status` from a response into this field: that legacy
+    /// response field is always `ACTIVE`.
+    #[serde(rename = "staleness_status")]
+    pub staleness_status: Option<crate::datadogV2::model::UpdateFeatureFlagStalenessStatus>,
     /// Tags associated with the feature flag. This field replaces the full set of
     /// existing tags; omit it to leave tags unchanged, or pass an empty array to
     /// clear all tags. The owning team is set by including a tag of the form
@@ -41,8 +50,10 @@ impl UpdateFeatureFlagAttributes {
     pub fn new() -> UpdateFeatureFlagAttributes {
         UpdateFeatureFlagAttributes {
             description: None,
+            distribution_channel: None,
             json_schema: None,
             name: None,
+            staleness_status: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -54,6 +65,14 @@ impl UpdateFeatureFlagAttributes {
         self
     }
 
+    pub fn distribution_channel(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagDistributionChannel,
+    ) -> Self {
+        self.distribution_channel = Some(value);
+        self
+    }
+
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
@@ -61,6 +80,14 @@ impl UpdateFeatureFlagAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn staleness_status(
+        mut self,
+        value: crate::datadogV2::model::UpdateFeatureFlagStalenessStatus,
+    ) -> Self {
+        self.staleness_status = Some(value);
         self
     }
 
@@ -102,8 +129,14 @@ impl<'de> Deserialize<'de> for UpdateFeatureFlagAttributes {
                 M: MapAccess<'a>,
             {
                 let mut description: Option<String> = None;
+                let mut distribution_channel: Option<
+                    crate::datadogV2::model::FeatureFlagDistributionChannel,
+                > = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut name: Option<String> = None;
+                let mut staleness_status: Option<
+                    crate::datadogV2::model::UpdateFeatureFlagStalenessStatus,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -120,6 +153,21 @@ impl<'de> Deserialize<'de> for UpdateFeatureFlagAttributes {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "distribution_channel" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            distribution_channel =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _distribution_channel) = distribution_channel {
+                                match _distribution_channel {
+                                    crate::datadogV2::model::FeatureFlagDistributionChannel::UnparsedObject(_distribution_channel) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "json_schema" => {
                             json_schema =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -129,6 +177,21 @@ impl<'de> Deserialize<'de> for UpdateFeatureFlagAttributes {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "staleness_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            staleness_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _staleness_status) = staleness_status {
+                                match _staleness_status {
+                                    crate::datadogV2::model::UpdateFeatureFlagStalenessStatus::UnparsedObject(_staleness_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "tags" => {
                             if v.is_null() {
@@ -146,8 +209,10 @@ impl<'de> Deserialize<'de> for UpdateFeatureFlagAttributes {
 
                 let content = UpdateFeatureFlagAttributes {
                     description,
+                    distribution_channel,
                     json_schema,
                     name,
+                    staleness_status,
                     tags,
                     additional_properties,
                     _unparsed,
