@@ -908,6 +908,23 @@ impl Default for Configuration {
                 "v2.update_elastic_cloud_integration_account".to_owned(),
                 false,
             ),
+            (
+                "v2.create_open_ai_codex_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_open_ai_codex_integration_account".to_owned(),
+                false,
+            ),
+            ("v2.get_open_ai_codex_integration_account".to_owned(), false),
+            (
+                "v2.list_open_ai_codex_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_open_ai_codex_integration_account".to_owned(),
+                false,
+            ),
             ("v2.create_snowflake_integration_account".to_owned(), false),
             ("v2.delete_snowflake_integration_account".to_owned(), false),
             ("v2.get_snowflake_integration_account".to_owned(), false),
