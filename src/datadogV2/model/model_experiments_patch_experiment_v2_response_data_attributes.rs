@@ -44,6 +44,9 @@ pub struct ExperimentsPatchExperimentV2ResponseDataAttributes {
     /// Kind of experiment. STANDARD is an ordinary experiment. Other values, such as CANARY and HOLDOUT, identify experiments owned by another workflow. New kinds may be added; treat unknown values as non-standard.
     #[serde(rename = "experiment_type")]
     pub experiment_type: Option<String>,
+    /// IDs of the holdouts the experiment is attached to, in evaluation order: MANAGED holdouts first, starting with the GLOBAL holdout, followed by EXTERNAL holdouts. For a draft experiment, the list includes the GLOBAL holdout that the experiment would join if it started. `GET /api/v2/experiments/{experiment_id}/holdouts` returns their details.
+    #[serde(rename = "holdout_ids")]
+    pub holdout_ids: Option<Vec<uuid::Uuid>>,
     /// Expected effect that the experiment is intended to test.
     #[serde(rename = "hypothesis")]
     pub hypothesis: Option<String>,
@@ -119,6 +122,7 @@ impl ExperimentsPatchExperimentV2ResponseDataAttributes {
             events_end_date: None,
             events_start_date: None,
             experiment_type: None,
+            holdout_ids: None,
             hypothesis: None,
             migration_metadata: None,
             name: None,
@@ -203,6 +207,11 @@ impl ExperimentsPatchExperimentV2ResponseDataAttributes {
 
     pub fn experiment_type(mut self, value: String) -> Self {
         self.experiment_type = Some(value);
+        self
+    }
+
+    pub fn holdout_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.holdout_ids = Some(value);
         self
     }
 
@@ -363,6 +372,7 @@ impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttribute
                 let mut events_end_date: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut events_start_date: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut experiment_type: Option<String> = None;
+                let mut holdout_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut hypothesis: Option<String> = None;
                 let mut migration_metadata: Option<serde_json::Value> = None;
                 let mut name: Option<String> = None;
@@ -448,6 +458,13 @@ impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttribute
                                 continue;
                             }
                             experiment_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "holdout_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            holdout_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "hypothesis" => {
@@ -587,6 +604,7 @@ impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttribute
                     events_end_date,
                     events_start_date,
                     experiment_type,
+                    holdout_ids,
                     hypothesis,
                     migration_metadata,
                     name,
