@@ -20,11 +20,6 @@ pub struct GovernanceControlDetectionAttributes {
     /// How the detection's current assignment was determined. Possible values are `auto_resolved`, `manual`, `reassigned`, and `cleared`.
     #[serde(rename = "assignment_source")]
     pub assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
-    /// DEPRECATED: mirrors `detection_type` for backward compatibility; use `detection_type`
-    /// instead.
-    #[deprecated]
-    #[serde(rename = "control_id")]
-    pub control_id: String,
     /// The date and time when the detection was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -71,7 +66,6 @@ pub struct GovernanceControlDetectionAttributes {
 impl GovernanceControlDetectionAttributes {
     pub fn new(
         assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
-        control_id: String,
         created_at: chrono::DateTime<chrono::Utc>,
         detection_type: String,
         display_name: String,
@@ -80,12 +74,10 @@ impl GovernanceControlDetectionAttributes {
         resource_type: String,
         state: crate::datadogV2::model::GovernanceControlDetectionState,
     ) -> GovernanceControlDetectionAttributes {
-        #[allow(deprecated)]
         GovernanceControlDetectionAttributes {
             assigned_team: None,
             assigned_to: None,
             assignment_source,
-            control_id,
             created_at,
             detection_type,
             display_name,
@@ -103,43 +95,36 @@ impl GovernanceControlDetectionAttributes {
         }
     }
 
-    #[allow(deprecated)]
     pub fn assigned_team(mut self, value: String) -> Self {
         self.assigned_team = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn assigned_to(mut self, value: String) -> Self {
         self.assigned_to = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn exception_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.exception_at = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn exception_by(mut self, value: String) -> Self {
         self.exception_by = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn metadata(mut self, value: serde_json::Value) -> Self {
         self.metadata = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn mitigate_after(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.mitigate_after = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn mitigated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.mitigated_at = Some(value);
         self
@@ -176,7 +161,6 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                 let mut assignment_source: Option<
                     crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
                 > = None;
-                let mut control_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut detection_type: Option<String> = None;
                 let mut display_name: Option<String> = None;
@@ -223,9 +207,6 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
-                        "control_id" => {
-                            control_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -303,7 +284,6 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                 }
                 let assignment_source = assignment_source
                     .ok_or_else(|| M::Error::missing_field("assignment_source"))?;
-                let control_id = control_id.ok_or_else(|| M::Error::missing_field("control_id"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let detection_type =
                     detection_type.ok_or_else(|| M::Error::missing_field("detection_type"))?;
@@ -316,12 +296,10 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                     resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let state = state.ok_or_else(|| M::Error::missing_field("state"))?;
 
-                #[allow(deprecated)]
                 let content = GovernanceControlDetectionAttributes {
                     assigned_team,
                     assigned_to,
                     assignment_source,
-                    control_id,
                     created_at,
                     detection_type,
                     display_name,
