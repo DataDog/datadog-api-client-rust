@@ -12,14 +12,24 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GovernanceControlDetectionAttributes {
     /// The identifier of the team the detection is assigned to, if any.
-    #[serde(rename = "assigned_team")]
-    pub assigned_team: Option<String>,
+    #[serde(
+        rename = "assigned_team",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub assigned_team: Option<Option<String>>,
     /// The identifier of the user the detection is assigned to, if any.
-    #[serde(rename = "assigned_to")]
-    pub assigned_to: Option<String>,
-    /// How the detection's current assignment was determined. Possible values are `auto_resolved`, `manual`, `reassigned`, and `cleared`.
+    #[serde(
+        rename = "assigned_to",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub assigned_to: Option<Option<String>>,
+    /// How the detection's current assignment was determined. Possible values are `auto_resolved`, `manual`, `reassigned`, and `cleared`. `null` when not set.
+    #[serialize_always]
     #[serde(rename = "assignment_source")]
-    pub assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
+    pub assignment_source:
+        Option<crate::datadogV2::model::GovernanceControlDetectionAssignmentSource>,
     /// DEPRECATED: mirrors `detection_type` for backward compatibility; use `detection_type`
     /// instead.
     #[deprecated]
@@ -32,32 +42,51 @@ pub struct GovernanceControlDetectionAttributes {
     #[serde(rename = "detection_type")]
     pub detection_type: String,
     /// The human-readable name of the detected resource.
+    #[serialize_always]
     #[serde(rename = "display_name")]
-    pub display_name: String,
+    pub display_name: Option<String>,
     /// The date and time when the detection was marked as an exception, if applicable.
-    #[serde(rename = "exception_at")]
-    pub exception_at: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(
+        rename = "exception_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub exception_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The identifier of the user who marked the detection as an exception, if applicable.
-    #[serde(rename = "exception_by")]
-    pub exception_by: Option<String>,
+    #[serde(
+        rename = "exception_by",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub exception_by: Option<Option<String>>,
     /// Free-form metadata associated with the detection.
     #[serde(rename = "metadata")]
     pub metadata: Option<serde_json::Value>,
     /// The date and time after which the detection is scheduled to be mitigated, if applicable.
-    #[serde(rename = "mitigate_after")]
-    pub mitigate_after: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(
+        rename = "mitigate_after",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub mitigate_after: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The date and time when the detection was mitigated, if applicable.
-    #[serde(rename = "mitigated_at")]
-    pub mitigated_at: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(
+        rename = "mitigated_at",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub mitigated_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The priority of the detection, if set.
+    #[serialize_always]
     #[serde(rename = "priority")]
-    pub priority: i64,
+    pub priority: Option<i64>,
     /// The identifier of the resource the detection applies to.
     #[serde(rename = "resource_id")]
     pub resource_id: String,
     /// The type of resource the detection applies to, for example `api_key` or `dashboard`.
+    #[serialize_always]
     #[serde(rename = "resource_type")]
-    pub resource_type: String,
+    pub resource_type: Option<String>,
     /// The current state of the detection. Possible values are `active`, `exception`, `mitigated`, `inactive`, `obsolete`, `resolved_externally`, and `mitigation_in_progress`.
     #[serde(rename = "state")]
     pub state: crate::datadogV2::model::GovernanceControlDetectionState,
@@ -70,14 +99,16 @@ pub struct GovernanceControlDetectionAttributes {
 
 impl GovernanceControlDetectionAttributes {
     pub fn new(
-        assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
+        assignment_source: Option<
+            crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
+        >,
         control_id: String,
         created_at: chrono::DateTime<chrono::Utc>,
         detection_type: String,
-        display_name: String,
-        priority: i64,
+        display_name: Option<String>,
+        priority: Option<i64>,
         resource_id: String,
-        resource_type: String,
+        resource_type: Option<String>,
         state: crate::datadogV2::model::GovernanceControlDetectionState,
     ) -> GovernanceControlDetectionAttributes {
         #[allow(deprecated)]
@@ -104,25 +135,25 @@ impl GovernanceControlDetectionAttributes {
     }
 
     #[allow(deprecated)]
-    pub fn assigned_team(mut self, value: String) -> Self {
+    pub fn assigned_team(mut self, value: Option<String>) -> Self {
         self.assigned_team = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn assigned_to(mut self, value: String) -> Self {
+    pub fn assigned_to(mut self, value: Option<String>) -> Self {
         self.assigned_to = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn exception_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+    pub fn exception_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.exception_at = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn exception_by(mut self, value: String) -> Self {
+    pub fn exception_by(mut self, value: Option<String>) -> Self {
         self.exception_by = Some(value);
         self
     }
@@ -134,13 +165,13 @@ impl GovernanceControlDetectionAttributes {
     }
 
     #[allow(deprecated)]
-    pub fn mitigate_after(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+    pub fn mitigate_after(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.mitigate_after = Some(value);
         self
     }
 
     #[allow(deprecated)]
-    pub fn mitigated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+    pub fn mitigated_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.mitigated_at = Some(value);
         self
     }
@@ -171,23 +202,23 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut assigned_team: Option<String> = None;
-                let mut assigned_to: Option<String> = None;
+                let mut assigned_team: Option<Option<String>> = None;
+                let mut assigned_to: Option<Option<String>> = None;
                 let mut assignment_source: Option<
-                    crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
+                    Option<crate::datadogV2::model::GovernanceControlDetectionAssignmentSource>,
                 > = None;
                 let mut control_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut detection_type: Option<String> = None;
-                let mut display_name: Option<String> = None;
-                let mut exception_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut exception_by: Option<String> = None;
+                let mut display_name: Option<Option<String>> = None;
+                let mut exception_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut exception_by: Option<Option<String>> = None;
                 let mut metadata: Option<serde_json::Value> = None;
-                let mut mitigate_after: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut mitigated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut priority: Option<i64> = None;
+                let mut mitigate_after: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut mitigated_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut priority: Option<Option<i64>> = None;
                 let mut resource_id: Option<String> = None;
-                let mut resource_type: Option<String> = None;
+                let mut resource_type: Option<Option<String>> = None;
                 let mut state: Option<crate::datadogV2::model::GovernanceControlDetectionState> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -199,16 +230,10 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assigned_team" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             assigned_team =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "assigned_to" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             assigned_to =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -217,7 +242,7 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _assignment_source) = assignment_source {
                                 match _assignment_source {
-                                    crate::datadogV2::model::GovernanceControlDetectionAssignmentSource::UnparsedObject(_assignment_source) => {
+                                    Some(crate::datadogV2::model::GovernanceControlDetectionAssignmentSource::UnparsedObject(_assignment_source)) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -239,16 +264,10 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "exception_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             exception_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "exception_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             exception_by =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -259,16 +278,10 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mitigate_after" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             mitigate_after =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mitigated_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             mitigated_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
