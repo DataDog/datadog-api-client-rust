@@ -14,9 +14,13 @@ pub struct IncidentPostmortemUpdatedTrigger {
     /// The maximum number of times to execute a workflow for an incident.
     #[serde(rename = "executionLimit")]
     pub execution_limit: Option<crate::datadogV2::model::ExecutionLimit>,
-    /// The type of incident that triggers the workflow.
+    /// Deprecated. Use `incidentTypes` instead. The type of incident that triggers the workflow.
+    #[deprecated]
     #[serde(rename = "incidentType")]
     pub incident_type: Option<String>,
+    /// The types of incident that trigger the workflow.
+    #[serde(rename = "incidentTypes")]
+    pub incident_types: Option<Vec<crate::datadogV2::model::IncidentTriggerIncidentType>>,
     /// Conditions that determine which incidents trigger the workflow.
     #[serde(rename = "tagCondition")]
     pub tag_condition: Option<crate::datadogV2::model::IncidentCondition>,
@@ -29,25 +33,39 @@ pub struct IncidentPostmortemUpdatedTrigger {
 
 impl IncidentPostmortemUpdatedTrigger {
     pub fn new() -> IncidentPostmortemUpdatedTrigger {
+        #[allow(deprecated)]
         IncidentPostmortemUpdatedTrigger {
             execution_limit: None,
             incident_type: None,
+            incident_types: None,
             tag_condition: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn execution_limit(mut self, value: crate::datadogV2::model::ExecutionLimit) -> Self {
         self.execution_limit = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn incident_types(
+        mut self,
+        value: Vec<crate::datadogV2::model::IncidentTriggerIncidentType>,
+    ) -> Self {
+        self.incident_types = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tag_condition(mut self, value: crate::datadogV2::model::IncidentCondition) -> Self {
         self.tag_condition = Some(value);
         self
@@ -87,6 +105,9 @@ impl<'de> Deserialize<'de> for IncidentPostmortemUpdatedTrigger {
             {
                 let mut execution_limit: Option<crate::datadogV2::model::ExecutionLimit> = None;
                 let mut incident_type: Option<String> = None;
+                let mut incident_types: Option<
+                    Vec<crate::datadogV2::model::IncidentTriggerIncidentType>,
+                > = None;
                 let mut tag_condition: Option<crate::datadogV2::model::IncidentCondition> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -110,6 +131,13 @@ impl<'de> Deserialize<'de> for IncidentPostmortemUpdatedTrigger {
                             incident_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "incidentTypes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tagCondition" => {
                             if v.is_null() {
                                 continue;
@@ -125,9 +153,11 @@ impl<'de> Deserialize<'de> for IncidentPostmortemUpdatedTrigger {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = IncidentPostmortemUpdatedTrigger {
                     execution_limit,
                     incident_type,
+                    incident_types,
                     tag_condition,
                     additional_properties,
                     _unparsed,
