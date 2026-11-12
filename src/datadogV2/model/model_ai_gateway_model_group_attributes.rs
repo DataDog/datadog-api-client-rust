@@ -41,6 +41,9 @@ pub struct AiGatewayModelGroupAttributes {
     pub revision: Option<i64>,
     #[serde(rename = "routing_rules")]
     pub routing_rules: Vec<crate::datadogV2::model::AiGatewayModelGroupRoutingRule>,
+    /// Whether some saved routes are hidden from the caller. Omit routing_rule_slugs to preserve all memberships; replacing the visible selection also preserves saved hidden memberships.
+    #[serde(rename = "routing_rules_restricted")]
+    pub routing_rules_restricted: Option<bool>,
     /// Time when the resource was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
@@ -75,6 +78,7 @@ impl AiGatewayModelGroupAttributes {
             providers,
             revision: None,
             routing_rules,
+            routing_rules_restricted: None,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -83,6 +87,11 @@ impl AiGatewayModelGroupAttributes {
 
     pub fn revision(mut self, value: i64) -> Self {
         self.revision = Some(value);
+        self
+    }
+
+    pub fn routing_rules_restricted(mut self, value: bool) -> Self {
+        self.routing_rules_restricted = Some(value);
         self
     }
 
@@ -129,6 +138,7 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                 let mut routing_rules: Option<
                     Vec<crate::datadogV2::model::AiGatewayModelGroupRoutingRule>,
                 > = None;
+                let mut routing_rules_restricted: Option<bool> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -183,6 +193,13 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                             routing_rules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "routing_rules_restricted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            routing_rules_restricted =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -219,6 +236,7 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                     providers,
                     revision,
                     routing_rules,
+                    routing_rules_restricted,
                     updated_at,
                     additional_properties,
                     _unparsed,

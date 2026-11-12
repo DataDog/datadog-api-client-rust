@@ -11,7 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTargetRequest {
-    /// Saved target row ID. On replacement, retain this ID only within its original route and at most once. A stale or foreign ID is rejected.
+    /// Whether this is the single default classified destination. Omission preserves a saved value; null clears it.
+    #[serde(
+        rename = "default",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub default: Option<Option<bool>>,
+    /// Saved target row ID. On replacement, retain this ID only within its original route and at most once. A stale, foreign, duplicate, or destination-changing ID is rejected. Hidden route targets can be retained using only this parent-local ID and type.
     #[serde(rename = "id")]
     pub id: Option<i64>,
     /// Model name. Omit when retaining a saved target by ID or selecting a concrete target by model_id.
@@ -23,20 +30,23 @@ pub struct AiGatewayRoutingRuleTargetRequest {
     /// Provider slug. weighted_affinity requires an explicit provider and does not allow "*".
     #[serde(rename = "provider")]
     pub provider: Option<String>,
-    /// Optional reasoning effort preference for this model destination. Must be supported by the selected model and provider. For provider "*", every eligible provider must support the level. An explicit value overrides the request's reasoning setting, subject to model-group policy. Omitted or null preserves request and provider behavior; none is an explicit level, not the default. Omitted or null clears an override on full replacement. Routing-rule references cannot set this field; each referenced model destination owns its override. If an override cannot be applied at runtime, the gateway keeps the destination and restores the caller's original reasoning settings, or preserves the provider default when omitted. It rechecks all applicable route and model-group policies against those settings before sending. Model-group max_reasoning_level enforces hard limits; the override is not an additional cap. Normal fallback applies if governance denies the resulting request or the destination cannot otherwise serve it. Metrics and span tags record the override outcome and incompatibility reason. When response headers have not already been committed, `X-Ai-Gateway-Reasoning-Override` reports applied or not_applied for the returned attempt, and `X-Ai-Gateway-Reasoning-Override-Reason` reports the reason when not applied.
+    /// Optional reasoning effort preference for this model destination. Must be supported by the selected model and provider. For provider "*", every eligible provider must support the level. An explicit value overrides the request's reasoning setting, subject to model-group policy. Omitted or null preserves request and provider behavior; none is an explicit level, not the default. On update, omission preserves a saved target override; null explicitly clears it. Routing-rule references cannot set this field; each referenced model destination owns its override. If an override cannot be applied at runtime, the gateway keeps the destination and restores the caller's original reasoning settings, or preserves the provider default when omitted. It rechecks all applicable route and model-group policies against those settings before sending. Model-group max_reasoning_level enforces hard limits; the override is not an additional cap. Normal fallback applies if governance denies the resulting request or the destination cannot otherwise serve it. Metrics and span tags record the override outcome and incompatibility reason. When response headers have not already been committed, `X-Ai-Gateway-Reasoning-Override` reports applied or not_applied for the returned attempt, and `X-Ai-Gateway-Reasoning-Override-Reason` reports the reason when not applied.
     #[serde(
         rename = "reasoning_level",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub reasoning_level: Option<Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>>,
-    /// Organization-unique routing rule slug. Allowed only in configured tiers.
+    /// Destination rubric in a classified tier. Omission preserves a saved value; null clears it. Must be absent on the default destination.
+    #[serde(rename = "rubric", default, with = "::serde_with::rust::double_option")]
+    pub rubric: Option<Option<String>>,
+    /// Organization-unique routing rule slug. New references require route View. Omit to retain a saved target by its parent-local ID. Allowed only in configured tiers.
     #[serde(rename = "slug")]
     pub slug: Option<String>,
     /// Type of routing target.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AiGatewayRoutingRuleTargetType,
-    /// Relative weight in a weighted_affinity tier. Omitted or null defaults to 1. Weights need not total 100. Must be omitted or null in configured tiers.
+    /// Relative weight in a weighted_affinity tier. Omission preserves a saved target weight; new targets and explicit null default to 1. Weights need not total 100. Must be omitted or null in configured tiers.
     #[serde(rename = "weight", default, with = "::serde_with::rust::double_option")]
     pub weight: Option<Option<i64>>,
     #[serde(flatten)]
@@ -51,17 +61,24 @@ impl AiGatewayRoutingRuleTargetRequest {
         type_: crate::datadogV2::model::AiGatewayRoutingRuleTargetType,
     ) -> AiGatewayRoutingRuleTargetRequest {
         AiGatewayRoutingRuleTargetRequest {
+            default: None,
             id: None,
             model: None,
             model_id: None,
             provider: None,
             reasoning_level: None,
+            rubric: None,
             slug: None,
             type_,
             weight: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn default(mut self, value: Option<bool>) -> Self {
+        self.default = Some(value);
+        self
     }
 
     pub fn id(mut self, value: i64) -> Self {
@@ -89,6 +106,11 @@ impl AiGatewayRoutingRuleTargetRequest {
         value: Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>,
     ) -> Self {
         self.reasoning_level = Some(value);
+        self
+    }
+
+    pub fn rubric(mut self, value: Option<String>) -> Self {
+        self.rubric = Some(value);
         self
     }
 
@@ -128,6 +150,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTargetRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut default: Option<Option<bool>> = None;
                 let mut id: Option<i64> = None;
                 let mut model: Option<String> = None;
                 let mut model_id: Option<i64> = None;
@@ -135,6 +158,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTargetRequest {
                 let mut reasoning_level: Option<
                     Option<crate::datadogV2::model::AiGatewayRoutingReasoningLevel>,
                 > = None;
+                let mut rubric: Option<Option<String>> = None;
                 let mut slug: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::AiGatewayRoutingRuleTargetType> =
                     None;
@@ -147,6 +171,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTargetRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "default" => {
+                            default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             if v.is_null() {
                                 continue;
@@ -183,6 +210,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTargetRequest {
                                 }
                             }
                         }
+                        "rubric" => {
+                            rubric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "slug" => {
                             if v.is_null() {
                                 continue;
@@ -213,11 +243,13 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTargetRequest {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AiGatewayRoutingRuleTargetRequest {
+                    default,
                     id,
                     model,
                     model_id,
                     provider,
                     reasoning_level,
+                    rubric,
                     slug,
                     type_,
                     weight,
