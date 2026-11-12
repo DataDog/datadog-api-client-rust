@@ -2872,6 +2872,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_agent_health_host_issues,
     );
     world.function_mappings.insert(
+        "v2.ListAgentHealthIssues".into(),
+        test_v2_list_agent_health_issues,
+    );
+    world.function_mappings.insert(
+        "v2.GetAgentHealthIssue".into(),
+        test_v2_get_agent_health_issue,
+    );
+    world.function_mappings.insert(
         "v2.ListAwsScanOptions".into(),
         test_v2_list_aws_scan_options,
     );
@@ -20330,6 +20338,87 @@ fn test_v2_list_agent_health_host_issues(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_agent_health_issues(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agent_health
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_severity = _parameters
+        .get("filter[severity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_category = _parameters
+        .get("filter[category]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_issue_type = _parameters
+        .get("filter[issue_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_kind = _parameters
+        .get("filter[resource_kind]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_id = _parameters
+        .get("filter[resource_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_agent_health::ListAgentHealthIssuesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_severity = filter_severity;
+    params.filter_category = filter_category;
+    params.filter_issue_type = filter_issue_type;
+    params.filter_resource_kind = filter_resource_kind;
+    params.filter_resource_id = filter_resource_id;
+    let response = match block_on(api.list_agent_health_issues_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_agent_health_issue(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_agent_health
+        .as_ref()
+        .expect("api instance not found");
+    let issue_id = serde_json::from_value(_parameters.get("issue_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_agent_health_issue_with_http_info(issue_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
