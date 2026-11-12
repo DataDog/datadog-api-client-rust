@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct JSONAPIErrorItem {
+    /// An application-specific error code.
+    #[serde(rename = "code")]
+    pub code: Option<String>,
     /// A human-readable explanation specific to this occurrence of the error.
     #[serde(rename = "detail")]
     pub detail: Option<String>,
@@ -36,6 +39,7 @@ pub struct JSONAPIErrorItem {
 impl JSONAPIErrorItem {
     pub fn new() -> JSONAPIErrorItem {
         JSONAPIErrorItem {
+            code: None,
             detail: None,
             meta: None,
             source: None,
@@ -44,6 +48,11 @@ impl JSONAPIErrorItem {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn code(mut self, value: String) -> Self {
+        self.code = Some(value);
+        self
     }
 
     pub fn detail(mut self, value: String) -> Self {
@@ -103,6 +112,7 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
             where
                 M: MapAccess<'a>,
             {
+                let mut code: Option<String> = None;
                 let mut detail: Option<String> = None;
                 let mut meta: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut source: Option<crate::datadogV2::model::JSONAPIErrorItemSource> = None;
@@ -116,6 +126,12 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "code" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "detail" => {
                             if v.is_null() {
                                 continue;
@@ -155,6 +171,7 @@ impl<'de> Deserialize<'de> for JSONAPIErrorItem {
                 }
 
                 let content = JSONAPIErrorItem {
+                    code,
                     detail,
                     meta,
                     source,

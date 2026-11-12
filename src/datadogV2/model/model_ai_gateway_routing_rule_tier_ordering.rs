@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum AiGatewayRoutingRuleTierOrdering {
     CONFIGURED,
     WEIGHTED_AFFINITY,
+    CLASSIFIED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for AiGatewayRoutingRuleTierOrdering {
         match self {
             Self::CONFIGURED => String::from("configured"),
             Self::WEIGHTED_AFFINITY => String::from("weighted_affinity"),
+            Self::CLASSIFIED => String::from("classified"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierOrdering {
         Ok(match s.as_str() {
             "configured" => Self::CONFIGURED,
             "weighted_affinity" => Self::WEIGHTED_AFFINITY,
+            "classified" => Self::CLASSIFIED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

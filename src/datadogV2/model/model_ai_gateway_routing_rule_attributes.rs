@@ -14,9 +14,9 @@ pub struct AiGatewayRoutingRuleAttributes {
     /// Time when the resource was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    /// Stable numeric route identifier used by scoped policies.
+    /// Stable numeric route identifier used by scoped policies and `ai-gateway-route` restriction policies.
     #[serde(rename = "route_id")]
-    pub route_id: Option<i64>,
+    pub route_id: i64,
     #[serde(rename = "tiers")]
     pub tiers: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTier>,
     /// Time when the resource was last updated.
@@ -32,22 +32,18 @@ pub struct AiGatewayRoutingRuleAttributes {
 impl AiGatewayRoutingRuleAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
+        route_id: i64,
         tiers: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTier>,
         updated_at: chrono::DateTime<chrono::Utc>,
     ) -> AiGatewayRoutingRuleAttributes {
         AiGatewayRoutingRuleAttributes {
             created_at,
-            route_id: None,
+            route_id,
             tiers,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn route_id(mut self, value: i64) -> Self {
-        self.route_id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -93,9 +89,6 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleAttributes {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "route_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             route_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tiers" => {
@@ -112,6 +105,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleAttributes {
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
+                let route_id = route_id.ok_or_else(|| M::Error::missing_field("route_id"))?;
                 let tiers = tiers.ok_or_else(|| M::Error::missing_field("tiers"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 

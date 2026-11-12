@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTier {
+    /// Saved classified-tier settings. Provider and model are empty when the caller cannot view the provider.
+    #[serde(rename = "classifier")]
+    pub classifier: Option<crate::datadogV2::model::AiGatewayRoutingClassifier>,
     /// How a tier orders its targets.
     #[serde(rename = "ordering")]
     pub ordering: crate::datadogV2::model::AiGatewayRoutingRuleTierOrdering,
@@ -32,12 +35,21 @@ impl AiGatewayRoutingRuleTier {
         targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTarget>,
     ) -> AiGatewayRoutingRuleTier {
         AiGatewayRoutingRuleTier {
+            classifier: None,
             ordering,
             ordering_issue: None,
             targets,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn classifier(
+        mut self,
+        value: crate::datadogV2::model::AiGatewayRoutingClassifier,
+    ) -> Self {
+        self.classifier = Some(value);
+        self
     }
 
     pub fn ordering_issue(
@@ -74,6 +86,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTier {
             where
                 M: MapAccess<'a>,
             {
+                let mut classifier: Option<crate::datadogV2::model::AiGatewayRoutingClassifier> =
+                    None;
                 let mut ordering: Option<
                     crate::datadogV2::model::AiGatewayRoutingRuleTierOrdering,
                 > = None;
@@ -90,6 +104,12 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTier {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "classifier" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            classifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "ordering" => {
                             ordering = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _ordering) = ordering {
@@ -130,6 +150,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTier {
                 let targets = targets.ok_or_else(|| M::Error::missing_field("targets"))?;
 
                 let content = AiGatewayRoutingRuleTier {
+                    classifier,
                     ordering,
                     ordering_issue,
                     targets,

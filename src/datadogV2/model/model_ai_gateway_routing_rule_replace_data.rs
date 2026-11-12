@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleReplaceData {
-    /// Attributes used to replace an AI Gateway routing rule.
+    /// Partial route update. Omit tiers to preserve the entire graph, including hidden selections. Saved target IDs retain omitted settings. Replacing tiers must explicitly retain or remove every hidden occurrence.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AiGatewayRoutingRuleReplaceAttributes,
     /// Resource identifier.

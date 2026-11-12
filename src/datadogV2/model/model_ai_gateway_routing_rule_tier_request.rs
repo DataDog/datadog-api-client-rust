@@ -11,7 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTierRequest {
-    /// How a tier orders its targets. Omitted or null defaults to configured, which preserves target order. The weighted_affinity ordering distributes first-choice assignments by relative target weights and accepts only model targets with an explicit provider, without repeated provider and model pairs in the same tier.
+    /// Decision model and settings for a classified tier. Omission preserves the saved classifier; null clears it. Newly selected models require provider View.
+    #[serde(
+        rename = "classifier",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub classifier: Option<Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>>,
+    /// How a tier orders its targets. Omission preserves the saved same-position tier on update; null resets to configured. New tiers default to configured. The weighted_affinity ordering distributes first-choice assignments by relative target weights and accepts only model targets with an explicit provider, without repeated provider and model pairs in the same tier. The `classified` ordering is allowed only in the first tier and requires a classifier, destination rubrics, and one default destination.
     #[serde(
         rename = "ordering",
         default,
@@ -32,11 +39,20 @@ impl AiGatewayRoutingRuleTierRequest {
         targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
     ) -> AiGatewayRoutingRuleTierRequest {
         AiGatewayRoutingRuleTierRequest {
+            classifier: None,
             ordering: None,
             targets,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn classifier(
+        mut self,
+        value: Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>,
+    ) -> Self {
+        self.classifier = Some(value);
+        self
     }
 
     pub fn ordering(
@@ -73,6 +89,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut classifier: Option<
+                    Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>,
+                > = None;
                 let mut ordering: Option<
                     Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>,
                 > = None;
@@ -87,6 +106,9 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "classifier" => {
+                            classifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "ordering" => {
                             ordering = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _ordering) = ordering {
@@ -111,6 +133,7 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
                 let targets = targets.ok_or_else(|| M::Error::missing_field("targets"))?;
 
                 let content = AiGatewayRoutingRuleTierRequest {
+                    classifier,
                     ordering,
                     targets,
                     additional_properties,
