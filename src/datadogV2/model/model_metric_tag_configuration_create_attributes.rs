@@ -19,11 +19,11 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// Defaults to false. Requires `tags` property.
     #[serde(rename = "exclude_tags_mode")]
     pub exclude_tags_mode: Option<bool>,
-    /// Toggle to include/exclude percentiles for a distribution metric.
-    /// Defaults to false. Can only be applied to metrics that have a `metric_type` of `distribution`.
+    /// Include percentile aggregations for metric types `distribution`, `exponential_histogram`,
+    /// and `explicit_histogram`. Omit this field to keep the current setting.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
-    /// The metric's type.
+    /// The metric's type. Contact your Customer Success Manager for instructions on using native histogram types.
     #[serde(rename = "metric_type")]
     pub metric_type: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
     /// A list of tag keys that will be queryable for your metric.
