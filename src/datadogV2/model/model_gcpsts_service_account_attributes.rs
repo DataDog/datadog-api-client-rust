@@ -58,6 +58,13 @@ pub struct GCPSTSServiceAccountAttributes {
     #[serde(rename = "monitored_resource_configs")]
     pub monitored_resource_configs:
         Option<Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>>,
+    /// Configurations that limit which GCP projects Datadog monitors, out of the projects this service
+    /// account can access. Each type can have at most one configuration. A project is monitored only if
+    /// it passes the filters of every configured type. By default, Datadog monitors every project the
+    /// service account can access. When updating a service account, omit this field to keep the current
+    /// filters, or send an empty list to remove them.
+    #[serde(rename = "project_filter_configs")]
+    pub project_filter_configs: Option<Vec<crate::datadogV2::model::GCPProjectFilterConfig>>,
     /// Configurations for GCP location filtering, such as region, multi-region, or zone. Only monitored resources that match the specified regions are imported into Datadog. By default, Datadog collects from all locations.
     #[serde(rename = "region_filter_configs")]
     pub region_filter_configs: Option<Vec<String>>,
@@ -88,6 +95,7 @@ impl GCPSTSServiceAccountAttributes {
             is_security_command_center_enabled: None,
             metric_namespace_configs: None,
             monitored_resource_configs: None,
+            project_filter_configs: None,
             region_filter_configs: None,
             resource_collection_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -180,6 +188,15 @@ impl GCPSTSServiceAccountAttributes {
     }
 
     #[allow(deprecated)]
+    pub fn project_filter_configs(
+        mut self,
+        value: Vec<crate::datadogV2::model::GCPProjectFilterConfig>,
+    ) -> Self {
+        self.project_filter_configs = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn region_filter_configs(mut self, value: Vec<String>) -> Self {
         self.region_filter_configs = Some(value);
         self
@@ -239,6 +256,9 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                 > = None;
                 let mut monitored_resource_configs: Option<
                     Vec<crate::datadogV2::model::GCPMonitoredResourceConfig>,
+                > = None;
+                let mut project_filter_configs: Option<
+                    Vec<crate::datadogV2::model::GCPProjectFilterConfig>,
                 > = None;
                 let mut region_filter_configs: Option<Vec<String>> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
@@ -340,6 +360,13 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                             monitored_resource_configs =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "project_filter_configs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            project_filter_configs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "region_filter_configs" => {
                             if v.is_null() {
                                 continue;
@@ -377,6 +404,7 @@ impl<'de> Deserialize<'de> for GCPSTSServiceAccountAttributes {
                     is_security_command_center_enabled,
                     metric_namespace_configs,
                     monitored_resource_configs,
+                    project_filter_configs,
                     region_filter_configs,
                     resource_collection_enabled,
                     additional_properties,
