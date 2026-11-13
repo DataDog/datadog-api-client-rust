@@ -34,6 +34,10 @@ pub struct LLMObsPatternsConfigAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub integration_provider: Option<Option<String>>,
+    /// Minimum topic size, the smallest number of interactions a topic must contain. Topics with fewer
+    /// interactions are moved to Outliers.
+    #[serde(rename = "min_cluster_size")]
+    pub min_cluster_size: i32,
     /// Model name for a bring-your-own-model configuration.
     #[serde(
         rename = "model_name",
@@ -75,6 +79,7 @@ impl LLMObsPatternsConfigAttributes {
         created_at: chrono::DateTime<chrono::Utc>,
         evp_query: String,
         hierarchy_depth: i32,
+        min_cluster_size: i32,
         name: String,
         num_records: i32,
         sampling_ratio: f64,
@@ -87,6 +92,7 @@ impl LLMObsPatternsConfigAttributes {
             evp_query,
             hierarchy_depth,
             integration_provider: None,
+            min_cluster_size,
             model_name: None,
             name,
             num_records,
@@ -150,6 +156,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigAttributes {
                 let mut evp_query: Option<String> = None;
                 let mut hierarchy_depth: Option<i32> = None;
                 let mut integration_provider: Option<Option<String>> = None;
+                let mut min_cluster_size: Option<i32> = None;
                 let mut model_name: Option<Option<String>> = None;
                 let mut name: Option<String> = None;
                 let mut num_records: Option<i32> = None;
@@ -180,6 +187,10 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigAttributes {
                         }
                         "integration_provider" => {
                             integration_provider =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "min_cluster_size" => {
+                            min_cluster_size =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "model_name" => {
@@ -216,6 +227,8 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigAttributes {
                 let evp_query = evp_query.ok_or_else(|| M::Error::missing_field("evp_query"))?;
                 let hierarchy_depth =
                     hierarchy_depth.ok_or_else(|| M::Error::missing_field("hierarchy_depth"))?;
+                let min_cluster_size =
+                    min_cluster_size.ok_or_else(|| M::Error::missing_field("min_cluster_size"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let num_records =
                     num_records.ok_or_else(|| M::Error::missing_field("num_records"))?;
@@ -230,6 +243,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigAttributes {
                     evp_query,
                     hierarchy_depth,
                     integration_provider,
+                    min_cluster_size,
                     model_name,
                     name,
                     num_records,

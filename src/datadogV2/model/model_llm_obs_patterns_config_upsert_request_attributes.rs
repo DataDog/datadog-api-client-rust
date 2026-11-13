@@ -26,6 +26,10 @@ pub struct LLMObsPatternsConfigUpsertRequestAttributes {
     /// Integration provider for a bring-your-own-model configuration.
     #[serde(rename = "integration_provider")]
     pub integration_provider: Option<String>,
+    /// Minimum topic size, the smallest number of interactions a topic must contain. Topics with fewer
+    /// interactions are moved to Outliers. Must be at least 2 and less than `num_records`. Required when creating a configuration.
+    #[serde(rename = "min_cluster_size")]
+    pub min_cluster_size: Option<i32>,
     /// Model name for a bring-your-own-model configuration.
     #[serde(rename = "model_name")]
     pub model_name: Option<String>,
@@ -65,6 +69,7 @@ impl LLMObsPatternsConfigUpsertRequestAttributes {
             evp_query,
             hierarchy_depth,
             integration_provider: None,
+            min_cluster_size: None,
             model_name: None,
             name,
             num_records,
@@ -88,6 +93,11 @@ impl LLMObsPatternsConfigUpsertRequestAttributes {
 
     pub fn integration_provider(mut self, value: String) -> Self {
         self.integration_provider = Some(value);
+        self
+    }
+
+    pub fn min_cluster_size(mut self, value: i32) -> Self {
+        self.min_cluster_size = Some(value);
         self
     }
 
@@ -137,6 +147,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
                 let mut evp_query: Option<String> = None;
                 let mut hierarchy_depth: Option<i32> = None;
                 let mut integration_provider: Option<String> = None;
+                let mut min_cluster_size: Option<i32> = None;
                 let mut model_name: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut num_records: Option<i32> = None;
@@ -175,6 +186,13 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
                                 continue;
                             }
                             integration_provider =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "min_cluster_size" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            min_cluster_size =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "model_name" => {
@@ -228,6 +246,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
                     evp_query,
                     hierarchy_depth,
                     integration_provider,
+                    min_cluster_size,
                     model_name,
                     name,
                     num_records,
