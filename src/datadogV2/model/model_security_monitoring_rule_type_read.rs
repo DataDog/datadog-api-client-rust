@@ -14,6 +14,7 @@ pub enum SecurityMonitoringRuleTypeRead {
     APPLICATION_SECURITY,
     API_SECURITY,
     WORKLOAD_ACTIVITY,
+    WORKLOAD_HARDENING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +28,7 @@ impl ToString for SecurityMonitoringRuleTypeRead {
             Self::APPLICATION_SECURITY => String::from("application_security"),
             Self::API_SECURITY => String::from("api_security"),
             Self::WORKLOAD_ACTIVITY => String::from("workload_activity"),
+            Self::WORKLOAD_HARDENING => String::from("workload_hardening"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -58,6 +60,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeRead {
             "application_security" => Self::APPLICATION_SECURITY,
             "api_security" => Self::API_SECURITY,
             "workload_activity" => Self::WORKLOAD_ACTIVITY,
+            "workload_hardening" => Self::WORKLOAD_HARDENING,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
