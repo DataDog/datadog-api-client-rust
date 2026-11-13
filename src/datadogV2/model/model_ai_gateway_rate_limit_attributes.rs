@@ -20,13 +20,16 @@ pub struct AiGatewayRateLimitAttributes {
     /// Whether this rate limit is active.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// Maximum input tokens per rolling minute shared by all matching traffic. Null when this rule does not limit input tokens.
+    /// Maximum input tokens per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit input tokens.
     #[serde(
         rename = "input_tokens_per_minute",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub input_tokens_per_minute: Option<Option<i64>>,
+    /// Whether the selector gives each matching value its own allowance, that is, whether it has at least one per_value entry. Returned even when scope_restricted hides the selector.
+    #[serde(rename = "is_template")]
+    pub is_template: Option<bool>,
     /// Action taken when request rate exceeds the limit.
     #[serde(rename = "mode")]
     pub mode: crate::datadogV2::model::AiGatewayRateLimitMode,
@@ -40,14 +43,14 @@ pub struct AiGatewayRateLimitAttributes {
     /// Rate limit name.
     #[serde(rename = "name")]
     pub name: String,
-    /// Maximum output tokens per rolling minute shared by all matching traffic. Null when this rule does not limit output tokens.
+    /// Maximum output tokens per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit output tokens.
     #[serde(
         rename = "output_tokens_per_minute",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub output_tokens_per_minute: Option<Option<i64>>,
-    /// Maximum requests per rolling minute shared by all matching traffic. Null when this rule does not limit requests.
+    /// Maximum requests per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit requests.
     #[serde(
         rename = "requests_per_minute",
         default,
@@ -60,6 +63,13 @@ pub struct AiGatewayRateLimitAttributes {
     /// Whether provider or model scope metadata was withheld. Omit unchanged scope fields on an unrelated update to preserve their saved values.
     #[serde(rename = "scope_restricted")]
     pub scope_restricted: bool,
+    /// Dimension rules for a template rate limit, which gives each matched user, Team, or value its own allowance with the rule's limits. Can't be combined with user_id, team_id, or tags, and can't be changed after creation. Omit for a rule with one shared allowance.
+    #[serde(
+        rename = "selector",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub selector: Option<Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>>,
     /// Optional scope tags, such as provider, model, ml_app, or custom dimensions. A request matches when it has all of these tags.
     #[serde(rename = "tags")]
     pub tags: std::collections::BTreeMap<String, String>,
@@ -70,6 +80,9 @@ pub struct AiGatewayRateLimitAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub team_id: Option<Option<uuid::Uuid>>,
+    /// Dimensions of the selector's per_value entries, such as user_id or tag:env, each matching value of which gets its own allowance. Empty unless is_template is true. Returned even when scope_restricted hides the selector.
+    #[serde(rename = "template_split_dims")]
+    pub template_split_dims: Option<Vec<String>>,
     /// Last modification timestamp.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
@@ -108,6 +121,7 @@ impl AiGatewayRateLimitAttributes {
             created_by,
             enabled,
             input_tokens_per_minute: None,
+            is_template: None,
             mode,
             monitor_id: None,
             name,
@@ -115,8 +129,10 @@ impl AiGatewayRateLimitAttributes {
             requests_per_minute: None,
             revision,
             scope_restricted,
+            selector: None,
             tags,
             team_id: None,
+            template_split_dims: None,
             updated_at,
             updated_by,
             user_id: None,
@@ -127,6 +143,11 @@ impl AiGatewayRateLimitAttributes {
 
     pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
         self.input_tokens_per_minute = Some(value);
+        self
+    }
+
+    pub fn is_template(mut self, value: bool) -> Self {
+        self.is_template = Some(value);
         self
     }
 
@@ -145,8 +166,21 @@ impl AiGatewayRateLimitAttributes {
         self
     }
 
+    pub fn selector(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
+    ) -> Self {
+        self.selector = Some(value);
+        self
+    }
+
     pub fn team_id(mut self, value: Option<uuid::Uuid>) -> Self {
         self.team_id = Some(value);
+        self
+    }
+
+    pub fn template_split_dims(mut self, value: Vec<String>) -> Self {
+        self.template_split_dims = Some(value);
         self
     }
 
@@ -185,6 +219,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                 let mut created_by: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut input_tokens_per_minute: Option<Option<i64>> = None;
+                let mut is_template: Option<bool> = None;
                 let mut mode: Option<crate::datadogV2::model::AiGatewayRateLimitMode> = None;
                 let mut monitor_id: Option<Option<i64>> = None;
                 let mut name: Option<String> = None;
@@ -192,8 +227,12 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                 let mut requests_per_minute: Option<Option<i64>> = None;
                 let mut revision: Option<i64> = None;
                 let mut scope_restricted: Option<bool> = None;
+                let mut selector: Option<
+                    Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
+                > = None;
                 let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut team_id: Option<Option<uuid::Uuid>> = None;
+                let mut template_split_dims: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
                 let mut user_id: Option<Option<uuid::Uuid>> = None;
@@ -216,6 +255,13 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                         }
                         "input_tokens_per_minute" => {
                             input_tokens_per_minute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_template" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mode" => {
@@ -250,11 +296,21 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                             scope_restricted =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "selector" => {
+                            selector = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "team_id" => {
                             team_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "template_split_dims" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            template_split_dims =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -289,6 +345,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                     created_by,
                     enabled,
                     input_tokens_per_minute,
+                    is_template,
                     mode,
                     monitor_id,
                     name,
@@ -296,8 +353,10 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                     requests_per_minute,
                     revision,
                     scope_restricted,
+                    selector,
                     tags,
                     team_id,
+                    template_split_dims,
                     updated_at,
                     updated_by,
                     user_id,

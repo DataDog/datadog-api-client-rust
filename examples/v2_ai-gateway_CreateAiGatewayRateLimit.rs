@@ -5,6 +5,7 @@ use datadog_api_client::datadogV2::model::AiGatewayRateLimitCreateAttributes;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitCreateData;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitCreateRequest;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitMode;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitSelectorEntry;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitType;
 use uuid::Uuid;
 
@@ -16,6 +17,11 @@ async fn main() {
             .mode(AiGatewayRateLimitMode::ALERT)
             .output_tokens_per_minute(None)
             .requests_per_minute(Some(600))
+            .selector(Some(vec![AiGatewayRateLimitSelectorEntry::new(
+                "user_id".to_string(),
+                true,
+            )
+            .values(vec!["11111111-1111-1111-1111-111111111111".to_string()])]))
             .team_id(Uuid::parse_str("00000000-0000-4000-8000-000000000002").expect("invalid UUID"))
             .user_id(
                 Uuid::parse_str("00000000-0000-4000-8000-000000000001").expect("invalid UUID"),
