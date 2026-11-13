@@ -11,10 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagRuleCreateData {
-    /// Attributes that can be supplied when creating a tag rule.
+    /// Attributes that can be supplied when creating a tag rule. If `tag_value_patterns`
+    /// contains `*`, set `required` and `negated` to different values. If both are `false`,
+    /// the rule has no effect. If both are `true`, no value can satisfy the rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TagRuleCreateAttributes,
-    /// JSON:API resource type for a tag rule.
+    /// JSON:API resource type for a tag rule. Requests accept `tag_rule` or `tag_policy`; responses use `tag_policy`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]
