@@ -31,6 +31,15 @@ pub struct CoverageSummaryAttributes {
     /// Total number of coverage reports evaluated.
     #[serde(rename = "evaluated_reports_count")]
     pub evaluated_reports_count: Option<i64>,
+    /// Coverage statistics broken down by flag. Each entry contains only coverage percentages.
+    /// Branch summaries include the flags of the latest covered commit, including coverage carried forward
+    /// to that commit. Pull request summaries include flags across all commits of the pull request.
+    #[serde(rename = "flags", default, with = "::serde_with::rust::double_option")]
+    pub flags: Option<
+        Option<
+            std::collections::BTreeMap<String, crate::datadogV2::model::CoverageSummaryFlagStats>,
+        >,
+    >,
     /// Overall patch coverage percentage.
     #[serde(
         rename = "patch_coverage",
@@ -72,6 +81,7 @@ impl CoverageSummaryAttributes {
             codeowners: None,
             evaluated_flags_count: None,
             evaluated_reports_count: None,
+            flags: None,
             patch_coverage: None,
             services: None,
             total_coverage: None,
@@ -100,6 +110,16 @@ impl CoverageSummaryAttributes {
 
     pub fn evaluated_reports_count(mut self, value: i64) -> Self {
         self.evaluated_reports_count = Some(value);
+        self
+    }
+
+    pub fn flags(
+        mut self,
+        value: Option<
+            std::collections::BTreeMap<String, crate::datadogV2::model::CoverageSummaryFlagStats>,
+        >,
+    ) -> Self {
+        self.flags = Some(value);
         self
     }
 
@@ -168,6 +188,14 @@ impl<'de> Deserialize<'de> for CoverageSummaryAttributes {
                 > = None;
                 let mut evaluated_flags_count: Option<i64> = None;
                 let mut evaluated_reports_count: Option<i64> = None;
+                let mut flags: Option<
+                    Option<
+                        std::collections::BTreeMap<
+                            String,
+                            crate::datadogV2::model::CoverageSummaryFlagStats,
+                        >,
+                    >,
+                > = None;
                 let mut patch_coverage: Option<Option<f64>> = None;
                 let mut services: Option<
                     Option<
@@ -203,6 +231,9 @@ impl<'de> Deserialize<'de> for CoverageSummaryAttributes {
                             evaluated_reports_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "flags" => {
+                            flags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "patch_coverage" => {
                             if v.as_str() == Some("") {
                                 continue;
@@ -232,6 +263,7 @@ impl<'de> Deserialize<'de> for CoverageSummaryAttributes {
                     codeowners,
                     evaluated_flags_count,
                     evaluated_reports_count,
+                    flags,
                     patch_coverage,
                     services,
                     total_coverage,

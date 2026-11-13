@@ -2942,6 +2942,8 @@ pub mod model_coverage_summary_attributes;
 pub use self::model_coverage_summary_attributes::CoverageSummaryAttributes;
 pub mod model_coverage_summary_codeowner_stats;
 pub use self::model_coverage_summary_codeowner_stats::CoverageSummaryCodeownerStats;
+pub mod model_coverage_summary_flag_stats;
+pub use self::model_coverage_summary_flag_stats::CoverageSummaryFlagStats;
 pub mod model_coverage_summary_service_stats;
 pub use self::model_coverage_summary_service_stats::CoverageSummaryServiceStats;
 pub mod model_coverage_summary_type;
