@@ -100,6 +100,12 @@ pub struct UsageBillableSummaryKeys {
     #[serde(rename = "dbm_normalized_queries_sum")]
     pub dbm_normalized_queries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
+    #[serde(rename = "error_tracking_sum")]
+    pub error_tracking_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    /// Response with properties for each aggregated usage type.
+    #[serde(rename = "error_tracking_tiered_sum")]
+    pub error_tracking_tiered_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_apm_and_profiler_average")]
     pub fargate_container_apm_and_profiler_average:
         Option<crate::datadogV1::model::UsageBillableSummaryBody>,
@@ -322,6 +328,8 @@ impl UsageBillableSummaryKeys {
             dbm_host_top99p: None,
             dbm_normalized_queries_average: None,
             dbm_normalized_queries_sum: None,
+            error_tracking_sum: None,
+            error_tracking_tiered_sum: None,
             fargate_container_apm_and_profiler_average: None,
             fargate_container_apm_and_profiler_sum: None,
             fargate_container_average: None,
@@ -616,6 +624,22 @@ impl UsageBillableSummaryKeys {
         value: crate::datadogV1::model::UsageBillableSummaryBody,
     ) -> Self {
         self.dbm_normalized_queries_sum = Some(value);
+        self
+    }
+
+    pub fn error_tracking_sum(
+        mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> Self {
+        self.error_tracking_sum = Some(value);
+        self
+    }
+
+    pub fn error_tracking_tiered_sum(
+        mut self,
+        value: crate::datadogV1::model::UsageBillableSummaryBody,
+    ) -> Self {
+        self.error_tracking_tiered_sum = Some(value);
         self
     }
 
@@ -1196,6 +1220,12 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                 let mut dbm_normalized_queries_sum: Option<
                     crate::datadogV1::model::UsageBillableSummaryBody,
                 > = None;
+                let mut error_tracking_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
+                let mut error_tracking_tiered_sum: Option<
+                    crate::datadogV1::model::UsageBillableSummaryBody,
+                > = None;
                 let mut fargate_container_apm_and_profiler_average: Option<
                     crate::datadogV1::model::UsageBillableSummaryBody,
                 > = None;
@@ -1569,6 +1599,20 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                                 continue;
                             }
                             dbm_normalized_queries_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_sum =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_tracking_tiered_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_tracking_tiered_sum =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fargate_container_apm_and_profiler_average" => {
@@ -2025,6 +2069,8 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                     dbm_host_top99p,
                     dbm_normalized_queries_average,
                     dbm_normalized_queries_sum,
+                    error_tracking_sum,
+                    error_tracking_tiered_sum,
                     fargate_container_apm_and_profiler_average,
                     fargate_container_apm_and_profiler_sum,
                     fargate_container_average,
