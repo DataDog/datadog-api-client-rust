@@ -321,11 +321,48 @@ impl ListFeatureFlagsEnvironmentsOptionalParams {
     }
 }
 
+/// UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams is a struct for passing parameters to the method [`FeatureFlagsAPI::update_allocations_for_feature_flag_in_environment`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams {
+    /// The key of the default variant to set. When approval is required, omit this parameter
+    /// and submit a `DEFAULT_VARIANT` suggestion separately.
+    pub default_variant_key: Option<String>,
+}
+
+impl UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams {
+    /// The key of the default variant to set. When approval is required, omit this parameter
+    /// and submit a `DEFAULT_VARIANT` suggestion separately.
+    pub fn default_variant_key(mut self, value: String) -> Self {
+        self.default_variant_key = Some(value);
+        self
+    }
+}
+
+/// ApplyFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::apply_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApplyFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ApproveFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::approve_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApproveFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ArchiveFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::archive_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ArchiveFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -353,6 +390,15 @@ pub enum CreateFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::create_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateVariantForFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::create_variant_for_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -369,6 +415,15 @@ pub enum DeleteFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::delete_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteVariantFromFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::delete_variant_from_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -381,6 +436,7 @@ pub enum DeleteVariantFromFeatureFlagError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DisableFeatureFlagEnvironmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -389,6 +445,7 @@ pub enum DisableFeatureFlagEnvironmentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EnableFeatureFlagEnvironmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -414,6 +471,15 @@ pub enum GetFeatureFlagError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetFeatureFlagsEnvironmentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::get_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -461,6 +527,15 @@ pub enum PauseExposureScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+/// RejectFlagSuggestionError is a struct for typed errors of method [`FeatureFlagsAPI::reject_flag_suggestion`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RejectFlagSuggestionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ResumeExposureScheduleError is a struct for typed errors of method [`FeatureFlagsAPI::resume_exposure_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -490,6 +565,7 @@ pub enum StopExposureScheduleError {
 #[serde(untagged)]
 pub enum UnarchiveFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -505,6 +581,16 @@ pub enum UpdateAllocationsForFeatureFlagInEnvironmentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFeatureFlagError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateFeatureFlagApprovalsError is a struct for typed errors of method [`FeatureFlagsAPI::update_feature_flag_approvals`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateFeatureFlagApprovalsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -536,7 +622,7 @@ pub enum UpdateVariantForFeatureFlagError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage feature flags and environments.
+/// Manage feature flags, environments, and approval suggestions.
 #[derive(Debug, Clone)]
 pub struct FeatureFlagsAPI {
     config: datadog::Configuration,
@@ -610,8 +696,334 @@ impl FeatureFlagsAPI {
         Self { config, client }
     }
 
-    /// Archives a feature flag. Archived flags are
-    /// hidden from the main list but remain accessible and can be unarchived.
+    /// Applies a previously approved feature flag change suggestion. Requires contributor or
+    /// editor access to the flag. Pending, rejected, or discarded suggestions return `409 Conflict`.
+    /// An already applied suggestion also returns `409 Conflict`, except that retrying an applied
+    /// experiment action succeeds. This endpoint does not require a request body.
+    ///
+    /// When an `ALLOCATIONS` suggestion is applied, either by this endpoint or by an approval that applies it,
+    /// each exposure schedule with `autostart` set to `true`, no `absolute_start_time`, and no future
+    /// `scheduled_start_time` starts at apply time. This includes a schedule that is already running, so a
+    /// suggestion that omits its `absolute_start_time` restarts its rollout. If its `selection_interval_ms` is
+    /// greater than `0`, every step except the last uses that interval. An `absolute_start_time` in the
+    /// suggestion is kept, including one set by the allocations request that built the suggestion, so time spent
+    /// waiting for approval counts toward its rollout steps.
+    /// Schedules with `apm_retention`, in the suggestion or on the saved schedule, are the exception: apply does
+    /// not start them, and they start only through the exposure schedule start endpoint. When the suggestion omits
+    /// `apm_retention` or `absolute_start_time` for a saved schedule with `apm_retention`, apply keeps the saved
+    /// values, so a running schedule keeps its start, unless the suggestion changes its rollout strategy, which
+    /// stops it.
+    pub async fn apply_flag_suggestion(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagSuggestionResponse,
+        datadog::Error<ApplyFlagSuggestionError>,
+    > {
+        match self
+            .apply_flag_suggestion_with_http_info(suggestion_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Applies a previously approved feature flag change suggestion. Requires contributor or
+    /// editor access to the flag. Pending, rejected, or discarded suggestions return `409 Conflict`.
+    /// An already applied suggestion also returns `409 Conflict`, except that retrying an applied
+    /// experiment action succeeds. This endpoint does not require a request body.
+    ///
+    /// When an `ALLOCATIONS` suggestion is applied, either by this endpoint or by an approval that applies it,
+    /// each exposure schedule with `autostart` set to `true`, no `absolute_start_time`, and no future
+    /// `scheduled_start_time` starts at apply time. This includes a schedule that is already running, so a
+    /// suggestion that omits its `absolute_start_time` restarts its rollout. If its `selection_interval_ms` is
+    /// greater than `0`, every step except the last uses that interval. An `absolute_start_time` in the
+    /// suggestion is kept, including one set by the allocations request that built the suggestion, so time spent
+    /// waiting for approval counts toward its rollout steps.
+    /// Schedules with `apm_retention`, in the suggestion or on the saved schedule, are the exception: apply does
+    /// not start them, and they start only through the exposure schedule start endpoint. When the suggestion omits
+    /// `apm_retention` or `absolute_start_time` for a saved schedule with `apm_retention`, apply keeps the saved
+    /// values, so a running schedule keeps its start, unless the suggestion changes its rollout strategy, which
+    /// stops it.
+    pub async fn apply_flag_suggestion_with_http_info(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagSuggestionResponse>,
+        datadog::Error<ApplyFlagSuggestionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.apply_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/suggestions/{suggestion_id}/apply",
+            local_configuration.get_operation_host(local_operation_id),
+            suggestion_id = datadog::urlencode(suggestion_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagSuggestionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ApplyFlagSuggestionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Approves a feature flag change suggestion and applies the change immediately by default.
+    /// Set `apply` to `false` to approve without applying, then call `ApplyFlagSuggestion` later.
+    /// Until it is applied or deleted, an approved suggestion still blocks conflicting changes.
+    /// Requires editor access to the flag or the Feature Flag Approvals Override permission.
+    /// A creator cannot approve their own suggestion unless they have override permission.
+    /// Applied or discarded suggestions return `409 Conflict`. Retrying approval of an already
+    /// applied experiment action with `apply` set to `true` succeeds.
+    pub async fn approve_flag_suggestion(
+        &self,
+        suggestion_id: uuid::Uuid,
+        body: crate::datadogV2::model::ApproveFlagSuggestionRequest,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagSuggestionResponse,
+        datadog::Error<ApproveFlagSuggestionError>,
+    > {
+        match self
+            .approve_flag_suggestion_with_http_info(suggestion_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Approves a feature flag change suggestion and applies the change immediately by default.
+    /// Set `apply` to `false` to approve without applying, then call `ApplyFlagSuggestion` later.
+    /// Until it is applied or deleted, an approved suggestion still blocks conflicting changes.
+    /// Requires editor access to the flag or the Feature Flag Approvals Override permission.
+    /// A creator cannot approve their own suggestion unless they have override permission.
+    /// Applied or discarded suggestions return `409 Conflict`. Retrying approval of an already
+    /// applied experiment action with `apply` set to `true` succeeds.
+    pub async fn approve_flag_suggestion_with_http_info(
+        &self,
+        suggestion_id: uuid::Uuid,
+        body: crate::datadogV2::model::ApproveFlagSuggestionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagSuggestionResponse>,
+        datadog::Error<ApproveFlagSuggestionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.approve_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/suggestions/{suggestion_id}/approve",
+            local_configuration.get_operation_host(local_operation_id),
+            suggestion_id = datadog::urlencode(suggestion_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagSuggestionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ApproveFlagSuggestionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Archives a feature flag. Archived flags are hidden from the main list but remain accessible
+    /// and can be unarchived.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn archive_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -634,8 +1046,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Archives a feature flag. Archived flags are
-    /// hidden from the main list but remain accessible and can be unarchived.
+    /// Archives a feature flag. Archived flags are hidden from the main list but remain accessible
+    /// and can be unarchived.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn archive_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -722,7 +1143,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Creates a new targeting rule (allocation) for a specific feature flag in a specific environment.
+    /// Creates a new targeting rule (allocation) for a feature flag in an environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `202 Accepted` with an
+    /// `approval-required` resource. No allocation is created and no suggestion is persisted.
+    /// The resource ID is the flag ID. Submit its `property`, `action`, `suggestion`, and `environment_id`
+    /// to `CreateFlagSuggestion`, together with `notification_rule_targets`, to request approval.
+    /// The suggestion value contains the complete desired allocation set, including the new rule.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict`, including for callers with
+    /// override permission or when approval is no longer required.
     pub async fn create_allocations_for_feature_flag_in_environment(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -753,7 +1184,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Creates a new targeting rule (allocation) for a specific feature flag in a specific environment.
+    /// Creates a new targeting rule (allocation) for a feature flag in an environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `202 Accepted` with an
+    /// `approval-required` resource. No allocation is created and no suggestion is persisted.
+    /// The resource ID is the flag ID. Submit its `property`, `action`, `suggestion`, and `environment_id`
+    /// to `CreateFlagSuggestion`, together with `notification_rule_targets`, to request approval.
+    /// The suggestion value contains the complete desired allocation set, including the new rule.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict`, including for callers with
+    /// override permission or when approval is no longer required.
     pub async fn create_allocations_for_feature_flag_in_environment_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1201,6 +1642,213 @@ impl FeatureFlagsAPI {
         }
     }
 
+    /// Creates a persisted suggestion for a feature flag change that requires approval.
+    /// The change is not applied until the suggestion is approved and applied. Requires
+    /// contributor or editor access to the flag. The request must contain at least one
+    /// `notification_rule_targets` handle for review notifications.
+    ///
+    /// Use this endpoint to submit the proposed change from the `202 Accepted` approval-required
+    /// response of `CreateAllocationsForFeatureFlagInEnvironment`. Other approval-gated mutation endpoints
+    /// return `201 Created` with a persisted suggestion. Do not submit those suggestions again.
+    ///
+    /// An `environment_id` is required for `ALLOCATIONS`, `DEFAULT_VARIANT`, and `OVERRIDE_VARIANT`.
+    /// For allocation and variant changes, `suggestion` is a JSON-encoded string, not a nested
+    /// JSON object. Conflicting suggestions that are pending, or approved but not yet applied,
+    /// return `409 Conflict`.
+    ///
+    /// The allocations in an `ALLOCATIONS` suggestion are validated with the rules that
+    /// `UpdateAllocationsForFeatureFlagInEnvironment` applies to a change that requires approval, including the
+    /// rules for request fields, targeting rules and their `ONE_OF` and `NOT_ONE_OF` value limits, variant and
+    /// metric references, draft allocations, and exposure schedules. A schedule with `apm_retention` that has not
+    /// started must be started with the exposure schedule start endpoint, not with `autostart` or an
+    /// `absolute_start_time`. That endpoint's Product Analytics Experiments Write permission checks also apply.
+    /// If that endpoint would reject the allocations, this endpoint returns the same error: `400 Bad Request` for
+    /// invalid allocations, for example a `UNIFORM_INTERVALS` schedule with a `selection_interval_ms` of `0`,
+    /// `403 Forbidden` when the caller lacks the Experiments Write permission the lineup needs, and
+    /// `409 Conflict` for a lineup that changes or omits a draft allocation.
+    pub async fn create_flag_suggestion(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateFlagSuggestionRequest,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagSuggestionResponse,
+        datadog::Error<CreateFlagSuggestionError>,
+    > {
+        match self
+            .create_flag_suggestion_with_http_info(feature_flag_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Creates a persisted suggestion for a feature flag change that requires approval.
+    /// The change is not applied until the suggestion is approved and applied. Requires
+    /// contributor or editor access to the flag. The request must contain at least one
+    /// `notification_rule_targets` handle for review notifications.
+    ///
+    /// Use this endpoint to submit the proposed change from the `202 Accepted` approval-required
+    /// response of `CreateAllocationsForFeatureFlagInEnvironment`. Other approval-gated mutation endpoints
+    /// return `201 Created` with a persisted suggestion. Do not submit those suggestions again.
+    ///
+    /// An `environment_id` is required for `ALLOCATIONS`, `DEFAULT_VARIANT`, and `OVERRIDE_VARIANT`.
+    /// For allocation and variant changes, `suggestion` is a JSON-encoded string, not a nested
+    /// JSON object. Conflicting suggestions that are pending, or approved but not yet applied,
+    /// return `409 Conflict`.
+    ///
+    /// The allocations in an `ALLOCATIONS` suggestion are validated with the rules that
+    /// `UpdateAllocationsForFeatureFlagInEnvironment` applies to a change that requires approval, including the
+    /// rules for request fields, targeting rules and their `ONE_OF` and `NOT_ONE_OF` value limits, variant and
+    /// metric references, draft allocations, and exposure schedules. A schedule with `apm_retention` that has not
+    /// started must be started with the exposure schedule start endpoint, not with `autostart` or an
+    /// `absolute_start_time`. That endpoint's Product Analytics Experiments Write permission checks also apply.
+    /// If that endpoint would reject the allocations, this endpoint returns the same error: `400 Bad Request` for
+    /// invalid allocations, for example a `UNIFORM_INTERVALS` schedule with a `selection_interval_ms` of `0`,
+    /// `403 Forbidden` when the caller lacks the Experiments Write permission the lineup needs, and
+    /// `409 Conflict` for a lineup that changes or omits a draft allocation.
+    pub async fn create_flag_suggestion_with_http_info(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateFlagSuggestionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagSuggestionResponse>,
+        datadog::Error<CreateFlagSuggestionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/{feature_flag_id}/suggestions",
+            local_configuration.get_operation_host(local_operation_id),
+            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagSuggestionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateFlagSuggestionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Adds a single new variant to an existing feature flag. This endpoint is
     /// additive-only: it never modifies existing variants. A request whose `key`
     /// already exists on the flag is rejected with `409 Conflict`; a `value`
@@ -1464,9 +2112,114 @@ impl FeatureFlagsAPI {
         }
     }
 
+    /// Deletes a pending suggestion or discards an approved suggestion that has not been
+    /// applied. Requires editor access to the flag, or contributor access for the suggestion's
+    /// creator. Applied and rejected suggestions return `409 Conflict`. A missing or already
+    /// discarded suggestion returns `204 No Content`.
+    pub async fn delete_flag_suggestion(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteFlagSuggestionError>> {
+        match self
+            .delete_flag_suggestion_with_http_info(suggestion_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes a pending suggestion or discards an approved suggestion that has not been
+    /// applied. Requires editor access to the flag, or contributor access for the suggestion's
+    /// creator. Applied and rejected suggestions return `409 Conflict`. A missing or already
+    /// discarded suggestion returns `204 No Content`.
+    pub async fn delete_flag_suggestion_with_http_info(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFlagSuggestionError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/suggestions/{suggestion_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            suggestion_id = datadog::urlencode(suggestion_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteFlagSuggestionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Deletes a variant from a feature flag.
     ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn delete_variant_from_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1483,7 +2236,15 @@ impl FeatureFlagsAPI {
 
     /// Deletes a variant from a feature flag.
     ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn delete_variant_from_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1563,7 +2324,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Disable a feature flag in a specific environment.
+    /// Disables a feature flag in a specific environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn disable_feature_flag_environment(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1578,7 +2349,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Disable a feature flag in a specific environment.
+    /// Disables a feature flag in a specific environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn disable_feature_flag_environment_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1658,7 +2439,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Enable a feature flag in a specific environment.
+    /// Enables a feature flag in a specific environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn enable_feature_flag_environment(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -1673,7 +2464,17 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Enable a feature flag in a specific environment.
+    /// Enables a feature flag in a specific environment.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn enable_feature_flag_environment_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -2126,6 +2927,119 @@ impl FeatureFlagsAPI {
             };
         } else {
             let local_entity: Option<GetFeatureFlagsEnvironmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns a feature flag change suggestion by ID. Use `lifecycle_status` to distinguish
+    /// pending, approved, applied, rejected, and discarded suggestions. An approved suggestion
+    /// has not yet been applied; an applied suggestion has changed the flag.
+    pub async fn get_flag_suggestion(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagSuggestionResponse,
+        datadog::Error<GetFlagSuggestionError>,
+    > {
+        match self.get_flag_suggestion_with_http_info(suggestion_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns a feature flag change suggestion by ID. Use `lifecycle_status` to distinguish
+    /// pending, approved, applied, rejected, and discarded suggestions. An approved suggestion
+    /// has not yet been applied; an applied suggestion has changed the flag.
+    pub async fn get_flag_suggestion_with_http_info(
+        &self,
+        suggestion_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagSuggestionResponse>,
+        datadog::Error<GetFlagSuggestionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/suggestions/{suggestion_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            suggestion_id = datadog::urlencode(suggestion_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagSuggestionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetFlagSuggestionError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2877,6 +3791,173 @@ impl FeatureFlagsAPI {
         }
     }
 
+    /// Rejects a pending feature flag change suggestion without applying the change. Requires
+    /// editor access to the flag or the Feature Flag Approvals Override permission. Rejecting
+    /// an already rejected suggestion succeeds. Approved, applied, or discarded suggestions
+    /// return `409 Conflict`.
+    pub async fn reject_flag_suggestion(
+        &self,
+        suggestion_id: uuid::Uuid,
+        body: crate::datadogV2::model::RejectFlagSuggestionRequest,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagSuggestionResponse,
+        datadog::Error<RejectFlagSuggestionError>,
+    > {
+        match self
+            .reject_flag_suggestion_with_http_info(suggestion_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Rejects a pending feature flag change suggestion without applying the change. Requires
+    /// editor access to the flag or the Feature Flag Approvals Override permission. Rejecting
+    /// an already rejected suggestion succeeds. Approved, applied, or discarded suggestions
+    /// return `409 Conflict`.
+    pub async fn reject_flag_suggestion_with_http_info(
+        &self,
+        suggestion_id: uuid::Uuid,
+        body: crate::datadogV2::model::RejectFlagSuggestionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagSuggestionResponse>,
+        datadog::Error<RejectFlagSuggestionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.reject_flag_suggestion";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/suggestions/{suggestion_id}/reject",
+            local_configuration.get_operation_host(local_operation_id),
+            suggestion_id = datadog::urlencode(suggestion_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagSuggestionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<RejectFlagSuggestionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Resumes progression for a previously paused progressive rollout.
     pub async fn resume_exposure_schedule(
         &self,
@@ -3213,8 +4294,16 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Unarchives a previously archived feature flag,
-    /// making it visible in the main list again.
+    /// Unarchives a previously archived feature flag, making it visible in the main list again.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn unarchive_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -3239,8 +4328,16 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Unarchives a previously archived feature flag,
-    /// making it visible in the main list again.
+    /// Unarchives a previously archived feature flag, making it visible in the main list again.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn unarchive_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -3327,13 +4424,27 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates targeting rules (allocations) for a specific feature flag in a specific environment.
-    /// This operation replaces the existing allocation set with the request payload.
+    /// Updates targeting rules (allocations) for a feature flag in an environment. This operation
+    /// replaces the existing allocation set with the request payload.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
+    ///
+    /// When approval is required, combining allocation replacement with `default_variant_key`
+    /// returns `400 Bad Request`. Omit that parameter and submit the default variant change
+    /// separately with `CreateFlagSuggestion` using the `DEFAULT_VARIANT` property and the variant ID.
     pub async fn update_allocations_for_feature_flag_in_environment(
         &self,
         feature_flag_id: uuid::Uuid,
         environment_id: uuid::Uuid,
         body: crate::datadogV2::model::OverwriteAllocationsRequest,
+        params: UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams,
     ) -> Result<
         crate::datadogV2::model::ListAllocationsResponse,
         datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>,
@@ -3343,6 +4454,7 @@ impl FeatureFlagsAPI {
                 feature_flag_id,
                 environment_id,
                 body,
+                params,
             )
             .await
         {
@@ -3359,19 +4471,36 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates targeting rules (allocations) for a specific feature flag in a specific environment.
-    /// This operation replaces the existing allocation set with the request payload.
+    /// Updates targeting rules (allocations) for a feature flag in an environment. This operation
+    /// replaces the existing allocation set with the request payload.
+    ///
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion. The change is not applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
+    ///
+    /// When approval is required, combining allocation replacement with `default_variant_key`
+    /// returns `400 Bad Request`. Omit that parameter and submit the default variant change
+    /// separately with `CreateFlagSuggestion` using the `DEFAULT_VARIANT` property and the variant ID.
     pub async fn update_allocations_for_feature_flag_in_environment_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
         environment_id: uuid::Uuid,
         body: crate::datadogV2::model::OverwriteAllocationsRequest,
+        params: UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::ListAllocationsResponse>,
         datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_allocations_for_feature_flag_in_environment";
+
+        // unbox and build optional parameters
+        let default_variant_key = params.default_variant_key;
 
         let local_client = &self.client;
 
@@ -3383,6 +4512,11 @@ impl FeatureFlagsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = default_variant_key {
+            local_req_builder =
+                local_req_builder.query(&[("default_variant_key", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -3497,13 +4631,30 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates an existing feature flag's metadata such as
-    ///  name and description. Does not modify targeting rules or allocations.
+    /// Updates an existing feature flag's metadata, including its name,
+    /// description, distribution channel, and tags. Does not modify targeting rules or allocations.
     ///
     /// To change the owning team, update `tags` and include a tag of the form
     /// `team:<team-handle>` in the array. `tags` is a full replacement of the
     /// existing tag set (including any `team:` tag), so include every tag you
     /// want to keep, not just the ones you're adding.
+    ///
+    /// To change the lifecycle, set `staleness_status` to `ACTIVE` (temporary) or `PERMANENT`.
+    /// Either value clears any snooze; omit it to keep the lifecycle. Send `staleness_status` in a
+    /// separate request from `distribution_channel`. Do not copy the top-level `staleness_status`
+    /// from a response into the request: that legacy response field is always `ACTIVE`, so
+    /// copying it makes a `PERMANENT` flag temporary.
+    ///
+    /// When backend approvals are enabled and a distribution channel change requires approval,
+    /// callers without the Feature Flag Approvals Override permission receive `201 Created`
+    /// with a suggestion instead of an updated flag. No fields in the request are applied.
+    /// The suggestion contains only the distribution channel change. To update other fields, such as
+    /// name, description, JSON schema, and tags, send a separate request without `distribution_channel`.
+    ///
+    /// While backend approvals are enabled, a request that includes `distribution_channel`
+    /// returns `409 Conflict` if a distribution channel suggestion for the flag is pending, or
+    /// approved but not yet applied. No fields are applied, including for callers with override
+    /// permission.
     pub async fn update_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -3527,13 +4678,30 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates an existing feature flag's metadata such as
-    ///  name and description. Does not modify targeting rules or allocations.
+    /// Updates an existing feature flag's metadata, including its name,
+    /// description, distribution channel, and tags. Does not modify targeting rules or allocations.
     ///
     /// To change the owning team, update `tags` and include a tag of the form
     /// `team:<team-handle>` in the array. `tags` is a full replacement of the
     /// existing tag set (including any `team:` tag), so include every tag you
     /// want to keep, not just the ones you're adding.
+    ///
+    /// To change the lifecycle, set `staleness_status` to `ACTIVE` (temporary) or `PERMANENT`.
+    /// Either value clears any snooze; omit it to keep the lifecycle. Send `staleness_status` in a
+    /// separate request from `distribution_channel`. Do not copy the top-level `staleness_status`
+    /// from a response into the request: that legacy response field is always `ACTIVE`, so
+    /// copying it makes a `PERMANENT` flag temporary.
+    ///
+    /// When backend approvals are enabled and a distribution channel change requires approval,
+    /// callers without the Feature Flag Approvals Override permission receive `201 Created`
+    /// with a suggestion instead of an updated flag. No fields in the request are applied.
+    /// The suggestion contains only the distribution channel change. To update other fields, such as
+    /// name, description, JSON schema, and tags, send a separate request without `distribution_channel`.
+    ///
+    /// While backend approvals are enabled, a request that includes `distribution_channel`
+    /// returns `409 Conflict` if a distribution channel suggestion for the flag is pending, or
+    /// approved but not yet applied. No fields are applied, including for callers with override
+    /// permission.
     pub async fn update_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -3658,6 +4826,175 @@ impl FeatureFlagsAPI {
             };
         } else {
             let local_entity: Option<UpdateFeatureFlagError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Enables or disables the approval requirement for a feature flag. Requires the Feature
+    /// Flag Write permission and contributor or editor access to the flag. Disabling approvals
+    /// also requires the Feature Flag Approvals Override permission, even if approvals are already disabled.
+    /// This operation updates the setting directly and does not create a suggestion. Changing the setting
+    /// returns `409 Conflict` when a pending experiment request or a running approved experiment uses the flag.
+    pub async fn update_feature_flag_approvals(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::UpdateFeatureFlagApprovalsRequest,
+    ) -> Result<
+        crate::datadogV2::model::FeatureFlagResponse,
+        datadog::Error<UpdateFeatureFlagApprovalsError>,
+    > {
+        match self
+            .update_feature_flag_approvals_with_http_info(feature_flag_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Enables or disables the approval requirement for a feature flag. Requires the Feature
+    /// Flag Write permission and contributor or editor access to the flag. Disabling approvals
+    /// also requires the Feature Flag Approvals Override permission, even if approvals are already disabled.
+    /// This operation updates the setting directly and does not create a suggestion. Changing the setting
+    /// returns `409 Conflict` when a pending experiment request or a running approved experiment uses the flag.
+    pub async fn update_feature_flag_approvals_with_http_info(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::UpdateFeatureFlagApprovalsRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
+        datadog::Error<UpdateFeatureFlagApprovalsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_feature_flag_approvals";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/{feature_flag_id}/require-approval",
+            local_configuration.get_operation_host(local_operation_id),
+            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateFeatureFlagApprovalsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -4008,7 +5345,15 @@ impl FeatureFlagsAPI {
 
     /// Updates the name and value of an existing variant on a feature flag.
     ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn update_variant_for_feature_flag(
         &self,
         feature_flag_id: uuid::Uuid,
@@ -4026,7 +5371,15 @@ impl FeatureFlagsAPI {
 
     /// Updates the name and value of an existing variant on a feature flag.
     ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    /// When backend approvals are enabled and this change requires approval, callers without
+    /// the Feature Flag Approvals Override permission receive `201 Created` with a persisted
+    /// suggestion, in the same format as the `GetFlagSuggestion` response. The change is not
+    /// applied until the suggestion is approved and applied.
+    /// Use the returned suggestion ID with `GetFlagSuggestion`, `ApproveFlagSuggestion`,
+    /// `RejectFlagSuggestion`, or `DeleteFlagSuggestion`.
+    ///
+    /// A conflicting suggestion that is pending, or approved but not yet applied, returns `409 Conflict` without applying the change,
+    /// including for callers with override permission or when approval is no longer required.
     pub async fn update_variant_for_feature_flag_with_http_info(
         &self,
         feature_flag_id: uuid::Uuid,
