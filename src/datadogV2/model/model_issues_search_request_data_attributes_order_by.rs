@@ -11,6 +11,7 @@ pub enum IssuesSearchRequestDataAttributesOrderBy {
     FIRST_SEEN,
     IMPACTED_SESSIONS,
     PRIORITY,
+    IMPACTED_ACCOUNTS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,6 +22,7 @@ impl ToString for IssuesSearchRequestDataAttributesOrderBy {
             Self::FIRST_SEEN => String::from("FIRST_SEEN"),
             Self::IMPACTED_SESSIONS => String::from("IMPACTED_SESSIONS"),
             Self::PRIORITY => String::from("PRIORITY"),
+            Self::IMPACTED_ACCOUNTS => String::from("IMPACTED_ACCOUNTS"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -49,6 +51,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributesOrderBy {
             "FIRST_SEEN" => Self::FIRST_SEEN,
             "IMPACTED_SESSIONS" => Self::IMPACTED_SESSIONS,
             "PRIORITY" => Self::PRIORITY,
+            "IMPACTED_ACCOUNTS" => Self::IMPACTED_ACCOUNTS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

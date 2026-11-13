@@ -10,6 +10,7 @@ pub enum IssuesSearchRequestDataAttributesTrack {
     TRACE,
     LOGS,
     RUM,
+    LLMOBS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for IssuesSearchRequestDataAttributesTrack {
             Self::TRACE => String::from("trace"),
             Self::LOGS => String::from("logs"),
             Self::RUM => String::from("rum"),
+            Self::LLMOBS => String::from("llmobs"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributesTrack {
             "trace" => Self::TRACE,
             "logs" => Self::LOGS,
             "rum" => Self::RUM,
+            "llmobs" => Self::LLMOBS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

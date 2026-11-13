@@ -12,13 +12,13 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssuesSearchResultAttributes {
     /// Count of sessions impacted by the issue over the queried time window.
-    /// Returned for RUM, LLM Observability, browser, and mobile searches,
+    /// Returned for RUM and LLM Observability tracks, for browser, mobile, and agent personas,
     /// or when `issue.impacted_sessions` is requested in the `include` query parameter.
     /// Omitted when zero unless requested in the `include` query parameter.
     #[serde(rename = "impacted_sessions")]
     pub impacted_sessions: Option<i64>,
     /// Count of users impacted by the issue over the queried time window.
-    /// Returned for RUM, browser, and mobile searches,
+    /// Returned for the RUM track, for browser and mobile personas,
     /// or when `issue.impacted_users` is requested in the `include` query parameter.
     /// Omitted when zero unless requested in the `include` query parameter.
     #[serde(rename = "impacted_users")]

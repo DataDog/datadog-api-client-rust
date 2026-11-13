@@ -17,10 +17,11 @@ pub struct IssuesSearchRequestDataAttributes {
     /// Start date (inclusive) of the query in milliseconds since the Unix epoch.
     #[serde(rename = "from")]
     pub from: i64,
-    /// The attribute to sort the search results by.
+    /// The attribute to sort the search results by, in descending order. Defaults to `TOTAL_COUNT`.
     #[serde(rename = "order_by")]
     pub order_by: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy>,
-    /// Persona for the search. Either track(s) or persona(s) must be specified.
+    /// Persona for the search. Either `track` or `persona` must be specified.
+    /// Ignored if `track` is specified.
     #[serde(rename = "persona")]
     pub persona: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona>,
     /// Search query following the event search syntax.
@@ -35,7 +36,8 @@ pub struct IssuesSearchRequestDataAttributes {
     /// End date (exclusive) of the query in milliseconds since the Unix epoch.
     #[serde(rename = "to")]
     pub to: i64,
-    /// Track of the events to query. Either track(s) or persona(s) must be specified.
+    /// Track of the events to query. Either `track` or `persona` must be specified.
+    /// If both are specified, `persona` is ignored.
     #[serde(rename = "track")]
     pub track: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack>,
     #[serde(flatten)]
