@@ -12,6 +12,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Dashboard {
+    /// Archive date of the dashboard.
+    #[serde(rename = "archived_at")]
+    pub archived_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Identifier of the dashboard author.
     #[serde(rename = "author_handle")]
     pub author_handle: Option<String>,
@@ -113,6 +116,7 @@ impl Dashboard {
     ) -> Dashboard {
         #[allow(deprecated)]
         Dashboard {
+            archived_at: None,
             author_handle: None,
             author_name: None,
             created_at: None,
@@ -136,6 +140,12 @@ impl Dashboard {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.archived_at = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -278,6 +288,7 @@ impl<'de> Deserialize<'de> for Dashboard {
             where
                 M: MapAccess<'a>,
             {
+                let mut archived_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut author_handle: Option<String> = None;
                 let mut author_name: Option<Option<String>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -313,6 +324,13 @@ impl<'de> Deserialize<'de> for Dashboard {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "archived_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            archived_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "author_handle" => {
                             if v.is_null() {
                                 continue;
@@ -462,6 +480,7 @@ impl<'de> Deserialize<'de> for Dashboard {
 
                 #[allow(deprecated)]
                 let content = Dashboard {
+                    archived_at,
                     author_handle,
                     author_name,
                     created_at,
