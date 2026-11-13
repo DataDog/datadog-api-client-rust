@@ -51,6 +51,7 @@ pub struct TagRuleAttributes {
     pub required: bool,
     /// How the rule is enforced. `blocking` rejects telemetry that violates the rule.
     /// `surfacing` only highlights non-compliant telemetry without blocking it.
+    /// RUM supports only `surfacing` rules.
     #[serde(rename = "rule_type")]
     pub rule_type: crate::datadogV2::model::TagRuleType,
     /// The scope the rule applies within.

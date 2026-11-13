@@ -12,13 +12,15 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagRuleUpdateData {
     /// Mutable attributes of a tag rule. Each field is optional; omitting a field leaves its
-    /// current value unchanged. The `source` of a rule cannot be changed.
+    /// current value unchanged. The `source` of a rule cannot be changed. Tag keys, patterns,
+    /// and metrics scopes have the same constraints as on creation. If the effective
+    /// `tag_value_patterns` contains `*`, set `required` and `negated` to different values.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::TagRuleUpdateAttributes>,
     /// The unique identifier of the tag rule being updated.
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API resource type for a tag rule.
+    /// JSON:API resource type for a tag rule. Requests accept `tag_rule` or `tag_policy`; responses use `tag_policy`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]

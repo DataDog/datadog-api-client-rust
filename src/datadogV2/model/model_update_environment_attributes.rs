@@ -11,16 +11,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateEnvironmentAttributes {
-    /// Indicates whether this is a production environment.
+    /// Indicates whether this is a production environment. If omitted, resets to false. Include the existing value to preserve it.
     #[serde(rename = "is_production")]
     pub is_production: Option<bool>,
-    /// The name of the environment.
+    /// The name of the environment. Required on every request and unique within the organization. Must contain 1 to 200 ASCII characters, start with a letter or digit, and contain only letters, digits, spaces, underscores, hyphens, and periods.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// List of queries to define the environment scope.
+    /// Controls whether feature flag evaluation events may include original targeting identifiers and full evaluation context. When true, SDKs may include this data. When false, SDKs hash targeting identifiers and omit evaluation context. If omitted, the existing value is preserved.
+    #[serde(rename = "observe_full_evaluation_data")]
+    pub observe_full_evaluation_data: Option<bool>,
+    /// Required list of at least one exact DD_ENV value associated with this environment. Values cannot be used by another environment in the same organization. Wildcards and search expressions are not supported.
     #[serde(rename = "queries")]
     pub queries: Option<Vec<String>>,
-    /// Indicates whether feature flag changes require approval in this environment.
+    /// Indicates whether feature flag changes require approval in this environment. If omitted, resets to false. Include the existing value to preserve it.
     #[serde(rename = "require_feature_flag_approval")]
     pub require_feature_flag_approval: Option<bool>,
     #[serde(flatten)]
@@ -35,6 +38,7 @@ impl UpdateEnvironmentAttributes {
         UpdateEnvironmentAttributes {
             is_production: None,
             name: None,
+            observe_full_evaluation_data: None,
             queries: None,
             require_feature_flag_approval: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,6 +53,11 @@ impl UpdateEnvironmentAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn observe_full_evaluation_data(mut self, value: bool) -> Self {
+        self.observe_full_evaluation_data = Some(value);
         self
     }
 
@@ -96,6 +105,7 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
             {
                 let mut is_production: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut observe_full_evaluation_data: Option<bool> = None;
                 let mut queries: Option<Vec<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -118,6 +128,13 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "observe_full_evaluation_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            observe_full_evaluation_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "queries" => {
                             if v.is_null() {
@@ -143,6 +160,7 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
                 let content = UpdateEnvironmentAttributes {
                     is_production,
                     name,
+                    observe_full_evaluation_data,
                     queries,
                     require_feature_flag_approval,
                     additional_properties,
