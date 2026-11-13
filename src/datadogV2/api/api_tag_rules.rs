@@ -33,7 +33,7 @@ impl DeleteTagRuleOptionalParams {
 pub struct GetTagRuleOptionalParams {
     /// Comma-separated list of related resources to include alongside the rule. Currently the only supported value is `score`.
     pub include: Option<crate::datadogV2::model::TagRuleInclude>,
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
@@ -45,7 +45,7 @@ impl GetTagRuleOptionalParams {
         self.include = Some(value);
         self
     }
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub fn ts_start(mut self, value: i64) -> Self {
         self.ts_start = Some(value);
         self
@@ -61,14 +61,14 @@ impl GetTagRuleOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetTagRuleScoreOptionalParams {
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
 }
 
 impl GetTagRuleScoreOptionalParams {
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub fn ts_start(mut self, value: i64) -> Self {
         self.ts_start = Some(value);
         self
@@ -92,7 +92,7 @@ pub struct ListTagRulesOptionalParams {
     pub include: Option<crate::datadogV2::model::TagRuleInclude>,
     /// Restrict the result set to rules whose source matches the given value.
     pub filter_source: Option<crate::datadogV2::model::TagRuleSource>,
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to a recent window appropriate for the source.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
@@ -119,7 +119,7 @@ impl ListTagRulesOptionalParams {
         self.filter_source = Some(value);
         self
     }
-    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to a recent window appropriate for the source.
+    /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to approximately 4 hours before the current time for metrics, or 24 hours before the current time for other sources. The API clamps earlier values to this default, regardless of `ts_end`.
     pub fn ts_start(mut self, value: i64) -> Self {
         self.ts_start = Some(value);
         self
@@ -189,7 +189,7 @@ pub enum UpdateTagRuleError {
 /// scoped to a particular telemetry source (such as logs, spans, or metrics). Rules can be
 /// `blocking` (data not matching the rule is rejected) or `surfacing` (matching data is
 /// highlighted but not blocked). Each rule reports a compliance `score` derived from how
-/// much recent telemetry adheres to the rule.
+/// much recent telemetry adheres to the rule. RUM supports only `surfacing` rules.
 #[derive(Debug, Clone)]
 pub struct TagRulesAPI {
     config: datadog::Configuration,
@@ -427,7 +427,8 @@ impl TagRulesAPI {
 
     /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
     /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the rule permanently.
+    /// the rule permanently. Deleting a `blocking` rule additionally requires the
+    /// `telemetry_rules_activate` permission.
     pub async fn delete_tag_rule(
         &self,
         rule_id: String,
@@ -441,7 +442,8 @@ impl TagRulesAPI {
 
     /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
     /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the rule permanently.
+    /// the rule permanently. Deleting a `blocking` rule additionally requires the
+    /// `telemetry_rules_activate` permission.
     pub async fn delete_tag_rule_with_http_info(
         &self,
         rule_id: String,
@@ -962,6 +964,9 @@ impl TagRulesAPI {
     /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
     /// request body are modified; omitted fields retain their current values. The rule's
     /// `source` cannot be changed after creation.
+    /// Promoting a rule from `surfacing` to `blocking` additionally requires the
+    /// `telemetry_rules_activate` permission, and your organization must have access to
+    /// blocking rules. You can't promote RUM rules to `blocking`.
     pub async fn update_tag_rule(
         &self,
         rule_id: String,
@@ -984,6 +989,9 @@ impl TagRulesAPI {
     /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
     /// request body are modified; omitted fields retain their current values. The rule's
     /// `source` cannot be changed after creation.
+    /// Promoting a rule from `surfacing` to `blocking` additionally requires the
+    /// `telemetry_rules_activate` permission, and your organization must have access to
+    /// blocking rules. You can't promote RUM rules to `blocking`.
     pub async fn update_tag_rule_with_http_info(
         &self,
         rule_id: String,

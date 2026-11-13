@@ -6,12 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes that can be supplied when creating a tag rule.
+/// Attributes that can be supplied when creating a tag rule. If `tag_value_patterns`
+/// contains `*`, set `required` and `negated` to different values. If both are `false`,
+/// the rule has no effect. If both are `true`, no value can satisfy the rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagRuleCreateAttributes {
-    /// Whether the rule is currently enforced. Defaults to `true` for newly created rules.
+    /// The API ignores this value on creation and always enables new rules. To disable a rule, use the "Update a tag rule" endpoint.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Human-readable name for the tag rule.
@@ -27,18 +29,23 @@ pub struct TagRuleCreateAttributes {
     /// creation time.
     #[serde(rename = "rule_type")]
     pub rule_type: crate::datadogV2::model::TagRuleCreateType,
-    /// The scope the rule applies within. Typically an environment, team, or
-    /// organization-level identifier used to limit where the rule is enforced.
+    /// The scope the rule applies within. For logs and spans, use a search query, such
+    /// as `env:prod`, or `*` to match all telemetry. For metrics, use a metric selector
+    /// with an optional tag filter, such as `system.cpu.*{env:prod}`. A metric wildcard
+    /// is allowed only once, at the end of the metric selector.
     #[serde(rename = "scope")]
     pub scope: String,
     /// The telemetry source that a tag rule applies to.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::TagRuleSource,
-    /// The tag key that the rule governs (for example, `service`).
+    /// The tag key that the rule governs (for example, `service`). Allowed characters
+    /// are ASCII letters, digits, underscores, hyphens, periods, and slashes. The keys
+    /// `host` and `device` are not supported in any letter case.
     #[serde(rename = "tag_key")]
     pub tag_key: String,
-    /// One or more patterns that valid values for the tag key must match. At least one
-    /// pattern is required.
+    /// Between 1 and 30 non-empty patterns that valid values for the tag key must match.
+    /// Allowed characters are ASCII letters, digits, underscores, colons, hyphens,
+    /// periods, commas, slashes, and asterisks.
     #[serde(rename = "tag_value_patterns")]
     pub tag_value_patterns: Vec<String>,
     #[serde(flatten)]
