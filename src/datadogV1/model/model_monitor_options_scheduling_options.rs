@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorOptionsSchedulingOptions {
-    /// Configuration options for the custom schedule. **This feature is in private beta.**
+    /// Configuration options for the custom schedule.
     #[serde(rename = "custom_schedule")]
     pub custom_schedule: Option<crate::datadogV1::model::MonitorOptionsCustomSchedule>,
     /// Configuration options for the evaluation window. If `hour_starts` is set, no other fields may be set. Otherwise, `day_starts` and `month_starts` must be set together.
