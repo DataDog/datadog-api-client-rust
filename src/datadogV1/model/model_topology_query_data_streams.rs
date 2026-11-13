@@ -17,12 +17,13 @@ pub struct TopologyQueryDataStreams {
     /// Your environment and primary tag (or * if enabled for your account).
     #[serde(rename = "filters")]
     pub filters: Vec<String>,
-    /// A search string for filtering services. When set, this replaces the `service` field.
+    /// A search string for filtering services. Replaces the deprecated `service` field.
     #[serde(rename = "query_string")]
     pub query_string: Option<String>,
-    /// (deprecated) Name of the service. Leave this empty and use query_string instead.
+    /// (deprecated) Name of the service. Use `query_string` instead.
+    #[deprecated]
     #[serde(rename = "service")]
-    pub service: String,
+    pub service: Option<String>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -32,19 +33,26 @@ impl TopologyQueryDataStreams {
     pub fn new(
         data_source: crate::datadogV1::model::TopologyQueryDataStreamsDataSource,
         filters: Vec<String>,
-        service: String,
     ) -> TopologyQueryDataStreams {
+        #[allow(deprecated)]
         TopologyQueryDataStreams {
             data_source,
             filters,
             query_string: None,
-            service,
+            service: None,
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn query_string(mut self, value: String) -> Self {
         self.query_string = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn service(mut self, value: String) -> Self {
+        self.service = Some(value);
         self
     }
 }
@@ -99,6 +107,9 @@ impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -111,8 +122,8 @@ impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
                 let data_source =
                     data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let filters = filters.ok_or_else(|| M::Error::missing_field("filters"))?;
-                let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
 
+                #[allow(deprecated)]
                 let content = TopologyQueryDataStreams {
                     data_source,
                     filters,
