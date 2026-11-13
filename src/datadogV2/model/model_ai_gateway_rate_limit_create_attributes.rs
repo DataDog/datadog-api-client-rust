@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitCreateAttributes {
+    /// Maximum priced spend per rolling minute, in microcents of 1e-8 USD each. At most 10000000000000, that is $100,000. In `ENFORCE` mode, requests to a model with no pricing are rejected, because their cost can't be counted.
+    #[serde(
+        rename = "cost_microcents_per_minute",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub cost_microcents_per_minute: Option<Option<i64>>,
     /// Maximum input tokens per rolling minute.
     #[serde(
         rename = "input_tokens_per_minute",
@@ -31,7 +38,7 @@ pub struct AiGatewayRateLimitCreateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub output_tokens_per_minute: Option<Option<i64>>,
-    /// Maximum requests per rolling minute. At least one of `requests_per_minute`, `input_tokens_per_minute`, and `output_tokens_per_minute` is required.
+    /// Maximum requests per rolling minute. At least one of `requests_per_minute`, `input_tokens_per_minute`, `output_tokens_per_minute`, and `cost_microcents_per_minute` is required.
     #[serde(
         rename = "requests_per_minute",
         default,
@@ -64,6 +71,7 @@ pub struct AiGatewayRateLimitCreateAttributes {
 impl AiGatewayRateLimitCreateAttributes {
     pub fn new(name: String) -> AiGatewayRateLimitCreateAttributes {
         AiGatewayRateLimitCreateAttributes {
+            cost_microcents_per_minute: None,
             input_tokens_per_minute: None,
             mode: None,
             name,
@@ -76,6 +84,11 @@ impl AiGatewayRateLimitCreateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cost_microcents_per_minute(mut self, value: Option<i64>) -> Self {
+        self.cost_microcents_per_minute = Some(value);
+        self
     }
 
     pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
@@ -147,6 +160,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cost_microcents_per_minute: Option<Option<i64>> = None;
                 let mut input_tokens_per_minute: Option<Option<i64>> = None;
                 let mut mode: Option<crate::datadogV2::model::AiGatewayRateLimitMode> = None;
                 let mut name: Option<String> = None;
@@ -166,6 +180,10 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cost_microcents_per_minute" => {
+                            cost_microcents_per_minute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "input_tokens_per_minute" => {
                             input_tokens_per_minute =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -226,6 +244,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = AiGatewayRateLimitCreateAttributes {
+                    cost_microcents_per_minute,
                     input_tokens_per_minute,
                     mode,
                     name,

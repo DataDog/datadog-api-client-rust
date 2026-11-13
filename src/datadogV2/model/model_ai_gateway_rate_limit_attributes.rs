@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitAttributes {
+    /// Maximum priced spend per rolling minute, in microcents of 1e-8 USD each, shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit cost.
+    #[serde(
+        rename = "cost_microcents_per_minute",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub cost_microcents_per_minute: Option<Option<i64>>,
     /// Creation timestamp.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -29,7 +36,7 @@ pub struct AiGatewayRateLimitAttributes {
     pub input_tokens_per_minute: Option<Option<i64>>,
     /// Whether the selector gives each matching value its own allowance, that is, whether it has at least one per_value entry. Returned even when scope_restricted hides the selector.
     #[serde(rename = "is_template")]
-    pub is_template: Option<bool>,
+    pub is_template: bool,
     /// Action taken when request rate exceeds the limit.
     #[serde(rename = "mode")]
     pub mode: crate::datadogV2::model::AiGatewayRateLimitMode,
@@ -82,7 +89,7 @@ pub struct AiGatewayRateLimitAttributes {
     pub team_id: Option<Option<uuid::Uuid>>,
     /// Dimensions of the selector's per_value entries, such as user_id or tag:env, each matching value of which gets its own allowance. Empty unless is_template is true. Returned even when scope_restricted hides the selector.
     #[serde(rename = "template_split_dims")]
-    pub template_split_dims: Option<Vec<String>>,
+    pub template_split_dims: Vec<String>,
     /// Last modification timestamp.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
@@ -108,20 +115,23 @@ impl AiGatewayRateLimitAttributes {
         created_at: chrono::DateTime<chrono::Utc>,
         created_by: String,
         enabled: bool,
+        is_template: bool,
         mode: crate::datadogV2::model::AiGatewayRateLimitMode,
         name: String,
         revision: i64,
         scope_restricted: bool,
         tags: std::collections::BTreeMap<String, String>,
+        template_split_dims: Vec<String>,
         updated_at: chrono::DateTime<chrono::Utc>,
         updated_by: String,
     ) -> AiGatewayRateLimitAttributes {
         AiGatewayRateLimitAttributes {
+            cost_microcents_per_minute: None,
             created_at,
             created_by,
             enabled,
             input_tokens_per_minute: None,
-            is_template: None,
+            is_template,
             mode,
             monitor_id: None,
             name,
@@ -132,7 +142,7 @@ impl AiGatewayRateLimitAttributes {
             selector: None,
             tags,
             team_id: None,
-            template_split_dims: None,
+            template_split_dims,
             updated_at,
             updated_by,
             user_id: None,
@@ -141,13 +151,13 @@ impl AiGatewayRateLimitAttributes {
         }
     }
 
-    pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
-        self.input_tokens_per_minute = Some(value);
+    pub fn cost_microcents_per_minute(mut self, value: Option<i64>) -> Self {
+        self.cost_microcents_per_minute = Some(value);
         self
     }
 
-    pub fn is_template(mut self, value: bool) -> Self {
-        self.is_template = Some(value);
+    pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
+        self.input_tokens_per_minute = Some(value);
         self
     }
 
@@ -176,11 +186,6 @@ impl AiGatewayRateLimitAttributes {
 
     pub fn team_id(mut self, value: Option<uuid::Uuid>) -> Self {
         self.team_id = Some(value);
-        self
-    }
-
-    pub fn template_split_dims(mut self, value: Vec<String>) -> Self {
-        self.template_split_dims = Some(value);
         self
     }
 
@@ -215,6 +220,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cost_microcents_per_minute: Option<Option<i64>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut enabled: Option<bool> = None;
@@ -244,6 +250,10 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cost_microcents_per_minute" => {
+                            cost_microcents_per_minute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -258,9 +268,6 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_template" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             is_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -306,9 +313,6 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                             team_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "template_split_dims" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             template_split_dims =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -331,16 +335,21 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
+                let is_template =
+                    is_template.ok_or_else(|| M::Error::missing_field("is_template"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let revision = revision.ok_or_else(|| M::Error::missing_field("revision"))?;
                 let scope_restricted =
                     scope_restricted.ok_or_else(|| M::Error::missing_field("scope_restricted"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
+                let template_split_dims = template_split_dims
+                    .ok_or_else(|| M::Error::missing_field("template_split_dims"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
                 let updated_by = updated_by.ok_or_else(|| M::Error::missing_field("updated_by"))?;
 
                 let content = AiGatewayRateLimitAttributes {
+                    cost_microcents_per_minute,
                     created_at,
                     created_by,
                     enabled,

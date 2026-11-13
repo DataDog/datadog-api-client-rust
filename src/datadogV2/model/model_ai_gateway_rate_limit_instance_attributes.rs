@@ -11,6 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitInstanceAttributes {
+    /// Priced spend, in microcents, counted in the rolling one-minute window. 0 when the rate limit doesn't limit cost.
+    #[serde(rename = "cost_microcents")]
+    pub cost_microcents: Option<i64>,
+    /// The rate limit's per-counter spend limit, in microcents. Null when it doesn't limit cost.
+    #[serde(
+        rename = "cost_microcents_per_minute",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub cost_microcents_per_minute: Option<Option<i64>>,
     /// When the gateway first recorded a request for this counter.
     #[serde(rename = "first_seen")]
     pub first_seen: chrono::DateTime<chrono::Utc>,
@@ -27,7 +37,7 @@ pub struct AiGatewayRateLimitInstanceAttributes {
     /// Opaque canonical key identifying the counter.
     #[serde(rename = "instance_key")]
     pub instance_key: String,
-    /// When the gateway last recorded a request for this counter; up to a few minutes behind live traffic.
+    /// When the gateway last saw this counter hot, that is near or at a limit or limiting; up to a few minutes behind live traffic.
     #[serde(rename = "last_seen")]
     pub last_seen: chrono::DateTime<chrono::Utc>,
     /// Requests this counter rejected in the last 15 minutes (ENFORCE).
@@ -91,6 +101,8 @@ impl AiGatewayRateLimitInstanceAttributes {
         would_limit_requests: i64,
     ) -> AiGatewayRateLimitInstanceAttributes {
         AiGatewayRateLimitInstanceAttributes {
+            cost_microcents: None,
+            cost_microcents_per_minute: None,
             first_seen,
             input_tokens,
             input_tokens_per_minute: None,
@@ -109,6 +121,16 @@ impl AiGatewayRateLimitInstanceAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cost_microcents(mut self, value: i64) -> Self {
+        self.cost_microcents = Some(value);
+        self
+    }
+
+    pub fn cost_microcents_per_minute(mut self, value: Option<i64>) -> Self {
+        self.cost_microcents_per_minute = Some(value);
+        self
     }
 
     pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
@@ -152,6 +174,8 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitInstanceAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cost_microcents: Option<i64> = None;
+                let mut cost_microcents_per_minute: Option<Option<i64>> = None;
                 let mut first_seen: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut input_tokens: Option<i64> = None;
                 let mut input_tokens_per_minute: Option<Option<i64>> = None;
@@ -175,6 +199,17 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitInstanceAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cost_microcents" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cost_microcents =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cost_microcents_per_minute" => {
+                            cost_microcents_per_minute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "first_seen" => {
                             first_seen = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -260,6 +295,8 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitInstanceAttributes {
                     .ok_or_else(|| M::Error::missing_field("would_limit_requests"))?;
 
                 let content = AiGatewayRateLimitInstanceAttributes {
+                    cost_microcents,
+                    cost_microcents_per_minute,
                     first_seen,
                     input_tokens,
                     input_tokens_per_minute,
