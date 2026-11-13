@@ -8526,6 +8526,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_standard_patterns,
     );
     world.function_mappings.insert(
+        "v2.ListTargetScanningGroups".into(),
+        test_v2_list_target_scanning_groups,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetScanningGroup".into(), test_v2_get_scanning_group);
+    world.function_mappings.insert(
         "v2.CreateServiceAccount".into(),
         test_v2_create_service_account,
     );
@@ -69131,6 +69138,60 @@ fn test_v2_list_standard_patterns(world: &mut DatadogWorld, _parameters: &HashMa
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_standard_patterns_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_target_scanning_groups(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_sensitive_data_scanner
+        .as_ref()
+        .expect("api instance not found");
+    let filter_target =
+        serde_json::from_value(_parameters.get("filter[target]").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_target_scanning_groups_with_http_info(filter_target)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_scanning_group(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_sensitive_data_scanner
+        .as_ref()
+        .expect("api instance not found");
+    let group_id = serde_json::from_value(_parameters.get("group_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_scanning_group_with_http_info(group_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
