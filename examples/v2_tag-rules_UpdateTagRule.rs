@@ -10,7 +10,7 @@ use datadog_api_client::datadogV2::model::TagRuleUpdateRequest;
 #[tokio::main]
 async fn main() {
     let body = TagRuleUpdateRequest::new(
-        TagRuleUpdateData::new("123".to_string(), TagRuleResourceType::TAG_RULE).attributes(
+        TagRuleUpdateData::new("123".to_string(), TagRuleResourceType::TAG_POLICY).attributes(
             TagRuleUpdateAttributes::new()
                 .rule_type(TagRuleType::SURFACING)
                 .tag_value_patterns(vec![]),

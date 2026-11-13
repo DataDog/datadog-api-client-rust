@@ -20,7 +20,7 @@ pub struct TagRuleData {
     /// Related resources for a tag rule. Only present when the corresponding `include` query parameter is supplied.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::TagRuleRelationships>,
-    /// JSON:API resource type for a tag rule.
+    /// JSON:API resource type for a tag rule. Requests accept `tag_rule` or `tag_policy`; responses use `tag_policy`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]
