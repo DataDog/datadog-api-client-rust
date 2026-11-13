@@ -746,6 +746,7 @@ impl Default for Configuration {
             ("v2.trigger_deployment_gates_evaluation".to_owned(), false),
             ("v2.update_deployment_gate".to_owned(), false),
             ("v2.update_deployment_rule".to_owned(), false),
+            ("v2.snooze_issue".to_owned(), false),
             ("v2.get_eudm_device".to_owned(), false),
             ("v2.get_eudm_devices".to_owned(), false),
             ("v2.clone_form".to_owned(), false),
