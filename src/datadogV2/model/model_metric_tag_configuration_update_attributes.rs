@@ -19,8 +19,8 @@ pub struct MetricTagConfigurationUpdateAttributes {
     /// Defaults to false. Requires `tags` property.
     #[serde(rename = "exclude_tags_mode")]
     pub exclude_tags_mode: Option<bool>,
-    /// Toggle to include/exclude percentiles for a distribution metric.
-    /// Defaults to false. Can only be applied to metrics that have a `metric_type` of `distribution`.
+    /// Include percentile aggregations for metric types `distribution`, `exponential_histogram`,
+    /// and `explicit_histogram`. Omit this field to keep the current setting.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
     /// A list of tag keys that will be queryable for your metric.
