@@ -8958,7 +8958,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new critical asset.
+    /// Create a new dynamic severity rule (previously called critical assets).
     pub async fn create_security_monitoring_critical_asset(
         &self,
         body: crate::datadogV2::model::SecurityMonitoringCriticalAssetCreateRequest,
@@ -8983,7 +8983,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new critical asset.
+    /// Create a new dynamic severity rule (previously called critical assets).
     pub async fn create_security_monitoring_critical_asset_with_http_info(
         &self,
         body: crate::datadogV2::model::SecurityMonitoringCriticalAssetCreateRequest,
@@ -12011,7 +12011,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete a specific critical asset.
+    /// Delete a specific dynamic severity rule (previously called critical assets).
     pub async fn delete_security_monitoring_critical_asset(
         &self,
         critical_asset_id: String,
@@ -12025,7 +12025,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete a specific critical asset.
+    /// Delete a specific dynamic severity rule (previously called critical assets).
     pub async fn delete_security_monitoring_critical_asset_with_http_info(
         &self,
         critical_asset_id: String,
@@ -13970,7 +13970,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the list of critical assets that affect a specific existing rule by the rule's ID.
+    /// Get the list of dynamic severity rules (previously called critical assets) that affect a specific existing rule by the rule's ID.
     pub async fn get_critical_assets_affecting_rule(
         &self,
         rule_id: String,
@@ -13995,7 +13995,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the list of critical assets that affect a specific existing rule by the rule's ID.
+    /// Get the list of dynamic severity rules (previously called critical assets) that affect a specific existing rule by the rule's ID.
     pub async fn get_critical_assets_affecting_rule_with_http_info(
         &self,
         rule_id: String,
@@ -16590,7 +16590,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the details of a specific critical asset.
+    /// Get the details of a specific dynamic severity rule (previously called critical assets).
     pub async fn get_security_monitoring_critical_asset(
         &self,
         critical_asset_id: String,
@@ -16615,7 +16615,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the details of a specific critical asset.
+    /// Get the details of a specific dynamic severity rule (previously called critical assets).
     pub async fn get_security_monitoring_critical_asset_with_http_info(
         &self,
         critical_asset_id: String,
@@ -22691,7 +22691,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the list of all critical assets.
+    /// Get the list of all dynamic severity rules (previously called critical assets).
     pub async fn list_security_monitoring_critical_assets(
         &self,
     ) -> Result<
@@ -22715,7 +22715,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the list of all critical assets.
+    /// Get the list of all dynamic severity rules (previously called critical assets).
     pub async fn list_security_monitoring_critical_assets_with_http_info(
         &self,
     ) -> Result<
@@ -29827,7 +29827,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update a specific critical asset.
+    /// Update a specific dynamic severity rule (previously called critical assets).
     pub async fn update_security_monitoring_critical_asset(
         &self,
         critical_asset_id: String,
@@ -29853,7 +29853,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update a specific critical asset.
+    /// Update a specific dynamic severity rule (previously called critical assets).
     pub async fn update_security_monitoring_critical_asset_with_http_info(
         &self,
         critical_asset_id: String,
