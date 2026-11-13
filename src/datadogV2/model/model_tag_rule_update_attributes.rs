@@ -7,7 +7,9 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// Mutable attributes of a tag rule. Each field is optional; omitting a field leaves its
-/// current value unchanged. The `source` of a rule cannot be changed.
+/// current value unchanged. The `source` of a rule cannot be changed. Tag keys, patterns,
+/// and metrics scopes have the same constraints as on creation. If the effective
+/// `tag_value_patterns` contains `*`, set `required` and `negated` to different values.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -26,6 +28,7 @@ pub struct TagRuleUpdateAttributes {
     pub required: Option<bool>,
     /// How the rule is enforced. `blocking` rejects telemetry that violates the rule.
     /// `surfacing` only highlights non-compliant telemetry without blocking it.
+    /// RUM supports only `surfacing` rules.
     #[serde(rename = "rule_type")]
     pub rule_type: Option<crate::datadogV2::model::TagRuleType>,
     /// The scope the rule applies within.
