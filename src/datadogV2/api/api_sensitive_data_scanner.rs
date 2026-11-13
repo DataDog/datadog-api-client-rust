@@ -42,6 +42,15 @@ pub enum DeleteScanningRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetScanningGroupError is a struct for typed errors of method [`SensitiveDataScannerAPI::get_scanning_group`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetScanningGroupError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListScanningGroupsError is a struct for typed errors of method [`SensitiveDataScannerAPI::list_scanning_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -54,6 +63,15 @@ pub enum ListScanningGroupsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListStandardPatternsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListTargetScanningGroupsError is a struct for typed errors of method [`SensitiveDataScannerAPI::list_target_scanning_groups`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListTargetScanningGroupsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -808,6 +826,120 @@ impl SensitiveDataScannerAPI {
         }
     }
 
+    /// Get a scanning group, with its rules included.
+    /// Only scanning groups of the `llm_observability` target are returned. Other scanning groups
+    /// are reported as not found.
+    pub async fn get_scanning_group(
+        &self,
+        group_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SensitiveDataScannerTargetGroupResponse,
+        datadog::Error<GetScanningGroupError>,
+    > {
+        match self.get_scanning_group_with_http_info(group_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a scanning group, with its rules included.
+    /// Only scanning groups of the `llm_observability` target are returned. Other scanning groups
+    /// are reported as not found.
+    pub async fn get_scanning_group_with_http_info(
+        &self,
+        group_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SensitiveDataScannerTargetGroupResponse>,
+        datadog::Error<GetScanningGroupError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_scanning_group";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sensitive-data-scanner/groups/{group_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            group_id = datadog::urlencode(group_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SensitiveDataScannerTargetGroupResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetScanningGroupError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List all the Scanning groups in your organization.
     pub async fn list_scanning_groups(
         &self,
@@ -1014,6 +1146,131 @@ impl SensitiveDataScannerAPI {
             };
         } else {
             let local_entity: Option<ListStandardPatternsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the scanning groups of a target, with their rules included.
+    /// Only the `llm_observability` target is supported. Scanning groups of logs, RUM, events, and APM
+    /// are listed by the List Scanning Groups endpoint.
+    /// If the organization has no scanning group for the target, its default group is stored and returned,
+    /// so it can be edited. This does not change what gets scanned, because the default rules already apply.
+    pub async fn list_target_scanning_groups(
+        &self,
+        filter_target: crate::datadogV2::model::SensitiveDataScannerGroupTarget,
+    ) -> Result<
+        crate::datadogV2::model::SensitiveDataScannerTargetGroupListResponse,
+        datadog::Error<ListTargetScanningGroupsError>,
+    > {
+        match self
+            .list_target_scanning_groups_with_http_info(filter_target)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the scanning groups of a target, with their rules included.
+    /// Only the `llm_observability` target is supported. Scanning groups of logs, RUM, events, and APM
+    /// are listed by the List Scanning Groups endpoint.
+    /// If the organization has no scanning group for the target, its default group is stored and returned,
+    /// so it can be edited. This does not change what gets scanned, because the default rules already apply.
+    pub async fn list_target_scanning_groups_with_http_info(
+        &self,
+        filter_target: crate::datadogV2::model::SensitiveDataScannerGroupTarget,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SensitiveDataScannerTargetGroupListResponse,
+        >,
+        datadog::Error<ListTargetScanningGroupsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_target_scanning_groups";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sensitive-data-scanner/groups",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[target]", &filter_target.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SensitiveDataScannerTargetGroupListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListTargetScanningGroupsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
