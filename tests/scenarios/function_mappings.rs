@@ -5081,6 +5081,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_usage_lambda_traced_invocations,
     );
     world.function_mappings.insert(
+        "v2.GetUsageMonthlyResources".into(),
+        test_v2_get_usage_monthly_resources,
+    );
+    world.function_mappings.insert(
         "v2.GetUsageObservabilityPipelines".into(),
         test_v2_get_usage_observability_pipelines,
     );
@@ -39367,6 +39371,63 @@ fn test_v2_get_usage_lambda_traced_invocations(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_usage_monthly_resources(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let filter_billing_dimension = serde_json::from_value(
+        _parameters
+            .get("filter[billing_dimension]")
+            .unwrap()
+            .clone(),
+    )
+    .unwrap();
+    let filter_month =
+        serde_json::from_value(_parameters.get("filter[month]").unwrap().clone()).unwrap();
+    let filter_view =
+        serde_json::from_value(_parameters.get("filter[view]").unwrap().clone()).unwrap();
+    let filter_include_descendants = _parameters
+        .get("filter[include_descendants]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_next_record_id = _parameters
+        .get("page[next_record_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_usage_metering::GetUsageMonthlyResourcesOptionalParams::default();
+    params.filter_include_descendants = filter_include_descendants;
+    params.page_limit = page_limit;
+    params.page_next_record_id = page_next_record_id;
+    let response = match block_on(api.get_usage_monthly_resources_with_http_info(
+        filter_billing_dimension,
+        filter_month,
+        filter_view,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
