@@ -5498,6 +5498,19 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateExperiment".into(), test_v2_create_experiment);
+    world
+        .function_mappings
+        .insert("v2.ListBandits".into(), test_v2_list_bandits);
+    world
+        .function_mappings
+        .insert("v2.GetBandit".into(), test_v2_get_bandit);
+    world
+        .function_mappings
+        .insert("v2.GetBanditResults".into(), test_v2_get_bandit_results);
+    world.function_mappings.insert(
+        "v2.GetBanditTrafficSummary".into(),
+        test_v2_get_bandit_traffic_summary,
+    );
     world.function_mappings.insert(
         "v2.ListExposureSQLModels".into(),
         test_v2_list_exposure_sql_models,
@@ -43277,6 +43290,156 @@ fn test_v2_create_experiment(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_experiment_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_bandits(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let search = _parameters
+        .get("search")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let status = _parameters
+        .get("status")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let subject_type_id = _parameters
+        .get("subject_type_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::ListBanditsOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.search = search;
+    params.sort = sort;
+    params.status = status;
+    params.subject_type_id = subject_type_id;
+    params.tags = tags;
+    let response = match block_on(api.list_bandits_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_bandit_results(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end = _parameters
+        .get("end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::GetBanditResultsOptionalParams::default();
+    params.start = start;
+    params.end = end;
+    let response = match block_on(api.get_bandit_results_with_http_info(bandit_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_bandit_traffic_summary(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end = _parameters
+        .get("end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::GetBanditTrafficSummaryOptionalParams::default();
+    params.start = start;
+    params.end = end;
+    let response = match block_on(api.get_bandit_traffic_summary_with_http_info(bandit_id, params))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {

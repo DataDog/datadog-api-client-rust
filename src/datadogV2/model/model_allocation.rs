@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Allocation {
+    /// The bandit that serves through this targeting rule allocation. Absent when no bandit uses it. Until the bandit ends, only the bandit's own operations can change or delete the allocation; its position among the flag's targeting rules can still change.
+    #[serde(rename = "bandit_id")]
+    pub bandit_id: Option<uuid::Uuid>,
     /// The timestamp when the targeting rule allocation was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -75,6 +78,7 @@ impl Allocation {
         variant_weights: Vec<crate::datadogV2::model::VariantWeight>,
     ) -> Allocation {
         Allocation {
+            bandit_id: None,
             created_at,
             environment_ids,
             experiment_id: None,
@@ -91,6 +95,11 @@ impl Allocation {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn bandit_id(mut self, value: uuid::Uuid) -> Self {
+        self.bandit_id = Some(value);
+        self
     }
 
     pub fn experiment_id(mut self, value: Option<String>) -> Self {
@@ -137,6 +146,7 @@ impl<'de> Deserialize<'de> for Allocation {
             where
                 M: MapAccess<'a>,
             {
+                let mut bandit_id: Option<uuid::Uuid> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut environment_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut experiment_id: Option<Option<String>> = None;
@@ -161,6 +171,12 @@ impl<'de> Deserialize<'de> for Allocation {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "bandit_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bandit_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -247,6 +263,7 @@ impl<'de> Deserialize<'de> for Allocation {
                     variant_weights.ok_or_else(|| M::Error::missing_field("variant_weights"))?;
 
                 let content = Allocation {
+                    bandit_id,
                     created_at,
                     environment_ids,
                     experiment_id,
