@@ -29,6 +29,7 @@ async fn main() {
                                 TopologyQueryDataStreams::new(
                                     TopologyQueryDataStreamsDataSource::DATA_STREAMS,
                                     vec!["env:prod".to_string()],
+                                    "".to_string(),
                                 )
                                 .query_string("service:myservice".to_string()),
                             )
