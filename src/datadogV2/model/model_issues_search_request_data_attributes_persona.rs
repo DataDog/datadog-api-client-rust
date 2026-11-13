@@ -11,6 +11,7 @@ pub enum IssuesSearchRequestDataAttributesPersona {
     BROWSER,
     MOBILE,
     BACKEND,
+    AGENT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,6 +22,7 @@ impl ToString for IssuesSearchRequestDataAttributesPersona {
             Self::BROWSER => String::from("BROWSER"),
             Self::MOBILE => String::from("MOBILE"),
             Self::BACKEND => String::from("BACKEND"),
+            Self::AGENT => String::from("AGENT"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -49,6 +51,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributesPersona {
             "BROWSER" => Self::BROWSER,
             "MOBILE" => Self::MOBILE,
             "BACKEND" => Self::BACKEND,
+            "AGENT" => Self::AGENT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
