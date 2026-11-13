@@ -14,7 +14,7 @@ async fn main() {
         TagRuleCreateAttributes::new(
             "Service tag must be one of api or web".to_string(),
             TagRuleCreateType::SURFACING,
-            "env".to_string(),
+            "env:prod".to_string(),
             TagRuleSource::LOGS,
             "service".to_string(),
             vec!["api".to_string(), "web".to_string()],
@@ -22,7 +22,7 @@ async fn main() {
         .enabled(true)
         .negated(false)
         .required(true),
-        TagRuleResourceType::TAG_RULE,
+        TagRuleResourceType::TAG_POLICY,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.create_tag_rule", true);
