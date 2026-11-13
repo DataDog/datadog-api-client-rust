@@ -18334,6 +18334,8 @@ pub mod model_incident_created_trigger_wrapper;
 pub use self::model_incident_created_trigger_wrapper::IncidentCreatedTriggerWrapper;
 pub mod model_incident_created_trigger;
 pub use self::model_incident_created_trigger::IncidentCreatedTrigger;
+pub mod model_incident_trigger_incident_type;
+pub use self::model_incident_trigger_incident_type::IncidentTriggerIncidentType;
 pub mod model_incident_condition;
 pub use self::model_incident_condition::IncidentCondition;
 pub mod model_incident_tag_value;
