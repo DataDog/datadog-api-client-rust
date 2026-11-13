@@ -24,7 +24,7 @@ pub struct AiGatewayRoutingClassifierRequest {
     /// Decision model on the provider. Omit together with provider to preserve the saved selection.
     #[serde(rename = "model")]
     pub model: Option<String>,
-    /// Decision-model provider slug. It must name a provider of type `openai`, `baseten`, or `typesafe`, the provider types that serve a decision model. Omit together with model to preserve the saved selection.
+    /// Decision-model provider slug. Omit together with model to preserve the saved selection.
     #[serde(rename = "provider")]
     pub provider: Option<String>,
     #[serde(flatten)]

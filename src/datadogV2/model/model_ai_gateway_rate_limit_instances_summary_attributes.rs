@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitInstancesSummaryAttributes {
-    /// Number of counters.
+    /// Number of counters that were near or at a limit, or limited a request, in the last hour. Counters with room to spare aren't recorded.
     #[serde(rename = "instance_count")]
     pub instance_count: i64,
     /// Requests the counters rejected in the last 15 minutes (ENFORCE), totaled over the counters whose usage was read.

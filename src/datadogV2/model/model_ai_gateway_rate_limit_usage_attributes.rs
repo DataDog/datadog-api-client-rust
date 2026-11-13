@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitUsageAttributes {
+    /// Priced spend, in microcents, counted in the rolling one-minute window. Only rules with a cost limit count it, so it is 0 for other rules and for the untracked and total entries.
+    #[serde(rename = "cost_microcents")]
+    pub cost_microcents: Option<i64>,
     /// Input tokens counted in the rolling one-minute window.
     #[serde(rename = "input_tokens")]
     pub input_tokens: i64,
@@ -42,6 +45,7 @@ impl AiGatewayRateLimitUsageAttributes {
         would_limit_requests: i64,
     ) -> AiGatewayRateLimitUsageAttributes {
         AiGatewayRateLimitUsageAttributes {
+            cost_microcents: None,
             input_tokens,
             limited_requests,
             output_tokens,
@@ -50,6 +54,11 @@ impl AiGatewayRateLimitUsageAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cost_microcents(mut self, value: i64) -> Self {
+        self.cost_microcents = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cost_microcents: Option<i64> = None;
                 let mut input_tokens: Option<i64> = None;
                 let mut limited_requests: Option<i64> = None;
                 let mut output_tokens: Option<i64> = None;
@@ -91,6 +101,13 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cost_microcents" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cost_microcents =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "input_tokens" => {
                             input_tokens =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -128,6 +145,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
                     .ok_or_else(|| M::Error::missing_field("would_limit_requests"))?;
 
                 let content = AiGatewayRateLimitUsageAttributes {
+                    cost_microcents,
                     input_tokens,
                     limited_requests,
                     output_tokens,

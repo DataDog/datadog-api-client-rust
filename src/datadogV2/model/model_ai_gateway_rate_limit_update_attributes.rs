@@ -11,6 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitUpdateAttributes {
+    /// Spend limit in microcents per rolling minute. Set to 0 to remove the cost limit. Null is ignored. At least one limit must remain.
+    #[serde(
+        rename = "cost_microcents_per_minute",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub cost_microcents_per_minute: Option<Option<i64>>,
     /// Whether this rate limit is active.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -68,6 +75,7 @@ pub struct AiGatewayRateLimitUpdateAttributes {
 impl AiGatewayRateLimitUpdateAttributes {
     pub fn new() -> AiGatewayRateLimitUpdateAttributes {
         AiGatewayRateLimitUpdateAttributes {
+            cost_microcents_per_minute: None,
             enabled: None,
             input_tokens_per_minute: None,
             mode: None,
@@ -80,6 +88,11 @@ impl AiGatewayRateLimitUpdateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cost_microcents_per_minute(mut self, value: Option<i64>) -> Self {
+        self.cost_microcents_per_minute = Some(value);
+        self
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
@@ -159,6 +172,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cost_microcents_per_minute: Option<Option<i64>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut input_tokens_per_minute: Option<Option<i64>> = None;
                 let mut mode: Option<crate::datadogV2::model::AiGatewayRateLimitMode> = None;
@@ -176,6 +190,10 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cost_microcents_per_minute" => {
+                            cost_microcents_per_minute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             if v.is_null() {
                                 continue;
@@ -232,6 +250,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
                 }
 
                 let content = AiGatewayRateLimitUpdateAttributes {
+                    cost_microcents_per_minute,
                     enabled,
                     input_tokens_per_minute,
                     mode,

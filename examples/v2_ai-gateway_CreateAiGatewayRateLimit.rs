@@ -13,6 +13,7 @@ use uuid::Uuid;
 async fn main() {
     let body = AiGatewayRateLimitCreateRequest::new(AiGatewayRateLimitCreateData::new(
         AiGatewayRateLimitCreateAttributes::new("Default rate limit".to_string())
+            .cost_microcents_per_minute(Some(100000000))
             .input_tokens_per_minute(None)
             .mode(AiGatewayRateLimitMode::ALERT)
             .output_tokens_per_minute(None)
