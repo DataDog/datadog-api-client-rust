@@ -656,7 +656,23 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.get_rule_based_view".to_owned(), false),
+            (
+                "v2.create_cost_recommendation_custom_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.create_cost_recommendation_notification_rule".to_owned(),
+                false,
+            ),
             ("v2.create_unit_cost".to_owned(), false),
+            (
+                "v2.delete_cost_recommendation_custom_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_cost_recommendation_notification_rule".to_owned(),
+                false,
+            ),
             ("v2.delete_unit_cost".to_owned(), false),
             ("v2.get_commitments_commitment_list".to_owned(), false),
             ("v2.get_commitments_coverage_scalar".to_owned(), false),
@@ -673,9 +689,19 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.get_cost_anomaly".to_owned(), false),
+            ("v2.get_cost_recommendation_custom_rule".to_owned(), false),
+            (
+                "v2.get_cost_recommendation_notification_rule".to_owned(),
+                false,
+            ),
             ("v2.get_cost_tag_metadata_currency".to_owned(), false),
             ("v2.get_unit_cost".to_owned(), false),
             ("v2.list_cost_anomalies".to_owned(), false),
+            ("v2.list_cost_recommendation_custom_rules".to_owned(), false),
+            (
+                "v2.list_cost_recommendation_notification_rules".to_owned(),
+                false,
+            ),
             ("v2.list_cost_tag_key_sources".to_owned(), false),
             ("v2.list_cost_tag_metadata".to_owned(), false),
             ("v2.list_cost_tag_metadata_metrics".to_owned(), false),
@@ -683,6 +709,14 @@ impl Default for Configuration {
             ("v2.list_cost_tag_metadata_orchestrators".to_owned(), false),
             ("v2.list_unit_costs".to_owned(), false),
             ("v2.search_cost_recommendations".to_owned(), false),
+            (
+                "v2.update_cost_recommendation_custom_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_cost_recommendation_notification_rule".to_owned(),
+                false,
+            ),
             ("v2.update_unit_cost".to_owned(), false),
             ("v2.create_quotas".to_owned(), false),
             ("v2.create_temporary_grant_request".to_owned(), false),

@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Monitor configuration options for data jobs queries.
+/// A recommendation notification rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MonitorFormulaAndFunctionDataJobsMonitorOptions {
-    /// Alert separately for each failed run instead of on the count of trailing failures.
-    /// Only supported for `failed_runs` monitors with the `aastra` query dialect. It requires
-    /// a `> 0` threshold with no warning threshold, an evaluation window of at most two days,
-    /// and renotification disabled.
-    #[serde(rename = "alert_on_every_failure")]
-    pub alert_on_every_failure: Option<bool>,
+pub struct CostRecommendationNotificationRuleResponse {
+    /// A recommendation notification rule.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CostRecommendationNotificationRuleData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,18 +21,15 @@ pub struct MonitorFormulaAndFunctionDataJobsMonitorOptions {
     pub(crate) _unparsed: bool,
 }
 
-impl MonitorFormulaAndFunctionDataJobsMonitorOptions {
-    pub fn new() -> MonitorFormulaAndFunctionDataJobsMonitorOptions {
-        MonitorFormulaAndFunctionDataJobsMonitorOptions {
-            alert_on_every_failure: None,
+impl CostRecommendationNotificationRuleResponse {
+    pub fn new(
+        data: crate::datadogV2::model::CostRecommendationNotificationRuleData,
+    ) -> CostRecommendationNotificationRuleResponse {
+        CostRecommendationNotificationRuleResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn alert_on_every_failure(mut self, value: bool) -> Self {
-        self.alert_on_every_failure = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -47,20 +41,14 @@ impl MonitorFormulaAndFunctionDataJobsMonitorOptions {
     }
 }
 
-impl Default for MonitorFormulaAndFunctionDataJobsMonitorOptions {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
+impl<'de> Deserialize<'de> for CostRecommendationNotificationRuleResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MonitorFormulaAndFunctionDataJobsMonitorOptionsVisitor;
-        impl<'a> Visitor<'a> for MonitorFormulaAndFunctionDataJobsMonitorOptionsVisitor {
-            type Value = MonitorFormulaAndFunctionDataJobsMonitorOptions;
+        struct CostRecommendationNotificationRuleResponseVisitor;
+        impl<'a> Visitor<'a> for CostRecommendationNotificationRuleResponseVisitor {
+            type Value = CostRecommendationNotificationRuleResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,7 +58,9 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
             where
                 M: MapAccess<'a>,
             {
-                let mut alert_on_every_failure: Option<bool> = None;
+                let mut data: Option<
+                    crate::datadogV2::model::CostRecommendationNotificationRuleData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,12 +69,8 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "alert_on_every_failure" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            alert_on_every_failure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -93,9 +79,10 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = MonitorFormulaAndFunctionDataJobsMonitorOptions {
-                    alert_on_every_failure,
+                let content = CostRecommendationNotificationRuleResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -104,6 +91,6 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
             }
         }
 
-        deserializer.deserialize_any(MonitorFormulaAndFunctionDataJobsMonitorOptionsVisitor)
+        deserializer.deserialize_any(CostRecommendationNotificationRuleResponseVisitor)
     }
 }

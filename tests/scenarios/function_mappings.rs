@@ -4928,6 +4928,46 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_search_cost_recommendations,
     );
     world.function_mappings.insert(
+        "v2.ListCostRecommendationCustomRules".into(),
+        test_v2_list_cost_recommendation_custom_rules,
+    );
+    world.function_mappings.insert(
+        "v2.CreateCostRecommendationCustomRule".into(),
+        test_v2_create_cost_recommendation_custom_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteCostRecommendationCustomRule".into(),
+        test_v2_delete_cost_recommendation_custom_rule,
+    );
+    world.function_mappings.insert(
+        "v2.GetCostRecommendationCustomRule".into(),
+        test_v2_get_cost_recommendation_custom_rule,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateCostRecommendationCustomRule".into(),
+        test_v2_update_cost_recommendation_custom_rule,
+    );
+    world.function_mappings.insert(
+        "v2.ListCostRecommendationNotificationRules".into(),
+        test_v2_list_cost_recommendation_notification_rules,
+    );
+    world.function_mappings.insert(
+        "v2.CreateCostRecommendationNotificationRule".into(),
+        test_v2_create_cost_recommendation_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteCostRecommendationNotificationRule".into(),
+        test_v2_delete_cost_recommendation_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.GetCostRecommendationNotificationRule".into(),
+        test_v2_get_cost_recommendation_notification_rule,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateCostRecommendationNotificationRule".into(),
+        test_v2_update_cost_recommendation_notification_rule,
+    );
+    world.function_mappings.insert(
         "v2.ListCostTagDescriptions".into(),
         test_v2_list_cost_tag_descriptions,
     );
@@ -37928,6 +37968,304 @@ fn test_v2_search_cost_recommendations(
     params.page_size = page_size;
     params.page_token = page_token;
     let response = match block_on(api.search_cost_recommendations_with_http_info(body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_recommendation_custom_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_cost_recommendation_custom_rules_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_cost_recommendation_custom_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_cost_recommendation_custom_rule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_cost_recommendation_custom_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let custom_rule_id =
+        serde_json::from_value(_parameters.get("custom_rule_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_cost_recommendation_custom_rule_with_http_info(custom_rule_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_cost_recommendation_custom_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let custom_rule_id =
+        serde_json::from_value(_parameters.get("custom_rule_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_cost_recommendation_custom_rule_with_http_info(custom_rule_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_cost_recommendation_custom_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let custom_rule_id =
+        serde_json::from_value(_parameters.get("custom_rule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_cost_recommendation_custom_rule_with_http_info(custom_rule_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_recommendation_notification_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_cost_recommendation_notification_rules_with_http_info())
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_cost_recommendation_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_cost_recommendation_notification_rule_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_cost_recommendation_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let notification_rule_id =
+        serde_json::from_value(_parameters.get("notification_rule_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_cost_recommendation_notification_rule_with_http_info(notification_rule_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_cost_recommendation_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let notification_rule_id =
+        serde_json::from_value(_parameters.get("notification_rule_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_cost_recommendation_notification_rule_with_http_info(notification_rule_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_cost_recommendation_notification_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let notification_rule_id =
+        serde_json::from_value(_parameters.get("notification_rule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_cost_recommendation_notification_rule_with_http_info(notification_rule_id, body),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
