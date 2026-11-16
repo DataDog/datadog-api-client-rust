@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitUpdateAttributes {
-    /// Spend limit in microcents per rolling minute. Set to 0 to remove the cost limit. Null is ignored. At least one limit must remain.
+    /// Spend limit in microcents per rolling minute. Set to 0 to remove the cost limit. Null is ignored. At least one limit, per-minute or in `window_limits`, must remain.
     #[serde(
         rename = "cost_microcents_per_minute",
         default,
@@ -21,7 +21,7 @@ pub struct AiGatewayRateLimitUpdateAttributes {
     /// Whether this rate limit is active.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// Set to 0 to remove the request limit. Null is ignored. At least one limit must remain.
+    /// Set to 0 to remove the input token limit. Null is ignored. At least one limit, per-minute or in `window_limits`, must remain.
     #[serde(
         rename = "input_tokens_per_minute",
         default,
@@ -34,14 +34,14 @@ pub struct AiGatewayRateLimitUpdateAttributes {
     /// Rate limit name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Set to 0 to remove the request limit. Null is ignored. At least one limit must remain.
+    /// Set to 0 to remove the output token limit. Null is ignored. At least one limit, per-minute or in `window_limits`, must remain.
     #[serde(
         rename = "output_tokens_per_minute",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub output_tokens_per_minute: Option<Option<i64>>,
-    /// Set to 0 to remove the request limit. Null is ignored. At least one limit must remain.
+    /// Set to 0 to remove the request limit. Null is ignored. At least one limit, per-minute or in `window_limits`, must remain.
     #[serde(
         rename = "requests_per_minute",
         default,
@@ -65,6 +65,13 @@ pub struct AiGatewayRateLimitUpdateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub user_id: Option<Option<String>>,
+    /// Replaces all limits over rolling windows longer than a minute. If `window_limits` is null or omitted, the existing limits are unchanged. An empty array removes them all. This field is available only to organizations with the feature enabled. Other organizations receive a 400 Bad Request response for a non-empty list. The same rules as on create apply. A rule can have at most four limits in total, including any per-minute limits that are set. Each metric and window pair can appear only once, and for the same metric, a longer window must have a larger amount. In `ENFORCE` mode, if the list includes a `cost` limit, the gateway rejects requests to models with no pricing because their cost can't be counted.
+    #[serde(
+        rename = "window_limits",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub window_limits: Option<Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -85,6 +92,7 @@ impl AiGatewayRateLimitUpdateAttributes {
             tags: None,
             team_id: None,
             user_id: None,
+            window_limits: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -140,6 +148,14 @@ impl AiGatewayRateLimitUpdateAttributes {
         self
     }
 
+    pub fn window_limits(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>>,
+    ) -> Self {
+        self.window_limits = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -182,6 +198,9 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
                 let mut tags: Option<Option<std::collections::BTreeMap<String, String>>> = None;
                 let mut team_id: Option<Option<String>> = None;
                 let mut user_id: Option<Option<String>> = None;
+                let mut window_limits: Option<
+                    Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -241,6 +260,10 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
                         "user_id" => {
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "window_limits" => {
+                            window_limits =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -260,6 +283,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUpdateAttributes {
                     tags,
                     team_id,
                     user_id,
+                    window_limits,
                     additional_properties,
                     _unparsed,
                 };

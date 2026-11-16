@@ -7,6 +7,9 @@ use datadog_api_client::datadogV2::model::AiGatewayRateLimitCreateRequest;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitMode;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitSelectorEntry;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitType;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimit;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimitMetric;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimitWindow;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -24,9 +27,12 @@ async fn main() {
             )
             .values(vec!["11111111-1111-1111-1111-111111111111".to_string()])]))
             .team_id(Uuid::parse_str("00000000-0000-4000-8000-000000000002").expect("invalid UUID"))
-            .user_id(
-                Uuid::parse_str("00000000-0000-4000-8000-000000000001").expect("invalid UUID"),
-            ),
+            .user_id(Uuid::parse_str("00000000-0000-4000-8000-000000000001").expect("invalid UUID"))
+            .window_limits(vec![AiGatewayRateLimitWindowLimit::new(
+                2000000000,
+                AiGatewayRateLimitWindowLimitMetric::COST,
+                AiGatewayRateLimitWindowLimitWindow::TWENTY_FOUR_HOURS,
+            )]),
         AiGatewayRateLimitType::RATE_LIMITS,
     ));
     let mut configuration = datadog::Configuration::new();
