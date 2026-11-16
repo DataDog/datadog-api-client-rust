@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomCostsUser {
-    /// The name of the Custom Costs file.
+    /// Handle of the user. This is usually the user's email address, but can be another identifier (for example, a UUID for a service account).
     #[serde(rename = "email")]
     pub email: Option<String>,
-    /// The name of the Custom Costs file.
+    /// Icon of the user.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
     /// Name of the user.

@@ -3404,6 +3404,8 @@ pub mod model_custom_costs_file_metadata_with_content_high_level;
 pub use self::model_custom_costs_file_metadata_with_content_high_level::CustomCostsFileMetadataWithContentHighLevel;
 pub mod model_custom_costs_file_metadata_with_content;
 pub use self::model_custom_costs_file_metadata_with_content::CustomCostsFileMetadataWithContent;
+pub mod model_custom_costs_file_preview_unavailable_reason;
+pub use self::model_custom_costs_file_preview_unavailable_reason::CustomCostsFilePreviewUnavailableReason;
 pub mod model_custom_cost_get_response_meta;
 pub use self::model_custom_cost_get_response_meta::CustomCostGetResponseMeta;
 pub mod model_custom_costs_file_update_request;
