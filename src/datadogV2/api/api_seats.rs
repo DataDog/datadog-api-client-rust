@@ -287,6 +287,12 @@ impl SeatsAPI {
     }
 
     /// Get the list of users assigned seats for a product code.
+    ///
+    /// This endpoint requires the `user_access_read` (User Access Read) permission
+    /// in addition to at least one of `billing_read`, `incident_read`, or `on_call_read`.
+    /// Scoped application keys, personal access tokens, and service access tokens
+    /// must include the `user_access_read` scope. Credentials without this scope
+    /// receive a `403 Forbidden` response.
     pub async fn get_seats_users(
         &self,
         product_code: String,
@@ -311,6 +317,12 @@ impl SeatsAPI {
     }
 
     /// Get the list of users assigned seats for a product code.
+    ///
+    /// This endpoint requires the `user_access_read` (User Access Read) permission
+    /// in addition to at least one of `billing_read`, `incident_read`, or `on_call_read`.
+    /// Scoped application keys, personal access tokens, and service access tokens
+    /// must include the `user_access_read` scope. Credentials without this scope
+    /// receive a `403 Forbidden` response.
     pub async fn get_seats_users_with_http_info(
         &self,
         product_code: String,
