@@ -103,6 +103,9 @@ pub struct AiGatewayRateLimitAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub user_id: Option<Option<uuid::Uuid>>,
+    /// Limits over rolling windows longer than a minute. Each limit counts the rule's matching traffic, or each counter of a template rate limit, over its window. Per-minute limits are in the `*_per_minute` fields. This list is empty when the rule has no window limits.
+    #[serde(rename = "window_limits")]
+    pub window_limits: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -146,6 +149,7 @@ impl AiGatewayRateLimitAttributes {
             updated_at,
             updated_by,
             user_id: None,
+            window_limits: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -191,6 +195,14 @@ impl AiGatewayRateLimitAttributes {
 
     pub fn user_id(mut self, value: Option<uuid::Uuid>) -> Self {
         self.user_id = Some(value);
+        self
+    }
+
+    pub fn window_limits(
+        mut self,
+        value: Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
+    ) -> Self {
+        self.window_limits = Some(value);
         self
     }
 
@@ -242,6 +254,9 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
                 let mut user_id: Option<Option<uuid::Uuid>> = None;
+                let mut window_limits: Option<
+                    Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -325,6 +340,13 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                         "user_id" => {
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "window_limits" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            window_limits =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -369,6 +391,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                     updated_at,
                     updated_by,
                     user_id,
+                    window_limits,
                     additional_properties,
                     _unparsed,
                 };

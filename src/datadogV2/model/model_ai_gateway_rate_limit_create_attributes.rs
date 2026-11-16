@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitCreateAttributes {
-    /// Maximum priced spend per rolling minute, in microcents of 1e-8 USD each. At most 10000000000000, that is $100,000. In `ENFORCE` mode, requests to a model with no pricing are rejected, because their cost can't be counted.
+    /// Maximum priced spend per rolling minute, in microcents of 1e-8 USD each. In `ENFORCE` mode, the gateway rejects requests to models with no pricing because their cost can't be counted.
     #[serde(
         rename = "cost_microcents_per_minute",
         default,
@@ -38,7 +38,7 @@ pub struct AiGatewayRateLimitCreateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub output_tokens_per_minute: Option<Option<i64>>,
-    /// Maximum requests per rolling minute. At least one of `requests_per_minute`, `input_tokens_per_minute`, `output_tokens_per_minute`, and `cost_microcents_per_minute` is required.
+    /// Maximum requests per rolling minute. At least one of `requests_per_minute`, `input_tokens_per_minute`, `output_tokens_per_minute`, `cost_microcents_per_minute`, or a non-empty `window_limits` is required.
     #[serde(
         rename = "requests_per_minute",
         default,
@@ -61,6 +61,9 @@ pub struct AiGatewayRateLimitCreateAttributes {
     /// Optional UUID. Count only this user's requests.
     #[serde(rename = "user_id")]
     pub user_id: Option<uuid::Uuid>,
+    /// Limits over rolling windows longer than a minute, such as $20 of spend per 24 hours. This field is available only to organizations with the feature enabled. Other organizations receive a 400 Bad Request response for a non-empty list. Each limit counts the rule's matching traffic, or each counter of a template rate limit, over its window. Set per-minute limits in the `*_per_minute` fields. A rule can have at most four limits in total, including any per-minute limits that are set. Each metric and window pair can appear only once, and for the same metric, a longer window must have a larger amount. In `ENFORCE` mode, the gateway rejects a request that exceeds any limit with HTTP 429 and a `Retry-After` header. If the list includes a `cost` limit, the gateway also rejects requests to models with no pricing because their cost can't be counted.
+    #[serde(rename = "window_limits")]
+    pub window_limits: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -81,6 +84,7 @@ impl AiGatewayRateLimitCreateAttributes {
             tags: None,
             team_id: None,
             user_id: None,
+            window_limits: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -134,6 +138,14 @@ impl AiGatewayRateLimitCreateAttributes {
         self
     }
 
+    pub fn window_limits(
+        mut self,
+        value: Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
+    ) -> Self {
+        self.window_limits = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -172,6 +184,9 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                 let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut team_id: Option<uuid::Uuid> = None;
                 let mut user_id: Option<uuid::Uuid> = None;
+                let mut window_limits: Option<
+                    Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -234,6 +249,13 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                             }
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "window_limits" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            window_limits =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -254,6 +276,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitCreateAttributes {
                     tags,
                     team_id,
                     user_id,
+                    window_limits,
                     additional_properties,
                     _unparsed,
                 };

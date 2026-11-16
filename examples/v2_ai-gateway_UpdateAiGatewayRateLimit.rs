@@ -6,6 +6,9 @@ use datadog_api_client::datadogV2::model::AiGatewayRateLimitType;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitUpdateAttributes;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitUpdateData;
 use datadog_api_client::datadogV2::model::AiGatewayRateLimitUpdateRequest;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimit;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimitMetric;
+use datadog_api_client::datadogV2::model::AiGatewayRateLimitWindowLimitWindow;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -19,7 +22,12 @@ async fn main() {
             .requests_per_minute(None)
             .tags(None)
             .team_id(None)
-            .user_id(None),
+            .user_id(None)
+            .window_limits(Some(vec![AiGatewayRateLimitWindowLimit::new(
+                2000000000,
+                AiGatewayRateLimitWindowLimitMetric::COST,
+                AiGatewayRateLimitWindowLimitWindow::TWENTY_FOUR_HOURS,
+            )])),
         Uuid::parse_str("11111111-1111-1111-1111-111111111111").expect("invalid UUID"),
         AiGatewayRateLimitType::RATE_LIMITS,
     ));
