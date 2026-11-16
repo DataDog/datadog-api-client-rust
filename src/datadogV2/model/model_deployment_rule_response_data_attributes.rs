@@ -27,6 +27,7 @@ pub struct DeploymentRuleResponseDataAttributes {
     #[serde(rename = "name")]
     pub name: String,
     /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+    /// Bits Deployment Analysis rules use the faulty deployment detection options shape and accept only `duration`.
     #[serde(rename = "options")]
     pub options: crate::datadogV2::model::DeploymentRulesOptions,
     /// The type of the deployment rule.

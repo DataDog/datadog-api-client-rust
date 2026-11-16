@@ -10,6 +10,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum DeploymentGatesEvaluationRule {
     DeploymentGatesMonitorRule(Box<crate::datadogV2::model::DeploymentGatesMonitorRule>),
     DeploymentGatesFDDRule(Box<crate::datadogV2::model::DeploymentGatesFDDRule>),
+    DeploymentGatesBitsDeploymentAnalysisRule(
+        Box<crate::datadogV2::model::DeploymentGatesBitsDeploymentAnalysisRule>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -34,6 +37,16 @@ impl<'de> Deserialize<'de> for DeploymentGatesEvaluationRule {
         ) {
             if !_v._unparsed {
                 return Ok(DeploymentGatesEvaluationRule::DeploymentGatesFDDRule(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::DeploymentGatesBitsDeploymentAnalysisRule>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    DeploymentGatesEvaluationRule::DeploymentGatesBitsDeploymentAnalysisRule(_v),
+                );
             }
         }
 

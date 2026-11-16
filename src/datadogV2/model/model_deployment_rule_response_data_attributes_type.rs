@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum DeploymentRuleResponseDataAttributesType {
     FAULTY_DEPLOYMENT_DETECTION,
     MONITOR,
+    BITS_DEPLOYMENT_ANALYSIS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for DeploymentRuleResponseDataAttributesType {
         match self {
             Self::FAULTY_DEPLOYMENT_DETECTION => String::from("faulty_deployment_detection"),
             Self::MONITOR => String::from("monitor"),
+            Self::BITS_DEPLOYMENT_ANALYSIS => String::from("bits_deployment_analysis"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributesType {
         Ok(match s.as_str() {
             "faulty_deployment_detection" => Self::FAULTY_DEPLOYMENT_DETECTION,
             "monitor" => Self::MONITOR,
+            "bits_deployment_analysis" => Self::BITS_DEPLOYMENT_ANALYSIS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

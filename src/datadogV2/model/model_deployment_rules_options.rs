@@ -4,6 +4,7 @@
 use serde::{Deserialize, Deserializer, Serialize};
 
 /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+/// Bits Deployment Analysis rules use the faulty deployment detection options shape and accept only `duration`.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
