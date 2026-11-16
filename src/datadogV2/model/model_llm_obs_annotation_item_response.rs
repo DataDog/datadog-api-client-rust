@@ -11,6 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationItemResponse {
+    /// Caller-supplied name or identifier for the external person or automated system that produced the labels.
+    /// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
+    /// resolved against Datadog users.
+    #[serde(rename = "annotator")]
+    pub annotator: Option<String>,
     /// Timestamp when the annotation was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -51,6 +56,7 @@ impl LLMObsAnnotationItemResponse {
         modified_by: String,
     ) -> LLMObsAnnotationItemResponse {
         LLMObsAnnotationItemResponse {
+            annotator: None,
             created_at,
             created_by,
             id,
@@ -61,6 +67,11 @@ impl LLMObsAnnotationItemResponse {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn annotator(mut self, value: String) -> Self {
+        self.annotator = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -89,6 +100,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationItemResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut annotator: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut id: Option<String> = None;
@@ -106,6 +118,12 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationItemResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "annotator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            annotator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -151,6 +169,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationItemResponse {
                     modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
 
                 let content = LLMObsAnnotationItemResponse {
+                    annotator,
                     created_at,
                     created_by,
                     id,

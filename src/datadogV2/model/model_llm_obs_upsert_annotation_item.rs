@@ -12,6 +12,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsUpsertAnnotationItem {
+    /// Caller-supplied name or identifier for the external person or automated system that produced the labels.
+    /// The value is an opaque string with no required format. Use a stable, recognizable value for the same
+    /// producer across annotations.
+    /// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
+    /// resolved against Datadog users.
+    /// Omit this field or set it to `null` to preserve existing attribution. Set it to an empty string to clear
+    /// attribution.
+    #[serde(
+        rename = "annotator",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub annotator: Option<Option<String>>,
     /// ID of the interaction to annotate.
     #[serde(rename = "interaction_id")]
     pub interaction_id: String,
@@ -32,11 +45,17 @@ impl LLMObsUpsertAnnotationItem {
         label_values: Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>,
     ) -> LLMObsUpsertAnnotationItem {
         LLMObsUpsertAnnotationItem {
+            annotator: None,
             interaction_id,
             label_values,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn annotator(mut self, value: Option<String>) -> Self {
+        self.annotator = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +84,7 @@ impl<'de> Deserialize<'de> for LLMObsUpsertAnnotationItem {
             where
                 M: MapAccess<'a>,
             {
+                let mut annotator: Option<Option<String>> = None;
                 let mut interaction_id: Option<String> = None;
                 let mut label_values: Option<
                     Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>,
@@ -77,6 +97,9 @@ impl<'de> Deserialize<'de> for LLMObsUpsertAnnotationItem {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "annotator" => {
+                            annotator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "interaction_id" => {
                             interaction_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -98,6 +121,7 @@ impl<'de> Deserialize<'de> for LLMObsUpsertAnnotationItem {
                     label_values.ok_or_else(|| M::Error::missing_field("label_values"))?;
 
                 let content = LLMObsUpsertAnnotationItem {
+                    annotator,
                     interaction_id,
                     label_values,
                     additional_properties,

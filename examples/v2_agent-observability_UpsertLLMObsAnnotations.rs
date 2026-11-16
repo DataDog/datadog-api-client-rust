@@ -26,7 +26,8 @@ async fn main() {
                     LLMObsAnnotationLabelValueValue::AnyValueString("positive".to_string()),
                 ),
             ],
-        )]),
+        )
+        .annotator(Some("Alex Contractor".to_string()))]),
         LLMObsAnnotationsType::ANNOTATIONS,
     ));
     let mut configuration = datadog::Configuration::new();
