@@ -385,6 +385,44 @@ impl GetUsageLambdaTracedInvocationsOptionalParams {
     }
 }
 
+/// GetUsageMonthlyResourcesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_monthly_resources`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetUsageMonthlyResourcesOptionalParams {
+    /// Include usage for descendant organizations of the authenticated organization.
+    pub filter_include_descendants: Option<bool>,
+    /// Maximum number of resource records per paginated response. Must be a positive integer.
+    /// Values above 100,000 are capped at 100,000. Ignored for billable queries using
+    /// 99th-percentile billing, which return the complete result in one response.
+    pub page_limit: Option<i64>,
+    /// Opaque cursor from `meta.pagination.next_record_id` in the previous response.
+    /// Omit for the first request. Ignored for billable queries using 99th-percentile
+    /// billing, which always return the complete result.
+    pub page_next_record_id: Option<String>,
+}
+
+impl GetUsageMonthlyResourcesOptionalParams {
+    /// Include usage for descendant organizations of the authenticated organization.
+    pub fn filter_include_descendants(mut self, value: bool) -> Self {
+        self.filter_include_descendants = Some(value);
+        self
+    }
+    /// Maximum number of resource records per paginated response. Must be a positive integer.
+    /// Values above 100,000 are capped at 100,000. Ignored for billable queries using
+    /// 99th-percentile billing, which return the complete result in one response.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Opaque cursor from `meta.pagination.next_record_id` in the previous response.
+    /// Omit for the first request. Ignored for billable queries using 99th-percentile
+    /// billing, which always return the complete result.
+    pub fn page_next_record_id(mut self, value: String) -> Self {
+        self.page_next_record_id = Some(value);
+        self
+    }
+}
+
 /// GetUsageObservabilityPipelinesOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::get_usage_observability_pipelines`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -687,6 +725,15 @@ pub enum GetUsageAttributionTypesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUsageLambdaTracedInvocationsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetUsageMonthlyResourcesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_monthly_resources`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetUsageMonthlyResourcesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -3601,6 +3648,210 @@ impl UsageMeteringAPI {
             };
         } else {
             let local_entity: Option<GetUsageLambdaTracedInvocationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get resource-level usage for a billing dimension and month, using the same
+    /// data as the resource breakdown in Plan & Usage. Supports all host and
+    /// non-host resource types available in that breakdown. Availability depends
+    /// on the billing dimension and the organization's usage data.
+    ///
+    /// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
+    /// to `true` to also return usage from its descendant organizations in all regions.
+    ///
+    /// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
+    /// For dimensions billed at the 99th percentile, this view returns resources at the
+    /// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
+    /// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
+    /// for unsupported billing dimensions, or dimensions configured with an unsupported
+    /// billing aggregation method, return a `400 Bad Request` error.
+    ///
+    /// To get the next page of results, pass the `meta.pagination.next_record_id` value
+    /// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
+    /// A null cursor indicates the last page. Paginated responses contain at most
+    /// `page[limit]` resource records, including queries across descendant organizations.
+    ///
+    /// Exception: for any billing dimension billed at the 99th percentile,
+    /// `filter[view]=billable` returns the complete resource breakdown in one response,
+    /// including requested descendants. Eligibility depends on the organization's
+    /// billing configuration for the requested dimension and month, not on the product
+    /// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
+    /// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
+    /// remain paginated.
+    pub async fn get_usage_monthly_resources(
+        &self,
+        filter_billing_dimension: String,
+        filter_month: String,
+        filter_view: crate::datadogV2::model::MonthlyResourcesView,
+        params: GetUsageMonthlyResourcesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MonthlyResourcesResponse,
+        datadog::Error<GetUsageMonthlyResourcesError>,
+    > {
+        match self
+            .get_usage_monthly_resources_with_http_info(
+                filter_billing_dimension,
+                filter_month,
+                filter_view,
+                params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get resource-level usage for a billing dimension and month, using the same
+    /// data as the resource breakdown in Plan & Usage. Supports all host and
+    /// non-host resource types available in that breakdown. Availability depends
+    /// on the billing dimension and the organization's usage data.
+    ///
+    /// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
+    /// to `true` to also return usage from its descendant organizations in all regions.
+    ///
+    /// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
+    /// For dimensions billed at the 99th percentile, this view returns resources at the
+    /// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
+    /// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
+    /// for unsupported billing dimensions, or dimensions configured with an unsupported
+    /// billing aggregation method, return a `400 Bad Request` error.
+    ///
+    /// To get the next page of results, pass the `meta.pagination.next_record_id` value
+    /// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
+    /// A null cursor indicates the last page. Paginated responses contain at most
+    /// `page[limit]` resource records, including queries across descendant organizations.
+    ///
+    /// Exception: for any billing dimension billed at the 99th percentile,
+    /// `filter[view]=billable` returns the complete resource breakdown in one response,
+    /// including requested descendants. Eligibility depends on the organization's
+    /// billing configuration for the requested dimension and month, not on the product
+    /// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
+    /// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
+    /// remain paginated.
+    pub async fn get_usage_monthly_resources_with_http_info(
+        &self,
+        filter_billing_dimension: String,
+        filter_month: String,
+        filter_view: crate::datadogV2::model::MonthlyResourcesView,
+        params: GetUsageMonthlyResourcesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MonthlyResourcesResponse>,
+        datadog::Error<GetUsageMonthlyResourcesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_usage_monthly_resources";
+
+        // unbox and build optional parameters
+        let filter_include_descendants = params.filter_include_descendants;
+        let page_limit = params.page_limit;
+        let page_next_record_id = params.page_next_record_id;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/monthly_resources",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[(
+            "filter[billing_dimension]",
+            &filter_billing_dimension.to_string(),
+        )]);
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        local_req_builder = local_req_builder.query(&[("filter[view]", &filter_view.to_string())]);
+        if let Some(ref local_query_param) = filter_include_descendants {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[include_descendants]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_next_record_id {
+            local_req_builder = local_req_builder
+                .query(&[("page[next_record_id]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Accept",
+            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
+        );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MonthlyResourcesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetUsageMonthlyResourcesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
