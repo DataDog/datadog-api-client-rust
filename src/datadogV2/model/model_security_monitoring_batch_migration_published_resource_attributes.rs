@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct SecurityMonitoringBatchMigrationPublishedResourceAttributes {
     /// The reason why the resource could not be published.
     #[serde(rename = "error")]
-    pub error: Option<String>,
+    pub error: Option<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishError>,
     /// The ID of the created Cloud SIEM detection rule.
     #[serde(rename = "ruleId")]
     pub rule_id: Option<String>,
@@ -40,7 +40,10 @@ impl SecurityMonitoringBatchMigrationPublishedResourceAttributes {
         }
     }
 
-    pub fn error(mut self, value: String) -> Self {
+    pub fn error(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishError,
+    ) -> Self {
         self.error = Some(value);
         self
     }
@@ -76,7 +79,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationPublishedResource
             where
                 M: MapAccess<'a>,
             {
-                let mut error: Option<String> = None;
+                let mut error: Option<
+                    crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishError,
+                > = None;
                 let mut rule_id: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishedResourceStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
