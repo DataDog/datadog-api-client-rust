@@ -2,6 +2,7 @@
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_feature_flags::FeatureFlagsAPI;
+use datadog_api_client::datadogV2::api_feature_flags::UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams;
 use datadog_api_client::datadogV2::model::AllocationDataRequest;
 use datadog_api_client::datadogV2::model::AllocationDataType;
 use datadog_api_client::datadogV2::model::AllocationType;
@@ -75,6 +76,7 @@ async fn main() {
             Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").expect("invalid UUID"),
             Uuid::parse_str("550e8400-e29b-41d4-a716-446655440001").expect("invalid UUID"),
             body,
+            UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams::default(),
         )
         .await;
     if let Ok(value) = resp {

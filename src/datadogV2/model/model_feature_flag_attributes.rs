@@ -58,7 +58,10 @@ pub struct FeatureFlagAttributes {
     /// The feature flag's current staleness state and suggested actions.
     #[serde(rename = "staleness_details")]
     pub staleness_details: Option<crate::datadogV2::model::FeatureFlagStalenessDetails>,
-    /// Indicates the whether a feature flag is stale or not.
+    /// Legacy status retained for compatibility. This field is always `ACTIVE`; use
+    /// `staleness_details.staleness_status` for the computed status. Do not copy it into an update
+    /// request: sending `ACTIVE` makes a `PERMANENT` flag temporary and clears any snooze.
+    #[deprecated]
     #[serde(rename = "staleness_status")]
     pub staleness_status: Option<String>,
     /// An explicit staleness status override. Omitted when no override is set.
@@ -92,6 +95,7 @@ impl FeatureFlagAttributes {
         value_type: crate::datadogV2::model::ValueType,
         variants: Vec<crate::datadogV2::model::Variant>,
     ) -> FeatureFlagAttributes {
+        #[allow(deprecated)]
         FeatureFlagAttributes {
             archived_at: None,
             created_at: None,
@@ -117,26 +121,31 @@ impl FeatureFlagAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_by(mut self, value: uuid::Uuid) -> Self {
         self.created_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn distribution_channel(mut self, value: String) -> Self {
         self.distribution_channel = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn feature_flag_environments(
         mut self,
         value: Vec<crate::datadogV2::model::FeatureFlagEnvironment>,
@@ -145,26 +154,31 @@ impl FeatureFlagAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_favorite(mut self, value: bool) -> Self {
         self.is_favorite = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn last_updated_by(mut self, value: uuid::Uuid) -> Self {
         self.last_updated_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn require_approval(mut self, value: bool) -> Self {
         self.require_approval = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn staleness_details(
         mut self,
         value: crate::datadogV2::model::FeatureFlagStalenessDetails,
@@ -173,11 +187,13 @@ impl FeatureFlagAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn staleness_status(mut self, value: String) -> Self {
         self.staleness_status = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn staleness_status_override(
         mut self,
         value: crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
@@ -186,11 +202,13 @@ impl FeatureFlagAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
@@ -392,6 +410,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                 let value_type = value_type.ok_or_else(|| M::Error::missing_field("value_type"))?;
                 let variants = variants.ok_or_else(|| M::Error::missing_field("variants"))?;
 
+                #[allow(deprecated)]
                 let content = FeatureFlagAttributes {
                     archived_at,
                     created_at,

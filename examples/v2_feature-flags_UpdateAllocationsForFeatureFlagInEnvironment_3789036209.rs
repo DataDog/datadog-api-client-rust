@@ -1,6 +1,7 @@
 // Update targeting rules for a flag in an environment returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_feature_flags::FeatureFlagsAPI;
+use datadog_api_client::datadogV2::api_feature_flags::UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams;
 use datadog_api_client::datadogV2::model::AllocationDataRequest;
 use datadog_api_client::datadogV2::model::AllocationDataType;
 use datadog_api_client::datadogV2::model::AllocationType;
@@ -55,6 +56,7 @@ async fn main() {
             feature_flag_data_id.clone(),
             environment_data_id.clone(),
             body,
+            UpdateAllocationsForFeatureFlagInEnvironmentOptionalParams::default(),
         )
         .await;
     if let Ok(value) = resp {

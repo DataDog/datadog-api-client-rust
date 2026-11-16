@@ -59,7 +59,9 @@ pub struct FeatureFlagListItemAttributes {
     /// The feature flag's current staleness state and suggested actions.
     #[serde(rename = "staleness_details")]
     pub staleness_details: Option<crate::datadogV2::model::FeatureFlagStalenessDetails>,
-    /// Legacy status retained for compatibility. This field is always `ACTIVE`; use `staleness_details.staleness_status` for the computed status.
+    /// Legacy status retained for compatibility. This field is always `ACTIVE`; use
+    /// `staleness_details.staleness_status` for the computed status. Do not copy it into an update
+    /// request: sending `ACTIVE` makes a `PERMANENT` flag temporary and clears any snooze.
     #[deprecated]
     #[serde(rename = "staleness_status")]
     pub staleness_status: Option<String>,
