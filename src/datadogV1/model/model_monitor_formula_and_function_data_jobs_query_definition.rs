@@ -12,20 +12,30 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorFormulaAndFunctionDataJobsQueryDefinition {
     /// The type of job being monitored. Valid values include:
-    /// `databricks.job`, `spark.application`, `airflow.dag`,
-    /// `dbt.job`, `dbt.model`, `dbt.test`, `glue.job`.
+    /// `databricks.job`, `spark.application`, `airflow.dag`, `dbt.job`, `glue.job`, `adf.pipeline`.
+    /// The `aastra` dialect also accepts `airflow.job`, `dbt.model`, and `dbt.test`.
     /// Custom job types are supported with the `custom.ol.` prefix.
     #[serde(rename = "job_type")]
     pub job_type: String,
-    /// Filter expression used to select the jobs to monitor.
+    /// Filter expression used to select the jobs to monitor. Its syntax depends on `query_dialect`:
+    /// a metric tag filter such as `job_name:smoke*` for `metric`, or an Aastra entity search
+    /// such as ``search for databricks_job where `@team:data-eng` `` for `aastra`.
     #[serde(rename = "jobs_query")]
     pub jobs_query: String,
+    /// Monitor configuration options for data jobs queries.
+    #[serde(rename = "monitor_options")]
+    pub monitor_options:
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsMonitorOptions>,
     /// Name of the query for use in formulas. Must be `run_query`.
     #[serde(rename = "name")]
     pub name: String,
-    /// Query dialect for data jobs queries. Currently only `metric` is supported.
+    /// Query dialect for data jobs queries. Valid values are `metric` and `aastra`.
     #[serde(rename = "query_dialect")]
     pub query_dialect: String,
+    /// Optional filter on individual runs, using metrics filter syntax.
+    /// Only supported with the `aastra` query dialect.
+    #[serde(rename = "run_filter")]
+    pub run_filter: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -43,11 +53,26 @@ impl MonitorFormulaAndFunctionDataJobsQueryDefinition {
         MonitorFormulaAndFunctionDataJobsQueryDefinition {
             job_type,
             jobs_query,
+            monitor_options: None,
             name,
             query_dialect,
+            run_filter: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn monitor_options(
+        mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsMonitorOptions,
+    ) -> Self {
+        self.monitor_options = Some(value);
+        self
+    }
+
+    pub fn run_filter(mut self, value: String) -> Self {
+        self.run_filter = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -78,8 +103,12 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsQueryDefinition 
             {
                 let mut job_type: Option<String> = None;
                 let mut jobs_query: Option<String> = None;
+                let mut monitor_options: Option<
+                    crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsMonitorOptions,
+                > = None;
                 let mut name: Option<String> = None;
                 let mut query_dialect: Option<String> = None;
+                let mut run_filter: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -94,12 +123,25 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsQueryDefinition 
                         "jobs_query" => {
                             jobs_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "monitor_options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            monitor_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "query_dialect" => {
                             query_dialect =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "run_filter" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -117,8 +159,10 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsQueryDefinition 
                 let content = MonitorFormulaAndFunctionDataJobsQueryDefinition {
                     job_type,
                     jobs_query,
+                    monitor_options,
                     name,
                     query_dialect,
+                    run_filter,
                     additional_properties,
                     _unparsed,
                 };
