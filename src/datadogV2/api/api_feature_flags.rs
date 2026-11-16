@@ -281,40 +281,40 @@ impl ListFeatureFlagsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListFeatureFlagsEnvironmentsOptionalParams {
-    /// Filter environments by name (partial matching).
+    /// This parameter is currently ignored. Use dd_env to filter environments.
     pub name: Option<String>,
-    /// Filter environments by key (partial matching).
+    /// This parameter is currently ignored. Use dd_env to filter environments.
     pub key: Option<String>,
-    /// Filter environments by queries that contain the provided DD_ENV value.
+    /// Filter environments whose queries list contains an exact match for the provided DD_ENV value.
     pub dd_env: Option<String>,
-    /// Maximum number of results to return.
+    /// This parameter is currently ignored. All matching environments are returned.
     pub limit: Option<i64>,
-    /// Number of results to skip.
+    /// This parameter is currently ignored. All matching environments are returned.
     pub offset: Option<i64>,
 }
 
 impl ListFeatureFlagsEnvironmentsOptionalParams {
-    /// Filter environments by name (partial matching).
+    /// This parameter is currently ignored. Use dd_env to filter environments.
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-    /// Filter environments by key (partial matching).
+    /// This parameter is currently ignored. Use dd_env to filter environments.
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
-    /// Filter environments by queries that contain the provided DD_ENV value.
+    /// Filter environments whose queries list contains an exact match for the provided DD_ENV value.
     pub fn dd_env(mut self, value: String) -> Self {
         self.dd_env = Some(value);
         self
     }
-    /// Maximum number of results to return.
+    /// This parameter is currently ignored. All matching environments are returned.
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-    /// Number of results to skip.
+    /// This parameter is currently ignored. All matching environments are returned.
     pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
@@ -2626,7 +2626,7 @@ impl FeatureFlagsAPI {
     }
 
     /// Returns a list of environments for the organization.
-    /// Supports filtering by name, key, and DD_ENV.
+    /// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
     pub async fn list_feature_flags_environments(
         &self,
         params: ListFeatureFlagsEnvironmentsOptionalParams,
@@ -2652,7 +2652,7 @@ impl FeatureFlagsAPI {
     }
 
     /// Returns a list of environments for the organization.
-    /// Supports filtering by name, key, and DD_ENV.
+    /// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
     pub async fn list_feature_flags_environments_with_http_info(
         &self,
         params: ListFeatureFlagsEnvironmentsOptionalParams,
@@ -3668,8 +3668,13 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates an existing environment's metadata such as
-    ///  name and description.
+    /// Updates an environment's name, DD_ENV values, and settings.
+    ///
+    /// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
+    /// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
+    ///
+    /// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
+    /// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
     pub async fn update_feature_flags_environment(
         &self,
         environment_id: uuid::Uuid,
@@ -3695,8 +3700,13 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Updates an existing environment's metadata such as
-    ///  name and description.
+    /// Updates an environment's name, DD_ENV values, and settings.
+    ///
+    /// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
+    /// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
+    ///
+    /// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
+    /// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
     pub async fn update_feature_flags_environment_with_http_info(
         &self,
         environment_id: uuid::Uuid,
