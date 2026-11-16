@@ -29,6 +29,10 @@ pub struct CustomCostsFileMetadataWithContent {
     /// Name of the Custom Costs file.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Reason the content of the Custom Costs file is not returned. Only set when `content` is omitted.
+    #[serde(rename = "preview_unavailable_reason")]
+    pub preview_unavailable_reason:
+        Option<crate::datadogV2::model::CustomCostsFilePreviewUnavailableReason>,
     /// Providers contained in the Custom Costs file.
     #[serde(rename = "provider_names")]
     pub provider_names: Option<Vec<String>>,
@@ -57,6 +61,7 @@ impl CustomCostsFileMetadataWithContent {
             charge_period: None,
             content: None,
             name: None,
+            preview_unavailable_reason: None,
             provider_names: None,
             status: None,
             uploaded_at: None,
@@ -96,6 +101,14 @@ impl CustomCostsFileMetadataWithContent {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn preview_unavailable_reason(
+        mut self,
+        value: crate::datadogV2::model::CustomCostsFilePreviewUnavailableReason,
+    ) -> Self {
+        self.preview_unavailable_reason = Some(value);
         self
     }
 
@@ -160,6 +173,9 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                 let mut content: Option<Vec<crate::datadogV2::model::CustomCostsFileLineItem>> =
                     None;
                 let mut name: Option<String> = None;
+                let mut preview_unavailable_reason: Option<
+                    crate::datadogV2::model::CustomCostsFilePreviewUnavailableReason,
+                > = None;
                 let mut provider_names: Option<Vec<String>> = None;
                 let mut status: Option<String> = None;
                 let mut uploaded_at: Option<f64> = None;
@@ -212,6 +228,23 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "preview_unavailable_reason" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            preview_unavailable_reason =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _preview_unavailable_reason) =
+                                preview_unavailable_reason
+                            {
+                                match _preview_unavailable_reason {
+                                    crate::datadogV2::model::CustomCostsFilePreviewUnavailableReason::UnparsedObject(_preview_unavailable_reason) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "provider_names" => {
                             if v.is_null() {
                                 continue;
@@ -254,6 +287,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                     charge_period,
                     content,
                     name,
+                    preview_unavailable_reason,
                     provider_names,
                     status,
                     uploaded_at,
