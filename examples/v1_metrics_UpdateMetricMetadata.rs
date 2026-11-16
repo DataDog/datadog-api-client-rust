@@ -6,9 +6,12 @@ use datadog_api_client::datadogV1::model::MetricMetadata;
 #[tokio::main]
 async fn main() {
     let body = MetricMetadata::new()
-        .per_unit("second".to_string())
-        .type_("count".to_string())
-        .unit("byte".to_string());
+        .description(Some("Number of requests received.".to_string()))
+        .per_unit(Some("second".to_string()))
+        .short_name(Some("requests".to_string()))
+        .statsd_interval(Some(10))
+        .type_(Some("count".to_string()))
+        .unit(Some("byte".to_string()));
     let configuration = datadog::Configuration::new();
     let api = MetricsAPI::with_config(configuration);
     let resp = api
