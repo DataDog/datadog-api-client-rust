@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum MonitorFormulaAndFunctionDataQualityDetectionType {
-    STATIC,
-    ANOMALY,
+pub enum IssueImpactType {
+    ERROR_TRACKING_ISSUE_IMPACT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl ToString for IssueImpactType {
     fn to_string(&self) -> String {
         match self {
-            Self::STATIC => String::from("static"),
-            Self::ANOMALY => String::from("anomaly"),
+            Self::ERROR_TRACKING_ISSUE_IMPACT => String::from("error_tracking_issue_impact"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl Serialize for IssueImpactType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +32,14 @@ impl Serialize for MonitorFormulaAndFunctionDataQualityDetectionType {
     }
 }
 
-impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl<'de> Deserialize<'de> for IssueImpactType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "static" => Self::STATIC,
-            "anomaly" => Self::ANOMALY,
+            "error_tracking_issue_impact" => Self::ERROR_TRACKING_ISSUE_IMPACT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
