@@ -11,6 +11,66 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListProductAnalyticsSegmentsOptionalParams is a struct for passing parameters to the method [`RumAudienceManagementAPI::list_product_analytics_segments`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListProductAnalyticsSegmentsOptionalParams {
+    /// Return only segments of this entity kind. Other values are ignored.
+    pub filter_entity: Option<crate::datadogV2::model::SegmentEntity>,
+    /// Comma-separated segment kinds to return: `event_platform`, `user_store`, `account_store`, `reference_table`,
+    /// `static`, `template`, `combination`, `journey`, or `retention`.
+    pub filter_type: Option<String>,
+    /// Comma-separated segment IDs to return, up to 1000.
+    pub filter_ids: Option<String>,
+    /// Set to `false` to include disabled segments.
+    pub filter_disabled: Option<bool>,
+    /// Column to sort by. Other values are ignored.
+    pub sort_column: Option<crate::datadogV2::model::SegmentSortColumn>,
+    /// Sort order. Only used with `sort[column]`.
+    pub sort_order: Option<crate::datadogV2::model::QuerySortOrder>,
+    /// Maximum number of segments to return. Returns all segments when not set.
+    pub limit: Option<i64>,
+}
+
+impl ListProductAnalyticsSegmentsOptionalParams {
+    /// Return only segments of this entity kind. Other values are ignored.
+    pub fn filter_entity(mut self, value: crate::datadogV2::model::SegmentEntity) -> Self {
+        self.filter_entity = Some(value);
+        self
+    }
+    /// Comma-separated segment kinds to return: `event_platform`, `user_store`, `account_store`, `reference_table`,
+    /// `static`, `template`, `combination`, `journey`, or `retention`.
+    pub fn filter_type(mut self, value: String) -> Self {
+        self.filter_type = Some(value);
+        self
+    }
+    /// Comma-separated segment IDs to return, up to 1000.
+    pub fn filter_ids(mut self, value: String) -> Self {
+        self.filter_ids = Some(value);
+        self
+    }
+    /// Set to `false` to include disabled segments.
+    pub fn filter_disabled(mut self, value: bool) -> Self {
+        self.filter_disabled = Some(value);
+        self
+    }
+    /// Column to sort by. Other values are ignored.
+    pub fn sort_column(mut self, value: crate::datadogV2::model::SegmentSortColumn) -> Self {
+        self.sort_column = Some(value);
+        self
+    }
+    /// Sort order. Only used with `sort[column]`.
+    pub fn sort_order(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
+        self.sort_order = Some(value);
+        self
+    }
+    /// Maximum number of segments to return. Returns all segments when not set.
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+}
+
 /// CreateConnectionError is a struct for typed errors of method [`RumAudienceManagementAPI::create_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -19,10 +79,28 @@ pub enum CreateConnectionError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateProductAnalyticsSegmentError is a struct for typed errors of method [`RumAudienceManagementAPI::create_product_analytics_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateProductAnalyticsSegmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteConnectionError is a struct for typed errors of method [`RumAudienceManagementAPI::delete_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteConnectionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteProductAnalyticsSegmentError is a struct for typed errors of method [`RumAudienceManagementAPI::delete_product_analytics_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteProductAnalyticsSegmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -52,6 +130,15 @@ pub enum GetMappingError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetProductAnalyticsSegmentError is a struct for typed errors of method [`RumAudienceManagementAPI::get_product_analytics_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProductAnalyticsSegmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetUserFacetInfoError is a struct for typed errors of method [`RumAudienceManagementAPI::get_user_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -64,6 +151,24 @@ pub enum GetUserFacetInfoError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListConnectionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListProductAnalyticsSegmentsError is a struct for typed errors of method [`RumAudienceManagementAPI::list_product_analytics_segments`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListProductAnalyticsSegmentsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PreviewProductAnalyticsSegmentError is a struct for typed errors of method [`RumAudienceManagementAPI::preview_product_analytics_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PreviewProductAnalyticsSegmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -96,6 +201,15 @@ pub enum QueryUsersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateConnectionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateProductAnalyticsSegmentError is a struct for typed errors of method [`RumAudienceManagementAPI::update_product_analytics_segment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateProductAnalyticsSegmentError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -319,6 +433,172 @@ impl RumAudienceManagementAPI {
         }
     }
 
+    /// Create a user or account segment. The `data_query` defines who belongs to the segment.
+    /// Segment names must be unique in the organization.
+    pub async fn create_product_analytics_segment(
+        &self,
+        body: crate::datadogV2::model::SegmentCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SegmentResponse,
+        datadog::Error<CreateProductAnalyticsSegmentError>,
+    > {
+        match self
+            .create_product_analytics_segment_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a user or account segment. The `data_query` defines who belongs to the segment.
+    /// Segment names must be unique in the organization.
+    pub async fn create_product_analytics_segment_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SegmentCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SegmentResponse>,
+        datadog::Error<CreateProductAnalyticsSegmentError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_product_analytics_segment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_product_analytics_segment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segment",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SegmentResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateProductAnalyticsSegmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete an existing data connection for an entity
     pub async fn delete_connection(
         &self,
@@ -418,8 +698,131 @@ impl RumAudienceManagementAPI {
         }
     }
 
+    /// Delete a segment. Segments created by users are deleted permanently.
+    /// Segments created by Datadog, and segments based on an uploaded list, are disabled instead.
+    pub async fn delete_product_analytics_segment(
+        &self,
+        id: String,
+    ) -> Result<
+        crate::datadogV2::model::SegmentDeleteResponse,
+        datadog::Error<DeleteProductAnalyticsSegmentError>,
+    > {
+        match self
+            .delete_product_analytics_segment_with_http_info(id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a segment. Segments created by users are deleted permanently.
+    /// Segments created by Datadog, and segments based on an uploaded list, are disabled instead.
+    pub async fn delete_product_analytics_segment_with_http_info(
+        &self,
+        id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SegmentDeleteResponse>,
+        datadog::Error<DeleteProductAnalyticsSegmentError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_product_analytics_segment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_product_analytics_segment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segment/{id}",
+            local_configuration.get_operation_host(local_operation_id),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SegmentDeleteResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DeleteProductAnalyticsSegmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a Product Analytics user profile.
-    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few minutes.
+    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few
+    /// minutes.
     /// This only deletes the user profile. To delete the RUM events of the user, use the RUM data deletion API.
     pub async fn delete_user_profile(
         &self,
@@ -432,7 +835,8 @@ impl RumAudienceManagementAPI {
     }
 
     /// Delete a Product Analytics user profile.
-    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few minutes.
+    /// Deletion is asynchronous: the request is accepted and the profile is removed shortly after, usually within a few
+    /// minutes.
     /// This only deletes the user profile. To delete the RUM events of the user, use the RUM data deletion API.
     pub async fn delete_user_profile_with_http_info(
         &self,
@@ -791,6 +1195,121 @@ impl RumAudienceManagementAPI {
         }
     }
 
+    /// Get a segment by ID, including its definition.
+    pub async fn get_product_analytics_segment(
+        &self,
+        id: String,
+    ) -> Result<
+        crate::datadogV2::model::SegmentResponse,
+        datadog::Error<GetProductAnalyticsSegmentError>,
+    > {
+        match self.get_product_analytics_segment_with_http_info(id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a segment by ID, including its definition.
+    pub async fn get_product_analytics_segment_with_http_info(
+        &self,
+        id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SegmentResponse>,
+        datadog::Error<GetProductAnalyticsSegmentError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_product_analytics_segment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_product_analytics_segment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segment/{id}",
+            local_configuration.get_operation_host(local_operation_id),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SegmentResponse>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetProductAnalyticsSegmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get facet information for user attributes including possible values and counts
     pub async fn get_user_facet_info(
         &self,
@@ -1058,6 +1577,334 @@ impl RumAudienceManagementAPI {
             };
         } else {
             let local_entity: Option<ListConnectionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the user and account segments of your organization. Disabled segments are left out unless
+    /// `filter[disabled]` is `false`.
+    /// The list does not include segment definitions; get a segment by ID to see its `data_query`.
+    pub async fn list_product_analytics_segments(
+        &self,
+        params: ListProductAnalyticsSegmentsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SegmentsResponse,
+        datadog::Error<ListProductAnalyticsSegmentsError>,
+    > {
+        match self
+            .list_product_analytics_segments_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the user and account segments of your organization. Disabled segments are left out unless
+    /// `filter[disabled]` is `false`.
+    /// The list does not include segment definitions; get a segment by ID to see its `data_query`.
+    pub async fn list_product_analytics_segments_with_http_info(
+        &self,
+        params: ListProductAnalyticsSegmentsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SegmentsResponse>,
+        datadog::Error<ListProductAnalyticsSegmentsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_product_analytics_segments";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_product_analytics_segments' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_entity = params.filter_entity;
+        let filter_type = params.filter_type;
+        let filter_ids = params.filter_ids;
+        let filter_disabled = params.filter_disabled;
+        let sort_column = params.sort_column;
+        let sort_order = params.sort_order;
+        let limit = params.limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segment",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_entity {
+            local_req_builder =
+                local_req_builder.query(&[("filter[entity]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_ids {
+            local_req_builder =
+                local_req_builder.query(&[("filter[ids]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_disabled {
+            local_req_builder =
+                local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_column {
+            local_req_builder =
+                local_req_builder.query(&[("sort[column]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_order {
+            local_req_builder =
+                local_req_builder.query(&[("sort[order]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SegmentsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListProductAnalyticsSegmentsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Preview the users or accounts that match a segment definition, without saving it.
+    /// Returns up to 1000 rows and the total number of matching entities.
+    pub async fn preview_product_analytics_segment(
+        &self,
+        body: crate::datadogV2::model::SegmentPreviewRequest,
+    ) -> Result<
+        crate::datadogV2::model::SegmentPreviewResponse,
+        datadog::Error<PreviewProductAnalyticsSegmentError>,
+    > {
+        match self
+            .preview_product_analytics_segment_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Preview the users or accounts that match a segment definition, without saving it.
+    /// Returns up to 1000 rows and the total number of matching entities.
+    pub async fn preview_product_analytics_segment_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SegmentPreviewRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SegmentPreviewResponse>,
+        datadog::Error<PreviewProductAnalyticsSegmentError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.preview_product_analytics_segment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.preview_product_analytics_segment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segments/preview",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SegmentPreviewResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PreviewProductAnalyticsSegmentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1677,6 +2524,159 @@ impl RumAudienceManagementAPI {
             })
         } else {
             let local_entity: Option<UpdateConnectionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a segment. Fields that are not set are left unchanged. The `id` in the body must match the one in the
+    /// path.
+    /// The response has no body; get the segment to see the result.
+    pub async fn update_product_analytics_segment(
+        &self,
+        id: String,
+        body: crate::datadogV2::model::SegmentUpdateRequest,
+    ) -> Result<(), datadog::Error<UpdateProductAnalyticsSegmentError>> {
+        match self
+            .update_product_analytics_segment_with_http_info(id, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a segment. Fields that are not set are left unchanged. The `id` in the body must match the one in the
+    /// path.
+    /// The response has no body; get the segment to see the result.
+    pub async fn update_product_analytics_segment_with_http_info(
+        &self,
+        id: String,
+        body: crate::datadogV2::model::SegmentUpdateRequest,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateProductAnalyticsSegmentError>>
+    {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_product_analytics_segment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_product_analytics_segment' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/product-analytics/segment/{id}",
+            local_configuration.get_operation_host(local_operation_id),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<UpdateProductAnalyticsSegmentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
