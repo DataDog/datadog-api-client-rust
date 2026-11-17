@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a work item view, including the filter query and optional notification rule.
+/// Attributes of a work item view, including the filter query.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,8 @@ pub struct CaseViewAttributes {
     /// A human-readable name for the view, displayed in the Work Management UI.
     #[serde(rename = "name")]
     pub name: String,
-    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching work items.
+    /// Deprecated. Identifier of a legacy notification rule linked to this view, if any.
+    #[deprecated]
     #[serde(rename = "np_rule_id")]
     pub np_rule_id: Option<String>,
     /// The search query that determines which work items appear in this view. Uses the same syntax as the Work Management search bar (for example, `status:open priority:P1`).
@@ -39,6 +40,7 @@ impl CaseViewAttributes {
         name: String,
         query: String,
     ) -> CaseViewAttributes {
+        #[allow(deprecated)]
         CaseViewAttributes {
             created_at,
             modified_at: None,
@@ -50,11 +52,13 @@ impl CaseViewAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn np_rule_id(mut self, value: String) -> Self {
         self.np_rule_id = Some(value);
         self
@@ -132,6 +136,7 @@ impl<'de> Deserialize<'de> for CaseViewAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
+                #[allow(deprecated)]
                 let content = CaseViewAttributes {
                     created_at,
                     modified_at,

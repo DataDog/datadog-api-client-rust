@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseView {
-    /// Attributes of a work item view, including the filter query and optional notification rule.
+    /// Attributes of a work item view, including the filter query.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseViewAttributes,
     /// The view's identifier.

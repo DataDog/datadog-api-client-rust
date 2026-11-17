@@ -14,7 +14,8 @@ pub struct CaseViewUpdateAttributes {
     /// The name of the view.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching work items.
+    /// Deprecated. This field is ignored. Use `POST /api/v2/cases/projects/{project_id}/notification_rules` to manage project notifications.
+    #[deprecated]
     #[serde(rename = "np_rule_id")]
     pub np_rule_id: Option<String>,
     /// The query used to filter work items in this view.
@@ -29,6 +30,7 @@ pub struct CaseViewUpdateAttributes {
 
 impl CaseViewUpdateAttributes {
     pub fn new() -> CaseViewUpdateAttributes {
+        #[allow(deprecated)]
         CaseViewUpdateAttributes {
             name: None,
             np_rule_id: None,
@@ -38,16 +40,19 @@ impl CaseViewUpdateAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn np_rule_id(mut self, value: String) -> Self {
         self.np_rule_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
@@ -122,6 +127,7 @@ impl<'de> Deserialize<'de> for CaseViewUpdateAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = CaseViewUpdateAttributes {
                     name,
                     np_rule_id,
