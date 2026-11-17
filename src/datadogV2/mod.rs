@@ -41,6 +41,7 @@ pub use self::api::api_compliance;
 pub use self::api::api_confluent_cloud;
 pub use self::api::api_container_images;
 pub use self::api::api_containers;
+pub use self::api::api_core_weave_integration;
 pub use self::api::api_csm_agents;
 pub use self::api::api_csm_coverage_analysis;
 pub use self::api::api_csm_ownership;
