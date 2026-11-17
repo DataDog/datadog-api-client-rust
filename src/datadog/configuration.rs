@@ -923,6 +923,26 @@ impl Default for Configuration {
                 "v2.update_chat_gpt_enterprise_integration_account".to_owned(),
                 false,
             ),
+            (
+                "v2.create_core_weave_cloud_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_core_weave_cloud_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_core_weave_cloud_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.list_core_weave_cloud_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_core_weave_cloud_integration_account".to_owned(),
+                false,
+            ),
             ("v2.create_databricks_integration_account".to_owned(), false),
             ("v2.delete_databricks_integration_account".to_owned(), false),
             ("v2.get_databricks_integration_account".to_owned(), false),
