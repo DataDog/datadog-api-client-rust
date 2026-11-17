@@ -29,7 +29,8 @@ pub enum QueryAggregatedWaterfallError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get insights into the performance of your Real User Monitoring (RUM) applications over HTTP. See the [RUM & Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>) for more information
+/// Get insights into the performance of your Real User Monitoring (RUM) applications over HTTP. See the [RUM &
+/// Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>) for more information.
 #[derive(Debug, Clone)]
 pub struct RUMInsightsAPI {
     config: datadog::Configuration,
