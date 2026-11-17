@@ -26,6 +26,9 @@ pub struct AiGatewayModelCatalogEntryAttributes {
     /// Model identifier sent to the provider.
     #[serde(rename = "model_id_wire")]
     pub model_id_wire: String,
+    /// Attributes of a model pricing resource.
+    #[serde(rename = "pricing")]
+    pub pricing: Option<crate::datadogV2::model::AiGatewayModelPricingAttributes>,
     /// Provider identifier.
     #[serde(rename = "provider_id")]
     pub provider_id: i64,
@@ -38,6 +41,10 @@ pub struct AiGatewayModelCatalogEntryAttributes {
     /// Time when the resource was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
+    /// The Datadog side of a model's zero data retention eligibility. The customer side is the provider's
+    /// `zdr_eligible` setting.
+    #[serde(rename = "zdr")]
+    pub zdr: Option<crate::datadogV2::model::AiGatewayModelZdr>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -62,10 +69,12 @@ impl AiGatewayModelCatalogEntryAttributes {
             metadata: None,
             model_id_canonical,
             model_id_wire,
+            pricing: None,
             provider_id,
             source,
             supported_operations,
             updated_at,
+            zdr: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -73,6 +82,19 @@ impl AiGatewayModelCatalogEntryAttributes {
 
     pub fn metadata(mut self, value: crate::datadogV2::model::AiGatewayModelMetadata) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn pricing(
+        mut self,
+        value: crate::datadogV2::model::AiGatewayModelPricingAttributes,
+    ) -> Self {
+        self.pricing = Some(value);
+        self
+    }
+
+    pub fn zdr(mut self, value: crate::datadogV2::model::AiGatewayModelZdr) -> Self {
+        self.zdr = Some(value);
         self
     }
 
@@ -107,12 +129,15 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                 let mut metadata: Option<crate::datadogV2::model::AiGatewayModelMetadata> = None;
                 let mut model_id_canonical: Option<String> = None;
                 let mut model_id_wire: Option<String> = None;
+                let mut pricing: Option<crate::datadogV2::model::AiGatewayModelPricingAttributes> =
+                    None;
                 let mut provider_id: Option<i64> = None;
                 let mut source: Option<crate::datadogV2::model::AiGatewayModelSource> = None;
                 let mut supported_operations: Option<
                     Vec<crate::datadogV2::model::AiGatewaySupportedOperation>,
                 > = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut zdr: Option<crate::datadogV2::model::AiGatewayModelZdr> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -141,6 +166,12 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                             model_id_wire =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "pricing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pricing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "provider_id" => {
                             provider_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -162,6 +193,12 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                         }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "zdr" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            zdr = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -189,10 +226,12 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                     metadata,
                     model_id_canonical,
                     model_id_wire,
+                    pricing,
                     provider_id,
                     source,
                     supported_operations,
                     updated_at,
+                    zdr,
                     additional_properties,
                     _unparsed,
                 };

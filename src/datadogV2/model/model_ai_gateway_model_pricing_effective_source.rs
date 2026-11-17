@@ -9,6 +9,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum AiGatewayModelPricingEffectiveSource {
     CATALOG_AUTO,
     MODEL_OVERRIDE,
+    MODELS_DEV,
+    UNPRICED,
     UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -18,6 +20,8 @@ impl ToString for AiGatewayModelPricingEffectiveSource {
         match self {
             Self::CATALOG_AUTO => String::from("catalog_auto"),
             Self::MODEL_OVERRIDE => String::from("model_override"),
+            Self::MODELS_DEV => String::from("models_dev"),
+            Self::UNPRICED => String::from("unpriced"),
             Self::UNKNOWN => String::from("unknown"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -45,6 +49,8 @@ impl<'de> Deserialize<'de> for AiGatewayModelPricingEffectiveSource {
         Ok(match s.as_str() {
             "catalog_auto" => Self::CATALOG_AUTO,
             "model_override" => Self::MODEL_OVERRIDE,
+            "models_dev" => Self::MODELS_DEV,
+            "unpriced" => Self::UNPRICED,
             "unknown" => Self::UNKNOWN,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),

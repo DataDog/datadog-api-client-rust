@@ -39,6 +39,9 @@ pub struct AiGatewayBudgetListAttributes {
     /// Human-readable resource name.
     #[serde(rename = "name")]
     pub name: String,
+    /// Health across all counters in the active accounting window. Includes hidden counters; contains no scope values or identities.
+    #[serde(rename = "reporting_summary")]
+    pub reporting_summary: Option<crate::datadogV2::model::AiGatewayBudgetReportingSummary>,
     /// Whether provider or model scope metadata was withheld. Omit unchanged scope fields on an unrelated update to preserve their saved values.
     #[serde(rename = "scope_restricted")]
     pub scope_restricted: bool,
@@ -109,6 +112,7 @@ impl AiGatewayBudgetListAttributes {
             enforcement,
             monitor_id,
             name,
+            reporting_summary: None,
             scope_restricted,
             selector: None,
             tags,
@@ -122,6 +126,14 @@ impl AiGatewayBudgetListAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn reporting_summary(
+        mut self,
+        value: crate::datadogV2::model::AiGatewayBudgetReportingSummary,
+    ) -> Self {
+        self.reporting_summary = Some(value);
+        self
     }
 
     pub fn selector(
@@ -178,6 +190,9 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetListAttributes {
                     None;
                 let mut monitor_id: Option<Option<i64>> = None;
                 let mut name: Option<String> = None;
+                let mut reporting_summary: Option<
+                    crate::datadogV2::model::AiGatewayBudgetReportingSummary,
+                > = None;
                 let mut scope_restricted: Option<bool> = None;
                 let mut selector: Option<
                     Option<Vec<crate::datadogV2::model::AiGatewayBudgetSelectorEntry>>,
@@ -238,6 +253,13 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetListAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "reporting_summary" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reporting_summary =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scope_restricted" => {
                             scope_restricted =
@@ -329,6 +351,7 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetListAttributes {
                     enforcement,
                     monitor_id,
                     name,
+                    reporting_summary,
                     scope_restricted,
                     selector,
                     tags,

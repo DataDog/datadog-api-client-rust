@@ -11,7 +11,8 @@ async fn main() {
     let body = AiGatewayProviderUpdateRequest::new(AiGatewayProviderUpdateData::new(
         AiGatewayProviderUpdateAttributes::new()
             .cost_multiplier(1.0 as f64)
-            .name("production-us-v2".to_string()),
+            .name("production-us-v2".to_string())
+            .zdr_eligible(false),
         "42".to_string(),
         AiGatewayProviderType::PROVIDERS,
     ));

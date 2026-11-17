@@ -2,6 +2,8 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_ai_gateway::AIGatewayAPI;
 use datadog_api_client::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering;
+use datadog_api_client::datadogV2::model::AiGatewayProviderInitialBinding;
+use datadog_api_client::datadogV2::model::AiGatewayProviderInitialBindingRelation;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingClassifierRequest;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingReasoningLevel;
 use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleCreateAttributes;
@@ -37,7 +39,11 @@ async fn main() {
                     .provider("openai".to_string()),
             ))
             .ordering(Some(AiGatewayNullableRoutingRuleTierOrdering::CONFIGURED))],
-        ),
+        )
+        .initial_bindings(vec![AiGatewayProviderInitialBinding::new(
+            vec!["org:11111111-1111-1111-1111-111111111111".to_string()],
+            AiGatewayProviderInitialBindingRelation::VIEWER,
+        )]),
         AiGatewayRoutingRuleType::ROUTING_RULES,
     ));
     let mut configuration = datadog::Configuration::new();

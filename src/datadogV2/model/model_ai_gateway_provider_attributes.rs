@@ -17,6 +17,11 @@ pub struct AiGatewayProviderAttributes {
     /// Time when the resource was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
+    /// Whose credential the gateway sends to the provider. `integration_account` sends the integration
+    /// account's credential. `subscription` forwards each caller's own subscription sign-in (`ChatGPT` for
+    /// `openai`, `claude.ai` for `anthropic`) and needs no integration account.
+    #[serde(rename = "credential_source")]
+    pub credential_source: Option<crate::datadogV2::model::AiGatewayProviderCredentialSource>,
     /// Provider integration account identifier.
     #[serde(rename = "integration_account_id")]
     pub integration_account_id: String,
@@ -32,9 +37,17 @@ pub struct AiGatewayProviderAttributes {
     /// Immutable routing identifier.
     #[serde(rename = "slug")]
     pub slug: String,
+    /// Read-only. Whether the provider is working, based on the model sync and live calls. Omitted for
+    /// providers that are never checked, which include providers without an integration account, and
+    /// Azure OpenAI and Gemini providers until live traffic records a status.
+    #[serde(rename = "status")]
+    pub status: Option<crate::datadogV2::model::AiGatewayProviderStatus>,
     /// Time when the resource was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
+    /// Whether this provider connection is covered by a zero data retention agreement.
+    #[serde(rename = "zdr_eligible")]
+    pub zdr_eligible: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -55,15 +68,26 @@ impl AiGatewayProviderAttributes {
         AiGatewayProviderAttributes {
             cost_multiplier,
             created_at,
+            credential_source: None,
             integration_account_id,
             integration_config: None,
             known_provider,
             name,
             slug,
+            status: None,
             updated_at,
+            zdr_eligible: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn credential_source(
+        mut self,
+        value: crate::datadogV2::model::AiGatewayProviderCredentialSource,
+    ) -> Self {
+        self.credential_source = Some(value);
+        self
     }
 
     pub fn integration_config(
@@ -71,6 +95,16 @@ impl AiGatewayProviderAttributes {
         value: crate::datadogV2::model::AiGatewayProviderIntegrationConfig,
     ) -> Self {
         self.integration_config = Some(value);
+        self
+    }
+
+    pub fn status(mut self, value: crate::datadogV2::model::AiGatewayProviderStatus) -> Self {
+        self.status = Some(value);
+        self
+    }
+
+    pub fn zdr_eligible(mut self, value: bool) -> Self {
+        self.zdr_eligible = Some(value);
         self
     }
 
@@ -102,6 +136,9 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
             {
                 let mut cost_multiplier: Option<f64> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut credential_source: Option<
+                    crate::datadogV2::model::AiGatewayProviderCredentialSource,
+                > = None;
                 let mut integration_account_id: Option<String> = None;
                 let mut integration_config: Option<
                     crate::datadogV2::model::AiGatewayProviderIntegrationConfig,
@@ -110,7 +147,9 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                     None;
                 let mut name: Option<String> = None;
                 let mut slug: Option<String> = None;
+                let mut status: Option<crate::datadogV2::model::AiGatewayProviderStatus> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut zdr_eligible: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -125,6 +164,21 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                         }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "credential_source" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            credential_source =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _credential_source) = credential_source {
+                                match _credential_source {
+                                    crate::datadogV2::model::AiGatewayProviderCredentialSource::UnparsedObject(_credential_source) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "integration_account_id" => {
                             integration_account_id =
@@ -155,8 +209,21 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                         "slug" => {
                             slug = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "zdr_eligible" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            zdr_eligible =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -179,12 +246,15 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                 let content = AiGatewayProviderAttributes {
                     cost_multiplier,
                     created_at,
+                    credential_source,
                     integration_account_id,
                     integration_config,
                     known_provider,
                     name,
                     slug,
+                    status,
                     updated_at,
+                    zdr_eligible,
                     additional_properties,
                     _unparsed,
                 };

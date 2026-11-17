@@ -17,6 +17,9 @@ pub struct AiGatewayProviderUpdateAttributes {
     /// Human-readable resource name.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Whether this provider connection is covered by a zero data retention agreement. Omit to leave unchanged.
+    #[serde(rename = "zdr_eligible")]
+    pub zdr_eligible: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl AiGatewayProviderUpdateAttributes {
         AiGatewayProviderUpdateAttributes {
             cost_multiplier: None,
             name: None,
+            zdr_eligible: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,6 +45,11 @@ impl AiGatewayProviderUpdateAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn zdr_eligible(mut self, value: bool) -> Self {
+        self.zdr_eligible = Some(value);
         self
     }
 
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderUpdateAttributes {
             {
                 let mut cost_multiplier: Option<f64> = None;
                 let mut name: Option<String> = None;
+                let mut zdr_eligible: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,6 +109,13 @@ impl<'de> Deserialize<'de> for AiGatewayProviderUpdateAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "zdr_eligible" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            zdr_eligible =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -110,6 +127,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderUpdateAttributes {
                 let content = AiGatewayProviderUpdateAttributes {
                     cost_multiplier,
                     name,
+                    zdr_eligible,
                     additional_properties,
                     _unparsed,
                 };
