@@ -5,12 +5,13 @@ use datadog_api_client::datadogV2::model::RUMApplicationCreate;
 use datadog_api_client::datadogV2::model::RUMApplicationCreateAttributes;
 use datadog_api_client::datadogV2::model::RUMApplicationCreateRequest;
 use datadog_api_client::datadogV2::model::RUMApplicationCreateType;
+use datadog_api_client::datadogV2::model::RUMApplicationPlatformType;
 
 #[tokio::main]
 async fn main() {
     let body = RUMApplicationCreateRequest::new(RUMApplicationCreate::new(
         RUMApplicationCreateAttributes::new("test-rum-5c67ebb32077e1d9".to_string())
-            .type_("ios".to_string()),
+            .type_(RUMApplicationPlatformType::IOS),
         RUMApplicationCreateType::RUM_APPLICATION_CREATE,
     ));
     let configuration = datadog::Configuration::new();

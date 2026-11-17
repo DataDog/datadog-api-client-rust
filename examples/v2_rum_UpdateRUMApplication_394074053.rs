@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::model::RUMApplicationUpdateAttributes;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateRequest;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateType;
 use datadog_api_client::datadogV2::model::RUMEventProcessingState;
-use datadog_api_client::datadogV2::model::RUMProductAnalyticsRetentionState;
+use datadog_api_client::datadogV2::model::RUMProductAnalyticsRetentionStateRequest;
 
 #[tokio::main]
 async fn main() {
@@ -20,7 +20,7 @@ async fn main() {
         .attributes(
             RUMApplicationUpdateAttributes::new()
                 .name("updated_rum_with_product_scales".to_string())
-                .product_analytics_retention_state(RUMProductAnalyticsRetentionState::MAX)
+                .product_analytics_retention_state(RUMProductAnalyticsRetentionStateRequest::MAX)
                 .rum_event_processing_state(RUMEventProcessingState::ALL),
         ),
     );
