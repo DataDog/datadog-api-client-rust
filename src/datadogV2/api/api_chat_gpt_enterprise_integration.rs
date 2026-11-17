@@ -15,8 +15,8 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateChatGPTEnterpriseIntegrationAccountError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -24,6 +24,7 @@ pub enum CreateChatGPTEnterpriseIntegrationAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteChatGPTEnterpriseIntegrationAccountError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -32,6 +33,7 @@ pub enum DeleteChatGPTEnterpriseIntegrationAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetChatGPTEnterpriseIntegrationAccountError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -40,6 +42,7 @@ pub enum GetChatGPTEnterpriseIntegrationAccountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListChatGPTEnterpriseIntegrationAccountsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -48,8 +51,8 @@ pub enum ListChatGPTEnterpriseIntegrationAccountsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateChatGPTEnterpriseIntegrationAccountError {
-    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
