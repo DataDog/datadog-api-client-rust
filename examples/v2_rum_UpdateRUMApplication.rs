@@ -1,6 +1,7 @@
 // Update a RUM application returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum::RUMAPI;
+use datadog_api_client::datadogV2::model::RUMApplicationPlatformType;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdate;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateAttributes;
 use datadog_api_client::datadogV2::model::RUMApplicationUpdateRequest;
@@ -18,7 +19,7 @@ async fn main() {
         .attributes(
             RUMApplicationUpdateAttributes::new()
                 .name("updated_name_for_my_existing_rum_application".to_string())
-                .type_("browser".to_string()),
+                .type_(RUMApplicationPlatformType::BROWSER),
         ),
     );
     let configuration = datadog::Configuration::new();

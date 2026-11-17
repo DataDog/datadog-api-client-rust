@@ -17,7 +17,7 @@ pub struct RUMApplicationAttributes {
     /// Indicates if flat sampling of Session Replay for APM-correlated RUM sessions is enabled.
     #[serde(rename = "apm_rum_flat_sampling_replay_enabled")]
     pub apm_rum_flat_sampling_replay_enabled: Option<bool>,
-    /// Sample rate (0-100) of Session Replay for APM-correlated RUM sessions when flat sampling is enabled.
+    /// Fraction (0 to 1) of APM-correlated RUM sessions with Session Replay when flat sampling is enabled.
     #[serde(rename = "apm_rum_flat_sampling_replay_sample_rate")]
     pub apm_rum_flat_sampling_replay_sample_rate: Option<f64>,
     /// ID of the RUM application.
@@ -77,7 +77,7 @@ pub struct RUMApplicationAttributes {
     /// List of tags associated with the RUM application.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
+    /// Type of the RUM application. Possible values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`, `react`, `nextjs`, `angular`, `vuejs`, `nuxt`, `tanstack`, `maui`, `salesforce-lwc`, `shopify`, `cpp`, `unreal`.
     #[serde(rename = "type")]
     pub type_: String,
     /// Timestamp in ms of the last update date.
