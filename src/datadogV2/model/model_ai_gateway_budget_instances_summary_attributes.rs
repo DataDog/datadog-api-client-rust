@@ -26,6 +26,9 @@ pub struct AiGatewayBudgetInstancesSummaryAttributes {
     /// Whether instances were withheld because their provider or model is hidden. Summary counts and totals exclude those instances.
     #[serde(rename = "restricted_details")]
     pub restricted_details: bool,
+    /// Sum of the capacity of every matching instance in the window, including per-instance overrides.
+    #[serde(rename = "total_capacity_microcents")]
+    pub total_capacity_microcents: Option<i64>,
     /// Spend summed across all instances, in microcents.
     #[serde(rename = "total_spend_microcents")]
     pub total_spend_microcents: i64,
@@ -55,11 +58,17 @@ impl AiGatewayBudgetInstancesSummaryAttributes {
             instance_count,
             over_warning_threshold_count,
             restricted_details,
+            total_capacity_microcents: None,
             total_spend_microcents,
             window_start,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn total_capacity_microcents(mut self, value: i64) -> Self {
+        self.total_capacity_microcents = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -93,6 +102,7 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetInstancesSummaryAttributes {
                 let mut instance_count: Option<i64> = None;
                 let mut over_warning_threshold_count: Option<i64> = None;
                 let mut restricted_details: Option<bool> = None;
+                let mut total_capacity_microcents: Option<i64> = None;
                 let mut total_spend_microcents: Option<i64> = None;
                 let mut window_start: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -120,6 +130,13 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetInstancesSummaryAttributes {
                         }
                         "restricted_details" => {
                             restricted_details =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "total_capacity_microcents" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            total_capacity_microcents =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total_spend_microcents" => {
@@ -157,6 +174,7 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetInstancesSummaryAttributes {
                     instance_count,
                     over_warning_threshold_count,
                     restricted_details,
+                    total_capacity_microcents,
                     total_spend_microcents,
                     window_start,
                     additional_properties,

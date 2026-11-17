@@ -14,6 +14,14 @@ pub struct AiGatewayProviderCreateAttributes {
     /// Multiplier applied to provider costs. Must be greater than 0 and at most 1000000.
     #[serde(rename = "cost_multiplier")]
     pub cost_multiplier: Option<f64>,
+    /// Whose credential the gateway sends to the provider. Defaults to `integration_account`, which sends
+    /// the integration account's credential. `subscription` forwards each caller's own subscription sign-in
+    /// (`ChatGPT` for `openai`, `claude.ai` for `anthropic`) and needs no integration account; it is available
+    /// only to organizations with subscription providers enabled. A subscription provider's models are
+    /// optional: callers can use any model their subscription includes, and a model you add sets its
+    /// pricing. Immutable.
+    #[serde(rename = "credential_source")]
+    pub credential_source: Option<crate::datadogV2::model::AiGatewayProviderCreateCredentialSource>,
     /// Reserved for initial View/Edit permissions. Supplying this attribute, including an empty array or null, returns HTTP 503 before discovery or persistence. Omit it for normal creation.
     #[serde(rename = "initial_bindings")]
     pub initial_bindings: Option<Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>>,
@@ -35,6 +43,11 @@ pub struct AiGatewayProviderCreateAttributes {
     /// Immutable routing identifier.
     #[serde(rename = "slug")]
     pub slug: String,
+    /// Whether this provider connection is covered by a zero data retention agreement. Defaults to `false`.
+    /// For Bedrock, zero data retention is granted per region, so configure one provider per region and set
+    /// this only on the covered ones.
+    #[serde(rename = "zdr_eligible")]
+    pub zdr_eligible: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -46,6 +59,7 @@ impl AiGatewayProviderCreateAttributes {
     pub fn new(name: String, slug: String) -> AiGatewayProviderCreateAttributes {
         AiGatewayProviderCreateAttributes {
             cost_multiplier: None,
+            credential_source: None,
             initial_bindings: None,
             integration_account_id: None,
             integration_config: None,
@@ -53,6 +67,7 @@ impl AiGatewayProviderCreateAttributes {
             models: None,
             name,
             slug,
+            zdr_eligible: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -60,6 +75,14 @@ impl AiGatewayProviderCreateAttributes {
 
     pub fn cost_multiplier(mut self, value: f64) -> Self {
         self.cost_multiplier = Some(value);
+        self
+    }
+
+    pub fn credential_source(
+        mut self,
+        value: crate::datadogV2::model::AiGatewayProviderCreateCredentialSource,
+    ) -> Self {
+        self.credential_source = Some(value);
         self
     }
 
@@ -97,6 +120,11 @@ impl AiGatewayProviderCreateAttributes {
         self
     }
 
+    pub fn zdr_eligible(mut self, value: bool) -> Self {
+        self.zdr_eligible = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -124,6 +152,9 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cost_multiplier: Option<f64> = None;
+                let mut credential_source: Option<
+                    crate::datadogV2::model::AiGatewayProviderCreateCredentialSource,
+                > = None;
                 let mut initial_bindings: Option<
                     Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>,
                 > = None;
@@ -136,6 +167,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                 let mut models: Option<Vec<crate::datadogV2::model::AiGatewayModelInput>> = None;
                 let mut name: Option<String> = None;
                 let mut slug: Option<String> = None;
+                let mut zdr_eligible: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -150,6 +182,21 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                             }
                             cost_multiplier =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "credential_source" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            credential_source =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _credential_source) = credential_source {
+                                match _credential_source {
+                                    crate::datadogV2::model::AiGatewayProviderCreateCredentialSource::UnparsedObject(_credential_source) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "initial_bindings" => {
                             if v.is_null() {
@@ -199,6 +246,13 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                         "slug" => {
                             slug = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "zdr_eligible" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            zdr_eligible =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -211,6 +265,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
 
                 let content = AiGatewayProviderCreateAttributes {
                     cost_multiplier,
+                    credential_source,
                     initial_bindings,
                     integration_account_id,
                     integration_config,
@@ -218,6 +273,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                     models,
                     name,
                     slug,
+                    zdr_eligible,
                     additional_properties,
                     _unparsed,
                 };

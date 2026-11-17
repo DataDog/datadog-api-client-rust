@@ -5,6 +5,7 @@ use datadog_api_client::datadogV2::model::AiGatewayCustomProviderSupportedOperat
 use datadog_api_client::datadogV2::model::AiGatewayKnownProvider;
 use datadog_api_client::datadogV2::model::AiGatewayModelInput;
 use datadog_api_client::datadogV2::model::AiGatewayProviderCreateAttributes;
+use datadog_api_client::datadogV2::model::AiGatewayProviderCreateCredentialSource;
 use datadog_api_client::datadogV2::model::AiGatewayProviderCreateData;
 use datadog_api_client::datadogV2::model::AiGatewayProviderCreateRequest;
 use datadog_api_client::datadogV2::model::AiGatewayProviderInitialBinding;
@@ -20,6 +21,7 @@ async fn main() {
             AiGatewayProviderCreateData::new(
                 AiGatewayProviderCreateAttributes::new("production-us".to_string(), "prod-us".to_string())
                     .cost_multiplier(1.0 as f64)
+                    .credential_source(AiGatewayProviderCreateCredentialSource::INTEGRATION_ACCOUNT)
                     .initial_bindings(
                         vec![
                             AiGatewayProviderInitialBinding::new(
@@ -50,7 +52,8 @@ async fn main() {
                                 "gpt-5.2-codex-20260801".to_string(),
                             ).supported_operations(vec![AiGatewaySupportedOperation::OPENAI_CHAT_COMPLETIONS])
                         ],
-                    ),
+                    )
+                    .zdr_eligible(false),
                 AiGatewayProviderType::PROVIDERS,
             ),
         );
