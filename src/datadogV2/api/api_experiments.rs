@@ -6,6 +6,7 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -38,6 +39,52 @@ impl DeleteExperimentProtocolOptionalParams {
     /// The updated_at value from the last read. Include the full timestamp, with fractional seconds. Returns 409 if another write changed the protocol. Omit to skip this check.
     pub fn expected_updated_at(mut self, value: String) -> Self {
         self.expected_updated_at = Some(value);
+        self
+    }
+}
+
+/// GetBanditResultsOptionalParams is a struct for passing parameters to the method [`ExperimentsAPI::get_bandit_results`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetBanditResultsOptionalParams {
+    /// Return only point estimates from refreshes saved at or after this RFC3339 timestamp. Inclusive.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// Return only point estimates from refreshes saved before this RFC3339 timestamp. Exclusive.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+}
+
+impl GetBanditResultsOptionalParams {
+    /// Return only point estimates from refreshes saved at or after this RFC3339 timestamp. Inclusive.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Return only point estimates from refreshes saved before this RFC3339 timestamp. Exclusive.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+}
+
+/// GetBanditTrafficSummaryOptionalParams is a struct for passing parameters to the method [`ExperimentsAPI::get_bandit_traffic_summary`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetBanditTrafficSummaryOptionalParams {
+    /// Return only the UTC days that overlap the range starting at this RFC3339 timestamp. Inclusive.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// Return only the UTC days that overlap the range ending at this RFC3339 timestamp. Exclusive.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+}
+
+impl GetBanditTrafficSummaryOptionalParams {
+    /// Return only the UTC days that overlap the range starting at this RFC3339 timestamp. Inclusive.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Return only the UTC days that overlap the range ending at this RFC3339 timestamp. Exclusive.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
         self
     }
 }
@@ -108,6 +155,74 @@ impl GetSubjectTypeOptionalParams {
     /// Set to `counts` to add experiment_count, exposure_source_count, metric_sql_model_count and protocol_count.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
+        self
+    }
+}
+
+/// ListBanditsOptionalParams is a struct for passing parameters to the method [`ExperimentsAPI::list_bandits`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListBanditsOptionalParams {
+    /// Number of results to skip for pagination. Defaults to 0 when omitted.
+    pub page_offset: Option<i64>,
+    /// Maximum number of results to return. Defaults to 25 when omitted, and is capped at 50 (larger values are clamped to 50). The response includes meta.page (with total) and pagination links.
+    pub page_limit: Option<i64>,
+    /// Find bandits whose names contain the search text, regardless of case.
+    pub filter_query: Option<String>,
+    /// Sort fields: `name`, `created_at`, or `updated_at`. Use a comma-separated list in priority order; for example, `name,-created_at`. Prefix each field with `-` for descending. Defaults to `created_at` descending.
+    pub sort: Option<String>,
+    /// Filter by bandit status. Accepted values are `DRAFT`, `SCHEDULED`, `RUNNING`, `PAUSED`, `STOPPED`, and `COMPLETED`.
+    /// Repeat this parameter to select several statuses; for example,
+    /// `filter[status]=RUNNING&filter[status]=PAUSED`.
+    pub filter_status: Option<Vec<String>>,
+    /// Filter by subject type UUID. Repeat this parameter to supply several IDs. A bandit matches if it uses any
+    /// listed subject type.
+    pub filter_subject_type_id: Option<Vec<uuid::Uuid>>,
+    /// Filter by tag name. Repeat this parameter to supply several tags. A bandit matches if it has at least one
+    /// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
+    /// one of each.
+    pub filter_tags: Option<Vec<String>>,
+}
+
+impl ListBanditsOptionalParams {
+    /// Number of results to skip for pagination. Defaults to 0 when omitted.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Maximum number of results to return. Defaults to 25 when omitted, and is capped at 50 (larger values are clamped to 50). The response includes meta.page (with total) and pagination links.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Find bandits whose names contain the search text, regardless of case.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Sort fields: `name`, `created_at`, or `updated_at`. Use a comma-separated list in priority order; for example, `name,-created_at`. Prefix each field with `-` for descending. Defaults to `created_at` descending.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Filter by bandit status. Accepted values are `DRAFT`, `SCHEDULED`, `RUNNING`, `PAUSED`, `STOPPED`, and `COMPLETED`.
+    /// Repeat this parameter to select several statuses; for example,
+    /// `filter[status]=RUNNING&filter[status]=PAUSED`.
+    pub fn filter_status(mut self, value: Vec<String>) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Filter by subject type UUID. Repeat this parameter to supply several IDs. A bandit matches if it uses any
+    /// listed subject type.
+    pub fn filter_subject_type_id(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.filter_subject_type_id = Some(value);
+        self
+    }
+    /// Filter by tag name. Repeat this parameter to supply several tags. A bandit matches if it has at least one
+    /// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
+    /// one of each.
+    pub fn filter_tags(mut self, value: Vec<String>) -> Self {
+        self.filter_tags = Some(value);
         self
     }
 }
@@ -279,7 +394,7 @@ pub struct ListExposureSQLModelsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
     /// experiment_count, which costs an extra aggregate query.
     pub include: Option<Vec<String>>,
-    /// When true, archived models are included in the result. Defaults to false, so archived models are hidden.
+    /// When `true`, archived models are included in the result. Defaults to `false`, so archived models are hidden.
     pub include_archived: Option<bool>,
     /// Maximum number of results to return. Defaults to 25 when omitted, and is capped at 50 (larger values are clamped to 50). The response includes meta.page (with total) and pagination links.
     pub page_limit: Option<i64>,
@@ -287,8 +402,8 @@ pub struct ListExposureSQLModelsOptionalParams {
     pub page_offset: Option<i64>,
     /// Find exposure SQL models whose names contain the search text, regardless of case.
     pub search: Option<String>,
-    /// Sort field: name, created_at, or updated_at. Prefix with `-` for descending (for example, `-created_at`).
-    /// Defaults to created_at descending.
+    /// Sort field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending (for example, `-created_at`).
+    /// Defaults to `created_at` descending.
     pub sort: Option<String>,
 }
 
@@ -299,7 +414,7 @@ impl ListExposureSQLModelsOptionalParams {
         self.include = Some(value);
         self
     }
-    /// When true, archived models are included in the result. Defaults to false, so archived models are hidden.
+    /// When `true`, archived models are included in the result. Defaults to `false`, so archived models are hidden.
     pub fn include_archived(mut self, value: bool) -> Self {
         self.include_archived = Some(value);
         self
@@ -319,8 +434,8 @@ impl ListExposureSQLModelsOptionalParams {
         self.search = Some(value);
         self
     }
-    /// Sort field: name, created_at, or updated_at. Prefix with `-` for descending (for example, `-created_at`).
-    /// Defaults to created_at descending.
+    /// Sort field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending (for example, `-created_at`).
+    /// Defaults to `created_at` descending.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -764,6 +879,33 @@ pub enum DeleteSubjectTypeError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetBanditError is a struct for typed errors of method [`ExperimentsAPI::get_bandit`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetBanditError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetBanditResultsError is a struct for typed errors of method [`ExperimentsAPI::get_bandit_results`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetBanditResultsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetBanditTrafficSummaryError is a struct for typed errors of method [`ExperimentsAPI::get_bandit_traffic_summary`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetBanditTrafficSummaryError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetExperimentError is a struct for typed errors of method [`ExperimentsAPI::get_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -858,6 +1000,15 @@ pub enum GetMetricSQLModelError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSubjectTypeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListBanditsError is a struct for typed errors of method [`ExperimentsAPI::list_bandits`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListBanditsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -3588,6 +3739,399 @@ impl ExperimentsAPI {
         }
     }
 
+    /// Get a bandit: its setup, the policy it serves, its latest refresh, and the arm most likely to be best. When the caller lacks feature flag or environment read permissions, the response omits `datadog_flag_configuration` and `meta.warnings` includes `datadog_flag_configuration_omitted`. Bandits must be enabled for the organization.
+    pub async fn get_bandit(
+        &self,
+        bandit_id: uuid::Uuid,
+    ) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<GetBanditError>>
+    {
+        match self.get_bandit_with_http_info(bandit_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a bandit: its setup, the policy it serves, its latest refresh, and the arm most likely to be best. When the caller lacks feature flag or environment read permissions, the response omits `datadog_flag_configuration` and `meta.warnings` includes `datadog_flag_configuration_omitted`. Bandits must be enabled for the organization.
+    pub async fn get_bandit_with_http_info(
+        &self,
+        bandit_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>,
+        datadog::Error<GetBanditError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_bandit";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_bandit' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/experiments/bandits/{bandit_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            bandit_id = datadog::urlencode(bandit_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetBanditError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get what a bandit's refreshes have learned: each arm's estimate and probability of being best from the latest saved refresh, and each arm's point estimate over time. `filter[from]` and `filter[to]` narrow only `point_estimates`, not the latest estimates. For observation counts, use Get bandit traffic summary. Bandits must be enabled for the organization.
+    pub async fn get_bandit_results(
+        &self,
+        bandit_id: uuid::Uuid,
+        params: GetBanditResultsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ExperimentsBanditResultsV2DTO,
+        datadog::Error<GetBanditResultsError>,
+    > {
+        match self
+            .get_bandit_results_with_http_info(bandit_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get what a bandit's refreshes have learned: each arm's estimate and probability of being best from the latest saved refresh, and each arm's point estimate over time. `filter[from]` and `filter[to]` narrow only `point_estimates`, not the latest estimates. For observation counts, use Get bandit traffic summary. Bandits must be enabled for the organization.
+    pub async fn get_bandit_results_with_http_info(
+        &self,
+        bandit_id: uuid::Uuid,
+        params: GetBanditResultsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>,
+        datadog::Error<GetBanditResultsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_bandit_results";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_bandit_results' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/experiments/bandits/{bandit_id}/results",
+            local_configuration.get_operation_host(local_operation_id),
+            bandit_id = datadog::urlencode(bandit_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetBanditResultsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get what a bandit has observed, as of its latest saved refresh: observation counts, subjects, and each arm's valid observations and subjects in total and per UTC day. An observation is a subject's reward on the arm it was exposed to, counted on the UTC day of its anchor time. `filter[from]` and `filter[to]` narrow only `daily`, not the totals. Bandits must be enabled for the organization.
+    pub async fn get_bandit_traffic_summary(
+        &self,
+        bandit_id: uuid::Uuid,
+        params: GetBanditTrafficSummaryOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO,
+        datadog::Error<GetBanditTrafficSummaryError>,
+    > {
+        match self
+            .get_bandit_traffic_summary_with_http_info(bandit_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get what a bandit has observed, as of its latest saved refresh: observation counts, subjects, and each arm's valid observations and subjects in total and per UTC day. An observation is a subject's reward on the arm it was exposed to, counted on the UTC day of its anchor time. `filter[from]` and `filter[to]` narrow only `daily`, not the totals. Bandits must be enabled for the organization.
+    pub async fn get_bandit_traffic_summary_with_http_info(
+        &self,
+        bandit_id: uuid::Uuid,
+        params: GetBanditTrafficSummaryOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO>,
+        datadog::Error<GetBanditTrafficSummaryError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_bandit_traffic_summary";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_bandit_traffic_summary' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/experiments/bandits/{bandit_id}/traffic-summary",
+            local_configuration.get_operation_host(local_operation_id),
+            bandit_id = datadog::urlencode(bandit_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetBanditTrafficSummaryError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a complete experiment by ID. The response includes structured metadata, related links, and, when a complete setup exists, decision metrics, variants, `warehouse_exposure_configuration`, `datadog_flag_configuration`, STATIC or STEPS traffic exposure, and assignment and event dates. STEPS describes the configured plan rather than wall-clock history; Datadog step durations exclude pauses. The list endpoint omits these setup details.
     pub async fn get_experiment(
         &self,
@@ -4846,6 +5390,165 @@ impl ExperimentsAPI {
         } else {
             let local_entity: Option<GetSubjectTypeError> =
                 serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the organization's bandits, newest first by default. Each item is a summary. For a bandit's setup, active policy, and latest refresh, use Get bandit. Bandits must be enabled for the organization.
+    pub async fn list_bandits(
+        &self,
+        params: ListBanditsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ExperimentsBanditV2ListDTOArray,
+        datadog::Error<ListBanditsError>,
+    > {
+        match self.list_bandits_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the organization's bandits, newest first by default. Each item is a summary. For a bandit's setup, active policy, and latest refresh, use Get bandit. Bandits must be enabled for the organization.
+    pub async fn list_bandits_with_http_info(
+        &self,
+        params: ListBanditsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>,
+        datadog::Error<ListBanditsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_bandits";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_bandits' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_offset = params.page_offset;
+        let page_limit = params.page_limit;
+        let filter_query = params.filter_query;
+        let sort = params.sort;
+        let filter_status = params.filter_status;
+        let filter_subject_type_id = params.filter_subject_type_id;
+        let filter_tags = params.filter_tags;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/experiments/bandits",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_status {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[status]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_subject_type_id {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[subject_type_id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_tags {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[tags]", &param.to_string())]);
+            }
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListBanditsError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
