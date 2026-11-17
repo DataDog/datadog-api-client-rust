@@ -2643,7 +2643,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a new saved work item view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
+    /// Creates a new saved work item view with a name, filter query, and associated project.
     pub async fn create_case_view(
         &self,
         body: crate::datadogV2::model::CaseViewCreateRequest,
@@ -2663,7 +2663,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a new saved work item view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
+    /// Creates a new saved work item view with a name, filter query, and associated project.
     pub async fn create_case_view_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseViewCreateRequest,
@@ -8339,7 +8339,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the name, query, or notification rule of an existing work item view.
+    /// Updates the name or query of an existing work item view.
     pub async fn update_case_view(
         &self,
         view_id: String,
@@ -8360,7 +8360,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the name, query, or notification rule of an existing work item view.
+    /// Updates the name or query of an existing work item view.
     pub async fn update_case_view_with_http_info(
         &self,
         view_id: String,

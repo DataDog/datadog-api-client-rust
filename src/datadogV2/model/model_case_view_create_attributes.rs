@@ -14,7 +14,8 @@ pub struct CaseViewCreateAttributes {
     /// The name of the view.
     #[serde(rename = "name")]
     pub name: String,
-    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching work items.
+    /// Deprecated. This field is ignored. Use `POST /api/v2/cases/projects/{project_id}/notification_rules` to manage project notifications.
+    #[deprecated]
     #[serde(rename = "np_rule_id")]
     pub np_rule_id: Option<String>,
     /// The UUID of the project this view belongs to. Views are scoped to a single project.
@@ -32,6 +33,7 @@ pub struct CaseViewCreateAttributes {
 
 impl CaseViewCreateAttributes {
     pub fn new(name: String, project_id: String, query: String) -> CaseViewCreateAttributes {
+        #[allow(deprecated)]
         CaseViewCreateAttributes {
             name,
             np_rule_id: None,
@@ -42,6 +44,7 @@ impl CaseViewCreateAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn np_rule_id(mut self, value: String) -> Self {
         self.np_rule_id = Some(value);
         self
@@ -111,6 +114,7 @@ impl<'de> Deserialize<'de> for CaseViewCreateAttributes {
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
+                #[allow(deprecated)]
                 let content = CaseViewCreateAttributes {
                     name,
                     np_rule_id,
