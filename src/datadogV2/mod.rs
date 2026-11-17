@@ -27,6 +27,7 @@ pub use self::api::api_case_management;
 pub use self::api::api_case_management_attribute;
 pub use self::api::api_case_management_type;
 pub use self::api::api_change_management;
+pub use self::api::api_chat_gpt_enterprise_integration;
 pub use self::api::api_ci_visibility_git_hub_accounts;
 pub use self::api::api_ci_visibility_logs;
 pub use self::api::api_ci_visibility_pipelines;

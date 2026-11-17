@@ -26,6 +26,7 @@ pub mod api_case_management;
 pub mod api_case_management_attribute;
 pub mod api_case_management_type;
 pub mod api_change_management;
+pub mod api_chat_gpt_enterprise_integration;
 pub mod api_ci_visibility_git_hub_accounts;
 pub mod api_ci_visibility_logs;
 pub mod api_ci_visibility_pipelines;
