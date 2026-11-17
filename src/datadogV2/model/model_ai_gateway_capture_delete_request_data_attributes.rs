@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayCaptureDeleteRequestDataAttributes {
-    /// Opaque revision of the organization default and all overrides. Writes require the revision returned by a current read or preview.
+    /// Opaque revision of the organization default and all overrides, including hidden overrides. Writes require the revision returned by a current read or preview.
     #[serde(rename = "configuration_revision")]
     pub configuration_revision: String,
     /// Set to `true` to confirm a change that can enable full capture, including a deletion that causes a `full_capture` override or the organization default to apply.

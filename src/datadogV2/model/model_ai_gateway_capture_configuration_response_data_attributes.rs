@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayCaptureConfigurationResponseDataAttributes {
-    /// Opaque revision of the organization default and all overrides. Writes require the revision returned by a current read or preview.
+    /// Opaque revision of the organization default and all overrides, including hidden overrides. Writes require the revision returned by a current read or preview.
     #[serde(rename = "configuration_revision")]
     pub configuration_revision: String,
     /// Items Metadata-only capture adds, each listed once. An item requires the items whose information it already reveals: `tool_output_size`, `tool_names` and `conversation_shape` require `tool_usage`, and `input_size_by_role` requires `tool_output_size`. A set that leaves out a required item is rejected. When several Metadata-only overrides match a request, it gets only the items all of them select.
@@ -22,7 +22,7 @@ pub struct AiGatewayCaptureConfigurationResponseDataAttributes {
     #[serde(rename = "default_mode")]
     pub default_mode:
         crate::datadogV2::model::AiGatewayCaptureConfigurationResponseDataAttributesDefaultMode,
-    /// Scoped overrides currently configured for the organization.
+    /// Overrides the caller can View. Hidden overrides still apply to traffic; an empty list does not prove that no overrides exist.
     #[serde(rename = "overrides")]
     pub overrides: Vec<crate::datadogV2::model::AiGatewayCaptureOverride>,
     #[serde(flatten)]
