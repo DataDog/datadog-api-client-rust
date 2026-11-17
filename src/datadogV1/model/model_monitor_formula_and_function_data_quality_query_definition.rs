@@ -23,8 +23,7 @@ pub struct MonitorFormulaAndFunctionDataQualityQueryDefinition {
     /// The data quality measure to query. Common values include:
     /// `bytes`, `cardinality`, `custom`, `freshness`, `max`, `mean`, `min`,
     /// `nullness`, `percent_negative`, `percent_zero`, `row_count`, `stddev`,
-    /// `sum`, `uniqueness`. `data-jobs alert` job duration monitors use `duration`.
-    /// Additional values may be supported.
+    /// `sum`, `uniqueness`. Additional values may be supported.
     #[serde(rename = "measure")]
     pub measure: String,
     /// Monitor configuration options for data quality queries.
@@ -34,10 +33,6 @@ pub struct MonitorFormulaAndFunctionDataQualityQueryDefinition {
     /// Name of the query for use in formulas.
     #[serde(rename = "name")]
     pub name: String,
-    /// Optional filter on individual runs, using metrics filter syntax.
-    /// Only supported by `data-jobs alert` job duration monitors.
-    #[serde(rename = "run_filter")]
-    pub run_filter: Option<String>,
     /// Schema version for the data quality query.
     #[serde(rename = "schema_version")]
     pub schema_version: Option<String>,
@@ -66,7 +61,6 @@ impl MonitorFormulaAndFunctionDataQualityQueryDefinition {
             measure,
             monitor_options: None,
             name,
-            run_filter: None,
             schema_version: None,
             scope: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -84,11 +78,6 @@ impl MonitorFormulaAndFunctionDataQualityQueryDefinition {
         value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityMonitorOptions,
     ) -> Self {
         self.monitor_options = Some(value);
-        self
-    }
-
-    pub fn run_filter(mut self, value: String) -> Self {
-        self.run_filter = Some(value);
         self
     }
 
@@ -138,7 +127,6 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityQueryDefiniti
                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityMonitorOptions,
                 > = None;
                 let mut name: Option<String> = None;
-                let mut run_filter: Option<String> = None;
                 let mut schema_version: Option<String> = None;
                 let mut scope: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -183,12 +171,6 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityQueryDefiniti
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "run_filter" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            run_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "schema_version" => {
                             if v.is_null() {
                                 continue;
@@ -222,7 +204,6 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityQueryDefiniti
                     measure,
                     monitor_options,
                     name,
-                    run_filter,
                     schema_version,
                     scope,
                     additional_properties,

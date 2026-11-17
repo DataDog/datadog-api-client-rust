@@ -6,23 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum MonitorFormulaAndFunctionDataQualityDetectionType {
-    STATIC,
-    ANOMALY,
+pub enum CostRecommendationNotificationRuleFrequency {
+    WEEKLY,
+    BIWEEKLY,
+    EVERY_30,
+    EVERY_90,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl ToString for CostRecommendationNotificationRuleFrequency {
     fn to_string(&self) -> String {
         match self {
-            Self::STATIC => String::from("static"),
-            Self::ANOMALY => String::from("anomaly"),
+            Self::WEEKLY => String::from("weekly"),
+            Self::BIWEEKLY => String::from("biweekly"),
+            Self::EVERY_30 => String::from("every_30"),
+            Self::EVERY_90 => String::from("every_90"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl Serialize for CostRecommendationNotificationRuleFrequency {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +38,17 @@ impl Serialize for MonitorFormulaAndFunctionDataQualityDetectionType {
     }
 }
 
-impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityDetectionType {
+impl<'de> Deserialize<'de> for CostRecommendationNotificationRuleFrequency {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "static" => Self::STATIC,
-            "anomaly" => Self::ANOMALY,
+            "weekly" => Self::WEEKLY,
+            "biweekly" => Self::BIWEEKLY,
+            "every_30" => Self::EVERY_30,
+            "every_90" => Self::EVERY_90,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
