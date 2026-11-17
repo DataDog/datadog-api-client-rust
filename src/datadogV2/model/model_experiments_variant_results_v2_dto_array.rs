@@ -14,7 +14,7 @@ pub struct ExperimentsVariantResultsV2DTOArray {
     /// Resources returned in this response.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::ExperimentsVariantResultsV2DTOData>,
-    /// Information about when experiment results were updated and whether they are stale.
+    /// Selected experiment result run, its recorded EVSI forecast, and results freshness.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::ExperimentsExperimentResultsV2MetaDTO>,
     #[serde(flatten)]

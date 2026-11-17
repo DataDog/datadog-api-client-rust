@@ -4578,7 +4578,7 @@ impl ExperimentsAPI {
         }
     }
 
-    /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero.
+    /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero. The response includes the selected run ID and, when recorded, EVSI forecast context and unavailable reasons for Bayesian analyses.
     pub async fn get_experiment_results(
         &self,
         experiment_id: uuid::Uuid,
@@ -4603,7 +4603,7 @@ impl ExperimentsAPI {
         }
     }
 
-    /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero.
+    /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero. The response includes the selected run ID and, when recorded, EVSI forecast context and unavailable reasons for Bayesian analyses.
     pub async fn get_experiment_results_with_http_info(
         &self,
         experiment_id: uuid::Uuid,
