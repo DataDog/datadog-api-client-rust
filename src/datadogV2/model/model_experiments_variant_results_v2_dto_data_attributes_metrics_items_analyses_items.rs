@@ -17,9 +17,15 @@ pub struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems
     /// Configured nominal confidence level. Interval bounds can use an adjusted level for multiple testing or hybrid methods.
     #[serde(rename = "confidence_level")]
     pub confidence_level: Option<f64>,
-    /// Expected reduction in minimum expected regret from collecting more sample data.
+    /// Expected value of sample information: expected reduction in minimum expected regret from additional data over the recorded horizon. Uses the analysis estimand units; relative lift is a fraction, not a percentage. Zero is a valid estimate. Omitted when unavailable or unrecorded.
     #[serde(rename = "evsi")]
     pub evsi: Option<f64>,
+    /// Standard error of the hypothetical additional-data estimate used for EVSI, in the same estimand units and CUPED setting. May be present when EVSI computation failed. Omitted when unavailable or unrecorded.
+    #[serde(rename = "evsi_future_se")]
+    pub evsi_future_se: Option<f64>,
+    /// Recorded reason this analysis has no EVSI estimate. Omitted when unrecorded; absence does not establish availability for historical or imported results. Controls and non-Bayesian analyses omit this field.
+    #[serde(rename = "evsi_unavailable_reason")]
+    pub evsi_unavailable_reason: Option<crate::datadogV2::model::ExperimentsEVSIUnavailableReason>,
     /// Expected effect when the effect is positive.
     #[serde(rename = "expectation_above_zero")]
     pub expectation_above_zero: Option<f64>,
@@ -87,6 +93,8 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
             confidence_interval: None,
             confidence_level: None,
             evsi: None,
+            evsi_future_se: None,
+            evsi_unavailable_reason: None,
             expectation_above_zero: None,
             expectation_below_zero: None,
             global_lift: None,
@@ -125,6 +133,19 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
 
     pub fn evsi(mut self, value: f64) -> Self {
         self.evsi = Some(value);
+        self
+    }
+
+    pub fn evsi_future_se(mut self, value: f64) -> Self {
+        self.evsi_future_se = Some(value);
+        self
+    }
+
+    pub fn evsi_unavailable_reason(
+        mut self,
+        value: crate::datadogV2::model::ExperimentsEVSIUnavailableReason,
+    ) -> Self {
+        self.evsi_unavailable_reason = Some(value);
         self
     }
 
@@ -268,6 +289,10 @@ impl<'de> Deserialize<'de>
                 > = None;
                 let mut confidence_level: Option<f64> = None;
                 let mut evsi: Option<f64> = None;
+                let mut evsi_future_se: Option<f64> = None;
+                let mut evsi_unavailable_reason: Option<
+                    crate::datadogV2::model::ExperimentsEVSIUnavailableReason,
+                > = None;
                 let mut expectation_above_zero: Option<f64> = None;
                 let mut expectation_below_zero: Option<f64> = None;
                 let mut global_lift: Option<f64> = None;
@@ -313,6 +338,28 @@ impl<'de> Deserialize<'de>
                                 continue;
                             }
                             evsi = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "evsi_future_se" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            evsi_future_se =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "evsi_unavailable_reason" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            evsi_unavailable_reason =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _evsi_unavailable_reason) = evsi_unavailable_reason {
+                                match _evsi_unavailable_reason {
+                                    crate::datadogV2::model::ExperimentsEVSIUnavailableReason::UnparsedObject(_evsi_unavailable_reason) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "expectation_above_zero" => {
                             if v.is_null() || v.as_str() == Some("") {
@@ -473,6 +520,8 @@ impl<'de> Deserialize<'de>
                         confidence_interval,
                         confidence_level,
                         evsi,
+                        evsi_future_se,
+                        evsi_unavailable_reason,
                         expectation_above_zero,
                         expectation_below_zero,
                         global_lift,
