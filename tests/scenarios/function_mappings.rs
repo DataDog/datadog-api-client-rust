@@ -20432,11 +20432,8 @@ fn test_v2_list_agent_health_issues(
         .v2_api_agent_health
         .as_ref()
         .expect("api instance not found");
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
+    let count_by = _parameters
+        .get("count_by")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_severity = _parameters
         .get("filter[severity]")
@@ -20454,8 +20451,7 @@ fn test_v2_list_agent_health_issues(
         .get("filter[resource_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_agent_health::ListAgentHealthIssuesOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
+    params.count_by = count_by;
     params.filter_severity = filter_severity;
     params.filter_category = filter_category;
     params.filter_issue_type = filter_issue_type;

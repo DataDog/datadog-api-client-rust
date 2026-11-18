@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An open Agent Health issue.
+/// An open Agent Health issue with available remediation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AgentHealthIssueData {
-    /// Attributes of an open Agent Health issue.
+    /// Attributes of an open Agent Health issue, including available remediation.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AgentHealthIssueAttributes,
     /// The unique identifier of the issue.

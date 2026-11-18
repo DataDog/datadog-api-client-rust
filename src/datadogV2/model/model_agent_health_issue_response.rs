@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AgentHealthIssueResponse {
     /// An open Agent Health issue with available remediation.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::AgentHealthIssueDetailData,
+    pub data: crate::datadogV2::model::AgentHealthIssueData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,9 +22,7 @@ pub struct AgentHealthIssueResponse {
 }
 
 impl AgentHealthIssueResponse {
-    pub fn new(
-        data: crate::datadogV2::model::AgentHealthIssueDetailData,
-    ) -> AgentHealthIssueResponse {
+    pub fn new(data: crate::datadogV2::model::AgentHealthIssueData) -> AgentHealthIssueResponse {
         AgentHealthIssueResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
@@ -58,7 +56,7 @@ impl<'de> Deserialize<'de> for AgentHealthIssueResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::AgentHealthIssueDetailData> = None;
+                let mut data: Option<crate::datadogV2::model::AgentHealthIssueData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
