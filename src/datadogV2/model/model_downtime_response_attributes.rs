@@ -52,7 +52,7 @@ pub struct DowntimeResponseAttributes {
     /// Actions that will trigger a monitor notification if the downtime is in the `notify_end_types` state.
     #[serde(rename = "notify_end_types")]
     pub notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>>,
-    /// The principals (users, roles, or teams) allowed to act on behalf of the downtime.
+    /// The user the downtime runs as. The downtime only silences monitors this user can mute.
     ///
     /// **Note**: This feature is currently in Preview and may not be available for all organizations.
     #[serde(rename = "run_as")]
