@@ -14,19 +14,9 @@ pub struct EnvironmentAttributes {
     /// The timestamp when the environment was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// The description of the environment.
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub description: Option<Option<String>>,
     /// Indicates whether this is a production environment.
     #[serde(rename = "is_production")]
     pub is_production: Option<bool>,
-    /// The unique key of the environment.
-    #[serde(rename = "key")]
-    pub key: Option<String>,
     /// The name of the environment.
     #[serde(rename = "name")]
     pub name: String,
@@ -53,9 +43,7 @@ impl EnvironmentAttributes {
     pub fn new(name: String) -> EnvironmentAttributes {
         EnvironmentAttributes {
             created_at: None,
-            description: None,
             is_production: None,
-            key: None,
             name,
             observe_full_evaluation_data: None,
             queries: None,
@@ -71,18 +59,8 @@ impl EnvironmentAttributes {
         self
     }
 
-    pub fn description(mut self, value: Option<String>) -> Self {
-        self.description = Some(value);
-        self
-    }
-
     pub fn is_production(mut self, value: bool) -> Self {
         self.is_production = Some(value);
-        self
-    }
-
-    pub fn key(mut self, value: String) -> Self {
-        self.key = Some(value);
         self
     }
 
@@ -133,9 +111,7 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                 M: MapAccess<'a>,
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut description: Option<Option<String>> = None;
                 let mut is_production: Option<bool> = None;
-                let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut observe_full_evaluation_data: Option<bool> = None;
                 let mut queries: Option<Vec<String>> = None;
@@ -155,22 +131,12 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "is_production" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_production =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -212,9 +178,7 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
 
                 let content = EnvironmentAttributes {
                     created_at,
-                    description,
                     is_production,
-                    key,
                     name,
                     observe_full_evaluation_data,
                     queries,
