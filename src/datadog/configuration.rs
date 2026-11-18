@@ -1098,6 +1098,18 @@ impl Default for Configuration {
             ("v2.update_org_group_policy_override".to_owned(), false),
             ("v2.list_role_templates".to_owned(), false),
             (
+                "v2.query_product_analytics_funnel_step_suggestions".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_funnel_suggestions".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_journey_drop_off".to_owned(),
+                false,
+            ),
+            (
                 "v2.query_product_analytics_journey_funnel".to_owned(),
                 false,
             ),
