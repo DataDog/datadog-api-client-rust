@@ -1188,7 +1188,7 @@ impl ActionsDatastoresAPI {
         }
     }
 
-    /// Lists all datastores for the organization.
+    /// Lists all datastores in the organization.
     pub async fn list_datastores(
         &self,
     ) -> Result<crate::datadogV2::model::DatastoreArray, datadog::Error<ListDatastoresError>> {
@@ -1206,7 +1206,7 @@ impl ActionsDatastoresAPI {
         }
     }
 
-    /// Lists all datastores for the organization.
+    /// Lists all datastores in the organization.
     pub async fn list_datastores_with_http_info(
         &self,
     ) -> Result<

@@ -2310,7 +2310,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Get the definition of a derived metric by name.
+    /// Get the definition of a derived metric from its name.
     pub async fn get_derived_metric(
         &self,
         metric_name: String,
@@ -2330,7 +2330,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Get the definition of a derived metric by name.
+    /// Get the definition of a derived metric from its name.
     pub async fn get_derived_metric_with_http_info(
         &self,
         metric_name: String,
