@@ -26,10 +26,8 @@ impl ListAgentHealthHostIssuesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAgentHealthIssuesOptionalParams {
-    /// The number of issues to return per page, from 1 to 100. Defaults to 25.
-    pub page_size: Option<i64>,
-    /// The zero-based page number, from 0 to 1000000. Defaults to 0.
-    pub page_number: Option<i64>,
+    /// Set to `issue_type` to include `meta.page` with `total_count` and per-issue-type counts. If you don't set this parameter, the response omits `meta`. Only `issue_type` is supported.
+    pub count_by: Option<crate::datadogV2::model::AgentHealthIssuesCountBy>,
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
     /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
     /// Blank entries are ignored; an all-blank filter is treated as absent.
@@ -53,14 +51,9 @@ pub struct ListAgentHealthIssuesOptionalParams {
 }
 
 impl ListAgentHealthIssuesOptionalParams {
-    /// The number of issues to return per page, from 1 to 100. Defaults to 25.
-    pub fn page_size(mut self, value: i64) -> Self {
-        self.page_size = Some(value);
-        self
-    }
-    /// The zero-based page number, from 0 to 1000000. Defaults to 0.
-    pub fn page_number(mut self, value: i64) -> Self {
-        self.page_number = Some(value);
+    /// Set to `issue_type` to include `meta.page` with `total_count` and per-issue-type counts. If you don't set this parameter, the response omits `meta`. Only `issue_type` is supported.
+    pub fn count_by(mut self, value: crate::datadogV2::model::AgentHealthIssuesCountBy) -> Self {
+        self.count_by = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
@@ -444,15 +437,17 @@ impl AgentHealthAPI {
         }
     }
 
-    /// List Agent Health issues across your organization. Only open issues are returned.
-    /// Returns `403` if you lack the `hosts_read` permission.
+    /// List open Agent Health issues across your organization. Returns `403` if you
+    /// lack the `hosts_read` permission.
     ///
-    /// Results use a stable order: severity rank (`high`, `medium`, `low`, then other values),
-    /// then `first_seen_at` descending with missing timestamps last, then issue ID ascending.
-    /// Use `page[size]` and the zero-based `page[number]` to paginate. Invalid page values
-    /// return a `400` JSON:API error response. `meta.page.total_filtered_count` is the number
-    /// of issues matching the filters, and `meta.page.total_count` the number of open issues
-    /// in the organization.
+    /// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
+    /// fields, including its `issue_type`. Issues use a stable order: severity rank
+    /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
+    /// missing timestamps last, then issue ID ascending.
+    ///
+    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
+    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
+    /// `meta` is omitted when `count_by` is not requested.
     ///
     /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
     /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
@@ -478,15 +473,17 @@ impl AgentHealthAPI {
         }
     }
 
-    /// List Agent Health issues across your organization. Only open issues are returned.
-    /// Returns `403` if you lack the `hosts_read` permission.
+    /// List open Agent Health issues across your organization. Returns `403` if you
+    /// lack the `hosts_read` permission.
     ///
-    /// Results use a stable order: severity rank (`high`, `medium`, `low`, then other values),
-    /// then `first_seen_at` descending with missing timestamps last, then issue ID ascending.
-    /// Use `page[size]` and the zero-based `page[number]` to paginate. Invalid page values
-    /// return a `400` JSON:API error response. `meta.page.total_filtered_count` is the number
-    /// of issues matching the filters, and `meta.page.total_count` the number of open issues
-    /// in the organization.
+    /// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
+    /// fields, including its `issue_type`. Issues use a stable order: severity rank
+    /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
+    /// missing timestamps last, then issue ID ascending.
+    ///
+    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
+    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
+    /// `meta` is omitted when `count_by` is not requested.
     ///
     /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
     /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
@@ -510,8 +507,7 @@ impl AgentHealthAPI {
         }
 
         // unbox and build optional parameters
-        let page_size = params.page_size;
-        let page_number = params.page_number;
+        let count_by = params.count_by;
         let filter_severity = params.filter_severity;
         let filter_category = params.filter_category;
         let filter_issue_type = params.filter_issue_type;
@@ -527,13 +523,9 @@ impl AgentHealthAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_query_param) = page_size {
+        if let Some(ref local_query_param) = count_by {
             local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+                local_req_builder.query(&[("count_by", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_severity {
             local_req_builder =

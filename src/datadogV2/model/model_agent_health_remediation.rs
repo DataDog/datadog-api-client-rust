@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AgentHealthRemediation {
+    /// A suggested prompt for an AI assistant to help remediate the issue.
+    #[serde(rename = "ai_prompt")]
+    pub ai_prompt: Option<String>,
     /// A script that can be used to remediate the issue.
     #[serde(rename = "script")]
     pub script: Option<crate::datadogV2::model::AgentHealthRemediationScript>,
@@ -30,12 +33,18 @@ pub struct AgentHealthRemediation {
 impl AgentHealthRemediation {
     pub fn new() -> AgentHealthRemediation {
         AgentHealthRemediation {
+            ai_prompt: None,
             script: None,
             steps: None,
             summary: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn ai_prompt(mut self, value: String) -> Self {
+        self.ai_prompt = Some(value);
+        self
     }
 
     pub fn script(mut self, value: crate::datadogV2::model::AgentHealthRemediationScript) -> Self {
@@ -88,6 +97,7 @@ impl<'de> Deserialize<'de> for AgentHealthRemediation {
             where
                 M: MapAccess<'a>,
             {
+                let mut ai_prompt: Option<String> = None;
                 let mut script: Option<crate::datadogV2::model::AgentHealthRemediationScript> =
                     None;
                 let mut steps: Option<Vec<crate::datadogV2::model::AgentHealthRemediationStep>> =
@@ -101,6 +111,12 @@ impl<'de> Deserialize<'de> for AgentHealthRemediation {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "ai_prompt" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_prompt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "script" => {
                             if v.is_null() {
                                 continue;
@@ -128,6 +144,7 @@ impl<'de> Deserialize<'de> for AgentHealthRemediation {
                 }
 
                 let content = AgentHealthRemediation {
+                    ai_prompt,
                     script,
                     steps,
                     summary,

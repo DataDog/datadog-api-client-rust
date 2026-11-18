@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A paginated response containing open Agent Health issues.
+/// A response containing open Agent Health issues.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AgentHealthIssuesResponse {
-    /// The open Agent Health issues on this page.
+    /// The open Agent Health issues matching the request.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::AgentHealthIssueData>,
-    /// Pagination metadata for the matching Agent Health issues.
+    /// Aggregate counts for the matching Agent Health issues. Present only when `count_by=issue_type` is requested.
     #[serde(rename = "meta")]
-    pub meta: crate::datadogV2::model::AgentHealthIssuesResponseMeta,
+    pub meta: Option<crate::datadogV2::model::AgentHealthIssuesResponseMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,14 +27,18 @@ pub struct AgentHealthIssuesResponse {
 impl AgentHealthIssuesResponse {
     pub fn new(
         data: Vec<crate::datadogV2::model::AgentHealthIssueData>,
-        meta: crate::datadogV2::model::AgentHealthIssuesResponseMeta,
     ) -> AgentHealthIssuesResponse {
         AgentHealthIssuesResponse {
             data,
-            meta,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::AgentHealthIssuesResponseMeta) -> Self {
+        self.meta = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -77,6 +81,9 @@ impl<'de> Deserialize<'de> for AgentHealthIssuesResponse {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -87,7 +94,6 @@ impl<'de> Deserialize<'de> for AgentHealthIssuesResponse {
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
-                let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
                 let content = AgentHealthIssuesResponse {
                     data,

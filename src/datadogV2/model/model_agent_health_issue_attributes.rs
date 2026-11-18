@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an open Agent Health issue.
+/// Attributes of an open Agent Health issue, including available remediation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,6 +17,9 @@ pub struct AgentHealthIssueAttributes {
     /// The description of the issue. Omitted when empty.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Free-form, issue-type-specific context. Keys are not part of the stable schema. Omitted when empty.
+    #[serde(rename = "extra")]
+    pub extra: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The time the issue was first seen, in RFC 3339 format. Omitted when empty.
     #[serde(rename = "first_seen_at")]
     pub first_seen_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -26,6 +29,9 @@ pub struct AgentHealthIssueAttributes {
     /// The machine-readable type of the issue.
     #[serde(rename = "issue_type")]
     pub issue_type: String,
+    /// Remediation for the issue. Omitted when no remediation is available.
+    #[serde(rename = "remediation")]
+    pub remediation: Option<crate::datadogV2::model::AgentHealthRemediation>,
     /// The identifier of the affected resource, interpreted according to `resource_kind`: hostname for `host`, DaemonSet UID for `deployment` (node Agent), cluster UUID for `cluster`, hostname of the host running the Cluster Agent for `cluster_agent`, or OpenTelemetry collector ID for `otel`.
     #[serde(rename = "resource_id")]
     pub resource_id: String,
@@ -69,9 +75,11 @@ impl AgentHealthIssueAttributes {
         AgentHealthIssueAttributes {
             category: None,
             description: None,
+            extra: None,
             first_seen_at: None,
             issue_name,
             issue_type,
+            remediation: None,
             resource_id,
             resource_kind,
             resource_type: None,
@@ -95,8 +103,18 @@ impl AgentHealthIssueAttributes {
         self
     }
 
+    pub fn extra(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.extra = Some(value);
+        self
+    }
+
     pub fn first_seen_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.first_seen_at = Some(value);
+        self
+    }
+
+    pub fn remediation(mut self, value: crate::datadogV2::model::AgentHealthRemediation) -> Self {
+        self.remediation = Some(value);
         self
     }
 
@@ -148,9 +166,11 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
             {
                 let mut category: Option<String> = None;
                 let mut description: Option<String> = None;
+                let mut extra: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut first_seen_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut issue_name: Option<String> = None;
                 let mut issue_type: Option<String> = None;
+                let mut remediation: Option<crate::datadogV2::model::AgentHealthRemediation> = None;
                 let mut resource_id: Option<String> = None;
                 let mut resource_kind: Option<String> = None;
                 let mut resource_type: Option<String> = None;
@@ -180,6 +200,12 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "extra" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extra = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "first_seen_at" => {
                             if v.is_null() {
                                 continue;
@@ -192,6 +218,13 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                         }
                         "issue_type" => {
                             issue_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "remediation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            remediation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resource_id" => {
                             resource_id =
@@ -251,9 +284,11 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                 let content = AgentHealthIssueAttributes {
                     category,
                     description,
+                    extra,
                     first_seen_at,
                     issue_name,
                     issue_type,
+                    remediation,
                     resource_id,
                     resource_kind,
                     resource_type,
