@@ -137,11 +137,16 @@ impl Configuration {
 impl Default for Configuration {
     fn default() -> Self {
         let unstable_operations = HashMap::from([
+            ("v2.create_fleet_access_scope".to_owned(), false),
             ("v2.create_fleet_schedule".to_owned(), false),
+            ("v2.delete_fleet_access_scope".to_owned(), false),
             ("v2.delete_fleet_schedule".to_owned(), false),
+            ("v2.get_fleet_access_scope".to_owned(), false),
+            ("v2.list_fleet_access_scopes".to_owned(), false),
             ("v2.list_fleet_agent_tracers".to_owned(), false),
             ("v2.list_fleet_tracers".to_owned(), false),
             ("v2.trigger_fleet_schedule".to_owned(), false),
+            ("v2.update_fleet_access_scope".to_owned(), false),
             ("v2.update_fleet_schedule".to_owned(), false),
             ("v2.aggregate_llm_obs_experimentation".to_owned(), false),
             ("v2.batch_update_llm_obs_dataset".to_owned(), false),
