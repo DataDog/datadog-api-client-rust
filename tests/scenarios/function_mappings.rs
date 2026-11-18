@@ -8579,6 +8579,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_security_agent_investigations,
     );
     world.function_mappings.insert(
+        "v2.CreateSecurityAgentInvestigation".into(),
+        test_v2_create_security_agent_investigation,
+    );
+    world.function_mappings.insert(
         "v2.CountSecurityAgentInvestigations".into(),
         test_v2_count_security_agent_investigations,
     );
@@ -69612,6 +69616,34 @@ fn test_v2_list_security_agent_investigations(
     params.page_number = page_number;
     params.page_size = page_size;
     let response = match block_on(api.list_security_agent_investigations_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_security_agent_investigation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_security_agent_investigation_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
