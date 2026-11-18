@@ -1893,11 +1893,16 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(datadog::ResponseContent {
-                status: local_status,
-                content: local_content.clone(),
-                entity: Some(local_content),
-            })
+            match serde_json::from_str::<String>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
         } else {
             let local_entity: Option<ExportFeatureFlagHistoryError> =
                 serde_json::from_str(&local_content).ok();
