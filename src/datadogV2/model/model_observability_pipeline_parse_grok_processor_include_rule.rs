@@ -20,6 +20,10 @@ pub struct ObservabilityPipelineParseGrokProcessorIncludeRule {
     #[serde(rename = "match_rules")]
     pub match_rules:
         Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleMatchRule>,
+    /// Optional name identifying this include-based Grok rule in worker diagnostics.
+    /// Names must be unique within the processor.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     /// A list of Grok helper rules that can be referenced by the parsing rules.
     #[serde(rename = "support_rules")]
     pub support_rules: Option<
@@ -42,10 +46,16 @@ impl ObservabilityPipelineParseGrokProcessorIncludeRule {
         ObservabilityPipelineParseGrokProcessorIncludeRule {
             include,
             match_rules,
+            name: None,
             support_rules: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
     }
 
     pub fn support_rules(
@@ -84,6 +94,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorIncludeRul
             {
                 let mut include: Option<String> = None;
                 let mut match_rules: Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleMatchRule>> = None;
+                let mut name: Option<String> = None;
                 let mut support_rules: Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleSupportRule>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -99,6 +110,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorIncludeRul
                         "match_rules" => {
                             match_rules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "support_rules" => {
                             if v.is_null() {
@@ -121,6 +138,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessorIncludeRul
                 let content = ObservabilityPipelineParseGrokProcessorIncludeRule {
                     include,
                     match_rules,
+                    name,
                     support_rules,
                     additional_properties,
                     _unparsed,
