@@ -21,21 +21,29 @@ pub struct AiGatewayModelGroupAttributes {
     #[serialize_always]
     #[serde(rename = "max_reasoning_level")]
     pub max_reasoning_level: Option<crate::datadogV2::model::AiGatewayNullableMaxReasoningLevel>,
-    /// All saved model catalog IDs, including selections whose provider metadata is hidden. Preserve these IDs independently of the visible catalog.
+    /// Saved model catalog IDs whose providers the caller can view. Hidden identities are omitted. The
+    /// `models_restricted` field indicates hidden membership.
     #[serde(rename = "model_ids")]
     pub model_ids: Vec<i64>,
-    /// Metadata for saved model selections whose providers the caller can view. Missing metadata does not remove a saved ID.
+    /// Metadata for saved model selections whose providers the caller can view. Hidden model identities and metadata are omitted.
     #[serde(rename = "models")]
     pub models: Vec<crate::datadogV2::model::AiGatewayModelGroupModel>,
+    /// Whether some saved models are hidden from the caller. Hidden identities, names, and counts are omitted. Editing visible selections preserves hidden memberships.
+    #[serde(rename = "models_restricted")]
+    pub models_restricted: Option<bool>,
     /// Human-readable resource name.
     #[serde(rename = "name")]
     pub name: String,
-    /// All explicitly selected provider IDs, including hidden providers. Embedded provider metadata includes only viewable providers.
+    /// Explicitly selected provider IDs the caller can view. Hidden identities are omitted. The
+    /// `providers_restricted` field indicates hidden membership.
     #[serde(rename = "provider_ids")]
     pub provider_ids: Vec<i64>,
-    /// Viewable explicitly selected providers, separate from individually selected models. Use provider_ids to retain all selections.
+    /// Viewable explicitly selected providers, separate from individually selected models. Hidden provider identities and metadata are omitted.
     #[serde(rename = "providers")]
     pub providers: Vec<crate::datadogV2::model::AiGatewayModelGroupProvider>,
+    /// Whether some saved providers are hidden from the caller. Hidden identities, names, and counts are omitted. Editing visible selections preserves hidden memberships.
+    #[serde(rename = "providers_restricted")]
+    pub providers_restricted: Option<bool>,
     /// Revision of the organization-wide policy. Present for the default model group and absent for named policies.
     #[serde(rename = "revision")]
     pub revision: Option<i64>,
@@ -73,9 +81,11 @@ impl AiGatewayModelGroupAttributes {
             max_reasoning_level,
             model_ids,
             models,
+            models_restricted: None,
             name,
             provider_ids,
             providers,
+            providers_restricted: None,
             revision: None,
             routing_rules,
             routing_rules_restricted: None,
@@ -83,6 +93,16 @@ impl AiGatewayModelGroupAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn models_restricted(mut self, value: bool) -> Self {
+        self.models_restricted = Some(value);
+        self
+    }
+
+    pub fn providers_restricted(mut self, value: bool) -> Self {
+        self.providers_restricted = Some(value);
+        self
     }
 
     pub fn revision(mut self, value: i64) -> Self {
@@ -129,11 +149,13 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                 let mut model_ids: Option<Vec<i64>> = None;
                 let mut models: Option<Vec<crate::datadogV2::model::AiGatewayModelGroupModel>> =
                     None;
+                let mut models_restricted: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut provider_ids: Option<Vec<i64>> = None;
                 let mut providers: Option<
                     Vec<crate::datadogV2::model::AiGatewayModelGroupProvider>,
                 > = None;
+                let mut providers_restricted: Option<bool> = None;
                 let mut revision: Option<i64> = None;
                 let mut routing_rules: Option<
                     Vec<crate::datadogV2::model::AiGatewayModelGroupRoutingRule>,
@@ -173,6 +195,13 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                         "models" => {
                             models = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "models_restricted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            models_restricted =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -182,6 +211,13 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                         }
                         "providers" => {
                             providers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "providers_restricted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            providers_restricted =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "revision" => {
                             if v.is_null() {
@@ -231,9 +267,11 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupAttributes {
                     max_reasoning_level,
                     model_ids,
                     models,
+                    models_restricted,
                     name,
                     provider_ids,
                     providers,
+                    providers_restricted,
                     revision,
                     routing_rules,
                     routing_rules_restricted,
