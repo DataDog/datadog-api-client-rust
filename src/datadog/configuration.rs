@@ -1167,9 +1167,23 @@ impl Default for Configuration {
             ("v2.get_entity_risk_score".to_owned(), false),
             ("v2.list_entity_risk_scores".to_owned(), false),
             ("v2.add_stix_threat_intel".to_owned(), false),
+            (
+                "v2.add_security_agent_outreach_policy_domain".to_owned(),
+                false,
+            ),
             ("v2.count_security_agent_investigations".to_owned(), false),
             ("v2.get_security_agent_investigation".to_owned(), false),
+            ("v2.get_security_agent_outreach_policy".to_owned(), false),
             ("v2.list_security_agent_investigations".to_owned(), false),
+            (
+                "v2.remove_security_agent_outreach_policy_domain".to_owned(),
+                false,
+            ),
+            ("v2.update_security_agent_outreach_mode".to_owned(), false),
+            (
+                "v2.update_security_agent_outreach_policy_rules".to_owned(),
+                false,
+            ),
             ("v2.create_slo_report_job".to_owned(), false),
             ("v2.get_slo_report".to_owned(), false),
             ("v2.get_slo_report_job_status".to_owned(), false),
