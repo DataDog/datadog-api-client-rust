@@ -21,6 +21,10 @@ pub struct CostRecommendationDataAttributes {
     /// The kind of recommendation (for example, `terminate` or `rightsize`).
     #[serde(rename = "recommendation_type")]
     pub recommendation_type: Option<String>,
+    /// ID of the recommender that produced the recommendation (for example,
+    /// `aws_ec2_instance_downsize`).
+    #[serde(rename = "recommender_id")]
+    pub recommender_id: Option<String>,
     /// Cloud provider identifier of the resource.
     #[serde(rename = "resource_id")]
     pub resource_id: Option<String>,
@@ -43,6 +47,7 @@ impl CostRecommendationDataAttributes {
             dd_resource_key: None,
             potential_daily_savings: None,
             recommendation_type: None,
+            recommender_id: None,
             resource_id: None,
             resource_type: None,
             tags: None,
@@ -66,6 +71,11 @@ impl CostRecommendationDataAttributes {
 
     pub fn recommendation_type(mut self, value: String) -> Self {
         self.recommendation_type = Some(value);
+        self
+    }
+
+    pub fn recommender_id(mut self, value: String) -> Self {
+        self.recommender_id = Some(value);
         self
     }
 
@@ -121,6 +131,7 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
                     crate::datadogV2::model::CostRecommendationDataAttributesPotentialDailySavings,
                 > = None;
                 let mut recommendation_type: Option<String> = None;
+                let mut recommender_id: Option<String> = None;
                 let mut resource_id: Option<String> = None;
                 let mut resource_type: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
@@ -151,6 +162,13 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
                                 continue;
                             }
                             recommendation_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "recommender_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            recommender_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resource_id" => {
@@ -185,6 +203,7 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
                     dd_resource_key,
                     potential_daily_savings,
                     recommendation_type,
+                    recommender_id,
                     resource_id,
                     resource_type,
                     tags,
