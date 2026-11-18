@@ -11,6 +11,7 @@ pub enum SecurityMonitoringIntegrationConfigCreateAttributes {
     SecurityMonitoringGoogleWorkspaceIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringGoogleWorkspaceIntegrationConfigCreateAttributes>),
 	SecurityMonitoringOktaIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringOktaIntegrationConfigCreateAttributes>),
 	SecurityMonitoringEntraIdIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringEntraIdIntegrationConfigCreateAttributes>),
+	SecurityMonitoringAWSIdentityCenterIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringAWSIdentityCenterIntegrationConfigCreateAttributes>),
 	SecurityMonitoringCrowdStrikeIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringCrowdStrikeIntegrationConfigCreateAttributes>),
 	SecurityMonitoringSentinelOneIntegrationConfigCreateAttributes(Box<crate::datadogV2::model::SecurityMonitoringSentinelOneIntegrationConfigCreateAttributes>),
 	UnparsedObject(crate::datadog::UnparsedObject),
@@ -43,6 +44,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationConfigCreateAttribut
         {
             if !_v._unparsed {
                 return Ok(SecurityMonitoringIntegrationConfigCreateAttributes::SecurityMonitoringEntraIdIntegrationConfigCreateAttributes(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SecurityMonitoringAWSIdentityCenterIntegrationConfigCreateAttributes>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(SecurityMonitoringIntegrationConfigCreateAttributes::SecurityMonitoringAWSIdentityCenterIntegrationConfigCreateAttributes(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SecurityMonitoringCrowdStrikeIntegrationConfigCreateAttributes>>(value.clone()) {
