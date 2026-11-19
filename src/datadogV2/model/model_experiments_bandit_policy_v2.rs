@@ -23,9 +23,16 @@ pub struct ExperimentsBanditPolicyV2 {
     /// `WARMUP` serves the arms equally. `ADAPTIVE` serves the initial split or a split from a refresh. `FALLBACK` serves one variant after the bandit ends.
     #[serde(rename = "kind")]
     pub kind: crate::datadogV2::model::ExperimentsBanditPolicyKind,
+    /// The policy's place in the bandit's policy history. It follows `applied_at` and orders policies saved at the same time.
+    #[serde(rename = "policy_number")]
+    pub policy_number: i64,
     /// Why the policy was applied.
     #[serde(rename = "reason")]
     pub reason: crate::datadogV2::model::ExperimentsBanditPolicyReason,
+    /// The refresh that proposed the policy. `null` for policies no refresh proposed, such as the first split and the policy served after the bandit ends.
+    #[serialize_always]
+    #[serde(rename = "refresh_id")]
+    pub refresh_id: Option<uuid::Uuid>,
     /// Each variant's share of traffic. The probabilities add up to 1.
     #[serde(rename = "variants")]
     pub variants: Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>,
@@ -42,7 +49,9 @@ impl ExperimentsBanditPolicyV2 {
         config_version: i64,
         id: uuid::Uuid,
         kind: crate::datadogV2::model::ExperimentsBanditPolicyKind,
+        policy_number: i64,
         reason: crate::datadogV2::model::ExperimentsBanditPolicyReason,
+        refresh_id: Option<uuid::Uuid>,
         variants: Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>,
     ) -> ExperimentsBanditPolicyV2 {
         ExperimentsBanditPolicyV2 {
@@ -50,7 +59,9 @@ impl ExperimentsBanditPolicyV2 {
             config_version,
             id,
             kind,
+            policy_number,
             reason,
+            refresh_id,
             variants,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -87,8 +98,10 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyV2 {
                 let mut config_version: Option<i64> = None;
                 let mut id: Option<uuid::Uuid> = None;
                 let mut kind: Option<crate::datadogV2::model::ExperimentsBanditPolicyKind> = None;
+                let mut policy_number: Option<i64> = None;
                 let mut reason: Option<crate::datadogV2::model::ExperimentsBanditPolicyReason> =
                     None;
+                let mut refresh_id: Option<Option<uuid::Uuid>> = None;
                 let mut variants: Option<
                     Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>,
                 > = None;
@@ -121,6 +134,10 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyV2 {
                                 }
                             }
                         }
+                        "policy_number" => {
+                            policy_number =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "reason" => {
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _reason) = reason {
@@ -131,6 +148,9 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyV2 {
                                     _ => {}
                                 }
                             }
+                        }
+                        "refresh_id" => {
+                            refresh_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "variants" => {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -147,7 +167,10 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyV2 {
                     config_version.ok_or_else(|| M::Error::missing_field("config_version"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;
+                let policy_number =
+                    policy_number.ok_or_else(|| M::Error::missing_field("policy_number"))?;
                 let reason = reason.ok_or_else(|| M::Error::missing_field("reason"))?;
+                let refresh_id = refresh_id.ok_or_else(|| M::Error::missing_field("refresh_id"))?;
                 let variants = variants.ok_or_else(|| M::Error::missing_field("variants"))?;
 
                 let content = ExperimentsBanditPolicyV2 {
@@ -155,7 +178,9 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyV2 {
                     config_version,
                     id,
                     kind,
+                    policy_number,
                     reason,
+                    refresh_id,
                     variants,
                     additional_properties,
                     _unparsed,
