@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Aggregated performance statistics for a single network resource across sampled view instances.
+/// Aggregated performance statistics for a single network resource across sampled view
+/// instances.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -26,13 +27,16 @@ pub struct AggregatedResource {
     /// Number of requests downloaded from the network.
     #[serde(rename = "downloaded_count")]
     pub downloaded_count: i32,
-    /// 75th percentile duration across all view names in the application, present when include_global_appearance is true.
+    /// 75th percentile duration across all view names in the application, present when
+    /// include_global_appearance is true.
     #[serde(rename = "global_p75_duration_ms")]
     pub global_p75_duration_ms: Option<f64>,
-    /// Number of distinct view names in the application that load this resource, present when include_global_appearance is true.
+    /// Number of distinct view names in the application that load this resource, present when
+    /// include_global_appearance is true.
     #[serde(rename = "global_view_name_count")]
     pub global_view_name_count: Option<i32>,
-    /// Percentage of distinct view names in the application that load this resource, present when include_global_appearance is true.
+    /// Percentage of distinct view names in the application that load this resource, present when
+    /// include_global_appearance is true.
     #[serde(rename = "global_view_name_pct")]
     pub global_view_name_pct: Option<f64>,
     /// HTTP method for the resource request.

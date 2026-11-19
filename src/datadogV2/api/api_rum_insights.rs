@@ -269,7 +269,8 @@ impl RUMInsightsAPI {
         }
     }
 
-    /// Get aggregated network resource waterfall data for a RUM view, sampled across multiple view instances.
+    /// Get aggregated network resource waterfall data for a RUM view, sampled across multiple view
+    /// instances.
     pub async fn query_aggregated_waterfall(
         &self,
         body: crate::datadogV2::model::AggregatedWaterfallRequest,
@@ -291,7 +292,8 @@ impl RUMInsightsAPI {
         }
     }
 
-    /// Get aggregated network resource waterfall data for a RUM view, sampled across multiple view instances.
+    /// Get aggregated network resource waterfall data for a RUM view, sampled across multiple view
+    /// instances.
     pub async fn query_aggregated_waterfall_with_http_info(
         &self,
         body: crate::datadogV2::model::AggregatedWaterfallRequest,

@@ -7,12 +7,13 @@ use datadog_api_client::datadogV2::model::AggregatedWaterfallRequest;
 use datadog_api_client::datadogV2::model::AggregatedWaterfallRequestAttributes;
 use datadog_api_client::datadogV2::model::AggregatedWaterfallRequestData;
 use datadog_api_client::datadogV2::model::AggregatedWaterfallRequestType;
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let body = AggregatedWaterfallRequest::new(AggregatedWaterfallRequestData::new(
         AggregatedWaterfallRequestAttributes::new(
-            "ccbc53b1-74f2-496b-bdd7-9a8fa7b7376b".to_string(),
+            Uuid::parse_str("ccbc53b1-74f2-496b-bdd7-9a8fa7b7376b").expect("invalid UUID"),
             1762437564,
             20,
             1762523964,

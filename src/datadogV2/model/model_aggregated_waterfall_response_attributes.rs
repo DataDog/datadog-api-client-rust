@@ -13,8 +13,9 @@ use std::fmt::{self, Formatter};
 pub struct AggregatedWaterfallResponseAttributes {
     /// The RUM application ID that was analyzed.
     #[serde(rename = "application_id")]
-    pub application_id: String,
-    /// Performance criteria used to filter view instances by a metric threshold, or null if no criteria were applied.
+    pub application_id: uuid::Uuid,
+    /// Performance criteria used to filter view instances by a metric threshold, or null if no
+    /// criteria were applied.
     #[serialize_always]
     #[serde(rename = "criteria")]
     pub criteria: Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
@@ -48,7 +49,7 @@ pub struct AggregatedWaterfallResponseAttributes {
 
 impl AggregatedWaterfallResponseAttributes {
     pub fn new(
-        application_id: String,
+        application_id: uuid::Uuid,
         criteria: Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
         from: i64,
         resources: Vec<crate::datadogV2::model::AggregatedResource>,
@@ -99,7 +100,7 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut application_id: Option<String> = None;
+                let mut application_id: Option<uuid::Uuid> = None;
                 let mut criteria: Option<
                     Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
                 > = None;
