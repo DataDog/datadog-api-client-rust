@@ -18,6 +18,9 @@ pub struct FeatureFlagListItemAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
+    /// How subjects are assigned to variants. `DATADOG` is the native scheme. `EPPO` reproduces the assignments that Eppo made for a flag migrated from Eppo, so its subjects keep their variants. Set when the flag is created and never changed.
+    #[serde(rename = "bucketing_mode")]
+    pub bucketing_mode: Option<crate::datadogV2::model::FeatureFlagBucketingMode>,
     /// The timestamp when the feature flag was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -97,6 +100,7 @@ impl FeatureFlagListItemAttributes {
         #[allow(deprecated)]
         FeatureFlagListItemAttributes {
             archived_at: None,
+            bucketing_mode: None,
             created_at: None,
             created_by: None,
             description,
@@ -123,6 +127,15 @@ impl FeatureFlagListItemAttributes {
     #[allow(deprecated)]
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn bucketing_mode(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagBucketingMode,
+    ) -> Self {
+        self.bucketing_mode = Some(value);
         self
     }
 
@@ -240,6 +253,8 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                 M: MapAccess<'a>,
             {
                 let mut archived_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut bucketing_mode: Option<crate::datadogV2::model::FeatureFlagBucketingMode> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<uuid::Uuid> = None;
                 let mut description: Option<String> = None;
@@ -275,6 +290,21 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                         "archived_at" => {
                             archived_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bucketing_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bucketing_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _bucketing_mode) = bucketing_mode {
+                                match _bucketing_mode {
+                                    crate::datadogV2::model::FeatureFlagBucketingMode::UnparsedObject(_bucketing_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "created_at" => {
                             if v.is_null() {
@@ -412,6 +442,7 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                 #[allow(deprecated)]
                 let content = FeatureFlagListItemAttributes {
                     archived_at,
+                    bucketing_mode,
                     created_at,
                     created_by,
                     description,
