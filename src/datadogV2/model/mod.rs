@@ -5458,6 +5458,8 @@ pub mod model_feature_flag_list_item;
 pub use self::model_feature_flag_list_item::FeatureFlagListItem;
 pub mod model_feature_flag_list_item_attributes;
 pub use self::model_feature_flag_list_item_attributes::FeatureFlagListItemAttributes;
+pub mod model_feature_flag_bucketing_mode;
+pub use self::model_feature_flag_bucketing_mode::FeatureFlagBucketingMode;
 pub mod model_feature_flag_environment_list_item;
 pub use self::model_feature_flag_environment_list_item::FeatureFlagEnvironmentListItem;
 pub mod model_feature_flag_status;
