@@ -39,6 +39,9 @@ pub struct IoCIndicator {
     /// Type of indicator (for example, IP address or domain).
     #[serde(rename = "indicator_type")]
     pub indicator_type: Option<String>,
+    /// Whether the indicator is muted for your organization.
+    #[serde(rename = "is_muted")]
+    pub is_muted: Option<bool>,
     /// Timestamp when the indicator was last seen.
     #[serde(rename = "last_seen")]
     pub last_seen: Option<chrono::DateTime<chrono::Utc>>,
@@ -67,6 +70,12 @@ pub struct IoCIndicator {
     /// Effect of a scoring factor on the indicator's threat score.
     #[serde(rename = "max_trust_score")]
     pub max_trust_score: Option<crate::datadogV2::model::IoCScoreEffect>,
+    /// Reason provided when the indicator was muted. Returned only when the indicator is muted.
+    #[serde(rename = "mute_reason")]
+    pub mute_reason: Option<String>,
+    /// Scope of the mute applied to the indicator. Returned only when the indicator is muted.
+    #[serde(rename = "mute_scope")]
+    pub mute_scope: Option<String>,
     /// Threat score for the indicator (0-100).
     #[serde(rename = "score")]
     pub score: Option<f64>,
@@ -113,6 +122,7 @@ impl IoCIndicator {
             id: None,
             indicator: None,
             indicator_type: None,
+            is_muted: None,
             last_seen: None,
             log_matches: None,
             m_as_type: None,
@@ -121,6 +131,8 @@ impl IoCIndicator {
             m_sources: None,
             malicious_sources: None,
             max_trust_score: None,
+            mute_reason: None,
+            mute_scope: None,
             score: None,
             signal_matches: None,
             signal_tier: None,
@@ -177,6 +189,11 @@ impl IoCIndicator {
         self
     }
 
+    pub fn is_muted(mut self, value: bool) -> Self {
+        self.is_muted = Some(value);
+        self
+    }
+
     pub fn last_seen(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_seen = Some(value);
         self
@@ -217,6 +234,16 @@ impl IoCIndicator {
 
     pub fn max_trust_score(mut self, value: crate::datadogV2::model::IoCScoreEffect) -> Self {
         self.max_trust_score = Some(value);
+        self
+    }
+
+    pub fn mute_reason(mut self, value: String) -> Self {
+        self.mute_reason = Some(value);
+        self
+    }
+
+    pub fn mute_scope(mut self, value: String) -> Self {
+        self.mute_scope = Some(value);
         self
     }
 
@@ -304,6 +331,7 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                 let mut id: Option<String> = None;
                 let mut indicator: Option<String> = None;
                 let mut indicator_type: Option<String> = None;
+                let mut is_muted: Option<bool> = None;
                 let mut last_seen: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut log_matches: Option<i64> = None;
                 let mut m_as_type: Option<crate::datadogV2::model::IoCScoreEffect> = None;
@@ -313,6 +341,8 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                 let mut malicious_sources: Option<Option<Vec<crate::datadogV2::model::IoCSource>>> =
                     None;
                 let mut max_trust_score: Option<crate::datadogV2::model::IoCScoreEffect> = None;
+                let mut mute_reason: Option<String> = None;
+                let mut mute_scope: Option<String> = None;
                 let mut score: Option<f64> = None;
                 let mut signal_matches: Option<i64> = None;
                 let mut signal_tier: Option<i64> = None;
@@ -377,6 +407,12 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                             }
                             indicator_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_muted" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_muted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_seen" => {
                             if v.is_null() {
@@ -477,6 +513,19 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                                 }
                             }
                         }
+                        "mute_reason" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute_reason =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "mute_scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mute_scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "score" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -553,6 +602,7 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                     id,
                     indicator,
                     indicator_type,
+                    is_muted,
                     last_seen,
                     log_matches,
                     m_as_type,
@@ -561,6 +611,8 @@ impl<'de> Deserialize<'de> for IoCIndicator {
                     m_sources,
                     malicious_sources,
                     max_trust_score,
+                    mute_reason,
+                    mute_scope,
                     score,
                     signal_matches,
                     signal_tier,
