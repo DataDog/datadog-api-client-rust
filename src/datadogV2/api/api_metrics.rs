@@ -591,6 +591,14 @@ pub enum ListMetricAssetsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListMetricMetadataError is a struct for typed errors of method [`MetricsAPI::list_metric_metadata`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListMetricMetadataError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListTagConfigurationByNameError is a struct for typed errors of method [`MetricsAPI::list_tag_configuration_by_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -3091,6 +3099,136 @@ impl MetricsAPI {
             };
         } else {
             let local_entity: Option<ListMetricAssetsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get metadata for up to 50 metrics in one request: type, description, units, StatsD interval, percentile and
+    /// historical metrics settings, how the metric is ingested, and the product that reports it.
+    /// Results are returned in the order the metrics were requested. Metrics that don't exist are left out of `data`.
+    /// The request doesn't fail, and no not-found entry is returned. To find missing metrics, compare the returned `id`
+    /// values with the names you requested.
+    pub async fn list_metric_metadata(
+        &self,
+        filter_metric_name: String,
+    ) -> Result<
+        crate::datadogV2::model::MetricMetadataListResponse,
+        datadog::Error<ListMetricMetadataError>,
+    > {
+        match self
+            .list_metric_metadata_with_http_info(filter_metric_name)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get metadata for up to 50 metrics in one request: type, description, units, StatsD interval, percentile and
+    /// historical metrics settings, how the metric is ingested, and the product that reports it.
+    /// Results are returned in the order the metrics were requested. Metrics that don't exist are left out of `data`.
+    /// The request doesn't fail, and no not-found entry is returned. To find missing metrics, compare the returned `id`
+    /// values with the names you requested.
+    pub async fn list_metric_metadata_with_http_info(
+        &self,
+        filter_metric_name: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MetricMetadataListResponse>,
+        datadog::Error<ListMetricMetadataError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_metric_metadata";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_metric_metadata' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/metrics/metadata",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[metric_name]", &filter_metric_name.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MetricMetadataListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListMetricMetadataError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
