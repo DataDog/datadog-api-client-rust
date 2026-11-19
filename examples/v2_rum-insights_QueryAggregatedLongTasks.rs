@@ -7,12 +7,13 @@ use datadog_api_client::datadogV2::model::AggregatedLongTasksRequestData;
 use datadog_api_client::datadogV2::model::AggregatedLongTasksRequestType;
 use datadog_api_client::datadogV2::model::AggregatedWaterfallPerformanceCriteria;
 use datadog_api_client::datadogV2::model::AggregatedWaterfallPerformanceCriteriaMetric;
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let body = AggregatedLongTasksRequest::new(AggregatedLongTasksRequestData::new(
         AggregatedLongTasksRequestAttributes::new(
-            "ccbc53b1-74f2-496b-bdd7-9a8fa7b7376b".to_string(),
+            Uuid::parse_str("ccbc53b1-74f2-496b-bdd7-9a8fa7b7376b").expect("invalid UUID"),
             1762437564,
             20,
             1762523964,

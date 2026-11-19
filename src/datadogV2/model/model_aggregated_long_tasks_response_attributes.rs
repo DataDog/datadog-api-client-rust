@@ -13,8 +13,9 @@ use std::fmt::{self, Formatter};
 pub struct AggregatedLongTasksResponseAttributes {
     /// The RUM application ID that was analyzed.
     #[serde(rename = "application_id")]
-    pub application_id: String,
-    /// Performance criteria used to filter view instances by a metric threshold, or null if no criteria were applied.
+    pub application_id: uuid::Uuid,
+    /// Performance criteria used to filter view instances by a metric threshold, or null if no
+    /// criteria were applied.
     #[serialize_always]
     #[serde(rename = "criteria")]
     pub criteria: Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
@@ -24,13 +25,13 @@ pub struct AggregatedLongTasksResponseAttributes {
     /// Long task statistics grouped by invoker type, sorted by impact score descending.
     #[serde(rename = "long_tasks_by_invoker_type")]
     pub long_tasks_by_invoker_type: Vec<crate::datadogV2::model::AggregatedLongTasksByInvokerType>,
-    /// List of RUM view IDs sampled for this aggregation, capped at 50.
+    /// IDs of sampled views that contain at least one long task. At most 50 IDs are returned.
     #[serde(rename = "sampled_view_ids")]
     pub sampled_view_ids: Vec<String>,
     /// End of the analyzed time range as a Unix timestamp in seconds.
     #[serde(rename = "to")]
     pub to: i64,
-    /// Number of view instances included in the analysis.
+    /// Number of sampled views that contain at least one long task.
     #[serde(rename = "view_count")]
     pub view_count: i32,
     /// The RUM view name that was analyzed.
@@ -45,7 +46,7 @@ pub struct AggregatedLongTasksResponseAttributes {
 
 impl AggregatedLongTasksResponseAttributes {
     pub fn new(
-        application_id: String,
+        application_id: uuid::Uuid,
         criteria: Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
         from: i64,
         long_tasks_by_invoker_type: Vec<crate::datadogV2::model::AggregatedLongTasksByInvokerType>,
@@ -94,7 +95,7 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut application_id: Option<String> = None;
+                let mut application_id: Option<uuid::Uuid> = None;
                 let mut criteria: Option<
                     Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
                 > = None;
