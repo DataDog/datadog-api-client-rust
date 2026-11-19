@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AggregatedLongTasksByInvokerType {
-    /// Number of sampled views where this invoker type had long tasks contributing to the criteria metric.
+    /// Number of sampled views where this invoker type had long tasks contributing to the criteria
+    /// metric.
     #[serde(rename = "criteria_view_occurrences")]
     pub criteria_view_occurrences: Option<i32>,
     /// Rank-product impact score combining view frequency and blocking time severity.

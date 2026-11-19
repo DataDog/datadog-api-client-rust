@@ -11,12 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TopLongTaskInvoker {
-    /// Number of sampled views where this invoker had long tasks contributing to the criteria metric.
+    /// Number of sampled views where this invoker had long tasks contributing to the criteria
+    /// metric.
     #[serde(rename = "criteria_view_occurrences")]
     pub criteria_view_occurrences: Option<i32>,
     /// Cleaned source file path for the invoker script.
-    #[serde(rename = "file", default, with = "::serde_with::rust::double_option")]
-    pub file: Option<Option<String>>,
+    #[serialize_always]
+    #[serde(rename = "file")]
+    pub file: Option<String>,
     /// Rank-product impact score combining view frequency and blocking time severity.
     #[serde(rename = "impact_score")]
     pub impact_score: Option<f64>,
@@ -38,13 +40,14 @@ pub struct TopLongTaskInvoker {
 
 impl TopLongTaskInvoker {
     pub fn new(
+        file: Option<String>,
         invoker: String,
         stats_per_view: crate::datadogV2::model::LongTaskStatsPerView,
         view_occurrences: i32,
     ) -> TopLongTaskInvoker {
         TopLongTaskInvoker {
             criteria_view_occurrences: None,
-            file: None,
+            file,
             impact_score: None,
             invoker,
             stats_per_view,
@@ -56,11 +59,6 @@ impl TopLongTaskInvoker {
 
     pub fn criteria_view_occurrences(mut self, value: i32) -> Self {
         self.criteria_view_occurrences = Some(value);
-        self
-    }
-
-    pub fn file(mut self, value: Option<String>) -> Self {
-        self.file = Some(value);
         self
     }
 
@@ -145,6 +143,7 @@ impl<'de> Deserialize<'de> for TopLongTaskInvoker {
                         }
                     }
                 }
+                let file = file.ok_or_else(|| M::Error::missing_field("file"))?;
                 let invoker = invoker.ok_or_else(|| M::Error::missing_field("invoker"))?;
                 let stats_per_view =
                     stats_per_view.ok_or_else(|| M::Error::missing_field("stats_per_view"))?;

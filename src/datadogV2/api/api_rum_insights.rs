@@ -104,7 +104,8 @@ impl RUMInsightsAPI {
         Self { config, client }
     }
 
-    /// Get aggregated long task data for a RUM view, grouped by invoker type and sampled across multiple view instances.
+    /// Get aggregated long task data for a RUM view, grouped by invoker type and sampled across
+    /// multiple view instances.
     pub async fn query_aggregated_long_tasks(
         &self,
         body: crate::datadogV2::model::AggregatedLongTasksRequest,
@@ -126,7 +127,8 @@ impl RUMInsightsAPI {
         }
     }
 
-    /// Get aggregated long task data for a RUM view, grouped by invoker type and sampled across multiple view instances.
+    /// Get aggregated long task data for a RUM view, grouped by invoker type and sampled across
+    /// multiple view instances.
     pub async fn query_aggregated_long_tasks_with_http_info(
         &self,
         body: crate::datadogV2::model::AggregatedLongTasksRequest,

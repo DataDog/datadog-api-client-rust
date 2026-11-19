@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Performance criteria used to filter view instances by a metric threshold, or null if no criteria were applied.
+/// Performance criteria used to filter view instances by a metric threshold, or null if no
+/// criteria were applied.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

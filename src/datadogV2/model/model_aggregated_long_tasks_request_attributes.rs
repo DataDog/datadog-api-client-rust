@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct AggregatedLongTasksRequestAttributes {
     /// The RUM application ID to analyze.
     #[serde(rename = "application_id")]
-    pub application_id: String,
+    pub application_id: uuid::Uuid,
     /// Performance criteria to filter view instances by a metric threshold. When criteria are
     /// applied, specify at least one of `min` or `max`. When both are provided, `min` must be less
     /// than `max`.
@@ -22,13 +22,14 @@ pub struct AggregatedLongTasksRequestAttributes {
     /// RUM query string to filter events (for example, @session.type:user @geo.country:US).
     #[serde(rename = "filter")]
     pub filter: Option<String>,
-    /// Start of the time range as a Unix timestamp in seconds.
+    /// Start of the time range as a Unix timestamp in seconds. Must be less than `to`;
+    /// the range cannot exceed 7 days.
     #[serde(rename = "from")]
     pub from: i64,
     /// Number of view instances to sample, between 1 and 500.
     #[serde(rename = "sample_size")]
     pub sample_size: i32,
-    /// End of the time range as a Unix timestamp in seconds.
+    /// End of the time range as a Unix timestamp in seconds. Must be greater than `from`.
     #[serde(rename = "to")]
     pub to: i64,
     /// The RUM view name to analyze (for example, /account/login).
@@ -43,7 +44,7 @@ pub struct AggregatedLongTasksRequestAttributes {
 
 impl AggregatedLongTasksRequestAttributes {
     pub fn new(
-        application_id: String,
+        application_id: uuid::Uuid,
         from: i64,
         sample_size: i32,
         to: i64,
@@ -101,7 +102,7 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut application_id: Option<String> = None;
+                let mut application_id: Option<uuid::Uuid> = None;
                 let mut criteria: Option<
                     crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria,
                 > = None;

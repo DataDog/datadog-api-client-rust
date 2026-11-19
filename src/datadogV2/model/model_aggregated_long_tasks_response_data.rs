@@ -14,9 +14,9 @@ pub struct AggregatedLongTasksResponseData {
     /// Attributes of an aggregated long tasks response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AggregatedLongTasksResponseAttributes,
-    /// Hash-based unique identifier for this aggregation.
+    /// Unique UUID identifying this response.
     #[serde(rename = "id")]
-    pub id: String,
+    pub id: uuid::Uuid,
     /// The JSON:API type for aggregated long tasks requests.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AggregatedLongTasksRequestType,
@@ -30,7 +30,7 @@ pub struct AggregatedLongTasksResponseData {
 impl AggregatedLongTasksResponseData {
     pub fn new(
         attributes: crate::datadogV2::model::AggregatedLongTasksResponseAttributes,
-        id: String,
+        id: uuid::Uuid,
         type_: crate::datadogV2::model::AggregatedLongTasksRequestType,
     ) -> AggregatedLongTasksResponseData {
         AggregatedLongTasksResponseData {
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksResponseData {
                 let mut attributes: Option<
                     crate::datadogV2::model::AggregatedLongTasksResponseAttributes,
                 > = None;
-                let mut id: Option<String> = None;
+                let mut id: Option<uuid::Uuid> = None;
                 let mut type_: Option<crate::datadogV2::model::AggregatedLongTasksRequestType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
