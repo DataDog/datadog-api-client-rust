@@ -40,6 +40,10 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     #[serde(rename = "model_type_override")]
     pub model_type_override:
         Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride>,
+    /// Platform-specific settings for a data quality monitor.
+    #[serde(rename = "platform_settings")]
+    pub platform_settings:
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings>,
     /// Sensitivity of the anomaly detection model, expressed as a multiplier on the width
     /// of the predicted bounds. Higher values widen the bounds and produce fewer alerts;
     /// lower values tighten them and produce more alerts. Defaults to `3.0`.
@@ -68,6 +72,7 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
             group_by_columns: None,
             model_configuration: None,
             model_type_override: None,
+            platform_settings: None,
             sensitivity: None,
             source_to_target_config: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -121,6 +126,14 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
         value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
     ) -> Self {
         self.model_type_override = Some(value);
+        self
+    }
+
+    pub fn platform_settings(
+        mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings,
+    ) -> Self {
+        self.platform_settings = Some(value);
         self
     }
 
@@ -182,6 +195,9 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                 > = None;
                 let mut model_type_override: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
+                > = None;
+                let mut platform_settings: Option<
+                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings,
                 > = None;
                 let mut sensitivity: Option<f64> = None;
                 let mut source_to_target_config: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig> = None;
@@ -264,6 +280,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                                 }
                             }
                         }
+                        "platform_settings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            platform_settings =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "sensitivity" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -295,6 +318,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                     group_by_columns,
                     model_configuration,
                     model_type_override,
+                    platform_settings,
                     sensitivity,
                     source_to_target_config,
                     additional_properties,
