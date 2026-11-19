@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 pub struct ListModelLabProjectsOptionalParams {
     /// Text search filter for project name or description.
     pub filter: Option<String>,
-    /// Filter by owner UUID.
+    /// Filter by owner UUID. Matches projects the user created and projects the user was added to as an owner.
     pub filter_owner_id: Option<uuid::Uuid>,
     /// Filter by tags. Format: key:value,key2:value2.
     pub filter_tags: Option<String>,
@@ -30,7 +30,7 @@ impl ListModelLabProjectsOptionalParams {
         self.filter = Some(value);
         self
     }
-    /// Filter by owner UUID.
+    /// Filter by owner UUID. Matches projects the user created and projects the user was added to as an owner.
     pub fn filter_owner_id(mut self, value: uuid::Uuid) -> Self {
         self.filter_owner_id = Some(value);
         self
@@ -180,6 +180,15 @@ impl ListModelLabRunsOptionalParams {
     }
 }
 
+/// AddModelLabProjectOwnerError is a struct for typed errors of method [`ModelLabAPIAPI::add_model_lab_project_owner`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AddModelLabProjectOwnerError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteModelLabRunError is a struct for typed errors of method [`ModelLabAPIAPI::delete_model_lab_run`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -297,6 +306,15 @@ pub enum PinModelLabRunError {
     UnknownValue(serde_json::Value),
 }
 
+/// RemoveModelLabProjectOwnerError is a struct for typed errors of method [`ModelLabAPIAPI::remove_model_lab_project_owner`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RemoveModelLabProjectOwnerError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// StarModelLabProjectError is a struct for typed errors of method [`ModelLabAPIAPI::star_model_lab_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -396,6 +414,114 @@ impl ModelLabAPIAPI {
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
+    }
+
+    /// Add a user as an owner of a Model Lab project. The user must belong to the
+    /// project's organization. The project's creator is always an owner, so adding
+    /// the creator, or a user who is already an owner, has no effect.
+    /// A project can have at most 50 owners besides its creator.
+    pub async fn add_model_lab_project_owner(
+        &self,
+        project_id: i64,
+        user_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<AddModelLabProjectOwnerError>> {
+        match self
+            .add_model_lab_project_owner_with_http_info(project_id, user_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Add a user as an owner of a Model Lab project. The user must belong to the
+    /// project's organization. The project's creator is always an owner, so adding
+    /// the creator, or a user who is already an owner, has no effect.
+    /// A project can have at most 50 owners besides its creator.
+    pub async fn add_model_lab_project_owner_with_http_info(
+        &self,
+        project_id: i64,
+        user_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddModelLabProjectOwnerError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.add_model_lab_project_owner";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.add_model_lab_project_owner' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/model-lab-api/projects/{project_id}/owners/{user_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            project_id = project_id,
+            user_id = datadog::urlencode(user_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<AddModelLabProjectOwnerError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
     }
 
     /// Delete a Model Lab run by its ID.
@@ -2007,6 +2133,112 @@ impl ModelLabAPIAPI {
             })
         } else {
             let local_entity: Option<PinModelLabRunError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Remove a user from the owners of a Model Lab project. Removing a user who
+    /// isn't an owner has no effect. The project's creator is always an owner and
+    /// can't be removed.
+    pub async fn remove_model_lab_project_owner(
+        &self,
+        project_id: i64,
+        user_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<RemoveModelLabProjectOwnerError>> {
+        match self
+            .remove_model_lab_project_owner_with_http_info(project_id, user_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Remove a user from the owners of a Model Lab project. Removing a user who
+    /// isn't an owner has no effect. The project's creator is always an owner and
+    /// can't be removed.
+    pub async fn remove_model_lab_project_owner_with_http_info(
+        &self,
+        project_id: i64,
+        user_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveModelLabProjectOwnerError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.remove_model_lab_project_owner";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.remove_model_lab_project_owner' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/model-lab-api/projects/{project_id}/owners/{user_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            project_id = project_id,
+            user_id = datadog::urlencode(user_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<RemoveModelLabProjectOwnerError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

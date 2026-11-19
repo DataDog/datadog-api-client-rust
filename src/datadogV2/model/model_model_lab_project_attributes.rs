@@ -40,13 +40,16 @@ pub struct ModelLabProjectAttributes {
     /// The name of the project.
     #[serde(rename = "name")]
     pub name: String,
-    /// The UUID of the project owner.
+    /// The UUID of the user that created the project. The creator is always an owner of the project.
     #[serde(
         rename = "owner_id",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub owner_id: Option<Option<String>>,
+    /// The UUIDs of the project's owners besides its creator, in the order they became owners.
+    #[serde(rename = "owner_ids")]
+    pub owner_ids: Option<Vec<uuid::Uuid>>,
     /// The list of tags associated with the project.
     #[serde(rename = "tags")]
     pub tags: Vec<crate::datadogV2::model::ModelLabTag>,
@@ -79,6 +82,7 @@ impl ModelLabProjectAttributes {
             is_starred,
             name,
             owner_id: None,
+            owner_ids: None,
             tags,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
@@ -98,6 +102,11 @@ impl ModelLabProjectAttributes {
 
     pub fn owner_id(mut self, value: Option<String>) -> Self {
         self.owner_id = Some(value);
+        self
+    }
+
+    pub fn owner_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.owner_ids = Some(value);
         self
     }
 
@@ -135,6 +144,7 @@ impl<'de> Deserialize<'de> for ModelLabProjectAttributes {
                 let mut is_starred: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut owner_id: Option<Option<String>> = None;
+                let mut owner_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut tags: Option<Vec<crate::datadogV2::model::ModelLabTag>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -172,6 +182,12 @@ impl<'de> Deserialize<'de> for ModelLabProjectAttributes {
                         "owner_id" => {
                             owner_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "owner_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            owner_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -204,6 +220,7 @@ impl<'de> Deserialize<'de> for ModelLabProjectAttributes {
                     is_starred,
                     name,
                     owner_id,
+                    owner_ids,
                     tags,
                     updated_at,
                     additional_properties,
