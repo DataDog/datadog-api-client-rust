@@ -958,7 +958,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Enable historical metrics ingestion (late data ingestion) for a metric. Idempotent:
+    /// Enable historical metrics ingestion for a metric. Idempotent:
     /// enabling an already-enabled metric returns 200 instead of 201. Not supported for
     /// distribution metrics, metrics with an existing tag configuration, or most standard
     /// (non-custom) metrics.
@@ -986,7 +986,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Enable historical metrics ingestion (late data ingestion) for a metric. Idempotent:
+    /// Enable historical metrics ingestion for a metric. Idempotent:
     /// enabling an already-enabled metric returns 200 instead of 201. Not supported for
     /// distribution metrics, metrics with an existing tag configuration, or most standard
     /// (non-custom) metrics.
@@ -999,15 +999,6 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_historical_metrics_configuration";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_historical_metrics_configuration' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1775,15 +1766,6 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_historical_metrics_configuration";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_historical_metrics_configuration' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2456,15 +2438,6 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_historical_metrics_configuration";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_historical_metrics_configuration' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
