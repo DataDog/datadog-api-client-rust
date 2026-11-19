@@ -5538,10 +5538,37 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.ListBandits".into(), test_v2_list_bandits);
     world
         .function_mappings
+        .insert("v2.CreateBandit".into(), test_v2_create_bandit);
+    world
+        .function_mappings
+        .insert("v2.DeleteBandit".into(), test_v2_delete_bandit);
+    world
+        .function_mappings
         .insert("v2.GetBandit".into(), test_v2_get_bandit);
     world
         .function_mappings
+        .insert("v2.PatchBandit".into(), test_v2_patch_bandit);
+    world
+        .function_mappings
+        .insert("v2.PauseBandit".into(), test_v2_pause_bandit);
+    world
+        .function_mappings
+        .insert("v2.ListBanditPolicies".into(), test_v2_list_bandit_policies);
+    world
+        .function_mappings
+        .insert("v2.RefreshBandit".into(), test_v2_refresh_bandit);
+    world
+        .function_mappings
         .insert("v2.GetBanditResults".into(), test_v2_get_bandit_results);
+    world
+        .function_mappings
+        .insert("v2.ResumeBandit".into(), test_v2_resume_bandit);
+    world
+        .function_mappings
+        .insert("v2.StartBandit".into(), test_v2_start_bandit);
+    world
+        .function_mappings
+        .insert("v2.StopBandit".into(), test_v2_stop_bandit);
     world.function_mappings.insert(
         "v2.GetBanditTrafficSummary".into(),
         test_v2_get_bandit_traffic_summary,
@@ -43595,6 +43622,56 @@ fn test_v2_list_bandits(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_create_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_bandit_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -43603,6 +43680,133 @@ fn test_v2_get_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .expect("api instance not found");
     let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_bandit_with_http_info(bandit_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_pause_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.pause_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_bandit_policies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::ListBanditPoliciesOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.sort = sort;
+    let response = match block_on(api.list_bandit_policies_with_http_info(bandit_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_refresh_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let full_refresh = _parameters
+        .get("full_refresh")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::RefreshBanditOptionalParams::default();
+    params.full_refresh = full_refresh;
+    let response = match block_on(api.refresh_bandit_with_http_info(bandit_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -43637,6 +43841,82 @@ fn test_v2_get_bandit_results(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.filter_from = filter_from;
     params.filter_to = filter_to;
     let response = match block_on(api.get_bandit_results_with_http_info(bandit_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_resume_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.resume_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_start_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.start_bandit_with_http_info(bandit_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_stop_bandit(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let bandit_id = serde_json::from_value(_parameters.get("bandit_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.stop_bandit_with_http_info(bandit_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
