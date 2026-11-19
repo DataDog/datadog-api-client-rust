@@ -1068,17 +1068,8 @@ impl Default for Configuration {
             ("v2.remove_role_from_restriction_query".to_owned(), false),
             ("v2.replace_restriction_query".to_owned(), false),
             ("v2.update_restriction_query".to_owned(), false),
-            (
-                "v2.create_historical_metrics_configuration".to_owned(),
-                false,
-            ),
             ("v2.create_tag_indexing_rule_exemption".to_owned(), false),
-            (
-                "v2.delete_historical_metrics_configuration".to_owned(),
-                false,
-            ),
             ("v2.delete_tag_indexing_rule_exemption".to_owned(), false),
-            ("v2.get_historical_metrics_configuration".to_owned(), false),
             ("v2.get_tag_indexing_rule_exemption".to_owned(), false),
             ("v2.list_tag_indexing_rule_exemptions".to_owned(), false),
             ("v2.update_tag_indexing_rule_exemption".to_owned(), false),
