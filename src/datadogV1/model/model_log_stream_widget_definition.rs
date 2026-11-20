@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The Log Stream displays a log flow matching the defined query.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct LogStreamWidgetDefinition {
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
     /// ID of the log set to use.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "logset")]
     pub logset: Option<String>,
     /// Amount of log lines to display
@@ -58,13 +58,11 @@ pub struct LogStreamWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogStreamWidgetDefinition {
-    pub fn new(
-        type_: crate::datadogV1::model::LogStreamWidgetDefinitionType,
-    ) -> LogStreamWidgetDefinition {
+    pub fn new(type_: crate::datadogV1::model::LogStreamWidgetDefinitionType) -> LogStreamWidgetDefinition {
         #[allow(deprecated)]
         LogStreamWidgetDefinition {
             columns: None,
@@ -85,93 +83,92 @@ impl LogStreamWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn columns(mut self, value: Vec<String>) -> Self {
         self.columns = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logset(mut self, value: String) -> Self {
         self.logset = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn message_display(mut self, value: crate::datadogV1::model::WidgetMessageDisplay) -> Self {
         self.message_display = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn show_date_column(mut self, value: bool) -> Self {
         self.show_date_column = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn show_message_column(mut self, value: bool) -> Self {
         self.show_message_column = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetFieldSort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -194,8 +191,7 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                 let mut description: Option<String> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut logset: Option<String> = None;
-                let mut message_display: Option<crate::datadogV1::model::WidgetMessageDisplay> =
-                    None;
+                let mut message_display: Option<crate::datadogV1::model::WidgetMessageDisplay> = None;
                 let mut query: Option<String> = None;
                 let mut show_date_column: Option<bool> = None;
                 let mut show_message_column: Option<bool> = None;
@@ -204,12 +200,8 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::LogStreamWidgetDefinitionType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::LogStreamWidgetDefinitionType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -219,32 +211,30 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                 continue;
                             }
                             columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "logset" => {
                             if v.is_null() {
                                 continue;
                             }
                             logset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message_display" => {
                             if v.is_null() {
                                 continue;
                             }
-                            message_display =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            message_display = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _message_display) = message_display {
                                 match _message_display {
                                     crate::datadogV1::model::WidgetMessageDisplay::UnparsedObject(_message_display) => {
@@ -253,33 +243,31 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_date_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_date_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_date_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_message_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_message_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_message_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -289,40 +277,37 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -333,12 +318,12 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

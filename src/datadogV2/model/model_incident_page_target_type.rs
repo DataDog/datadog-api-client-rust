@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentPageTargetType {
-    TEAM_HANDLE,
-    TEAM_UUID,
-    USER_UUID,
+	TEAM_HANDLE,
+	TEAM_UUID,
+	USER_UUID,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for IncidentPageTargetType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "team_handle" => Self::TEAM_HANDLE,
-            "team_uuid" => Self::TEAM_UUID,
-            "user_uuid" => Self::USER_UUID,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"team_handle" => Self::TEAM_HANDLE,"team_uuid" => Self::TEAM_UUID,"user_uuid" => Self::USER_UUID,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

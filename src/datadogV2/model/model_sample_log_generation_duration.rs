@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SampleLogGenerationDuration {
-    ONE_HOUR,
-    ONE_DAY,
-    THREE_DAYS,
-    SEVEN_DAYS,
+	ONE_HOUR,
+	ONE_DAY,
+	THREE_DAYS,
+	SEVEN_DAYS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for SampleLogGenerationDuration {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "1h" => Self::ONE_HOUR,
-            "1d" => Self::ONE_DAY,
-            "3d" => Self::THREE_DAYS,
-            "7d" => Self::SEVEN_DAYS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"1h" => Self::ONE_HOUR,"1d" => Self::ONE_DAY,"3d" => Self::THREE_DAYS,"7d" => Self::SEVEN_DAYS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

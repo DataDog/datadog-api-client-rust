@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for filtering users by both user properties and event platform activity.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct QueryEventFilteredUsersRequestDataAttributes {
     /// Event platform query used to filter users based on their event activity within a specified time window.
     #[serde(rename = "event_query")]
-    pub event_query:
-        Option<crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery>,
+    pub event_query: Option<crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery>,
     /// Whether to include the total count of matching users in the response.
     #[serde(rename = "include_row_count")]
     pub include_row_count: Option<bool>,
@@ -31,7 +30,7 @@ pub struct QueryEventFilteredUsersRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl QueryEventFilteredUsersRequestDataAttributes {
@@ -46,43 +45,38 @@ impl QueryEventFilteredUsersRequestDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn event_query(
-        mut self,
-        value: crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery,
-    ) -> Self {
+    
+    pub fn event_query(mut self, value: crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery) -> Self {
         self.event_query = Some(value);
         self
     }
-
+    
     pub fn include_row_count(mut self, value: bool) -> Self {
         self.include_row_count = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn select_columns(mut self, value: Vec<String>) -> Self {
         self.select_columns = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for QueryEventFilteredUsersRequestDataAttributes {
     fn default() -> Self {
@@ -107,17 +101,12 @@ impl<'de> Deserialize<'de> for QueryEventFilteredUsersRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut event_query: Option<
-                    crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery,
-                > = None;
+                let mut event_query: Option<crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery> = None;
                 let mut include_row_count: Option<bool> = None;
                 let mut limit: Option<i64> = None;
                 let mut query: Option<String> = None;
                 let mut select_columns: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,40 +115,37 @@ impl<'de> Deserialize<'de> for QueryEventFilteredUsersRequestDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            event_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "include_row_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            include_row_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            include_row_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "select_columns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            select_columns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            select_columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

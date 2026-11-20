@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsBanditOptimalVariantUnavailableReason {
-    NO_RESULTS_YET,
-    WARMUP,
-    NOT_ENOUGH_DATA,
-    NO_DIFFERENCE,
-    STATS_UNAVAILABLE,
+	NO_RESULTS_YET,
+	WARMUP,
+	NOT_ENOUGH_DATA,
+	NO_DIFFERENCE,
+	STATS_UNAVAILABLE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ExperimentsBanditOptimalVariantUnavailableReason 
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "NO_RESULTS_YET" => Self::NO_RESULTS_YET,
-            "WARMUP" => Self::WARMUP,
-            "NOT_ENOUGH_DATA" => Self::NOT_ENOUGH_DATA,
-            "NO_DIFFERENCE" => Self::NO_DIFFERENCE,
-            "STATS_UNAVAILABLE" => Self::STATS_UNAVAILABLE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"NO_RESULTS_YET" => Self::NO_RESULTS_YET,"WARMUP" => Self::WARMUP,"NOT_ENOUGH_DATA" => Self::NOT_ENOUGH_DATA,"NO_DIFFERENCE" => Self::NO_DIFFERENCE,"STATS_UNAVAILABLE" => Self::STATS_UNAVAILABLE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

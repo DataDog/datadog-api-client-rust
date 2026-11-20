@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Monitor configuration options for data jobs queries.
 #[non_exhaustive]
@@ -12,16 +12,16 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorFormulaAndFunctionDataJobsMonitorOptions {
     /// Alert separately for each failed run instead of on the count of trailing failures.
-    /// Only supported for `failed_runs` monitors with the `aastra` query dialect. It requires
-    /// a `> 0` threshold with no warning threshold, an evaluation window of at most two days,
-    /// and renotification disabled.
+/// Only supported for `failed_runs` monitors with the `aastra` query dialect. It requires
+/// a `> 0` threshold with no warning threshold, an evaluation window of at most two days,
+/// and renotification disabled.
     #[serde(rename = "alert_on_every_failure")]
     pub alert_on_every_failure: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorFormulaAndFunctionDataJobsMonitorOptions {
@@ -32,20 +32,18 @@ impl MonitorFormulaAndFunctionDataJobsMonitorOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn alert_on_every_failure(mut self, value: bool) -> Self {
         self.alert_on_every_failure = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonitorFormulaAndFunctionDataJobsMonitorOptions {
     fn default() -> Self {
@@ -71,10 +69,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
                 M: MapAccess<'a>,
             {
                 let mut alert_on_every_failure: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,14 +78,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataJobsMonitorOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            alert_on_every_failure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            alert_on_every_failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

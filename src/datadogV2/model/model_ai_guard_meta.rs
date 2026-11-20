@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata about the evaluated conversation, used to select the policy and evaluator behavior.
 #[non_exhaustive]
@@ -12,17 +12,17 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AIGuardMeta {
     /// The coding agent that produced the conversation. By default, a non-empty
-    /// value selects the coding-agent evaluator profile, while an omitted or empty
-    /// value selects the default profile. Known identifiers include `claude-code`,
-    /// `codex`, `cursor`, and `github-copilot`; other identifiers are accepted.
-    /// The coding-agent profile assumes the caller can ask the user to confirm
-    /// Supply Chain Firewall warnings; the default profile assumes it cannot.
+/// value selects the coding-agent evaluator profile, while an omitted or empty
+/// value selects the default profile. Known identifiers include `claude-code`,
+/// `codex`, `cursor`, and `github-copilot`; other identifiers are accepted.
+/// The coding-agent profile assumes the caller can ask the user to confirm
+/// Supply Chain Firewall warnings; the default profile assumes it cannot.
     #[serde(rename = "coding_agent")]
     pub coding_agent: Option<String>,
     /// Request-only confidence threshold override. A number sets the threshold
-    /// for every threat category; an object supplies a global threshold and
-    /// optional per-category overrides. Omit this field to use the stored
-    /// sensitivity policy. This field is not returned in evaluation responses.
+/// for every threat category; an object supplies a global threshold and
+/// optional per-category overrides. Omit this field to use the stored
+/// sensitivity policy. This field is not returned in evaluation responses.
     #[serde(rename = "confidence_threshold")]
     pub confidence_threshold: Option<crate::datadogV2::model::AIGuardConfidenceThresholdOverride>,
     /// The environment the conversation belongs to.
@@ -35,17 +35,15 @@ pub struct AIGuardMeta {
     #[serde(rename = "service")]
     pub service: Option<String>,
     /// A non-empty map replaces stored tool policies for this request only,
-    /// keyed by tool name. Any called tool not present resolves to EVALUATE.
-    /// Only takes effect when tool policies are enabled for the organization.
+/// keyed by tool name. Any called tool not present resolves to EVALUATE.
+/// Only takes effect when tool policies are enabled for the organization.
     #[serde(rename = "tool_policies")]
-    pub tool_policies: Option<
-        std::collections::BTreeMap<String, crate::datadogV2::model::AIGuardToolPolicyAction>,
-    >,
+    pub tool_policies: Option<std::collections::BTreeMap<String, crate::datadogV2::model::AIGuardToolPolicyAction>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AIGuardMeta {
@@ -61,51 +59,43 @@ impl AIGuardMeta {
             _unparsed: false,
         }
     }
-
+    
     pub fn coding_agent(mut self, value: String) -> Self {
         self.coding_agent = Some(value);
         self
     }
-
-    pub fn confidence_threshold(
-        mut self,
-        value: crate::datadogV2::model::AIGuardConfidenceThresholdOverride,
-    ) -> Self {
+    
+    pub fn confidence_threshold(mut self, value: crate::datadogV2::model::AIGuardConfidenceThresholdOverride) -> Self {
         self.confidence_threshold = Some(value);
         self
     }
-
+    
     pub fn env(mut self, value: String) -> Self {
         self.env = Some(value);
         self
     }
-
+    
     pub fn is_sds_enabled_override(mut self, value: bool) -> Self {
         self.is_sds_enabled_override = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
-    pub fn tool_policies(
-        mut self,
-        value: std::collections::BTreeMap<String, crate::datadogV2::model::AIGuardToolPolicyAction>,
-    ) -> Self {
+    
+    pub fn tool_policies(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::AIGuardToolPolicyAction>) -> Self {
         self.tool_policies = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AIGuardMeta {
     fn default() -> Self {
@@ -131,22 +121,12 @@ impl<'de> Deserialize<'de> for AIGuardMeta {
                 M: MapAccess<'a>,
             {
                 let mut coding_agent: Option<String> = None;
-                let mut confidence_threshold: Option<
-                    crate::datadogV2::model::AIGuardConfidenceThresholdOverride,
-                > = None;
+                let mut confidence_threshold: Option<crate::datadogV2::model::AIGuardConfidenceThresholdOverride> = None;
                 let mut env: Option<String> = None;
                 let mut is_sds_enabled_override: Option<bool> = None;
                 let mut service: Option<String> = None;
-                let mut tool_policies: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV2::model::AIGuardToolPolicyAction,
-                    >,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut tool_policies: Option<std::collections::BTreeMap<String, crate::datadogV2::model::AIGuardToolPolicyAction>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,15 +135,13 @@ impl<'de> Deserialize<'de> for AIGuardMeta {
                             if v.is_null() {
                                 continue;
                             }
-                            coding_agent =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            coding_agent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "confidence_threshold" => {
                             if v.is_null() {
                                 continue;
                             }
-                            confidence_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            confidence_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _confidence_threshold) = confidence_threshold {
                                 match _confidence_threshold {
                                     crate::datadogV2::model::AIGuardConfidenceThresholdOverride::UnparsedObject(_confidence_threshold) => {
@@ -172,38 +150,36 @@ impl<'de> Deserialize<'de> for AIGuardMeta {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "env" => {
                             if v.is_null() {
                                 continue;
                             }
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_sds_enabled_override" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_sds_enabled_override =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_sds_enabled_override = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tool_policies" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tool_policies =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tool_policies = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

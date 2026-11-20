@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationship of AuthN Mapping to a Team.
 #[non_exhaustive]
@@ -18,28 +18,25 @@ pub struct AuthNMappingRelationshipToTeam {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AuthNMappingRelationshipToTeam {
-    pub fn new(
-        team: crate::datadogV2::model::RelationshipToTeam,
-    ) -> AuthNMappingRelationshipToTeam {
+    pub fn new(team: crate::datadogV2::model::RelationshipToTeam) -> AuthNMappingRelationshipToTeam {
         AuthNMappingRelationshipToTeam {
             team,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AuthNMappingRelationshipToTeam {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -59,22 +56,19 @@ impl<'de> Deserialize<'de> for AuthNMappingRelationshipToTeam {
                 M: MapAccess<'a>,
             {
                 let mut team: Option<crate::datadogV2::model::RelationshipToTeam> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "team" => {
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let team = team.ok_or_else(|| M::Error::missing_field("team"))?;

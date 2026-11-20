@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a specific version of an Agent Observability prompt. For a composed version, `authoring_template` contains its pinned include-bearing source; ordinary versions omit that attribute. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
 #[non_exhaustive]
@@ -15,9 +15,9 @@ pub struct LLMObsPromptVersionDataAttributes {
     #[serde(rename = "author")]
     pub author: Option<String>,
     /// A text template, a list of chat messages and named message placeholders, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`; other text, including `{{>...}}` sequences without a version, remains literal. Use an authored chat object when including prompts as chat messages.
-    /// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    /// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
-    /// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
+/// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+/// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
+/// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
     #[serde(rename = "authoring_template")]
     pub authoring_template: Option<crate::datadogV2::model::LLMObsPromptTemplate>,
     /// Versioned prompt configuration is in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager. Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
@@ -33,7 +33,7 @@ pub struct LLMObsPromptVersionDataAttributes {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Labels attached to this version (for example `development`, `staging`, `production`).
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "labels")]
     pub labels: Option<Vec<String>>,
     /// Timestamp of the most recent observed run of this prompt version.
@@ -55,9 +55,9 @@ pub struct LLMObsPromptVersionDataAttributes {
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// A text template, a list of chat messages and named message placeholders, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`; other text, including `{{>...}}` sequences without a version, remains literal. Use an authored chat object when including prompts as chat messages.
-    /// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    /// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
-    /// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
+/// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+/// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
+/// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
     #[serde(rename = "template")]
     pub template: crate::datadogV2::model::LLMObsPromptTemplate,
     /// User-supplied identifier for this version.
@@ -73,16 +73,11 @@ pub struct LLMObsPromptVersionDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsPromptVersionDataAttributes {
-    pub fn new(
-        prompt_id: String,
-        prompt_uuid: String,
-        template: crate::datadogV2::model::LLMObsPromptTemplate,
-        version: i64,
-    ) -> LLMObsPromptVersionDataAttributes {
+    pub fn new(prompt_id: String, prompt_uuid: String, template: crate::datadogV2::model::LLMObsPromptTemplate, version: i64) -> LLMObsPromptVersionDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptVersionDataAttributes {
             author: None,
@@ -106,96 +101,92 @@ impl LLMObsPromptVersionDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn author(mut self, value: String) -> Self {
         self.author = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn authoring_template(
-        mut self,
-        value: crate::datadogV2::model::LLMObsPromptTemplate,
-    ) -> Self {
+    pub fn authoring_template(mut self, value: crate::datadogV2::model::LLMObsPromptTemplate) -> Self {
         self.authoring_template = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn datasets(mut self, value: Vec<crate::datadogV2::model::LLMObsPromptDataset>) -> Self {
         self.datasets = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn labels(mut self, value: Vec<String>) -> Self {
         self.labels = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn last_seen_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_seen_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ml_app(mut self, value: String) -> Self {
         self.ml_app = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ml_apps(mut self, value: Vec<String>) -> Self {
         self.ml_apps = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn user_version(mut self, value: String) -> Self {
         self.user_version = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn version_created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.version_created_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -215,10 +206,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
-                let mut authoring_template: Option<crate::datadogV2::model::LLMObsPromptTemplate> =
-                    None;
-                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut authoring_template: Option<crate::datadogV2::model::LLMObsPromptTemplate> = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
                 let mut description: Option<String> = None;
@@ -233,10 +222,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 let mut user_version: Option<String> = None;
                 let mut version: Option<i64> = None;
                 let mut version_created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -246,13 +232,12 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "authoring_template" => {
                             if v.is_null() {
                                 continue;
                             }
-                            authoring_template =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            authoring_template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _authoring_template) = authoring_template {
                                 match _authoring_template {
                                     crate::datadogV2::model::LLMObsPromptTemplate::UnparsedObject(_authoring_template) => {
@@ -261,70 +246,67 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "config" => {
                             if v.is_null() {
                                 continue;
                             }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "datasets" => {
                             if v.is_null() {
                                 continue;
                             }
                             datasets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "labels" => {
                             if v.is_null() {
                                 continue;
                             }
                             labels = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_seen_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_seen_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_seen_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ml_app" => {
                             if v.is_null() {
                                 continue;
                             }
                             ml_app = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ml_apps" => {
                             if v.is_null() {
                                 continue;
                             }
                             ml_apps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prompt_id" => {
                             prompt_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prompt_uuid" => {
-                            prompt_uuid =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            prompt_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "template" => {
                             template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _template) = template {
@@ -335,34 +317,31 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "user_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            user_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            user_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version_created_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            version_created_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            version_created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let prompt_id = prompt_id.ok_or_else(|| M::Error::missing_field("prompt_id"))?;
-                let prompt_uuid =
-                    prompt_uuid.ok_or_else(|| M::Error::missing_field("prompt_uuid"))?;
+                let prompt_uuid = prompt_uuid.ok_or_else(|| M::Error::missing_field("prompt_uuid"))?;
                 let template = template.ok_or_else(|| M::Error::missing_field("template"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 

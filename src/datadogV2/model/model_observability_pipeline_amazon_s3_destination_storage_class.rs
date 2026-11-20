@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineAmazonS3DestinationStorageClass {
-    STANDARD,
-    REDUCED_REDUNDANCY,
-    INTELLIGENT_TIERING,
-    STANDARD_IA,
-    EXPRESS_ONEZONE,
-    ONEZONE_IA,
-    GLACIER,
-    GLACIER_IR,
-    DEEP_ARCHIVE,
+	STANDARD,
+	REDUCED_REDUNDANCY,
+	INTELLIGENT_TIERING,
+	STANDARD_IA,
+	EXPRESS_ONEZONE,
+	ONEZONE_IA,
+	GLACIER,
+	GLACIER_IR,
+	DEEP_ARCHIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3DestinationStorageCl
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "STANDARD" => Self::STANDARD,
-            "REDUCED_REDUNDANCY" => Self::REDUCED_REDUNDANCY,
-            "INTELLIGENT_TIERING" => Self::INTELLIGENT_TIERING,
-            "STANDARD_IA" => Self::STANDARD_IA,
-            "EXPRESS_ONEZONE" => Self::EXPRESS_ONEZONE,
-            "ONEZONE_IA" => Self::ONEZONE_IA,
-            "GLACIER" => Self::GLACIER,
-            "GLACIER_IR" => Self::GLACIER_IR,
-            "DEEP_ARCHIVE" => Self::DEEP_ARCHIVE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"STANDARD" => Self::STANDARD,"REDUCED_REDUNDANCY" => Self::REDUCED_REDUNDANCY,"INTELLIGENT_TIERING" => Self::INTELLIGENT_TIERING,"STANDARD_IA" => Self::STANDARD_IA,"EXPRESS_ONEZONE" => Self::EXPRESS_ONEZONE,"ONEZONE_IA" => Self::ONEZONE_IA,"GLACIER" => Self::GLACIER,"GLACIER_IR" => Self::GLACIER_IR,"DEEP_ARCHIVE" => Self::DEEP_ARCHIVE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `ArbitraryCostUpsertRequestDataAttributes` object.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ArbitraryCostUpsertRequestDataAttributes {
     /// The `attributes` `costs_to_allocate`.
     #[serde(rename = "costs_to_allocate")]
-    pub costs_to_allocate:
-        Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems>,
+    pub costs_to_allocate: Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems>,
     /// The `attributes` `enabled`.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -40,19 +39,11 @@ pub struct ArbitraryCostUpsertRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ArbitraryCostUpsertRequestDataAttributes {
-    pub fn new(
-        costs_to_allocate: Vec<
-            crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems,
-        >,
-        provider: Vec<String>,
-        rule_name: String,
-        strategy: crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategy,
-        type_: String,
-    ) -> ArbitraryCostUpsertRequestDataAttributes {
+    pub fn new(costs_to_allocate: Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems>, provider: Vec<String>, rule_name: String, strategy: crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategy, type_: String) -> ArbitraryCostUpsertRequestDataAttributes {
         ArbitraryCostUpsertRequestDataAttributes {
             costs_to_allocate,
             enabled: None,
@@ -66,30 +57,29 @@ impl ArbitraryCostUpsertRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn order_id(mut self, value: i64) -> Self {
         self.order_id = Some(value);
         self
     }
-
+    
     pub fn rejected(mut self, value: bool) -> Self {
         self.rejected = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -114,61 +104,54 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributes {
                 let mut provider: Option<Vec<String>> = None;
                 let mut rejected: Option<bool> = None;
                 let mut rule_name: Option<String> = None;
-                let mut strategy: Option<
-                    crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategy,
-                > = None;
+                let mut strategy: Option<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategy> = None;
                 let mut type_: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "costs_to_allocate" => {
-                            costs_to_allocate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            costs_to_allocate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "order_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             order_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider" => {
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rejected" => {
                             if v.is_null() {
                                 continue;
                             }
                             rejected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_name" => {
                             rule_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "strategy" => {
                             strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let costs_to_allocate = costs_to_allocate
-                    .ok_or_else(|| M::Error::missing_field("costs_to_allocate"))?;
+                let costs_to_allocate = costs_to_allocate.ok_or_else(|| M::Error::missing_field("costs_to_allocate"))?;
                 let provider = provider.ok_or_else(|| M::Error::missing_field("provider"))?;
                 let rule_name = rule_name.ok_or_else(|| M::Error::missing_field("rule_name"))?;
                 let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;

@@ -1,0 +1,214 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
+
+/// Test-only generated schema for the dashboard versioning proof of concept.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct DistributionBackendRequestAnyOfAnyOfItemQuery {
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "aggregator")]
+    pub aggregator: Option<crate::datadogV1_20270101::model::ScalarAggregator>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "byoc_cluster")]
+    pub byoc_cluster: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "data_source")]
+    pub data_source: crate::datadogV1_20270101::model::FormulaMetricsDataSource,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "histogram_mode")]
+    pub histogram_mode: Option<crate::datadogV1_20270101::model::HistogramMode>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "query")]
+    pub query: String,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "semantic_mode")]
+    pub semantic_mode: Option<crate::datadogV1_20270101::model::FormulaSemanticMode>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool
+}
+
+impl DistributionBackendRequestAnyOfAnyOfItemQuery {
+    pub fn new(data_source: crate::datadogV1_20270101::model::FormulaMetricsDataSource, name: String, query: String) -> DistributionBackendRequestAnyOfAnyOfItemQuery {
+        DistributionBackendRequestAnyOfAnyOfItemQuery {
+            aggregator: None,
+            byoc_cluster: None,
+            cross_org_uuids: None,
+            data_source,
+            histogram_mode: None,
+            name,
+            query,
+            semantic_mode: None,
+            _unparsed: false,
+        }
+    }
+    
+    pub fn aggregator(mut self, value: crate::datadogV1_20270101::model::ScalarAggregator) -> Self {
+        self.aggregator = Some(value);
+        self
+    }
+    
+    pub fn byoc_cluster(mut self, value: String) -> Self {
+        self.byoc_cluster = Some(value);
+        self
+    }
+    
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
+    }
+    
+    pub fn histogram_mode(mut self, value: crate::datadogV1_20270101::model::HistogramMode) -> Self {
+        self.histogram_mode = Some(value);
+        self
+    }
+    
+    pub fn semantic_mode(mut self, value: crate::datadogV1_20270101::model::FormulaSemanticMode) -> Self {
+        self.semantic_mode = Some(value);
+        self
+    }
+    
+}
+
+
+
+impl<'de> Deserialize<'de> for DistributionBackendRequestAnyOfAnyOfItemQuery {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct DistributionBackendRequestAnyOfAnyOfItemQueryVisitor;
+        impl<'a> Visitor<'a> for DistributionBackendRequestAnyOfAnyOfItemQueryVisitor {
+            type Value = DistributionBackendRequestAnyOfAnyOfItemQuery;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut aggregator: Option<crate::datadogV1_20270101::model::ScalarAggregator> = None;
+                let mut byoc_cluster: Option<String> = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
+                let mut data_source: Option<crate::datadogV1_20270101::model::FormulaMetricsDataSource> = None;
+                let mut histogram_mode: Option<crate::datadogV1_20270101::model::HistogramMode> = None;
+                let mut name: Option<String> = None;
+                let mut query: Option<String> = None;
+                let mut semantic_mode: Option<crate::datadogV1_20270101::model::FormulaSemanticMode> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "aggregator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _aggregator) = aggregator {
+                                match _aggregator {
+                                    crate::datadogV1_20270101::model::ScalarAggregator::UnparsedObject(_aggregator) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        "byoc_cluster" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            byoc_cluster = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "data_source" => {
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _data_source) = data_source {
+                                match _data_source {
+                                    crate::datadogV1_20270101::model::FormulaMetricsDataSource::UnparsedObject(_data_source) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        "histogram_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            histogram_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _histogram_mode) = histogram_mode {
+                                match _histogram_mode {
+                                    crate::datadogV1_20270101::model::HistogramMode::UnparsedObject(_histogram_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "query" => {
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "semantic_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            semantic_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _semantic_mode) = semantic_mode {
+                                match _semantic_mode {
+                                    crate::datadogV1_20270101::model::FormulaSemanticMode::UnparsedObject(_semantic_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        &_ => {
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
+                    }
+                }
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
+
+                let content = DistributionBackendRequestAnyOfAnyOfItemQuery {
+                    aggregator,
+                    byoc_cluster,
+                    cross_org_uuids,
+                    data_source,
+                    histogram_mode,
+                    name,
+                    query,
+                    semantic_mode,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(DistributionBackendRequestAnyOfAnyOfItemQueryVisitor)
+    }
+}

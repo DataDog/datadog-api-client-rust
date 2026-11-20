@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// CreateQuotasOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::create_quotas`]
 #[non_exhaustive]
@@ -208,8 +205,8 @@ pub struct GetHourlyUsageOptionalParams {
     /// Include breakdown of usage by subcategories where applicable (for product family logs only). Defaults to false.
     pub filter_include_breakdown: Option<bool>,
     /// Comma separated list of product family versions to use in the format `product_family:version`. For example,
-    /// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
-    /// product family. Currently all families have one version `1.0.0`.
+/// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
+/// product family. Currently all families have one version `1.0.0`.
     pub filter_versions: Option<String>,
     /// Maximum number of results to return (between 1 and 500) - defaults to 500 if limit not specified.
     pub page_limit: Option<i32>,
@@ -239,8 +236,8 @@ impl GetHourlyUsageOptionalParams {
         self
     }
     /// Comma separated list of product family versions to use in the format `product_family:version`. For example,
-    /// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
-    /// product family. Currently all families have one version `1.0.0`.
+/// `infra_hosts:1.0.0`. If this parameter is not used, the API will use the latest version of each requested
+/// product family. Currently all families have one version `1.0.0`.
     pub fn filter_versions(mut self, value: String) -> Self {
         self.filter_versions = Some(value);
         self
@@ -268,7 +265,7 @@ pub struct GetMonthlyCostAttributionOptionalParams {
     /// The billing dimension to sort by. Always sorted by total cost. Example: `infra_host`.
     pub sort_name: Option<String>,
     /// Comma separated list of tag keys used to group cost. If no value is provided the cost will not be broken down by tags.
-    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+/// To see which tags are available, look for the value of `tag_config_source` in the API response.
     pub tag_breakdown_keys: Option<String>,
     /// List following results with a next_record_id provided in the previous query.
     pub next_record_id: Option<String>,
@@ -293,7 +290,7 @@ impl GetMonthlyCostAttributionOptionalParams {
         self
     }
     /// Comma separated list of tag keys used to group cost. If no value is provided the cost will not be broken down by tags.
-    /// To see which tags are available, look for the value of `tag_config_source` in the API response.
+/// To see which tags are available, look for the value of `tag_config_source` in the API response.
     pub fn tag_breakdown_keys(mut self, value: String) -> Self {
         self.tag_breakdown_keys = Some(value);
         self
@@ -354,13 +351,13 @@ impl GetQuotaOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageApplicationSecurityMonitoringOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
@@ -372,13 +369,13 @@ impl GetUsageApplicationSecurityMonitoringOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageLambdaTracedInvocationsOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
@@ -392,12 +389,12 @@ pub struct GetUsageMonthlyResourcesOptionalParams {
     /// Include usage for descendant organizations of the authenticated organization.
     pub filter_include_descendants: Option<bool>,
     /// Maximum number of resource records per paginated response. Must be a positive integer.
-    /// Values above 100,000 are capped at 100,000. Ignored for billable queries using
-    /// 99th-percentile billing, which return the complete result in one response.
+/// Values above 100,000 are capped at 100,000. Ignored for billable queries using
+/// 99th-percentile billing, which return the complete result in one response.
     pub page_limit: Option<i64>,
     /// Opaque cursor from `meta.pagination.next_record_id` in the previous response.
-    /// Omit for the first request. Ignored for billable queries using 99th-percentile
-    /// billing, which always return the complete result.
+/// Omit for the first request. Ignored for billable queries using 99th-percentile
+/// billing, which always return the complete result.
     pub page_next_record_id: Option<String>,
 }
 
@@ -408,15 +405,15 @@ impl GetUsageMonthlyResourcesOptionalParams {
         self
     }
     /// Maximum number of resource records per paginated response. Must be a positive integer.
-    /// Values above 100,000 are capped at 100,000. Ignored for billable queries using
-    /// 99th-percentile billing, which return the complete result in one response.
+/// Values above 100,000 are capped at 100,000. Ignored for billable queries using
+/// 99th-percentile billing, which return the complete result in one response.
     pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Opaque cursor from `meta.pagination.next_record_id` in the previous response.
-    /// Omit for the first request. Ignored for billable queries using 99th-percentile
-    /// billing, which always return the complete result.
+/// Omit for the first request. Ignored for billable queries using 99th-percentile
+/// billing, which always return the complete result.
     pub fn page_next_record_id(mut self, value: String) -> Self {
         self.page_next_record_id = Some(value);
         self
@@ -428,13 +425,13 @@ impl GetUsageMonthlyResourcesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub end_hr: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl GetUsageObservabilityPipelinesOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to hour: `[YYYY-MM-DDThh]` for usage ending
-    /// **before** this hour.
+/// **before** this hour.
     pub fn end_hr(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_hr = Some(value);
         self
@@ -455,10 +452,7 @@ pub struct ListMyTemporaryGrantRequestsOptionalParams {
 
 impl ListMyTemporaryGrantRequestsOptionalParams {
     /// Optional status. Defaults to all statuses.
-    pub fn filter_status(
-        mut self,
-        value: crate::datadogV2::model::TemporaryGrantRequestStatus,
-    ) -> Self {
+    pub fn filter_status(mut self, value: crate::datadogV2::model::TemporaryGrantRequestStatus) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -520,10 +514,7 @@ pub struct ListTemporaryGrantRequestsOptionalParams {
 
 impl ListTemporaryGrantRequestsOptionalParams {
     /// Optional status. Defaults to all statuses.
-    pub fn filter_status(
-        mut self,
-        value: crate::datadogV2::model::TemporaryGrantRequestStatus,
-    ) -> Self {
+    pub fn filter_status(mut self, value: crate::datadogV2::model::TemporaryGrantRequestStatus) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -560,6 +551,9 @@ impl UpdateQuotaOptionalParams {
     }
 }
 
+
+
+
 /// CreateQuotasError is a struct for typed errors of method [`UsageMeteringAPI::create_quotas`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -568,6 +562,7 @@ pub enum CreateQuotasError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::create_temporary_grant_request`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -578,6 +573,7 @@ pub enum CreateTemporaryGrantRequestError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeletePendingQuotaError is a struct for typed errors of method [`UsageMeteringAPI::delete_pending_quota`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -586,6 +582,7 @@ pub enum DeletePendingQuotaError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteQuotaError is a struct for typed errors of method [`UsageMeteringAPI::delete_quota`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -596,6 +593,7 @@ pub enum DeleteQuotaError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteRequestedTemporaryGrantError is a struct for typed errors of method [`UsageMeteringAPI::delete_requested_temporary_grant`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -604,6 +602,7 @@ pub enum DeleteRequestedTemporaryGrantError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::delete_temporary_grant_request`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -614,6 +613,7 @@ pub enum DeleteTemporaryGrantRequestError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetActiveBillingDimensionsError is a struct for typed errors of method [`UsageMeteringAPI::get_active_billing_dimensions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -621,6 +621,7 @@ pub enum GetActiveBillingDimensionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetBillingDimensionMappingError is a struct for typed errors of method [`UsageMeteringAPI::get_billing_dimension_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -630,6 +631,7 @@ pub enum GetBillingDimensionMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -637,6 +639,7 @@ pub enum GetCostByOrgError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetEstimatedCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_estimated_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -646,6 +649,7 @@ pub enum GetEstimatedCostByOrgError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetHistoricalCostByOrgError is a struct for typed errors of method [`UsageMeteringAPI::get_historical_cost_by_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -653,6 +657,7 @@ pub enum GetHistoricalCostByOrgError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetHourlyUsageError is a struct for typed errors of method [`UsageMeteringAPI::get_hourly_usage`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -662,6 +667,7 @@ pub enum GetHourlyUsageError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetMonthlyCostAttributionError is a struct for typed errors of method [`UsageMeteringAPI::get_monthly_cost_attribution`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -669,6 +675,7 @@ pub enum GetMonthlyCostAttributionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetMyTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::get_my_temporary_grant_request`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -679,6 +686,7 @@ pub enum GetMyTemporaryGrantRequestError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetProjectedCostError is a struct for typed errors of method [`UsageMeteringAPI::get_projected_cost`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -686,6 +694,7 @@ pub enum GetProjectedCostError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetQuotaError is a struct for typed errors of method [`UsageMeteringAPI::get_quota`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -696,6 +705,7 @@ pub enum GetQuotaError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::get_temporary_grant_request`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -705,6 +715,7 @@ pub enum GetTemporaryGrantRequestError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUsageApplicationSecurityMonitoringError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_application_security_monitoring`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -712,6 +723,7 @@ pub enum GetUsageApplicationSecurityMonitoringError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetUsageAttributionTypesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_attribution_types`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -721,6 +733,7 @@ pub enum GetUsageAttributionTypesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUsageLambdaTracedInvocationsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_lambda_traced_invocations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -728,6 +741,7 @@ pub enum GetUsageLambdaTracedInvocationsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetUsageMonthlyResourcesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_monthly_resources`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -738,6 +752,7 @@ pub enum GetUsageMonthlyResourcesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUsageObservabilityPipelinesError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_observability_pipelines`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -746,6 +761,7 @@ pub enum GetUsageObservabilityPipelinesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUsageSummaryAvailableFieldsError is a struct for typed errors of method [`UsageMeteringAPI::get_usage_summary_available_fields`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -753,6 +769,7 @@ pub enum GetUsageSummaryAvailableFieldsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListMyTemporaryGrantRequestsError is a struct for typed errors of method [`UsageMeteringAPI::list_my_temporary_grant_requests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -763,6 +780,7 @@ pub enum ListMyTemporaryGrantRequestsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListQuotasError is a struct for typed errors of method [`UsageMeteringAPI::list_quotas`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -771,6 +789,7 @@ pub enum ListQuotasError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTemporaryGrantRequestsError is a struct for typed errors of method [`UsageMeteringAPI::list_temporary_grant_requests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -781,6 +800,7 @@ pub enum ListTemporaryGrantRequestsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateQuotaError is a struct for typed errors of method [`UsageMeteringAPI::update_quota`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -790,6 +810,7 @@ pub enum UpdateQuotaError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::update_temporary_grant_request`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -798,6 +819,7 @@ pub enum UpdateTemporaryGrantRequestError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The usage metering API allows you to get hourly, daily, and
 /// monthly usage across multiple facets of Datadog.
@@ -830,7 +852,8 @@ impl UsageMeteringAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -875,138 +898,119 @@ impl UsageMeteringAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
-    /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
-    /// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
-    /// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
-    /// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
-    /// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
-    /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
-    /// accompany an immediate limit or update an existing quota by itself.
-    /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
-    ///
-    /// ### Quota namespaces and scope keys
-    ///
-    /// The `quota_namespace` path parameter selects the product whose usage quotas are managed. Each namespace
-    /// supports its own scope keys, described below. Omit `scope` for the organization-wide quota.
-    ///
-    /// #### `ai_credits` scope keys
-    ///
-    /// Each item's `scope` contains exactly one of the following keys.
-    ///
-    /// **`user_handle`**
-    ///
-    /// - **Value:** One of the following:
-    ///   - A user's handle, such as `jane@example.com`. User handles are returned in the
-    ///     `data[].attributes.handle` field by the
-    ///     [Users API](<https://docs.datadoghq.com/api/latest/users/#list-all-users>).
-    ///   - `"*"`, the default quota applied to users without a specific quota.
-    ///   - `"*agents*"`, the quota shared by all autonomous agents.
-    /// - **Validation:** A specific handle must identify an existing user in the caller's organization when
-    ///   `include_descendants` is false. When `include_descendants` is true, the handle must exist in the caller's
-    ///   organization or in at least one targeted descendant organization. The quota is then applied only to the
-    ///   organizations where the handle exists, and the item fails only if the handle exists in none of them.
-    ///
-    /// **`role_uuid`**
-    ///
-    /// - **Value:** The UUID of a role, for example `12345678-1234-1234-1234-123456789012`. `"*"` is not accepted
-    ///   because there is no default role quota. Role UUIDs are returned in the `data[].id` field by the
-    ///   [Roles API](<https://docs.datadoghq.com/api/latest/roles/#list-roles>).
-    /// - **Validation:** The role must exist in the caller's organization. Role UUIDs are unique, so
-    ///   `include_descendants` has no effect on a `role_uuid` scope: the role is validated against the caller's
-    ///   organization only.
-    ///
-    /// **`team_id`** (private preview)
-    ///
-    /// - **Value:** The ID of a team. Team IDs are returned in the `data[].id` field by the
-    ///   [Teams API](<https://docs.datadoghq.com/api/latest/teams/get-all-teams/>).
-    /// - **Availability:** Quotas on `team_id` are in private preview. Contact your Datadog account team to request access.
-    pub async fn create_quotas(
-        &self,
-        quota_namespace: String,
-        body: crate::datadogV2::model::UsageQuotasCreateRequest,
-        params: CreateQuotasOptionalParams,
-    ) -> Result<crate::datadogV2::model::UsageQuotasBulkResponse, datadog::Error<CreateQuotasError>>
-    {
-        match self
-            .create_quotas_with_http_info(quota_namespace, body, params)
-            .await
-        {
+/// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+/// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
+/// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
+/// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
+/// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
+/// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
+/// accompany an immediate limit or update an existing quota by itself.
+/// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
+///
+/// ### Quota namespaces and scope keys
+///
+/// The `quota_namespace` path parameter selects the product whose usage quotas are managed. Each namespace
+/// supports its own scope keys, described below. Omit `scope` for the organization-wide quota.
+///
+/// #### `ai_credits` scope keys
+///
+/// Each item's `scope` contains exactly one of the following keys.
+///
+/// **`user_handle`**
+///
+/// - **Value:** One of the following:
+///   - A user's handle, such as `jane@example.com`. User handles are returned in the
+///     `data[].attributes.handle` field by the
+///     [Users API](<https://docs.datadoghq.com/api/latest/users/#list-all-users>).
+///   - `"*"`, the default quota applied to users without a specific quota.
+///   - `"*agents*"`, the quota shared by all autonomous agents.
+/// - **Validation:** A specific handle must identify an existing user in the caller's organization when
+///   `include_descendants` is false. When `include_descendants` is true, the handle must exist in the caller's
+///   organization or in at least one targeted descendant organization. The quota is then applied only to the
+///   organizations where the handle exists, and the item fails only if the handle exists in none of them.
+///
+/// **`role_uuid`**
+///
+/// - **Value:** The UUID of a role, for example `12345678-1234-1234-1234-123456789012`. `"*"` is not accepted
+///   because there is no default role quota. Role UUIDs are returned in the `data[].id` field by the
+///   [Roles API](<https://docs.datadoghq.com/api/latest/roles/#list-roles>).
+/// - **Validation:** The role must exist in the caller's organization. Role UUIDs are unique, so
+///   `include_descendants` has no effect on a `role_uuid` scope: the role is validated against the caller's
+///   organization only.
+///
+/// **`team_id`** (private preview)
+///
+/// - **Value:** The ID of a team. Team IDs are returned in the `data[].id` field by the
+///   [Teams API](<https://docs.datadoghq.com/api/latest/teams/get-all-teams/>).
+/// - **Availability:** Quotas on `team_id` are in private preview. Contact your Datadog account team to request access.
+    pub async fn create_quotas(&self, quota_namespace: String, body: crate::datadogV2::model::UsageQuotasCreateRequest, params: CreateQuotasOptionalParams) -> Result<crate::datadogV2::model::UsageQuotasBulkResponse, datadog::Error<CreateQuotasError>> {
+        match self.create_quotas_with_http_info(quota_namespace, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
-    /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
-    /// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
-    /// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
-    /// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
-    /// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
-    /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
-    /// accompany an immediate limit or update an existing quota by itself.
-    /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
-    ///
-    /// ### Quota namespaces and scope keys
-    ///
-    /// The `quota_namespace` path parameter selects the product whose usage quotas are managed. Each namespace
-    /// supports its own scope keys, described below. Omit `scope` for the organization-wide quota.
-    ///
-    /// #### `ai_credits` scope keys
-    ///
-    /// Each item's `scope` contains exactly one of the following keys.
-    ///
-    /// **`user_handle`**
-    ///
-    /// - **Value:** One of the following:
-    ///   - A user's handle, such as `jane@example.com`. User handles are returned in the
-    ///     `data[].attributes.handle` field by the
-    ///     [Users API](<https://docs.datadoghq.com/api/latest/users/#list-all-users>).
-    ///   - `"*"`, the default quota applied to users without a specific quota.
-    ///   - `"*agents*"`, the quota shared by all autonomous agents.
-    /// - **Validation:** A specific handle must identify an existing user in the caller's organization when
-    ///   `include_descendants` is false. When `include_descendants` is true, the handle must exist in the caller's
-    ///   organization or in at least one targeted descendant organization. The quota is then applied only to the
-    ///   organizations where the handle exists, and the item fails only if the handle exists in none of them.
-    ///
-    /// **`role_uuid`**
-    ///
-    /// - **Value:** The UUID of a role, for example `12345678-1234-1234-1234-123456789012`. `"*"` is not accepted
-    ///   because there is no default role quota. Role UUIDs are returned in the `data[].id` field by the
-    ///   [Roles API](<https://docs.datadoghq.com/api/latest/roles/#list-roles>).
-    /// - **Validation:** The role must exist in the caller's organization. Role UUIDs are unique, so
-    ///   `include_descendants` has no effect on a `role_uuid` scope: the role is validated against the caller's
-    ///   organization only.
-    ///
-    /// **`team_id`** (private preview)
-    ///
-    /// - **Value:** The ID of a team. Team IDs are returned in the `data[].id` field by the
-    ///   [Teams API](<https://docs.datadoghq.com/api/latest/teams/get-all-teams/>).
-    /// - **Availability:** Quotas on `team_id` are in private preview. Contact your Datadog account team to request access.
-    pub async fn create_quotas_with_http_info(
-        &self,
-        quota_namespace: String,
-        body: crate::datadogV2::model::UsageQuotasCreateRequest,
-        params: CreateQuotasOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageQuotasBulkResponse>,
-        datadog::Error<CreateQuotasError>,
-    > {
+/// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+/// Set `create_only=true` to atomically create exactly one quota in the caller's organization and reject an
+/// existing quota with `409` instead of updating it. This mode does not support pending limits or descendant writes.
+/// Repeated create-only requests do not replay the original response. If a response is lost, a retry can return `409`
+/// even if the first request succeeded; reconcile the outcome before retrying or importing the quota.
+/// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
+/// accompany an immediate limit or update an existing quota by itself.
+/// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
+///
+/// ### Quota namespaces and scope keys
+///
+/// The `quota_namespace` path parameter selects the product whose usage quotas are managed. Each namespace
+/// supports its own scope keys, described below. Omit `scope` for the organization-wide quota.
+///
+/// #### `ai_credits` scope keys
+///
+/// Each item's `scope` contains exactly one of the following keys.
+///
+/// **`user_handle`**
+///
+/// - **Value:** One of the following:
+///   - A user's handle, such as `jane@example.com`. User handles are returned in the
+///     `data[].attributes.handle` field by the
+///     [Users API](<https://docs.datadoghq.com/api/latest/users/#list-all-users>).
+///   - `"*"`, the default quota applied to users without a specific quota.
+///   - `"*agents*"`, the quota shared by all autonomous agents.
+/// - **Validation:** A specific handle must identify an existing user in the caller's organization when
+///   `include_descendants` is false. When `include_descendants` is true, the handle must exist in the caller's
+///   organization or in at least one targeted descendant organization. The quota is then applied only to the
+///   organizations where the handle exists, and the item fails only if the handle exists in none of them.
+///
+/// **`role_uuid`**
+///
+/// - **Value:** The UUID of a role, for example `12345678-1234-1234-1234-123456789012`. `"*"` is not accepted
+///   because there is no default role quota. Role UUIDs are returned in the `data[].id` field by the
+///   [Roles API](<https://docs.datadoghq.com/api/latest/roles/#list-roles>).
+/// - **Validation:** The role must exist in the caller's organization. Role UUIDs are unique, so
+///   `include_descendants` has no effect on a `role_uuid` scope: the role is validated against the caller's
+///   organization only.
+///
+/// **`team_id`** (private preview)
+///
+/// - **Value:** The ID of a team. Team IDs are returned in the `data[].id` field by the
+///   [Teams API](<https://docs.datadoghq.com/api/latest/teams/get-all-teams/>).
+/// - **Availability:** Quotas on `team_id` are in private preview. Contact your Datadog account team to request access.
+    pub async fn create_quotas_with_http_info(&self, quota_namespace: String, body: crate::datadogV2::model::UsageQuotasCreateRequest, params: CreateQuotasOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageQuotasBulkResponse>, datadog::Error<CreateQuotasError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_quotas";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1018,6 +1022,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
         let create_only = params.create_only;
@@ -1026,25 +1031,25 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = create_only {
-            local_req_builder =
-                local_req_builder.query(&[("create_only", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("create_only", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1057,23 +1062,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1081,7 +1079,10 @@ impl UsageMeteringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1091,7 +1092,10 @@ impl UsageMeteringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1113,7 +1117,7 @@ impl UsageMeteringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1130,62 +1134,38 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageQuotasBulkResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageQuotasBulkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateQuotasError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Request a temporary increase to your monthly AI credit limit. Set `total` to the new monthly limit you need, in whole credits, not the number of credits to add. Include a justification and, optionally, an expiry. If you omit the expiry, the grant ends at the next UTC month boundary. A user with the Billing Edit permission approves or denies the request. Requires an authenticated human user. Service-account credentials are unsupported.
-    pub async fn create_temporary_grant_request(
-        &self,
-        body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestResponse,
-        datadog::Error<CreateTemporaryGrantRequestError>,
-    > {
-        match self
-            .create_temporary_grant_request_with_http_info(body)
-            .await
-        {
+    pub async fn create_temporary_grant_request(&self, body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest) -> Result<crate::datadogV2::model::TemporaryGrantRequestResponse, datadog::Error<CreateTemporaryGrantRequestError>> {
+        match self.create_temporary_grant_request_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Request a temporary increase to your monthly AI credit limit. Set `total` to the new monthly limit you need, in whole credits, not the number of credits to add. Include a justification and, optionally, an expiry. If you omit the expiry, the grant ends at the next UTC month boundary. A user with the Billing Edit permission approves or denies the request. Requires an authenticated human user. Service-account credentials are unsupported.
-    pub async fn create_temporary_grant_request_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
-        datadog::Error<CreateTemporaryGrantRequestError>,
-    > {
+    pub async fn create_temporary_grant_request_with_http_info(&self, body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>, datadog::Error<CreateTemporaryGrantRequestError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_temporary_grant_request";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1197,19 +1177,23 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/temporary-grant-requests",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1222,23 +1206,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1246,7 +1223,10 @@ impl UsageMeteringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1256,7 +1236,10 @@ impl UsageMeteringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1278,7 +1261,7 @@ impl UsageMeteringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1295,53 +1278,32 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTemporaryGrantRequestError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTemporaryGrantRequestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Cancels the limit change scheduled to take effect at the start of the next usage period, leaving the usage quota and its current limit unchanged. Returns `404` when the quota does not exist, has no scheduled change, or its scheduled change has already taken effect; in every case the quota is left unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn delete_pending_quota(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: DeletePendingQuotaOptionalParams,
-    ) -> Result<(), datadog::Error<DeletePendingQuotaError>> {
-        match self
-            .delete_pending_quota_with_http_info(quota_namespace, id, params)
-            .await
-        {
+    pub async fn delete_pending_quota(&self, quota_namespace: String, id: String, params: DeletePendingQuotaOptionalParams) -> Result<(), datadog::Error<DeletePendingQuotaError>> {
+        match self.delete_pending_quota_with_http_info(quota_namespace, id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Cancels the limit change scheduled to take effect at the start of the next usage period, leaving the usage quota and its current limit unchanged. Returns `404` when the quota does not exist, has no scheduled change, or its scheduled change has already taken effect; in every case the quota is left unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn delete_pending_quota_with_http_info(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: DeletePendingQuotaOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePendingQuotaError>> {
+    pub async fn delete_pending_quota_with_http_info(&self, quota_namespace: String, id: String, params: DeletePendingQuotaOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePendingQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_pending_quota";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1353,6 +1315,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
 
@@ -1360,21 +1323,23 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}/{id}/pending",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            , id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1387,22 +1352,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1420,40 +1379,23 @@ impl UsageMeteringAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeletePendingQuotaError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeletePendingQuotaError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a usage quota by its opaque identifier. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn delete_quota(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: DeleteQuotaOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteQuotaError>> {
-        match self
-            .delete_quota_with_http_info(quota_namespace, id, params)
-            .await
-        {
+    pub async fn delete_quota(&self, quota_namespace: String, id: String, params: DeleteQuotaOptionalParams) -> Result<(), datadog::Error<DeleteQuotaError>> {
+        match self.delete_quota_with_http_info(quota_namespace, id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a usage quota by its opaque identifier. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn delete_quota_with_http_info(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: DeleteQuotaOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteQuotaError>> {
+    pub async fn delete_quota_with_http_info(&self, quota_namespace: String, id: String, params: DeleteQuotaOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_quota";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1465,6 +1407,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
 
@@ -1472,21 +1415,23 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            , id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1499,22 +1444,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1533,35 +1472,22 @@ impl UsageMeteringAPI {
             })
         } else {
             let local_entity: Option<DeleteQuotaError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Revoke only the grant that's still associated with this approved request. The request and audit history remain. A stale request can't revoke a replacement grant. Requires the Billing Edit permission. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn delete_requested_temporary_grant(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteRequestedTemporaryGrantError>> {
-        match self
-            .delete_requested_temporary_grant_with_http_info(request_id)
-            .await
-        {
+    pub async fn delete_requested_temporary_grant(&self, request_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteRequestedTemporaryGrantError>> {
+        match self.delete_requested_temporary_grant_with_http_info(request_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Revoke only the grant that's still associated with this approved request. The request and audit history remain. A stale request can't revoke a replacement grant. Requires the Billing Edit permission. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn delete_requested_temporary_grant_with_http_info(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRequestedTemporaryGrantError>>
-    {
+    pub async fn delete_requested_temporary_grant_with_http_info(&self, request_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRequestedTemporaryGrantError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_requested_temporary_grant";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1573,19 +1499,24 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}/grant",
-            local_configuration.get_operation_host(local_operation_id),
-            request_id = datadog::urlencode(request_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), request_id=
+            datadog::urlencode(request_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1598,22 +1529,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1631,37 +1556,23 @@ impl UsageMeteringAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRequestedTemporaryGrantError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRequestedTemporaryGrantError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Cancel a pending request that you own. The request history is kept, and no grant is created or revoked. Requires an authenticated human user. Service-account credentials are unsupported.
-    pub async fn delete_temporary_grant_request(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteTemporaryGrantRequestError>> {
-        match self
-            .delete_temporary_grant_request_with_http_info(request_id)
-            .await
-        {
+    pub async fn delete_temporary_grant_request(&self, request_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteTemporaryGrantRequestError>> {
+        match self.delete_temporary_grant_request_with_http_info(request_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Cancel a pending request that you own. The request history is kept, and no grant is created or revoked. Requires an authenticated human user. Service-account credentials are unsupported.
-    pub async fn delete_temporary_grant_request_with_http_info(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTemporaryGrantRequestError>>
-    {
+    pub async fn delete_temporary_grant_request_with_http_info(&self, request_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTemporaryGrantRequestError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_temporary_grant_request";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1673,19 +1584,24 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/temporary-grant-requests/{request_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            request_id = datadog::urlencode(request_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), request_id=
+            datadog::urlencode(request_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1698,22 +1614,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1731,63 +1641,48 @@ impl UsageMeteringAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTemporaryGrantRequestError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTemporaryGrantRequestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
-    pub async fn get_active_billing_dimensions(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ActiveBillingDimensionsResponse,
-        datadog::Error<GetActiveBillingDimensionsError>,
-    > {
+    pub async fn get_active_billing_dimensions(&self) -> Result<crate::datadogV2::model::ActiveBillingDimensionsResponse, datadog::Error<GetActiveBillingDimensionsError>> {
         match self.get_active_billing_dimensions_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get active billing dimensions for cost attribution. Cost data for a given month becomes available no later than the 19th of the following month.
-    pub async fn get_active_billing_dimensions_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>,
-        datadog::Error<GetActiveBillingDimensionsError>,
-    > {
+    pub async fn get_active_billing_dimensions_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ActiveBillingDimensionsResponse>, datadog::Error<GetActiveBillingDimensionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_active_billing_dimensions";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/active_billing_dimensions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1800,22 +1695,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1827,72 +1716,48 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ActiveBillingDimensionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ActiveBillingDimensionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetActiveBillingDimensionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetActiveBillingDimensionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a mapping of billing dimensions to the corresponding keys for the supported usage metering public API endpoints.
-    /// Mapping data is updated on a monthly cadence.
-    ///
-    /// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_billing_dimension_mapping(
-        &self,
-        params: GetBillingDimensionMappingOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::BillingDimensionsMappingResponse,
-        datadog::Error<GetBillingDimensionMappingError>,
-    > {
-        match self
-            .get_billing_dimension_mapping_with_http_info(params)
-            .await
-        {
+/// Mapping data is updated on a monthly cadence.
+///
+/// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_billing_dimension_mapping(&self, params: GetBillingDimensionMappingOptionalParams) -> Result<crate::datadogV2::model::BillingDimensionsMappingResponse, datadog::Error<GetBillingDimensionMappingError>> {
+        match self.get_billing_dimension_mapping_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a mapping of billing dimensions to the corresponding keys for the supported usage metering public API endpoints.
-    /// Mapping data is updated on a monthly cadence.
-    ///
-    /// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_billing_dimension_mapping_with_http_info(
-        &self,
-        params: GetBillingDimensionMappingOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::BillingDimensionsMappingResponse>,
-        datadog::Error<GetBillingDimensionMappingError>,
-    > {
+/// Mapping data is updated on a monthly cadence.
+///
+/// This endpoint is only accessible to [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_billing_dimension_mapping_with_http_info(&self, params: GetBillingDimensionMappingOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::BillingDimensionsMappingResponse>, datadog::Error<GetBillingDimensionMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_billing_dimension_mapping";
 
+        
         // unbox and build optional parameters
         let filter_month = params.filter_month;
         let filter_view = params.filter_view;
@@ -1901,28 +1766,22 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/billing_dimension_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_month {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[month]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[month]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = filter_view {
-            local_req_builder =
-                local_req_builder.query(&[("filter[view]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[view]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1935,22 +1794,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1962,77 +1815,54 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::BillingDimensionsMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::BillingDimensionsMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetBillingDimensionMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetBillingDimensionMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get cost across multi-org account.
-    /// Cost by org data for a given month becomes available no later than the 16th of the following month.
-    /// **Note:** This endpoint has been deprecated. Please use the new endpoint
-    /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
-    /// instead.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_cost_by_org(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        params: GetCostByOrgOptionalParams,
-    ) -> Result<crate::datadogV2::model::CostByOrgResponse, datadog::Error<GetCostByOrgError>> {
-        match self
-            .get_cost_by_org_with_http_info(start_month, params)
-            .await
-        {
+/// Cost by org data for a given month becomes available no later than the 16th of the following month.
+/// **Note:** This endpoint has been deprecated. Please use the new endpoint
+/// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
+/// instead.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_cost_by_org(&self, start_month: chrono::DateTime<chrono::Utc>, params: GetCostByOrgOptionalParams) -> Result<crate::datadogV2::model::CostByOrgResponse, datadog::Error<GetCostByOrgError>> {
+        match self.get_cost_by_org_with_http_info(start_month,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get cost across multi-org account.
-    /// Cost by org data for a given month becomes available no later than the 16th of the following month.
-    /// **Note:** This endpoint has been deprecated. Please use the new endpoint
-    /// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
-    /// instead.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_cost_by_org_with_http_info(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        params: GetCostByOrgOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
-        datadog::Error<GetCostByOrgError>,
-    > {
+/// Cost by org data for a given month becomes available no later than the 16th of the following month.
+/// **Note:** This endpoint has been deprecated. Please use the new endpoint
+/// [`/historical_cost`](<https://docs.datadoghq.com/api/latest/usage-metering/#get-historical-cost-across-your-account>)
+/// instead.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_cost_by_org_with_http_info(&self, start_month: chrono::DateTime<chrono::Utc>, params: GetCostByOrgOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>, datadog::Error<GetCostByOrgError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_cost_by_org";
 
+        
         // unbox and build optional parameters
         let end_month = params.end_month;
 
@@ -2040,28 +1870,20 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/cost_by_org",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_month",
-            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder = local_req_builder.query(&[(
-                "end_month",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_month", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2074,22 +1896,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2101,71 +1917,52 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCostByOrgError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get estimated cost across multi-org and single root-org accounts.
-    /// Estimated cost data is only available for the current month and previous month
-    /// and is delayed by up to 72 hours from when it was incurred.
-    /// To access historical costs prior to this, use the `/historical_cost` endpoint.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_estimated_cost_by_org(
-        &self,
-        params: GetEstimatedCostByOrgOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CostByOrgResponse,
-        datadog::Error<GetEstimatedCostByOrgError>,
-    > {
-        match self.get_estimated_cost_by_org_with_http_info(params).await {
+/// Estimated cost data is only available for the current month and previous month
+/// and is delayed by up to 72 hours from when it was incurred.
+/// To access historical costs prior to this, use the `/historical_cost` endpoint.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_estimated_cost_by_org(&self, params: GetEstimatedCostByOrgOptionalParams) -> Result<crate::datadogV2::model::CostByOrgResponse, datadog::Error<GetEstimatedCostByOrgError>> {
+        match self.get_estimated_cost_by_org_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get estimated cost across multi-org and single root-org accounts.
-    /// Estimated cost data is only available for the current month and previous month
-    /// and is delayed by up to 72 hours from when it was incurred.
-    /// To access historical costs prior to this, use the `/historical_cost` endpoint.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_estimated_cost_by_org_with_http_info(
-        &self,
-        params: GetEstimatedCostByOrgOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
-        datadog::Error<GetEstimatedCostByOrgError>,
-    > {
+/// Estimated cost data is only available for the current month and previous month
+/// and is delayed by up to 72 hours from when it was incurred.
+/// To access historical costs prior to this, use the `/historical_cost` endpoint.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_estimated_cost_by_org_with_http_info(&self, params: GetEstimatedCostByOrgOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>, datadog::Error<GetEstimatedCostByOrgError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_estimated_cost_by_org";
 
+        
         // unbox and build optional parameters
         let view = params.view;
         let start_month = params.start_month;
@@ -2179,54 +1976,37 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/estimated_cost",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = view {
-            local_req_builder =
-                local_req_builder.query(&[("view", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("view", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = start_month {
-            local_req_builder = local_req_builder.query(&[(
-                "start_month",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("start_month", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = end_month {
-            local_req_builder = local_req_builder.query(&[(
-                "end_month",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_month", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = start_date {
-            local_req_builder = local_req_builder.query(&[(
-                "start_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("start_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = end_date {
-            local_req_builder = local_req_builder.query(&[(
-                "end_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = cost_aggregation {
-            local_req_builder =
-                local_req_builder.query(&[("cost_aggregation", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("cost_aggregation", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_connected_accounts {
-            local_req_builder = local_req_builder
-                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_connected_accounts", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2239,22 +2019,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2266,73 +2040,48 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetEstimatedCostByOrgError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetEstimatedCostByOrgError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get historical cost across multi-org and single root-org accounts.
-    /// Cost data for a given month becomes available no later than the 16th of the following month.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_historical_cost_by_org(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        params: GetHistoricalCostByOrgOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CostByOrgResponse,
-        datadog::Error<GetHistoricalCostByOrgError>,
-    > {
-        match self
-            .get_historical_cost_by_org_with_http_info(start_month, params)
-            .await
-        {
+/// Cost data for a given month becomes available no later than the 16th of the following month.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_historical_cost_by_org(&self, start_month: chrono::DateTime<chrono::Utc>, params: GetHistoricalCostByOrgOptionalParams) -> Result<crate::datadogV2::model::CostByOrgResponse, datadog::Error<GetHistoricalCostByOrgError>> {
+        match self.get_historical_cost_by_org_with_http_info(start_month,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get historical cost across multi-org and single root-org accounts.
-    /// Cost data for a given month becomes available no later than the 16th of the following month.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_historical_cost_by_org_with_http_info(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        params: GetHistoricalCostByOrgOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>,
-        datadog::Error<GetHistoricalCostByOrgError>,
-    > {
+/// Cost data for a given month becomes available no later than the 16th of the following month.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_historical_cost_by_org_with_http_info(&self, start_month: chrono::DateTime<chrono::Utc>, params: GetHistoricalCostByOrgOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CostByOrgResponse>, datadog::Error<GetHistoricalCostByOrgError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_historical_cost_by_org";
 
+        
         // unbox and build optional parameters
         let view = params.view;
         let end_month = params.end_month;
@@ -2342,36 +2091,26 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/historical_cost",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_month",
-            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = view {
-            local_req_builder =
-                local_req_builder.query(&[("view", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("view", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = end_month {
-            local_req_builder = local_req_builder.query(&[(
-                "end_month",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_month", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = include_connected_accounts {
-            local_req_builder = local_req_builder
-                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_connected_accounts", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2384,22 +2123,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2411,71 +2144,42 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CostByOrgResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetHistoricalCostByOrgError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetHistoricalCostByOrgError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get hourly usage by product family.
-    pub async fn get_hourly_usage(
-        &self,
-        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
-        filter_product_families: String,
-        params: GetHourlyUsageOptionalParams,
-    ) -> Result<crate::datadogV2::model::HourlyUsageResponse, datadog::Error<GetHourlyUsageError>>
-    {
-        match self
-            .get_hourly_usage_with_http_info(
-                filter_timestamp_start,
-                filter_product_families,
-                params,
-            )
-            .await
-        {
+    pub async fn get_hourly_usage(&self, filter_timestamp_start: chrono::DateTime<chrono::Utc>, filter_product_families: String, params: GetHourlyUsageOptionalParams) -> Result<crate::datadogV2::model::HourlyUsageResponse, datadog::Error<GetHourlyUsageError>> {
+        match self.get_hourly_usage_with_http_info(filter_timestamp_start, filter_product_families,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get hourly usage by product family.
-    pub async fn get_hourly_usage_with_http_info(
-        &self,
-        filter_timestamp_start: chrono::DateTime<chrono::Utc>,
-        filter_product_families: String,
-        params: GetHourlyUsageOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::HourlyUsageResponse>,
-        datadog::Error<GetHourlyUsageError>,
-    > {
+    pub async fn get_hourly_usage_with_http_info(&self, filter_timestamp_start: chrono::DateTime<chrono::Utc>, filter_product_families: String, params: GetHourlyUsageOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::HourlyUsageResponse>, datadog::Error<GetHourlyUsageError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_hourly_usage";
 
+        
         // unbox and build optional parameters
         let filter_timestamp_end = params.filter_timestamp_end;
         let filter_include_descendants = params.filter_include_descendants;
@@ -2489,60 +2193,39 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/hourly_usage",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "filter[timestamp][start]",
-            &filter_timestamp_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
-        local_req_builder = local_req_builder.query(&[(
-            "filter[product_families]",
-            &filter_product_families.to_string(),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[timestamp][start]", &filter_timestamp_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
+        local_req_builder = local_req_builder.query(&[("filter[product_families]", &filter_product_families.to_string() )]);
         if let Some(ref local_query_param) = filter_timestamp_end {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[timestamp][end]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[timestamp][end]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = filter_include_descendants {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[include_descendants]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[include_descendants]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_connected_accounts {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[include_connected_accounts]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[include_connected_accounts]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_breakdown {
-            local_req_builder = local_req_builder
-                .query(&[("filter[include_breakdown]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[include_breakdown]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_versions {
-            local_req_builder =
-                local_req_builder.query(&[("filter[versions]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[versions]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_next_record_id {
-            local_req_builder = local_req_builder
-                .query(&[("page[next_record_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[next_record_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2555,22 +2238,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2582,100 +2259,72 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::HourlyUsageResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::HourlyUsageResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetHourlyUsageError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetHourlyUsageError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
-    /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
-    /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
-    /// Pseudo code example:
-    /// ```
-    /// response := GetMonthlyCostAttribution(start_month, end_month)
-    /// cursor := response.metadata.pagination.next_record_id
-    /// WHILE cursor != null BEGIN
-    ///   sleep(5 seconds)  # Avoid running into rate limit
-    ///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
-    ///   cursor := response.metadata.pagination.next_record_id
-    /// END
-    /// ```
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
-    pub async fn get_monthly_cost_attribution(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        fields: String,
-        params: GetMonthlyCostAttributionOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MonthlyCostAttributionResponse,
-        datadog::Error<GetMonthlyCostAttributionError>,
-    > {
-        match self
-            .get_monthly_cost_attribution_with_http_info(start_month, fields, params)
-            .await
-        {
+/// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
+/// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
+/// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
+/// Pseudo code example:
+/// ```
+/// response := GetMonthlyCostAttribution(start_month, end_month)
+/// cursor := response.metadata.pagination.next_record_id
+/// WHILE cursor != null BEGIN
+///   sleep(5 seconds)  # Avoid running into rate limit
+///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
+///   cursor := response.metadata.pagination.next_record_id
+/// END
+/// ```
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
+    pub async fn get_monthly_cost_attribution(&self, start_month: chrono::DateTime<chrono::Utc>, fields: String, params: GetMonthlyCostAttributionOptionalParams) -> Result<crate::datadogV2::model::MonthlyCostAttributionResponse, datadog::Error<GetMonthlyCostAttributionError>> {
+        match self.get_monthly_cost_attribution_with_http_info(start_month, fields,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get monthly cost attribution by tag across multi-org and single root-org accounts.
-    /// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
-    /// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
-    /// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
-    /// Pseudo code example:
-    /// ```
-    /// response := GetMonthlyCostAttribution(start_month, end_month)
-    /// cursor := response.metadata.pagination.next_record_id
-    /// WHILE cursor != null BEGIN
-    ///   sleep(5 seconds)  # Avoid running into rate limit
-    ///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
-    ///   cursor := response.metadata.pagination.next_record_id
-    /// END
-    /// ```
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
-    pub async fn get_monthly_cost_attribution_with_http_info(
-        &self,
-        start_month: chrono::DateTime<chrono::Utc>,
-        fields: String,
-        params: GetMonthlyCostAttributionOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>,
-        datadog::Error<GetMonthlyCostAttributionError>,
-    > {
+/// Cost Attribution data for a given month becomes available no later than the 19th of the following month.
+/// This API endpoint is paginated. To make sure you receive all records, check if the value of `next_record_id` is
+/// set in the response. If it is, make another request and pass `next_record_id` as a parameter.
+/// Pseudo code example:
+/// ```
+/// response := GetMonthlyCostAttribution(start_month, end_month)
+/// cursor := response.metadata.pagination.next_record_id
+/// WHILE cursor != null BEGIN
+///   sleep(5 seconds)  # Avoid running into rate limit
+///   response := GetMonthlyCostAttribution(start_month, end_month, next_record_id=cursor)
+///   cursor := response.metadata.pagination.next_record_id
+/// END
+/// ```
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>). This endpoint is not available in the Government (US1-FED) site.
+    pub async fn get_monthly_cost_attribution_with_http_info(&self, start_month: chrono::DateTime<chrono::Utc>, fields: String, params: GetMonthlyCostAttributionOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MonthlyCostAttributionResponse>, datadog::Error<GetMonthlyCostAttributionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_monthly_cost_attribution";
 
+        
         // unbox and build optional parameters
         let end_month = params.end_month;
         let sort_direction = params.sort_direction;
@@ -2688,49 +2337,36 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/monthly_cost_attribution",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_month",
-            &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
-        local_req_builder = local_req_builder.query(&[("fields", &fields.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("start_month", &start_month.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
+        local_req_builder = local_req_builder.query(&[("fields", &fields.to_string() )]);
         if let Some(ref local_query_param) = end_month {
-            local_req_builder = local_req_builder.query(&[(
-                "end_month",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_month", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = sort_direction {
-            local_req_builder =
-                local_req_builder.query(&[("sort_direction", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_direction", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_name {
-            local_req_builder =
-                local_req_builder.query(&[("sort_name", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_name", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = tag_breakdown_keys {
-            local_req_builder =
-                local_req_builder.query(&[("tag_breakdown_keys", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("tag_breakdown_keys", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = next_record_id {
-            local_req_builder =
-                local_req_builder.query(&[("next_record_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("next_record_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2743,22 +2379,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2770,63 +2400,38 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MonthlyCostAttributionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MonthlyCostAttributionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetMonthlyCostAttributionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetMonthlyCostAttributionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Read an owned request, its decision, and its linked grant state. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn get_my_temporary_grant_request(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestResponse,
-        datadog::Error<GetMyTemporaryGrantRequestError>,
-    > {
-        match self
-            .get_my_temporary_grant_request_with_http_info(request_id)
-            .await
-        {
+    pub async fn get_my_temporary_grant_request(&self, request_id: uuid::Uuid) -> Result<crate::datadogV2::model::TemporaryGrantRequestResponse, datadog::Error<GetMyTemporaryGrantRequestError>> {
+        match self.get_my_temporary_grant_request_with_http_info(request_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Read an owned request, its decision, and its linked grant state. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn get_my_temporary_grant_request_with_http_info(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
-        datadog::Error<GetMyTemporaryGrantRequestError>,
-    > {
+    pub async fn get_my_temporary_grant_request_with_http_info(&self, request_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>, datadog::Error<GetMyTemporaryGrantRequestError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_my_temporary_grant_request";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2838,19 +2443,24 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/temporary-grant-requests/{request_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            request_id = datadog::urlencode(request_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), request_id=
+            datadog::urlencode(request_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2863,22 +2473,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2890,67 +2494,48 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetMyTemporaryGrantRequestError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetMyTemporaryGrantRequestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get projected cost across multi-org and single root-org accounts.
-    /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_projected_cost(
-        &self,
-        params: GetProjectedCostOptionalParams,
-    ) -> Result<crate::datadogV2::model::ProjectedCostResponse, datadog::Error<GetProjectedCostError>>
-    {
-        match self.get_projected_cost_with_http_info(params).await {
+/// Projected cost data is only available for the current month and becomes available around the 12th of the month.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_projected_cost(&self, params: GetProjectedCostOptionalParams) -> Result<crate::datadogV2::model::ProjectedCostResponse, datadog::Error<GetProjectedCostError>> {
+        match self.get_projected_cost_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get projected cost across multi-org and single root-org accounts.
-    /// Projected cost data is only available for the current month and becomes available around the 12th of the month.
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    pub async fn get_projected_cost_with_http_info(
-        &self,
-        params: GetProjectedCostOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectedCostResponse>,
-        datadog::Error<GetProjectedCostError>,
-    > {
+/// Projected cost data is only available for the current month and becomes available around the 12th of the month.
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+    pub async fn get_projected_cost_with_http_info(&self, params: GetProjectedCostOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectedCostResponse>, datadog::Error<GetProjectedCostError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_projected_cost";
 
+        
         // unbox and build optional parameters
         let view = params.view;
         let include_connected_accounts = params.include_connected_accounts;
@@ -2959,26 +2544,22 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/projected_cost",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = view {
-            local_req_builder =
-                local_req_builder.query(&[("view", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("view", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_connected_accounts {
-            local_req_builder = local_req_builder
-                .query(&[("include_connected_accounts", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_connected_accounts", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2991,22 +2572,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3018,72 +2593,46 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ProjectedCostResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ProjectedCostResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetProjectedCostError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetProjectedCostError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a usage quota's current configuration by its opaque identifier. Scheduled limits are returned separately until they take effect, after which they are returned as the current limit.
-    ///
-    /// By default, you can retrieve quotas from your organization and authorized descendant organizations in the same data center. Set `include_descendants=false` to restrict access to your organization.
-    ///
-    /// A quota remains readable after its associated user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
-    pub async fn get_quota(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: GetQuotaOptionalParams,
-    ) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<GetQuotaError>> {
-        match self
-            .get_quota_with_http_info(quota_namespace, id, params)
-            .await
-        {
+///
+/// By default, you can retrieve quotas from your organization and authorized descendant organizations in the same data center. Set `include_descendants=false` to restrict access to your organization.
+///
+/// A quota remains readable after its associated user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
+    pub async fn get_quota(&self, quota_namespace: String, id: String, params: GetQuotaOptionalParams) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<GetQuotaError>> {
+        match self.get_quota_with_http_info(quota_namespace, id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a usage quota's current configuration by its opaque identifier. Scheduled limits are returned separately until they take effect, after which they are returned as the current limit.
-    ///
-    /// By default, you can retrieve quotas from your organization and authorized descendant organizations in the same data center. Set `include_descendants=false` to restrict access to your organization.
-    ///
-    /// A quota remains readable after its associated user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
-    pub async fn get_quota_with_http_info(
-        &self,
-        quota_namespace: String,
-        id: String,
-        params: GetQuotaOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>,
-        datadog::Error<GetQuotaError>,
-    > {
+///
+/// By default, you can retrieve quotas from your organization and authorized descendant organizations in the same data center. Set `include_descendants=false` to restrict access to your organization.
+///
+/// A quota remains readable after its associated user, role, or team is deleted. Requires `billing_read` or `billing_edit`.
+    pub async fn get_quota_with_http_info(&self, quota_namespace: String, id: String, params: GetQuotaOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>, datadog::Error<GetQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_quota";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3095,6 +2644,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
 
@@ -3102,21 +2652,23 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            , id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3129,22 +2681,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3156,62 +2702,38 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageQuotaResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageQuotaResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetQuotaError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Read an organization request, justification, decision, and linked grant state. Requires Billing Edit. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn get_temporary_grant_request(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestResponse,
-        datadog::Error<GetTemporaryGrantRequestError>,
-    > {
-        match self
-            .get_temporary_grant_request_with_http_info(request_id)
-            .await
-        {
+    pub async fn get_temporary_grant_request(&self, request_id: uuid::Uuid) -> Result<crate::datadogV2::model::TemporaryGrantRequestResponse, datadog::Error<GetTemporaryGrantRequestError>> {
+        match self.get_temporary_grant_request_with_http_info(request_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Read an organization request, justification, decision, and linked grant state. Requires Billing Edit. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn get_temporary_grant_request_with_http_info(
-        &self,
-        request_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
-        datadog::Error<GetTemporaryGrantRequestError>,
-    > {
+    pub async fn get_temporary_grant_request_with_http_info(&self, request_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>, datadog::Error<GetTemporaryGrantRequestError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_temporary_grant_request";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3223,19 +2745,24 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            request_id = datadog::urlencode(request_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), request_id=
+            datadog::urlencode(request_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3248,22 +2775,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3275,72 +2796,44 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTemporaryGrantRequestError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTemporaryGrantRequestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get hourly usage for application security .
-    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_application_security_monitoring(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageApplicationSecurityMonitoringOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
-        datadog::Error<GetUsageApplicationSecurityMonitoringError>,
-    > {
-        match self
-            .get_usage_application_security_monitoring_with_http_info(start_hr, params)
-            .await
-        {
+/// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_application_security_monitoring(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageApplicationSecurityMonitoringOptionalParams) -> Result<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse, datadog::Error<GetUsageApplicationSecurityMonitoringError>> {
+        match self.get_usage_application_security_monitoring_with_http_info(start_hr,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get hourly usage for application security .
-    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_application_security_monitoring_with_http_info(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageApplicationSecurityMonitoringOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
-        >,
-        datadog::Error<GetUsageApplicationSecurityMonitoringError>,
-    > {
+/// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_application_security_monitoring_with_http_info(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageApplicationSecurityMonitoringOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>, datadog::Error<GetUsageApplicationSecurityMonitoringError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_application_security_monitoring";
 
+        
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
@@ -3348,28 +2841,20 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/application_security",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_hr",
-            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder = local_req_builder.query(&[(
-                "end_hr",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3382,22 +2867,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3409,77 +2888,57 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageApplicationSecurityMonitoringResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageApplicationSecurityMonitoringError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageApplicationSecurityMonitoringError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get usage attribution types.
-    pub async fn get_usage_attribution_types(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::UsageAttributionTypesResponse,
-        datadog::Error<GetUsageAttributionTypesError>,
-    > {
+    pub async fn get_usage_attribution_types(&self) -> Result<crate::datadogV2::model::UsageAttributionTypesResponse, datadog::Error<GetUsageAttributionTypesError>> {
         match self.get_usage_attribution_types_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get usage attribution types.
-    pub async fn get_usage_attribution_types_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageAttributionTypesResponse>,
-        datadog::Error<GetUsageAttributionTypesError>,
-    > {
+    pub async fn get_usage_attribution_types_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageAttributionTypesResponse>, datadog::Error<GetUsageAttributionTypesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_attribution_types";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/usage-attribution-types",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3492,22 +2951,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3519,70 +2972,44 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageAttributionTypesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageAttributionTypesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageAttributionTypesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageAttributionTypesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get hourly usage for Lambda traced invocations.
-    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_lambda_traced_invocations(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageLambdaTracedInvocationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
-        datadog::Error<GetUsageLambdaTracedInvocationsError>,
-    > {
-        match self
-            .get_usage_lambda_traced_invocations_with_http_info(start_hr, params)
-            .await
-        {
+/// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_lambda_traced_invocations(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageLambdaTracedInvocationsOptionalParams) -> Result<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse, datadog::Error<GetUsageLambdaTracedInvocationsError>> {
+        match self.get_usage_lambda_traced_invocations_with_http_info(start_hr,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get hourly usage for Lambda traced invocations.
-    /// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_lambda_traced_invocations_with_http_info(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageLambdaTracedInvocationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>,
-        datadog::Error<GetUsageLambdaTracedInvocationsError>,
-    > {
+/// **Note:** This endpoint has been deprecated.. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_lambda_traced_invocations_with_http_info(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageLambdaTracedInvocationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>, datadog::Error<GetUsageLambdaTracedInvocationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_lambda_traced_invocations";
 
+        
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
@@ -3590,28 +3017,20 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/lambda_traced_invocations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_hr",
-            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder = local_req_builder.query(&[(
-                "end_hr",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3624,22 +3043,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3651,130 +3064,94 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::UsageLambdaTracedInvocationsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageLambdaTracedInvocationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageLambdaTracedInvocationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageLambdaTracedInvocationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get resource-level usage for a billing dimension and month, using the same
-    /// data as the resource breakdown in Plan & Usage. Supports all host and
-    /// non-host resource types available in that breakdown. Availability depends
-    /// on the billing dimension and the organization's usage data.
-    ///
-    /// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
-    /// to `true` to also return usage from its descendant organizations in all regions.
-    ///
-    /// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
-    /// For dimensions billed at the 99th percentile, this view returns resources at the
-    /// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
-    /// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
-    /// for unsupported billing dimensions, or dimensions configured with an unsupported
-    /// billing aggregation method, return a `400 Bad Request` error.
-    ///
-    /// To get the next page of results, pass the `meta.pagination.next_record_id` value
-    /// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
-    /// A null cursor indicates the last page. Paginated responses contain at most
-    /// `page[limit]` resource records, including queries across descendant organizations.
-    ///
-    /// Exception: for any billing dimension billed at the 99th percentile,
-    /// `filter[view]=billable` returns the complete resource breakdown in one response,
-    /// including requested descendants. Eligibility depends on the organization's
-    /// billing configuration for the requested dimension and month, not on the product
-    /// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
-    /// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
-    /// remain paginated.
-    pub async fn get_usage_monthly_resources(
-        &self,
-        filter_billing_dimension: String,
-        filter_month: String,
-        filter_view: crate::datadogV2::model::MonthlyResourcesView,
-        params: GetUsageMonthlyResourcesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MonthlyResourcesResponse,
-        datadog::Error<GetUsageMonthlyResourcesError>,
-    > {
-        match self
-            .get_usage_monthly_resources_with_http_info(
-                filter_billing_dimension,
-                filter_month,
-                filter_view,
-                params,
-            )
-            .await
-        {
+/// data as the resource breakdown in Plan & Usage. Supports all host and
+/// non-host resource types available in that breakdown. Availability depends
+/// on the billing dimension and the organization's usage data.
+///
+/// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
+/// to `true` to also return usage from its descendant organizations in all regions.
+///
+/// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
+/// For dimensions billed at the 99th percentile, this view returns resources at the
+/// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
+/// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
+/// for unsupported billing dimensions, or dimensions configured with an unsupported
+/// billing aggregation method, return a `400 Bad Request` error.
+///
+/// To get the next page of results, pass the `meta.pagination.next_record_id` value
+/// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
+/// A null cursor indicates the last page. Paginated responses contain at most
+/// `page[limit]` resource records, including queries across descendant organizations.
+///
+/// Exception: for any billing dimension billed at the 99th percentile,
+/// `filter[view]=billable` returns the complete resource breakdown in one response,
+/// including requested descendants. Eligibility depends on the organization's
+/// billing configuration for the requested dimension and month, not on the product
+/// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
+/// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
+/// remain paginated.
+    pub async fn get_usage_monthly_resources(&self, filter_billing_dimension: String, filter_month: String, filter_view: crate::datadogV2::model::MonthlyResourcesView, params: GetUsageMonthlyResourcesOptionalParams) -> Result<crate::datadogV2::model::MonthlyResourcesResponse, datadog::Error<GetUsageMonthlyResourcesError>> {
+        match self.get_usage_monthly_resources_with_http_info(filter_billing_dimension, filter_month, filter_view,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get resource-level usage for a billing dimension and month, using the same
-    /// data as the resource breakdown in Plan & Usage. Supports all host and
-    /// non-host resource types available in that breakdown. Availability depends
-    /// on the billing dimension and the organization's usage data.
-    ///
-    /// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
-    /// to `true` to also return usage from its descendant organizations in all regions.
-    ///
-    /// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
-    /// For dimensions billed at the 99th percentile, this view returns resources at the
-    /// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
-    /// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
-    /// for unsupported billing dimensions, or dimensions configured with an unsupported
-    /// billing aggregation method, return a `400 Bad Request` error.
-    ///
-    /// To get the next page of results, pass the `meta.pagination.next_record_id` value
-    /// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
-    /// A null cursor indicates the last page. Paginated responses contain at most
-    /// `page[limit]` resource records, including queries across descendant organizations.
-    ///
-    /// Exception: for any billing dimension billed at the 99th percentile,
-    /// `filter[view]=billable` returns the complete resource breakdown in one response,
-    /// including requested descendants. Eligibility depends on the organization's
-    /// billing configuration for the requested dimension and month, not on the product
-    /// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
-    /// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
-    /// remain paginated.
-    pub async fn get_usage_monthly_resources_with_http_info(
-        &self,
-        filter_billing_dimension: String,
-        filter_month: String,
-        filter_view: crate::datadogV2::model::MonthlyResourcesView,
-        params: GetUsageMonthlyResourcesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MonthlyResourcesResponse>,
-        datadog::Error<GetUsageMonthlyResourcesError>,
-    > {
+/// data as the resource breakdown in Plan & Usage. Supports all host and
+/// non-host resource types available in that breakdown. Availability depends
+/// on the billing dimension and the organization's usage data.
+///
+/// Results are scoped to the authenticated organization. Set `filter[include_descendants]`
+/// to `true` to also return usage from its descendant organizations in all regions.
+///
+/// Set `filter[view]` to `billable` to return resources that contribute to billable usage.
+/// For dimensions billed at the 99th percentile, this view returns resources at the
+/// selected billing hour. For sum-based dimensions, it returns monthly resource usage.
+/// Set `filter[view]` to `all` to return the full monthly resource breakdown. Requests
+/// for unsupported billing dimensions, or dimensions configured with an unsupported
+/// billing aggregation method, return a `400 Bad Request` error.
+///
+/// To get the next page of results, pass the `meta.pagination.next_record_id` value
+/// from the previous response as `page[next_record_id]`, and keep all filters unchanged.
+/// A null cursor indicates the last page. Paginated responses contain at most
+/// `page[limit]` resource records, including queries across descendant organizations.
+///
+/// Exception: for any billing dimension billed at the 99th percentile,
+/// `filter[view]=billable` returns the complete resource breakdown in one response,
+/// including requested descendants. Eligibility depends on the organization's
+/// billing configuration for the requested dimension and month, not on the product
+/// name. For these queries, `page[limit]` and `page[next_record_id]` are ignored, and
+/// `meta.pagination.next_record_id` is null. Sum-based usage and `filter[view]=all`
+/// remain paginated.
+    pub async fn get_usage_monthly_resources_with_http_info(&self, filter_billing_dimension: String, filter_month: String, filter_view: crate::datadogV2::model::MonthlyResourcesView, params: GetUsageMonthlyResourcesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MonthlyResourcesResponse>, datadog::Error<GetUsageMonthlyResourcesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_monthly_resources";
 
+        
         // unbox and build optional parameters
         let filter_include_descendants = params.filter_include_descendants;
         let page_limit = params.page_limit;
@@ -3784,39 +3161,28 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/monthly_resources",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "filter[billing_dimension]",
-            &filter_billing_dimension.to_string(),
-        )]);
-        local_req_builder =
-            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
-        local_req_builder = local_req_builder.query(&[("filter[view]", &filter_view.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[billing_dimension]", &filter_billing_dimension.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("filter[month]", &filter_month.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("filter[view]", &filter_view.to_string() )]);
         if let Some(ref local_query_param) = filter_include_descendants {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[include_descendants]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[include_descendants]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_next_record_id {
-            local_req_builder = local_req_builder
-                .query(&[("page[next_record_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[next_record_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3829,22 +3195,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3856,70 +3216,44 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MonthlyResourcesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MonthlyResourcesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageMonthlyResourcesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageMonthlyResourcesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get hourly usage for observability pipelines.
-    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_observability_pipelines(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageObservabilityPipelinesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UsageObservabilityPipelinesResponse,
-        datadog::Error<GetUsageObservabilityPipelinesError>,
-    > {
-        match self
-            .get_usage_observability_pipelines_with_http_info(start_hr, params)
-            .await
-        {
+/// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_observability_pipelines(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageObservabilityPipelinesOptionalParams) -> Result<crate::datadogV2::model::UsageObservabilityPipelinesResponse, datadog::Error<GetUsageObservabilityPipelinesError>> {
+        match self.get_usage_observability_pipelines_with_http_info(start_hr,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get hourly usage for observability pipelines.
-    /// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
-    pub async fn get_usage_observability_pipelines_with_http_info(
-        &self,
-        start_hr: chrono::DateTime<chrono::Utc>,
-        params: GetUsageObservabilityPipelinesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageObservabilityPipelinesResponse>,
-        datadog::Error<GetUsageObservabilityPipelinesError>,
-    > {
+/// **Note:** This endpoint has been deprecated. Hourly usage data for all products is now available in the [Get hourly usage by product family API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-hourly-usage-by-product-family>)
+    pub async fn get_usage_observability_pipelines_with_http_info(&self, start_hr: chrono::DateTime<chrono::Utc>, params: GetUsageObservabilityPipelinesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageObservabilityPipelinesResponse>, datadog::Error<GetUsageObservabilityPipelinesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_observability_pipelines";
 
+        
         // unbox and build optional parameters
         let end_hr = params.end_hr;
 
@@ -3927,28 +3261,20 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/observability_pipelines",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "start_hr",
-            &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("start_hr", &start_hr.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = end_hr {
-            local_req_builder = local_req_builder.query(&[(
-                "end_hr",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_hr", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3961,22 +3287,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3988,153 +3308,131 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageObservabilityPipelinesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageObservabilityPipelinesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageObservabilityPipelinesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageObservabilityPipelinesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the field names returned by `GET /api/v1/usage/summary` at each of its
-    /// three response levels. Each list contains every key the data endpoint
-    /// emits—both typed fields declared in the OpenAPI spec and untyped keys
-    /// exposed through `additionalProperties` (the latter used for billing
-    /// dimensions and usage types added after the v1 schema freeze).
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    ///
-    /// Go example:
-    ///
-    /// ```go
-    /// fields, _, err := api.GetUsageSummaryAvailableFields(ctx)
-    /// attr := fields.Data.GetAttributes()
-    ///
-    /// // resp is the *UsageSummaryResponse returned by api.GetUsageSummary(ctx, ...)
-    /// // Layer 1: UsageSummaryResponse
-    /// for _, key := range attr.GetResponseFields() {
-    ///     if val, ok := resp.AdditionalProperties[key]; ok {
-    ///         fmt.Println(key, val.(json.Number))
-    ///     }
-    /// }
-    /// // Layer 2: UsageSummaryDate (per month)
-    /// for _, date := range resp.GetUsage() {
-    ///     for _, key := range attr.GetDateFields() {
-    ///         if val, ok := date.AdditionalProperties[key]; ok {
-    ///             fmt.Println(key, val.(json.Number))
-    ///         }
-    ///     }
-    ///     // Layer 3: UsageSummaryDateOrg (per org per month)
-    ///     for _, org := range date.GetOrgs() {
-    ///         for _, key := range attr.GetDateOrgFields() {
-    ///             if val, ok := org.AdditionalProperties[key]; ok {
-    ///                 fmt.Println(key, val.(json.Number))
-    ///             }
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    pub async fn get_usage_summary_available_fields(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::UsageSummaryAvailableFieldsResponse,
-        datadog::Error<GetUsageSummaryAvailableFieldsError>,
-    > {
-        match self
-            .get_usage_summary_available_fields_with_http_info()
-            .await
-        {
+/// three response levels. Each list contains every key the data endpoint
+/// emits—both typed fields declared in the OpenAPI spec and untyped keys
+/// exposed through `additionalProperties` (the latter used for billing
+/// dimensions and usage types added after the v1 schema freeze).
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+///
+/// Go example:
+///
+/// ```go
+/// fields, _, err := api.GetUsageSummaryAvailableFields(ctx)
+/// attr := fields.Data.GetAttributes()
+///
+/// // resp is the *UsageSummaryResponse returned by api.GetUsageSummary(ctx, ...)
+/// // Layer 1: UsageSummaryResponse
+/// for _, key := range attr.GetResponseFields() {
+///     if val, ok := resp.AdditionalProperties[key]; ok {
+///         fmt.Println(key, val.(json.Number))
+///     }
+/// }
+/// // Layer 2: UsageSummaryDate (per month)
+/// for _, date := range resp.GetUsage() {
+///     for _, key := range attr.GetDateFields() {
+///         if val, ok := date.AdditionalProperties[key]; ok {
+///             fmt.Println(key, val.(json.Number))
+///         }
+///     }
+///     // Layer 3: UsageSummaryDateOrg (per org per month)
+///     for _, org := range date.GetOrgs() {
+///         for _, key := range attr.GetDateOrgFields() {
+///             if val, ok := org.AdditionalProperties[key]; ok {
+///                 fmt.Println(key, val.(json.Number))
+///             }
+///         }
+///     }
+/// }
+/// ```
+    pub async fn get_usage_summary_available_fields(&self) -> Result<crate::datadogV2::model::UsageSummaryAvailableFieldsResponse, datadog::Error<GetUsageSummaryAvailableFieldsError>> {
+        match self.get_usage_summary_available_fields_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the field names returned by `GET /api/v1/usage/summary` at each of its
-    /// three response levels. Each list contains every key the data endpoint
-    /// emits—both typed fields declared in the OpenAPI spec and untyped keys
-    /// exposed through `additionalProperties` (the latter used for billing
-    /// dimensions and usage types added after the v1 schema freeze).
-    ///
-    /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
-    ///
-    /// Go example:
-    ///
-    /// ```go
-    /// fields, _, err := api.GetUsageSummaryAvailableFields(ctx)
-    /// attr := fields.Data.GetAttributes()
-    ///
-    /// // resp is the *UsageSummaryResponse returned by api.GetUsageSummary(ctx, ...)
-    /// // Layer 1: UsageSummaryResponse
-    /// for _, key := range attr.GetResponseFields() {
-    ///     if val, ok := resp.AdditionalProperties[key]; ok {
-    ///         fmt.Println(key, val.(json.Number))
-    ///     }
-    /// }
-    /// // Layer 2: UsageSummaryDate (per month)
-    /// for _, date := range resp.GetUsage() {
-    ///     for _, key := range attr.GetDateFields() {
-    ///         if val, ok := date.AdditionalProperties[key]; ok {
-    ///             fmt.Println(key, val.(json.Number))
-    ///         }
-    ///     }
-    ///     // Layer 3: UsageSummaryDateOrg (per org per month)
-    ///     for _, org := range date.GetOrgs() {
-    ///         for _, key := range attr.GetDateOrgFields() {
-    ///             if val, ok := org.AdditionalProperties[key]; ok {
-    ///                 fmt.Println(key, val.(json.Number))
-    ///             }
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    pub async fn get_usage_summary_available_fields_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageSummaryAvailableFieldsResponse>,
-        datadog::Error<GetUsageSummaryAvailableFieldsError>,
-    > {
+/// three response levels. Each list contains every key the data endpoint
+/// emits—both typed fields declared in the OpenAPI spec and untyped keys
+/// exposed through `additionalProperties` (the latter used for billing
+/// dimensions and usage types added after the v1 schema freeze).
+///
+/// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
+///
+/// Go example:
+///
+/// ```go
+/// fields, _, err := api.GetUsageSummaryAvailableFields(ctx)
+/// attr := fields.Data.GetAttributes()
+///
+/// // resp is the *UsageSummaryResponse returned by api.GetUsageSummary(ctx, ...)
+/// // Layer 1: UsageSummaryResponse
+/// for _, key := range attr.GetResponseFields() {
+///     if val, ok := resp.AdditionalProperties[key]; ok {
+///         fmt.Println(key, val.(json.Number))
+///     }
+/// }
+/// // Layer 2: UsageSummaryDate (per month)
+/// for _, date := range resp.GetUsage() {
+///     for _, key := range attr.GetDateFields() {
+///         if val, ok := date.AdditionalProperties[key]; ok {
+///             fmt.Println(key, val.(json.Number))
+///         }
+///     }
+///     // Layer 3: UsageSummaryDateOrg (per org per month)
+///     for _, org := range date.GetOrgs() {
+///         for _, key := range attr.GetDateOrgFields() {
+///             if val, ok := org.AdditionalProperties[key]; ok {
+///                 fmt.Println(key, val.(json.Number))
+///             }
+///         }
+///     }
+/// }
+/// ```
+    pub async fn get_usage_summary_available_fields_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageSummaryAvailableFieldsResponse>, datadog::Error<GetUsageSummaryAvailableFieldsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_usage_summary_available_fields";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/summary/available_fields",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Accept",
-            HeaderValue::from_static("application/json;datetime-format=rfc3339"),
-        );
+        headers.insert("Accept", HeaderValue::from_static("application/json;datetime-format=rfc3339"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4147,22 +3445,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4174,64 +3466,39 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageSummaryAvailableFieldsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageSummaryAvailableFieldsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUsageSummaryAvailableFieldsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUsageSummaryAvailableFieldsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the authenticated user's own requests, including decided requests. Other users' requests are never included. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn list_my_temporary_grant_requests(
-        &self,
-        params: ListMyTemporaryGrantRequestsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestListResponse,
-        datadog::Error<ListMyTemporaryGrantRequestsError>,
-    > {
-        match self
-            .list_my_temporary_grant_requests_with_http_info(params)
-            .await
-        {
+    pub async fn list_my_temporary_grant_requests(&self, params: ListMyTemporaryGrantRequestsOptionalParams) -> Result<crate::datadogV2::model::TemporaryGrantRequestListResponse, datadog::Error<ListMyTemporaryGrantRequestsError>> {
+        match self.list_my_temporary_grant_requests_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_my_temporary_grant_requests_with_pagination(
-        &self,
-        mut params: ListMyTemporaryGrantRequestsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TemporaryGrantRequestData,
-            datadog::Error<ListMyTemporaryGrantRequestsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListMyTemporaryGrantRequestsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TemporaryGrantRequestData, datadog::Error<ListMyTemporaryGrantRequestsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 50;
             if params.page_limit.is_none() {
@@ -4257,14 +3524,9 @@ impl UsageMeteringAPI {
         }
     }
 
+    
     /// List the authenticated user's own requests, including decided requests. Other users' requests are never included. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn list_my_temporary_grant_requests_with_http_info(
-        &self,
-        params: ListMyTemporaryGrantRequestsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>,
-        datadog::Error<ListMyTemporaryGrantRequestsError>,
-    > {
+    pub async fn list_my_temporary_grant_requests_with_http_info(&self, params: ListMyTemporaryGrantRequestsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>, datadog::Error<ListMyTemporaryGrantRequestsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_my_temporary_grant_requests";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4276,6 +3538,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_status = params.filter_status;
         let page_limit = params.page_limit;
@@ -4285,27 +3548,25 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/temporary-grant-requests",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[status]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4318,22 +3579,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4345,66 +3600,41 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMyTemporaryGrantRequestsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMyTemporaryGrantRequestsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include
-    /// descendant organizations in the same data center as the caller. Requires the `billing_read` or
-    /// `billing_edit` permission.
-    pub async fn list_quotas(
-        &self,
-        quota_namespace: String,
-        params: ListQuotasOptionalParams,
-    ) -> Result<crate::datadogV2::model::UsageQuotasListResponse, datadog::Error<ListQuotasError>>
-    {
-        match self
-            .list_quotas_with_http_info(quota_namespace, params)
-            .await
-        {
+/// descendant organizations in the same data center as the caller. Requires the `billing_read` or
+/// `billing_edit` permission.
+    pub async fn list_quotas(&self, quota_namespace: String, params: ListQuotasOptionalParams) -> Result<crate::datadogV2::model::UsageQuotasListResponse, datadog::Error<ListQuotasError>> {
+        match self.list_quotas_with_http_info(quota_namespace,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_quotas_with_pagination(
-        &self,
-        quota_namespace: String,
-        mut params: ListQuotasOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::UsageQuotaResponseData,
-            datadog::Error<ListQuotasError>,
-        >,
-    > + '_ {
+        &self,  quota_namespace: String, mut params: ListQuotasOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UsageQuotaResponseData, datadog::Error<ListQuotasError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_limit.is_none() {
@@ -4430,17 +3660,11 @@ impl UsageMeteringAPI {
         }
     }
 
+    
     /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include
-    /// descendant organizations in the same data center as the caller. Requires the `billing_read` or
-    /// `billing_edit` permission.
-    pub async fn list_quotas_with_http_info(
-        &self,
-        quota_namespace: String,
-        params: ListQuotasOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageQuotasListResponse>,
-        datadog::Error<ListQuotasError>,
-    > {
+/// descendant organizations in the same data center as the caller. Requires the `billing_read` or
+/// `billing_edit` permission.
+    pub async fn list_quotas_with_http_info(&self, quota_namespace: String, params: ListQuotasOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageQuotasListResponse>, datadog::Error<ListQuotasError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_quotas";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4452,6 +3676,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
         let page_cursor = params.page_cursor;
@@ -4461,28 +3686,27 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4495,22 +3719,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4522,63 +3740,39 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageQuotasListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageQuotasListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListQuotasError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all request statuses within the authenticated organization. Filter by pending status for the review queue. Requires Billing Edit, including for reads. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn list_temporary_grant_requests(
-        &self,
-        params: ListTemporaryGrantRequestsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestListResponse,
-        datadog::Error<ListTemporaryGrantRequestsError>,
-    > {
-        match self
-            .list_temporary_grant_requests_with_http_info(params)
-            .await
-        {
+    pub async fn list_temporary_grant_requests(&self, params: ListTemporaryGrantRequestsOptionalParams) -> Result<crate::datadogV2::model::TemporaryGrantRequestListResponse, datadog::Error<ListTemporaryGrantRequestsError>> {
+        match self.list_temporary_grant_requests_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_temporary_grant_requests_with_pagination(
-        &self,
-        mut params: ListTemporaryGrantRequestsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TemporaryGrantRequestData,
-            datadog::Error<ListTemporaryGrantRequestsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListTemporaryGrantRequestsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TemporaryGrantRequestData, datadog::Error<ListTemporaryGrantRequestsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 50;
             if params.page_limit.is_none() {
@@ -4604,14 +3798,9 @@ impl UsageMeteringAPI {
         }
     }
 
+    
     /// List all request statuses within the authenticated organization. Filter by pending status for the review queue. Requires Billing Edit, including for reads. Requires an authenticated human user. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
-    pub async fn list_temporary_grant_requests_with_http_info(
-        &self,
-        params: ListTemporaryGrantRequestsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>,
-        datadog::Error<ListTemporaryGrantRequestsError>,
-    > {
+    pub async fn list_temporary_grant_requests_with_http_info(&self, params: ListTemporaryGrantRequestsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>, datadog::Error<ListTemporaryGrantRequestsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_temporary_grant_requests";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4623,6 +3812,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_status = params.filter_status;
         let page_limit = params.page_limit;
@@ -4633,33 +3823,28 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/admin/temporary-grant-requests",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[status]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_requested_by_user_id {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[requested_by_user_id]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[requested_by_user_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4672,22 +3857,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4699,66 +3878,38 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTemporaryGrantRequestsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTemporaryGrantRequestsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the supplied fields on a usage quota. Setting `enforced=false` clears any pending change atomically, including when enforcement is already disabled. Other immediate updates preserve future pending changes when `pending_usage_limit` is omitted. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn update_quota(
-        &self,
-        quota_namespace: String,
-        id: String,
-        body: crate::datadogV2::model::UsageQuotaUpdateRequest,
-        params: UpdateQuotaOptionalParams,
-    ) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<UpdateQuotaError>> {
-        match self
-            .update_quota_with_http_info(quota_namespace, id, body, params)
-            .await
-        {
+    pub async fn update_quota(&self, quota_namespace: String, id: String, body: crate::datadogV2::model::UsageQuotaUpdateRequest, params: UpdateQuotaOptionalParams) -> Result<crate::datadogV2::model::UsageQuotaResponse, datadog::Error<UpdateQuotaError>> {
+        match self.update_quota_with_http_info(quota_namespace, id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the supplied fields on a usage quota. Setting `enforced=false` clears any pending change atomically, including when enforcement is already disabled. Other immediate updates preserve future pending changes when `pending_usage_limit` is omitted. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
-    pub async fn update_quota_with_http_info(
-        &self,
-        quota_namespace: String,
-        id: String,
-        body: crate::datadogV2::model::UsageQuotaUpdateRequest,
-        params: UpdateQuotaOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>,
-        datadog::Error<UpdateQuotaError>,
-    > {
+    pub async fn update_quota_with_http_info(&self, quota_namespace: String, id: String, body: crate::datadogV2::model::UsageQuotaUpdateRequest, params: UpdateQuotaOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsageQuotaResponse>, datadog::Error<UpdateQuotaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_quota";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4770,6 +3921,7 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_descendants = params.include_descendants;
 
@@ -4777,22 +3929,24 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/quotas/{quota_namespace}/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            quota_namespace = datadog::urlencode(quota_namespace),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), quota_namespace=
+            datadog::urlencode(quota_namespace)
+            , id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_descendants {
-            local_req_builder =
-                local_req_builder.query(&[("include_descendants", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendants", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4805,23 +3959,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4829,7 +3976,10 @@ impl UsageMeteringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4839,7 +3989,10 @@ impl UsageMeteringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4861,7 +4014,7 @@ impl UsageMeteringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4878,64 +4031,38 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UsageQuotaResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UsageQuotaResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateQuotaError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Approve or deny the submitted terms, which are immutable. Approval atomically writes the grant, audit record, and request decision. An expired request can't be approved. Requires the Billing Edit permission. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn update_temporary_grant_request(
-        &self,
-        request_id: uuid::Uuid,
-        body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest,
-    ) -> Result<
-        crate::datadogV2::model::TemporaryGrantRequestResponse,
-        datadog::Error<UpdateTemporaryGrantRequestError>,
-    > {
-        match self
-            .update_temporary_grant_request_with_http_info(request_id, body)
-            .await
-        {
+    pub async fn update_temporary_grant_request(&self, request_id: uuid::Uuid, body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest) -> Result<crate::datadogV2::model::TemporaryGrantRequestResponse, datadog::Error<UpdateTemporaryGrantRequestError>> {
+        match self.update_temporary_grant_request_with_http_info(request_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Approve or deny the submitted terms, which are immutable. Approval atomically writes the grant, audit record, and request decision. An expired request can't be approved. Requires the Billing Edit permission. Requires an authenticated human user. Service-account credentials aren't supported. Request status remains approved after the grant's expiry, revocation, or replacement.
-    pub async fn update_temporary_grant_request_with_http_info(
-        &self,
-        request_id: uuid::Uuid,
-        body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
-        datadog::Error<UpdateTemporaryGrantRequestError>,
-    > {
+    pub async fn update_temporary_grant_request_with_http_info(&self, request_id: uuid::Uuid, body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>, datadog::Error<UpdateTemporaryGrantRequestError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_temporary_grant_request";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4947,20 +4074,25 @@ impl UsageMeteringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}/decision",
-            local_configuration.get_operation_host(local_operation_id),
-            request_id = datadog::urlencode(request_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), request_id=
+            datadog::urlencode(request_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4973,23 +4105,16 @@ impl UsageMeteringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4997,7 +4122,10 @@ impl UsageMeteringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5007,7 +4135,10 @@ impl UsageMeteringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5029,7 +4160,7 @@ impl UsageMeteringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5046,26 +4177,17 @@ impl UsageMeteringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTemporaryGrantRequestError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTemporaryGrantRequestError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

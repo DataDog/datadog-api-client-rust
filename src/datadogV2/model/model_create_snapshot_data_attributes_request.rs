@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for snapshot creation.
 #[non_exhaustive]
@@ -39,15 +39,11 @@ pub struct CreateSnapshotDataAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateSnapshotDataAttributesRequest {
-    pub fn new(
-        end: i64,
-        start: i64,
-        widget_definition: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> CreateSnapshotDataAttributesRequest {
+    pub fn new(end: i64, start: i64, widget_definition: std::collections::BTreeMap<String, serde_json::Value>) -> CreateSnapshotDataAttributesRequest {
         CreateSnapshotDataAttributesRequest {
             additional_config: None,
             end,
@@ -61,43 +57,39 @@ impl CreateSnapshotDataAttributesRequest {
             _unparsed: false,
         }
     }
-
-    pub fn additional_config(
-        mut self,
-        value: crate::datadogV2::model::CreateSnapshotAdditionalConfig,
-    ) -> Self {
+    
+    pub fn additional_config(mut self, value: crate::datadogV2::model::CreateSnapshotAdditionalConfig) -> Self {
         self.additional_config = Some(value);
         self
     }
-
+    
     pub fn height(mut self, value: i64) -> Self {
         self.height = Some(value);
         self
     }
-
+    
     pub fn is_authenticated(mut self, value: bool) -> Self {
         self.is_authenticated = Some(value);
         self
     }
-
+    
     pub fn ttl(mut self, value: crate::datadogV2::model::CreateSnapshotTTL) -> Self {
         self.ttl = Some(value);
         self
     }
-
+    
     pub fn width(mut self, value: i64) -> Self {
         self.width = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateSnapshotDataAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -116,22 +108,15 @@ impl<'de> Deserialize<'de> for CreateSnapshotDataAttributesRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut additional_config: Option<
-                    crate::datadogV2::model::CreateSnapshotAdditionalConfig,
-                > = None;
+                let mut additional_config: Option<crate::datadogV2::model::CreateSnapshotAdditionalConfig> = None;
                 let mut end: Option<i64> = None;
                 let mut height: Option<i64> = None;
                 let mut is_authenticated: Option<bool> = None;
                 let mut start: Option<i64> = None;
                 let mut ttl: Option<crate::datadogV2::model::CreateSnapshotTTL> = None;
-                let mut widget_definition: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
+                let mut widget_definition: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut width: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,28 +125,26 @@ impl<'de> Deserialize<'de> for CreateSnapshotDataAttributesRequest {
                             if v.is_null() {
                                 continue;
                             }
-                            additional_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            additional_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "height" => {
                             if v.is_null() {
                                 continue;
                             }
                             height = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_authenticated" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_authenticated =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_authenticated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ttl" => {
                             if v.is_null() {
                                 continue;
@@ -169,36 +152,32 @@ impl<'de> Deserialize<'de> for CreateSnapshotDataAttributesRequest {
                             ttl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _ttl) = ttl {
                                 match _ttl {
-                                    crate::datadogV2::model::CreateSnapshotTTL::UnparsedObject(
-                                        _ttl,
-                                    ) => {
+                                    crate::datadogV2::model::CreateSnapshotTTL::UnparsedObject(_ttl) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "widget_definition" => {
-                            widget_definition =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            widget_definition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "width" => {
                             if v.is_null() {
                                 continue;
                             }
                             width = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let end = end.ok_or_else(|| M::Error::missing_field("end"))?;
                 let start = start.ok_or_else(|| M::Error::missing_field("start"))?;
-                let widget_definition = widget_definition
-                    .ok_or_else(|| M::Error::missing_field("widget_definition"))?;
+                let widget_definition = widget_definition.ok_or_else(|| M::Error::missing_field("widget_definition"))?;
 
                 let content = CreateSnapshotDataAttributesRequest {
                     additional_config,

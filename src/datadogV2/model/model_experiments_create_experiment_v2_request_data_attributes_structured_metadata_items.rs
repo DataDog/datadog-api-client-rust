@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata field key and values to set on the experiment.
 #[non_exhaustive]
@@ -24,13 +24,11 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataI
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
-    pub fn new(
-        field_key: String,
-    ) -> ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
+    pub fn new(field_key: String) -> ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
         ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
             enum_values: None,
             field_key,
@@ -39,37 +37,32 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn enum_values(mut self, value: Vec<String>) -> Self {
         self.enum_values = Some(value);
         self
     }
-
+    
     pub fn freetext_value(mut self, value: String) -> Self {
         self.freetext_value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems
-{
+
+
+impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItemsVisitor;
-        impl<'a> Visitor<'a>
-            for ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItemsVisitor
-        {
+        impl<'a> Visitor<'a> for ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItemsVisitor {
             type Value = ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -83,10 +76,7 @@ impl<'de> Deserialize<'de>
                 let mut enum_values: Option<Vec<String>> = None;
                 let mut field_key: Option<String> = None;
                 let mut freetext_value: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,43 +85,38 @@ impl<'de> Deserialize<'de>
                             if v.is_null() {
                                 continue;
                             }
-                            enum_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enum_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "field_key" => {
                             field_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "freetext_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            freetext_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            freetext_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let field_key = field_key.ok_or_else(|| M::Error::missing_field("field_key"))?;
 
-                let content =
-                    ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
-                        enum_values,
-                        field_key,
-                        freetext_value,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItems {
+                    enum_values,
+                    field_key,
+                    freetext_value,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItemsVisitor,
-        )
+        deserializer.deserialize_any(ExperimentsCreateExperimentV2RequestDataAttributesStructuredMetadataItemsVisitor)
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A CycloneDX 1.5 Bill of Materials (BOM) document containing vulnerability data.
 #[non_exhaustive]
@@ -33,17 +33,11 @@ pub struct CycloneDXBom {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CycloneDXBom {
-    pub fn new(
-        bom_format: String,
-        components: Vec<crate::datadogV2::model::CycloneDXComponent>,
-        metadata: crate::datadogV2::model::CycloneDXMetadata,
-        spec_version: String,
-        vulnerabilities: Vec<crate::datadogV2::model::CycloneDXVulnerability>,
-    ) -> CycloneDXBom {
+    pub fn new(bom_format: String, components: Vec<crate::datadogV2::model::CycloneDXComponent>, metadata: crate::datadogV2::model::CycloneDXMetadata, spec_version: String, vulnerabilities: Vec<crate::datadogV2::model::CycloneDXVulnerability>) -> CycloneDXBom {
         CycloneDXBom {
             bom_format,
             components,
@@ -55,20 +49,19 @@ impl CycloneDXBom {
             _unparsed: false,
         }
     }
-
+    
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CycloneDXBom {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -92,54 +85,45 @@ impl<'de> Deserialize<'de> for CycloneDXBom {
                 let mut metadata: Option<crate::datadogV2::model::CycloneDXMetadata> = None;
                 let mut spec_version: Option<String> = None;
                 let mut version: Option<i64> = None;
-                let mut vulnerabilities: Option<
-                    Vec<crate::datadogV2::model::CycloneDXVulnerability>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut vulnerabilities: Option<Vec<crate::datadogV2::model::CycloneDXVulnerability>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "bomFormat" => {
                             bom_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "components" => {
                             components = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "specVersion" => {
-                            spec_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            spec_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "vulnerabilities" => {
-                            vulnerabilities =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vulnerabilities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let bom_format = bom_format.ok_or_else(|| M::Error::missing_field("bom_format"))?;
                 let components = components.ok_or_else(|| M::Error::missing_field("components"))?;
                 let metadata = metadata.ok_or_else(|| M::Error::missing_field("metadata"))?;
-                let spec_version =
-                    spec_version.ok_or_else(|| M::Error::missing_field("spec_version"))?;
-                let vulnerabilities =
-                    vulnerabilities.ok_or_else(|| M::Error::missing_field("vulnerabilities"))?;
+                let spec_version = spec_version.ok_or_else(|| M::Error::missing_field("spec_version"))?;
+                let vulnerabilities = vulnerabilities.ok_or_else(|| M::Error::missing_field("vulnerabilities"))?;
 
                 let content = CycloneDXBom {
                     bom_format,

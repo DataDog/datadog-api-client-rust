@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the attributes of the security filter to be created.
 #[non_exhaustive]
@@ -30,17 +30,11 @@ pub struct SecurityFilterCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityFilterCreateAttributes {
-    pub fn new(
-        exclusion_filters: Vec<crate::datadogV2::model::SecurityFilterExclusionFilter>,
-        filtered_data_type: crate::datadogV2::model::SecurityFilterFilteredDataType,
-        is_enabled: bool,
-        name: String,
-        query: String,
-    ) -> SecurityFilterCreateAttributes {
+    pub fn new(exclusion_filters: Vec<crate::datadogV2::model::SecurityFilterExclusionFilter>, filtered_data_type: crate::datadogV2::model::SecurityFilterFilteredDataType, is_enabled: bool, name: String, query: String) -> SecurityFilterCreateAttributes {
         SecurityFilterCreateAttributes {
             exclusion_filters,
             filtered_data_type,
@@ -51,15 +45,14 @@ impl SecurityFilterCreateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,30 +71,21 @@ impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut exclusion_filters: Option<
-                    Vec<crate::datadogV2::model::SecurityFilterExclusionFilter>,
-                > = None;
-                let mut filtered_data_type: Option<
-                    crate::datadogV2::model::SecurityFilterFilteredDataType,
-                > = None;
+                let mut exclusion_filters: Option<Vec<crate::datadogV2::model::SecurityFilterExclusionFilter>> = None;
+                let mut filtered_data_type: Option<crate::datadogV2::model::SecurityFilterFilteredDataType> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "exclusion_filters" => {
-                            exclusion_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exclusion_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filtered_data_type" => {
-                            filtered_data_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            filtered_data_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _filtered_data_type) = filtered_data_type {
                                 match _filtered_data_type {
                                     crate::datadogV2::model::SecurityFilterFilteredDataType::UnparsedObject(_filtered_data_type) => {
@@ -110,27 +94,25 @@ impl<'de> Deserialize<'de> for SecurityFilterCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "is_enabled" => {
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let exclusion_filters = exclusion_filters
-                    .ok_or_else(|| M::Error::missing_field("exclusion_filters"))?;
-                let filtered_data_type = filtered_data_type
-                    .ok_or_else(|| M::Error::missing_field("filtered_data_type"))?;
+                let exclusion_filters = exclusion_filters.ok_or_else(|| M::Error::missing_field("exclusion_filters"))?;
+                let filtered_data_type = filtered_data_type.ok_or_else(|| M::Error::missing_field("filtered_data_type"))?;
                 let is_enabled = is_enabled.ok_or_else(|| M::Error::missing_field("is_enabled"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;

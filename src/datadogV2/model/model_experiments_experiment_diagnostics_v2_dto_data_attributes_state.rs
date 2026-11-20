@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsExperimentDiagnosticsV2DTODataAttributesState {
-    NOT_STARTED,
-    RUNNING,
-    COMPLETED,
-    FAILED,
+	NOT_STARTED,
+	RUNNING,
+	COMPLETED,
+	FAILED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "NOT_STARTED" => Self::NOT_STARTED,
-            "RUNNING" => Self::RUNNING,
-            "COMPLETED" => Self::COMPLETED,
-            "FAILED" => Self::FAILED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"NOT_STARTED" => Self::NOT_STARTED,"RUNNING" => Self::RUNNING,"COMPLETED" => Self::COMPLETED,"FAILED" => Self::FAILED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

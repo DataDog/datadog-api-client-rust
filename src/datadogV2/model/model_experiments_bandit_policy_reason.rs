@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsBanditPolicyReason {
-    ACTIVATION,
-    REFRESH,
-    ARM_CHANGE,
-    SCHEDULED_END,
-    STOP,
+	ACTIVATION,
+	REFRESH,
+	ARM_CHANGE,
+	SCHEDULED_END,
+	STOP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "ACTIVATION" => Self::ACTIVATION,
-            "REFRESH" => Self::REFRESH,
-            "ARM_CHANGE" => Self::ARM_CHANGE,
-            "SCHEDULED_END" => Self::SCHEDULED_END,
-            "STOP" => Self::STOP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"ACTIVATION" => Self::ACTIVATION,"REFRESH" => Self::REFRESH,"ARM_CHANGE" => Self::ARM_CHANGE,"SCHEDULED_END" => Self::SCHEDULED_END,"STOP" => Self::STOP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateServiceNowTemplateError is a struct for typed errors of method [`ServiceNowIntegrationAPI::create_service_now_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum CreateServiceNowTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteServiceNowTemplateError is a struct for typed errors of method [`ServiceNowIntegrationAPI::delete_service_now_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -27,6 +28,7 @@ pub enum DeleteServiceNowTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetServiceNowTemplateError is a struct for typed errors of method [`ServiceNowIntegrationAPI::get_service_now_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,6 +39,7 @@ pub enum GetServiceNowTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListServiceNowAssignmentGroupsError is a struct for typed errors of method [`ServiceNowIntegrationAPI::list_service_now_assignment_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -45,6 +48,7 @@ pub enum ListServiceNowAssignmentGroupsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListServiceNowBusinessServicesError is a struct for typed errors of method [`ServiceNowIntegrationAPI::list_service_now_business_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -55,6 +59,7 @@ pub enum ListServiceNowBusinessServicesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListServiceNowInstancesError is a struct for typed errors of method [`ServiceNowIntegrationAPI::list_service_now_instances`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -64,6 +69,7 @@ pub enum ListServiceNowInstancesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListServiceNowTemplatesError is a struct for typed errors of method [`ServiceNowIntegrationAPI::list_service_now_templates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -71,6 +77,7 @@ pub enum ListServiceNowTemplatesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListServiceNowUsersError is a struct for typed errors of method [`ServiceNowIntegrationAPI::list_service_now_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -81,6 +88,7 @@ pub enum ListServiceNowUsersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateServiceNowTemplateError is a struct for typed errors of method [`ServiceNowIntegrationAPI::update_service_now_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,6 +97,7 @@ pub enum UpdateServiceNowTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your ServiceNow Integration. ServiceNow is a cloud-based platform that helps organizations manage digital workflows for enterprise operations.
 #[derive(Debug, Clone)]
@@ -112,7 +121,8 @@ impl ServiceNowIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -157,59 +167,49 @@ impl ServiceNowIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new ServiceNow template.
-    pub async fn create_service_now_template(
-        &self,
-        body: crate::datadogV2::model::ServiceNowTemplateCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowTemplateResponse,
-        datadog::Error<CreateServiceNowTemplateError>,
-    > {
+    pub async fn create_service_now_template(&self, body: crate::datadogV2::model::ServiceNowTemplateCreateRequest) -> Result<crate::datadogV2::model::ServiceNowTemplateResponse, datadog::Error<CreateServiceNowTemplateError>> {
         match self.create_service_now_template_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new ServiceNow template.
-    pub async fn create_service_now_template_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ServiceNowTemplateCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>,
-        datadog::Error<CreateServiceNowTemplateError>,
-    > {
+    pub async fn create_service_now_template_with_http_info(&self, body: crate::datadogV2::model::ServiceNowTemplateCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>, datadog::Error<CreateServiceNowTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_service_now_template";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -222,23 +222,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -246,7 +239,10 @@ impl ServiceNowIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -256,7 +252,10 @@ impl ServiceNowIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -278,7 +277,7 @@ impl ServiceNowIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -295,65 +294,53 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateServiceNowTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateServiceNowTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a ServiceNow template by ID.
-    pub async fn delete_service_now_template(
-        &self,
-        template_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteServiceNowTemplateError>> {
-        match self
-            .delete_service_now_template_with_http_info(template_id)
-            .await
-        {
+    pub async fn delete_service_now_template(&self, template_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteServiceNowTemplateError>> {
+        match self.delete_service_now_template_with_http_info(template_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a ServiceNow template by ID.
-    pub async fn delete_service_now_template_with_http_info(
-        &self,
-        template_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceNowTemplateError>> {
+    pub async fn delete_service_now_template_with_http_info(&self, template_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceNowTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_service_now_template";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -366,22 +353,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -399,66 +380,50 @@ impl ServiceNowIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteServiceNowTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteServiceNowTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a ServiceNow template by ID.
-    pub async fn get_service_now_template(
-        &self,
-        template_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowTemplateResponse,
-        datadog::Error<GetServiceNowTemplateError>,
-    > {
-        match self
-            .get_service_now_template_with_http_info(template_id)
-            .await
-        {
+    pub async fn get_service_now_template(&self, template_id: uuid::Uuid) -> Result<crate::datadogV2::model::ServiceNowTemplateResponse, datadog::Error<GetServiceNowTemplateError>> {
+        match self.get_service_now_template_with_http_info(template_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a ServiceNow template by ID.
-    pub async fn get_service_now_template_with_http_info(
-        &self,
-        template_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>,
-        datadog::Error<GetServiceNowTemplateError>,
-    > {
+    pub async fn get_service_now_template_with_http_info(&self, template_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>, datadog::Error<GetServiceNowTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_service_now_template";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -471,22 +436,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -498,79 +457,59 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetServiceNowTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetServiceNowTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all assignment groups for a ServiceNow instance.
-    pub async fn list_service_now_assignment_groups(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowAssignmentGroupsResponse,
-        datadog::Error<ListServiceNowAssignmentGroupsError>,
-    > {
-        match self
-            .list_service_now_assignment_groups_with_http_info(instance_id)
-            .await
-        {
+    pub async fn list_service_now_assignment_groups(&self, instance_id: uuid::Uuid) -> Result<crate::datadogV2::model::ServiceNowAssignmentGroupsResponse, datadog::Error<ListServiceNowAssignmentGroupsError>> {
+        match self.list_service_now_assignment_groups_with_http_info(instance_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all assignment groups for a ServiceNow instance.
-    pub async fn list_service_now_assignment_groups_with_http_info(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowAssignmentGroupsResponse>,
-        datadog::Error<ListServiceNowAssignmentGroupsError>,
-    > {
+    pub async fn list_service_now_assignment_groups_with_http_info(&self, instance_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowAssignmentGroupsResponse>, datadog::Error<ListServiceNowAssignmentGroupsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_service_now_assignment_groups";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/assignment_groups/{instance_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            instance_id = datadog::urlencode(instance_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), instance_id=
+            datadog::urlencode(instance_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -583,22 +522,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -610,79 +543,59 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowAssignmentGroupsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowAssignmentGroupsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListServiceNowAssignmentGroupsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListServiceNowAssignmentGroupsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all business services for a ServiceNow instance.
-    pub async fn list_service_now_business_services(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowBusinessServicesResponse,
-        datadog::Error<ListServiceNowBusinessServicesError>,
-    > {
-        match self
-            .list_service_now_business_services_with_http_info(instance_id)
-            .await
-        {
+    pub async fn list_service_now_business_services(&self, instance_id: uuid::Uuid) -> Result<crate::datadogV2::model::ServiceNowBusinessServicesResponse, datadog::Error<ListServiceNowBusinessServicesError>> {
+        match self.list_service_now_business_services_with_http_info(instance_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all business services for a ServiceNow instance.
-    pub async fn list_service_now_business_services_with_http_info(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowBusinessServicesResponse>,
-        datadog::Error<ListServiceNowBusinessServicesError>,
-    > {
+    pub async fn list_service_now_business_services_with_http_info(&self, instance_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowBusinessServicesResponse>, datadog::Error<ListServiceNowBusinessServicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_service_now_business_services";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/business_services/{instance_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            instance_id = datadog::urlencode(instance_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), instance_id=
+            datadog::urlencode(instance_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -695,22 +608,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -722,73 +629,57 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowBusinessServicesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowBusinessServicesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListServiceNowBusinessServicesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListServiceNowBusinessServicesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all ServiceNow instances for the organization.
-    pub async fn list_service_now_instances(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowInstancesResponse,
-        datadog::Error<ListServiceNowInstancesError>,
-    > {
+    pub async fn list_service_now_instances(&self) -> Result<crate::datadogV2::model::ServiceNowInstancesResponse, datadog::Error<ListServiceNowInstancesError>> {
         match self.list_service_now_instances_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all ServiceNow instances for the organization.
-    pub async fn list_service_now_instances_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowInstancesResponse>,
-        datadog::Error<ListServiceNowInstancesError>,
-    > {
+    pub async fn list_service_now_instances_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowInstancesResponse>, datadog::Error<ListServiceNowInstancesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_service_now_instances";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/instances",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -801,22 +692,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -828,73 +713,57 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowInstancesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowInstancesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListServiceNowInstancesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListServiceNowInstancesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all ServiceNow templates for the organization.
-    pub async fn list_service_now_templates(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowTemplatesResponse,
-        datadog::Error<ListServiceNowTemplatesError>,
-    > {
+    pub async fn list_service_now_templates(&self) -> Result<crate::datadogV2::model::ServiceNowTemplatesResponse, datadog::Error<ListServiceNowTemplatesError>> {
         match self.list_service_now_templates_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all ServiceNow templates for the organization.
-    pub async fn list_service_now_templates_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplatesResponse>,
-        datadog::Error<ListServiceNowTemplatesError>,
-    > {
+    pub async fn list_service_now_templates_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplatesResponse>, datadog::Error<ListServiceNowTemplatesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_service_now_templates";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -907,22 +776,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -934,79 +797,59 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplatesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplatesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListServiceNowTemplatesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListServiceNowTemplatesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all users for a ServiceNow instance.
-    pub async fn list_service_now_users(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowUsersResponse,
-        datadog::Error<ListServiceNowUsersError>,
-    > {
-        match self
-            .list_service_now_users_with_http_info(instance_id)
-            .await
-        {
+    pub async fn list_service_now_users(&self, instance_id: uuid::Uuid) -> Result<crate::datadogV2::model::ServiceNowUsersResponse, datadog::Error<ListServiceNowUsersError>> {
+        match self.list_service_now_users_with_http_info(instance_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all users for a ServiceNow instance.
-    pub async fn list_service_now_users_with_http_info(
-        &self,
-        instance_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowUsersResponse>,
-        datadog::Error<ListServiceNowUsersError>,
-    > {
+    pub async fn list_service_now_users_with_http_info(&self, instance_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowUsersResponse>, datadog::Error<ListServiceNowUsersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_service_now_users";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/users/{instance_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            instance_id = datadog::urlencode(instance_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), instance_id=
+            datadog::urlencode(instance_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1019,22 +862,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1046,83 +883,61 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowUsersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowUsersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListServiceNowUsersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListServiceNowUsersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a ServiceNow template by ID.
-    pub async fn update_service_now_template(
-        &self,
-        template_id: uuid::Uuid,
-        body: crate::datadogV2::model::ServiceNowTemplateUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ServiceNowTemplateResponse,
-        datadog::Error<UpdateServiceNowTemplateError>,
-    > {
-        match self
-            .update_service_now_template_with_http_info(template_id, body)
-            .await
-        {
+    pub async fn update_service_now_template(&self, template_id: uuid::Uuid, body: crate::datadogV2::model::ServiceNowTemplateUpdateRequest) -> Result<crate::datadogV2::model::ServiceNowTemplateResponse, datadog::Error<UpdateServiceNowTemplateError>> {
+        match self.update_service_now_template_with_http_info(template_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a ServiceNow template by ID.
-    pub async fn update_service_now_template_with_http_info(
-        &self,
-        template_id: uuid::Uuid,
-        body: crate::datadogV2::model::ServiceNowTemplateUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>,
-        datadog::Error<UpdateServiceNowTemplateError>,
-    > {
+    pub async fn update_service_now_template_with_http_info(&self, template_id: uuid::Uuid, body: crate::datadogV2::model::ServiceNowTemplateUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceNowTemplateResponse>, datadog::Error<UpdateServiceNowTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_service_now_template";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -1134,23 +949,16 @@ impl ServiceNowIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1158,7 +966,10 @@ impl ServiceNowIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1168,7 +979,10 @@ impl ServiceNowIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1190,7 +1004,7 @@ impl ServiceNowIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1207,26 +1021,17 @@ impl ServiceNowIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceNowTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateServiceNowTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateServiceNowTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

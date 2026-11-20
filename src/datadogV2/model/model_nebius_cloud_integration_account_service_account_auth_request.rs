@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Service-account key pair authentication, the only method Nebius Cloud integration accounts support. Create a service account in the Nebius console, add it to the admin group, upload an authorized key pair to it, and issue a static API key with the OBSERVABILITY scope through the Nebius CLI.
 #[non_exhaustive]
@@ -28,14 +28,11 @@ pub struct NebiusCloudIntegrationAccountServiceAccountAuthRequest {
     pub static_api_key: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudIntegrationAccountServiceAccountAuthRequest {
-    pub fn new(
-        auth_type: crate::datadogV2::model::NebiusCloudIntegrationAccountServiceAccountAuthType,
-        service_account_id: String,
-    ) -> NebiusCloudIntegrationAccountServiceAccountAuthRequest {
+    pub fn new(auth_type: crate::datadogV2::model::NebiusCloudIntegrationAccountServiceAccountAuthType, service_account_id: String) -> NebiusCloudIntegrationAccountServiceAccountAuthRequest {
         NebiusCloudIntegrationAccountServiceAccountAuthRequest {
             auth_type,
             private_key: None,
@@ -45,22 +42,25 @@ impl NebiusCloudIntegrationAccountServiceAccountAuthRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn private_key(mut self, value: String) -> Self {
         self.private_key = Some(value);
         self
     }
-
+    
     pub fn public_key_id(mut self, value: String) -> Self {
         self.public_key_id = Some(value);
         self
     }
-
+    
     pub fn static_api_key(mut self, value: String) -> Self {
         self.static_api_key = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountServiceAccountAuthRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,9 +79,7 @@ impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountServiceAccountAuthRe
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_type: Option<
-                    crate::datadogV2::model::NebiusCloudIntegrationAccountServiceAccountAuthType,
-                > = None;
+                let mut auth_type: Option<crate::datadogV2::model::NebiusCloudIntegrationAccountServiceAccountAuthType> = None;
                 let mut private_key: Option<String> = None;
                 let mut public_key_id: Option<String> = None;
                 let mut service_account_id: Option<String> = None;
@@ -100,42 +98,35 @@ impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountServiceAccountAuthRe
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "private_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "public_key_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            public_key_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            public_key_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service_account_id" => {
-                            service_account_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            service_account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "static_api_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            static_api_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            static_api_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
-                let service_account_id = service_account_id
-                    .ok_or_else(|| M::Error::missing_field("service_account_id"))?;
+                let service_account_id = service_account_id.ok_or_else(|| M::Error::missing_field("service_account_id"))?;
 
                 let content = NebiusCloudIntegrationAccountServiceAccountAuthRequest {
                     auth_type,

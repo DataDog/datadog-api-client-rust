@@ -2,21 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DnsMetricKey {
-    DNS_TOTAL_REQUESTS,
-    DNS_FAILURES,
-    DNS_SUCCESSFUL_RESPONSES,
-    DNS_FAILED_RESPONSES,
-    DNS_TIMEOUTS,
-    DNS_RESPONSES_NXDOMAIN,
-    DNS_RESPONSES_SERVFAIL,
-    DNS_RESPONSES_OTHER,
-    DNS_SUCCESS_LATENCY_PERCENTILE,
-    DNS_FAILURE_LATENCY_PERCENTILE,
+	DNS_TOTAL_REQUESTS,
+	DNS_FAILURES,
+	DNS_SUCCESSFUL_RESPONSES,
+	DNS_FAILED_RESPONSES,
+	DNS_TIMEOUTS,
+	DNS_RESPONSES_NXDOMAIN,
+	DNS_RESPONSES_SERVFAIL,
+	DNS_RESPONSES_OTHER,
+	DNS_SUCCESS_LATENCY_PERCENTILE,
+	DNS_FAILURE_LATENCY_PERCENTILE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,20 +57,8 @@ impl<'de> Deserialize<'de> for DnsMetricKey {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "dns_total_requests" => Self::DNS_TOTAL_REQUESTS,
-            "dns_failures" => Self::DNS_FAILURES,
-            "dns_successful_responses" => Self::DNS_SUCCESSFUL_RESPONSES,
-            "dns_failed_responses" => Self::DNS_FAILED_RESPONSES,
-            "dns_timeouts" => Self::DNS_TIMEOUTS,
-            "dns_responses.nxdomain" => Self::DNS_RESPONSES_NXDOMAIN,
-            "dns_responses.servfail" => Self::DNS_RESPONSES_SERVFAIL,
-            "dns_responses.other" => Self::DNS_RESPONSES_OTHER,
-            "dns_success_latency_percentile" => Self::DNS_SUCCESS_LATENCY_PERCENTILE,
-            "dns_failure_latency_percentile" => Self::DNS_FAILURE_LATENCY_PERCENTILE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"dns_total_requests" => Self::DNS_TOTAL_REQUESTS,"dns_failures" => Self::DNS_FAILURES,"dns_successful_responses" => Self::DNS_SUCCESSFUL_RESPONSES,"dns_failed_responses" => Self::DNS_FAILED_RESPONSES,"dns_timeouts" => Self::DNS_TIMEOUTS,"dns_responses.nxdomain" => Self::DNS_RESPONSES_NXDOMAIN,"dns_responses.servfail" => Self::DNS_RESPONSES_SERVFAIL,"dns_responses.other" => Self::DNS_RESPONSES_OTHER,"dns_success_latency_percentile" => Self::DNS_SUCCESS_LATENCY_PERCENTILE,"dns_failure_latency_percentile" => Self::DNS_FAILURE_LATENCY_PERCENTILE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

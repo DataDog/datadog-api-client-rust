@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Resources related to a work item
 #[non_exhaustive]
@@ -12,25 +12,13 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseRelationships {
     /// Relationship to user.
-    #[serde(
-        rename = "assignee",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "assignee", default, with = "::serde_with::rust::double_option")]
     pub assignee: Option<Option<crate::datadogV2::model::NullableUserRelationship>>,
     /// Relationship to user.
-    #[serde(
-        rename = "created_by",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "created_by", default, with = "::serde_with::rust::double_option")]
     pub created_by: Option<Option<crate::datadogV2::model::NullableUserRelationship>>,
     /// Relationship to user.
-    #[serde(
-        rename = "modified_by",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "modified_by", default, with = "::serde_with::rust::double_option")]
     pub modified_by: Option<Option<crate::datadogV2::model::NullableUserRelationship>>,
     /// Relationship to project.
     #[serde(rename = "project")]
@@ -39,7 +27,7 @@ pub struct CaseRelationships {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CaseRelationships {
@@ -53,44 +41,33 @@ impl CaseRelationships {
             _unparsed: false,
         }
     }
-
-    pub fn assignee(
-        mut self,
-        value: Option<crate::datadogV2::model::NullableUserRelationship>,
-    ) -> Self {
+    
+    pub fn assignee(mut self, value: Option<crate::datadogV2::model::NullableUserRelationship>) -> Self {
         self.assignee = Some(value);
         self
     }
-
-    pub fn created_by(
-        mut self,
-        value: Option<crate::datadogV2::model::NullableUserRelationship>,
-    ) -> Self {
+    
+    pub fn created_by(mut self, value: Option<crate::datadogV2::model::NullableUserRelationship>) -> Self {
         self.created_by = Some(value);
         self
     }
-
-    pub fn modified_by(
-        mut self,
-        value: Option<crate::datadogV2::model::NullableUserRelationship>,
-    ) -> Self {
+    
+    pub fn modified_by(mut self, value: Option<crate::datadogV2::model::NullableUserRelationship>) -> Self {
         self.modified_by = Some(value);
         self
     }
-
+    
     pub fn project(mut self, value: crate::datadogV2::model::ProjectRelationship) -> Self {
         self.project = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CaseRelationships {
     fn default() -> Self {
@@ -115,45 +92,35 @@ impl<'de> Deserialize<'de> for CaseRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut assignee: Option<
-                    Option<crate::datadogV2::model::NullableUserRelationship>,
-                > = None;
-                let mut created_by: Option<
-                    Option<crate::datadogV2::model::NullableUserRelationship>,
-                > = None;
-                let mut modified_by: Option<
-                    Option<crate::datadogV2::model::NullableUserRelationship>,
-                > = None;
+                let mut assignee: Option<Option<crate::datadogV2::model::NullableUserRelationship>> = None;
+                let mut created_by: Option<Option<crate::datadogV2::model::NullableUserRelationship>> = None;
+                let mut modified_by: Option<Option<crate::datadogV2::model::NullableUserRelationship>> = None;
                 let mut project: Option<crate::datadogV2::model::ProjectRelationship> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assignee" => {
                             assignee = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_by" => {
-                            modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "project" => {
                             if v.is_null() {
                                 continue;
                             }
                             project = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

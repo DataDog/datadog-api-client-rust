@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsPatternsTopicsWithClusteredPointsType {
-    GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE,
+	GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LLMObsPatternsTopicsWithClusteredPointsType {
     fn to_string(&self) -> String {
         match self {
-            Self::GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE => {
-                String::from("get_topics_with_cluster_points_response")
-            }
+            Self::GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE => String::from("get_topics_with_cluster_points_response"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,13 +39,8 @@ impl<'de> Deserialize<'de> for LLMObsPatternsTopicsWithClusteredPointsType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "get_topics_with_cluster_points_response" => {
-                Self::GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"get_topics_with_cluster_points_response" => Self::GET_TOPICS_WITH_CLUSTER_POINTS_RESPONSE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

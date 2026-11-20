@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListInvestigationsOptionalParams is a struct for passing parameters to the method [`BitsAIAPI::list_investigations`]
 #[non_exhaustive]
@@ -42,6 +39,9 @@ impl ListInvestigationsOptionalParams {
     }
 }
 
+
+
+
 /// GetInvestigationError is a struct for typed errors of method [`BitsAIAPI::get_investigation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -50,6 +50,7 @@ pub enum GetInvestigationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListInvestigationsError is a struct for typed errors of method [`BitsAIAPI::list_investigations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -60,6 +61,7 @@ pub enum ListInvestigationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// TriggerInvestigationError is a struct for typed errors of method [`BitsAIAPI::trigger_investigation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -68,6 +70,7 @@ pub enum TriggerInvestigationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Use the Bits AI endpoints to retrieve AI-powered investigations.
 #[derive(Debug, Clone)]
@@ -91,7 +94,8 @@ impl BitsAIAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -136,59 +140,50 @@ impl BitsAIAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get a specific Bits AI investigation by ID.
-    pub async fn get_investigation(
-        &self,
-        id: String,
-    ) -> Result<
-        crate::datadogV2::model::GetInvestigationResponse,
-        datadog::Error<GetInvestigationError>,
-    > {
+    pub async fn get_investigation(&self, id: String) -> Result<crate::datadogV2::model::GetInvestigationResponse, datadog::Error<GetInvestigationError>> {
         match self.get_investigation_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific Bits AI investigation by ID.
-    pub async fn get_investigation_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GetInvestigationResponse>,
-        datadog::Error<GetInvestigationError>,
-    > {
+    pub async fn get_investigation_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GetInvestigationResponse>, datadog::Error<GetInvestigationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_investigation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -201,22 +196,16 @@ impl BitsAIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -228,61 +217,39 @@ impl BitsAIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GetInvestigationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GetInvestigationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetInvestigationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetInvestigationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Bits AI investigations for the organization.
-    pub async fn list_investigations(
-        &self,
-        params: ListInvestigationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListInvestigationsResponse,
-        datadog::Error<ListInvestigationsError>,
-    > {
-        match self.list_investigations_with_http_info(params).await {
+    pub async fn list_investigations(&self, params: ListInvestigationsOptionalParams) -> Result<crate::datadogV2::model::ListInvestigationsResponse, datadog::Error<ListInvestigationsError>> {
+        match self.list_investigations_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_investigations_with_pagination(
-        &self,
-        mut params: ListInvestigationsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::ListInvestigationsResponseData,
-            datadog::Error<ListInvestigationsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListInvestigationsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ListInvestigationsResponseData, datadog::Error<ListInvestigationsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 25;
             if params.page_limit.is_none() {
@@ -310,17 +277,13 @@ impl BitsAIAPI {
         }
     }
 
+    
     /// List all Bits AI investigations for the organization.
-    pub async fn list_investigations_with_http_info(
-        &self,
-        params: ListInvestigationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListInvestigationsResponse>,
-        datadog::Error<ListInvestigationsError>,
-    > {
+    pub async fn list_investigations_with_http_info(&self, params: ListInvestigationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListInvestigationsResponse>, datadog::Error<ListInvestigationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_investigations";
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -330,27 +293,25 @@ impl BitsAIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_monitor_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[monitor_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[monitor_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -363,22 +324,16 @@ impl BitsAIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -390,80 +345,62 @@ impl BitsAIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListInvestigationsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListInvestigationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListInvestigationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListInvestigationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
-    /// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
-    /// `monitor_alert_trigger`, the `monitors_read` permission is also required.
-    pub async fn trigger_investigation(
-        &self,
-        body: crate::datadogV2::model::TriggerInvestigationRequest,
-    ) -> Result<
-        crate::datadogV2::model::TriggerInvestigationResponse,
-        datadog::Error<TriggerInvestigationError>,
-    > {
+/// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
+/// `monitor_alert_trigger`, the `monitors_read` permission is also required.
+    pub async fn trigger_investigation(&self, body: crate::datadogV2::model::TriggerInvestigationRequest) -> Result<crate::datadogV2::model::TriggerInvestigationResponse, datadog::Error<TriggerInvestigationError>> {
         match self.trigger_investigation_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
-    /// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
-    /// `monitor_alert_trigger`, the `monitors_read` permission is also required.
-    pub async fn trigger_investigation_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TriggerInvestigationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TriggerInvestigationResponse>,
-        datadog::Error<TriggerInvestigationError>,
-    > {
+/// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
+/// `monitor_alert_trigger`, the `monitors_read` permission is also required.
+    pub async fn trigger_investigation_with_http_info(&self, body: crate::datadogV2::model::TriggerInvestigationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TriggerInvestigationResponse>, datadog::Error<TriggerInvestigationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.trigger_investigation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -476,23 +413,16 @@ impl BitsAIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -500,7 +430,10 @@ impl BitsAIAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -510,7 +443,10 @@ impl BitsAIAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -532,7 +468,7 @@ impl BitsAIAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -549,26 +485,17 @@ impl BitsAIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TriggerInvestigationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TriggerInvestigationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<TriggerInvestigationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<TriggerInvestigationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

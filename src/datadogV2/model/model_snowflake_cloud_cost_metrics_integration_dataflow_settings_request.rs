@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the Cloud Cost Management dataflow. Only the fields provided are changed.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequest {
     pub query_tags: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequest {
@@ -26,12 +26,14 @@ impl SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn query_tags(mut self, value: String) -> Self {
         self.query_tags = Some(value);
         self
     }
+    
 }
+
 
 impl Default for SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -66,12 +68,10 @@ impl<'de> Deserialize<'de> for SnowflakeCloudCostMetricsIntegrationDataflowSetti
                                 continue;
                             }
                             query_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -84,7 +84,6 @@ impl<'de> Deserialize<'de> for SnowflakeCloudCostMetricsIntegrationDataflowSetti
             }
         }
 
-        deserializer
-            .deserialize_any(SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequestVisitor)
+        deserializer.deserialize_any(SnowflakeCloudCostMetricsIntegrationDataflowSettingsRequestVisitor)
     }
 }

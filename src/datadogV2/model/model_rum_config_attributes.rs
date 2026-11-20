@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the RUM configuration.
 #[non_exhaustive]
@@ -42,14 +42,11 @@ pub struct RumConfigAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RumConfigAttributes {
-    pub fn new(
-        enforced_application_tags: bool,
-        retention_filters_enabled: bool,
-    ) -> RumConfigAttributes {
+    pub fn new(enforced_application_tags: bool, retention_filters_enabled: bool) -> RumConfigAttributes {
         RumConfigAttributes {
             disabled: None,
             enforced_application_tags,
@@ -64,59 +61,49 @@ impl RumConfigAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
-
-    pub fn enforced_application_tags_updated_at(
-        mut self,
-        value: chrono::DateTime<chrono::Utc>,
-    ) -> Self {
+    
+    pub fn enforced_application_tags_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.enforced_application_tags_updated_at = Some(value);
         self
     }
-
+    
     pub fn enforced_application_tags_updated_by(mut self, value: String) -> Self {
         self.enforced_application_tags_updated_by = Some(value);
         self
     }
-
+    
     pub fn ootb_metrics_version(mut self, value: i64) -> Self {
         self.ootb_metrics_version = Some(value);
         self
     }
-
-    pub fn ootb_metrics_version_installed_at(
-        mut self,
-        value: chrono::DateTime<chrono::Utc>,
-    ) -> Self {
+    
+    pub fn ootb_metrics_version_installed_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.ootb_metrics_version_installed_at = Some(value);
         self
     }
-
-    pub fn retention_filters_enabled_updated_at(
-        mut self,
-        value: chrono::DateTime<chrono::Utc>,
-    ) -> Self {
+    
+    pub fn retention_filters_enabled_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.retention_filters_enabled_updated_at = Some(value);
         self
     }
-
+    
     pub fn retention_filters_enabled_updated_by(mut self, value: String) -> Self {
         self.retention_filters_enabled_updated_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RumConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -137,22 +124,14 @@ impl<'de> Deserialize<'de> for RumConfigAttributes {
             {
                 let mut disabled: Option<bool> = None;
                 let mut enforced_application_tags: Option<bool> = None;
-                let mut enforced_application_tags_updated_at: Option<
-                    chrono::DateTime<chrono::Utc>,
-                > = None;
+                let mut enforced_application_tags_updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut enforced_application_tags_updated_by: Option<String> = None;
                 let mut ootb_metrics_version: Option<i64> = None;
-                let mut ootb_metrics_version_installed_at: Option<chrono::DateTime<chrono::Utc>> =
-                    None;
+                let mut ootb_metrics_version_installed_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut retention_filters_enabled: Option<bool> = None;
-                let mut retention_filters_enabled_updated_at: Option<
-                    chrono::DateTime<chrono::Utc>,
-                > = None;
+                let mut retention_filters_enabled_updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut retention_filters_enabled_updated_by: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -162,68 +141,58 @@ impl<'de> Deserialize<'de> for RumConfigAttributes {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enforced_application_tags" => {
-                            enforced_application_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enforced_application_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enforced_application_tags_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enforced_application_tags_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enforced_application_tags_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enforced_application_tags_updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enforced_application_tags_updated_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enforced_application_tags_updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ootb_metrics_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ootb_metrics_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ootb_metrics_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ootb_metrics_version_installed_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ootb_metrics_version_installed_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ootb_metrics_version_installed_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retention_filters_enabled" => {
-                            retention_filters_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            retention_filters_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retention_filters_enabled_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            retention_filters_enabled_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            retention_filters_enabled_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retention_filters_enabled_updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            retention_filters_enabled_updated_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            retention_filters_enabled_updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let enforced_application_tags = enforced_application_tags
-                    .ok_or_else(|| M::Error::missing_field("enforced_application_tags"))?;
-                let retention_filters_enabled = retention_filters_enabled
-                    .ok_or_else(|| M::Error::missing_field("retention_filters_enabled"))?;
+                let enforced_application_tags = enforced_application_tags.ok_or_else(|| M::Error::missing_field("enforced_application_tags"))?;
+                let retention_filters_enabled = retention_filters_enabled.ok_or_else(|| M::Error::missing_field("retention_filters_enabled"))?;
 
                 let content = RumConfigAttributes {
                     disabled,

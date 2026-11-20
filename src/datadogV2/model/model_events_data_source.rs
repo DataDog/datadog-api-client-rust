@@ -2,25 +2,26 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventsDataSource {
-    LOGS,
-    SPANS,
-    NETWORK,
-    RUM,
-    SECURITY_SIGNALS,
-    PROFILES,
-    AUDIT,
-    EVENTS,
-    CI_TESTS,
-    CI_PIPELINES,
-    INCIDENT_ANALYTICS,
-    PRODUCT_ANALYTICS,
-    ON_CALL_EVENTS,
-    DORA,
+	LOGS,
+	SPANS,
+	NETWORK,
+	RUM,
+	SECURITY_SIGNALS,
+	PROFILES,
+	AUDIT,
+	EVENTS,
+	CI_TESTS,
+	CI_PIPELINES,
+	INCIDENT_ANALYTICS,
+	PRODUCT_ANALYTICS,
+	ON_CALL_EVENTS,
+	DORA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -64,24 +65,8 @@ impl<'de> Deserialize<'de> for EventsDataSource {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "logs" => Self::LOGS,
-            "spans" => Self::SPANS,
-            "network" => Self::NETWORK,
-            "rum" => Self::RUM,
-            "security_signals" => Self::SECURITY_SIGNALS,
-            "profiles" => Self::PROFILES,
-            "audit" => Self::AUDIT,
-            "events" => Self::EVENTS,
-            "ci_tests" => Self::CI_TESTS,
-            "ci_pipelines" => Self::CI_PIPELINES,
-            "incident_analytics" => Self::INCIDENT_ANALYTICS,
-            "product_analytics" => Self::PRODUCT_ANALYTICS,
-            "on_call_events" => Self::ON_CALL_EVENTS,
-            "dora" => Self::DORA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"logs" => Self::LOGS,"spans" => Self::SPANS,"network" => Self::NETWORK,"rum" => Self::RUM,"security_signals" => Self::SECURITY_SIGNALS,"profiles" => Self::PROFILES,"audit" => Self::AUDIT,"events" => Self::EVENTS,"ci_tests" => Self::CI_TESTS,"ci_pipelines" => Self::CI_PIPELINES,"incident_analytics" => Self::INCIDENT_ANALYTICS,"product_analytics" => Self::PRODUCT_ANALYTICS,"on_call_events" => Self::ON_CALL_EVENTS,"dora" => Self::DORA,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

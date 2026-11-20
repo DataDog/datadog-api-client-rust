@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Hourly turn-level metrics from the OpenAI Compliance Logs Platform, including turn and session identity, Work Insights classification, token usage, credits, estimated cost, duration, and activity for skills, plugins, and artifacts. Turn cost is a provider estimate and can differ from invoiced charges. Requires the `chatgpt.enterprise.compliance_logs_platform.workspace_analytics.read` scope on the key in `authentication`. Without this scope, the dataflow collects no data.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct OpenAICodexTurnMetricsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OpenAICodexTurnMetricsIntegrationDataflowRequest {
@@ -26,12 +26,14 @@ impl OpenAICodexTurnMetricsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for OpenAICodexTurnMetricsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -66,17 +68,17 @@ impl<'de> Deserialize<'de> for OpenAICodexTurnMetricsIntegrationDataflowRequest 
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content =
-                    OpenAICodexTurnMetricsIntegrationDataflowRequest { enabled, _unparsed };
+                let content = OpenAICodexTurnMetricsIntegrationDataflowRequest {
+                    enabled,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

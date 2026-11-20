@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Response with monthly summary of data billed by Datadog.
 #[non_exhaustive]
@@ -18,7 +18,7 @@ pub struct UsageBillableSummaryHour {
     #[serde(rename = "account_public_id")]
     pub account_public_id: Option<String>,
     /// The billing plan (metadata). (Deprecated from June 2026)
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "billing_plan")]
     pub billing_plan: Option<String>,
     /// Shows the last date of usage.
@@ -49,7 +49,7 @@ pub struct UsageBillableSummaryHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageBillableSummaryHour {
@@ -71,81 +71,79 @@ impl UsageBillableSummaryHour {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn account_name(mut self, value: String) -> Self {
         self.account_name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn account_public_id(mut self, value: String) -> Self {
         self.account_public_id = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn billing_plan(mut self, value: String) -> Self {
         self.billing_plan = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn num_orgs(mut self, value: i64) -> Self {
         self.num_orgs = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ratio_in_month(mut self, value: f64) -> Self {
         self.ratio_in_month = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn usage(mut self, value: crate::datadogV1::model::UsageBillableSummaryKeys) -> Self {
         self.usage = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageBillableSummaryHour {
     fn default() -> Self {
@@ -181,10 +179,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                 let mut region: Option<String> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut usage: Option<crate::datadogV1::model::UsageBillableSummaryKeys> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -193,77 +188,73 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                             if v.is_null() {
                                 continue;
                             }
-                            account_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "account_public_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            account_public_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "billing_plan" => {
                             if v.is_null() {
                                 continue;
                             }
-                            billing_plan =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            billing_plan = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "end_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "num_orgs" => {
                             if v.is_null() {
                                 continue;
                             }
                             num_orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ratio_in_month" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ratio_in_month =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ratio_in_month = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "region" => {
                             if v.is_null() {
                                 continue;
                             }
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "usage" => {
                             if v.is_null() {
                                 continue;
                             }
                             usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

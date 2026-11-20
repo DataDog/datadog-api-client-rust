@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A node of the Sankey diagram, representing one facet value in one column.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ProductAnalyticsSankeyNode {
     /// The nodes rolled up into this one, when the node is an aggregate.
     #[serde(rename = "aggregated_nodes")]
-    pub aggregated_nodes:
-        Option<Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>>,
+    pub aggregated_nodes: Option<Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>>,
     /// Zero-based index of the column the node sits in.
     #[serde(rename = "column")]
     pub column: Option<i64>,
@@ -34,7 +33,7 @@ pub struct ProductAnalyticsSankeyNode {
     #[serde(rename = "outgoing_value")]
     pub outgoing_value: Option<i64>,
     /// The kind of node. `regular` is a single facet value, `other` rolls up the values that did not
-    /// fit within `entries_per_step`, and `dropoff` collects the sessions that ended at this column.
+/// fit within `entries_per_step`, and `dropoff` collects the sessions that ended at this column.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ProductAnalyticsSankeyNodeType>,
     /// Number of sessions passing through the node.
@@ -44,7 +43,7 @@ pub struct ProductAnalyticsSankeyNode {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsSankeyNode {
@@ -63,63 +62,58 @@ impl ProductAnalyticsSankeyNode {
             _unparsed: false,
         }
     }
-
-    pub fn aggregated_nodes(
-        mut self,
-        value: Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>,
-    ) -> Self {
+    
+    pub fn aggregated_nodes(mut self, value: Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>) -> Self {
         self.aggregated_nodes = Some(value);
         self
     }
-
+    
     pub fn column(mut self, value: i64) -> Self {
         self.column = Some(value);
         self
     }
-
+    
     pub fn dropoff_value(mut self, value: i64) -> Self {
         self.dropoff_value = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn incoming_value(mut self, value: i64) -> Self {
         self.incoming_value = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn outgoing_value(mut self, value: i64) -> Self {
         self.outgoing_value = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: crate::datadogV2::model::ProductAnalyticsSankeyNodeType) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn value(mut self, value: i64) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ProductAnalyticsSankeyNode {
     fn default() -> Self {
@@ -144,22 +138,16 @@ impl<'de> Deserialize<'de> for ProductAnalyticsSankeyNode {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregated_nodes: Option<
-                    Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>,
-                > = None;
+                let mut aggregated_nodes: Option<Vec<crate::datadogV2::model::ProductAnalyticsSankeyAggregatedNode>> = None;
                 let mut column: Option<i64> = None;
                 let mut dropoff_value: Option<i64> = None;
                 let mut id: Option<String> = None;
                 let mut incoming_value: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut outgoing_value: Option<i64> = None;
-                let mut type_: Option<crate::datadogV2::model::ProductAnalyticsSankeyNodeType> =
-                    None;
+                let mut type_: Option<crate::datadogV2::model::ProductAnalyticsSankeyNodeType> = None;
                 let mut value: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -168,48 +156,44 @@ impl<'de> Deserialize<'de> for ProductAnalyticsSankeyNode {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregated_nodes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregated_nodes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "column" => {
                             if v.is_null() {
                                 continue;
                             }
                             column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dropoff_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dropoff_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dropoff_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "incoming_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incoming_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incoming_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "outgoing_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            outgoing_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            outgoing_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -223,18 +207,18 @@ impl<'de> Deserialize<'de> for ProductAnalyticsSankeyNode {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

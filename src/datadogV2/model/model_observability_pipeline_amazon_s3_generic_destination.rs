@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `amazon_s3_generic` destination sends your logs to an Amazon S3 bucket.
 ///
@@ -14,13 +14,12 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAmazonS3GenericDestination {
     /// AWS authentication credentials used for accessing AWS services such as S3.
-    /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
+/// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth>,
     /// Event batching settings
     #[serde(rename = "batch_settings")]
-    pub batch_settings:
-        Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings>,
+    pub batch_settings: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings>,
     /// S3 bucket name.
     #[serde(rename = "bucket")]
     pub bucket: String,
@@ -47,17 +46,14 @@ pub struct ObservabilityPipelineAmazonS3GenericDestination {
     pub region: String,
     /// Server-side encryption type for Amazon S3.
     #[serde(rename = "server_side_encryption")]
-    pub server_side_encryption: Option<
-        crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption,
-    >,
+    pub server_side_encryption: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption>,
     /// The AWS KMS key ID used for SSE-KMS encryption.
-    /// Only applies when `server_side_encryption` is set to `aws:kms`.
+/// Only applies when `server_side_encryption` is set to `aws:kms`.
     #[serde(rename = "ssekms_key_id")]
     pub ssekms_key_id: Option<String>,
     /// S3 storage class.
     #[serde(rename = "storage_class")]
-    pub storage_class:
-        crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass,
+    pub storage_class: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass,
     /// The destination type. Always `amazon_s3_generic`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericDestinationType,
@@ -65,20 +61,11 @@ pub struct ObservabilityPipelineAmazonS3GenericDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineAmazonS3GenericDestination {
-    pub fn new(
-        bucket: String,
-        compression: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericCompression,
-        encoding: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericEncoding,
-        id: String,
-        inputs: Vec<String>,
-        region: String,
-        storage_class: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass,
-        type_: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericDestinationType,
-    ) -> ObservabilityPipelineAmazonS3GenericDestination {
+    pub fn new(bucket: String, compression: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericCompression, encoding: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericEncoding, id: String, inputs: Vec<String>, region: String, storage_class: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass, type_: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericDestinationType) -> ObservabilityPipelineAmazonS3GenericDestination {
         ObservabilityPipelineAmazonS3GenericDestination {
             auth: None,
             batch_settings: None,
@@ -98,54 +85,44 @@ impl ObservabilityPipelineAmazonS3GenericDestination {
             _unparsed: false,
         }
     }
-
+    
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineAwsAuth) -> Self {
         self.auth = Some(value);
         self
     }
-
-    pub fn batch_settings(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings,
-    ) -> Self {
+    
+    pub fn batch_settings(mut self, value: crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings) -> Self {
         self.batch_settings = Some(value);
         self
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
+    
     pub fn key_prefix(mut self, value: String) -> Self {
         self.key_prefix = Some(value);
         self
     }
-
-    pub fn server_side_encryption(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption,
-    ) -> Self {
+    
+    pub fn server_side_encryption(mut self, value: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption) -> Self {
         self.server_side_encryption = Some(value);
         self
     }
-
+    
     pub fn ssekms_key_id(mut self, value: String) -> Self {
         self.ssekms_key_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -165,35 +142,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                 M: MapAccess<'a>,
             {
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth> = None;
-                let mut batch_settings: Option<
-                    crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings,
-                > = None;
+                let mut batch_settings: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericBatchSettings> = None;
                 let mut bucket: Option<String> = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
-                let mut compression: Option<
-                    crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericCompression,
-                > = None;
-                let mut encoding: Option<
-                    crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericEncoding,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
+                let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericCompression> = None;
+                let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericEncoding> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_prefix: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut server_side_encryption: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption> = None;
                 let mut ssekms_key_id: Option<String> = None;
-                let mut storage_class: Option<
-                    crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut storage_class: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass> = None;
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -203,17 +165,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                 continue;
                             }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "batch_settings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            batch_settings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            batch_settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -227,10 +188,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "compression" => {
-                            compression =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            compression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _compression) = compression {
                                 match _compression {
                                     crate::datadogV2::model::ObservabilityPipelineAmazonS3GenericCompression::UnparsedObject(_compression) => {
@@ -239,7 +199,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "encoding" => {
                             encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _encoding) = encoding {
@@ -250,28 +210,27 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "key_prefix" => {
                             if v.is_null() {
                                 continue;
                             }
                             key_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "region" => {
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "server_side_encryption" => {
                             if v.is_null() {
                                 continue;
                             }
-                            server_side_encryption =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            server_side_encryption = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _server_side_encryption) = server_side_encryption {
                                 match _server_side_encryption {
                                     crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption::UnparsedObject(_server_side_encryption) => {
@@ -280,17 +239,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "ssekms_key_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ssekms_key_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ssekms_key_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "storage_class" => {
-                            storage_class =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            storage_class = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _storage_class) = storage_class {
                                 match _storage_class {
                                     crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass::UnparsedObject(_storage_class) => {
@@ -299,7 +256,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -310,23 +267,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let bucket = bucket.ok_or_else(|| M::Error::missing_field("bucket"))?;
-                let compression =
-                    compression.ok_or_else(|| M::Error::missing_field("compression"))?;
+                let compression = compression.ok_or_else(|| M::Error::missing_field("compression"))?;
                 let encoding = encoding.ok_or_else(|| M::Error::missing_field("encoding"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let region = region.ok_or_else(|| M::Error::missing_field("region"))?;
-                let storage_class =
-                    storage_class.ok_or_else(|| M::Error::missing_field("storage_class"))?;
+                let storage_class = storage_class.ok_or_else(|| M::Error::missing_field("storage_class"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineAmazonS3GenericDestination {

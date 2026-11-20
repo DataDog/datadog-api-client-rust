@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object that contains the new private location, the public key for result encryption, and the configuration skeleton.
 #[non_exhaustive]
@@ -19,13 +19,12 @@ pub struct SyntheticsPrivateLocationCreationResponse {
     pub private_location: Option<crate::datadogV1::model::SyntheticsPrivateLocation>,
     /// Public key for the result encryption.
     #[serde(rename = "result_encryption")]
-    pub result_encryption:
-        Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption>,
+    pub result_encryption: Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsPrivateLocationCreationResponse {
@@ -38,36 +37,28 @@ impl SyntheticsPrivateLocationCreationResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
-
-    pub fn private_location(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsPrivateLocation,
-    ) -> Self {
+    
+    pub fn private_location(mut self, value: crate::datadogV1::model::SyntheticsPrivateLocation) -> Self {
         self.private_location = Some(value);
         self
     }
-
-    pub fn result_encryption(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption,
-    ) -> Self {
+    
+    pub fn result_encryption(mut self, value: crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption) -> Self {
         self.result_encryption = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsPrivateLocationCreationResponse {
     fn default() -> Self {
@@ -92,16 +83,10 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationCreationResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut private_location: Option<
-                    crate::datadogV1::model::SyntheticsPrivateLocation,
-                > = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut private_location: Option<crate::datadogV1::model::SyntheticsPrivateLocation> = None;
                 let mut result_encryption: Option<crate::datadogV1::model::SyntheticsPrivateLocationCreationResponseResultEncryption> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,26 +96,24 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationCreationResponse {
                                 continue;
                             }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "private_location" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_location =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "result_encryption" => {
                             if v.is_null() {
                                 continue;
                             }
-                            result_encryption =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            result_encryption = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

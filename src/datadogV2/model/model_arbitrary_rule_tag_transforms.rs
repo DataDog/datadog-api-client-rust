@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Only supported for `proportional_timeseries` and `even_timeseries` rules. Applies tag key renames and tag value transforms to timeseries input rows after `mapping_transform`.
 #[non_exhaustive]
@@ -16,14 +16,12 @@ pub struct ArbitraryRuleTagTransforms {
     pub tag_key_rename: Option<std::collections::BTreeMap<String, String>>,
     /// Map of tag key to the transform applied to its values.
     #[serde(rename = "tag_value_transforms")]
-    pub tag_value_transforms: Option<
-        std::collections::BTreeMap<String, crate::datadogV2::model::ArbitraryRuleTagValueTransform>,
-    >,
+    pub tag_value_transforms: Option<std::collections::BTreeMap<String, crate::datadogV2::model::ArbitraryRuleTagValueTransform>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ArbitraryRuleTagTransforms {
@@ -35,31 +33,23 @@ impl ArbitraryRuleTagTransforms {
             _unparsed: false,
         }
     }
-
+    
     pub fn tag_key_rename(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.tag_key_rename = Some(value);
         self
     }
-
-    pub fn tag_value_transforms(
-        mut self,
-        value: std::collections::BTreeMap<
-            String,
-            crate::datadogV2::model::ArbitraryRuleTagValueTransform,
-        >,
-    ) -> Self {
+    
+    pub fn tag_value_transforms(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::ArbitraryRuleTagValueTransform>) -> Self {
         self.tag_value_transforms = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ArbitraryRuleTagTransforms {
     fn default() -> Self {
@@ -85,16 +75,8 @@ impl<'de> Deserialize<'de> for ArbitraryRuleTagTransforms {
                 M: MapAccess<'a>,
             {
                 let mut tag_key_rename: Option<std::collections::BTreeMap<String, String>> = None;
-                let mut tag_value_transforms: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV2::model::ArbitraryRuleTagValueTransform,
-                    >,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut tag_value_transforms: Option<std::collections::BTreeMap<String, crate::datadogV2::model::ArbitraryRuleTagValueTransform>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,21 +85,19 @@ impl<'de> Deserialize<'de> for ArbitraryRuleTagTransforms {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_key_rename =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_key_rename = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tag_value_transforms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_value_transforms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_value_transforms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

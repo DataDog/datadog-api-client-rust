@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems` object.
 #[non_exhaustive]
@@ -27,14 +27,11 @@ pub struct ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
-    pub fn new(
-        condition: String,
-        tag: String,
-    ) -> ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
+    pub fn new(condition: String, tag: String) -> ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
         ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
             condition,
             tag,
@@ -44,25 +41,24 @@ impl ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn value(mut self, value: String) -> Self {
         self.value = Some(value);
         self
     }
-
+    
     pub fn values(mut self, value: Option<Vec<String>>) -> Self {
         self.values = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,34 +81,31 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesCostsToAl
                 let mut tag: Option<String> = None;
                 let mut value: Option<String> = None;
                 let mut values: Option<Option<Vec<String>>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "condition" => {
                             condition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag" => {
                             tag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "values" => {
                             values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let condition = condition.ok_or_else(|| M::Error::missing_field("condition"))?;
@@ -131,7 +124,6 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesCostsToAl
             }
         }
 
-        deserializer
-            .deserialize_any(ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItemsVisitor)
+        deserializer.deserialize_any(ArbitraryCostUpsertRequestDataAttributesCostsToAllocateItemsVisitor)
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the role.
 #[non_exhaustive]
@@ -15,8 +15,8 @@ pub struct RoleUpdateAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Whether to exclude restricted default permissions from this role.
-    /// Restricted default permissions are automatically assigned to every role by default. Set this field to `true` to exclude them.
-    /// Some of these permissions can only be excluded after Minimal Access Roles is enabled for the organization.
+/// Restricted default permissions are automatically assigned to every role by default. Set this field to `true` to exclude them.
+/// Some of these permissions can only be excluded after Minimal Access Roles is enabled for the organization.
     #[serde(rename = "default_permissions_opt_out")]
     pub default_permissions_opt_out: Option<bool>,
     /// Time of last role modification.
@@ -26,8 +26,8 @@ pub struct RoleUpdateAttributes {
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// The managed role from which this role automatically inherits new permissions.
-    /// Specify one of the following: "Datadog Admin Role", "Datadog Standard Role", or "Datadog Read Only Role".
-    /// If empty or not specified, the role does not automatically inherit permissions from any managed role.
+/// Specify one of the following: "Datadog Admin Role", "Datadog Standard Role", or "Datadog Read Only Role".
+/// If empty or not specified, the role does not automatically inherit permissions from any managed role.
     #[serde(rename = "receives_permissions_from")]
     pub receives_permissions_from: Option<Vec<String>>,
     /// Number of teams with that role.
@@ -40,7 +40,7 @@ pub struct RoleUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RoleUpdateAttributes {
@@ -57,50 +57,48 @@ impl RoleUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn default_permissions_opt_out(mut self, value: bool) -> Self {
         self.default_permissions_opt_out = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn receives_permissions_from(mut self, value: Vec<String>) -> Self {
         self.receives_permissions_from = Some(value);
         self
     }
-
+    
     pub fn team_count(mut self, value: i64) -> Self {
         self.team_count = Some(value);
         self
     }
-
+    
     pub fn user_count(mut self, value: i32) -> Self {
         self.user_count = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for RoleUpdateAttributes {
     fn default() -> Self {
@@ -132,10 +130,7 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                 let mut receives_permissions_from: Option<Vec<String>> = None;
                 let mut team_count: Option<i64> = None;
                 let mut user_count: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -145,51 +140,48 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "default_permissions_opt_out" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_permissions_opt_out =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_permissions_opt_out = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "receives_permissions_from" => {
                             if v.is_null() {
                                 continue;
                             }
-                            receives_permissions_from =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            receives_permissions_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "team_count" => {
                             if v.is_null() {
                                 continue;
                             }
                             team_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_count" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

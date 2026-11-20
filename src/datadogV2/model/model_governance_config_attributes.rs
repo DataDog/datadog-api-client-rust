@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a Governance Console configuration.
 #[non_exhaustive]
@@ -21,23 +21,18 @@ pub struct GovernanceConfigAttributes {
     #[serde(rename = "usage_attribution_configured")]
     pub usage_attribution_configured: bool,
     /// Whether the organization has opted in to sharing governance data with a managing org
-    /// for cross-org insights.
+/// for cross-org insights.
     #[serde(rename = "xorg_insights_enabled")]
     pub xorg_insights_enabled: bool,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GovernanceConfigAttributes {
-    pub fn new(
-        assignment_notifications_enabled: bool,
-        enabled: bool,
-        usage_attribution_configured: bool,
-        xorg_insights_enabled: bool,
-    ) -> GovernanceConfigAttributes {
+    pub fn new(assignment_notifications_enabled: bool, enabled: bool, usage_attribution_configured: bool, xorg_insights_enabled: bool) -> GovernanceConfigAttributes {
         GovernanceConfigAttributes {
             assignment_notifications_enabled,
             enabled,
@@ -47,15 +42,14 @@ impl GovernanceConfigAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GovernanceConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,43 +72,34 @@ impl<'de> Deserialize<'de> for GovernanceConfigAttributes {
                 let mut enabled: Option<bool> = None;
                 let mut usage_attribution_configured: Option<bool> = None;
                 let mut xorg_insights_enabled: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assignment_notifications_enabled" => {
-                            assignment_notifications_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_notifications_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "usage_attribution_configured" => {
-                            usage_attribution_configured =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            usage_attribution_configured = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "xorg_insights_enabled" => {
-                            xorg_insights_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            xorg_insights_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let assignment_notifications_enabled = assignment_notifications_enabled
-                    .ok_or_else(|| M::Error::missing_field("assignment_notifications_enabled"))?;
+                let assignment_notifications_enabled = assignment_notifications_enabled.ok_or_else(|| M::Error::missing_field("assignment_notifications_enabled"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let usage_attribution_configured = usage_attribution_configured
-                    .ok_or_else(|| M::Error::missing_field("usage_attribution_configured"))?;
-                let xorg_insights_enabled = xorg_insights_enabled
-                    .ok_or_else(|| M::Error::missing_field("xorg_insights_enabled"))?;
+                let usage_attribution_configured = usage_attribution_configured.ok_or_else(|| M::Error::missing_field("usage_attribution_configured"))?;
+                let xorg_insights_enabled = xorg_insights_enabled.ok_or_else(|| M::Error::missing_field("xorg_insights_enabled"))?;
 
                 let content = GovernanceConfigAttributes {
                     assignment_notifications_enabled,

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Time restrictions during which the routing rule is active. Outside of these hours, the rule does not match and routing continues to subsequent rules. This is mutually exclusive with the action-level `support_hours` field.
 #[non_exhaustive]
@@ -21,14 +21,11 @@ pub struct TimeRestrictions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TimeRestrictions {
-    pub fn new(
-        restrictions: Vec<crate::datadogV2::model::TimeRestriction>,
-        time_zone: String,
-    ) -> TimeRestrictions {
+    pub fn new(restrictions: Vec<crate::datadogV2::model::TimeRestriction>, time_zone: String) -> TimeRestrictions {
         TimeRestrictions {
             restrictions,
             time_zone,
@@ -36,15 +33,14 @@ impl TimeRestrictions {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TimeRestrictions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -65,30 +61,25 @@ impl<'de> Deserialize<'de> for TimeRestrictions {
             {
                 let mut restrictions: Option<Vec<crate::datadogV2::model::TimeRestriction>> = None;
                 let mut time_zone: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "restrictions" => {
-                            restrictions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            restrictions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time_zone" => {
                             time_zone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let restrictions =
-                    restrictions.ok_or_else(|| M::Error::missing_field("restrictions"))?;
+                let restrictions = restrictions.ok_or_else(|| M::Error::missing_field("restrictions"))?;
                 let time_zone = time_zone.ok_or_else(|| M::Error::missing_field("time_zone"))?;
 
                 let content = TimeRestrictions {

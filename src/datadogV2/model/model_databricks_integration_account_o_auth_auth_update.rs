@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Databricks OAuth machine-to-machine authentication using a service principal. Only the fields provided are changed; omit `client_secret` to keep the stored one.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct DatabricksIntegrationAccountOAuthAuthUpdate {
     #[serde(rename = "auth_type")]
     pub auth_type: crate::datadogV2::model::DatabricksIntegrationAccountOAuthAuthType,
     /// Microsoft Entra ID tenant of the service principal, for Azure Databricks workspaces. Omit it to keep the stored tenant, send `null` or an empty string to remove it, or send a value to replace it.
-    #[serde(
-        rename = "azure_tenant_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "azure_tenant_id", default, with = "::serde_with::rust::double_option")]
     pub azure_tenant_id: Option<Option<String>>,
     /// Client ID of the Databricks service principal.
     #[serde(rename = "client_id")]
@@ -29,13 +25,11 @@ pub struct DatabricksIntegrationAccountOAuthAuthUpdate {
     pub client_secret: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DatabricksIntegrationAccountOAuthAuthUpdate {
-    pub fn new(
-        auth_type: crate::datadogV2::model::DatabricksIntegrationAccountOAuthAuthType,
-    ) -> DatabricksIntegrationAccountOAuthAuthUpdate {
+    pub fn new(auth_type: crate::datadogV2::model::DatabricksIntegrationAccountOAuthAuthType) -> DatabricksIntegrationAccountOAuthAuthUpdate {
         DatabricksIntegrationAccountOAuthAuthUpdate {
             auth_type,
             azure_tenant_id: None,
@@ -44,22 +38,25 @@ impl DatabricksIntegrationAccountOAuthAuthUpdate {
             _unparsed: false,
         }
     }
-
+    
     pub fn azure_tenant_id(mut self, value: Option<String>) -> Self {
         self.azure_tenant_id = Some(value);
         self
     }
-
+    
     pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
-
+    
     pub fn client_secret(mut self, value: String) -> Self {
         self.client_secret = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for DatabricksIntegrationAccountOAuthAuthUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,9 +75,7 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountOAuthAuthUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_type: Option<
-                    crate::datadogV2::model::DatabricksIntegrationAccountOAuthAuthType,
-                > = None;
+                let mut auth_type: Option<crate::datadogV2::model::DatabricksIntegrationAccountOAuthAuthType> = None;
                 let mut azure_tenant_id: Option<Option<String>> = None;
                 let mut client_id: Option<String> = None;
                 let mut client_secret: Option<String> = None;
@@ -98,29 +93,25 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountOAuthAuthUpdate {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "azure_tenant_id" => {
-                            azure_tenant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_tenant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "client_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "client_secret" => {
                             if v.is_null() {
                                 continue;
                             }
-                            client_secret =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            client_secret = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;

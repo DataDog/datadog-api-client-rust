@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration {
-    ONE_HOUR,
-    SIX_HOURS,
-    TWELVE_HOURS,
-    ONE_DAY,
-    TWO_DAYS,
-    ONE_WEEK,
-    TWO_WEEKS,
+	ONE_HOUR,
+	SIX_HOURS,
+	TWELVE_HOURS,
+	ONE_DAY,
+	TWO_DAYS,
+	ONE_WEEK,
+	TWO_WEEKS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -41,17 +42,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptionsLear
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            1 => Self::ONE_HOUR,
-            6 => Self::SIX_HOURS,
-            12 => Self::TWELVE_HOURS,
-            24 => Self::ONE_DAY,
-            48 => Self::TWO_DAYS,
-            168 => Self::ONE_WEEK,
-            336 => Self::TWO_WEEKS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {1 => Self::ONE_HOUR,6 => Self::SIX_HOURS,12 => Self::TWELVE_HOURS,24 => Self::ONE_DAY,48 => Self::TWO_DAYS,168 => Self::ONE_WEEK,336 => Self::TWO_WEEKS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

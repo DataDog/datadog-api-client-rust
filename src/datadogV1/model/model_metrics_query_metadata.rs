@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing all metric names returned and their associated metadata.
 #[non_exhaustive]
@@ -51,16 +51,16 @@ pub struct MetricsQueryMetadata {
     #[serde(rename = "tag_set")]
     pub tag_set: Option<Vec<String>>,
     /// Detailed information about the metric unit.
-    /// The first element describes the "primary unit" (for example, `bytes` in `bytes per second`).
-    /// The second element describes the "per unit" (for example, `second` in `bytes per second`).
-    /// If the second element is not present, the API returns null.
+/// The first element describes the "primary unit" (for example, `bytes` in `bytes per second`).
+/// The second element describes the "per unit" (for example, `second` in `bytes per second`).
+/// If the second element is not present, the API returns null.
     #[serde(rename = "unit")]
     pub unit: Option<Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MetricsQueryMetadata {
@@ -84,88 +84,83 @@ impl MetricsQueryMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggr(mut self, value: Option<String>) -> Self {
         self.aggr = Some(value);
         self
     }
-
-    pub fn attributes(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn end(mut self, value: i64) -> Self {
         self.end = Some(value);
         self
     }
-
+    
     pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
-
+    
     pub fn interval(mut self, value: i64) -> Self {
         self.interval = Some(value);
         self
     }
-
+    
     pub fn length(mut self, value: i64) -> Self {
         self.length = Some(value);
         self
     }
-
+    
     pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
-
+    
     pub fn pointlist(mut self, value: Vec<Vec<Option<f64>>>) -> Self {
         self.pointlist = Some(value);
         self
     }
-
+    
     pub fn query_index(mut self, value: i64) -> Self {
         self.query_index = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
-
+    
     pub fn tag_set(mut self, value: Vec<String>) -> Self {
         self.tag_set = Some(value);
         self
     }
-
+    
     pub fn unit(mut self, value: Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>) -> Self {
         self.unit = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MetricsQueryMetadata {
     fn default() -> Self {
@@ -191,8 +186,7 @@ impl<'de> Deserialize<'de> for MetricsQueryMetadata {
                 M: MapAccess<'a>,
             {
                 let mut aggr: Option<Option<String>> = None;
-                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut display_name: Option<String> = None;
                 let mut end: Option<i64> = None;
                 let mut expression: Option<String> = None;
@@ -205,102 +199,97 @@ impl<'de> Deserialize<'de> for MetricsQueryMetadata {
                 let mut start: Option<i64> = None;
                 let mut tag_set: Option<Vec<String>> = None;
                 let mut unit: Option<Vec<Option<crate::datadogV1::model::MetricsQueryUnit>>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aggr" => {
                             aggr = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "attributes" => {
                             if v.is_null() {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "display_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "end" => {
                             if v.is_null() {
                                 continue;
                             }
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "expression" => {
                             if v.is_null() {
                                 continue;
                             }
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "interval" => {
                             if v.is_null() {
                                 continue;
                             }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "length" => {
                             if v.is_null() {
                                 continue;
                             }
                             length = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pointlist" => {
                             if v.is_null() {
                                 continue;
                             }
                             pointlist = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query_index" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_index =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             if v.is_null() {
                                 continue;
                             }
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_set" => {
                             if v.is_null() {
                                 continue;
                             }
                             tag_set = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "unit" => {
                             if v.is_null() {
                                 continue;
                             }
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

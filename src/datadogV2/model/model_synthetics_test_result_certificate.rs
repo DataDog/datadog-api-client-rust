@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// SSL/TLS certificate information returned from an SSL test.
 #[non_exhaustive]
@@ -51,7 +51,7 @@ pub struct SyntheticsTestResultCertificate {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultCertificate {
@@ -73,78 +73,73 @@ impl SyntheticsTestResultCertificate {
             _unparsed: false,
         }
     }
-
+    
     pub fn cipher(mut self, value: String) -> Self {
         self.cipher = Some(value);
         self
     }
-
+    
     pub fn exponent(mut self, value: i64) -> Self {
         self.exponent = Some(value);
         self
     }
-
+    
     pub fn ext_key_usage(mut self, value: Vec<String>) -> Self {
         self.ext_key_usage = Some(value);
         self
     }
-
+    
     pub fn fingerprint(mut self, value: String) -> Self {
         self.fingerprint = Some(value);
         self
     }
-
+    
     pub fn fingerprint256(mut self, value: String) -> Self {
         self.fingerprint256 = Some(value);
         self
     }
-
+    
     pub fn issuer(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.issuer = Some(value);
         self
     }
-
+    
     pub fn modulus(mut self, value: String) -> Self {
         self.modulus = Some(value);
         self
     }
-
+    
     pub fn protocol(mut self, value: String) -> Self {
         self.protocol = Some(value);
         self
     }
-
+    
     pub fn serial_number(mut self, value: String) -> Self {
         self.serial_number = Some(value);
         self
     }
-
+    
     pub fn subject(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.subject = Some(value);
         self
     }
-
+    
     pub fn tls_version(mut self, value: f64) -> Self {
         self.tls_version = Some(value);
         self
     }
-
-    pub fn valid(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultCertificateValidity,
-    ) -> Self {
+    
+    pub fn valid(mut self, value: crate::datadogV2::model::SyntheticsTestResultCertificateValidity) -> Self {
         self.valid = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultCertificate {
     fn default() -> Self {
@@ -180,13 +175,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificate {
                 let mut serial_number: Option<String> = None;
                 let mut subject: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut tls_version: Option<f64> = None;
-                let mut valid: Option<
-                    crate::datadogV2::model::SyntheticsTestResultCertificateValidity,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut valid: Option<crate::datadogV2::model::SyntheticsTestResultCertificateValidity> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,83 +186,78 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificate {
                                 continue;
                             }
                             cipher = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "exponent" => {
                             if v.is_null() {
                                 continue;
                             }
                             exponent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ext_key_usage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ext_key_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ext_key_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fingerprint" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fingerprint =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fingerprint = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fingerprint256" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fingerprint256 =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fingerprint256 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issuer" => {
                             if v.is_null() {
                                 continue;
                             }
                             issuer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modulus" => {
                             if v.is_null() {
                                 continue;
                             }
                             modulus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "protocol" => {
                             if v.is_null() {
                                 continue;
                             }
                             protocol = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "serial_number" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serial_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serial_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject" => {
                             if v.is_null() {
                                 continue;
                             }
                             subject = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tls_version" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tls_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tls_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "valid" => {
                             if v.is_null() {
                                 continue;
                             }
                             valid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateOpsgenieAccountError is a struct for typed errors of method [`OpsgenieIntegrationAPI::create_opsgenie_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateOpsgenieAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::create_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CreateOpsgenieServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOpsgenieAccountError is a struct for typed errors of method [`OpsgenieIntegrationAPI::delete_opsgenie_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum DeleteOpsgenieAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::delete_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum DeleteOpsgenieServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::get_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum GetOpsgenieServiceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOpsgenieAccountsError is a struct for typed errors of method [`OpsgenieIntegrationAPI::list_opsgenie_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -58,6 +63,7 @@ pub enum ListOpsgenieAccountsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOpsgenieServicesError is a struct for typed errors of method [`OpsgenieIntegrationAPI::list_opsgenie_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -65,6 +71,7 @@ pub enum ListOpsgenieServicesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateOpsgenieAccountError is a struct for typed errors of method [`OpsgenieIntegrationAPI::update_opsgenie_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -75,6 +82,7 @@ pub enum UpdateOpsgenieAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOpsgenieServiceError is a struct for typed errors of method [`OpsgenieIntegrationAPI::update_opsgenie_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -82,6 +90,7 @@ pub enum UpdateOpsgenieServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your [Datadog Opsgenie integration](<https://docs.datadoghq.com/integrations/opsgenie/>)
 /// directly through the Datadog API.
@@ -106,7 +115,8 @@ impl OpsgenieIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -151,59 +161,49 @@ impl OpsgenieIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new Opsgenie account in the Datadog Opsgenie integration.
-    pub async fn create_opsgenie_account(
-        &self,
-        body: crate::datadogV2::model::OpsgenieAccountCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieAccountResponse,
-        datadog::Error<CreateOpsgenieAccountError>,
-    > {
+    pub async fn create_opsgenie_account(&self, body: crate::datadogV2::model::OpsgenieAccountCreateRequest) -> Result<crate::datadogV2::model::OpsgenieAccountResponse, datadog::Error<CreateOpsgenieAccountError>> {
         match self.create_opsgenie_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new Opsgenie account in the Datadog Opsgenie integration.
-    pub async fn create_opsgenie_account_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OpsgenieAccountCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountResponse>,
-        datadog::Error<CreateOpsgenieAccountError>,
-    > {
+    pub async fn create_opsgenie_account_with_http_info(&self, body: crate::datadogV2::model::OpsgenieAccountCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountResponse>, datadog::Error<CreateOpsgenieAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_opsgenie_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -216,23 +216,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -240,7 +233,10 @@ impl OpsgenieIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -250,7 +246,10 @@ impl OpsgenieIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -272,7 +271,7 @@ impl OpsgenieIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -289,76 +288,58 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOpsgenieAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOpsgenieAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new service object in the Opsgenie integration.
-    pub async fn create_opsgenie_service(
-        &self,
-        body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieServiceResponse,
-        datadog::Error<CreateOpsgenieServiceError>,
-    > {
+    pub async fn create_opsgenie_service(&self, body: crate::datadogV2::model::OpsgenieServiceCreateRequest) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, datadog::Error<CreateOpsgenieServiceError>> {
         match self.create_opsgenie_service_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new service object in the Opsgenie integration.
-    pub async fn create_opsgenie_service_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OpsgenieServiceCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
-        datadog::Error<CreateOpsgenieServiceError>,
-    > {
+    pub async fn create_opsgenie_service_with_http_info(&self, body: crate::datadogV2::model::OpsgenieServiceCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, datadog::Error<CreateOpsgenieServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_opsgenie_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -371,23 +352,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -395,7 +369,10 @@ impl OpsgenieIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -405,7 +382,10 @@ impl OpsgenieIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -427,7 +407,7 @@ impl OpsgenieIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -444,65 +424,53 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOpsgenieServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a single Opsgenie account from the Datadog Opsgenie integration.
-    pub async fn delete_opsgenie_account(
-        &self,
-        account_id: String,
-    ) -> Result<(), datadog::Error<DeleteOpsgenieAccountError>> {
-        match self
-            .delete_opsgenie_account_with_http_info(account_id)
-            .await
-        {
+    pub async fn delete_opsgenie_account(&self, account_id: String) -> Result<(), datadog::Error<DeleteOpsgenieAccountError>> {
+        match self.delete_opsgenie_account_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a single Opsgenie account from the Datadog Opsgenie integration.
-    pub async fn delete_opsgenie_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieAccountError>> {
+    pub async fn delete_opsgenie_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_opsgenie_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -515,22 +483,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -548,52 +510,44 @@ impl OpsgenieIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOpsgenieAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOpsgenieAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a single service object in the Datadog Opsgenie integration.
-    pub async fn delete_opsgenie_service(
-        &self,
-        integration_service_id: String,
-    ) -> Result<(), datadog::Error<DeleteOpsgenieServiceError>> {
-        match self
-            .delete_opsgenie_service_with_http_info(integration_service_id)
-            .await
-        {
+    pub async fn delete_opsgenie_service(&self, integration_service_id: String) -> Result<(), datadog::Error<DeleteOpsgenieServiceError>> {
+        match self.delete_opsgenie_service_with_http_info(integration_service_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a single service object in the Datadog Opsgenie integration.
-    pub async fn delete_opsgenie_service_with_http_info(
-        &self,
-        integration_service_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieServiceError>> {
+    pub async fn delete_opsgenie_service_with_http_info(&self, integration_service_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_opsgenie_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_service_id = datadog::urlencode(integration_service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_service_id=
+            datadog::urlencode(integration_service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -606,22 +560,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -639,66 +587,50 @@ impl OpsgenieIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOpsgenieServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single service from the Datadog Opsgenie integration.
-    pub async fn get_opsgenie_service(
-        &self,
-        integration_service_id: String,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieServiceResponse,
-        datadog::Error<GetOpsgenieServiceError>,
-    > {
-        match self
-            .get_opsgenie_service_with_http_info(integration_service_id)
-            .await
-        {
+    pub async fn get_opsgenie_service(&self, integration_service_id: String) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, datadog::Error<GetOpsgenieServiceError>> {
+        match self.get_opsgenie_service_with_http_info(integration_service_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single service from the Datadog Opsgenie integration.
-    pub async fn get_opsgenie_service_with_http_info(
-        &self,
-        integration_service_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
-        datadog::Error<GetOpsgenieServiceError>,
-    > {
+    pub async fn get_opsgenie_service_with_http_info(&self, integration_service_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, datadog::Error<GetOpsgenieServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_opsgenie_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_service_id = datadog::urlencode(integration_service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_service_id=
+            datadog::urlencode(integration_service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -711,22 +643,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -738,73 +664,57 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOpsgenieServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all Opsgenie accounts from the Datadog Opsgenie integration.
-    pub async fn list_opsgenie_accounts(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieAccountsResponse,
-        datadog::Error<ListOpsgenieAccountsError>,
-    > {
+    pub async fn list_opsgenie_accounts(&self) -> Result<crate::datadogV2::model::OpsgenieAccountsResponse, datadog::Error<ListOpsgenieAccountsError>> {
         match self.list_opsgenie_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of all Opsgenie accounts from the Datadog Opsgenie integration.
-    pub async fn list_opsgenie_accounts_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountsResponse>,
-        datadog::Error<ListOpsgenieAccountsError>,
-    > {
+    pub async fn list_opsgenie_accounts_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountsResponse>, datadog::Error<ListOpsgenieAccountsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_opsgenie_accounts";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -817,22 +727,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -844,73 +748,57 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOpsgenieAccountsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOpsgenieAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all services from the Datadog Opsgenie integration.
-    pub async fn list_opsgenie_services(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieServicesResponse,
-        datadog::Error<ListOpsgenieServicesError>,
-    > {
+    pub async fn list_opsgenie_services(&self) -> Result<crate::datadogV2::model::OpsgenieServicesResponse, datadog::Error<ListOpsgenieServicesError>> {
         match self.list_opsgenie_services_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of all services from the Datadog Opsgenie integration.
-    pub async fn list_opsgenie_services_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieServicesResponse>,
-        datadog::Error<ListOpsgenieServicesError>,
-    > {
+    pub async fn list_opsgenie_services_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieServicesResponse>, datadog::Error<ListOpsgenieServicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_opsgenie_services";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -923,22 +811,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -950,82 +832,60 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServicesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServicesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOpsgenieServicesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOpsgenieServicesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a single Opsgenie account in the Datadog Opsgenie integration.
-    pub async fn update_opsgenie_account(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::OpsgenieAccountUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieAccountResponse,
-        datadog::Error<UpdateOpsgenieAccountError>,
-    > {
-        match self
-            .update_opsgenie_account_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn update_opsgenie_account(&self, account_id: String, body: crate::datadogV2::model::OpsgenieAccountUpdateRequest) -> Result<crate::datadogV2::model::OpsgenieAccountResponse, datadog::Error<UpdateOpsgenieAccountError>> {
+        match self.update_opsgenie_account_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a single Opsgenie account in the Datadog Opsgenie integration.
-    pub async fn update_opsgenie_account_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::OpsgenieAccountUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountResponse>,
-        datadog::Error<UpdateOpsgenieAccountError>,
-    > {
+    pub async fn update_opsgenie_account_with_http_info(&self, account_id: String, body: crate::datadogV2::model::OpsgenieAccountUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieAccountResponse>, datadog::Error<UpdateOpsgenieAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_opsgenie_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1038,23 +898,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1062,7 +915,10 @@ impl OpsgenieIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1072,7 +928,10 @@ impl OpsgenieIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1094,7 +953,7 @@ impl OpsgenieIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1111,82 +970,60 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOpsgenieAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOpsgenieAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a single service object in the Datadog Opsgenie integration.
-    pub async fn update_opsgenie_service(
-        &self,
-        integration_service_id: String,
-        body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OpsgenieServiceResponse,
-        datadog::Error<UpdateOpsgenieServiceError>,
-    > {
-        match self
-            .update_opsgenie_service_with_http_info(integration_service_id, body)
-            .await
-        {
+    pub async fn update_opsgenie_service(&self, integration_service_id: String, body: crate::datadogV2::model::OpsgenieServiceUpdateRequest) -> Result<crate::datadogV2::model::OpsgenieServiceResponse, datadog::Error<UpdateOpsgenieServiceError>> {
+        match self.update_opsgenie_service_with_http_info(integration_service_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a single service object in the Datadog Opsgenie integration.
-    pub async fn update_opsgenie_service_with_http_info(
-        &self,
-        integration_service_id: String,
-        body: crate::datadogV2::model::OpsgenieServiceUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>,
-        datadog::Error<UpdateOpsgenieServiceError>,
-    > {
+    pub async fn update_opsgenie_service_with_http_info(&self, integration_service_id: String, body: crate::datadogV2::model::OpsgenieServiceUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OpsgenieServiceResponse>, datadog::Error<UpdateOpsgenieServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_opsgenie_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_service_id = datadog::urlencode(integration_service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_service_id=
+            datadog::urlencode(integration_service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1199,23 +1036,16 @@ impl OpsgenieIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1223,7 +1053,10 @@ impl OpsgenieIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1233,7 +1066,10 @@ impl OpsgenieIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1255,7 +1091,7 @@ impl OpsgenieIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1272,26 +1108,17 @@ impl OpsgenieIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OpsgenieServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOpsgenieServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOpsgenieServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

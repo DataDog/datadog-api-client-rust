@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the Jira issue to create.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct CreateJiraIssueRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateJiraIssueRequestDataAttributes {
@@ -45,40 +45,38 @@ impl CreateJiraIssueRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignee_id(mut self, value: String) -> Self {
         self.assignee_id = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn fields(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.fields = Some(value);
         self
     }
-
+    
     pub fn priority(mut self, value: crate::datadogV2::model::CasePriority) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CreateJiraIssueRequestDataAttributes {
     fn default() -> Self {
@@ -105,14 +103,10 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataAttributes {
             {
                 let mut assignee_id: Option<String> = None;
                 let mut description: Option<String> = None;
-                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,22 +115,20 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            assignee_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignee_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fields" => {
                             if v.is_null() {
                                 continue;
                             }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
@@ -144,26 +136,24 @@ impl<'de> Deserialize<'de> for CreateJiraIssueRequestDataAttributes {
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _priority) = priority {
                                 match _priority {
-                                    crate::datadogV2::model::CasePriority::UnparsedObject(
-                                        _priority,
-                                    ) => {
+                                    crate::datadogV2::model::CasePriority::UnparsedObject(_priority) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

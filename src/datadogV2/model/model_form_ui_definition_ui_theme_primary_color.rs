@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormUiDefinitionUiThemePrimaryColor {
-    GRAY,
-    RED,
-    ORANGE,
-    YELLOW,
-    GREEN,
-    LIGHT_BLUE,
-    DARK_BLUE,
-    MAGENTA,
-    INDIGO,
+	GRAY,
+	RED,
+	ORANGE,
+	YELLOW,
+	GREEN,
+	LIGHT_BLUE,
+	DARK_BLUE,
+	MAGENTA,
+	INDIGO,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for FormUiDefinitionUiThemePrimaryColor {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "gray" => Self::GRAY,
-            "red" => Self::RED,
-            "orange" => Self::ORANGE,
-            "yellow" => Self::YELLOW,
-            "green" => Self::GREEN,
-            "light-blue" => Self::LIGHT_BLUE,
-            "dark-blue" => Self::DARK_BLUE,
-            "magenta" => Self::MAGENTA,
-            "indigo" => Self::INDIGO,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"gray" => Self::GRAY,"red" => Self::RED,"orange" => Self::ORANGE,"yellow" => Self::YELLOW,"green" => Self::GREEN,"light-blue" => Self::LIGHT_BLUE,"dark-blue" => Self::DARK_BLUE,"magenta" => Self::MAGENTA,"indigo" => Self::INDIGO,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

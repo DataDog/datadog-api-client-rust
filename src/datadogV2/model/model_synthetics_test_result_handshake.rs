@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Handshake request and response for protocol-level tests.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct SyntheticsTestResultHandshake {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultHandshake {
@@ -33,31 +33,23 @@ impl SyntheticsTestResultHandshake {
             _unparsed: false,
         }
     }
-
-    pub fn request(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultRequestInfo,
-    ) -> Self {
+    
+    pub fn request(mut self, value: crate::datadogV2::model::SyntheticsTestResultRequestInfo) -> Self {
         self.request = Some(value);
         self
     }
-
-    pub fn response(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-    ) -> Self {
+    
+    pub fn response(mut self, value: crate::datadogV2::model::SyntheticsTestResultResponseInfo) -> Self {
         self.response = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultHandshake {
     fn default() -> Self {
@@ -82,15 +74,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultHandshake {
             where
                 M: MapAccess<'a>,
             {
-                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> =
-                    None;
-                let mut response: Option<
-                    crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> = None;
+                let mut response: Option<crate::datadogV2::model::SyntheticsTestResultResponseInfo> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,18 +86,18 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultHandshake {
                                 continue;
                             }
                             request = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "response" => {
                             if v.is_null() {
                                 continue;
                             }
                             response = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

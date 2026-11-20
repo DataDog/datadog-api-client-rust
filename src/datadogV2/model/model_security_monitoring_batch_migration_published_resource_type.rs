@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringBatchMigrationPublishedResourceType {
-    BATCH_MIGRATION_PUBLISHED_RESOURCE,
+	BATCH_MIGRATION_PUBLISHED_RESOURCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringBatchMigrationPublishedResourceType {
     fn to_string(&self) -> String {
         match self {
-            Self::BATCH_MIGRATION_PUBLISHED_RESOURCE => {
-                String::from("batchMigrationPublishedResource")
-            }
+            Self::BATCH_MIGRATION_PUBLISHED_RESOURCE => String::from("batchMigrationPublishedResource"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationPublishedResource
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "batchMigrationPublishedResource" => Self::BATCH_MIGRATION_PUBLISHED_RESOURCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"batchMigrationPublishedResource" => Self::BATCH_MIGRATION_PUBLISHED_RESOURCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

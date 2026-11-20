@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringContentPackTimestampBucket {
-    NOT_SEEN,
-    WITHIN_24_HOURS,
-    WITHIN_24_TO_72_HOURS,
-    OVER_72H_TO_30D,
-    OVER_30D,
+	NOT_SEEN,
+	WITHIN_24_HOURS,
+	WITHIN_24_TO_72_HOURS,
+	OVER_72H_TO_30D,
+	OVER_30D,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackTimestampBucket {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "not_seen" => Self::NOT_SEEN,
-            "within_24_hours" => Self::WITHIN_24_HOURS,
-            "within_24_to_72_hours" => Self::WITHIN_24_TO_72_HOURS,
-            "over_72h_to_30d" => Self::OVER_72H_TO_30D,
-            "over_30d" => Self::OVER_30D,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"not_seen" => Self::NOT_SEEN,"within_24_hours" => Self::WITHIN_24_HOURS,"within_24_to_72_hours" => Self::WITHIN_24_TO_72_HOURS,"over_72h_to_30d" => Self::OVER_72H_TO_30D,"over_30d" => Self::OVER_30D,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

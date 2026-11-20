@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreatePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::create_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreatePagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeletePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::delete_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum DeletePagerDutyIntegrationServiceError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetPagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::get_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum GetPagerDutyIntegrationServiceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdatePagerDutyIntegrationServiceError is a struct for typed errors of method [`PagerDutyIntegrationAPI::update_pager_duty_integration_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum UpdatePagerDutyIntegrationServiceError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your [Datadog-PagerDuty integration](<https://docs.datadoghq.com/integrations/pagerduty/>)
 /// directly through the Datadog API.
@@ -65,7 +69,8 @@ impl PagerDutyIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -110,62 +115,49 @@ impl PagerDutyIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new service object in the PagerDuty integration.
-    pub async fn create_pager_duty_integration_service(
-        &self,
-        body: crate::datadogV1::model::PagerDutyService,
-    ) -> Result<
-        crate::datadogV1::model::PagerDutyServiceName,
-        datadog::Error<CreatePagerDutyIntegrationServiceError>,
-    > {
-        match self
-            .create_pager_duty_integration_service_with_http_info(body)
-            .await
-        {
+    pub async fn create_pager_duty_integration_service(&self, body: crate::datadogV1::model::PagerDutyService) -> Result<crate::datadogV1::model::PagerDutyServiceName, datadog::Error<CreatePagerDutyIntegrationServiceError>> {
+        match self.create_pager_duty_integration_service_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new service object in the PagerDuty integration.
-    pub async fn create_pager_duty_integration_service_with_http_info(
-        &self,
-        body: crate::datadogV1::model::PagerDutyService,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::PagerDutyServiceName>,
-        datadog::Error<CreatePagerDutyIntegrationServiceError>,
-    > {
+    pub async fn create_pager_duty_integration_service_with_http_info(&self, body: crate::datadogV1::model::PagerDutyService) -> Result<datadog::ResponseContent<crate::datadogV1::model::PagerDutyServiceName>, datadog::Error<CreatePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_pager_duty_integration_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -178,23 +170,16 @@ impl PagerDutyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -202,7 +187,10 @@ impl PagerDutyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -212,7 +200,10 @@ impl PagerDutyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -234,7 +225,7 @@ impl PagerDutyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -251,66 +242,53 @@ impl PagerDutyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreatePagerDutyIntegrationServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreatePagerDutyIntegrationServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a single service object in the Datadog-PagerDuty integration.
-    pub async fn delete_pager_duty_integration_service(
-        &self,
-        service_name: String,
-    ) -> Result<(), datadog::Error<DeletePagerDutyIntegrationServiceError>> {
-        match self
-            .delete_pager_duty_integration_service_with_http_info(service_name)
-            .await
-        {
+    pub async fn delete_pager_duty_integration_service(&self, service_name: String) -> Result<(), datadog::Error<DeletePagerDutyIntegrationServiceError>> {
+        match self.delete_pager_duty_integration_service_with_http_info(service_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a single service object in the Datadog-PagerDuty integration.
-    pub async fn delete_pager_duty_integration_service_with_http_info(
-        &self,
-        service_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePagerDutyIntegrationServiceError>>
-    {
+    pub async fn delete_pager_duty_integration_service_with_http_info(&self, service_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_pager_duty_integration_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            service_name = datadog::urlencode(service_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), service_name=
+            datadog::urlencode(service_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -323,22 +301,16 @@ impl PagerDutyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -356,66 +328,50 @@ impl PagerDutyIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeletePagerDutyIntegrationServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeletePagerDutyIntegrationServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get service name in the Datadog-PagerDuty integration.
-    pub async fn get_pager_duty_integration_service(
-        &self,
-        service_name: String,
-    ) -> Result<
-        crate::datadogV1::model::PagerDutyServiceName,
-        datadog::Error<GetPagerDutyIntegrationServiceError>,
-    > {
-        match self
-            .get_pager_duty_integration_service_with_http_info(service_name)
-            .await
-        {
+    pub async fn get_pager_duty_integration_service(&self, service_name: String) -> Result<crate::datadogV1::model::PagerDutyServiceName, datadog::Error<GetPagerDutyIntegrationServiceError>> {
+        match self.get_pager_duty_integration_service_with_http_info(service_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get service name in the Datadog-PagerDuty integration.
-    pub async fn get_pager_duty_integration_service_with_http_info(
-        &self,
-        service_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::PagerDutyServiceName>,
-        datadog::Error<GetPagerDutyIntegrationServiceError>,
-    > {
+    pub async fn get_pager_duty_integration_service_with_http_info(&self, service_name: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::PagerDutyServiceName>, datadog::Error<GetPagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_pager_duty_integration_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            service_name = datadog::urlencode(service_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), service_name=
+            datadog::urlencode(service_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -428,22 +384,16 @@ impl PagerDutyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -455,69 +405,54 @@ impl PagerDutyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::PagerDutyServiceName>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetPagerDutyIntegrationServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetPagerDutyIntegrationServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a single service object in the Datadog-PagerDuty integration.
-    pub async fn update_pager_duty_integration_service(
-        &self,
-        service_name: String,
-        body: crate::datadogV1::model::PagerDutyServiceKey,
-    ) -> Result<(), datadog::Error<UpdatePagerDutyIntegrationServiceError>> {
-        match self
-            .update_pager_duty_integration_service_with_http_info(service_name, body)
-            .await
-        {
+    pub async fn update_pager_duty_integration_service(&self, service_name: String, body: crate::datadogV1::model::PagerDutyServiceKey) -> Result<(), datadog::Error<UpdatePagerDutyIntegrationServiceError>> {
+        match self.update_pager_duty_integration_service_with_http_info(service_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a single service object in the Datadog-PagerDuty integration.
-    pub async fn update_pager_duty_integration_service_with_http_info(
-        &self,
-        service_name: String,
-        body: crate::datadogV1::model::PagerDutyServiceKey,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdatePagerDutyIntegrationServiceError>>
-    {
+    pub async fn update_pager_duty_integration_service_with_http_info(&self, service_name: String, body: crate::datadogV1::model::PagerDutyServiceKey) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdatePagerDutyIntegrationServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_pager_duty_integration_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            service_name = datadog::urlencode(service_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), service_name=
+            datadog::urlencode(service_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -530,23 +465,16 @@ impl PagerDutyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -554,7 +482,10 @@ impl PagerDutyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -564,7 +495,10 @@ impl PagerDutyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -586,7 +520,7 @@ impl PagerDutyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -609,13 +543,8 @@ impl PagerDutyIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdatePagerDutyIntegrationServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdatePagerDutyIntegrationServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

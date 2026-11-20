@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `splunk_hec_metrics` destination forwards metrics to Splunk using the HTTP Event Collector (HEC).
 ///
@@ -18,9 +18,7 @@ pub struct ObservabilityPipelineSplunkHecMetricsDestination {
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Compression algorithm applied when sending metrics to Splunk HEC.
     #[serde(rename = "compression")]
-    pub compression: Option<
-        crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression,
-    >,
+    pub compression: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression>,
     /// Optional default namespace for metrics sent to Splunk HEC.
     #[serde(rename = "default_namespace")]
     pub default_namespace: Option<String>,
@@ -55,15 +53,11 @@ pub struct ObservabilityPipelineSplunkHecMetricsDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineSplunkHecMetricsDestination {
-    pub fn new(
-        id: String,
-        inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationType,
-    ) -> ObservabilityPipelineSplunkHecMetricsDestination {
+    pub fn new(id: String, inputs: Vec<String>, type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationType) -> ObservabilityPipelineSplunkHecMetricsDestination {
         ObservabilityPipelineSplunkHecMetricsDestination {
             buffer: None,
             compression: None,
@@ -81,66 +75,59 @@ impl ObservabilityPipelineSplunkHecMetricsDestination {
             _unparsed: false,
         }
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
-    pub fn compression(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression,
-    ) -> Self {
+    
+    pub fn compression(mut self, value: crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression) -> Self {
         self.compression = Some(value);
         self
     }
-
+    
     pub fn default_namespace(mut self, value: String) -> Self {
         self.default_namespace = Some(value);
         self
     }
-
+    
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
         self
     }
-
+    
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
-
+    
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
-
+    
     pub fn sourcetype(mut self, value: String) -> Self {
         self.sourcetype = Some(value);
         self
     }
-
+    
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
         self
     }
-
+    
     pub fn token_key(mut self, value: String) -> Self {
         self.token_key = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -159,9 +146,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination 
             where
                 M: MapAccess<'a>,
             {
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
                 let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression> = None;
                 let mut default_namespace: Option<String> = None;
                 let mut endpoint_url_key: Option<String> = None;
@@ -172,13 +157,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination 
                 let mut sourcetype: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut token_key: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,13 +176,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination 
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "compression" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compression =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            compression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _compression) = compression {
                                 match _compression {
                                     crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestinationCompression::UnparsedObject(_compression) => {
@@ -211,57 +190,55 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination 
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "default_namespace" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_namespace =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "endpoint_url_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            endpoint_url_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            endpoint_url_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "index" => {
                             if v.is_null() {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             if v.is_null() {
                                 continue;
                             }
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sourcetype" => {
                             if v.is_null() {
                                 continue;
                             }
                             sourcetype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tls" => {
                             if v.is_null() {
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "token_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -272,12 +249,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecMetricsDestination 
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IssuesSearchRequestDataAttributesOrderBy {
-    TOTAL_COUNT,
-    FIRST_SEEN,
-    IMPACTED_SESSIONS,
-    PRIORITY,
-    IMPACTED_ACCOUNTS,
+	TOTAL_COUNT,
+	FIRST_SEEN,
+	IMPACTED_SESSIONS,
+	PRIORITY,
+	IMPACTED_ACCOUNTS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributesOrderBy {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "TOTAL_COUNT" => Self::TOTAL_COUNT,
-            "FIRST_SEEN" => Self::FIRST_SEEN,
-            "IMPACTED_SESSIONS" => Self::IMPACTED_SESSIONS,
-            "PRIORITY" => Self::PRIORITY,
-            "IMPACTED_ACCOUNTS" => Self::IMPACTED_ACCOUNTS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"TOTAL_COUNT" => Self::TOTAL_COUNT,"FIRST_SEEN" => Self::FIRST_SEEN,"IMPACTED_SESSIONS" => Self::IMPACTED_SESSIONS,"PRIORITY" => Self::PRIORITY,"IMPACTED_ACCOUNTS" => Self::IMPACTED_ACCOUNTS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

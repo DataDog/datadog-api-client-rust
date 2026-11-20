@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Suggested responses to the signal.
 #[non_exhaustive]
@@ -13,17 +13,15 @@ use std::fmt::{self, Formatter};
 pub struct SecurityAgentInvestigationResponseSuggestions {
     /// Suggested mitigations, in the order to apply them.
     #[serde(rename = "mitigation_suggestions")]
-    pub mitigation_suggestions:
-        Option<Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>>,
+    pub mitigation_suggestions: Option<Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>>,
     /// Suggestions to tune the detection rule that generated the signal.
     #[serde(rename = "rule_tuning_suggestions")]
-    pub rule_tuning_suggestions:
-        Option<crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions>,
+    pub rule_tuning_suggestions: Option<crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityAgentInvestigationResponseSuggestions {
@@ -35,31 +33,23 @@ impl SecurityAgentInvestigationResponseSuggestions {
             _unparsed: false,
         }
     }
-
-    pub fn mitigation_suggestions(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>,
-    ) -> Self {
+    
+    pub fn mitigation_suggestions(mut self, value: Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>) -> Self {
         self.mitigation_suggestions = Some(value);
         self
     }
-
-    pub fn rule_tuning_suggestions(
-        mut self,
-        value: crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions,
-    ) -> Self {
+    
+    pub fn rule_tuning_suggestions(mut self, value: crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions) -> Self {
         self.rule_tuning_suggestions = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityAgentInvestigationResponseSuggestions {
     fn default() -> Self {
@@ -84,16 +74,9 @@ impl<'de> Deserialize<'de> for SecurityAgentInvestigationResponseSuggestions {
             where
                 M: MapAccess<'a>,
             {
-                let mut mitigation_suggestions: Option<
-                    Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>,
-                > = None;
-                let mut rule_tuning_suggestions: Option<
-                    crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut mitigation_suggestions: Option<Vec<crate::datadogV2::model::SecurityAgentInvestigationMitigationSuggestion>> = None;
+                let mut rule_tuning_suggestions: Option<crate::datadogV2::model::SecurityAgentInvestigationRuleTuningSuggestions> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -102,21 +85,19 @@ impl<'de> Deserialize<'de> for SecurityAgentInvestigationResponseSuggestions {
                             if v.is_null() {
                                 continue;
                             }
-                            mitigation_suggestions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mitigation_suggestions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rule_tuning_suggestions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rule_tuning_suggestions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rule_tuning_suggestions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Software or hardware component.
 #[non_exhaustive]
@@ -39,16 +39,11 @@ pub struct SBOMComponent {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SBOMComponent {
-    pub fn new(
-        name: String,
-        supplier: crate::datadogV2::model::SBOMComponentSupplier,
-        type_: crate::datadogV2::model::SBOMComponentType,
-        version: String,
-    ) -> SBOMComponent {
+    pub fn new(name: String, supplier: crate::datadogV2::model::SBOMComponentSupplier, type_: crate::datadogV2::model::SBOMComponentType, version: String) -> SBOMComponent {
         SBOMComponent {
             bom_ref: None,
             licenses: None,
@@ -62,38 +57,34 @@ impl SBOMComponent {
             _unparsed: false,
         }
     }
-
+    
     pub fn bom_ref(mut self, value: String) -> Self {
         self.bom_ref = Some(value);
         self
     }
-
+    
     pub fn licenses(mut self, value: Vec<crate::datadogV2::model::SBOMComponentLicense>) -> Self {
         self.licenses = Some(value);
         self
     }
-
-    pub fn properties(
-        mut self,
-        value: Vec<crate::datadogV2::model::SBOMComponentProperty>,
-    ) -> Self {
+    
+    pub fn properties(mut self, value: Vec<crate::datadogV2::model::SBOMComponentProperty>) -> Self {
         self.properties = Some(value);
         self
     }
-
+    
     pub fn purl(mut self, value: String) -> Self {
         self.purl = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SBOMComponent {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -115,16 +106,12 @@ impl<'de> Deserialize<'de> for SBOMComponent {
                 let mut bom_ref: Option<String> = None;
                 let mut licenses: Option<Vec<crate::datadogV2::model::SBOMComponentLicense>> = None;
                 let mut name: Option<String> = None;
-                let mut properties: Option<Vec<crate::datadogV2::model::SBOMComponentProperty>> =
-                    None;
+                let mut properties: Option<Vec<crate::datadogV2::model::SBOMComponentProperty>> = None;
                 let mut purl: Option<String> = None;
                 let mut supplier: Option<crate::datadogV2::model::SBOMComponentSupplier> = None;
                 let mut type_: Option<crate::datadogV2::model::SBOMComponentType> = None;
                 let mut version: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,52 +121,50 @@ impl<'de> Deserialize<'de> for SBOMComponent {
                                 continue;
                             }
                             bom_ref = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "licenses" => {
                             if v.is_null() {
                                 continue;
                             }
                             licenses = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "properties" => {
                             if v.is_null() {
                                 continue;
                             }
                             properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "purl" => {
                             if v.is_null() {
                                 continue;
                             }
                             purl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "supplier" => {
                             supplier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::SBOMComponentType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::SBOMComponentType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

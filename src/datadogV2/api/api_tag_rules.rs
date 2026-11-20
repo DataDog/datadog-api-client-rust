@@ -1,15 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// DeleteTagRuleOptionalParams is a struct for passing parameters to the method [`TagRulesAPI::delete_tag_rule`]
 #[non_exhaustive]
@@ -131,6 +128,9 @@ impl ListTagRulesOptionalParams {
     }
 }
 
+
+
+
 /// CreateTagRuleError is a struct for typed errors of method [`TagRulesAPI::create_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -139,6 +139,7 @@ pub enum CreateTagRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTagRuleError is a struct for typed errors of method [`TagRulesAPI::delete_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -149,6 +150,7 @@ pub enum DeleteTagRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTagRuleError is a struct for typed errors of method [`TagRulesAPI::get_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -157,6 +159,7 @@ pub enum GetTagRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTagRuleScoreError is a struct for typed errors of method [`TagRulesAPI::get_tag_rule_score`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -167,6 +170,7 @@ pub enum GetTagRuleScoreError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTagRulesError is a struct for typed errors of method [`TagRulesAPI::list_tag_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -176,6 +180,7 @@ pub enum ListTagRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTagRuleError is a struct for typed errors of method [`TagRulesAPI::update_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -184,6 +189,7 @@ pub enum UpdateTagRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Tag Rules define rules that govern which tag values are accepted for a given tag key,
 /// scoped to a particular telemetry source (such as logs, spans, or metrics). Rules can be
@@ -211,7 +217,8 @@ impl TagRulesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -256,44 +263,33 @@ impl TagRulesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new tag rule for the organization. The caller's organization is derived from
-    /// the authenticated user; cross-organization creation is not supported. Fields such as
-    /// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
-    pub async fn create_tag_rule(
-        &self,
-        body: crate::datadogV2::model::TagRuleCreateRequest,
-    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<CreateTagRuleError>> {
+/// the authenticated user; cross-organization creation is not supported. Fields such as
+/// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
+    pub async fn create_tag_rule(&self, body: crate::datadogV2::model::TagRuleCreateRequest) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<CreateTagRuleError>> {
         match self.create_tag_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new tag rule for the organization. The caller's organization is derived from
-    /// the authenticated user; cross-organization creation is not supported. Fields such as
-    /// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
-    pub async fn create_tag_rule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TagRuleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
-        datadog::Error<CreateTagRuleError>,
-    > {
+/// the authenticated user; cross-organization creation is not supported. Fields such as
+/// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
+    pub async fn create_tag_rule_with_http_info(&self, body: crate::datadogV2::model::TagRuleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>, datadog::Error<CreateTagRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -305,19 +301,23 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -330,23 +330,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -354,7 +347,10 @@ impl TagRulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -364,7 +360,10 @@ impl TagRulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -386,7 +385,7 @@ impl TagRulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -404,51 +403,37 @@ impl TagRulesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTagRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTagRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
-    /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the rule permanently. Deleting a `blocking` rule additionally requires the
-    /// `telemetry_rules_activate` permission.
-    pub async fn delete_tag_rule(
-        &self,
-        rule_id: String,
-        params: DeleteTagRuleOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteTagRuleError>> {
-        match self.delete_tag_rule_with_http_info(rule_id, params).await {
+/// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
+/// the rule permanently. Deleting a `blocking` rule additionally requires the
+/// `telemetry_rules_activate` permission.
+    pub async fn delete_tag_rule(&self, rule_id: String, params: DeleteTagRuleOptionalParams) -> Result<(), datadog::Error<DeleteTagRuleError>> {
+        match self.delete_tag_rule_with_http_info(rule_id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
-    /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the rule permanently. Deleting a `blocking` rule additionally requires the
-    /// `telemetry_rules_activate` permission.
-    pub async fn delete_tag_rule_with_http_info(
-        &self,
-        rule_id: String,
-        params: DeleteTagRuleOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagRuleError>> {
+/// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
+/// the rule permanently. Deleting a `blocking` rule additionally requires the
+/// `telemetry_rules_activate` permission.
+    pub async fn delete_tag_rule_with_http_info(&self, rule_id: String, params: DeleteTagRuleOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -460,6 +445,7 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let hard_delete = params.hard_delete;
 
@@ -467,20 +453,21 @@ impl TagRulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = hard_delete {
-            local_req_builder =
-                local_req_builder.query(&[("hard_delete", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("hard_delete", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -493,22 +480,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -526,50 +507,33 @@ impl TagRulesAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTagRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTagRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a single tag rule by ID. Optionally include the rule's current compliance
-    /// score via the `include=score` query parameter. Rules belonging to other organizations
-    /// cannot be retrieved.
-    pub async fn get_tag_rule(
-        &self,
-        rule_id: String,
-        params: GetTagRuleOptionalParams,
-    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<GetTagRuleError>> {
-        match self.get_tag_rule_with_http_info(rule_id, params).await {
+/// score via the `include=score` query parameter. Rules belonging to other organizations
+/// cannot be retrieved.
+    pub async fn get_tag_rule(&self, rule_id: String, params: GetTagRuleOptionalParams) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<GetTagRuleError>> {
+        match self.get_tag_rule_with_http_info(rule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a single tag rule by ID. Optionally include the rule's current compliance
-    /// score via the `include=score` query parameter. Rules belonging to other organizations
-    /// cannot be retrieved.
-    pub async fn get_tag_rule_with_http_info(
-        &self,
-        rule_id: String,
-        params: GetTagRuleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
-        datadog::Error<GetTagRuleError>,
-    > {
+/// score via the `include=score` query parameter. Rules belonging to other organizations
+/// cannot be retrieved.
+    pub async fn get_tag_rule_with_http_info(&self, rule_id: String, params: GetTagRuleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>, datadog::Error<GetTagRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -581,6 +545,7 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let ts_start = params.ts_start;
@@ -590,28 +555,27 @@ impl TagRulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts_start {
-            local_req_builder =
-                local_req_builder.query(&[("ts_start", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_start", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts_end {
-            local_req_builder =
-                local_req_builder.query(&[("ts_end", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_end", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -624,22 +588,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -652,65 +610,43 @@ impl TagRulesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTagRuleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the compliance score for a single tag rule. The score is computed over the
-    /// requested time window (or a source-appropriate default) and represents the percentage of
-    /// telemetry within that window that conforms to the rule. A `null` score indicates that
-    /// no relevant telemetry was found.
-    pub async fn get_tag_rule_score(
-        &self,
-        rule_id: String,
-        params: GetTagRuleScoreOptionalParams,
-    ) -> Result<crate::datadogV2::model::TagRuleScoreResponse, datadog::Error<GetTagRuleScoreError>>
-    {
-        match self
-            .get_tag_rule_score_with_http_info(rule_id, params)
-            .await
-        {
+/// requested time window (or a source-appropriate default) and represents the percentage of
+/// telemetry within that window that conforms to the rule. A `null` score indicates that
+/// no relevant telemetry was found.
+    pub async fn get_tag_rule_score(&self, rule_id: String, params: GetTagRuleScoreOptionalParams) -> Result<crate::datadogV2::model::TagRuleScoreResponse, datadog::Error<GetTagRuleScoreError>> {
+        match self.get_tag_rule_score_with_http_info(rule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the compliance score for a single tag rule. The score is computed over the
-    /// requested time window (or a source-appropriate default) and represents the percentage of
-    /// telemetry within that window that conforms to the rule. A `null` score indicates that
-    /// no relevant telemetry was found.
-    pub async fn get_tag_rule_score_with_http_info(
-        &self,
-        rule_id: String,
-        params: GetTagRuleScoreOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagRuleScoreResponse>,
-        datadog::Error<GetTagRuleScoreError>,
-    > {
+/// requested time window (or a source-appropriate default) and represents the percentage of
+/// telemetry within that window that conforms to the rule. A `null` score indicates that
+/// no relevant telemetry was found.
+    pub async fn get_tag_rule_score_with_http_info(&self, rule_id: String, params: GetTagRuleScoreOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagRuleScoreResponse>, datadog::Error<GetTagRuleScoreError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_tag_rule_score";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -722,6 +658,7 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let ts_start = params.ts_start;
         let ts_end = params.ts_end;
@@ -730,24 +667,24 @@ impl TagRulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules/{rule_id}/score",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = ts_start {
-            local_req_builder =
-                local_req_builder.query(&[("ts_start", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_start", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts_end {
-            local_req_builder =
-                local_req_builder.query(&[("ts_end", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_end", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -760,22 +697,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -787,62 +718,42 @@ impl TagRulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagRuleScoreResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagRuleScoreResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTagRuleScoreError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTagRuleScoreError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve all tag rules for the organization. Optionally include disabled or deleted
-    /// rules, filter by telemetry source, and include each rule's current compliance score
-    /// via the `include=score` query parameter.
-    pub async fn list_tag_rules(
-        &self,
-        params: ListTagRulesOptionalParams,
-    ) -> Result<crate::datadogV2::model::TagRulesListResponse, datadog::Error<ListTagRulesError>>
-    {
-        match self.list_tag_rules_with_http_info(params).await {
+/// rules, filter by telemetry source, and include each rule's current compliance score
+/// via the `include=score` query parameter.
+    pub async fn list_tag_rules(&self, params: ListTagRulesOptionalParams) -> Result<crate::datadogV2::model::TagRulesListResponse, datadog::Error<ListTagRulesError>> {
+        match self.list_tag_rules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve all tag rules for the organization. Optionally include disabled or deleted
-    /// rules, filter by telemetry source, and include each rule's current compliance score
-    /// via the `include=score` query parameter.
-    pub async fn list_tag_rules_with_http_info(
-        &self,
-        params: ListTagRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagRulesListResponse>,
-        datadog::Error<ListTagRulesError>,
-    > {
+/// rules, filter by telemetry source, and include each rule's current compliance score
+/// via the `include=score` query parameter.
+    pub async fn list_tag_rules_with_http_info(&self, params: ListTagRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagRulesListResponse>, datadog::Error<ListTagRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_rules";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -854,6 +765,7 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_disabled = params.include_disabled;
         let include_deleted = params.include_deleted;
@@ -866,39 +778,34 @@ impl TagRulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_disabled {
-            local_req_builder =
-                local_req_builder.query(&[("include_disabled", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_disabled", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_deleted {
-            local_req_builder =
-                local_req_builder.query(&[("include_deleted", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_deleted", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_source {
-            local_req_builder =
-                local_req_builder.query(&[("filter[source]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[source]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts_start {
-            local_req_builder =
-                local_req_builder.query(&[("ts_start", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_start", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts_end {
-            local_req_builder =
-                local_req_builder.query(&[("ts_end", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts_end", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -911,22 +818,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -938,68 +839,48 @@ impl TagRulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagRulesListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagRulesListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTagRulesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
-    /// request body are modified; omitted fields retain their current values. The rule's
-    /// `source` cannot be changed after creation.
-    /// Promoting a rule from `surfacing` to `blocking` additionally requires the
-    /// `telemetry_rules_activate` permission, and your organization must have access to
-    /// blocking rules. You can't promote RUM rules to `blocking`.
-    pub async fn update_tag_rule(
-        &self,
-        rule_id: String,
-        body: crate::datadogV2::model::TagRuleUpdateRequest,
-    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<UpdateTagRuleError>> {
+/// request body are modified; omitted fields retain their current values. The rule's
+/// `source` cannot be changed after creation.
+/// Promoting a rule from `surfacing` to `blocking` additionally requires the
+/// `telemetry_rules_activate` permission, and your organization must have access to
+/// blocking rules. You can't promote RUM rules to `blocking`.
+    pub async fn update_tag_rule(&self, rule_id: String, body: crate::datadogV2::model::TagRuleUpdateRequest) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<UpdateTagRuleError>> {
         match self.update_tag_rule_with_http_info(rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
-    /// request body are modified; omitted fields retain their current values. The rule's
-    /// `source` cannot be changed after creation.
-    /// Promoting a rule from `surfacing` to `blocking` additionally requires the
-    /// `telemetry_rules_activate` permission, and your organization must have access to
-    /// blocking rules. You can't promote RUM rules to `blocking`.
-    pub async fn update_tag_rule_with_http_info(
-        &self,
-        rule_id: String,
-        body: crate::datadogV2::model::TagRuleUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
-        datadog::Error<UpdateTagRuleError>,
-    > {
+/// request body are modified; omitted fields retain their current values. The rule's
+/// `source` cannot be changed after creation.
+/// Promoting a rule from `surfacing` to `blocking` additionally requires the
+/// `telemetry_rules_activate` permission, and your organization must have access to
+/// blocking rules. You can't promote RUM rules to `blocking`.
+    pub async fn update_tag_rule_with_http_info(&self, rule_id: String, body: crate::datadogV2::model::TagRuleUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>, datadog::Error<UpdateTagRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1011,20 +892,25 @@ impl TagRulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/governance/tag_rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1037,23 +923,16 @@ impl TagRulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1061,7 +940,10 @@ impl TagRulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1071,7 +953,10 @@ impl TagRulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1093,7 +978,7 @@ impl TagRulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1111,23 +996,16 @@ impl TagRulesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTagRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTagRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

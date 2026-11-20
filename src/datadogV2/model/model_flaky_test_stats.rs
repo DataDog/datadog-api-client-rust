@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Test statistics for the flaky test.
 #[non_exhaustive]
@@ -12,17 +12,13 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FlakyTestStats {
     /// The failure rate percentage of the test for the past 7 days. This is the number of failed test runs divided by the total number of test runs (excluding skipped test runs).
-    #[serde(
-        rename = "failure_rate_pct",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "failure_rate_pct", default, with = "::serde_with::rust::double_option")]
     pub failure_rate_pct: Option<Option<f64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FlakyTestStats {
@@ -33,20 +29,18 @@ impl FlakyTestStats {
             _unparsed: false,
         }
     }
-
+    
     pub fn failure_rate_pct(mut self, value: Option<f64>) -> Self {
         self.failure_rate_pct = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FlakyTestStats {
     fn default() -> Self {
@@ -72,10 +66,7 @@ impl<'de> Deserialize<'de> for FlakyTestStats {
                 M: MapAccess<'a>,
             {
                 let mut failure_rate_pct: Option<Option<f64>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -84,14 +75,13 @@ impl<'de> Deserialize<'de> for FlakyTestStats {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            failure_rate_pct =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            failure_rate_pct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

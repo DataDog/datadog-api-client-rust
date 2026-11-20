@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A specific monitor and the groups to evaluate for it.
 #[non_exhaustive]
@@ -19,7 +19,7 @@ pub struct DeploymentRuleOptionsMonitorId {
     pub id: String,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DeploymentRuleOptionsMonitorId {
@@ -30,7 +30,10 @@ impl DeploymentRuleOptionsMonitorId {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitorId {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -57,15 +60,13 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitorId {
                     match k.as_str() {
                         "groups" => {
                             groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let groups = groups.ok_or_else(|| M::Error::missing_field("groups"))?;

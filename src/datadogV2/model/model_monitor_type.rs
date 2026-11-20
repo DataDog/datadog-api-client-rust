@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes from the monitor that triggered the event.
 #[non_exhaustive]
@@ -48,7 +48,7 @@ pub struct MonitorType {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorType {
@@ -69,70 +69,68 @@ impl MonitorType {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn group_status(mut self, value: i32) -> Self {
         self.group_status = Some(value);
         self
     }
-
+    
     pub fn groups(mut self, value: Vec<String>) -> Self {
         self.groups = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn modified(mut self, value: i64) -> Self {
         self.modified = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn templated_name(mut self, value: String) -> Self {
         self.templated_name = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonitorType {
     fn default() -> Self {
@@ -168,10 +166,7 @@ impl<'de> Deserialize<'de> for MonitorType {
                 let mut tags: Option<Vec<String>> = None;
                 let mut templated_name: Option<String> = None;
                 let mut type_: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -181,74 +176,72 @@ impl<'de> Deserialize<'de> for MonitorType {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "group_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            group_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            group_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "groups" => {
                             if v.is_null() {
                                 continue;
                             }
                             groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified" => {
                             if v.is_null() {
                                 continue;
                             }
                             modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "templated_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            templated_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            templated_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

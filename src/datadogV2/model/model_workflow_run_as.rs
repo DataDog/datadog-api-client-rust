@@ -1,17 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Identity used to run the workflow.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum WorkflowRunAs {
-    WorkflowRunAsOwner(Box<crate::datadogV2::model::WorkflowRunAsOwner>),
-    WorkflowRunAsServiceAccount(Box<crate::datadogV2::model::WorkflowRunAsServiceAccount>),
-    WorkflowRunAsInitiator(Box<crate::datadogV2::model::WorkflowRunAsInitiator>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	WorkflowRunAsOwner(Box<crate::datadogV2::model::WorkflowRunAsOwner>),
+	WorkflowRunAsServiceAccount(Box<crate::datadogV2::model::WorkflowRunAsServiceAccount>),
+	WorkflowRunAsInitiator(Box<crate::datadogV2::model::WorkflowRunAsInitiator>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for WorkflowRunAs {
@@ -20,31 +20,22 @@ impl<'de> Deserialize<'de> for WorkflowRunAs {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowRunAsOwner>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowRunAsOwner>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WorkflowRunAs::WorkflowRunAsOwner(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::WorkflowRunAsServiceAccount>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowRunAsServiceAccount>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WorkflowRunAs::WorkflowRunAsServiceAccount(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowRunAsInitiator>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::WorkflowRunAsInitiator>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WorkflowRunAs::WorkflowRunAsInitiator(_v));
             }
         }
-
-        return Ok(WorkflowRunAs::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(WorkflowRunAs::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

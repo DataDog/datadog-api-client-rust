@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListDatastoreItemsOptionalParams is a struct for passing parameters to the method [`ActionsDatastoresAPI::list_datastore_items`]
 #[non_exhaustive]
@@ -54,6 +51,9 @@ impl ListDatastoreItemsOptionalParams {
     }
 }
 
+
+
+
 /// BulkDeleteDatastoreItemsError is a struct for typed errors of method [`ActionsDatastoresAPI::bulk_delete_datastore_items`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -62,6 +62,7 @@ pub enum BulkDeleteDatastoreItemsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// BulkWriteDatastoreItemsError is a struct for typed errors of method [`ActionsDatastoresAPI::bulk_write_datastore_items`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -72,6 +73,7 @@ pub enum BulkWriteDatastoreItemsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateDatastoreError is a struct for typed errors of method [`ActionsDatastoresAPI::create_datastore`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -80,6 +82,7 @@ pub enum CreateDatastoreError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteDatastoreError is a struct for typed errors of method [`ActionsDatastoresAPI::delete_datastore`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -90,6 +93,7 @@ pub enum DeleteDatastoreError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteDatastoreItemError is a struct for typed errors of method [`ActionsDatastoresAPI::delete_datastore_item`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -98,6 +102,7 @@ pub enum DeleteDatastoreItemError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetDatastoreError is a struct for typed errors of method [`ActionsDatastoresAPI::get_datastore`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -108,6 +113,7 @@ pub enum GetDatastoreError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDatastoreItemsError is a struct for typed errors of method [`ActionsDatastoresAPI::list_datastore_items`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -117,6 +123,7 @@ pub enum ListDatastoreItemsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDatastoresError is a struct for typed errors of method [`ActionsDatastoresAPI::list_datastores`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -124,6 +131,7 @@ pub enum ListDatastoresError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateDatastoreError is a struct for typed errors of method [`ActionsDatastoresAPI::update_datastore`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -134,6 +142,7 @@ pub enum UpdateDatastoreError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateDatastoreItemError is a struct for typed errors of method [`ActionsDatastoresAPI::update_datastore_item`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -142,6 +151,7 @@ pub enum UpdateDatastoreItemError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Leverage the Actions Datastore API to create, modify, and delete
 /// items in datastores owned by your organization.
@@ -166,7 +176,8 @@ impl ActionsDatastoresAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -211,65 +222,51 @@ impl ActionsDatastoresAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Deletes multiple items from a datastore by their keys in a single operation.
-    pub async fn bulk_delete_datastore_items(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::BulkDeleteAppsDatastoreItemsRequest,
-    ) -> Result<
-        crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray,
-        datadog::Error<BulkDeleteDatastoreItemsError>,
-    > {
-        match self
-            .bulk_delete_datastore_items_with_http_info(datastore_id, body)
-            .await
-        {
+    pub async fn bulk_delete_datastore_items(&self, datastore_id: String, body: crate::datadogV2::model::BulkDeleteAppsDatastoreItemsRequest) -> Result<crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray, datadog::Error<BulkDeleteDatastoreItemsError>> {
+        match self.bulk_delete_datastore_items_with_http_info(datastore_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes multiple items from a datastore by their keys in a single operation.
-    pub async fn bulk_delete_datastore_items_with_http_info(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::BulkDeleteAppsDatastoreItemsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray>,
-        datadog::Error<BulkDeleteDatastoreItemsError>,
-    > {
+    pub async fn bulk_delete_datastore_items_with_http_info(&self, datastore_id: String, body: crate::datadogV2::model::BulkDeleteAppsDatastoreItemsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray>, datadog::Error<BulkDeleteDatastoreItemsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.bulk_delete_datastore_items";
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items/bulk",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -282,23 +279,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -306,7 +296,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -316,7 +309,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -338,7 +334,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -355,83 +351,60 @@ impl ActionsDatastoresAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DeleteAppsDatastoreItemResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<BulkDeleteDatastoreItemsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BulkDeleteDatastoreItemsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates or replaces multiple items in a datastore by their keys in a single operation.
-    pub async fn bulk_write_datastore_items(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::BulkPutAppsDatastoreItemsRequest,
-    ) -> Result<
-        crate::datadogV2::model::PutAppsDatastoreItemResponseArray,
-        datadog::Error<BulkWriteDatastoreItemsError>,
-    > {
-        match self
-            .bulk_write_datastore_items_with_http_info(datastore_id, body)
-            .await
-        {
+    pub async fn bulk_write_datastore_items(&self, datastore_id: String, body: crate::datadogV2::model::BulkPutAppsDatastoreItemsRequest) -> Result<crate::datadogV2::model::PutAppsDatastoreItemResponseArray, datadog::Error<BulkWriteDatastoreItemsError>> {
+        match self.bulk_write_datastore_items_with_http_info(datastore_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates or replaces multiple items in a datastore by their keys in a single operation.
-    pub async fn bulk_write_datastore_items_with_http_info(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::BulkPutAppsDatastoreItemsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PutAppsDatastoreItemResponseArray>,
-        datadog::Error<BulkWriteDatastoreItemsError>,
-    > {
+    pub async fn bulk_write_datastore_items_with_http_info(&self, datastore_id: String, body: crate::datadogV2::model::BulkPutAppsDatastoreItemsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::PutAppsDatastoreItemResponseArray>, datadog::Error<BulkWriteDatastoreItemsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.bulk_write_datastore_items";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items/bulk",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -444,23 +417,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -468,7 +434,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -478,7 +447,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -500,7 +472,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -517,76 +489,58 @@ impl ActionsDatastoresAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PutAppsDatastoreItemResponseArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PutAppsDatastoreItemResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<BulkWriteDatastoreItemsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BulkWriteDatastoreItemsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new datastore.
-    pub async fn create_datastore(
-        &self,
-        body: crate::datadogV2::model::CreateAppsDatastoreRequest,
-    ) -> Result<
-        crate::datadogV2::model::CreateAppsDatastoreResponse,
-        datadog::Error<CreateDatastoreError>,
-    > {
+    pub async fn create_datastore(&self, body: crate::datadogV2::model::CreateAppsDatastoreRequest) -> Result<crate::datadogV2::model::CreateAppsDatastoreResponse, datadog::Error<CreateDatastoreError>> {
         match self.create_datastore_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new datastore.
-    pub async fn create_datastore_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateAppsDatastoreRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CreateAppsDatastoreResponse>,
-        datadog::Error<CreateDatastoreError>,
-    > {
+    pub async fn create_datastore_with_http_info(&self, body: crate::datadogV2::model::CreateAppsDatastoreRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CreateAppsDatastoreResponse>, datadog::Error<CreateDatastoreError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_datastore";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -599,23 +553,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -623,7 +570,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -633,7 +583,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -655,7 +608,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -672,62 +625,53 @@ impl ActionsDatastoresAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CreateAppsDatastoreResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CreateAppsDatastoreResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDatastoreError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDatastoreError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a datastore by its unique identifier.
-    pub async fn delete_datastore(
-        &self,
-        datastore_id: String,
-    ) -> Result<(), datadog::Error<DeleteDatastoreError>> {
+    pub async fn delete_datastore(&self, datastore_id: String) -> Result<(), datadog::Error<DeleteDatastoreError>> {
         match self.delete_datastore_with_http_info(datastore_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a datastore by its unique identifier.
-    pub async fn delete_datastore_with_http_info(
-        &self,
-        datastore_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDatastoreError>> {
+    pub async fn delete_datastore_with_http_info(&self, datastore_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDatastoreError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_datastore";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -740,22 +684,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -773,69 +711,51 @@ impl ActionsDatastoresAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteDatastoreError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDatastoreError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes an item from a datastore by its key.
-    pub async fn delete_datastore_item(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::DeleteAppsDatastoreItemRequest,
-    ) -> Result<
-        crate::datadogV2::model::DeleteAppsDatastoreItemResponse,
-        datadog::Error<DeleteDatastoreItemError>,
-    > {
-        match self
-            .delete_datastore_item_with_http_info(datastore_id, body)
-            .await
-        {
+    pub async fn delete_datastore_item(&self, datastore_id: String, body: crate::datadogV2::model::DeleteAppsDatastoreItemRequest) -> Result<crate::datadogV2::model::DeleteAppsDatastoreItemResponse, datadog::Error<DeleteDatastoreItemError>> {
+        match self.delete_datastore_item_with_http_info(datastore_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes an item from a datastore by its key.
-    pub async fn delete_datastore_item_with_http_info(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::DeleteAppsDatastoreItemRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DeleteAppsDatastoreItemResponse>,
-        datadog::Error<DeleteDatastoreItemError>,
-    > {
+    pub async fn delete_datastore_item_with_http_info(&self, datastore_id: String, body: crate::datadogV2::model::DeleteAppsDatastoreItemRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DeleteAppsDatastoreItemResponse>, datadog::Error<DeleteDatastoreItemError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_datastore_item";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -848,23 +768,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -872,7 +785,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -882,7 +798,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -904,7 +823,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -921,73 +840,59 @@ impl ActionsDatastoresAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DeleteAppsDatastoreItemResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DeleteAppsDatastoreItemResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteDatastoreItemError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDatastoreItemError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves a specific datastore by its ID.
-    pub async fn get_datastore(
-        &self,
-        datastore_id: String,
-    ) -> Result<crate::datadogV2::model::Datastore, datadog::Error<GetDatastoreError>> {
+    pub async fn get_datastore(&self, datastore_id: String) -> Result<crate::datadogV2::model::Datastore, datadog::Error<GetDatastoreError>> {
         match self.get_datastore_with_http_info(datastore_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves a specific datastore by its ID.
-    pub async fn get_datastore_with_http_info(
-        &self,
-        datastore_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Datastore>,
-        datadog::Error<GetDatastoreError>,
-    > {
+    pub async fn get_datastore_with_http_info(&self, datastore_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::Datastore>, datadog::Error<GetDatastoreError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_datastore";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1000,22 +905,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1028,62 +927,41 @@ impl ActionsDatastoresAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Datastore>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDatastoreError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Lists items from a datastore. You can filter the results by specifying either an item key or a filter query parameter, but not both at the same time. Supports server-side pagination for large datasets.
-    pub async fn list_datastore_items(
-        &self,
-        datastore_id: String,
-        params: ListDatastoreItemsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ItemApiPayloadArray, datadog::Error<ListDatastoreItemsError>>
-    {
-        match self
-            .list_datastore_items_with_http_info(datastore_id, params)
-            .await
-        {
+    pub async fn list_datastore_items(&self, datastore_id: String, params: ListDatastoreItemsOptionalParams) -> Result<crate::datadogV2::model::ItemApiPayloadArray, datadog::Error<ListDatastoreItemsError>> {
+        match self.list_datastore_items_with_http_info(datastore_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Lists items from a datastore. You can filter the results by specifying either an item key or a filter query parameter, but not both at the same time. Supports server-side pagination for large datasets.
-    pub async fn list_datastore_items_with_http_info(
-        &self,
-        datastore_id: String,
-        params: ListDatastoreItemsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ItemApiPayloadArray>,
-        datadog::Error<ListDatastoreItemsError>,
-    > {
+    pub async fn list_datastore_items_with_http_info(&self, datastore_id: String, params: ListDatastoreItemsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ItemApiPayloadArray>, datadog::Error<ListDatastoreItemsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_datastore_items";
 
+        
         // unbox and build optional parameters
         let filter = params.filter;
         let item_key = params.item_key;
@@ -1095,36 +973,33 @@ impl ActionsDatastoresAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = item_key {
-            local_req_builder =
-                local_req_builder.query(&[("item_key", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("item_key", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1137,22 +1012,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1164,70 +1033,57 @@ impl ActionsDatastoresAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ItemApiPayloadArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ItemApiPayloadArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDatastoreItemsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDatastoreItemsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Lists all datastores for the organization.
-    pub async fn list_datastores(
-        &self,
-    ) -> Result<crate::datadogV2::model::DatastoreArray, datadog::Error<ListDatastoresError>> {
+    pub async fn list_datastores(&self) -> Result<crate::datadogV2::model::DatastoreArray, datadog::Error<ListDatastoresError>> {
         match self.list_datastores_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Lists all datastores for the organization.
-    pub async fn list_datastores_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DatastoreArray>,
-        datadog::Error<ListDatastoresError>,
-    > {
+    pub async fn list_datastores_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::DatastoreArray>, datadog::Error<ListDatastoresError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_datastores";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1240,22 +1096,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1268,76 +1118,59 @@ impl ActionsDatastoresAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::DatastoreArray>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDatastoresError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDatastoresError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing datastore's attributes.
-    pub async fn update_datastore(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::UpdateAppsDatastoreRequest,
-    ) -> Result<crate::datadogV2::model::Datastore, datadog::Error<UpdateDatastoreError>> {
-        match self
-            .update_datastore_with_http_info(datastore_id, body)
-            .await
-        {
+    pub async fn update_datastore(&self, datastore_id: String, body: crate::datadogV2::model::UpdateAppsDatastoreRequest) -> Result<crate::datadogV2::model::Datastore, datadog::Error<UpdateDatastoreError>> {
+        match self.update_datastore_with_http_info(datastore_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing datastore's attributes.
-    pub async fn update_datastore_with_http_info(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::UpdateAppsDatastoreRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Datastore>,
-        datadog::Error<UpdateDatastoreError>,
-    > {
+    pub async fn update_datastore_with_http_info(&self, datastore_id: String, body: crate::datadogV2::model::UpdateAppsDatastoreRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::Datastore>, datadog::Error<UpdateDatastoreError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_datastore";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1350,23 +1183,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1374,7 +1200,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1384,7 +1213,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1406,7 +1238,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1424,77 +1256,59 @@ impl ActionsDatastoresAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Datastore>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateDatastoreError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateDatastoreError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially updates an item in a datastore by its key.
-    pub async fn update_datastore_item(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::UpdateAppsDatastoreItemRequest,
-    ) -> Result<crate::datadogV2::model::ItemApiPayload, datadog::Error<UpdateDatastoreItemError>>
-    {
-        match self
-            .update_datastore_item_with_http_info(datastore_id, body)
-            .await
-        {
+    pub async fn update_datastore_item(&self, datastore_id: String, body: crate::datadogV2::model::UpdateAppsDatastoreItemRequest) -> Result<crate::datadogV2::model::ItemApiPayload, datadog::Error<UpdateDatastoreItemError>> {
+        match self.update_datastore_item_with_http_info(datastore_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially updates an item in a datastore by its key.
-    pub async fn update_datastore_item_with_http_info(
-        &self,
-        datastore_id: String,
-        body: crate::datadogV2::model::UpdateAppsDatastoreItemRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ItemApiPayload>,
-        datadog::Error<UpdateDatastoreItemError>,
-    > {
+    pub async fn update_datastore_item_with_http_info(&self, datastore_id: String, body: crate::datadogV2::model::UpdateAppsDatastoreItemRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ItemApiPayload>, datadog::Error<UpdateDatastoreItemError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_datastore_item";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(local_operation_id),
-            datastore_id = datadog::urlencode(datastore_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), datastore_id=
+            datadog::urlencode(datastore_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1507,23 +1321,16 @@ impl ActionsDatastoresAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1531,7 +1338,10 @@ impl ActionsDatastoresAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1541,7 +1351,10 @@ impl ActionsDatastoresAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1563,7 +1376,7 @@ impl ActionsDatastoresAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1581,23 +1394,16 @@ impl ActionsDatastoresAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ItemApiPayload>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateDatastoreItemError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateDatastoreItemError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

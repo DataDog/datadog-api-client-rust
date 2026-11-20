@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::create_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CreateApplicationKeyError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum DeleteAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum DeleteApplicationKeyError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::get_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum GetAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::get_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -57,6 +62,7 @@ pub enum GetApplicationKeyError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAPIKeysError is a struct for typed errors of method [`KeyManagementAPI::list_api_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +72,7 @@ pub enum ListAPIKeysError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListApplicationKeysError is a struct for typed errors of method [`KeyManagementAPI::list_application_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,6 +80,7 @@ pub enum ListApplicationKeysError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::update_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -82,6 +90,7 @@ pub enum UpdateAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::update_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,6 +98,7 @@ pub enum UpdateApplicationKeyError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Datadog API and application keys. You need an API key and an
 /// application key for a user with the required permissions to interact with these endpoints.
@@ -118,7 +128,8 @@ impl KeyManagementAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -163,64 +174,57 @@ impl KeyManagementAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// This endpoint is deprecated. Use [Create an API key](<https://docs.datadoghq.com/api/latest/key-management/#create-an-api-key>) (`POST /api/v2/api_keys`) instead.
-    ///
-    /// Creates an API key with a given name.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn create_api_key(
-        &self,
-        body: crate::datadogV1::model::ApiKey,
-    ) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<CreateAPIKeyError>> {
+///
+/// Creates an API key with a given name.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn create_api_key(&self, body: crate::datadogV1::model::ApiKey) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<CreateAPIKeyError>> {
         match self.create_api_key_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Create an API key](<https://docs.datadoghq.com/api/latest/key-management/#create-an-api-key>) (`POST /api/v2/api_keys`) instead.
-    ///
-    /// Creates an API key with a given name.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn create_api_key_with_http_info(
-        &self,
-        body: crate::datadogV1::model::ApiKey,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>,
-        datadog::Error<CreateAPIKeyError>,
-    > {
+///
+/// Creates an API key with a given name.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn create_api_key_with_http_info(&self, body: crate::datadogV1::model::ApiKey) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>, datadog::Error<CreateAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/api_key",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -233,23 +237,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -257,7 +254,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -267,7 +267,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -289,7 +292,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -307,82 +310,67 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::ApiKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. Use [Create an application key for current user](<https://docs.datadoghq.com/api/latest/key-management/#create-an-application-key-for-current-user>) (`POST /api/v2/current_user/application_keys`) instead.
-    ///
-    /// Create an application key with a given name.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn create_application_key(
-        &self,
-        body: crate::datadogV1::model::ApplicationKey,
-    ) -> Result<
-        crate::datadogV1::model::ApplicationKeyResponse,
-        datadog::Error<CreateApplicationKeyError>,
-    > {
+///
+/// Create an application key with a given name.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn create_application_key(&self, body: crate::datadogV1::model::ApplicationKey) -> Result<crate::datadogV1::model::ApplicationKeyResponse, datadog::Error<CreateApplicationKeyError>> {
         match self.create_application_key_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Create an application key for current user](<https://docs.datadoghq.com/api/latest/key-management/#create-an-application-key-for-current-user>) (`POST /api/v2/current_user/application_keys`) instead.
-    ///
-    /// Create an application key with a given name.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn create_application_key_with_http_info(
-        &self,
-        body: crate::datadogV1::model::ApplicationKey,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
-        datadog::Error<CreateApplicationKeyError>,
-    > {
+///
+/// Create an application key with a given name.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn create_application_key_with_http_info(&self, body: crate::datadogV1::model::ApplicationKey) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, datadog::Error<CreateApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/application_key",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -395,23 +383,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -419,7 +400,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -429,7 +413,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -451,7 +438,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -468,81 +455,67 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. Use [Delete an API key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-api-key>) (`DELETE /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Delete a given API key.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn delete_api_key(
-        &self,
-        key: String,
-    ) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<DeleteAPIKeyError>> {
+///
+/// Delete a given API key.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn delete_api_key(&self, key: String) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<DeleteAPIKeyError>> {
         match self.delete_api_key_with_http_info(key).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Delete an API key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-api-key>) (`DELETE /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Delete a given API key.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn delete_api_key_with_http_info(
-        &self,
-        key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>,
-        datadog::Error<DeleteAPIKeyError>,
-    > {
+///
+/// Delete a given API key.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn delete_api_key_with_http_info(&self, key: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>, datadog::Error<DeleteAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/api_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -555,22 +528,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -583,92 +550,78 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::ApiKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<DeleteAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. To delete your own application key, use
-    /// [Delete an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key-owned-by-current-user>)
-    /// (`DELETE /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To delete an application key for your organization, use
-    /// [Delete an application key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key>)
-    /// (`DELETE /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
-    ///
-    /// Delete a given application key.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn delete_application_key(
-        &self,
-        key: String,
-    ) -> Result<
-        crate::datadogV1::model::ApplicationKeyResponse,
-        datadog::Error<DeleteApplicationKeyError>,
-    > {
+/// [Delete an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key-owned-by-current-user>)
+/// (`DELETE /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To delete an application key for your organization, use
+/// [Delete an application key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key>)
+/// (`DELETE /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
+///
+/// Delete a given application key.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn delete_application_key(&self, key: String) -> Result<crate::datadogV1::model::ApplicationKeyResponse, datadog::Error<DeleteApplicationKeyError>> {
         match self.delete_application_key_with_http_info(key).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. To delete your own application key, use
-    /// [Delete an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key-owned-by-current-user>)
-    /// (`DELETE /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To delete an application key for your organization, use
-    /// [Delete an application key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key>)
-    /// (`DELETE /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
-    ///
-    /// Delete a given application key.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn delete_application_key_with_http_info(
-        &self,
-        key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
-        datadog::Error<DeleteApplicationKeyError>,
-    > {
+/// [Delete an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key-owned-by-current-user>)
+/// (`DELETE /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To delete an application key for your organization, use
+/// [Delete an application key](<https://docs.datadoghq.com/api/latest/key-management/#delete-an-application-key>)
+/// (`DELETE /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
+///
+/// Delete a given application key.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn delete_application_key_with_http_info(&self, key: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, datadog::Error<DeleteApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/application_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -681,22 +634,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -708,81 +655,67 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. Use [Get API key](<https://docs.datadoghq.com/api/latest/key-management/#get-api-key>) (`GET /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Get a given API key.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn get_api_key(
-        &self,
-        key: String,
-    ) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<GetAPIKeyError>> {
+///
+/// Get a given API key.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn get_api_key(&self, key: String) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<GetAPIKeyError>> {
         match self.get_api_key_with_http_info(key).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Get API key](<https://docs.datadoghq.com/api/latest/key-management/#get-api-key>) (`GET /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Get a given API key.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn get_api_key_with_http_info(
-        &self,
-        key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>,
-        datadog::Error<GetAPIKeyError>,
-    > {
+///
+/// Get a given API key.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn get_api_key_with_http_info(&self, key: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>, datadog::Error<GetAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/api_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -795,22 +728,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -823,92 +750,78 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::ApiKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. To get your own application key, use
-    /// [Get one application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-one-application-key-owned-by-current-user>)
-    /// (`GET /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To get an application key for your organization, use
-    /// [Get an application key](<https://docs.datadoghq.com/api/latest/key-management/#get-an-application-key>)
-    /// (`GET /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_read` permission.
-    ///
-    /// Get a given application key.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn get_application_key(
-        &self,
-        key: String,
-    ) -> Result<
-        crate::datadogV1::model::ApplicationKeyResponse,
-        datadog::Error<GetApplicationKeyError>,
-    > {
+/// [Get one application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-one-application-key-owned-by-current-user>)
+/// (`GET /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To get an application key for your organization, use
+/// [Get an application key](<https://docs.datadoghq.com/api/latest/key-management/#get-an-application-key>)
+/// (`GET /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_read` permission.
+///
+/// Get a given application key.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn get_application_key(&self, key: String) -> Result<crate::datadogV1::model::ApplicationKeyResponse, datadog::Error<GetApplicationKeyError>> {
         match self.get_application_key_with_http_info(key).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. To get your own application key, use
-    /// [Get one application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-one-application-key-owned-by-current-user>)
-    /// (`GET /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To get an application key for your organization, use
-    /// [Get an application key](<https://docs.datadoghq.com/api/latest/key-management/#get-an-application-key>)
-    /// (`GET /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_read` permission.
-    ///
-    /// Get a given application key.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn get_application_key_with_http_info(
-        &self,
-        key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
-        datadog::Error<GetApplicationKeyError>,
-    > {
+/// [Get one application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-one-application-key-owned-by-current-user>)
+/// (`GET /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To get an application key for your organization, use
+/// [Get an application key](<https://docs.datadoghq.com/api/latest/key-management/#get-an-application-key>)
+/// (`GET /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_read` permission.
+///
+/// Get a given application key.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn get_application_key_with_http_info(&self, key: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, datadog::Error<GetApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/application_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -921,22 +834,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -948,78 +855,65 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. Use [Get all API keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-api-keys>) (`GET /api/v2/api_keys`) instead.
-    ///
-    /// Get all API keys available for your account.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn list_api_keys(
-        &self,
-    ) -> Result<crate::datadogV1::model::ApiKeyListResponse, datadog::Error<ListAPIKeysError>> {
+///
+/// Get all API keys available for your account.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn list_api_keys(&self) -> Result<crate::datadogV1::model::ApiKeyListResponse, datadog::Error<ListAPIKeysError>> {
         match self.list_api_keys_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Get all API keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-api-keys>) (`GET /api/v2/api_keys`) instead.
-    ///
-    /// Get all API keys available for your account.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn list_api_keys_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApiKeyListResponse>,
-        datadog::Error<ListAPIKeysError>,
-    > {
+///
+/// Get all API keys available for your account.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn list_api_keys_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApiKeyListResponse>, datadog::Error<ListAPIKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_api_keys";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/api_key",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1032,22 +926,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1059,92 +947,77 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApiKeyListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApiKeyListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAPIKeysError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. To list your own application keys, use
-    /// [Get all application keys owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys-owned-by-current-user>)
-    /// (`GET /api/v2/current_user/application_keys`), which requires the `user_app_keys` permission.
-    /// To list application keys across your organization, use
-    /// [Get all application keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys>)
-    /// (`GET /api/v2/application_keys`), which requires the `org_app_keys_read` permission.
-    ///
-    /// Get all application keys available for your Datadog account.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn list_application_keys(
-        &self,
-    ) -> Result<
-        crate::datadogV1::model::ApplicationKeyListResponse,
-        datadog::Error<ListApplicationKeysError>,
-    > {
+/// [Get all application keys owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys-owned-by-current-user>)
+/// (`GET /api/v2/current_user/application_keys`), which requires the `user_app_keys` permission.
+/// To list application keys across your organization, use
+/// [Get all application keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys>)
+/// (`GET /api/v2/application_keys`), which requires the `org_app_keys_read` permission.
+///
+/// Get all application keys available for your Datadog account.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn list_application_keys(&self) -> Result<crate::datadogV1::model::ApplicationKeyListResponse, datadog::Error<ListApplicationKeysError>> {
         match self.list_application_keys_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. To list your own application keys, use
-    /// [Get all application keys owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys-owned-by-current-user>)
-    /// (`GET /api/v2/current_user/application_keys`), which requires the `user_app_keys` permission.
-    /// To list application keys across your organization, use
-    /// [Get all application keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys>)
-    /// (`GET /api/v2/application_keys`), which requires the `org_app_keys_read` permission.
-    ///
-    /// Get all application keys available for your Datadog account.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn list_application_keys_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyListResponse>,
-        datadog::Error<ListApplicationKeysError>,
-    > {
+/// [Get all application keys owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys-owned-by-current-user>)
+/// (`GET /api/v2/current_user/application_keys`), which requires the `user_app_keys` permission.
+/// To list application keys across your organization, use
+/// [Get all application keys](<https://docs.datadoghq.com/api/latest/key-management/#get-all-application-keys>)
+/// (`GET /api/v2/application_keys`), which requires the `org_app_keys_read` permission.
+///
+/// Get all application keys available for your Datadog account.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn list_application_keys_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyListResponse>, datadog::Error<ListApplicationKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_application_keys";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/application_key",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1157,22 +1030,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1184,85 +1051,69 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListApplicationKeysError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListApplicationKeysError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. Use [Edit an API key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-api-key>) (`PATCH /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Edit an API key name.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn update_api_key(
-        &self,
-        key: String,
-        body: crate::datadogV1::model::ApiKey,
-    ) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<UpdateAPIKeyError>> {
+///
+/// Edit an API key name.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn update_api_key(&self, key: String, body: crate::datadogV1::model::ApiKey) -> Result<crate::datadogV1::model::ApiKeyResponse, datadog::Error<UpdateAPIKeyError>> {
         match self.update_api_key_with_http_info(key, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. Use [Edit an API key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-api-key>) (`PATCH /api/v2/api_keys/{api_key_id}`) instead.
-    ///
-    /// Edit an API key name.
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn update_api_key_with_http_info(
-        &self,
-        key: String,
-        body: crate::datadogV1::model::ApiKey,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>,
-        datadog::Error<UpdateAPIKeyError>,
-    > {
+///
+/// Edit an API key name.
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn update_api_key_with_http_info(&self, key: String, body: crate::datadogV1::model::ApiKey) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApiKeyResponse>, datadog::Error<UpdateAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/api_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -1274,23 +1125,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1298,7 +1142,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1308,7 +1155,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1330,7 +1180,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1348,95 +1198,79 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::ApiKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint is deprecated. To edit your own application key, use
-    /// [Edit an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key-owned-by-current-user>)
-    /// (`PATCH /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To edit an application key for your organization, use
-    /// [Edit an application key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key>)
-    /// (`PATCH /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
-    ///
-    /// Edit an application key name.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn update_application_key(
-        &self,
-        key: String,
-        body: crate::datadogV1::model::ApplicationKey,
-    ) -> Result<
-        crate::datadogV1::model::ApplicationKeyResponse,
-        datadog::Error<UpdateApplicationKeyError>,
-    > {
+/// [Edit an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key-owned-by-current-user>)
+/// (`PATCH /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To edit an application key for your organization, use
+/// [Edit an application key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key>)
+/// (`PATCH /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
+///
+/// Edit an application key name.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn update_application_key(&self, key: String, body: crate::datadogV1::model::ApplicationKey) -> Result<crate::datadogV1::model::ApplicationKeyResponse, datadog::Error<UpdateApplicationKeyError>> {
         match self.update_application_key_with_http_info(key, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint is deprecated. To edit your own application key, use
-    /// [Edit an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key-owned-by-current-user>)
-    /// (`PATCH /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
-    /// To edit an application key for your organization, use
-    /// [Edit an application key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key>)
-    /// (`PATCH /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
-    ///
-    /// Edit an application key name.
-    /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    ///
-    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
-    pub async fn update_application_key_with_http_info(
-        &self,
-        key: String,
-        body: crate::datadogV1::model::ApplicationKey,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>,
-        datadog::Error<UpdateApplicationKeyError>,
-    > {
+/// [Edit an application key owned by current user](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key-owned-by-current-user>)
+/// (`PATCH /api/v2/current_user/application_keys/{app_key_id}`), which requires the `user_app_keys` permission.
+/// To edit an application key for your organization, use
+/// [Edit an application key](<https://docs.datadoghq.com/api/latest/key-management/#edit-an-application-key>)
+/// (`PATCH /api/v2/application_keys/{app_key_id}`), which requires the `org_app_keys_write` permission.
+///
+/// Edit an application key name.
+/// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+///
+/// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
+    pub async fn update_application_key_with_http_info(&self, key: String, body: crate::datadogV1::model::ApplicationKey) -> Result<datadog::ResponseContent<crate::datadogV1::model::ApplicationKeyResponse>, datadog::Error<UpdateApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/application_key/{key}",
-            local_configuration.get_operation_host(local_operation_id),
-            key = datadog::urlencode(key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), key=
+            datadog::urlencode(key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1449,23 +1283,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1473,7 +1300,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1483,7 +1313,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1505,7 +1338,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1522,26 +1355,17 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

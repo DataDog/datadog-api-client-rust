@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventsAggregationValue {
-    AVG,
-    CARDINALITY,
-    COUNT,
-    DELTA,
-    EARLIEST,
-    LATEST,
-    MAX,
-    MEDIAN,
-    MIN,
-    MOST_FREQUENT,
-    SUM,
+	AVG,
+	CARDINALITY,
+	COUNT,
+	DELTA,
+	EARLIEST,
+	LATEST,
+	MAX,
+	MEDIAN,
+	MIN,
+	MOST_FREQUENT,
+	SUM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -58,21 +59,8 @@ impl<'de> Deserialize<'de> for EventsAggregationValue {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "avg" => Self::AVG,
-            "cardinality" => Self::CARDINALITY,
-            "count" => Self::COUNT,
-            "delta" => Self::DELTA,
-            "earliest" => Self::EARLIEST,
-            "latest" => Self::LATEST,
-            "max" => Self::MAX,
-            "median" => Self::MEDIAN,
-            "min" => Self::MIN,
-            "most_frequent" => Self::MOST_FREQUENT,
-            "sum" => Self::SUM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"avg" => Self::AVG,"cardinality" => Self::CARDINALITY,"count" => Self::COUNT,"delta" => Self::DELTA,"earliest" => Self::EARLIEST,"latest" => Self::LATEST,"max" => Self::MAX,"median" => Self::MEDIAN,"min" => Self::MIN,"most_frequent" => Self::MOST_FREQUENT,"sum" => Self::SUM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

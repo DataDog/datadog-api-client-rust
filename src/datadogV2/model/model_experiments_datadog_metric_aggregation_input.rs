@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings for a metric aggregation that uses a Datadog measure. The other measure must be omitted or null.
 #[non_exhaustive]
@@ -24,13 +24,8 @@ pub struct ExperimentsDatadogMetricAggregationInput {
     #[serde(rename = "operation")]
     pub operation: String,
     /// Property filters that select data for this aggregation.
-    #[serde(
-        rename = "property_filters",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub property_filters:
-        Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>>,
+    #[serde(rename = "property_filters", default, with = "::serde_with::rust::double_option")]
+    pub property_filters: Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>>,
     /// Calculation used to evaluate the threshold.
     #[serde(rename = "threshold_aggregation_type")]
     pub threshold_aggregation_type: Option<String>,
@@ -41,7 +36,7 @@ pub struct ExperimentsDatadogMetricAggregationInput {
     #[serde(rename = "threshold_comparison_operator")]
     pub threshold_comparison_operator: Option<String>,
     /// Time unit for the threshold evaluation window. Supports seconds, minutes, hours, days, calendar_days, and
-    /// weeks. Calendar days start at midnight on the assignment day. Other units start at the assignment time.
+/// weeks. Calendar days start at midnight on the assignment day. Other units start at the assignment time.
     #[serde(rename = "threshold_timeframe_dimension")]
     pub threshold_timeframe_dimension: Option<String>,
     /// End of the threshold evaluation window, measured from assignment in the configured time unit.
@@ -54,17 +49,12 @@ pub struct ExperimentsDatadogMetricAggregationInput {
     #[serde(rename = "timeframe_start_value")]
     pub timeframe_start_value: Option<f64>,
     /// Time unit for the aggregation window. Calendar days are measured from midnight on the assignment day.
-    /// Other units are measured from the assignment time.
+/// Other units are measured from the assignment time.
     #[serde(rename = "timeframe_unit")]
     pub timeframe_unit: Option<String>,
     /// Optional warehouse measure. Use null when the other measure is selected.
-    #[serde(
-        rename = "warehouse_metric_measure",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub warehouse_metric_measure:
-        Option<Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>>,
+    #[serde(rename = "warehouse_metric_measure", default, with = "::serde_with::rust::double_option")]
+    pub warehouse_metric_measure: Option<Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>>,
     /// Fixed lower bound used to cap extreme measure values.
     #[serde(rename = "winsor_lower_fixed_value")]
     pub winsor_lower_fixed_value: Option<f64>,
@@ -84,14 +74,11 @@ pub struct ExperimentsDatadogMetricAggregationInput {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsDatadogMetricAggregationInput {
-    pub fn new(
-        datadog_metric_measure: crate::datadogV2::model::ExperimentsDatadogMetricMeasureInput,
-        operation: String,
-    ) -> ExperimentsDatadogMetricAggregationInput {
+    pub fn new(datadog_metric_measure: crate::datadogV2::model::ExperimentsDatadogMetricMeasureInput, operation: String) -> ExperimentsDatadogMetricAggregationInput {
         ExperimentsDatadogMetricAggregationInput {
             aging_threshold_days: None,
             datadog_metric_measure,
@@ -116,106 +103,99 @@ impl ExperimentsDatadogMetricAggregationInput {
             _unparsed: false,
         }
     }
-
+    
     pub fn aging_threshold_days(mut self, value: i64) -> Self {
         self.aging_threshold_days = Some(value);
         self
     }
-
+    
     pub fn enable_aging_subject_filter(mut self, value: bool) -> Self {
         self.enable_aging_subject_filter = Some(value);
         self
     }
-
-    pub fn property_filters(
-        mut self,
-        value: Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>,
-    ) -> Self {
+    
+    pub fn property_filters(mut self, value: Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>) -> Self {
         self.property_filters = Some(value);
         self
     }
-
+    
     pub fn threshold_aggregation_type(mut self, value: String) -> Self {
         self.threshold_aggregation_type = Some(value);
         self
     }
-
+    
     pub fn threshold_breach_value(mut self, value: f64) -> Self {
         self.threshold_breach_value = Some(value);
         self
     }
-
+    
     pub fn threshold_comparison_operator(mut self, value: String) -> Self {
         self.threshold_comparison_operator = Some(value);
         self
     }
-
+    
     pub fn threshold_timeframe_dimension(mut self, value: String) -> Self {
         self.threshold_timeframe_dimension = Some(value);
         self
     }
-
+    
     pub fn threshold_timeframe_value(mut self, value: f64) -> Self {
         self.threshold_timeframe_value = Some(value);
         self
     }
-
+    
     pub fn timeframe_end_value(mut self, value: f64) -> Self {
         self.timeframe_end_value = Some(value);
         self
     }
-
+    
     pub fn timeframe_start_value(mut self, value: f64) -> Self {
         self.timeframe_start_value = Some(value);
         self
     }
-
+    
     pub fn timeframe_unit(mut self, value: String) -> Self {
         self.timeframe_unit = Some(value);
         self
     }
-
-    pub fn warehouse_metric_measure(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>,
-    ) -> Self {
+    
+    pub fn warehouse_metric_measure(mut self, value: Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>) -> Self {
         self.warehouse_metric_measure = Some(value);
         self
     }
-
+    
     pub fn winsor_lower_fixed_value(mut self, value: f64) -> Self {
         self.winsor_lower_fixed_value = Some(value);
         self
     }
-
+    
     pub fn winsor_lower_percentile(mut self, value: f64) -> Self {
         self.winsor_lower_percentile = Some(value);
         self
     }
-
+    
     pub fn winsor_upper_fixed_value(mut self, value: f64) -> Self {
         self.winsor_upper_fixed_value = Some(value);
         self
     }
-
+    
     pub fn winsor_upper_percentile(mut self, value: f64) -> Self {
         self.winsor_upper_percentile = Some(value);
         self
     }
-
+    
     pub fn winsorization_strategy(mut self, value: String) -> Self {
         self.winsorization_strategy = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsDatadogMetricAggregationInput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -235,14 +215,10 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogMetricAggregationInput {
                 M: MapAccess<'a>,
             {
                 let mut aging_threshold_days: Option<i64> = None;
-                let mut datadog_metric_measure: Option<
-                    crate::datadogV2::model::ExperimentsDatadogMetricMeasureInput,
-                > = None;
+                let mut datadog_metric_measure: Option<crate::datadogV2::model::ExperimentsDatadogMetricMeasureInput> = None;
                 let mut enable_aging_subject_filter: Option<bool> = None;
                 let mut operation: Option<String> = None;
-                let mut property_filters: Option<
-                    Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>,
-                > = None;
+                let mut property_filters: Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>> = None;
                 let mut threshold_aggregation_type: Option<String> = None;
                 let mut threshold_breach_value: Option<f64> = None;
                 let mut threshold_comparison_operator: Option<String> = None;
@@ -251,18 +227,13 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogMetricAggregationInput {
                 let mut timeframe_end_value: Option<f64> = None;
                 let mut timeframe_start_value: Option<f64> = None;
                 let mut timeframe_unit: Option<String> = None;
-                let mut warehouse_metric_measure: Option<
-                    Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>,
-                > = None;
+                let mut warehouse_metric_measure: Option<Option<crate::datadogV2::model::ExperimentsNullableWarehouseMetricMeasureInput>> = None;
                 let mut winsor_lower_fixed_value: Option<f64> = None;
                 let mut winsor_lower_percentile: Option<f64> = None;
                 let mut winsor_upper_fixed_value: Option<f64> = None;
                 let mut winsor_upper_percentile: Option<f64> = None;
                 let mut winsorization_strategy: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -271,131 +242,112 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogMetricAggregationInput {
                             if v.is_null() {
                                 continue;
                             }
-                            aging_threshold_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aging_threshold_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datadog_metric_measure" => {
-                            datadog_metric_measure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            datadog_metric_measure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enable_aging_subject_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enable_aging_subject_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enable_aging_subject_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "operation" => {
                             operation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "property_filters" => {
-                            property_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            property_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "threshold_aggregation_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            threshold_aggregation_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            threshold_aggregation_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "threshold_breach_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            threshold_breach_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            threshold_breach_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "threshold_comparison_operator" => {
                             if v.is_null() {
                                 continue;
                             }
-                            threshold_comparison_operator =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            threshold_comparison_operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "threshold_timeframe_dimension" => {
                             if v.is_null() {
                                 continue;
                             }
-                            threshold_timeframe_dimension =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            threshold_timeframe_dimension = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "threshold_timeframe_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            threshold_timeframe_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            threshold_timeframe_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeframe_end_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            timeframe_end_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeframe_end_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeframe_start_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            timeframe_start_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeframe_start_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeframe_unit" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timeframe_unit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeframe_unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "warehouse_metric_measure" => {
-                            warehouse_metric_measure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            warehouse_metric_measure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winsor_lower_fixed_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            winsor_lower_fixed_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            winsor_lower_fixed_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winsor_lower_percentile" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            winsor_lower_percentile =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            winsor_lower_percentile = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winsor_upper_fixed_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            winsor_upper_fixed_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            winsor_upper_fixed_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winsor_upper_percentile" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            winsor_upper_percentile =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            winsor_upper_percentile = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winsorization_strategy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            winsorization_strategy =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            winsorization_strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let datadog_metric_measure = datadog_metric_measure
-                    .ok_or_else(|| M::Error::missing_field("datadog_metric_measure"))?;
+                let datadog_metric_measure = datadog_metric_measure.ok_or_else(|| M::Error::missing_field("datadog_metric_measure"))?;
                 let operation = operation.ok_or_else(|| M::Error::missing_field("operation"))?;
 
                 let content = ExperimentsDatadogMetricAggregationInput {

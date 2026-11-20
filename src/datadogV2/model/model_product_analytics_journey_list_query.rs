@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query definition for a journey list request.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ProductAnalyticsJourneyListQuery {
     /// Computed columns to add to each row.
     #[serde(rename = "computed_columns")]
-    pub computed_columns:
-        Option<Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>>,
+    pub computed_columns: Option<Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>>,
     /// Whether to return the entities that converted at the target step, or those that dropped off.
     #[serde(rename = "conversion_type")]
     pub conversion_type: Option<crate::datadogV2::model::ProductAnalyticsJourneyConversionType>,
@@ -34,25 +33,23 @@ pub struct ProductAnalyticsJourneyListQuery {
     #[serde(rename = "search")]
     pub search: crate::datadogV2::model::ProductAnalyticsJourneySearch,
     /// Sort configuration for the returned rows. The sort is applied only when `facet`
-    /// is one of the returned columns; otherwise it is ignored.
+/// is one of the returned columns; otherwise it is ignored.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::ProductAnalyticsJourneyListSort>,
     /// A reference to a step, or a range of steps, in the journey.
-    /// Use a `node` target to name a single step, or a `path` target to name the range
-    /// between two steps.
+/// Use a `node` target to name a single step, or a `path` target to name the range
+/// between two steps.
     #[serde(rename = "target")]
     pub target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsJourneyListQuery {
-    pub fn new(
-        search: crate::datadogV2::model::ProductAnalyticsJourneySearch,
-    ) -> ProductAnalyticsJourneyListQuery {
+    pub fn new(search: crate::datadogV2::model::ProductAnalyticsJourneySearch) -> ProductAnalyticsJourneyListQuery {
         ProductAnalyticsJourneyListQuery {
             computed_columns: None,
             conversion_type: None,
@@ -67,64 +64,54 @@ impl ProductAnalyticsJourneyListQuery {
             _unparsed: false,
         }
     }
-
-    pub fn computed_columns(
-        mut self,
-        value: Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>,
-    ) -> Self {
+    
+    pub fn computed_columns(mut self, value: Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>) -> Self {
         self.computed_columns = Some(value);
         self
     }
-
-    pub fn conversion_type(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsJourneyConversionType,
-    ) -> Self {
+    
+    pub fn conversion_type(mut self, value: crate::datadogV2::model::ProductAnalyticsJourneyConversionType) -> Self {
         self.conversion_type = Some(value);
         self
     }
-
+    
     pub fn entity_columns(mut self, value: Vec<String>) -> Self {
         self.entity_columns = Some(value);
         self
     }
-
+    
     pub fn entity_filters(mut self, value: String) -> Self {
         self.entity_filters = Some(value);
         self
     }
-
-    pub fn group_by(
-        mut self,
-        value: Vec<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBy>,
-    ) -> Self {
+    
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV2::model::ProductAnalyticsJourneyListSort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn target(mut self, value: crate::datadogV2::model::ProductAnalyticsJourneyTarget) -> Self {
         self.target = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsJourneyListQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -143,28 +130,16 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyListQuery {
             where
                 M: MapAccess<'a>,
             {
-                let mut computed_columns: Option<
-                    Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>,
-                > = None;
-                let mut conversion_type: Option<
-                    crate::datadogV2::model::ProductAnalyticsJourneyConversionType,
-                > = None;
+                let mut computed_columns: Option<Vec<crate::datadogV2::model::ProductAnalyticsJourneyComputedColumn>> = None;
+                let mut conversion_type: Option<crate::datadogV2::model::ProductAnalyticsJourneyConversionType> = None;
                 let mut entity_columns: Option<Vec<String>> = None;
                 let mut entity_filters: Option<String> = None;
-                let mut group_by: Option<
-                    Vec<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBy>,
-                > = None;
+                let mut group_by: Option<Vec<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBy>> = None;
                 let mut limit: Option<i64> = None;
-                let mut search: Option<crate::datadogV2::model::ProductAnalyticsJourneySearch> =
-                    None;
-                let mut sort: Option<crate::datadogV2::model::ProductAnalyticsJourneyListSort> =
-                    None;
-                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut search: Option<crate::datadogV2::model::ProductAnalyticsJourneySearch> = None;
+                let mut sort: Option<crate::datadogV2::model::ProductAnalyticsJourneyListSort> = None;
+                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -173,15 +148,13 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyListQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            computed_columns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            computed_columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conversion_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            conversion_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            conversion_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _conversion_type) = conversion_type {
                                 match _conversion_type {
                                     crate::datadogV2::model::ProductAnalyticsJourneyConversionType::UnparsedObject(_conversion_type) => {
@@ -190,42 +163,40 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyListQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "entity_columns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_columns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entity_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
@@ -239,12 +210,12 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyListQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let search = search.ok_or_else(|| M::Error::missing_field("search"))?;

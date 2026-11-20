@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Writable attributes used to update a Databricks integration account. Every field is optional; only the fields provided are changed. When `dataflows` is provided, only the dataflow ids included in the request are modified; dataflows omitted from the map keep their current configuration, as do the settings of an included dataflow that provides only `enabled`.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct DatabricksIntegrationAccountUpdateAttributes {
     /// Authentication for updating the Databricks integration account. Exactly one method is set. Choosing `private_action_runner` leaves the `databricks-model-serving-metrics` dataflow unable to collect data. `bearer_token` is deprecated on Databricks: it is accepted only on accounts that already use it and never on creation, so it cannot move an account onto token authentication. Migrate those accounts to `databricks_oauth` or `private_action_runner`.
     #[serde(rename = "authentication")]
-    pub authentication:
-        Option<crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate>,
+    pub authentication: Option<crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate>,
     /// Data Datadog collects from Databricks, keyed by dataflow id. Each dataflow turns on a distinct kind of collection: set `enabled` to start or stop it, and use `settings` to configure what it collects. Defaults listed on each dataflow apply when the account is created; on update, omitted fields keep their current values. Some dataflows have prerequisites, noted on each; unless one is documented as rejecting the request, it is not verified, so a dataflow enabled without it is stored but collects no data.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::DatabricksIntegrationDataflowsRequest>,
@@ -28,7 +27,7 @@ pub struct DatabricksIntegrationAccountUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DatabricksIntegrationAccountUpdateAttributes {
@@ -42,44 +41,33 @@ impl DatabricksIntegrationAccountUpdateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn authentication(
-        mut self,
-        value: crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate,
-    ) -> Self {
+    
+    pub fn authentication(mut self, value: crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate) -> Self {
         self.authentication = Some(value);
         self
     }
-
-    pub fn dataflows(
-        mut self,
-        value: crate::datadogV2::model::DatabricksIntegrationDataflowsRequest,
-    ) -> Self {
+    
+    pub fn dataflows(mut self, value: crate::datadogV2::model::DatabricksIntegrationDataflowsRequest) -> Self {
         self.dataflows = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::DatabricksIntegrationAccountSettingsUpdate,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::DatabricksIntegrationAccountSettingsUpdate) -> Self {
         self.settings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DatabricksIntegrationAccountUpdateAttributes {
     fn default() -> Self {
@@ -104,20 +92,11 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut authentication: Option<
-                    crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate,
-                > = None;
-                let mut dataflows: Option<
-                    crate::datadogV2::model::DatabricksIntegrationDataflowsRequest,
-                > = None;
+                let mut authentication: Option<crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate> = None;
+                let mut dataflows: Option<crate::datadogV2::model::DatabricksIntegrationDataflowsRequest> = None;
                 let mut name: Option<String> = None;
-                let mut settings: Option<
-                    crate::datadogV2::model::DatabricksIntegrationAccountSettingsUpdate,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut settings: Option<crate::datadogV2::model::DatabricksIntegrationAccountSettingsUpdate> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,8 +105,7 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            authentication =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            authentication = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _authentication) = authentication {
                                 match _authentication {
                                     crate::datadogV2::model::DatabricksIntegrationAccountAuthenticationUpdate::UnparsedObject(_authentication) => {
@@ -136,30 +114,30 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "dataflows" => {
                             if v.is_null() {
                                 continue;
                             }
                             dataflows = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

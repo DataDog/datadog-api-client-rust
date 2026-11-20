@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetHostTotalsOptionalParams is a struct for passing parameters to the method [`HostsAPI::get_host_totals`]
 #[non_exhaustive]
@@ -91,6 +88,9 @@ impl ListHostsOptionalParams {
     }
 }
 
+
+
+
 /// GetHostTotalsError is a struct for typed errors of method [`HostsAPI::get_host_totals`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -98,6 +98,7 @@ pub enum GetHostTotalsError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListHostsError is a struct for typed errors of method [`HostsAPI::list_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -107,6 +108,7 @@ pub enum ListHostsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// MuteHostError is a struct for typed errors of method [`HostsAPI::mute_host`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -115,6 +117,7 @@ pub enum MuteHostError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnmuteHostError is a struct for typed errors of method [`HostsAPI::unmute_host`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -122,6 +125,7 @@ pub enum UnmuteHostError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Get information about your infrastructure hosts in Datadog, and mute or unmute any notifications from your hosts. See the [Infrastructure page](<https://docs.datadoghq.com/infrastructure/>) for more information.
 #[derive(Debug, Clone)]
@@ -145,7 +149,8 @@ impl HostsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -190,45 +195,35 @@ impl HostsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// This endpoint returns the total number of active and up hosts in your Datadog account.
-    /// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
-    pub async fn get_host_totals(
-        &self,
-        params: GetHostTotalsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostTotals, datadog::Error<GetHostTotalsError>> {
-        match self.get_host_totals_with_http_info(params).await {
+/// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
+    pub async fn get_host_totals(&self, params: GetHostTotalsOptionalParams) -> Result<crate::datadogV1::model::HostTotals, datadog::Error<GetHostTotalsError>> {
+        match self.get_host_totals_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint returns the total number of active and up hosts in your Datadog account.
-    /// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
-    pub async fn get_host_totals_with_http_info(
-        &self,
-        params: GetHostTotalsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostTotals>,
-        datadog::Error<GetHostTotalsError>,
-    > {
+/// Active means the host has reported in the past hour, and up means it has reported in the past two hours.
+    pub async fn get_host_totals_with_http_info(&self, params: GetHostTotalsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV1::model::HostTotals>, datadog::Error<GetHostTotalsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_host_totals";
 
+        
         // unbox and build optional parameters
         let from = params.from;
 
@@ -236,19 +231,19 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts/totals",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = from {
-            local_req_builder =
-                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("from", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -261,22 +256,16 @@ impl HostsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -289,67 +278,51 @@ impl HostsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::HostTotals>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetHostTotalsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetHostTotalsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint allows searching for hosts by name, alias, or tag.
-    /// Hosts live within the past 3 hours are included by default.
-    /// Retention is 7 days.
-    /// Results are paginated with a max of 1000 results at a time.
-    /// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
-    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
-    pub async fn list_hosts(
-        &self,
-        params: ListHostsOptionalParams,
-    ) -> Result<crate::datadogV1::model::HostListResponse, datadog::Error<ListHostsError>> {
-        match self.list_hosts_with_http_info(params).await {
+/// Hosts live within the past 3 hours are included by default.
+/// Retention is 7 days.
+/// Results are paginated with a max of 1000 results at a time.
+/// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
+/// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
+    pub async fn list_hosts(&self, params: ListHostsOptionalParams) -> Result<crate::datadogV1::model::HostListResponse, datadog::Error<ListHostsError>> {
+        match self.list_hosts_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint allows searching for hosts by name, alias, or tag.
-    /// Hosts live within the past 3 hours are included by default.
-    /// Retention is 7 days.
-    /// Results are paginated with a max of 1000 results at a time.
-    /// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
-    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
-    pub async fn list_hosts_with_http_info(
-        &self,
-        params: ListHostsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostListResponse>,
-        datadog::Error<ListHostsError>,
-    > {
+/// Hosts live within the past 3 hours are included by default.
+/// Retention is 7 days.
+/// Results are paginated with a max of 1000 results at a time.
+/// **Note:** If the host is an Amazon EC2 instance, `id` is replaced with `aws_id` in the response.
+/// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
+    pub async fn list_hosts_with_http_info(&self, params: ListHostsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV1::model::HostListResponse>, datadog::Error<ListHostsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_hosts";
 
+        
         // unbox and build optional parameters
         let filter = params.filter;
         let sort_field = params.sort_field;
@@ -364,47 +337,40 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_field {
-            local_req_builder =
-                local_req_builder.query(&[("sort_field", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_field", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_dir {
-            local_req_builder =
-                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_dir", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = start {
-            local_req_builder =
-                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("start", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = count {
-            local_req_builder =
-                local_req_builder.query(&[("count", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("count", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = from {
-            local_req_builder =
-                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("from", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_muted_hosts_data {
-            local_req_builder = local_req_builder
-                .query(&[("include_muted_hosts_data", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_muted_hosts_data", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_hosts_metadata {
-            local_req_builder = local_req_builder
-                .query(&[("include_hosts_metadata", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_hosts_metadata", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -417,22 +383,16 @@ impl HostsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -444,74 +404,60 @@ impl HostsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostListResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::HostListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListHostsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
-    pub async fn mute_host(
-        &self,
-        host_name: String,
-        body: crate::datadogV1::model::HostMuteSettings,
-    ) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<MuteHostError>> {
+    pub async fn mute_host(&self, host_name: String, body: crate::datadogV1::model::HostMuteSettings) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<MuteHostError>> {
         match self.mute_host_with_http_info(host_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Mute a host. **Note:** This creates a [Downtime V2](<https://docs.datadoghq.com/api/latest/downtimes/#schedule-a-downtime>) for the host.
-    pub async fn mute_host_with_http_info(
-        &self,
-        host_name: String,
-        body: crate::datadogV1::model::HostMuteSettings,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>,
-        datadog::Error<MuteHostError>,
-    > {
+    pub async fn mute_host_with_http_info(&self, host_name: String, body: crate::datadogV1::model::HostMuteSettings) -> Result<datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>, datadog::Error<MuteHostError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.mute_host";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/mute",
-            local_configuration.get_operation_host(local_operation_id),
-            host_name = datadog::urlencode(host_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), host_name=
+            datadog::urlencode(host_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -524,23 +470,16 @@ impl HostsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -548,7 +487,10 @@ impl HostsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -558,7 +500,10 @@ impl HostsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -580,7 +525,7 @@ impl HostsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -597,71 +542,59 @@ impl HostsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<MuteHostError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Unmutes a host. This endpoint takes no JSON arguments.
-    pub async fn unmute_host(
-        &self,
-        host_name: String,
-    ) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<UnmuteHostError>> {
+    pub async fn unmute_host(&self, host_name: String) -> Result<crate::datadogV1::model::HostMuteResponse, datadog::Error<UnmuteHostError>> {
         match self.unmute_host_with_http_info(host_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Unmutes a host. This endpoint takes no JSON arguments.
-    pub async fn unmute_host_with_http_info(
-        &self,
-        host_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>,
-        datadog::Error<UnmuteHostError>,
-    > {
+    pub async fn unmute_host_with_http_info(&self, host_name: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::HostMuteResponse>, datadog::Error<UnmuteHostError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.unmute_host";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/unmute",
-            local_configuration.get_operation_host(local_operation_id),
-            host_name = datadog::urlencode(host_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), host_name=
+            datadog::urlencode(host_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -674,22 +607,16 @@ impl HostsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -701,24 +628,17 @@ impl HostsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::HostMuteResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UnmuteHostError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

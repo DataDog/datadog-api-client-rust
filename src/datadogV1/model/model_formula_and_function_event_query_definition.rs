@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A formula and functions events query.
 #[non_exhaustive]
@@ -39,15 +39,11 @@ pub struct FormulaAndFunctionEventQueryDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FormulaAndFunctionEventQueryDefinition {
-    pub fn new(
-        compute: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
-        data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
-        name: String,
-    ) -> FormulaAndFunctionEventQueryDefinition {
+    pub fn new(compute: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute, data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource, name: String) -> FormulaAndFunctionEventQueryDefinition {
         FormulaAndFunctionEventQueryDefinition {
             compute,
             cross_org_uuids: None,
@@ -61,46 +57,39 @@ impl FormulaAndFunctionEventQueryDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
         self
     }
-
-    pub fn group_by(
-        mut self,
-        value: crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig,
-    ) -> Self {
+    
+    pub fn group_by(mut self, value: crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
-    pub fn search(
-        mut self,
-        value: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch,
-    ) -> Self {
+    
+    pub fn search(mut self, value: crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch) -> Self {
         self.search = Some(value);
         self
     }
-
+    
     pub fn storage(mut self, value: String) -> Self {
         self.storage = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -119,43 +108,30 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
             where
                 M: MapAccess<'a>,
             {
-                let mut compute: Option<
-                    crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute,
-                > = None;
+                let mut compute: Option<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute> = None;
                 let mut cross_org_uuids: Option<Vec<String>> = None;
-                let mut data_source: Option<
-                    crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
-                > = None;
-                let mut group_by: Option<
-                    crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig,
-                > = None;
+                let mut data_source: Option<crate::datadogV1::model::FormulaAndFunctionEventsDataSource> = None;
+                let mut group_by: Option<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
-                let mut search: Option<
-                    crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch,
-                > = None;
+                let mut search: Option<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch> = None;
                 let mut storage: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "compute" => {
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cross_org_uuids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cross_org_uuids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cross_org_uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::FormulaAndFunctionEventsDataSource::UnparsedObject(_data_source) => {
@@ -164,7 +140,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
@@ -178,38 +154,37 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             if v.is_null() {
                                 continue;
                             }
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "storage" => {
                             if v.is_null() {
                                 continue;
                             }
                             storage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let compute = compute.ok_or_else(|| M::Error::missing_field("compute"))?;
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = FormulaAndFunctionEventQueryDefinition {

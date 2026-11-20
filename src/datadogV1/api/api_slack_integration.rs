@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::create_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::get_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum GetSlackIntegrationChannelError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetSlackIntegrationChannelsError is a struct for typed errors of method [`SlackIntegrationAPI::get_slack_integration_channels`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum GetSlackIntegrationChannelsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RemoveSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::remove_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -42,6 +45,7 @@ pub enum RemoveSlackIntegrationChannelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateSlackIntegrationChannelError is a struct for typed errors of method [`SlackIntegrationAPI::update_slack_integration_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -49,6 +53,7 @@ pub enum UpdateSlackIntegrationChannelError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your [Datadog-Slack integration](<https://docs.datadoghq.com/integrations/slack>)
 /// directly through the Datadog API.
@@ -73,7 +78,8 @@ impl SlackIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -118,65 +124,51 @@ impl SlackIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Add a channel to your Datadog-Slack integration.
-    pub async fn create_slack_integration_channel(
-        &self,
-        account_name: String,
-        body: crate::datadogV1::model::SlackIntegrationChannel,
-    ) -> Result<
-        crate::datadogV1::model::SlackIntegrationChannel,
-        datadog::Error<CreateSlackIntegrationChannelError>,
-    > {
-        match self
-            .create_slack_integration_channel_with_http_info(account_name, body)
-            .await
-        {
+    pub async fn create_slack_integration_channel(&self, account_name: String, body: crate::datadogV1::model::SlackIntegrationChannel) -> Result<crate::datadogV1::model::SlackIntegrationChannel, datadog::Error<CreateSlackIntegrationChannelError>> {
+        match self.create_slack_integration_channel_with_http_info(account_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a channel to your Datadog-Slack integration.
-    pub async fn create_slack_integration_channel_with_http_info(
-        &self,
-        account_name: String,
-        body: crate::datadogV1::model::SlackIntegrationChannel,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
-        datadog::Error<CreateSlackIntegrationChannelError>,
-    > {
+    pub async fn create_slack_integration_channel_with_http_info(&self, account_name: String, body: crate::datadogV1::model::SlackIntegrationChannel) -> Result<datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>, datadog::Error<CreateSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_slack_integration_channel";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host(local_operation_id),
-            account_name = datadog::urlencode(account_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_name=
+            datadog::urlencode(account_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -189,23 +181,16 @@ impl SlackIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -213,7 +198,10 @@ impl SlackIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -223,7 +211,10 @@ impl SlackIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -245,7 +236,7 @@ impl SlackIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -262,67 +253,42 @@ impl SlackIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateSlackIntegrationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a channel configured for your Datadog-Slack integration.
-    pub async fn get_slack_integration_channel(
-        &self,
-        account_name: String,
-        channel_name: String,
-    ) -> Result<
-        crate::datadogV1::model::SlackIntegrationChannel,
-        datadog::Error<GetSlackIntegrationChannelError>,
-    > {
-        match self
-            .get_slack_integration_channel_with_http_info(account_name, channel_name)
-            .await
-        {
+    pub async fn get_slack_integration_channel(&self, account_name: String, channel_name: String) -> Result<crate::datadogV1::model::SlackIntegrationChannel, datadog::Error<GetSlackIntegrationChannelError>> {
+        match self.get_slack_integration_channel_with_http_info(account_name, channel_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a channel configured for your Datadog-Slack integration.
-    pub async fn get_slack_integration_channel_with_http_info(
-        &self,
-        account_name: String,
-        channel_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
-        datadog::Error<GetSlackIntegrationChannelError>,
-    > {
+    pub async fn get_slack_integration_channel_with_http_info(&self, account_name: String, channel_name: String) -> Result<datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>, datadog::Error<GetSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_slack_integration_channel";
+
+        
 
         let local_client = &self.client;
 
@@ -333,12 +299,15 @@ impl SlackIntegrationAPI {
             , channel_name=
             datadog::urlencode(channel_name)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -351,22 +320,16 @@ impl SlackIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -378,79 +341,59 @@ impl SlackIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetSlackIntegrationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all channels configured for your Datadog-Slack integration.
-    pub async fn get_slack_integration_channels(
-        &self,
-        account_name: String,
-    ) -> Result<
-        Vec<crate::datadogV1::model::SlackIntegrationChannel>,
-        datadog::Error<GetSlackIntegrationChannelsError>,
-    > {
-        match self
-            .get_slack_integration_channels_with_http_info(account_name)
-            .await
-        {
+    pub async fn get_slack_integration_channels(&self, account_name: String) -> Result<Vec<crate::datadogV1::model::SlackIntegrationChannel>, datadog::Error<GetSlackIntegrationChannelsError>> {
+        match self.get_slack_integration_channels_with_http_info(account_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of all channels configured for your Datadog-Slack integration.
-    pub async fn get_slack_integration_channels_with_http_info(
-        &self,
-        account_name: String,
-    ) -> Result<
-        datadog::ResponseContent<Vec<crate::datadogV1::model::SlackIntegrationChannel>>,
-        datadog::Error<GetSlackIntegrationChannelsError>,
-    > {
+    pub async fn get_slack_integration_channels_with_http_info(&self, account_name: String) -> Result<datadog::ResponseContent<Vec<crate::datadogV1::model::SlackIntegrationChannel>>, datadog::Error<GetSlackIntegrationChannelsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_slack_integration_channels";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host(local_operation_id),
-            account_name = datadog::urlencode(account_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_name=
+            datadog::urlencode(account_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -463,22 +406,16 @@ impl SlackIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -490,54 +427,36 @@ impl SlackIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<crate::datadogV1::model::SlackIntegrationChannel>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<Vec<crate::datadogV1::model::SlackIntegrationChannel>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetSlackIntegrationChannelsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetSlackIntegrationChannelsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a channel from your Datadog-Slack integration.
-    pub async fn remove_slack_integration_channel(
-        &self,
-        account_name: String,
-        channel_name: String,
-    ) -> Result<(), datadog::Error<RemoveSlackIntegrationChannelError>> {
-        match self
-            .remove_slack_integration_channel_with_http_info(account_name, channel_name)
-            .await
-        {
+    pub async fn remove_slack_integration_channel(&self, account_name: String, channel_name: String) -> Result<(), datadog::Error<RemoveSlackIntegrationChannelError>> {
+        match self.remove_slack_integration_channel_with_http_info(account_name, channel_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a channel from your Datadog-Slack integration.
-    pub async fn remove_slack_integration_channel_with_http_info(
-        &self,
-        account_name: String,
-        channel_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveSlackIntegrationChannelError>>
-    {
+    pub async fn remove_slack_integration_channel_with_http_info(&self, account_name: String, channel_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.remove_slack_integration_channel";
+
+        
 
         let local_client = &self.client;
 
@@ -548,12 +467,15 @@ impl SlackIntegrationAPI {
             , channel_name=
             datadog::urlencode(channel_name)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -566,22 +488,16 @@ impl SlackIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -599,56 +515,33 @@ impl SlackIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveSlackIntegrationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a channel used in your Datadog-Slack integration.
-    pub async fn update_slack_integration_channel(
-        &self,
-        account_name: String,
-        channel_name: String,
-        body: crate::datadogV1::model::SlackIntegrationChannel,
-    ) -> Result<
-        crate::datadogV1::model::SlackIntegrationChannel,
-        datadog::Error<UpdateSlackIntegrationChannelError>,
-    > {
-        match self
-            .update_slack_integration_channel_with_http_info(account_name, channel_name, body)
-            .await
-        {
+    pub async fn update_slack_integration_channel(&self, account_name: String, channel_name: String, body: crate::datadogV1::model::SlackIntegrationChannel) -> Result<crate::datadogV1::model::SlackIntegrationChannel, datadog::Error<UpdateSlackIntegrationChannelError>> {
+        match self.update_slack_integration_channel_with_http_info(account_name, channel_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a channel used in your Datadog-Slack integration.
-    pub async fn update_slack_integration_channel_with_http_info(
-        &self,
-        account_name: String,
-        channel_name: String,
-        body: crate::datadogV1::model::SlackIntegrationChannel,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>,
-        datadog::Error<UpdateSlackIntegrationChannelError>,
-    > {
+    pub async fn update_slack_integration_channel_with_http_info(&self, account_name: String, channel_name: String, body: crate::datadogV1::model::SlackIntegrationChannel) -> Result<datadog::ResponseContent<crate::datadogV1::model::SlackIntegrationChannel>, datadog::Error<UpdateSlackIntegrationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_slack_integration_channel";
+
+        
 
         let local_client = &self.client;
 
@@ -659,13 +552,16 @@ impl SlackIntegrationAPI {
             , channel_name=
             datadog::urlencode(channel_name)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -678,23 +574,16 @@ impl SlackIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -702,7 +591,10 @@ impl SlackIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -712,7 +604,10 @@ impl SlackIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -734,7 +629,7 @@ impl SlackIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -751,26 +646,17 @@ impl SlackIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::SlackIntegrationChannel>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateSlackIntegrationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateSlackIntegrationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ReferenceTableSortType {
-    UPDATED_AT,
-    TABLE_NAME,
-    STATUS,
-    MINUS_UPDATED_AT,
-    MINUS_TABLE_NAME,
-    MINUS_STATUS,
+	UPDATED_AT,
+	TABLE_NAME,
+	STATUS,
+	MINUS_UPDATED_AT,
+	MINUS_TABLE_NAME,
+	MINUS_STATUS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for ReferenceTableSortType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "updated_at" => Self::UPDATED_AT,
-            "table_name" => Self::TABLE_NAME,
-            "status" => Self::STATUS,
-            "-updated_at" => Self::MINUS_UPDATED_AT,
-            "-table_name" => Self::MINUS_TABLE_NAME,
-            "-status" => Self::MINUS_STATUS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"updated_at" => Self::UPDATED_AT,"table_name" => Self::TABLE_NAME,"status" => Self::STATUS,"-updated_at" => Self::MINUS_UPDATED_AT,"-table_name" => Self::MINUS_TABLE_NAME,"-status" => Self::MINUS_STATUS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

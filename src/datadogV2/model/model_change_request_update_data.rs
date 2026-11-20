@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data object to update a change request.
 #[non_exhaustive]
@@ -24,13 +24,11 @@ pub struct ChangeRequestUpdateData {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChangeRequestUpdateData {
-    pub fn new(
-        type_: crate::datadogV2::model::ChangeRequestResourceType,
-    ) -> ChangeRequestUpdateData {
+    pub fn new(type_: crate::datadogV2::model::ChangeRequestResourceType) -> ChangeRequestUpdateData {
         ChangeRequestUpdateData {
             attributes: None,
             relationships: None,
@@ -39,31 +37,24 @@ impl ChangeRequestUpdateData {
             _unparsed: false,
         }
     }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::ChangeRequestUpdateAttributes,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: crate::datadogV2::model::ChangeRequestUpdateAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
-
-    pub fn relationships(
-        mut self,
-        value: crate::datadogV2::model::ChangeRequestUpdateRelationships,
-    ) -> Self {
+    
+    pub fn relationships(mut self, value: crate::datadogV2::model::ChangeRequestUpdateRelationships) -> Self {
         self.relationships = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ChangeRequestUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -82,16 +73,10 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::ChangeRequestUpdateAttributes> =
-                    None;
-                let mut relationships: Option<
-                    crate::datadogV2::model::ChangeRequestUpdateRelationships,
-                > = None;
+                let mut attributes: Option<crate::datadogV2::model::ChangeRequestUpdateAttributes> = None;
+                let mut relationships: Option<crate::datadogV2::model::ChangeRequestUpdateRelationships> = None;
                 let mut type_: Option<crate::datadogV2::model::ChangeRequestResourceType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,14 +86,13 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "relationships" => {
                             if v.is_null() {
                                 continue;
                             }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            relationships = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -119,12 +103,12 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateData {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

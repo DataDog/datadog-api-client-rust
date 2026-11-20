@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Log Autosubscription configuration for Datadog Forwarder Lambda functions.
 /// Automatically set up triggers for existing and new logs for some services,
@@ -20,17 +20,17 @@ pub struct AWSLambdaForwarderConfig {
     #[serde(rename = "log_source_config")]
     pub log_source_config: Option<crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig>,
     /// List of service IDs set to enable automatic log collection.
-    /// Discover the list of available services with the
-    /// [Get list of AWS log ready
-    /// services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>)
-    /// endpoint.
+/// Discover the list of available services with the
+/// [Get list of AWS log ready
+/// services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>)
+/// endpoint.
     #[serde(rename = "sources")]
     pub sources: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AWSLambdaForwarderConfig {
@@ -43,33 +43,28 @@ impl AWSLambdaForwarderConfig {
             _unparsed: false,
         }
     }
-
+    
     pub fn lambdas(mut self, value: Vec<String>) -> Self {
         self.lambdas = Some(value);
         self
     }
-
-    pub fn log_source_config(
-        mut self,
-        value: crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig,
-    ) -> Self {
+    
+    pub fn log_source_config(mut self, value: crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig) -> Self {
         self.log_source_config = Some(value);
         self
     }
-
+    
     pub fn sources(mut self, value: Vec<String>) -> Self {
         self.sources = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AWSLambdaForwarderConfig {
     fn default() -> Self {
@@ -95,14 +90,9 @@ impl<'de> Deserialize<'de> for AWSLambdaForwarderConfig {
                 M: MapAccess<'a>,
             {
                 let mut lambdas: Option<Vec<String>> = None;
-                let mut log_source_config: Option<
-                    crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig,
-                > = None;
+                let mut log_source_config: Option<crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig> = None;
                 let mut sources: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -112,25 +102,24 @@ impl<'de> Deserialize<'de> for AWSLambdaForwarderConfig {
                                 continue;
                             }
                             lambdas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "log_source_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            log_source_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            log_source_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sources" => {
                             if v.is_null() {
                                 continue;
                             }
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

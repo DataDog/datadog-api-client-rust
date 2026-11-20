@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Available values query for logs, RUM, or spans data sources.
 #[non_exhaustive]
@@ -22,15 +22,11 @@ pub struct NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
     pub search: crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuerySearch,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
-    pub fn new(
-        data_source: String,
-        group_by: Vec<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQueryGroupBy>,
-        search: crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuerySearch,
-    ) -> NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
+    pub fn new(data_source: String, group_by: Vec<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQueryGroupBy>, search: crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuerySearch) -> NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
         NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
             data_source,
             group_by,
@@ -38,7 +34,10 @@ impl NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for NotebookTemplateVariableAvailableValuesQueryLogRumSpans {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -59,32 +58,26 @@ impl<'de> Deserialize<'de> for NotebookTemplateVariableAvailableValuesQueryLogRu
             {
                 let mut data_source: Option<String> = None;
                 let mut group_by: Option<Vec<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQueryGroupBy>> = None;
-                let mut search: Option<
-                    crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuerySearch,
-                > = None;
+                let mut search: Option<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuerySearch> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "group_by" => {
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let group_by = group_by.ok_or_else(|| M::Error::missing_field("group_by"))?;
                 let search = search.ok_or_else(|| M::Error::missing_field("search"))?;
 

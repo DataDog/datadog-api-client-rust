@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Downtime details.
 #[non_exhaustive]
@@ -12,30 +12,18 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeResponseAttributes {
     /// Time that the downtime was canceled.
-    #[serde(
-        rename = "canceled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "canceled", default, with = "::serde_with::rust::double_option")]
     pub canceled: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Creation time of the downtime.
     #[serde(rename = "created")]
     pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// The timezone in which to display the downtime's start and end times in Datadog applications. This is not used
-    /// as an offset for scheduling.
-    #[serde(
-        rename = "display_timezone",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// as an offset for scheduling.
+    #[serde(rename = "display_timezone", default, with = "::serde_with::rust::double_option")]
     pub display_timezone: Option<Option<String>>,
     /// A message to include with notifications for this downtime. Email notifications can be sent to specific users
-    /// by using the same `@username` notation as events.
-    #[serde(
-        rename = "message",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// by using the same `@username` notation as events.
+    #[serde(rename = "message", default, with = "::serde_with::rust::double_option")]
     pub message: Option<Option<String>>,
     /// Time that the downtime was last modified.
     #[serde(rename = "modified")]
@@ -53,13 +41,13 @@ pub struct DowntimeResponseAttributes {
     #[serde(rename = "notify_end_types")]
     pub notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>>,
     /// The principals (users, roles, or teams) allowed to act on behalf of the downtime.
-    ///
-    /// **Note**: This feature is currently in Preview and may not be available for all organizations.
+///
+/// **Note**: This feature is currently in Preview and may not be available for all organizations.
     #[serde(rename = "run_as")]
     pub run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>>,
     /// The schedule that defines when the monitor starts, stops, and recurs. There are two types of schedules:
-    /// one-time and recurring. Recurring schedules may have up to five RRULE-based recurrences. If no schedules are
-    /// provided, the downtime will begin immediately and never end.
+/// one-time and recurring. Recurring schedules may have up to five RRULE-based recurrences. If no schedules are
+/// provided, the downtime will begin immediately and never end.
     #[serde(rename = "schedule")]
     pub schedule: Option<crate::datadogV2::model::DowntimeScheduleResponse>,
     /// The scope to which the downtime applies. Must follow the [common search syntax](<https://docs.datadoghq.com/logs/explorer/search_syntax/>).
@@ -72,7 +60,7 @@ pub struct DowntimeResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DowntimeResponseAttributes {
@@ -95,89 +83,78 @@ impl DowntimeResponseAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn canceled(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.canceled = Some(value);
         self
     }
-
+    
     pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
-
+    
     pub fn display_timezone(mut self, value: Option<String>) -> Self {
         self.display_timezone = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: Option<String>) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
-
-    pub fn monitor_identifier(
-        mut self,
-        value: crate::datadogV2::model::DowntimeMonitorIdentifier,
-    ) -> Self {
+    
+    pub fn monitor_identifier(mut self, value: crate::datadogV2::model::DowntimeMonitorIdentifier) -> Self {
         self.monitor_identifier = Some(value);
         self
     }
-
+    
     pub fn mute_first_recovery_notification(mut self, value: bool) -> Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
-
-    pub fn notify_end_states(
-        mut self,
-        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
-    ) -> Self {
+    
+    pub fn notify_end_states(mut self, value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>) -> Self {
         self.notify_end_states = Some(value);
         self
     }
-
-    pub fn notify_end_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
-    ) -> Self {
+    
+    pub fn notify_end_types(mut self, value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>) -> Self {
         self.notify_end_types = Some(value);
         self
     }
-
+    
     pub fn run_as(mut self, value: Vec<crate::datadogV2::model::DowntimeRunAsItem>) -> Self {
         self.run_as = Some(value);
         self
     }
-
+    
     pub fn schedule(mut self, value: crate::datadogV2::model::DowntimeScheduleResponse) -> Self {
         self.schedule = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::DowntimeStatus) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DowntimeResponseAttributes {
     fn default() -> Self {
@@ -207,56 +184,45 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                 let mut display_timezone: Option<Option<String>> = None;
                 let mut message: Option<Option<String>> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut monitor_identifier: Option<
-                    crate::datadogV2::model::DowntimeMonitorIdentifier,
-                > = None;
+                let mut monitor_identifier: Option<crate::datadogV2::model::DowntimeMonitorIdentifier> = None;
                 let mut mute_first_recovery_notification: Option<bool> = None;
-                let mut notify_end_states: Option<
-                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
-                > = None;
-                let mut notify_end_types: Option<
-                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
-                > = None;
+                let mut notify_end_states: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>> = None;
+                let mut notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>> = None;
                 let mut run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>> = None;
                 let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleResponse> = None;
                 let mut scope: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::DowntimeStatus> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "canceled" => {
                             canceled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created" => {
                             if v.is_null() {
                                 continue;
                             }
                             created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "display_timezone" => {
-                            display_timezone =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified" => {
                             if v.is_null() {
                                 continue;
                             }
                             modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "monitor_identifier" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_identifier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            monitor_identifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _monitor_identifier) = monitor_identifier {
                                 match _monitor_identifier {
                                     crate::datadogV2::model::DowntimeMonitorIdentifier::UnparsedObject(_monitor_identifier) => {
@@ -265,34 +231,31 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "mute_first_recovery_notification" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mute_first_recovery_notification =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mute_first_recovery_notification = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_end_states" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_end_states =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_end_states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_end_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_end_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_end_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "run_as" => {
                             if v.is_null() {
                                 continue;
                             }
                             run_as = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "schedule" => {
                             if v.is_null() {
                                 continue;
@@ -306,13 +269,13 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -320,20 +283,18 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::DowntimeStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV2::model::DowntimeStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

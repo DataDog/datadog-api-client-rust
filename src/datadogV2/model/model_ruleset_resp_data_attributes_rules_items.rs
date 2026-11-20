@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `RulesetRespDataAttributesRulesItems` object.
 #[non_exhaustive]
@@ -15,18 +15,10 @@ pub struct RulesetRespDataAttributesRulesItems {
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// The definition of `DataAttributesRulesItemsMapping` object.
-    #[serde(
-        rename = "mapping",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "mapping", default, with = "::serde_with::rust::double_option")]
     pub mapping: Option<Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>>,
     /// The `items` `metadata`.
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "metadata", default, with = "::serde_with::rust::double_option")]
     pub metadata: Option<Option<std::collections::BTreeMap<String, String>>>,
     /// The `items` `name`.
     #[serde(rename = "name")]
@@ -35,18 +27,13 @@ pub struct RulesetRespDataAttributesRulesItems {
     #[serde(rename = "query", default, with = "::serde_with::rust::double_option")]
     pub query: Option<Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQuery>>,
     /// The definition of `RulesetRespDataAttributesRulesItemsReferenceTable` object.
-    #[serde(
-        rename = "reference_table",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub reference_table:
-        Option<Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable>>,
+    #[serde(rename = "reference_table", default, with = "::serde_with::rust::double_option")]
+    pub reference_table: Option<Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RulesetRespDataAttributesRulesItems {
@@ -62,44 +49,34 @@ impl RulesetRespDataAttributesRulesItems {
             _unparsed: false,
         }
     }
-
-    pub fn mapping(
-        mut self,
-        value: Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>,
-    ) -> Self {
+    
+    pub fn mapping(mut self, value: Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>) -> Self {
         self.mapping = Some(value);
         self
     }
-
+    
     pub fn metadata(mut self, value: Option<std::collections::BTreeMap<String, String>>) -> Self {
         self.metadata = Some(value);
         self
     }
-
-    pub fn query(
-        mut self,
-        value: Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQuery>,
-    ) -> Self {
+    
+    pub fn query(mut self, value: Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQuery>) -> Self {
         self.query = Some(value);
         self
     }
-
-    pub fn reference_table(
-        mut self,
-        value: Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable>,
-    ) -> Self {
+    
+    pub fn reference_table(mut self, value: Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable>) -> Self {
         self.reference_table = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -119,51 +96,39 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItems {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut mapping: Option<
-                    Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>,
-                > = None;
+                let mut mapping: Option<Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>> = None;
                 let mut metadata: Option<Option<std::collections::BTreeMap<String, String>>> = None;
                 let mut name: Option<String> = None;
-                let mut query: Option<
-                    Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQuery>,
-                > = None;
-                let mut reference_table: Option<
-                    Option<
-                        crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable,
-                    >,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut query: Option<Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQuery>> = None;
+                let mut reference_table: Option<Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsReferenceTable>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mapping" => {
                             mapping = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "reference_table" => {
-                            reference_table =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            reference_table = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;

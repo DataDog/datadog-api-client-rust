@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// OCSP response received while validating a certificate.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct SyntheticsTestResultOCSPResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultOCSPResponse {
@@ -37,36 +37,28 @@ impl SyntheticsTestResultOCSPResponse {
             _unparsed: false,
         }
     }
-
-    pub fn certificate(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultOCSPCertificate,
-    ) -> Self {
+    
+    pub fn certificate(mut self, value: crate::datadogV2::model::SyntheticsTestResultOCSPCertificate) -> Self {
         self.certificate = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn updates(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultOCSPUpdates,
-    ) -> Self {
+    
+    pub fn updates(mut self, value: crate::datadogV2::model::SyntheticsTestResultOCSPUpdates) -> Self {
         self.updates = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultOCSPResponse {
     fn default() -> Self {
@@ -91,16 +83,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultOCSPResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut certificate: Option<
-                    crate::datadogV2::model::SyntheticsTestResultOCSPCertificate,
-                > = None;
+                let mut certificate: Option<crate::datadogV2::model::SyntheticsTestResultOCSPCertificate> = None;
                 let mut status: Option<String> = None;
-                let mut updates: Option<crate::datadogV2::model::SyntheticsTestResultOCSPUpdates> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut updates: Option<crate::datadogV2::model::SyntheticsTestResultOCSPUpdates> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -109,26 +95,25 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultOCSPResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            certificate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            certificate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updates" => {
                             if v.is_null() {
                                 continue;
                             }
                             updates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

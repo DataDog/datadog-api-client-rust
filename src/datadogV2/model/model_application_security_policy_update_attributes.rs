@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Update a WAF policy.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct ApplicationSecurityPolicyUpdateAttributes {
     #[serde(rename = "description")]
     pub description: String,
     /// Make this policy the default policy. The default policy is applied to
-    /// every service not specifically assigned to another policy.
+/// every service not specifically assigned to another policy.
     #[serde(rename = "isDefault")]
     pub is_default: bool,
     /// The name of the WAF policy.
@@ -28,7 +28,7 @@ pub struct ApplicationSecurityPolicyUpdateAttributes {
     #[serde(rename = "rules")]
     pub rules: Vec<crate::datadogV2::model::ApplicationSecurityPolicyRuleOverride>,
     /// Deprecated: Ruleset overrides. Use `protectionPresets` instead.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "rulesets")]
     pub rulesets: Option<Vec<crate::datadogV2::model::ApplicationSecurityPolicyRulesetOverride>>,
     /// The scope of the WAF policy.
@@ -41,19 +41,11 @@ pub struct ApplicationSecurityPolicyUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ApplicationSecurityPolicyUpdateAttributes {
-    pub fn new(
-        description: String,
-        is_default: bool,
-        name: String,
-        protection_presets: Vec<String>,
-        rules: Vec<crate::datadogV2::model::ApplicationSecurityPolicyRuleOverride>,
-        scope: Vec<crate::datadogV2::model::ApplicationSecurityPolicyScope>,
-        version: i64,
-    ) -> ApplicationSecurityPolicyUpdateAttributes {
+    pub fn new(description: String, is_default: bool, name: String, protection_presets: Vec<String>, rules: Vec<crate::datadogV2::model::ApplicationSecurityPolicyRuleOverride>, scope: Vec<crate::datadogV2::model::ApplicationSecurityPolicyScope>, version: i64) -> ApplicationSecurityPolicyUpdateAttributes {
         #[allow(deprecated)]
         ApplicationSecurityPolicyUpdateAttributes {
             description,
@@ -68,24 +60,20 @@ impl ApplicationSecurityPolicyUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn rulesets(
-        mut self,
-        value: Vec<crate::datadogV2::model::ApplicationSecurityPolicyRulesetOverride>,
-    ) -> Self {
+    pub fn rulesets(mut self, value: Vec<crate::datadogV2::model::ApplicationSecurityPolicyRulesetOverride>) -> Self {
         self.rulesets = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ApplicationSecurityPolicyUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -108,66 +96,53 @@ impl<'de> Deserialize<'de> for ApplicationSecurityPolicyUpdateAttributes {
                 let mut is_default: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut protection_presets: Option<Vec<String>> = None;
-                let mut rules: Option<
-                    Vec<crate::datadogV2::model::ApplicationSecurityPolicyRuleOverride>,
-                > = None;
-                let mut rulesets: Option<
-                    Vec<crate::datadogV2::model::ApplicationSecurityPolicyRulesetOverride>,
-                > = None;
-                let mut scope: Option<
-                    Vec<crate::datadogV2::model::ApplicationSecurityPolicyScope>,
-                > = None;
+                let mut rules: Option<Vec<crate::datadogV2::model::ApplicationSecurityPolicyRuleOverride>> = None;
+                let mut rulesets: Option<Vec<crate::datadogV2::model::ApplicationSecurityPolicyRulesetOverride>> = None;
+                let mut scope: Option<Vec<crate::datadogV2::model::ApplicationSecurityPolicyScope>> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "isDefault" => {
                             is_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "protectionPresets" => {
-                            protection_presets =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            protection_presets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rules" => {
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rulesets" => {
                             if v.is_null() {
                                 continue;
                             }
                             rulesets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let is_default = is_default.ok_or_else(|| M::Error::missing_field("is_default"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let protection_presets = protection_presets
-                    .ok_or_else(|| M::Error::missing_field("protection_presets"))?;
+                let protection_presets = protection_presets.ok_or_else(|| M::Error::missing_field("protection_presets"))?;
                 let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;
                 let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines the metric computed at each funnel step.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsJourneyFunnelCompute {
     /// Aggregation function: `count`, `cardinality`, `avg`, `median`, `min`, `max`, `sum`,
-    /// or a percentile of the form `pc<N>` such as `pc95`. Defaults to `cardinality`.
+/// or a percentile of the form `pc<N>` such as `pc95`. Defaults to `cardinality`.
     #[serde(rename = "aggregation")]
     pub aggregation: Option<String>,
     /// Metric to aggregate on. Defaults to the identity join key.
@@ -22,7 +22,7 @@ pub struct ProductAnalyticsJourneyFunnelCompute {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsJourneyFunnelCompute {
@@ -34,25 +34,23 @@ impl ProductAnalyticsJourneyFunnelCompute {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggregation(mut self, value: String) -> Self {
         self.aggregation = Some(value);
         self
     }
-
+    
     pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ProductAnalyticsJourneyFunnelCompute {
     fn default() -> Self {
@@ -79,10 +77,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelCompute {
             {
                 let mut aggregation: Option<String> = None;
                 let mut metric: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -91,20 +86,19 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelCompute {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,21 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SourcemapMapKind {
-    JS,
-    JVM,
-    IOS,
-    REACT,
-    FLUTTER,
-    ELF,
-    NDK,
-    IL2CPP,
-    WASM,
-    PORTABLE_PDB,
+	JS,
+	JVM,
+	IOS,
+	REACT,
+	FLUTTER,
+	ELF,
+	NDK,
+	IL2CPP,
+	WASM,
+	PORTABLE_PDB,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,20 +57,8 @@ impl<'de> Deserialize<'de> for SourcemapMapKind {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "js" => Self::JS,
-            "jvm" => Self::JVM,
-            "ios" => Self::IOS,
-            "react" => Self::REACT,
-            "flutter" => Self::FLUTTER,
-            "elf" => Self::ELF,
-            "ndk" => Self::NDK,
-            "il2cpp" => Self::IL2CPP,
-            "wasm" => Self::WASM,
-            "portable_pdb" => Self::PORTABLE_PDB,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"js" => Self::JS,"jvm" => Self::JVM,"ios" => Self::IOS,"react" => Self::REACT,"flutter" => Self::FLUTTER,"elf" => Self::ELF,"ndk" => Self::NDK,"il2cpp" => Self::IL2CPP,"wasm" => Self::WASM,"portable_pdb" => Self::PORTABLE_PDB,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

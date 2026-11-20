@@ -2,27 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CaseInsightType {
-    SECURITY_SIGNAL,
-    MONITOR,
-    EVENT_CORRELATION,
-    ERROR_TRACKING,
-    CLOUD_COST_RECOMMENDATION,
-    INCIDENT,
-    SENSITIVE_DATA_SCANNER_ISSUE,
-    EVENT,
-    WATCHDOG_STORY,
-    WIDGET,
-    SECURITY_FINDING,
-    INSIGHT_SCORECARD_CAMPAIGN,
-    RESOURCE_POLICY,
-    APM_RECOMMENDATION,
-    SCM_URL,
-    PROFILING_DOWNSIZING_EXPERIMENT,
+	SECURITY_SIGNAL,
+	MONITOR,
+	EVENT_CORRELATION,
+	ERROR_TRACKING,
+	CLOUD_COST_RECOMMENDATION,
+	INCIDENT,
+	SENSITIVE_DATA_SCANNER_ISSUE,
+	EVENT,
+	WATCHDOG_STORY,
+	WIDGET,
+	SECURITY_FINDING,
+	INSIGHT_SCORECARD_CAMPAIGN,
+	RESOURCE_POLICY,
+	APM_RECOMMENDATION,
+	SCM_URL,
+	PROFILING_DOWNSIZING_EXPERIMENT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,9 +45,7 @@ impl ToString for CaseInsightType {
             Self::RESOURCE_POLICY => String::from("RESOURCE_POLICY"),
             Self::APM_RECOMMENDATION => String::from("APM_RECOMMENDATION"),
             Self::SCM_URL => String::from("SCM_URL"),
-            Self::PROFILING_DOWNSIZING_EXPERIMENT => {
-                String::from("PROFILING_DOWNSIZING_EXPERIMENT")
-            }
+            Self::PROFILING_DOWNSIZING_EXPERIMENT => String::from("PROFILING_DOWNSIZING_EXPERIMENT"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -70,26 +69,8 @@ impl<'de> Deserialize<'de> for CaseInsightType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "SECURITY_SIGNAL" => Self::SECURITY_SIGNAL,
-            "MONITOR" => Self::MONITOR,
-            "EVENT_CORRELATION" => Self::EVENT_CORRELATION,
-            "ERROR_TRACKING" => Self::ERROR_TRACKING,
-            "CLOUD_COST_RECOMMENDATION" => Self::CLOUD_COST_RECOMMENDATION,
-            "INCIDENT" => Self::INCIDENT,
-            "SENSITIVE_DATA_SCANNER_ISSUE" => Self::SENSITIVE_DATA_SCANNER_ISSUE,
-            "EVENT" => Self::EVENT,
-            "WATCHDOG_STORY" => Self::WATCHDOG_STORY,
-            "WIDGET" => Self::WIDGET,
-            "SECURITY_FINDING" => Self::SECURITY_FINDING,
-            "INSIGHT_SCORECARD_CAMPAIGN" => Self::INSIGHT_SCORECARD_CAMPAIGN,
-            "RESOURCE_POLICY" => Self::RESOURCE_POLICY,
-            "APM_RECOMMENDATION" => Self::APM_RECOMMENDATION,
-            "SCM_URL" => Self::SCM_URL,
-            "PROFILING_DOWNSIZING_EXPERIMENT" => Self::PROFILING_DOWNSIZING_EXPERIMENT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"SECURITY_SIGNAL" => Self::SECURITY_SIGNAL,"MONITOR" => Self::MONITOR,"EVENT_CORRELATION" => Self::EVENT_CORRELATION,"ERROR_TRACKING" => Self::ERROR_TRACKING,"CLOUD_COST_RECOMMENDATION" => Self::CLOUD_COST_RECOMMENDATION,"INCIDENT" => Self::INCIDENT,"SENSITIVE_DATA_SCANNER_ISSUE" => Self::SENSITIVE_DATA_SCANNER_ISSUE,"EVENT" => Self::EVENT,"WATCHDOG_STORY" => Self::WATCHDOG_STORY,"WIDGET" => Self::WIDGET,"SECURITY_FINDING" => Self::SECURITY_FINDING,"INSIGHT_SCORECARD_CAMPAIGN" => Self::INSIGHT_SCORECARD_CAMPAIGN,"RESOURCE_POLICY" => Self::RESOURCE_POLICY,"APM_RECOMMENDATION" => Self::APM_RECOMMENDATION,"SCM_URL" => Self::SCM_URL,"PROFILING_DOWNSIZING_EXPERIMENT" => Self::PROFILING_DOWNSIZING_EXPERIMENT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

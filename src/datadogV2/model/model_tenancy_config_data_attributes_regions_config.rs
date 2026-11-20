@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Region configuration for an OCI tenancy, indicating which regions are available, enabled, or disabled for data collection.
 #[non_exhaustive]
@@ -12,31 +12,19 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyConfigDataAttributesRegionsConfig {
     /// List of OCI regions available for data collection in the tenancy. Returns `null` when no regions are set.
-    #[serde(
-        rename = "available",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "available", default, with = "::serde_with::rust::double_option")]
     pub available: Option<Option<Vec<String>>>,
     /// List of OCI regions explicitly disabled for data collection. Returns `null` when no regions are set.
-    #[serde(
-        rename = "disabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "disabled", default, with = "::serde_with::rust::double_option")]
     pub disabled: Option<Option<Vec<String>>>,
     /// List of OCI regions enabled for data collection. Returns `null` when no regions are set.
-    #[serde(
-        rename = "enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "enabled", default, with = "::serde_with::rust::double_option")]
     pub enabled: Option<Option<Vec<String>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TenancyConfigDataAttributesRegionsConfig {
@@ -49,30 +37,28 @@ impl TenancyConfigDataAttributesRegionsConfig {
             _unparsed: false,
         }
     }
-
+    
     pub fn available(mut self, value: Option<Vec<String>>) -> Self {
         self.available = Some(value);
         self
     }
-
+    
     pub fn disabled(mut self, value: Option<Vec<String>>) -> Self {
         self.disabled = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: Option<Vec<String>>) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TenancyConfigDataAttributesRegionsConfig {
     fn default() -> Self {
@@ -100,28 +86,25 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributesRegionsConfig {
                 let mut available: Option<Option<Vec<String>>> = None;
                 let mut disabled: Option<Option<Vec<String>>> = None;
                 let mut enabled: Option<Option<Vec<String>>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "available" => {
                             available = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "disabled" => {
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

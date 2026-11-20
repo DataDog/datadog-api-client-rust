@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Summary fields for an experiment returned in a list.
 #[non_exhaustive]
@@ -117,142 +117,128 @@ impl ExperimentsExperimentV2ListDTODataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignments_end_date(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.assignments_end_date = Some(value);
         self
     }
-
+    
     pub fn assignments_start_date(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.assignments_start_date = Some(value);
         self
     }
-
+    
     pub fn concluded_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.concluded_at = Some(value);
         self
     }
-
-    pub fn conclusion(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesConclusion,
-    ) -> Self {
+    
+    pub fn conclusion(mut self, value: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesConclusion) -> Self {
         self.conclusion = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn events_end_date(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.events_end_date = Some(value);
         self
     }
-
+    
     pub fn events_start_date(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.events_start_date = Some(value);
         self
     }
-
+    
     pub fn experiment_type(mut self, value: String) -> Self {
         self.experiment_type = Some(value);
         self
     }
-
+    
     pub fn holdout_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.holdout_ids = Some(value);
         self
     }
-
+    
     pub fn hypothesis(mut self, value: String) -> Self {
         self.hypothesis = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn pipeline_table_suffix(mut self, value: String) -> Self {
         self.pipeline_table_suffix = Some(value);
         self
     }
-
+    
     pub fn protocol_id(mut self, value: String) -> Self {
         self.protocol_id = Some(value);
         self
     }
-
-    pub fn related_links(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesRelatedLinksItems>,
-    ) -> Self {
+    
+    pub fn related_links(mut self, value: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesRelatedLinksItems>) -> Self {
         self.related_links = Some(value);
         self
     }
-
+    
     pub fn results_last_updated(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.results_last_updated = Some(value);
         self
     }
-
-    pub fn status(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsExperimentV2DTODataAttributesStatus,
-    ) -> Self {
+    
+    pub fn status(mut self, value: crate::datadogV2::model::ExperimentsExperimentV2DTODataAttributesStatus) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn structured_metadata(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsStructuredMetadataResponse>,
-    ) -> Self {
+    
+    pub fn structured_metadata(mut self, value: Vec<crate::datadogV2::model::ExperimentsStructuredMetadataResponse>) -> Self {
         self.structured_metadata = Some(value);
         self
     }
-
+    
     pub fn subject_type_id(mut self, value: Option<String>) -> Self {
         self.subject_type_id = Some(value);
         self
     }
-
+    
     pub fn summary(mut self, value: String) -> Self {
         self.summary = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn teams(mut self, value: Vec<String>) -> Self {
         self.teams = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsExperimentV2ListDTODataAttributes {
     fn default() -> Self {
@@ -278,8 +264,7 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentV2ListDTODataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut assignments_end_date: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut assignments_start_date: Option<Option<chrono::DateTime<chrono::Utc>>> =
-                    None;
+                let mut assignments_start_date: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut concluded_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut conclusion: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesConclusion> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -294,115 +279,96 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentV2ListDTODataAttributes {
                 let mut protocol_id: Option<String> = None;
                 let mut related_links: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesRelatedLinksItems>> = None;
                 let mut results_last_updated: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut status: Option<
-                    crate::datadogV2::model::ExperimentsExperimentV2DTODataAttributesStatus,
-                > = None;
-                let mut structured_metadata: Option<
-                    Vec<crate::datadogV2::model::ExperimentsStructuredMetadataResponse>,
-                > = None;
+                let mut status: Option<crate::datadogV2::model::ExperimentsExperimentV2DTODataAttributesStatus> = None;
+                let mut structured_metadata: Option<Vec<crate::datadogV2::model::ExperimentsStructuredMetadataResponse>> = None;
                 let mut subject_type_id: Option<Option<String>> = None;
                 let mut summary: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut teams: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assignments_end_date" => {
-                            assignments_end_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignments_end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignments_start_date" => {
-                            assignments_start_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignments_start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "concluded_at" => {
-                            concluded_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            concluded_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conclusion" => {
                             if v.is_null() {
                                 continue;
                             }
                             conclusion = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "events_end_date" => {
-                            events_end_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            events_end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "events_start_date" => {
-                            events_start_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            events_start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "experiment_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            experiment_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "holdout_ids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            holdout_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            holdout_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hypothesis" => {
                             if v.is_null() {
                                 continue;
                             }
                             hypothesis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pipeline_table_suffix" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pipeline_table_suffix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pipeline_table_suffix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "protocol_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            protocol_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            protocol_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "related_links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            related_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            related_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "results_last_updated" => {
-                            results_last_updated =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            results_last_updated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -416,47 +382,45 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentV2ListDTODataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "structured_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            structured_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            structured_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject_type_id" => {
-                            subject_type_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "summary" => {
                             if v.is_null() {
                                 continue;
                             }
                             summary = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "teams" => {
                             if v.is_null() {
                                 continue;
                             }
                             teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

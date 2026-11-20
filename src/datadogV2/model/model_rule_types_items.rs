@@ -2,31 +2,32 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RuleTypesItems {
-    APPLICATION_SECURITY,
-    LOG_DETECTION,
-    WORKLOAD_SECURITY,
-    SIGNAL_CORRELATION,
-    CLOUD_CONFIGURATION,
-    INFRASTRUCTURE_CONFIGURATION,
-    APPLICATION_CODE_VULNERABILITY,
-    APPLICATION_LIBRARY_VULNERABILITY,
-    ATTACK_PATH,
-    CONTAINER_IMAGE_VULNERABILITY,
-    IDENTITY_RISK,
-    MISCONFIGURATION,
-    API_SECURITY,
-    HOST_VULNERABILITY,
-    IAC_MISCONFIGURATION,
-    SAST_VULNERABILITY,
-    SECRET_VULNERABILITY,
-    WORKLOAD_ACTIVITY,
-    SENSITIVE_DATA,
-    SERVERLESS_FUNCTION_CODE_VULNERABILITY,
+	APPLICATION_SECURITY,
+	LOG_DETECTION,
+	WORKLOAD_SECURITY,
+	SIGNAL_CORRELATION,
+	CLOUD_CONFIGURATION,
+	INFRASTRUCTURE_CONFIGURATION,
+	APPLICATION_CODE_VULNERABILITY,
+	APPLICATION_LIBRARY_VULNERABILITY,
+	ATTACK_PATH,
+	CONTAINER_IMAGE_VULNERABILITY,
+	IDENTITY_RISK,
+	MISCONFIGURATION,
+	API_SECURITY,
+	HOST_VULNERABILITY,
+	IAC_MISCONFIGURATION,
+	SAST_VULNERABILITY,
+	SECRET_VULNERABILITY,
+	WORKLOAD_ACTIVITY,
+	SENSITIVE_DATA,
+	SERVERLESS_FUNCTION_CODE_VULNERABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,9 +41,7 @@ impl ToString for RuleTypesItems {
             Self::CLOUD_CONFIGURATION => String::from("cloud_configuration"),
             Self::INFRASTRUCTURE_CONFIGURATION => String::from("infrastructure_configuration"),
             Self::APPLICATION_CODE_VULNERABILITY => String::from("application_code_vulnerability"),
-            Self::APPLICATION_LIBRARY_VULNERABILITY => {
-                String::from("application_library_vulnerability")
-            }
+            Self::APPLICATION_LIBRARY_VULNERABILITY => String::from("application_library_vulnerability"),
             Self::ATTACK_PATH => String::from("attack_path"),
             Self::CONTAINER_IMAGE_VULNERABILITY => String::from("container_image_vulnerability"),
             Self::IDENTITY_RISK => String::from("identity_risk"),
@@ -54,9 +53,7 @@ impl ToString for RuleTypesItems {
             Self::SECRET_VULNERABILITY => String::from("secret_vulnerability"),
             Self::WORKLOAD_ACTIVITY => String::from("workload_activity"),
             Self::SENSITIVE_DATA => String::from("sensitive_data"),
-            Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY => {
-                String::from("serverless_function_code_vulnerability")
-            }
+            Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY => String::from("serverless_function_code_vulnerability"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -80,32 +77,8 @@ impl<'de> Deserialize<'de> for RuleTypesItems {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "application_security" => Self::APPLICATION_SECURITY,
-            "log_detection" => Self::LOG_DETECTION,
-            "workload_security" => Self::WORKLOAD_SECURITY,
-            "signal_correlation" => Self::SIGNAL_CORRELATION,
-            "cloud_configuration" => Self::CLOUD_CONFIGURATION,
-            "infrastructure_configuration" => Self::INFRASTRUCTURE_CONFIGURATION,
-            "application_code_vulnerability" => Self::APPLICATION_CODE_VULNERABILITY,
-            "application_library_vulnerability" => Self::APPLICATION_LIBRARY_VULNERABILITY,
-            "attack_path" => Self::ATTACK_PATH,
-            "container_image_vulnerability" => Self::CONTAINER_IMAGE_VULNERABILITY,
-            "identity_risk" => Self::IDENTITY_RISK,
-            "misconfiguration" => Self::MISCONFIGURATION,
-            "api_security" => Self::API_SECURITY,
-            "host_vulnerability" => Self::HOST_VULNERABILITY,
-            "iac_misconfiguration" => Self::IAC_MISCONFIGURATION,
-            "sast_vulnerability" => Self::SAST_VULNERABILITY,
-            "secret_vulnerability" => Self::SECRET_VULNERABILITY,
-            "workload_activity" => Self::WORKLOAD_ACTIVITY,
-            "sensitive_data" => Self::SENSITIVE_DATA,
-            "serverless_function_code_vulnerability" => {
-                Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"application_security" => Self::APPLICATION_SECURITY,"log_detection" => Self::LOG_DETECTION,"workload_security" => Self::WORKLOAD_SECURITY,"signal_correlation" => Self::SIGNAL_CORRELATION,"cloud_configuration" => Self::CLOUD_CONFIGURATION,"infrastructure_configuration" => Self::INFRASTRUCTURE_CONFIGURATION,"application_code_vulnerability" => Self::APPLICATION_CODE_VULNERABILITY,"application_library_vulnerability" => Self::APPLICATION_LIBRARY_VULNERABILITY,"attack_path" => Self::ATTACK_PATH,"container_image_vulnerability" => Self::CONTAINER_IMAGE_VULNERABILITY,"identity_risk" => Self::IDENTITY_RISK,"misconfiguration" => Self::MISCONFIGURATION,"api_security" => Self::API_SECURITY,"host_vulnerability" => Self::HOST_VULNERABILITY,"iac_misconfiguration" => Self::IAC_MISCONFIGURATION,"sast_vulnerability" => Self::SAST_VULNERABILITY,"secret_vulnerability" => Self::SECRET_VULNERABILITY,"workload_activity" => Self::WORKLOAD_ACTIVITY,"sensitive_data" => Self::SENSITIVE_DATA,"serverless_function_code_vulnerability" => Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

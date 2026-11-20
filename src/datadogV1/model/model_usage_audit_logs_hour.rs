@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Audit logs usage for a given organization for a given hour.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct UsageAuditLogsHour {
     #[serde(rename = "hour")]
     pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// The total number of audit logs lines indexed during a given hour.
-    #[serde(
-        rename = "lines_indexed",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "lines_indexed", default, with = "::serde_with::rust::double_option")]
     pub lines_indexed: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]
@@ -31,7 +27,7 @@ pub struct UsageAuditLogsHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageAuditLogsHour {
@@ -45,35 +41,33 @@ impl UsageAuditLogsHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
-
+    
     pub fn lines_indexed(mut self, value: Option<i64>) -> Self {
         self.lines_indexed = Some(value);
         self
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageAuditLogsHour {
     fn default() -> Self {
@@ -102,10 +96,7 @@ impl<'de> Deserialize<'de> for UsageAuditLogsHour {
                 let mut lines_indexed: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,28 +106,27 @@ impl<'de> Deserialize<'de> for UsageAuditLogsHour {
                                 continue;
                             }
                             hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "lines_indexed" => {
-                            lines_indexed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lines_indexed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Project notification settings.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct ProjectNotificationSettings {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProjectNotificationSettings {
@@ -61,60 +61,58 @@ impl ProjectNotificationSettings {
             _unparsed: false,
         }
     }
-
+    
     pub fn destinations(mut self, value: Vec<i64>) -> Self {
         self.destinations = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_assignment(mut self, value: bool) -> Self {
         self.notify_on_case_assignment = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_closed(mut self, value: bool) -> Self {
         self.notify_on_case_closed = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_comment(mut self, value: bool) -> Self {
         self.notify_on_case_comment = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_comment_mention(mut self, value: bool) -> Self {
         self.notify_on_case_comment_mention = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_priority_change(mut self, value: bool) -> Self {
         self.notify_on_case_priority_change = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_status_change(mut self, value: bool) -> Self {
         self.notify_on_case_status_change = Some(value);
         self
     }
-
+    
     pub fn notify_on_case_unassignment(mut self, value: bool) -> Self {
         self.notify_on_case_unassignment = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ProjectNotificationSettings {
     fn default() -> Self {
@@ -148,10 +146,7 @@ impl<'de> Deserialize<'de> for ProjectNotificationSettings {
                 let mut notify_on_case_priority_change: Option<bool> = None;
                 let mut notify_on_case_status_change: Option<bool> = None;
                 let mut notify_on_case_unassignment: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,69 +155,61 @@ impl<'de> Deserialize<'de> for ProjectNotificationSettings {
                             if v.is_null() {
                                 continue;
                             }
-                            destinations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            destinations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "notify_on_case_assignment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_assignment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_assignment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_closed" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_closed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_closed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_comment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_comment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_comment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_comment_mention" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_comment_mention =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_comment_mention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_priority_change" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_priority_change =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_priority_change = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_status_change" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_status_change =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_status_change = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_on_case_unassignment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_on_case_unassignment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_on_case_unassignment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

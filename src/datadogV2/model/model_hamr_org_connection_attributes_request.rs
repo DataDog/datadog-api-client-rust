@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for a HAMR organization connection request.
 #[non_exhaustive]
@@ -12,16 +12,16 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HamrOrgConnectionAttributesRequest {
     /// Status of the HAMR connection:
-    /// - 0: UNSPECIFIED - Connection status not specified
-    /// - 1: ONBOARDING - Initial setup of HAMR connection
-    /// - 2: PASSIVE - Secondary organization in passive standby mode
-    /// - 3: FAILOVER - Liminal status between PASSIVE and ACTIVE
-    /// - 4: ACTIVE - Organization is an active failover
-    /// - 5: RECOVERY - Recovery operation in progress
+/// - 0: UNSPECIFIED - Connection status not specified
+/// - 1: ONBOARDING - Initial setup of HAMR connection
+/// - 2: PASSIVE - Secondary organization in passive standby mode
+/// - 3: FAILOVER - Liminal status between PASSIVE and ACTIVE
+/// - 4: ACTIVE - Organization is an active failover
+/// - 5: RECOVERY - Recovery operation in progress
     #[serde(rename = "hamr_status")]
     pub hamr_status: crate::datadogV2::model::HamrOrgConnectionStatus,
     /// Indicates whether this organization is the primary organization in the HAMR relationship.
-    /// If true, this is the primary organization. If false, this is the secondary/backup organization.
+/// If true, this is the primary organization. If false, this is the secondary/backup organization.
     #[serde(rename = "is_primary")]
     pub is_primary: bool,
     /// Username or identifier of the user who last modified this HAMR connection.
@@ -40,18 +40,11 @@ pub struct HamrOrgConnectionAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HamrOrgConnectionAttributesRequest {
-    pub fn new(
-        hamr_status: crate::datadogV2::model::HamrOrgConnectionStatus,
-        is_primary: bool,
-        modified_by: String,
-        target_org_datacenter: String,
-        target_org_name: String,
-        target_org_uuid: String,
-    ) -> HamrOrgConnectionAttributesRequest {
+    pub fn new(hamr_status: crate::datadogV2::model::HamrOrgConnectionStatus, is_primary: bool, modified_by: String, target_org_datacenter: String, target_org_name: String, target_org_uuid: String) -> HamrOrgConnectionAttributesRequest {
         HamrOrgConnectionAttributesRequest {
             hamr_status,
             is_primary,
@@ -63,15 +56,14 @@ impl HamrOrgConnectionAttributesRequest {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for HamrOrgConnectionAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,24 +82,19 @@ impl<'de> Deserialize<'de> for HamrOrgConnectionAttributesRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut hamr_status: Option<crate::datadogV2::model::HamrOrgConnectionStatus> =
-                    None;
+                let mut hamr_status: Option<crate::datadogV2::model::HamrOrgConnectionStatus> = None;
                 let mut is_primary: Option<bool> = None;
                 let mut modified_by: Option<String> = None;
                 let mut target_org_datacenter: Option<String> = None;
                 let mut target_org_name: Option<String> = None;
                 let mut target_org_uuid: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "hamr_status" => {
-                            hamr_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            hamr_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _hamr_status) = hamr_status {
                                 match _hamr_status {
                                     crate::datadogV2::model::HamrOrgConnectionStatus::UnparsedObject(_hamr_status) => {
@@ -116,44 +103,35 @@ impl<'de> Deserialize<'de> for HamrOrgConnectionAttributesRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "is_primary" => {
                             is_primary = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_by" => {
-                            modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target_org_datacenter" => {
-                            target_org_datacenter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_org_datacenter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target_org_name" => {
-                            target_org_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target_org_uuid" => {
-                            target_org_uuid =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_org_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let hamr_status =
-                    hamr_status.ok_or_else(|| M::Error::missing_field("hamr_status"))?;
+                let hamr_status = hamr_status.ok_or_else(|| M::Error::missing_field("hamr_status"))?;
                 let is_primary = is_primary.ok_or_else(|| M::Error::missing_field("is_primary"))?;
-                let modified_by =
-                    modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
-                let target_org_datacenter = target_org_datacenter
-                    .ok_or_else(|| M::Error::missing_field("target_org_datacenter"))?;
-                let target_org_name =
-                    target_org_name.ok_or_else(|| M::Error::missing_field("target_org_name"))?;
-                let target_org_uuid =
-                    target_org_uuid.ok_or_else(|| M::Error::missing_field("target_org_uuid"))?;
+                let modified_by = modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
+                let target_org_datacenter = target_org_datacenter.ok_or_else(|| M::Error::missing_field("target_org_datacenter"))?;
+                let target_org_name = target_org_name.ok_or_else(|| M::Error::missing_field("target_org_name"))?;
+                let target_org_uuid = target_org_uuid.ok_or_else(|| M::Error::missing_field("target_org_uuid"))?;
 
                 let content = HamrOrgConnectionAttributesRequest {
                     hamr_status,

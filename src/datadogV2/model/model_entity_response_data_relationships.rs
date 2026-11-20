@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Entity relationships including incidents, oncalls, schemas, and related entities.
 #[non_exhaustive]
@@ -22,8 +22,7 @@ pub struct EntityResponseDataRelationships {
     pub raw_schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema>,
     /// Related entities relationship containing a list of entity references related to this entity.
     #[serde(rename = "relatedEntities")]
-    pub related_entities:
-        Option<crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities>,
+    pub related_entities: Option<crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities>,
     /// Schema relationship linking an entity to its associated schema resource.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsSchema>,
@@ -31,7 +30,7 @@ pub struct EntityResponseDataRelationships {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl EntityResponseDataRelationships {
@@ -46,55 +45,38 @@ impl EntityResponseDataRelationships {
             _unparsed: false,
         }
     }
-
-    pub fn incidents(
-        mut self,
-        value: crate::datadogV2::model::EntityResponseDataRelationshipsIncidents,
-    ) -> Self {
+    
+    pub fn incidents(mut self, value: crate::datadogV2::model::EntityResponseDataRelationshipsIncidents) -> Self {
         self.incidents = Some(value);
         self
     }
-
-    pub fn oncalls(
-        mut self,
-        value: crate::datadogV2::model::EntityResponseDataRelationshipsOncalls,
-    ) -> Self {
+    
+    pub fn oncalls(mut self, value: crate::datadogV2::model::EntityResponseDataRelationshipsOncalls) -> Self {
         self.oncalls = Some(value);
         self
     }
-
-    pub fn raw_schema(
-        mut self,
-        value: crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema,
-    ) -> Self {
+    
+    pub fn raw_schema(mut self, value: crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema) -> Self {
         self.raw_schema = Some(value);
         self
     }
-
-    pub fn related_entities(
-        mut self,
-        value: crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities,
-    ) -> Self {
+    
+    pub fn related_entities(mut self, value: crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities) -> Self {
         self.related_entities = Some(value);
         self
     }
-
-    pub fn schema(
-        mut self,
-        value: crate::datadogV2::model::EntityResponseDataRelationshipsSchema,
-    ) -> Self {
+    
+    pub fn schema(mut self, value: crate::datadogV2::model::EntityResponseDataRelationshipsSchema) -> Self {
         self.schema = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for EntityResponseDataRelationships {
     fn default() -> Self {
@@ -119,25 +101,12 @@ impl<'de> Deserialize<'de> for EntityResponseDataRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut incidents: Option<
-                    crate::datadogV2::model::EntityResponseDataRelationshipsIncidents,
-                > = None;
-                let mut oncalls: Option<
-                    crate::datadogV2::model::EntityResponseDataRelationshipsOncalls,
-                > = None;
-                let mut raw_schema: Option<
-                    crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema,
-                > = None;
-                let mut related_entities: Option<
-                    crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities,
-                > = None;
-                let mut schema: Option<
-                    crate::datadogV2::model::EntityResponseDataRelationshipsSchema,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut incidents: Option<crate::datadogV2::model::EntityResponseDataRelationshipsIncidents> = None;
+                let mut oncalls: Option<crate::datadogV2::model::EntityResponseDataRelationshipsOncalls> = None;
+                let mut raw_schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema> = None;
+                let mut related_entities: Option<crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities> = None;
+                let mut schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsSchema> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -147,37 +116,36 @@ impl<'de> Deserialize<'de> for EntityResponseDataRelationships {
                                 continue;
                             }
                             incidents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "oncalls" => {
                             if v.is_null() {
                                 continue;
                             }
                             oncalls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rawSchema" => {
                             if v.is_null() {
                                 continue;
                             }
                             raw_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "relatedEntities" => {
                             if v.is_null() {
                                 continue;
                             }
-                            related_entities =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            related_entities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "schema" => {
                             if v.is_null() {
                                 continue;
                             }
                             schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

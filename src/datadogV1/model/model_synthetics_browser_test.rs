@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing details about a Synthetic browser test.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct SyntheticsBrowserTest {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// Define whether you want to start (`live`) or pause (`paused`) a
-    /// Synthetic test.
+/// Synthetic test.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus>,
     /// Array of steps for the test.
@@ -49,18 +49,11 @@ pub struct SyntheticsBrowserTest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsBrowserTest {
-    pub fn new(
-        config: crate::datadogV1::model::SyntheticsBrowserTestConfig,
-        locations: Vec<String>,
-        message: String,
-        name: String,
-        options: crate::datadogV1::model::SyntheticsTestOptions,
-        type_: crate::datadogV1::model::SyntheticsBrowserTestType,
-    ) -> SyntheticsBrowserTest {
+    pub fn new(config: crate::datadogV1::model::SyntheticsBrowserTestConfig, locations: Vec<String>, message: String, name: String, options: crate::datadogV1::model::SyntheticsTestOptions, type_: crate::datadogV1::model::SyntheticsBrowserTestType) -> SyntheticsBrowserTest {
         SyntheticsBrowserTest {
             config,
             locations,
@@ -77,40 +70,39 @@ impl SyntheticsBrowserTest {
             _unparsed: false,
         }
     }
-
+    
     pub fn monitor_id(mut self, value: i64) -> Self {
         self.monitor_id = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestPauseStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn steps(mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> Self {
         self.steps = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsBrowserTest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -140,41 +132,38 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTest {
                 let mut steps: Option<Vec<crate::datadogV1::model::SyntheticsStep>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsBrowserTestType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "config" => {
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "locations" => {
                             locations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "monitor_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -188,19 +177,19 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "steps" => {
                             if v.is_null() {
                                 continue;
                             }
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -211,12 +200,12 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let config = config.ok_or_else(|| M::Error::missing_field("config"))?;

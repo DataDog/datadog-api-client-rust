@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an iOS dSYM source map.
 #[non_exhaustive]
@@ -27,15 +27,11 @@ pub struct IOSSourcemapAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IOSSourcemapAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: crate::datadogV2::model::IOSSourcemapMapKind,
-        size: i64,
-    ) -> IOSSourcemapAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, mapkind: crate::datadogV2::model::IOSSourcemapMapKind, size: i64) -> IOSSourcemapAttributes {
         IOSSourcemapAttributes {
             created_at,
             mapkind,
@@ -45,20 +41,19 @@ impl IOSSourcemapAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn uuids(mut self, value: String) -> Self {
         self.uuids = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IOSSourcemapAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,17 +76,14 @@ impl<'de> Deserialize<'de> for IOSSourcemapAttributes {
                 let mut mapkind: Option<crate::datadogV2::model::IOSSourcemapMapKind> = None;
                 let mut size: Option<i64> = None;
                 let mut uuids: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mapkind) = mapkind {
@@ -102,21 +94,21 @@ impl<'de> Deserialize<'de> for IOSSourcemapAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "size" => {
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "uuids" => {
                             if v.is_null() {
                                 continue;
                             }
                             uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;

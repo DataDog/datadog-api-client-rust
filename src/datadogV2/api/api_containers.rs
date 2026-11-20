@@ -1,91 +1,94 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
 use futures_core::stream::Stream;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// ListContainersOptionalParams is a struct for passing parameters to the method [`ContainersAPI::list_containers`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainersOptionalParams {
     /// Comma-separated `key:value` tags. A container must match every tag. Each tag starts with a letter and
-    /// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
-    /// case-sensitive (tags are usually lowercase).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
-    /// `kube_namespace:*-web` matches `kube_namespace:shop-web`, and `container_id:a4cf*` matches containers
-    /// whose ID starts with `a4cf`.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
-    /// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. To match
-    /// unrelated values of one key, make one request per value.
+/// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
+/// case-sensitive (tags are usually lowercase).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
+/// `kube_namespace:*-web` matches `kube_namespace:shop-web`, and `container_id:a4cf*` matches containers
+/// whose ID starts with `a4cf`.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
+/// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. To match
+/// unrelated values of one key, make one request per value.
     pub filter_tags: Option<String>,
     /// Comma-separated list of up to three tag keys to group containers by. Returns `container_group`
-    /// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
-    /// Containers with multiple values for a grouping tag can appear in multiple groups.
-    /// Summing group counts can overcount distinct containers.
+/// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
+/// Containers with multiple values for a grouping tag can appear in multiple groups.
+/// Summing group counts can overcount distinct containers.
     pub group_by: Option<String>,
     /// Attribute to sort individual containers by: `name`, `created_at`, `started_at`, `state`,
-    /// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
-    /// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
-    /// Ignored when `group_by` is specified.
+/// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
+/// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
+/// Ignored when `group_by` is specified.
     pub sort: Option<String>,
     /// Maximum number of results returned. For grouped results, defaults to `100` with a maximum
-    /// of `1000` groups.
+/// of `1000` groups.
     pub page_size: Option<i32>,
     /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+/// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
     pub page_cursor: Option<String>,
 }
 
 impl ListContainersOptionalParams {
     /// Comma-separated `key:value` tags. A container must match every tag. Each tag starts with a letter and
-    /// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
-    /// case-sensitive (tags are usually lowercase).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
-    /// `kube_namespace:*-web` matches `kube_namespace:shop-web`, and `container_id:a4cf*` matches containers
-    /// whose ID starts with `a4cf`.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
-    /// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. To match
-    /// unrelated values of one key, make one request per value.
+/// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
+/// case-sensitive (tags are usually lowercase).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
+/// `kube_namespace:*-web` matches `kube_namespace:shop-web`, and `container_id:a4cf*` matches containers
+/// whose ID starts with `a4cf`.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
+/// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. To match
+/// unrelated values of one key, make one request per value.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Comma-separated list of up to three tag keys to group containers by. Returns `container_group`
-    /// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
-    /// Containers with multiple values for a grouping tag can appear in multiple groups.
-    /// Summing group counts can overcount distinct containers.
+/// objects with counts and tags. Grouped results ignore `sort` and do not support pagination.
+/// Containers with multiple values for a grouping tag can appear in multiple groups.
+/// Summing group counts can overcount distinct containers.
     pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
     /// Attribute to sort individual containers by: `name`, `created_at`, `started_at`, `state`,
-    /// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
-    /// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
-    /// Ignored when `group_by` is specified.
+/// `container_id`, `host`, `image_name`, or `image_digest`. Defaults to `started_at` in ascending
+/// order. Prefix the attribute with `-` for descending order, such as `-started_at`.
+/// Ignored when `group_by` is specified.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Maximum number of results returned. For grouped results, defaults to `100` with a maximum
-    /// of `1000` groups.
+/// of `1000` groups.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
     /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
+/// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
 }
+
+
+
 
 /// ListContainersError is a struct for typed errors of method [`ContainersAPI::list_containers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -94,6 +97,7 @@ pub enum ListContainersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Containers API allows you to query container data for your organization.
 /// See the [Container Monitoring page](<https://docs.datadoghq.com/containers/>) for more information.
@@ -118,7 +122,8 @@ impl ContainersAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -163,43 +168,34 @@ impl ContainersAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get all containers for your organization. Use `group_by` to return container groups with counts.
-    /// Grouped results are limited by `page[size]` and do not support pagination.
-    ///
-    /// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
-    /// or `/api/v2/query/timeseries`.
-    pub async fn list_containers(
-        &self,
-        params: ListContainersOptionalParams,
-    ) -> Result<crate::datadogV2::model::ContainersResponse, datadog::Error<ListContainersError>>
-    {
-        match self.list_containers_with_http_info(params).await {
+/// Grouped results are limited by `page[size]` and do not support pagination.
+///
+/// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
+/// or `/api/v2/query/timeseries`.
+    pub async fn list_containers(&self, params: ListContainersOptionalParams) -> Result<crate::datadogV2::model::ContainersResponse, datadog::Error<ListContainersError>> {
+        match self.list_containers_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_containers_with_pagination(
-        &self,
-        mut params: ListContainersOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::ContainerItem, datadog::Error<ListContainersError>>,
-    > + '_ {
+        &self, mut params: ListContainersOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ContainerItem, datadog::Error<ListContainersError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 1000;
             if params.page_size.is_none() {
@@ -228,21 +224,17 @@ impl ContainersAPI {
         }
     }
 
+    
     /// Get all containers for your organization. Use `group_by` to return container groups with counts.
-    /// Grouped results are limited by `page[size]` and do not support pagination.
-    ///
-    /// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
-    /// or `/api/v2/query/timeseries`.
-    pub async fn list_containers_with_http_info(
-        &self,
-        params: ListContainersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ContainersResponse>,
-        datadog::Error<ListContainersError>,
-    > {
+/// Grouped results are limited by `page[size]` and do not support pagination.
+///
+/// To get CPU or memory metrics, use a `container` data source query with `/api/v2/query/scalar`
+/// or `/api/v2/query/timeseries`.
+    pub async fn list_containers_with_http_info(&self, params: ListContainersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ContainersResponse>, datadog::Error<ListContainersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_containers";
 
+        
         // unbox and build optional parameters
         let filter_tags = params.filter_tags;
         let group_by = params.group_by;
@@ -254,35 +246,31 @@ impl ContainersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/containers",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = group_by {
-            local_req_builder =
-                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("group_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -295,22 +283,16 @@ impl ContainersAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -322,26 +304,17 @@ impl ContainersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ContainersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ContainersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListContainersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListContainersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

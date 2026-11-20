@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2Dot1LinkType {
-    DOC,
-    REPO,
-    RUNBOOK,
-    DASHBOARD,
-    OTHER,
+	DOC,
+	REPO,
+	RUNBOOK,
+	DASHBOARD,
+	OTHER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1LinkType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "doc" => Self::DOC,
-            "repo" => Self::REPO,
-            "runbook" => Self::RUNBOOK,
-            "dashboard" => Self::DASHBOARD,
-            "other" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"doc" => Self::DOC,"repo" => Self::REPO,"runbook" => Self::RUNBOOK,"dashboard" => Self::DASHBOARD,"other" => Self::OTHER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `quota` processor measures logging traffic for logs that match a specified filter. When the configured daily quota is met, the processor can drop or alert.
 ///
@@ -38,30 +38,27 @@ pub struct ObservabilityPipelineQuotaProcessor {
     #[serde(rename = "name")]
     pub name: String,
     /// The action to take when the quota or bucket limit is exceeded. Options:
-    /// - `drop`: Drop the event.
-    /// - `no_action`: Let the event pass through.
-    /// - `overflow_routing`: Route to an overflow destination.
-    ///
-    /// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
+/// - `drop`: Drop the event.
+/// - `no_action`: Let the event pass through.
+/// - `overflow_routing`: Route to an overflow destination.
+///
+/// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
     #[serde(rename = "overflow_action")]
-    pub overflow_action:
-        Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
+    pub overflow_action: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
     /// A list of alternate quota rules that apply to specific sets of events, identified by matching field values. Each override can define a custom limit.
     #[serde(rename = "overrides")]
-    pub overrides:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>>,
+    pub overrides: Option<Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>>,
     /// A list of fields used to segment log traffic for quota enforcement. Quotas are tracked independently by unique combinations of these field values.
     #[serde(rename = "partition_fields")]
     pub partition_fields: Option<Vec<String>>,
     /// The action to take when the quota or bucket limit is exceeded. Options:
-    /// - `drop`: Drop the event.
-    /// - `no_action`: Let the event pass through.
-    /// - `overflow_routing`: Route to an overflow destination.
-    ///
-    /// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
+/// - `drop`: Drop the event.
+/// - `no_action`: Let the event pass through.
+/// - `overflow_routing`: Route to an overflow destination.
+///
+/// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
     #[serde(rename = "too_many_buckets_action")]
-    pub too_many_buckets_action:
-        Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
+    pub too_many_buckets_action: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
     /// The processor type. The value should always be `quota`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType,
@@ -69,18 +66,11 @@ pub struct ObservabilityPipelineQuotaProcessor {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineQuotaProcessor {
-    pub fn new(
-        enabled: bool,
-        id: String,
-        include: String,
-        limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
-        name: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType,
-    ) -> ObservabilityPipelineQuotaProcessor {
+    pub fn new(enabled: bool, id: String, include: String, limit: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit, name: String, type_: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType) -> ObservabilityPipelineQuotaProcessor {
         ObservabilityPipelineQuotaProcessor {
             display_name: None,
             drop_events: None,
@@ -99,59 +89,49 @@ impl ObservabilityPipelineQuotaProcessor {
             _unparsed: false,
         }
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn drop_events(mut self, value: bool) -> Self {
         self.drop_events = Some(value);
         self
     }
-
+    
     pub fn ignore_when_missing_partitions(mut self, value: bool) -> Self {
         self.ignore_when_missing_partitions = Some(value);
         self
     }
-
-    pub fn overflow_action(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
-    ) -> Self {
+    
+    pub fn overflow_action(mut self, value: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction) -> Self {
         self.overflow_action = Some(value);
         self
     }
-
-    pub fn overrides(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>,
-    ) -> Self {
+    
+    pub fn overrides(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>) -> Self {
         self.overrides = Some(value);
         self
     }
-
+    
     pub fn partition_fields(mut self, value: Vec<String>) -> Self {
         self.partition_fields = Some(value);
         self
     }
-
-    pub fn too_many_buckets_action(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
-    ) -> Self {
+    
+    pub fn too_many_buckets_action(mut self, value: crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction) -> Self {
         self.too_many_buckets_action = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -176,27 +156,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                 let mut id: Option<String> = None;
                 let mut ignore_when_missing_partitions: Option<bool> = None;
                 let mut include: Option<String> = None;
-                let mut limit: Option<
-                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit,
-                > = None;
+                let mut limit: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorLimit> = None;
                 let mut name: Option<String> = None;
-                let mut overflow_action: Option<
-                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
-                > = None;
-                let mut overrides: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>,
-                > = None;
+                let mut overflow_action: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction> = None;
+                let mut overrides: Option<Vec<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverride>> = None;
                 let mut partition_fields: Option<Vec<String>> = None;
-                let mut too_many_buckets_action: Option<
-                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut too_many_buckets_action: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction> = None;
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -205,44 +172,40 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "drop_events" => {
                             if v.is_null() {
                                 continue;
                             }
-                            drop_events =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            drop_events = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ignore_when_missing_partitions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ignore_when_missing_partitions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ignore_when_missing_partitions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "overflow_action" => {
                             if v.is_null() {
                                 continue;
                             }
-                            overflow_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            overflow_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _overflow_action) = overflow_action {
                                 match _overflow_action {
                                     crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction::UnparsedObject(_overflow_action) => {
@@ -251,26 +214,24 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "overrides" => {
                             if v.is_null() {
                                 continue;
                             }
                             overrides = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "partition_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            partition_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            partition_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "too_many_buckets_action" => {
                             if v.is_null() {
                                 continue;
                             }
-                            too_many_buckets_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            too_many_buckets_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _too_many_buckets_action) = too_many_buckets_action {
                                 match _too_many_buckets_action {
                                     crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction::UnparsedObject(_too_many_buckets_action) => {
@@ -279,7 +240,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -290,12 +251,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineQuotaProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;

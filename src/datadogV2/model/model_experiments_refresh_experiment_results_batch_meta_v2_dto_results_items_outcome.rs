@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsRefreshExperimentResultsBatchMetaV2DTOResultsItemsOutcome {
-    TRIGGERED,
-    SKIPPED_ALREADY_RUNNING,
-    SKIPPED_NOT_EDITABLE,
-    SKIPPED_ORG_AT_CAPACITY,
-    FAILED,
+	TRIGGERED,
+	SKIPPED_ALREADY_RUNNING,
+	SKIPPED_NOT_EDITABLE,
+	SKIPPED_ORG_AT_CAPACITY,
+	FAILED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,23 +41,14 @@ impl Serialize for ExperimentsRefreshExperimentResultsBatchMetaV2DTOResultsItems
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsRefreshExperimentResultsBatchMetaV2DTOResultsItemsOutcome
-{
+impl<'de> Deserialize<'de> for ExperimentsRefreshExperimentResultsBatchMetaV2DTOResultsItemsOutcome {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "TRIGGERED" => Self::TRIGGERED,
-            "SKIPPED_ALREADY_RUNNING" => Self::SKIPPED_ALREADY_RUNNING,
-            "SKIPPED_NOT_EDITABLE" => Self::SKIPPED_NOT_EDITABLE,
-            "SKIPPED_ORG_AT_CAPACITY" => Self::SKIPPED_ORG_AT_CAPACITY,
-            "FAILED" => Self::FAILED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"TRIGGERED" => Self::TRIGGERED,"SKIPPED_ALREADY_RUNNING" => Self::SKIPPED_ALREADY_RUNNING,"SKIPPED_NOT_EDITABLE" => Self::SKIPPED_NOT_EDITABLE,"SKIPPED_ORG_AT_CAPACITY" => Self::SKIPPED_ORG_AT_CAPACITY,"FAILED" => Self::FAILED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationships for an impact field.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct IncidentImpactFieldRelationships {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentImpactFieldRelationships {
@@ -37,36 +37,28 @@ impl IncidentImpactFieldRelationships {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by_user = Some(value);
         self
     }
-
-    pub fn incident_type(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentType,
-    ) -> Self {
+    
+    pub fn incident_type(mut self, value: crate::datadogV2::model::RelationshipToIncidentType) -> Self {
         self.incident_type = Some(value);
         self
     }
-
-    pub fn last_modified_by_user(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> Self {
+    
+    pub fn last_modified_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentImpactFieldRelationships {
     fn default() -> Self {
@@ -92,14 +84,9 @@ impl<'de> Deserialize<'de> for IncidentImpactFieldRelationships {
                 M: MapAccess<'a>,
             {
                 let mut created_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
-                let mut incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType> =
-                    None;
-                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType> = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -108,28 +95,25 @@ impl<'de> Deserialize<'de> for IncidentImpactFieldRelationships {
                             if v.is_null() {
                                 continue;
                             }
-                            created_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_modified_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

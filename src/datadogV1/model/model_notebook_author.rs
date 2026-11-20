@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of user object returned by the API.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct NotebookAuthor {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotebookAuthor {
@@ -61,60 +61,58 @@ impl NotebookAuthor {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
-
+    
     pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: Option<String>) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn verified(mut self, value: bool) -> Self {
         self.verified = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for NotebookAuthor {
     fn default() -> Self {
@@ -148,10 +146,7 @@ impl<'de> Deserialize<'de> for NotebookAuthor {
                 let mut status: Option<String> = None;
                 let mut title: Option<Option<String>> = None;
                 let mut verified: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -161,54 +156,54 @@ impl<'de> Deserialize<'de> for NotebookAuthor {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "disabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "email" => {
                             if v.is_null() {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "handle" => {
                             if v.is_null() {
                                 continue;
                             }
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "icon" => {
                             if v.is_null() {
                                 continue;
                             }
                             icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "verified" => {
                             if v.is_null() {
                                 continue;
                             }
                             verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

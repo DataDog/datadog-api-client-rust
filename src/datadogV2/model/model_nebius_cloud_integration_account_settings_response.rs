@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings configured on the Nebius Cloud integration account.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct NebiusCloudIntegrationAccountSettingsResponse {
     pub account_tags: Option<Vec<String>>,
     /// Metric collection settings configured on the Nebius Cloud integration account. Absent or empty when no filters are configured.
     #[serde(rename = "metrics_config")]
-    pub metrics_config:
-        Option<crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse>,
+    pub metrics_config: Option<crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse>,
     /// ID of the Nebius tenant being monitored.
     #[serde(rename = "tenant_id")]
     pub tenant_id: String,
@@ -25,7 +24,7 @@ pub struct NebiusCloudIntegrationAccountSettingsResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudIntegrationAccountSettingsResponse {
@@ -38,28 +37,24 @@ impl NebiusCloudIntegrationAccountSettingsResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn account_tags(mut self, value: Vec<String>) -> Self {
         self.account_tags = Some(value);
         self
     }
-
-    pub fn metrics_config(
-        mut self,
-        value: crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse,
-    ) -> Self {
+    
+    pub fn metrics_config(mut self, value: crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse) -> Self {
         self.metrics_config = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountSettingsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,14 +74,9 @@ impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountSettingsResponse {
                 M: MapAccess<'a>,
             {
                 let mut account_tags: Option<Vec<String>> = None;
-                let mut metrics_config: Option<
-                    crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse,
-                > = None;
+                let mut metrics_config: Option<crate::datadogV2::model::NebiusCloudIntegrationAccountMetricsConfigResponse> = None;
                 let mut tenant_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,24 +85,22 @@ impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountSettingsResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            account_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metrics_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metrics_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tenant_id" => {
                             tenant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let tenant_id = tenant_id.ok_or_else(|| M::Error::missing_field("tenant_id"))?;

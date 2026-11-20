@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringCriticalAssetSeverity {
-    INFO,
-    LOW,
-    MEDIUM,
-    HIGH,
-    CRITICAL,
-    INCREASE,
-    DECREASE,
-    NO_OP,
+	INFO,
+	LOW,
+	MEDIUM,
+	HIGH,
+	CRITICAL,
+	INCREASE,
+	DECREASE,
+	NO_OP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetSeverity {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "info" => Self::INFO,
-            "low" => Self::LOW,
-            "medium" => Self::MEDIUM,
-            "high" => Self::HIGH,
-            "critical" => Self::CRITICAL,
-            "increase" => Self::INCREASE,
-            "decrease" => Self::DECREASE,
-            "no-op" => Self::NO_OP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"info" => Self::INFO,"low" => Self::LOW,"medium" => Self::MEDIUM,"high" => Self::HIGH,"critical" => Self::CRITICAL,"increase" => Self::INCREASE,"decrease" => Self::DECREASE,"no-op" => Self::NO_OP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetTimeWindows {
-    SEVEN_DAYS,
-    THIRTY_DAYS,
-    NINETY_DAYS,
-    WEEK_TO_DATE,
-    PREVIOUS_WEEK,
-    MONTH_TO_DATE,
-    PREVIOUS_MONTH,
-    GLOBAL_TIME,
+	SEVEN_DAYS,
+	THIRTY_DAYS,
+	NINETY_DAYS,
+	WEEK_TO_DATE,
+	PREVIOUS_WEEK,
+	MONTH_TO_DATE,
+	PREVIOUS_MONTH,
+	GLOBAL_TIME,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for WidgetTimeWindows {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "7d" => Self::SEVEN_DAYS,
-            "30d" => Self::THIRTY_DAYS,
-            "90d" => Self::NINETY_DAYS,
-            "week_to_date" => Self::WEEK_TO_DATE,
-            "previous_week" => Self::PREVIOUS_WEEK,
-            "month_to_date" => Self::MONTH_TO_DATE,
-            "previous_month" => Self::PREVIOUS_MONTH,
-            "global_time" => Self::GLOBAL_TIME,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"7d" => Self::SEVEN_DAYS,"30d" => Self::THIRTY_DAYS,"90d" => Self::NINETY_DAYS,"week_to_date" => Self::WEEK_TO_DATE,"previous_week" => Self::PREVIOUS_WEEK,"month_to_date" => Self::MONTH_TO_DATE,"previous_month" => Self::PREVIOUS_MONTH,"global_time" => Self::GLOBAL_TIME,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

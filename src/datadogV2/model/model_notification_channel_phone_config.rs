@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Phone notification channel configuration
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct NotificationChannelPhoneConfig {
     /// Notification methods currently available for this phone number. Omitted when no methods are available.
     #[serde(rename = "available_notification_types")]
-    pub available_notification_types:
-        Option<Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>>,
+    pub available_notification_types: Option<Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>>,
     /// The formatted international version of Number (e.g. +33 7 1 23 45 67).
     #[serde(rename = "formatted_number")]
     pub formatted_number: String,
@@ -25,11 +24,7 @@ pub struct NotificationChannelPhoneConfig {
     #[serde(rename = "region")]
     pub region: String,
     /// If present, the date the user subscribed this number to SMS messages
-    #[serde(
-        rename = "sms_subscribed_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "sms_subscribed_at", default, with = "::serde_with::rust::double_option")]
     pub sms_subscribed_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Indicates that the notification channel is a phone
     #[serde(rename = "type")]
@@ -41,17 +36,11 @@ pub struct NotificationChannelPhoneConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotificationChannelPhoneConfig {
-    pub fn new(
-        formatted_number: String,
-        number: String,
-        region: String,
-        type_: crate::datadogV2::model::NotificationChannelPhoneConfigType,
-        verified: bool,
-    ) -> NotificationChannelPhoneConfig {
+    pub fn new(formatted_number: String, number: String, region: String, type_: crate::datadogV2::model::NotificationChannelPhoneConfigType, verified: bool) -> NotificationChannelPhoneConfig {
         NotificationChannelPhoneConfig {
             available_notification_types: None,
             formatted_number,
@@ -64,28 +53,24 @@ impl NotificationChannelPhoneConfig {
             _unparsed: false,
         }
     }
-
-    pub fn available_notification_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>,
-    ) -> Self {
+    
+    pub fn available_notification_types(mut self, value: Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>) -> Self {
         self.available_notification_types = Some(value);
         self
     }
-
+    
     pub fn sms_subscribed_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.sms_subscribed_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -104,20 +89,14 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut available_notification_types: Option<
-                    Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>,
-                > = None;
+                let mut available_notification_types: Option<Vec<crate::datadogV2::model::OnCallPhoneNotificationRuleMethod>> = None;
                 let mut formatted_number: Option<String> = None;
                 let mut number: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut sms_subscribed_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut type_: Option<crate::datadogV2::model::NotificationChannelPhoneConfigType> =
-                    None;
+                let mut type_: Option<crate::datadogV2::model::NotificationChannelPhoneConfigType> = None;
                 let mut verified: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,23 +105,20 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
                             if v.is_null() {
                                 continue;
                             }
-                            available_notification_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            available_notification_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "formatted_number" => {
-                            formatted_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            formatted_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "number" => {
                             number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "region" => {
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sms_subscribed_at" => {
-                            sms_subscribed_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sms_subscribed_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -153,19 +129,18 @@ impl<'de> Deserialize<'de> for NotificationChannelPhoneConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "verified" => {
                             verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let formatted_number =
-                    formatted_number.ok_or_else(|| M::Error::missing_field("formatted_number"))?;
+                let formatted_number = formatted_number.ok_or_else(|| M::Error::missing_field("formatted_number"))?;
                 let number = number.ok_or_else(|| M::Error::missing_field("number"))?;
                 let region = region.ok_or_else(|| M::Error::missing_field("region"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

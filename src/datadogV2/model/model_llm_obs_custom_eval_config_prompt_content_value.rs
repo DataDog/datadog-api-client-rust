@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Value of a prompt message content block.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct LLMObsCustomEvalConfigPromptContentValue {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCustomEvalConfigPromptContentValue {
@@ -37,36 +37,28 @@ impl LLMObsCustomEvalConfigPromptContentValue {
             _unparsed: false,
         }
     }
-
+    
     pub fn text(mut self, value: String) -> Self {
         self.text = Some(value);
         self
     }
-
-    pub fn tool_call(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolCall,
-    ) -> Self {
+    
+    pub fn tool_call(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolCall) -> Self {
         self.tool_call = Some(value);
         self
     }
-
-    pub fn tool_call_result(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolResult,
-    ) -> Self {
+    
+    pub fn tool_call_result(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolResult) -> Self {
         self.tool_call_result = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LLMObsCustomEvalConfigPromptContentValue {
     fn default() -> Self {
@@ -92,16 +84,9 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigPromptContentValue {
                 M: MapAccess<'a>,
             {
                 let mut text: Option<String> = None;
-                let mut tool_call: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolCall,
-                > = None;
-                let mut tool_call_result: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolResult,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut tool_call: Option<crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolCall> = None;
+                let mut tool_call_result: Option<crate::datadogV2::model::LLMObsCustomEvalConfigPromptToolResult> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,25 +96,24 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigPromptContentValue {
                                 continue;
                             }
                             text = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tool_call" => {
                             if v.is_null() {
                                 continue;
                             }
                             tool_call = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tool_call_result" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tool_call_result =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tool_call_result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

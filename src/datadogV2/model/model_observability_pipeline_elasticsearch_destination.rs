@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `elasticsearch` destination writes logs or metrics to an Elasticsearch cluster.
 ///
@@ -15,10 +15,9 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineElasticsearchDestination {
     /// The Elasticsearch API version to use. Set to `auto` to auto-detect.
     #[serde(rename = "api_version")]
-    pub api_version:
-        Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion>,
+    pub api_version: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion>,
     /// Authentication settings for the Elasticsearch destination.
-    /// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
+/// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth>,
     /// Configuration for buffer settings on destination components.
@@ -29,12 +28,10 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     pub bulk_index: Option<String>,
     /// Compression configuration for the Elasticsearch destination.
     #[serde(rename = "compression")]
-    pub compression:
-        Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression>,
+    pub compression: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression>,
     /// Configuration options for writing to Elasticsearch Data Streams instead of a fixed index.
     #[serde(rename = "data_stream")]
-    pub data_stream:
-        Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream>,
+    pub data_stream: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream>,
     /// Name of the environment variable or secret that holds the Elasticsearch endpoint URL.
     #[serde(rename = "endpoint_url_key")]
     pub endpoint_url_key: Option<String>,
@@ -63,15 +60,11 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineElasticsearchDestination {
-    pub fn new(
-        id: String,
-        inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType,
-    ) -> ObservabilityPipelineElasticsearchDestination {
+    pub fn new(id: String, inputs: Vec<String>, type_: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType) -> ObservabilityPipelineElasticsearchDestination {
         ObservabilityPipelineElasticsearchDestination {
             api_version: None,
             auth: None,
@@ -91,85 +84,69 @@ impl ObservabilityPipelineElasticsearchDestination {
             _unparsed: false,
         }
     }
-
-    pub fn api_version(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion,
-    ) -> Self {
+    
+    pub fn api_version(mut self, value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion) -> Self {
         self.api_version = Some(value);
         self
     }
-
-    pub fn auth(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth,
-    ) -> Self {
+    
+    pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth) -> Self {
         self.auth = Some(value);
         self
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
+    
     pub fn bulk_index(mut self, value: String) -> Self {
         self.bulk_index = Some(value);
         self
     }
-
-    pub fn compression(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression,
-    ) -> Self {
+    
+    pub fn compression(mut self, value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression) -> Self {
         self.compression = Some(value);
         self
     }
-
-    pub fn data_stream(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream,
-    ) -> Self {
+    
+    pub fn data_stream(mut self, value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream) -> Self {
         self.data_stream = Some(value);
         self
     }
-
+    
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
         self
     }
-
+    
     pub fn id_key(mut self, value: String) -> Self {
         self.id_key = Some(value);
         self
     }
-
+    
     pub fn pipeline(mut self, value: String) -> Self {
         self.pipeline = Some(value);
         self
     }
-
+    
     pub fn request_retry_partial(mut self, value: bool) -> Self {
         self.request_retry_partial = Some(value);
         self
     }
-
+    
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -189,12 +166,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                 M: MapAccess<'a>,
             {
                 let mut api_version: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion> = None;
-                let mut auth: Option<
-                    crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth,
-                > = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
+                let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth> = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
                 let mut bulk_index: Option<String> = None;
                 let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression> = None;
                 let mut data_stream: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream> = None;
@@ -205,13 +178,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                 let mut pipeline: Option<String> = None;
                 let mut request_retry_partial: Option<bool> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -220,8 +188,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                             if v.is_null() {
                                 continue;
                             }
-                            api_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            api_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _api_version) = api_version {
                                 match _api_version {
                                     crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion::UnparsedObject(_api_version) => {
@@ -230,13 +197,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "auth" => {
                             if v.is_null() {
                                 continue;
                             }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -250,65 +217,61 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "bulk_index" => {
                             if v.is_null() {
                                 continue;
                             }
                             bulk_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "compression" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compression =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_stream" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_stream =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_stream = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "endpoint_url_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            endpoint_url_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            endpoint_url_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             id_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pipeline" => {
                             if v.is_null() {
                                 continue;
                             }
                             pipeline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "request_retry_partial" => {
                             if v.is_null() {
                                 continue;
                             }
-                            request_retry_partial =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            request_retry_partial = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tls" => {
                             if v.is_null() {
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -319,12 +282,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

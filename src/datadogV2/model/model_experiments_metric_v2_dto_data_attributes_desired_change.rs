@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsMetricV2DTODataAttributesDesiredChange {
-    METRIC_INCREASES,
-    METRIC_DECREASES,
-    UNKNOWN,
+	METRIC_INCREASES,
+	METRIC_DECREASES,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for ExperimentsMetricV2DTODataAttributesDesiredChange
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "METRIC_INCREASES" => Self::METRIC_INCREASES,
-            "METRIC_DECREASES" => Self::METRIC_DECREASES,
-            "UNKNOWN" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"METRIC_INCREASES" => Self::METRIC_INCREASES,"METRIC_DECREASES" => Self::METRIC_DECREASES,"UNKNOWN" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

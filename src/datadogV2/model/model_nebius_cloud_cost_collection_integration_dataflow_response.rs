@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Cloud cost data read from a Nebius Object Storage bucket export and used by [Cloud Cost Management](<https://docs.datadoghq.com/cloud_cost_management/>). Requires a bucket holding your cost export and a Nebius access key pair that can read it; without both this dataflow collects no data.
 #[non_exhaustive]
@@ -16,14 +16,12 @@ pub struct NebiusCloudCostCollectionIntegrationDataflowResponse {
     pub enabled: Option<bool>,
     /// Settings of the Cloud Cost Management dataflow.
     #[serde(rename = "settings")]
-    pub settings: Option<
-        crate::datadogV2::model::NebiusCloudCostCollectionIntegrationDataflowSettingsResponse,
-    >,
+    pub settings: Option<crate::datadogV2::model::NebiusCloudCostCollectionIntegrationDataflowSettingsResponse>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudCostCollectionIntegrationDataflowResponse {
@@ -35,28 +33,23 @@ impl NebiusCloudCostCollectionIntegrationDataflowResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::NebiusCloudCostCollectionIntegrationDataflowSettingsResponse,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::NebiusCloudCostCollectionIntegrationDataflowSettingsResponse) -> Self {
         self.settings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for NebiusCloudCostCollectionIntegrationDataflowResponse {
     fn default() -> Self {
@@ -83,10 +76,7 @@ impl<'de> Deserialize<'de> for NebiusCloudCostCollectionIntegrationDataflowRespo
             {
                 let mut enabled: Option<bool> = None;
                 let mut settings: Option<crate::datadogV2::model::NebiusCloudCostCollectionIntegrationDataflowSettingsResponse> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -96,18 +86,18 @@ impl<'de> Deserialize<'de> for NebiusCloudCostCollectionIntegrationDataflowRespo
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

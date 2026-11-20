@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An execution policy.
 #[non_exhaustive]
@@ -27,8 +27,8 @@ pub struct ExecutionPolicyAttributes {
     #[serde(rename = "name")]
     pub name: String,
     /// Restricts where the policy applies. At most one scope type can be set,
-    /// and it must match the action pattern's integration. An empty object means
-    /// the policy has no scope restriction.
+/// and it must match the action pattern's integration. An empty object means
+/// the policy has no scope restriction.
     #[serde(rename = "scope")]
     pub scope: Option<crate::datadogV2::model::ExecutionPolicyScope>,
     /// The targets this policy applies to.
@@ -47,21 +47,11 @@ pub struct ExecutionPolicyAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExecutionPolicyAttributes {
-    pub fn new(
-        action_pattern: crate::datadogV2::model::ExecutionPolicyActionPattern,
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        effect: crate::datadogV2::model::ExecutionPolicyEffect,
-        name: String,
-        targets: Vec<crate::datadogV2::model::ExecutionPolicyTarget>,
-        updated_at: chrono::DateTime<chrono::Utc>,
-        updated_by: String,
-        version: i32,
-    ) -> ExecutionPolicyAttributes {
+    pub fn new(action_pattern: crate::datadogV2::model::ExecutionPolicyActionPattern, created_at: chrono::DateTime<chrono::Utc>, created_by: String, effect: crate::datadogV2::model::ExecutionPolicyEffect, name: String, targets: Vec<crate::datadogV2::model::ExecutionPolicyTarget>, updated_at: chrono::DateTime<chrono::Utc>, updated_by: String, version: i32) -> ExecutionPolicyAttributes {
         ExecutionPolicyAttributes {
             action_pattern,
             created_at,
@@ -77,20 +67,19 @@ impl ExecutionPolicyAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn scope(mut self, value: crate::datadogV2::model::ExecutionPolicyScope) -> Self {
         self.scope = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExecutionPolicyAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -109,9 +98,7 @@ impl<'de> Deserialize<'de> for ExecutionPolicyAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut action_pattern: Option<
-                    crate::datadogV2::model::ExecutionPolicyActionPattern,
-                > = None;
+                let mut action_pattern: Option<crate::datadogV2::model::ExecutionPolicyActionPattern> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut effect: Option<crate::datadogV2::model::ExecutionPolicyEffect> = None;
@@ -121,24 +108,20 @@ impl<'de> Deserialize<'de> for ExecutionPolicyAttributes {
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
                 let mut version: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "action_pattern" => {
-                            action_pattern =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            action_pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "effect" => {
                             effect = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _effect) = effect {
@@ -149,37 +132,36 @@ impl<'de> Deserialize<'de> for ExecutionPolicyAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "targets" => {
                             targets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_by" => {
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let action_pattern =
-                    action_pattern.ok_or_else(|| M::Error::missing_field("action_pattern"))?;
+                let action_pattern = action_pattern.ok_or_else(|| M::Error::missing_field("action_pattern"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let effect = effect.ok_or_else(|| M::Error::missing_field("effect"))?;

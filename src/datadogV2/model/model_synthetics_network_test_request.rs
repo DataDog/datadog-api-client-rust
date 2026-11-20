@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing the request for a Network Path test.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct SyntheticsNetworkTestRequest {
     #[serde(rename = "max_ttl")]
     pub max_ttl: i64,
     /// For TCP or UDP tests, the port to use when performing the test.
-    /// If not set on a UDP test, a random port is assigned, which may affect the results.
+/// If not set on a UDP test, a random port is assigned, which may affect the results.
     #[serde(rename = "port")]
     pub port: Option<i64>,
     /// An optional label displayed for the source host in the Network Path visualization.
@@ -43,16 +43,11 @@ pub struct SyntheticsNetworkTestRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsNetworkTestRequest {
-    pub fn new(
-        e2e_queries: i64,
-        host: String,
-        max_ttl: i64,
-        traceroute_queries: i64,
-    ) -> SyntheticsNetworkTestRequest {
+    pub fn new(e2e_queries: i64, host: String, max_ttl: i64, traceroute_queries: i64) -> SyntheticsNetworkTestRequest {
         SyntheticsNetworkTestRequest {
             destination_service: None,
             e2e_queries,
@@ -67,43 +62,39 @@ impl SyntheticsNetworkTestRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn destination_service(mut self, value: String) -> Self {
         self.destination_service = Some(value);
         self
     }
-
+    
     pub fn port(mut self, value: i64) -> Self {
         self.port = Some(value);
         self
     }
-
+    
     pub fn source_service(mut self, value: String) -> Self {
         self.source_service = Some(value);
         self
     }
-
-    pub fn tcp_method(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsNetworkTestRequestTCPMethod,
-    ) -> Self {
+    
+    pub fn tcp_method(mut self, value: crate::datadogV2::model::SyntheticsNetworkTestRequestTCPMethod) -> Self {
         self.tcp_method = Some(value);
         self
     }
-
+    
     pub fn timeout(mut self, value: i64) -> Self {
         self.timeout = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsNetworkTestRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -128,15 +119,10 @@ impl<'de> Deserialize<'de> for SyntheticsNetworkTestRequest {
                 let mut max_ttl: Option<i64> = None;
                 let mut port: Option<i64> = None;
                 let mut source_service: Option<String> = None;
-                let mut tcp_method: Option<
-                    crate::datadogV2::model::SyntheticsNetworkTestRequestTCPMethod,
-                > = None;
+                let mut tcp_method: Option<crate::datadogV2::model::SyntheticsNetworkTestRequestTCPMethod> = None;
                 let mut timeout: Option<i64> = None;
                 let mut traceroute_queries: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -145,32 +131,29 @@ impl<'de> Deserialize<'de> for SyntheticsNetworkTestRequest {
                             if v.is_null() {
                                 continue;
                             }
-                            destination_service =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            destination_service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "e2e_queries" => {
-                            e2e_queries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            e2e_queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "host" => {
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "max_ttl" => {
                             max_ttl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "port" => {
                             if v.is_null() {
                                 continue;
                             }
                             port = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source_service" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source_service =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_method" => {
                             if v.is_null() {
                                 continue;
@@ -184,30 +167,27 @@ impl<'de> Deserialize<'de> for SyntheticsNetworkTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "timeout" => {
                             if v.is_null() {
                                 continue;
                             }
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "traceroute_queries" => {
-                            traceroute_queries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            traceroute_queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let e2e_queries =
-                    e2e_queries.ok_or_else(|| M::Error::missing_field("e2e_queries"))?;
+                let e2e_queries = e2e_queries.ok_or_else(|| M::Error::missing_field("e2e_queries"))?;
                 let host = host.ok_or_else(|| M::Error::missing_field("host"))?;
                 let max_ttl = max_ttl.ok_or_else(|| M::Error::missing_field("max_ttl"))?;
-                let traceroute_queries = traceroute_queries
-                    .ok_or_else(|| M::Error::missing_field("traceroute_queries"))?;
+                let traceroute_queries = traceroute_queries.ok_or_else(|| M::Error::missing_field("traceroute_queries"))?;
 
                 let content = SyntheticsNetworkTestRequest {
                     destination_service,

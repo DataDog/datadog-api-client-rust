@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the Flaky Tests Management policies for a repository.
 #[non_exhaustive]
@@ -13,16 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct TestOptimizationFlakyTestsManagementPoliciesAttributes {
     /// Configuration for the attempt-to-fix Flaky Tests Management policy.
     #[serde(rename = "attempt_to_fix")]
-    pub attempt_to_fix:
-        Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAttemptToFix>,
+    pub attempt_to_fix: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAttemptToFix>,
     /// Configuration for the disabled Flaky Tests Management policy.
     #[serde(rename = "disabled")]
-    pub disabled:
-        Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled>,
+    pub disabled: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled>,
     /// Configuration for the quarantined Flaky Tests Management policy.
     #[serde(rename = "quarantined")]
-    pub quarantined:
-        Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesQuarantined>,
+    pub quarantined: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesQuarantined>,
     /// The repository identifier.
     #[serde(rename = "repository_id")]
     pub repository_id: Option<String>,
@@ -30,7 +27,7 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TestOptimizationFlakyTestsManagementPoliciesAttributes {
@@ -44,44 +41,33 @@ impl TestOptimizationFlakyTestsManagementPoliciesAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn attempt_to_fix(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAttemptToFix,
-    ) -> Self {
+    
+    pub fn attempt_to_fix(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAttemptToFix) -> Self {
         self.attempt_to_fix = Some(value);
         self
     }
-
-    pub fn disabled(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled,
-    ) -> Self {
+    
+    pub fn disabled(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled) -> Self {
         self.disabled = Some(value);
         self
     }
-
-    pub fn quarantined(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesQuarantined,
-    ) -> Self {
+    
+    pub fn quarantined(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesQuarantined) -> Self {
         self.quarantined = Some(value);
         self
     }
-
+    
     pub fn repository_id(mut self, value: String) -> Self {
         self.repository_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TestOptimizationFlakyTestsManagementPoliciesAttributes {
     fn default() -> Self {
@@ -107,15 +93,10 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttri
                 M: MapAccess<'a>,
             {
                 let mut attempt_to_fix: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAttemptToFix> = None;
-                let mut disabled: Option<
-                    crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled,
-                > = None;
+                let mut disabled: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabled> = None;
                 let mut quarantined: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesQuarantined> = None;
                 let mut repository_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -124,34 +105,31 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttri
                             if v.is_null() {
                                 continue;
                             }
-                            attempt_to_fix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            attempt_to_fix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "disabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "quarantined" => {
                             if v.is_null() {
                                 continue;
                             }
-                            quarantined =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            quarantined = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "repository_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

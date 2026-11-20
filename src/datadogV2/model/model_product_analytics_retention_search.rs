@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines the cohort and return criteria that make up a retention query.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct ProductAnalyticsRetentionSearch {
     #[serde(rename = "retention_entity")]
     pub retention_entity: crate::datadogV2::model::ProductAnalyticsRetentionEntity,
     /// When an entity counts as having returned. Use `conversion_on` to count only entities that
-    /// returned during the period itself, or `conversion_on_or_after` to also count later returns.
+/// returned during the period itself, or `conversion_on_or_after` to also count later returns.
     #[serde(rename = "return_condition")]
     pub return_condition: crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition,
     /// Defines the event that counts as a return, and the window in which it must occur.
@@ -31,15 +31,11 @@ pub struct ProductAnalyticsRetentionSearch {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsRetentionSearch {
-    pub fn new(
-        cohort_criteria: crate::datadogV2::model::ProductAnalyticsRetentionCohortCriteria,
-        retention_entity: crate::datadogV2::model::ProductAnalyticsRetentionEntity,
-        return_condition: crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition,
-    ) -> ProductAnalyticsRetentionSearch {
+    pub fn new(cohort_criteria: crate::datadogV2::model::ProductAnalyticsRetentionCohortCriteria, retention_entity: crate::datadogV2::model::ProductAnalyticsRetentionEntity, return_condition: crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition) -> ProductAnalyticsRetentionSearch {
         ProductAnalyticsRetentionSearch {
             cohort_criteria,
             filters: None,
@@ -50,31 +46,24 @@ impl ProductAnalyticsRetentionSearch {
             _unparsed: false,
         }
     }
-
-    pub fn filters(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsRetentionFilters,
-    ) -> Self {
+    
+    pub fn filters(mut self, value: crate::datadogV2::model::ProductAnalyticsRetentionFilters) -> Self {
         self.filters = Some(value);
         self
     }
-
-    pub fn return_criteria(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsRetentionReturnCriteria,
-    ) -> Self {
+    
+    pub fn return_criteria(mut self, value: crate::datadogV2::model::ProductAnalyticsRetentionReturnCriteria) -> Self {
         self.return_criteria = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsRetentionSearch {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -93,41 +82,27 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionSearch {
             where
                 M: MapAccess<'a>,
             {
-                let mut cohort_criteria: Option<
-                    crate::datadogV2::model::ProductAnalyticsRetentionCohortCriteria,
-                > = None;
-                let mut filters: Option<crate::datadogV2::model::ProductAnalyticsRetentionFilters> =
-                    None;
-                let mut retention_entity: Option<
-                    crate::datadogV2::model::ProductAnalyticsRetentionEntity,
-                > = None;
-                let mut return_condition: Option<
-                    crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition,
-                > = None;
-                let mut return_criteria: Option<
-                    crate::datadogV2::model::ProductAnalyticsRetentionReturnCriteria,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut cohort_criteria: Option<crate::datadogV2::model::ProductAnalyticsRetentionCohortCriteria> = None;
+                let mut filters: Option<crate::datadogV2::model::ProductAnalyticsRetentionFilters> = None;
+                let mut retention_entity: Option<crate::datadogV2::model::ProductAnalyticsRetentionEntity> = None;
+                let mut return_condition: Option<crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition> = None;
+                let mut return_criteria: Option<crate::datadogV2::model::ProductAnalyticsRetentionReturnCriteria> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cohort_criteria" => {
-                            cohort_criteria =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cohort_criteria = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retention_entity" => {
-                            retention_entity =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            retention_entity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _retention_entity) = retention_entity {
                                 match _retention_entity {
                                     crate::datadogV2::model::ProductAnalyticsRetentionEntity::UnparsedObject(_retention_entity) => {
@@ -136,10 +111,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionSearch {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "return_condition" => {
-                            return_condition =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            return_condition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _return_condition) = return_condition {
                                 match _return_condition {
                                     crate::datadogV2::model::ProductAnalyticsRetentionReturnCondition::UnparsedObject(_return_condition) => {
@@ -148,27 +122,23 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionSearch {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "return_criteria" => {
                             if v.is_null() {
                                 continue;
                             }
-                            return_criteria =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            return_criteria = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let cohort_criteria =
-                    cohort_criteria.ok_or_else(|| M::Error::missing_field("cohort_criteria"))?;
-                let retention_entity =
-                    retention_entity.ok_or_else(|| M::Error::missing_field("retention_entity"))?;
-                let return_condition =
-                    return_condition.ok_or_else(|| M::Error::missing_field("return_condition"))?;
+                let cohort_criteria = cohort_criteria.ok_or_else(|| M::Error::missing_field("cohort_criteria"))?;
+                let retention_entity = retention_entity.ok_or_else(|| M::Error::missing_field("retention_entity"))?;
+                let return_condition = return_condition.ok_or_else(|| M::Error::missing_field("return_condition"))?;
 
                 let content = ProductAnalyticsRetentionSearch {
                     cohort_criteria,

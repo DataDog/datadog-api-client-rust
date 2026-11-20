@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Directory information about the employee associated with the device,
 /// sourced from a customer reference table.
@@ -38,7 +38,7 @@ pub struct DeviceEmployee {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DeviceEmployee {
@@ -55,50 +55,48 @@ impl DeviceEmployee {
             _unparsed: false,
         }
     }
-
+    
     pub fn city(mut self, value: String) -> Self {
         self.city = Some(value);
         self
     }
-
+    
     pub fn country(mut self, value: String) -> Self {
         self.country = Some(value);
         self
     }
-
+    
     pub fn department(mut self, value: String) -> Self {
         self.department = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn office(mut self, value: String) -> Self {
         self.office = Some(value);
         self
     }
-
+    
     pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DeviceEmployee {
     fn default() -> Self {
@@ -130,10 +128,7 @@ impl<'de> Deserialize<'de> for DeviceEmployee {
                 let mut name: Option<String> = None;
                 let mut office: Option<String> = None;
                 let mut team: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -143,48 +138,48 @@ impl<'de> Deserialize<'de> for DeviceEmployee {
                                 continue;
                             }
                             city = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "country" => {
                             if v.is_null() {
                                 continue;
                             }
                             country = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "department" => {
                             if v.is_null() {
                                 continue;
                             }
                             department = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "email" => {
                             if v.is_null() {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "office" => {
                             if v.is_null() {
                                 continue;
                             }
                             office = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team" => {
                             if v.is_null() {
                                 continue;
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

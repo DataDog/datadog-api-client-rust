@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ProductAnalyticsJourneySearchGraphFilterName {
-    TIME_TO_CONVERT,
-    SESSION,
-    DROPOFF_RATE,
+	TIME_TO_CONVERT,
+	SESSION,
+	DROPOFF_RATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilterName {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "__dd.time_to_convert" => Self::TIME_TO_CONVERT,
-            "__dd.session" => Self::SESSION,
-            "__dd.dropoff_rate" => Self::DROPOFF_RATE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"__dd.time_to_convert" => Self::TIME_TO_CONVERT,"__dd.session" => Self::SESSION,"__dd.dropoff_rate" => Self::DROPOFF_RATE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

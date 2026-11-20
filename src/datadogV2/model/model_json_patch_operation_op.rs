@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum JsonPatchOperationOp {
-    ADD,
-    REMOVE,
-    REPLACE,
-    MOVE,
-    COPY,
-    TEST,
+	ADD,
+	REMOVE,
+	REPLACE,
+	MOVE,
+	COPY,
+	TEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for JsonPatchOperationOp {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "add" => Self::ADD,
-            "remove" => Self::REMOVE,
-            "replace" => Self::REPLACE,
-            "move" => Self::MOVE,
-            "copy" => Self::COPY,
-            "test" => Self::TEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"add" => Self::ADD,"remove" => Self::REMOVE,"replace" => Self::REPLACE,"move" => Self::MOVE,"copy" => Self::COPY,"test" => Self::TEST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

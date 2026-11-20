@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Optional Datadog percentile measure. Use null when the warehouse measure is selected.
 #[non_exhaustive]
@@ -39,17 +39,11 @@ pub struct ExperimentsNullableDatadogPercentileMeasureInput {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsNullableDatadogPercentileMeasureInput {
-    pub fn new(
-        column_name: String,
-        column_type: String,
-        name: String,
-        source_subtype: String,
-        source_type: String,
-    ) -> ExperimentsNullableDatadogPercentileMeasureInput {
+    pub fn new(column_name: String, column_type: String, name: String, source_subtype: String, source_type: String) -> ExperimentsNullableDatadogPercentileMeasureInput {
         ExperimentsNullableDatadogPercentileMeasureInput {
             column_name,
             column_type,
@@ -63,30 +57,29 @@ impl ExperimentsNullableDatadogPercentileMeasureInput {
             _unparsed: false,
         }
     }
-
+    
     pub fn filters(mut self, value: serde_json::Value) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn source_definition_filter(mut self, value: serde_json::Value) -> Self {
         self.source_definition_filter = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsNullableDatadogPercentileMeasureInput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -113,68 +106,56 @@ impl<'de> Deserialize<'de> for ExperimentsNullableDatadogPercentileMeasureInput 
                 let mut source_definition_filter: Option<serde_json::Value> = None;
                 let mut source_subtype: Option<String> = None;
                 let mut source_type: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "column_name" => {
-                            column_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            column_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "column_type" => {
-                            column_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            column_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source_definition_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source_definition_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_definition_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source_subtype" => {
-                            source_subtype =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_subtype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source_type" => {
-                            source_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let column_name =
-                    column_name.ok_or_else(|| M::Error::missing_field("column_name"))?;
-                let column_type =
-                    column_type.ok_or_else(|| M::Error::missing_field("column_type"))?;
+                let column_name = column_name.ok_or_else(|| M::Error::missing_field("column_name"))?;
+                let column_type = column_type.ok_or_else(|| M::Error::missing_field("column_type"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let source_subtype =
-                    source_subtype.ok_or_else(|| M::Error::missing_field("source_subtype"))?;
-                let source_type =
-                    source_type.ok_or_else(|| M::Error::missing_field("source_type"))?;
+                let source_subtype = source_subtype.ok_or_else(|| M::Error::missing_field("source_subtype"))?;
+                let source_type = source_type.ok_or_else(|| M::Error::missing_field("source_type"))?;
 
                 let content = ExperimentsNullableDatadogPercentileMeasureInput {
                     column_name,

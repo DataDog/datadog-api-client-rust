@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Downtime duration attributes of a monitor configuration policy.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct MonitorConfigPolicyDowntimePolicyCreateRequest {
     pub max_duration_ms: i64,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorConfigPolicyDowntimePolicyCreateRequest {
@@ -26,7 +26,10 @@ impl MonitorConfigPolicyDowntimePolicyCreateRequest {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for MonitorConfigPolicyDowntimePolicyCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -51,18 +54,14 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyDowntimePolicyCreateRequest {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "max_duration_ms" => {
-                            max_duration_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_duration_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let max_duration_ms =
-                    max_duration_ms.ok_or_else(|| M::Error::missing_field("max_duration_ms"))?;
+                let max_duration_ms = max_duration_ms.ok_or_else(|| M::Error::missing_field("max_duration_ms"))?;
 
                 let content = MonitorConfigPolicyDowntimePolicyCreateRequest {
                     max_duration_ms,

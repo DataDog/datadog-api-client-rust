@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// One package the Supply Chain Firewall evaluated, with the outcome and every matched rule.
 #[non_exhaustive]
@@ -30,16 +30,11 @@ pub struct AIGuardScfwPackageFinding {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AIGuardScfwPackageFinding {
-    pub fn new(
-        ecosystem: String,
-        name: String,
-        outcome: crate::datadogV2::model::AIGuardScfwOutcome,
-        version: String,
-    ) -> AIGuardScfwPackageFinding {
+    pub fn new(ecosystem: String, name: String, outcome: crate::datadogV2::model::AIGuardScfwOutcome, version: String) -> AIGuardScfwPackageFinding {
         AIGuardScfwPackageFinding {
             ecosystem,
             matched_rules: None,
@@ -50,23 +45,19 @@ impl AIGuardScfwPackageFinding {
             _unparsed: false,
         }
     }
-
-    pub fn matched_rules(
-        mut self,
-        value: Vec<crate::datadogV2::model::AIGuardScfwMatchedRule>,
-    ) -> Self {
+    
+    pub fn matched_rules(mut self, value: Vec<crate::datadogV2::model::AIGuardScfwMatchedRule>) -> Self {
         self.matched_rules = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AIGuardScfwPackageFinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -86,54 +77,46 @@ impl<'de> Deserialize<'de> for AIGuardScfwPackageFinding {
                 M: MapAccess<'a>,
             {
                 let mut ecosystem: Option<String> = None;
-                let mut matched_rules: Option<
-                    Vec<crate::datadogV2::model::AIGuardScfwMatchedRule>,
-                > = None;
+                let mut matched_rules: Option<Vec<crate::datadogV2::model::AIGuardScfwMatchedRule>> = None;
                 let mut name: Option<String> = None;
                 let mut outcome: Option<crate::datadogV2::model::AIGuardScfwOutcome> = None;
                 let mut version: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "ecosystem" => {
                             ecosystem = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "matched_rules" => {
                             if v.is_null() {
                                 continue;
                             }
-                            matched_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            matched_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "outcome" => {
                             outcome = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _outcome) = outcome {
                                 match _outcome {
-                                    crate::datadogV2::model::AIGuardScfwOutcome::UnparsedObject(
-                                        _outcome,
-                                    ) => {
+                                    crate::datadogV2::model::AIGuardScfwOutcome::UnparsedObject(_outcome) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let ecosystem = ecosystem.ok_or_else(|| M::Error::missing_field("ecosystem"))?;

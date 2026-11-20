@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CaseStatusGroup {
-    SG_OPEN,
-    SG_IN_PROGRESS,
-    SG_CLOSED,
+	SG_OPEN,
+	SG_IN_PROGRESS,
+	SG_CLOSED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for CaseStatusGroup {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "SG_OPEN" => Self::SG_OPEN,
-            "SG_IN_PROGRESS" => Self::SG_IN_PROGRESS,
-            "SG_CLOSED" => Self::SG_CLOSED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"SG_OPEN" => Self::SG_OPEN,"SG_IN_PROGRESS" => Self::SG_IN_PROGRESS,"SG_CLOSED" => Self::SG_CLOSED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

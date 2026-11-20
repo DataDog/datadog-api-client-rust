@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleDetectionMethod {
-    THRESHOLD,
-    NEW_VALUE,
-    ANOMALY_DETECTION,
-    IMPOSSIBLE_TRAVEL,
-    HARDCODED,
-    THIRD_PARTY,
-    ANOMALY_THRESHOLD,
-    SEQUENCE_DETECTION,
+	THRESHOLD,
+	NEW_VALUE,
+	ANOMALY_DETECTION,
+	IMPOSSIBLE_TRAVEL,
+	HARDCODED,
+	THIRD_PARTY,
+	ANOMALY_THRESHOLD,
+	SEQUENCE_DETECTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleDetectionMethod {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "threshold" => Self::THRESHOLD,
-            "new_value" => Self::NEW_VALUE,
-            "anomaly_detection" => Self::ANOMALY_DETECTION,
-            "impossible_travel" => Self::IMPOSSIBLE_TRAVEL,
-            "hardcoded" => Self::HARDCODED,
-            "third_party" => Self::THIRD_PARTY,
-            "anomaly_threshold" => Self::ANOMALY_THRESHOLD,
-            "sequence_detection" => Self::SEQUENCE_DETECTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"threshold" => Self::THRESHOLD,"new_value" => Self::NEW_VALUE,"anomaly_detection" => Self::ANOMALY_DETECTION,"impossible_travel" => Self::IMPOSSIBLE_TRAVEL,"hardcoded" => Self::HARDCODED,"third_party" => Self::THIRD_PARTY,"anomaly_threshold" => Self::ANOMALY_THRESHOLD,"sequence_detection" => Self::SEQUENCE_DETECTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

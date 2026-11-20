@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentRuleExecutionType {
-    SINGLE_EXECUTION,
-    MULTI_EXECUTION,
+	SINGLE_EXECUTION,
+	MULTI_EXECUTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,12 +32,8 @@ impl<'de> Deserialize<'de> for IncidentRuleExecutionType {
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
-        Ok(match s {
-            1 => Self::SINGLE_EXECUTION,
-            2 => Self::MULTI_EXECUTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {1 => Self::SINGLE_EXECUTION,2 => Self::MULTI_EXECUTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

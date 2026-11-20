@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A model available for a given LLM provider integration and account.
 #[non_exhaustive]
@@ -45,21 +45,11 @@ pub struct LLMObsIntegrationModel {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsIntegrationModel {
-    pub fn new(
-        has_access: bool,
-        id: String,
-        integration: String,
-        integration_display_name: String,
-        json_schema: bool,
-        model_display_name: String,
-        model_id: String,
-        provider: String,
-        provider_display_name: String,
-    ) -> LLMObsIntegrationModel {
+    pub fn new(has_access: bool, id: String, integration: String, integration_display_name: String, json_schema: bool, model_display_name: String, model_id: String, provider: String, provider_display_name: String) -> LLMObsIntegrationModel {
         LLMObsIntegrationModel {
             has_access,
             id,
@@ -75,23 +65,19 @@ impl LLMObsIntegrationModel {
             _unparsed: false,
         }
     }
-
-    pub fn region_prefix_overrides(
-        mut self,
-        value: std::collections::BTreeMap<String, String>,
-    ) -> Self {
+    
+    pub fn region_prefix_overrides(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.region_prefix_overrides = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsIntegrationModel {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -119,77 +105,61 @@ impl<'de> Deserialize<'de> for LLMObsIntegrationModel {
                 let mut model_id: Option<String> = None;
                 let mut provider: Option<String> = None;
                 let mut provider_display_name: Option<String> = None;
-                let mut region_prefix_overrides: Option<
-                    std::collections::BTreeMap<String, String>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut region_prefix_overrides: Option<std::collections::BTreeMap<String, String>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "has_access" => {
                             has_access = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "integration" => {
-                            integration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "integration_display_name" => {
-                            integration_display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integration_display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "json_schema" => {
-                            json_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            json_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_display_name" => {
-                            model_display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_id" => {
                             model_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider" => {
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider_display_name" => {
-                            provider_display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "region_prefix_overrides" => {
                             if v.is_null() {
                                 continue;
                             }
-                            region_prefix_overrides =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            region_prefix_overrides = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let has_access = has_access.ok_or_else(|| M::Error::missing_field("has_access"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let integration =
-                    integration.ok_or_else(|| M::Error::missing_field("integration"))?;
-                let integration_display_name = integration_display_name
-                    .ok_or_else(|| M::Error::missing_field("integration_display_name"))?;
-                let json_schema =
-                    json_schema.ok_or_else(|| M::Error::missing_field("json_schema"))?;
-                let model_display_name = model_display_name
-                    .ok_or_else(|| M::Error::missing_field("model_display_name"))?;
+                let integration = integration.ok_or_else(|| M::Error::missing_field("integration"))?;
+                let integration_display_name = integration_display_name.ok_or_else(|| M::Error::missing_field("integration_display_name"))?;
+                let json_schema = json_schema.ok_or_else(|| M::Error::missing_field("json_schema"))?;
+                let model_display_name = model_display_name.ok_or_else(|| M::Error::missing_field("model_display_name"))?;
                 let model_id = model_id.ok_or_else(|| M::Error::missing_field("model_id"))?;
                 let provider = provider.ok_or_else(|| M::Error::missing_field("provider"))?;
-                let provider_display_name = provider_display_name
-                    .ok_or_else(|| M::Error::missing_field("provider_display_name"))?;
+                let provider_display_name = provider_display_name.ok_or_else(|| M::Error::missing_field("provider_display_name"))?;
 
                 let content = LLMObsIntegrationModel {
                     has_access,

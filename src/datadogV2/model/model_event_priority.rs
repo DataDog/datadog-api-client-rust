@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventPriority {
-    NORMAL,
-    LOW,
-    PRIORITY_ONE,
-    PRIORITY_TWO,
-    PRIORITY_THREE,
-    PRIORITY_FOUR,
-    PRIORITY_FIVE,
+	NORMAL,
+	LOW,
+	PRIORITY_ONE,
+	PRIORITY_TWO,
+	PRIORITY_THREE,
+	PRIORITY_FOUR,
+	PRIORITY_FIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for EventPriority {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "normal" => Self::NORMAL,
-            "low" => Self::LOW,
-            "1" => Self::PRIORITY_ONE,
-            "2" => Self::PRIORITY_TWO,
-            "3" => Self::PRIORITY_THREE,
-            "4" => Self::PRIORITY_FOUR,
-            "5" => Self::PRIORITY_FIVE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"normal" => Self::NORMAL,"low" => Self::LOW,"1" => Self::PRIORITY_ONE,"2" => Self::PRIORITY_TWO,"3" => Self::PRIORITY_THREE,"4" => Self::PRIORITY_FOUR,"5" => Self::PRIORITY_FIVE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

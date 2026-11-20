@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A group by rule
 #[non_exhaustive]
@@ -15,11 +15,11 @@ pub struct LogsGroupBy {
     #[serde(rename = "facet")]
     pub facet: String,
     /// Used to perform a histogram computation (only for measure facets).
-    /// Note: at most 100 buckets are allowed, the number of buckets is (max - min)/interval.
+/// Note: at most 100 buckets are allowed, the number of buckets is (max - min)/interval.
     #[serde(rename = "histogram")]
     pub histogram: Option<crate::datadogV2::model::LogsGroupByHistogram>,
     /// The maximum buckets to return for this group by. Note: at most 10000 buckets are allowed.
-    /// If grouping by multiple facets, the product of limits must not exceed 10000.
+/// If grouping by multiple facets, the product of limits must not exceed 10000.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
     /// The value to use for logs that don't have the facet used to group by
@@ -35,7 +35,7 @@ pub struct LogsGroupBy {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsGroupBy {
@@ -51,40 +51,39 @@ impl LogsGroupBy {
             _unparsed: false,
         }
     }
-
+    
     pub fn histogram(mut self, value: crate::datadogV2::model::LogsGroupByHistogram) -> Self {
         self.histogram = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn missing(mut self, value: crate::datadogV2::model::LogsGroupByMissing) -> Self {
         self.missing = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV2::model::LogsAggregateSort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn total(mut self, value: crate::datadogV2::model::LogsGroupByTotal) -> Self {
         self.total = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsGroupBy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -109,29 +108,26 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                 let mut missing: Option<crate::datadogV2::model::LogsGroupByMissing> = None;
                 let mut sort: Option<crate::datadogV2::model::LogsAggregateSort> = None;
                 let mut total: Option<crate::datadogV2::model::LogsGroupByTotal> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "facet" => {
                             facet = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "histogram" => {
                             if v.is_null() {
                                 continue;
                             }
                             histogram = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "missing" => {
                             if v.is_null() {
                                 continue;
@@ -139,21 +135,19 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                             missing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _missing) = missing {
                                 match _missing {
-                                    crate::datadogV2::model::LogsGroupByMissing::UnparsedObject(
-                                        _missing,
-                                    ) => {
+                                    crate::datadogV2::model::LogsGroupByMissing::UnparsedObject(_missing) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total" => {
                             if v.is_null() {
                                 continue;
@@ -161,20 +155,18 @@ impl<'de> Deserialize<'de> for LogsGroupBy {
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _total) = total {
                                 match _total {
-                                    crate::datadogV2::model::LogsGroupByTotal::UnparsedObject(
-                                        _total,
-                                    ) => {
+                                    crate::datadogV2::model::LogsGroupByTotal::UnparsedObject(_total) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let facet = facet.ok_or_else(|| M::Error::missing_field("facet"))?;

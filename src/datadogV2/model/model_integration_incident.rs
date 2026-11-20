@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Incident integration settings.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct IntegrationIncident {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IntegrationIncident {
@@ -49,51 +49,43 @@ impl IntegrationIncident {
             _unparsed: false,
         }
     }
-
+    
     pub fn auto_escalation_query(mut self, value: String) -> Self {
         self.auto_escalation_query = Some(value);
         self
     }
-
+    
     pub fn default_incident_commander(mut self, value: String) -> Self {
         self.default_incident_commander = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn field_mappings(
-        mut self,
-        value: Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>,
-    ) -> Self {
+    
+    pub fn field_mappings(mut self, value: Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>) -> Self {
         self.field_mappings = Some(value);
         self
     }
-
+    
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
-
-    pub fn severity_config(
-        mut self,
-        value: crate::datadogV2::model::IntegrationIncidentSeverityConfig,
-    ) -> Self {
+    
+    pub fn severity_config(mut self, value: crate::datadogV2::model::IntegrationIncidentSeverityConfig) -> Self {
         self.severity_config = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IntegrationIncident {
     fn default() -> Self {
@@ -121,17 +113,10 @@ impl<'de> Deserialize<'de> for IntegrationIncident {
                 let mut auto_escalation_query: Option<String> = None;
                 let mut default_incident_commander: Option<String> = None;
                 let mut enabled: Option<bool> = None;
-                let mut field_mappings: Option<
-                    Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>,
-                > = None;
+                let mut field_mappings: Option<Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>> = None;
                 let mut incident_type: Option<String> = None;
-                let mut severity_config: Option<
-                    crate::datadogV2::model::IntegrationIncidentSeverityConfig,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut severity_config: Option<crate::datadogV2::model::IntegrationIncidentSeverityConfig> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,48 +125,43 @@ impl<'de> Deserialize<'de> for IntegrationIncident {
                             if v.is_null() {
                                 continue;
                             }
-                            auto_escalation_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auto_escalation_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default_incident_commander" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_incident_commander =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_incident_commander = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "field_mappings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            field_mappings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            field_mappings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "severity_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            severity_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            severity_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

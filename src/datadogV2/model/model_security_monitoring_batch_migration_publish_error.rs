@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The reason why the resource could not be published.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct SecurityMonitoringBatchMigrationPublishError {
     pub code: Option<String>,
     /// The rule validation errors returned on rule creation.
     #[serde(rename = "details")]
-    pub details:
-        Option<Vec<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail>>,
+    pub details: Option<Vec<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail>>,
     /// The error message.
     #[serde(rename = "message")]
     pub message: String,
@@ -25,7 +24,7 @@ pub struct SecurityMonitoringBatchMigrationPublishError {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringBatchMigrationPublishError {
@@ -38,28 +37,24 @@ impl SecurityMonitoringBatchMigrationPublishError {
             _unparsed: false,
         }
     }
-
+    
     pub fn code(mut self, value: String) -> Self {
         self.code = Some(value);
         self
     }
-
-    pub fn details(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail>,
-    ) -> Self {
+    
+    pub fn details(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail>) -> Self {
         self.details = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationPublishError {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,16 +74,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationPublishError {
                 M: MapAccess<'a>,
             {
                 let mut code: Option<String> = None;
-                let mut details: Option<
-                    Vec<
-                        crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail,
-                    >,
-                > = None;
+                let mut details: Option<Vec<crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishErrorDetail>> = None;
                 let mut message: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,21 +86,21 @@ impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationPublishError {
                                 continue;
                             }
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "details" => {
                             if v.is_null() {
                                 continue;
                             }
                             details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let message = message.ok_or_else(|| M::Error::missing_field("message"))?;

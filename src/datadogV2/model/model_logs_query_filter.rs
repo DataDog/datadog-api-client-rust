@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The search and filter query settings
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct LogsQueryFilter {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsQueryFilter {
@@ -45,40 +45,38 @@ impl LogsQueryFilter {
             _unparsed: false,
         }
     }
-
+    
     pub fn from(mut self, value: String) -> Self {
         self.from = Some(value);
         self
     }
-
+    
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn storage_tier(mut self, value: crate::datadogV2::model::LogsStorageTier) -> Self {
         self.storage_tier = Some(value);
         self
     }
-
+    
     pub fn to(mut self, value: String) -> Self {
         self.to = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LogsQueryFilter {
     fn default() -> Self {
@@ -108,10 +106,7 @@ impl<'de> Deserialize<'de> for LogsQueryFilter {
                 let mut query: Option<String> = None;
                 let mut storage_tier: Option<crate::datadogV2::model::LogsStorageTier> = None;
                 let mut to: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,47 +116,44 @@ impl<'de> Deserialize<'de> for LogsQueryFilter {
                                 continue;
                             }
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "storage_tier" => {
                             if v.is_null() {
                                 continue;
                             }
-                            storage_tier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            storage_tier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _storage_tier) = storage_tier {
                                 match _storage_tier {
-                                    crate::datadogV2::model::LogsStorageTier::UnparsedObject(
-                                        _storage_tier,
-                                    ) => {
+                                    crate::datadogV2::model::LogsStorageTier::UnparsedObject(_storage_tier) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "to" => {
                             if v.is_null() {
                                 continue;
                             }
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

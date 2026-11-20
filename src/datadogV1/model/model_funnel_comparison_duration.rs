@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Comparison time configuration for funnel widgets.
 #[non_exhaustive]
@@ -19,28 +19,26 @@ pub struct FunnelComparisonDuration {
     pub type_: crate::datadogV1::model::FunnelComparisonDurationType,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FunnelComparisonDuration {
-    pub fn new(
-        type_: crate::datadogV1::model::FunnelComparisonDurationType,
-    ) -> FunnelComparisonDuration {
+    pub fn new(type_: crate::datadogV1::model::FunnelComparisonDurationType) -> FunnelComparisonDuration {
         FunnelComparisonDuration {
             custom_timeframe: None,
             type_,
             _unparsed: false,
         }
     }
-
-    pub fn custom_timeframe(
-        mut self,
-        value: crate::datadogV1::model::FunnelComparisonCustomTimeframe,
-    ) -> Self {
+    
+    pub fn custom_timeframe(mut self, value: crate::datadogV1::model::FunnelComparisonCustomTimeframe) -> Self {
         self.custom_timeframe = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for FunnelComparisonDuration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -59,9 +57,7 @@ impl<'de> Deserialize<'de> for FunnelComparisonDuration {
             where
                 M: MapAccess<'a>,
             {
-                let mut custom_timeframe: Option<
-                    crate::datadogV1::model::FunnelComparisonCustomTimeframe,
-                > = None;
+                let mut custom_timeframe: Option<crate::datadogV1::model::FunnelComparisonCustomTimeframe> = None;
                 let mut type_: Option<crate::datadogV1::model::FunnelComparisonDurationType> = None;
                 let mut _unparsed = false;
 
@@ -71,9 +67,8 @@ impl<'de> Deserialize<'de> for FunnelComparisonDuration {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_timeframe =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_timeframe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -84,12 +79,10 @@ impl<'de> Deserialize<'de> for FunnelComparisonDuration {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

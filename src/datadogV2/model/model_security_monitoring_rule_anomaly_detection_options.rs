@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Options on anomaly detection method.
 #[non_exhaustive]
@@ -12,25 +12,19 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringRuleAnomalyDetectionOptions {
     /// Duration in seconds of the time buckets used to aggregate events matched by the rule.
-    /// Must be greater than or equal to 300.
+/// Must be greater than or equal to 300.
     #[serde(rename = "bucketDuration")]
-    pub bucket_duration: Option<
-        crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration,
-    >,
+    pub bucket_duration: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration>,
     /// An optional parameter that sets how permissive anomaly detection is.
-    /// Higher values require higher deviations before triggering a signal.
+/// Higher values require higher deviations before triggering a signal.
     #[serde(rename = "detectionTolerance")]
-    pub detection_tolerance: Option<
-        crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance,
-    >,
+    pub detection_tolerance: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance>,
     /// When set to true, Datadog uses previous values that fall within the defined learning window to construct the baseline, enabling the system to establish an accurate baseline more rapidly rather than relying solely on gradual learning over time.
     #[serde(rename = "instantaneousBaseline")]
     pub instantaneous_baseline: Option<bool>,
     /// Learning duration in hours. Anomaly detection waits for at least this amount of historical data before it starts evaluating.
     #[serde(rename = "learningDuration")]
-    pub learning_duration: Option<
-        crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration,
-    >,
+    pub learning_duration: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration>,
     /// An optional override baseline to apply while the rule is in the learning period. Must be greater than or equal to 0.
     #[serde(rename = "learningPeriodBaseline")]
     pub learning_period_baseline: Option<i64>,
@@ -38,7 +32,7 @@ pub struct SecurityMonitoringRuleAnomalyDetectionOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleAnomalyDetectionOptions {
@@ -53,49 +47,38 @@ impl SecurityMonitoringRuleAnomalyDetectionOptions {
             _unparsed: false,
         }
     }
-
-    pub fn bucket_duration(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration,
-    ) -> Self {
+    
+    pub fn bucket_duration(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration) -> Self {
         self.bucket_duration = Some(value);
         self
     }
-
-    pub fn detection_tolerance(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance,
-    ) -> Self {
+    
+    pub fn detection_tolerance(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance) -> Self {
         self.detection_tolerance = Some(value);
         self
     }
-
+    
     pub fn instantaneous_baseline(mut self, value: bool) -> Self {
         self.instantaneous_baseline = Some(value);
         self
     }
-
-    pub fn learning_duration(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration,
-    ) -> Self {
+    
+    pub fn learning_duration(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration) -> Self {
         self.learning_duration = Some(value);
         self
     }
-
+    
     pub fn learning_period_baseline(mut self, value: i64) -> Self {
         self.learning_period_baseline = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleAnomalyDetectionOptions {
     fn default() -> Self {
@@ -125,10 +108,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                 let mut instantaneous_baseline: Option<bool> = None;
                 let mut learning_duration: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration> = None;
                 let mut learning_period_baseline: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -137,8 +117,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            bucket_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _bucket_duration) = bucket_duration {
                                 match _bucket_duration {
                                     crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration::UnparsedObject(_bucket_duration) => {
@@ -147,13 +126,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "detectionTolerance" => {
                             if v.is_null() {
                                 continue;
                             }
-                            detection_tolerance =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            detection_tolerance = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _detection_tolerance) = detection_tolerance {
                                 match _detection_tolerance {
                                     crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance::UnparsedObject(_detection_tolerance) => {
@@ -162,20 +140,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "instantaneousBaseline" => {
                             if v.is_null() {
                                 continue;
                             }
-                            instantaneous_baseline =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            instantaneous_baseline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "learningDuration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            learning_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            learning_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _learning_duration) = learning_duration {
                                 match _learning_duration {
                                     crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration::UnparsedObject(_learning_duration) => {
@@ -184,19 +160,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "learningPeriodBaseline" => {
                             if v.is_null() {
                                 continue;
                             }
-                            learning_period_baseline =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            learning_period_baseline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

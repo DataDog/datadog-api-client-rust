@@ -1,20 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Targeted recovery (the default) or query-based batch recovery.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum RumRecoveryCreateAttributes {
-    RumRecoverySessionsCreateAttributes(
-        Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>,
-    ),
-    RumRecoveryBatchCreateAttributes(
-        Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	RumRecoverySessionsCreateAttributes(Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>),
+	RumRecoveryBatchCreateAttributes(Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for RumRecoveryCreateAttributes {
@@ -23,25 +19,17 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateAttributes {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(RumRecoveryCreateAttributes::RumRecoverySessionsCreateAttributes(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(RumRecoveryCreateAttributes::RumRecoveryBatchCreateAttributes(_v));
             }
         }
-
-        return Ok(RumRecoveryCreateAttributes::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(RumRecoveryCreateAttributes::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

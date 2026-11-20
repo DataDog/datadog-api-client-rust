@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsArchiveEncryptionS3Type {
-    NO_OVERRIDE,
-    SSE_S3,
-    SSE_KMS,
+	NO_OVERRIDE,
+	SSE_S3,
+	SSE_KMS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for LogsArchiveEncryptionS3Type {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "NO_OVERRIDE" => Self::NO_OVERRIDE,
-            "SSE_S3" => Self::SSE_S3,
-            "SSE_KMS" => Self::SSE_KMS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"NO_OVERRIDE" => Self::NO_OVERRIDE,"SSE_S3" => Self::SSE_S3,"SSE_KMS" => Self::SSE_KMS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

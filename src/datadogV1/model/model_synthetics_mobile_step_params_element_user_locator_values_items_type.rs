@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsMobileStepParamsElementUserLocatorValuesItemsType {
-    ACCESSIBILITY_ID,
-    ID,
-    IOS_PREDICATE_STRING,
-    IOS_CLASS_CHAIN,
-    XPATH,
+	ACCESSIBILITY_ID,
+	ID,
+	IOS_PREDICATE_STRING,
+	IOS_CLASS_CHAIN,
+	XPATH,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsElementUserLocatorValue
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "accessibility-id" => Self::ACCESSIBILITY_ID,
-            "id" => Self::ID,
-            "ios-predicate-string" => Self::IOS_PREDICATE_STRING,
-            "ios-class-chain" => Self::IOS_CLASS_CHAIN,
-            "xpath" => Self::XPATH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"accessibility-id" => Self::ACCESSIBILITY_ID,"id" => Self::ID,"ios-predicate-string" => Self::IOS_PREDICATE_STRING,"ios-class-chain" => Self::IOS_CLASS_CHAIN,"xpath" => Self::XPATH,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

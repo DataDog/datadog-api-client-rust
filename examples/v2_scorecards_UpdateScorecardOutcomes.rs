@@ -12,7 +12,8 @@ use datadog_api_client::datadogV2::model::UpdateOutcomesAsyncType;
 async fn main() {
     let body = UpdateOutcomesAsyncRequest::new().data(
         UpdateOutcomesAsyncRequestData::new()
-            .attributes(UpdateOutcomesAsyncAttributes::new().results(vec![
+            .attributes(
+                UpdateOutcomesAsyncAttributes::new().results(vec![
                     UpdateOutcomesAsyncRequestItem::new(
                         "service:my-service".to_string(),
                         "q8MQxk8TCqrHnWkx".to_string(),
@@ -22,7 +23,8 @@ async fn main() {
                         r#"See: <a href="https://app.datadoghq.com/services">Services</a>"#
                             .to_string(),
                     ),
-                ]))
+                ]),
+            )
             .type_(UpdateOutcomesAsyncType::BATCHED_OUTCOME),
     );
     let configuration = datadog::Configuration::new();

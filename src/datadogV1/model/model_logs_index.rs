@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing a Datadog Log index.
 #[non_exhaustive]
@@ -21,28 +21,28 @@ pub struct LogsIndex {
     #[serde(rename = "daily_limit_warning_threshold_percentage")]
     pub daily_limit_warning_threshold_percentage: Option<f64>,
     /// An array of exclusion objects. The logs are tested against the query of each filter,
-    /// following the order of the array. Only the first matching active exclusion matters,
-    /// others (if any) are ignored.
+/// following the order of the array. Only the first matching active exclusion matters,
+/// others (if any) are ignored.
     #[serde(rename = "exclusion_filters")]
     pub exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>>,
     /// Filter for logs.
     #[serde(rename = "filter")]
     pub filter: crate::datadogV1::model::LogsFilter,
     /// A boolean stating if the index is rate limited, meaning more logs than the daily limit have been sent.
-    /// Rate limit is reset every-day at 2pm UTC.
+/// Rate limit is reset every-day at 2pm UTC.
     #[serde(rename = "is_rate_limited")]
     pub is_rate_limited: Option<bool>,
     /// The name of the index.
     #[serde(rename = "name")]
     pub name: String,
     /// The total number of days logs are stored in Standard and Flex Tier before being deleted from the index.
-    /// If Standard Tier is enabled on this index, logs are first retained in Standard Tier for the number of days specified through `num_retention_days`,
-    /// and then stored in Flex Tier until the number of days specified in `num_flex_logs_retention_days` is reached.
-    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
+/// If Standard Tier is enabled on this index, logs are first retained in Standard Tier for the number of days specified through `num_retention_days`,
+/// and then stored in Flex Tier until the number of days specified in `num_flex_logs_retention_days` is reached.
+/// The available values depend on retention plans specified in your organization's contract/subscriptions.
     #[serde(rename = "num_flex_logs_retention_days")]
     pub num_flex_logs_retention_days: Option<i64>,
     /// The number of days logs are stored in Standard Tier before aging into the Flex Tier or being deleted from the index.
-    /// The available values depend on retention plans specified in your organization's contract/subscriptions.
+/// The available values depend on retention plans specified in your organization's contract/subscriptions.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
     /// A list of tags associated with the index. Tags must be in `key:value` format.
@@ -52,7 +52,7 @@ pub struct LogsIndex {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsIndex {
@@ -72,58 +72,54 @@ impl LogsIndex {
             _unparsed: false,
         }
     }
-
+    
     pub fn daily_limit(mut self, value: i64) -> Self {
         self.daily_limit = Some(value);
         self
     }
-
-    pub fn daily_limit_reset(
-        mut self,
-        value: crate::datadogV1::model::LogsDailyLimitReset,
-    ) -> Self {
+    
+    pub fn daily_limit_reset(mut self, value: crate::datadogV1::model::LogsDailyLimitReset) -> Self {
         self.daily_limit_reset = Some(value);
         self
     }
-
+    
     pub fn daily_limit_warning_threshold_percentage(mut self, value: f64) -> Self {
         self.daily_limit_warning_threshold_percentage = Some(value);
         self
     }
-
+    
     pub fn exclusion_filters(mut self, value: Vec<crate::datadogV1::model::LogsExclusion>) -> Self {
         self.exclusion_filters = Some(value);
         self
     }
-
+    
     pub fn is_rate_limited(mut self, value: bool) -> Self {
         self.is_rate_limited = Some(value);
         self
     }
-
+    
     pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
         self.num_flex_logs_retention_days = Some(value);
         self
     }
-
+    
     pub fn num_retention_days(mut self, value: i64) -> Self {
         self.num_retention_days = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsIndex {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -143,21 +139,16 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 M: MapAccess<'a>,
             {
                 let mut daily_limit: Option<i64> = None;
-                let mut daily_limit_reset: Option<crate::datadogV1::model::LogsDailyLimitReset> =
-                    None;
+                let mut daily_limit_reset: Option<crate::datadogV1::model::LogsDailyLimitReset> = None;
                 let mut daily_limit_warning_threshold_percentage: Option<f64> = None;
-                let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> =
-                    None;
+                let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> = None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut is_rate_limited: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,68 +157,61 @@ impl<'de> Deserialize<'de> for LogsIndex {
                             if v.is_null() {
                                 continue;
                             }
-                            daily_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            daily_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "daily_limit_reset" => {
                             if v.is_null() {
                                 continue;
                             }
-                            daily_limit_reset =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            daily_limit_reset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "daily_limit_warning_threshold_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            daily_limit_warning_threshold_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            daily_limit_warning_threshold_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exclusion_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exclusion_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exclusion_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_rate_limited" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_rate_limited =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_rate_limited = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "num_flex_logs_retention_days" => {
                             if v.is_null() {
                                 continue;
                             }
-                            num_flex_logs_retention_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            num_flex_logs_retention_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "num_retention_days" => {
                             if v.is_null() {
                                 continue;
                             }
-                            num_retention_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            num_retention_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let filter = filter.ok_or_else(|| M::Error::missing_field("filter"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Response with aggregated usage types.
 #[non_exhaustive]
@@ -34,8 +34,7 @@ pub struct UsageBillableSummaryKeys {
     pub apm_trace_search_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "application_security_fargate_average")]
-    pub application_security_fargate_average:
-        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    pub application_security_fargate_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "application_security_host_sum")]
     pub application_security_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
@@ -107,19 +106,16 @@ pub struct UsageBillableSummaryKeys {
     pub error_tracking_tiered_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_apm_and_profiler_average")]
-    pub fargate_container_apm_and_profiler_average:
-        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    pub fargate_container_apm_and_profiler_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_apm_and_profiler_sum")]
-    pub fargate_container_apm_and_profiler_sum:
-        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    pub fargate_container_apm_and_profiler_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_average")]
     pub fargate_container_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_profiler_average")]
-    pub fargate_container_profiler_average:
-        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    pub fargate_container_profiler_average: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "fargate_container_profiler_sum")]
     pub fargate_container_profiler_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
@@ -203,8 +199,7 @@ pub struct UsageBillableSummaryKeys {
     pub logs_indexed_90day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_custom_retention_sum")]
-    pub logs_indexed_custom_retention_sum:
-        Option<crate::datadogV1::model::UsageBillableSummaryBody>,
+    pub logs_indexed_custom_retention_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
     /// Response with properties for each aggregated usage type.
     #[serde(rename = "logs_indexed_sum")]
     pub logs_indexed_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody>,
@@ -293,7 +288,7 @@ pub struct UsageBillableSummaryKeys {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageBillableSummaryKeys {
@@ -394,731 +389,468 @@ impl UsageBillableSummaryKeys {
             _unparsed: false,
         }
     }
-
-    pub fn apm_fargate_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_fargate_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_fargate_average = Some(value);
         self
     }
-
-    pub fn apm_fargate_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_fargate_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_fargate_sum = Some(value);
         self
     }
-
-    pub fn apm_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_host_sum = Some(value);
         self
     }
-
-    pub fn apm_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_host_top99p = Some(value);
         self
     }
-
-    pub fn apm_profiler_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_profiler_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_profiler_host_sum = Some(value);
         self
     }
-
-    pub fn apm_profiler_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_profiler_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_profiler_host_top99p = Some(value);
         self
     }
-
-    pub fn apm_trace_search_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn apm_trace_search_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.apm_trace_search_sum = Some(value);
         self
     }
-
-    pub fn application_security_fargate_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn application_security_fargate_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.application_security_fargate_average = Some(value);
         self
     }
-
-    pub fn application_security_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn application_security_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.application_security_host_sum = Some(value);
         self
     }
-
-    pub fn application_security_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn application_security_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.application_security_host_top99p = Some(value);
         self
     }
-
-    pub fn ci_pipeline_indexed_spans_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_pipeline_indexed_spans_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_pipeline_indexed_spans_sum = Some(value);
         self
     }
-
-    pub fn ci_pipeline_maximum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_pipeline_maximum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_pipeline_maximum = Some(value);
         self
     }
-
-    pub fn ci_pipeline_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_pipeline_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_pipeline_sum = Some(value);
         self
     }
-
-    pub fn ci_test_indexed_spans_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_test_indexed_spans_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_test_indexed_spans_sum = Some(value);
         self
     }
-
-    pub fn ci_testing_maximum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_testing_maximum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_testing_maximum = Some(value);
         self
     }
-
-    pub fn ci_testing_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ci_testing_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ci_testing_sum = Some(value);
         self
     }
-
-    pub fn cloud_cost_management_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cloud_cost_management_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cloud_cost_management_average = Some(value);
         self
     }
-
-    pub fn cloud_cost_management_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cloud_cost_management_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cloud_cost_management_sum = Some(value);
         self
     }
-
-    pub fn cspm_container_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cspm_container_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cspm_container_sum = Some(value);
         self
     }
-
-    pub fn cspm_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cspm_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cspm_host_sum = Some(value);
         self
     }
-
-    pub fn cspm_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cspm_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cspm_host_top99p = Some(value);
         self
     }
-
-    pub fn custom_event_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn custom_event_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.custom_event_sum = Some(value);
         self
     }
-
-    pub fn cws_container_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cws_container_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cws_container_sum = Some(value);
         self
     }
-
-    pub fn cws_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cws_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cws_host_sum = Some(value);
         self
     }
-
-    pub fn cws_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn cws_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.cws_host_top99p = Some(value);
         self
     }
-
-    pub fn dbm_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn dbm_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.dbm_host_sum = Some(value);
         self
     }
-
-    pub fn dbm_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn dbm_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.dbm_host_top99p = Some(value);
         self
     }
-
-    pub fn dbm_normalized_queries_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn dbm_normalized_queries_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.dbm_normalized_queries_average = Some(value);
         self
     }
-
-    pub fn dbm_normalized_queries_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn dbm_normalized_queries_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.dbm_normalized_queries_sum = Some(value);
         self
     }
-
-    pub fn error_tracking_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn error_tracking_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.error_tracking_sum = Some(value);
         self
     }
-
-    pub fn error_tracking_tiered_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn error_tracking_tiered_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.error_tracking_tiered_sum = Some(value);
         self
     }
-
-    pub fn fargate_container_apm_and_profiler_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_apm_and_profiler_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_apm_and_profiler_average = Some(value);
         self
     }
-
-    pub fn fargate_container_apm_and_profiler_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_apm_and_profiler_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_apm_and_profiler_sum = Some(value);
         self
     }
-
-    pub fn fargate_container_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_average = Some(value);
         self
     }
-
-    pub fn fargate_container_profiler_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_profiler_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_profiler_average = Some(value);
         self
     }
-
-    pub fn fargate_container_profiler_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_profiler_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_profiler_sum = Some(value);
         self
     }
-
-    pub fn fargate_container_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn fargate_container_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.fargate_container_sum = Some(value);
         self
     }
-
-    pub fn incident_management_maximum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn incident_management_maximum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.incident_management_maximum = Some(value);
         self
     }
-
-    pub fn incident_management_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn incident_management_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.incident_management_sum = Some(value);
         self
     }
-
-    pub fn infra_and_apm_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn infra_and_apm_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.infra_and_apm_host_sum = Some(value);
         self
     }
-
-    pub fn infra_and_apm_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn infra_and_apm_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.infra_and_apm_host_top99p = Some(value);
         self
     }
-
-    pub fn infra_container_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn infra_container_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.infra_container_sum = Some(value);
         self
     }
-
-    pub fn infra_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn infra_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.infra_host_sum = Some(value);
         self
     }
-
-    pub fn infra_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn infra_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.infra_host_top99p = Some(value);
         self
     }
-
-    pub fn ingested_spans_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ingested_spans_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ingested_spans_sum = Some(value);
         self
     }
-
-    pub fn ingested_timeseries_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ingested_timeseries_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ingested_timeseries_average = Some(value);
         self
     }
-
-    pub fn ingested_timeseries_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn ingested_timeseries_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.ingested_timeseries_sum = Some(value);
         self
     }
-
+    
     pub fn iot_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.iot_sum = Some(value);
         self
     }
-
+    
     pub fn iot_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.iot_top99p = Some(value);
         self
     }
-
-    pub fn lambda_function_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn lambda_function_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.lambda_function_average = Some(value);
         self
     }
-
-    pub fn lambda_function_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn lambda_function_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.lambda_function_sum = Some(value);
         self
     }
-
-    pub fn logs_forwarding_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_forwarding_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_forwarding_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_15day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_15day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_15day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_180day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_180day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_180day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_1day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_1day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_1day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_30day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_30day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_30day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_360day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_360day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_360day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_3day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_3day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_3day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_45day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_45day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_45day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_60day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_60day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_60day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_7day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_7day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_7day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_90day_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_90day_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_90day_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_custom_retention_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_custom_retention_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_custom_retention_sum = Some(value);
         self
     }
-
-    pub fn logs_indexed_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_indexed_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_indexed_sum = Some(value);
         self
     }
-
-    pub fn logs_ingested_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn logs_ingested_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.logs_ingested_sum = Some(value);
         self
     }
-
-    pub fn network_device_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn network_device_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.network_device_sum = Some(value);
         self
     }
-
-    pub fn network_device_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn network_device_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.network_device_top99p = Some(value);
         self
     }
-
-    pub fn npm_flow_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn npm_flow_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.npm_flow_sum = Some(value);
         self
     }
-
-    pub fn npm_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn npm_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.npm_host_sum = Some(value);
         self
     }
-
-    pub fn npm_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn npm_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.npm_host_top99p = Some(value);
         self
     }
-
-    pub fn observability_pipeline_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn observability_pipeline_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.observability_pipeline_sum = Some(value);
         self
     }
-
-    pub fn online_archive_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn online_archive_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.online_archive_sum = Some(value);
         self
     }
-
-    pub fn prof_container_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn prof_container_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.prof_container_sum = Some(value);
         self
     }
-
-    pub fn prof_host_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn prof_host_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.prof_host_sum = Some(value);
         self
     }
-
-    pub fn prof_host_top99p(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn prof_host_top99p(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.prof_host_top99p = Some(value);
         self
     }
-
-    pub fn rum_lite_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn rum_lite_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.rum_lite_sum = Some(value);
         self
     }
-
-    pub fn rum_replay_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn rum_replay_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.rum_replay_sum = Some(value);
         self
     }
-
+    
     pub fn rum_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.rum_sum = Some(value);
         self
     }
-
-    pub fn rum_units_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn rum_units_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.rum_units_sum = Some(value);
         self
     }
-
-    pub fn sensitive_data_scanner_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn sensitive_data_scanner_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.sensitive_data_scanner_sum = Some(value);
         self
     }
-
-    pub fn serverless_apm_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn serverless_apm_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.serverless_apm_sum = Some(value);
         self
     }
-
-    pub fn serverless_infra_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn serverless_infra_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.serverless_infra_average = Some(value);
         self
     }
-
-    pub fn serverless_infra_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn serverless_infra_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.serverless_infra_sum = Some(value);
         self
     }
-
-    pub fn serverless_invocation_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn serverless_invocation_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.serverless_invocation_sum = Some(value);
         self
     }
-
+    
     pub fn siem_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.siem_sum = Some(value);
         self
     }
-
-    pub fn standard_timeseries_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn standard_timeseries_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.standard_timeseries_average = Some(value);
         self
     }
-
-    pub fn synthetics_api_tests_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn synthetics_api_tests_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.synthetics_api_tests_sum = Some(value);
         self
     }
-
-    pub fn synthetics_app_testing_maximum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn synthetics_app_testing_maximum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.synthetics_app_testing_maximum = Some(value);
         self
     }
-
-    pub fn synthetics_browser_checks_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn synthetics_browser_checks_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.synthetics_browser_checks_sum = Some(value);
         self
     }
-
-    pub fn timeseries_average(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn timeseries_average(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.timeseries_average = Some(value);
         self
     }
-
-    pub fn timeseries_sum(
-        mut self,
-        value: crate::datadogV1::model::UsageBillableSummaryBody,
-    ) -> Self {
+    
+    pub fn timeseries_sum(mut self, value: crate::datadogV1::model::UsageBillableSummaryBody) -> Self {
         self.timeseries_sum = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageBillableSummaryKeys {
     fn default() -> Self {
@@ -1143,257 +875,98 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
             where
                 M: MapAccess<'a>,
             {
-                let mut apm_fargate_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut apm_fargate_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut apm_profiler_host_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut apm_profiler_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut apm_trace_search_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut application_security_fargate_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut application_security_host_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut application_security_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ci_pipeline_indexed_spans_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ci_pipeline_maximum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ci_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut ci_test_indexed_spans_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ci_testing_maximum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ci_testing_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut cloud_cost_management_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut cloud_cost_management_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut cspm_container_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut cspm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut cspm_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut custom_event_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut cws_container_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut cws_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut cws_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut dbm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut dbm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut dbm_normalized_queries_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut dbm_normalized_queries_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut error_tracking_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut error_tracking_tiered_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_apm_and_profiler_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_apm_and_profiler_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_profiler_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_profiler_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut fargate_container_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut incident_management_maximum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut incident_management_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut infra_and_apm_host_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut infra_and_apm_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut infra_container_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut infra_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut infra_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ingested_spans_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ingested_timeseries_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut ingested_timeseries_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
+                let mut apm_fargate_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_fargate_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_profiler_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_profiler_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut apm_trace_search_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut application_security_fargate_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut application_security_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut application_security_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_pipeline_indexed_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_pipeline_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_test_indexed_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_testing_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ci_testing_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cloud_cost_management_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cloud_cost_management_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cspm_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cspm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cspm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut custom_event_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cws_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cws_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut cws_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut dbm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut dbm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut dbm_normalized_queries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut dbm_normalized_queries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut error_tracking_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut error_tracking_tiered_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_apm_and_profiler_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_apm_and_profiler_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_profiler_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_profiler_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut fargate_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut incident_management_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut incident_management_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut infra_and_apm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut infra_and_apm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut infra_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut infra_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut infra_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ingested_spans_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ingested_timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut ingested_timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
                 let mut iot_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
-                let mut iot_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut lambda_function_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut lambda_function_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_forwarding_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_15day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_180day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_1day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_30day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_360day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_3day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_45day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_60day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_7day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_90day_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_custom_retention_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_indexed_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut logs_ingested_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut network_device_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut network_device_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut npm_flow_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut npm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut npm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut observability_pipeline_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut online_archive_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut prof_container_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut prof_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut prof_host_top99p: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut rum_lite_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut rum_replay_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
+                let mut iot_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut lambda_function_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut lambda_function_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_forwarding_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_15day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_180day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_1day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_30day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_360day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_3day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_45day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_60day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_7day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_90day_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_custom_retention_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_indexed_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut logs_ingested_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut network_device_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut network_device_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut npm_flow_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut npm_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut npm_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut observability_pipeline_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut online_archive_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut prof_container_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut prof_host_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut prof_host_top99p: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut rum_lite_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut rum_replay_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
                 let mut rum_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
-                let mut rum_units_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut sensitive_data_scanner_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut serverless_apm_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut serverless_infra_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut serverless_infra_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut serverless_invocation_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
+                let mut rum_units_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut sensitive_data_scanner_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut serverless_apm_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut serverless_infra_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut serverless_infra_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut serverless_invocation_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
                 let mut siem_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
-                let mut standard_timeseries_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut synthetics_api_tests_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut synthetics_app_testing_maximum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut synthetics_browser_checks_sum: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut timeseries_average: Option<
-                    crate::datadogV1::model::UsageBillableSummaryBody,
-                > = None;
-                let mut timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut standard_timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut synthetics_api_tests_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut synthetics_app_testing_maximum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut synthetics_browser_checks_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut timeseries_average: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                let mut timeseries_sum: Option<crate::datadogV1::model::UsageBillableSummaryBody> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -1402,640 +975,553 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryKeys {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_fargate_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_fargate_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_fargate_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_fargate_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_fargate_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_profiler_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_profiler_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_profiler_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_profiler_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_profiler_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_profiler_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_trace_search_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            apm_trace_search_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_trace_search_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "application_security_fargate_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            application_security_fargate_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_security_fargate_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "application_security_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            application_security_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_security_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "application_security_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            application_security_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_security_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_indexed_spans_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_pipeline_indexed_spans_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_indexed_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_maximum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_pipeline_maximum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_maximum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_pipeline_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_test_indexed_spans_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_test_indexed_spans_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_test_indexed_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_testing_maximum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_testing_maximum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_testing_maximum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_testing_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ci_testing_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_testing_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_cost_management_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_cost_management_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_cost_management_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_container_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_container_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_container_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cspm_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_event_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_event_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_event_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_container_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_container_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_container_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cws_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_normalized_queries_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_normalized_queries_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_normalized_queries_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_normalized_queries_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dbm_normalized_queries_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_normalized_queries_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_tiered_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_tracking_tiered_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_tiered_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_apm_and_profiler_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_apm_and_profiler_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_apm_and_profiler_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_apm_and_profiler_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_apm_and_profiler_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_apm_and_profiler_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_profiler_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_profiler_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_profiler_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_profiler_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_profiler_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_profiler_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_container_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fargate_container_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_container_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_management_maximum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_management_maximum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_management_maximum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_management_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_management_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_management_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_and_apm_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_and_apm_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_and_apm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_and_apm_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_and_apm_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_and_apm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_container_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_container_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_container_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            infra_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_spans_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ingested_spans_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_timeseries_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ingested_timeseries_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_timeseries_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_timeseries_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ingested_timeseries_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_timeseries_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "iot_sum" => {
                             if v.is_null() {
                                 continue;
                             }
                             iot_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "iot_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
                             iot_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "lambda_function_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            lambda_function_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lambda_function_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lambda_function_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            lambda_function_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lambda_function_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_forwarding_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_forwarding_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_forwarding_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_15day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_15day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_15day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_180day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_180day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_180day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_1day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_1day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_1day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_30day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_30day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_30day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_360day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_360day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_360day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_3day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_3day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_3day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_45day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_45day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_45day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_60day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_60day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_60day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_7day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_7day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_7day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_90day_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_90day_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_90day_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_custom_retention_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_custom_retention_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_custom_retention_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_indexed_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_ingested_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_ingested_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_ingested_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "network_device_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            network_device_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_device_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "network_device_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            network_device_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_device_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_flow_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            npm_flow_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_flow_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            npm_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            npm_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "observability_pipeline_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            observability_pipeline_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            observability_pipeline_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            online_archive_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            online_archive_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "prof_container_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            prof_container_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            prof_container_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "prof_host_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            prof_host_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            prof_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "prof_host_top99p" => {
                             if v.is_null() {
                                 continue;
                             }
-                            prof_host_top99p =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            prof_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_lite_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_lite_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_lite_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_replay_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_replay_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_replay_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_sum" => {
                             if v.is_null() {
                                 continue;
                             }
                             rum_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rum_units_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_units_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_units_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sensitive_data_scanner_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sensitive_data_scanner_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sensitive_data_scanner_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apm_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_apm_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_infra_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_infra_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_infra_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_infra_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_infra_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_infra_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_invocation_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serverless_invocation_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_invocation_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_sum" => {
                             if v.is_null() {
                                 continue;
                             }
                             siem_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "standard_timeseries_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            standard_timeseries_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            standard_timeseries_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_api_tests_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_api_tests_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_api_tests_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_app_testing_maximum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_app_testing_maximum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_app_testing_maximum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_browser_checks_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            synthetics_browser_checks_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            synthetics_browser_checks_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeseries_average" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timeseries_average =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeseries_average = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeseries_sum" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timeseries_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeseries_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

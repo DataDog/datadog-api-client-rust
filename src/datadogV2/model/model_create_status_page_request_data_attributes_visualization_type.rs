@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CreateStatusPageRequestDataAttributesVisualizationType {
-    BARS_AND_UPTIME_PERCENTAGE,
-    BARS_ONLY,
-    COMPONENT_NAME_ONLY,
+	BARS_AND_UPTIME_PERCENTAGE,
+	BARS_ONLY,
+	COMPONENT_NAME_ONLY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributesVisualizatio
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "bars_and_uptime_percentage" => Self::BARS_AND_UPTIME_PERCENTAGE,
-            "bars_only" => Self::BARS_ONLY,
-            "component_name_only" => Self::COMPONENT_NAME_ONLY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"bars_and_uptime_percentage" => Self::BARS_AND_UPTIME_PERCENTAGE,"bars_only" => Self::BARS_ONLY,"component_name_only" => Self::COMPONENT_NAME_ONLY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

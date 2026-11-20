@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityFindingType {
-    API_SECURITY,
-    ATTACK_PATH,
-    HOST_AND_CONTAINER_VULNERABILITY,
-    IAC_MISCONFIGURATION,
-    IDENTITY_RISK,
-    LIBRARY_VULNERABILITY,
-    MISCONFIGURATION,
-    RUNTIME_CODE_VULNERABILITY,
-    SECRET,
-    STATIC_CODE_VULNERABILITY,
-    WORKLOAD_ACTIVITY,
+	API_SECURITY,
+	ATTACK_PATH,
+	HOST_AND_CONTAINER_VULNERABILITY,
+	IAC_MISCONFIGURATION,
+	IDENTITY_RISK,
+	LIBRARY_VULNERABILITY,
+	MISCONFIGURATION,
+	RUNTIME_CODE_VULNERABILITY,
+	SECRET,
+	STATIC_CODE_VULNERABILITY,
+	WORKLOAD_ACTIVITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,9 +27,7 @@ impl ToString for SecurityFindingType {
         match self {
             Self::API_SECURITY => String::from("api_security"),
             Self::ATTACK_PATH => String::from("attack_path"),
-            Self::HOST_AND_CONTAINER_VULNERABILITY => {
-                String::from("host_and_container_vulnerability")
-            }
+            Self::HOST_AND_CONTAINER_VULNERABILITY => String::from("host_and_container_vulnerability"),
             Self::IAC_MISCONFIGURATION => String::from("iac_misconfiguration"),
             Self::IDENTITY_RISK => String::from("identity_risk"),
             Self::LIBRARY_VULNERABILITY => String::from("library_vulnerability"),
@@ -60,21 +59,8 @@ impl<'de> Deserialize<'de> for SecurityFindingType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "api_security" => Self::API_SECURITY,
-            "attack_path" => Self::ATTACK_PATH,
-            "host_and_container_vulnerability" => Self::HOST_AND_CONTAINER_VULNERABILITY,
-            "iac_misconfiguration" => Self::IAC_MISCONFIGURATION,
-            "identity_risk" => Self::IDENTITY_RISK,
-            "library_vulnerability" => Self::LIBRARY_VULNERABILITY,
-            "misconfiguration" => Self::MISCONFIGURATION,
-            "runtime_code_vulnerability" => Self::RUNTIME_CODE_VULNERABILITY,
-            "secret" => Self::SECRET,
-            "static_code_vulnerability" => Self::STATIC_CODE_VULNERABILITY,
-            "workload_activity" => Self::WORKLOAD_ACTIVITY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"api_security" => Self::API_SECURITY,"attack_path" => Self::ATTACK_PATH,"host_and_container_vulnerability" => Self::HOST_AND_CONTAINER_VULNERABILITY,"iac_misconfiguration" => Self::IAC_MISCONFIGURATION,"identity_risk" => Self::IDENTITY_RISK,"library_vulnerability" => Self::LIBRARY_VULNERABILITY,"misconfiguration" => Self::MISCONFIGURATION,"runtime_code_vulnerability" => Self::RUNTIME_CODE_VULNERABILITY,"secret" => Self::SECRET,"static_code_vulnerability" => Self::STATIC_CODE_VULNERABILITY,"workload_activity" => Self::WORKLOAD_ACTIVITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

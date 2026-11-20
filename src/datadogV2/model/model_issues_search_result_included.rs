@@ -1,20 +1,20 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// An array of related resources, returned when the `include` query parameter is used.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum IssuesSearchResultIncluded {
-    Issue(Box<crate::datadogV2::model::Issue>),
-    IssueCase(Box<crate::datadogV2::model::IssueCase>),
-    IssueUser(Box<crate::datadogV2::model::IssueUser>),
-    IssueTeam(Box<crate::datadogV2::model::IssueTeam>),
-    IssuePullRequest(Box<crate::datadogV2::model::IssuePullRequest>),
-    IssueWatch(Box<crate::datadogV2::model::IssueWatch>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	Issue(Box<crate::datadogV2::model::Issue>),
+	IssueCase(Box<crate::datadogV2::model::IssueCase>),
+	IssueUser(Box<crate::datadogV2::model::IssueUser>),
+	IssueTeam(Box<crate::datadogV2::model::IssueTeam>),
+	IssuePullRequest(Box<crate::datadogV2::model::IssuePullRequest>),
+	IssueWatch(Box<crate::datadogV2::model::IssueWatch>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for IssuesSearchResultIncluded {
@@ -23,50 +23,37 @@ impl<'de> Deserialize<'de> for IssuesSearchResultIncluded {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Issue>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Issue>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::Issue(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::IssueCase>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IssueCase>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssueCase(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::IssueUser>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IssueUser>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssueUser(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::IssueTeam>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IssueTeam>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssueTeam(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::IssuePullRequest>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IssuePullRequest>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssuePullRequest(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::IssueWatch>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IssueWatch>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(IssuesSearchResultIncluded::IssueWatch(_v));
             }
         }
-
-        return Ok(IssuesSearchResultIncluded::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(IssuesSearchResultIncluded::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

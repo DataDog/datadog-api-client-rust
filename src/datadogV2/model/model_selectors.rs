@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Selectors are used to filter security issues for which notifications should be generated.
 /// Users can specify rule severities, rule types, a query to filter security issues on tags and attributes, and the trigger source.
@@ -23,14 +23,14 @@ pub struct Selectors {
     #[serde(rename = "severities")]
     pub severities: Option<Vec<crate::datadogV2::model::RuleSeverity>>,
     /// The type of security issues on which the rule applies. Notification rules based on security signals need to use the trigger source "security_signals",
-    /// while notification rules based on security vulnerabilities need to use the trigger source "security_findings".
+/// while notification rules based on security vulnerabilities need to use the trigger source "security_findings".
     #[serde(rename = "trigger_source")]
     pub trigger_source: crate::datadogV2::model::TriggerSource,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl Selectors {
@@ -44,30 +44,29 @@ impl Selectors {
             _unparsed: false,
         }
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn rule_types(mut self, value: Vec<crate::datadogV2::model::RuleTypesItems>) -> Self {
         self.rule_types = Some(value);
         self
     }
-
+    
     pub fn severities(mut self, value: Vec<crate::datadogV2::model::RuleSeverity>) -> Self {
         self.severities = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for Selectors {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,10 +89,7 @@ impl<'de> Deserialize<'de> for Selectors {
                 let mut rule_types: Option<Vec<crate::datadogV2::model::RuleTypesItems>> = None;
                 let mut severities: Option<Vec<crate::datadogV2::model::RuleSeverity>> = None;
                 let mut trigger_source: Option<crate::datadogV2::model::TriggerSource> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,42 +99,38 @@ impl<'de> Deserialize<'de> for Selectors {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_types" => {
                             if v.is_null() {
                                 continue;
                             }
                             rule_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "severities" => {
                             if v.is_null() {
                                 continue;
                             }
                             severities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "trigger_source" => {
-                            trigger_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            trigger_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _trigger_source) = trigger_source {
                                 match _trigger_source {
-                                    crate::datadogV2::model::TriggerSource::UnparsedObject(
-                                        _trigger_source,
-                                    ) => {
+                                    crate::datadogV2::model::TriggerSource::UnparsedObject(_trigger_source) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let trigger_source =
-                    trigger_source.ok_or_else(|| M::Error::missing_field("trigger_source"))?;
+                let trigger_source = trigger_source.ok_or_else(|| M::Error::missing_field("trigger_source"))?;
 
                 let content = Selectors {
                     query,

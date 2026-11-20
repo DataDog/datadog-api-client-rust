@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationships of a role assignment.
 #[non_exhaustive]
@@ -13,12 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct IncidentRoleAssignmentRelationshipsResponse {
     /// Relationship to a responder.
     #[serde(rename = "created_by_user")]
-    pub created_by_user:
-        Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship>,
+    pub created_by_user: Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship>,
     /// Relationship to a responder.
     #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user:
-        Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship>,
+    pub last_modified_by_user: Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship>,
     /// Relationship to a role.
     #[serde(rename = "reserved_role")]
     pub reserved_role: Option<crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship>,
@@ -32,13 +30,11 @@ pub struct IncidentRoleAssignmentRelationshipsResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentRoleAssignmentRelationshipsResponse {
-    pub fn new(
-        responder: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-    ) -> IncidentRoleAssignmentRelationshipsResponse {
+    pub fn new(responder: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship) -> IncidentRoleAssignmentRelationshipsResponse {
         IncidentRoleAssignmentRelationshipsResponse {
             created_by_user: None,
             last_modified_by_user: None,
@@ -49,47 +45,34 @@ impl IncidentRoleAssignmentRelationshipsResponse {
             _unparsed: false,
         }
     }
-
-    pub fn created_by_user(
-        mut self,
-        value: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-    ) -> Self {
+    
+    pub fn created_by_user(mut self, value: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship) -> Self {
         self.created_by_user = Some(value);
         self
     }
-
-    pub fn last_modified_by_user(
-        mut self,
-        value: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-    ) -> Self {
+    
+    pub fn last_modified_by_user(mut self, value: crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }
-
-    pub fn reserved_role(
-        mut self,
-        value: crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship,
-    ) -> Self {
+    
+    pub fn reserved_role(mut self, value: crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship) -> Self {
         self.reserved_role = Some(value);
         self
     }
-
-    pub fn user_defined_role(
-        mut self,
-        value: crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship,
-    ) -> Self {
+    
+    pub fn user_defined_role(mut self, value: crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship) -> Self {
         self.user_defined_role = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentRoleAssignmentRelationshipsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -108,25 +91,12 @@ impl<'de> Deserialize<'de> for IncidentRoleAssignmentRelationshipsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_by_user: Option<
-                    crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-                > = None;
-                let mut last_modified_by_user: Option<
-                    crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-                > = None;
-                let mut reserved_role: Option<
-                    crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship,
-                > = None;
-                let mut responder: Option<
-                    crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship,
-                > = None;
-                let mut user_defined_role: Option<
-                    crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut created_by_user: Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship> = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship> = None;
+                let mut reserved_role: Option<crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship> = None;
+                let mut responder: Option<crate::datadogV2::model::IncidentRoleAssignmentResponderRelationship> = None;
+                let mut user_defined_role: Option<crate::datadogV2::model::IncidentRoleAssignmentRoleRelationship> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -135,38 +105,34 @@ impl<'de> Deserialize<'de> for IncidentRoleAssignmentRelationshipsResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            created_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_modified_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reserved_role" => {
                             if v.is_null() {
                                 continue;
                             }
-                            reserved_role =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            reserved_role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "responder" => {
                             responder = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_defined_role" => {
                             if v.is_null() {
                                 continue;
                             }
-                            user_defined_role =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            user_defined_role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let responder = responder.ok_or_else(|| M::Error::missing_field("responder"))?;

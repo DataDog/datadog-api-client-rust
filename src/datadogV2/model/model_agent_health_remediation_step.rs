@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A step to remediate the issue.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct AgentHealthRemediationStep {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AgentHealthRemediationStep {
@@ -33,25 +33,23 @@ impl AgentHealthRemediationStep {
             _unparsed: false,
         }
     }
-
+    
     pub fn order(mut self, value: i64) -> Self {
         self.order = Some(value);
         self
     }
-
+    
     pub fn text(mut self, value: String) -> Self {
         self.text = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AgentHealthRemediationStep {
     fn default() -> Self {
@@ -78,10 +76,7 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationStep {
             {
                 let mut order: Option<i64> = None;
                 let mut text: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -91,18 +86,18 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationStep {
                                 continue;
                             }
                             order = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "text" => {
                             if v.is_null() {
                                 continue;
                             }
                             text = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

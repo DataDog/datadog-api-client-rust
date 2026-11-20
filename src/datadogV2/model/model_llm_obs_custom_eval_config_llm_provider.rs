@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// LLM provider configuration for a custom evaluator.
 #[non_exhaustive]
@@ -19,8 +19,7 @@ pub struct LLMObsCustomEvalConfigLLMProvider {
     pub integration_account_id: Option<String>,
     /// Name of the LLM integration provider. Use `deterministic` for a code evaluator, which runs `llm_judge_config.user_specified_json_post_processing_function` instead of calling an LLM. `insights_sponsored` is returned for evaluators that Datadog manages and cannot be set.
     #[serde(rename = "integration_provider")]
-    pub integration_provider:
-        Option<crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider>,
+    pub integration_provider: Option<crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider>,
     /// Name of the LLM model. Use `javascript` for a `deterministic` evaluator.
     #[serde(rename = "model_name")]
     pub model_name: Option<String>,
@@ -31,7 +30,7 @@ pub struct LLMObsCustomEvalConfigLLMProvider {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCustomEvalConfigLLMProvider {
@@ -46,49 +45,38 @@ impl LLMObsCustomEvalConfigLLMProvider {
             _unparsed: false,
         }
     }
-
-    pub fn bedrock(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigBedrockOptions,
-    ) -> Self {
+    
+    pub fn bedrock(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigBedrockOptions) -> Self {
         self.bedrock = Some(value);
         self
     }
-
+    
     pub fn integration_account_id(mut self, value: String) -> Self {
         self.integration_account_id = Some(value);
         self
     }
-
-    pub fn integration_provider(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider,
-    ) -> Self {
+    
+    pub fn integration_provider(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider) -> Self {
         self.integration_provider = Some(value);
         self
     }
-
+    
     pub fn model_name(mut self, value: String) -> Self {
         self.model_name = Some(value);
         self
     }
-
-    pub fn vertex_ai(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigVertexAIOptions,
-    ) -> Self {
+    
+    pub fn vertex_ai(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigVertexAIOptions) -> Self {
         self.vertex_ai = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LLMObsCustomEvalConfigLLMProvider {
     fn default() -> Self {
@@ -113,21 +101,12 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMProvider {
             where
                 M: MapAccess<'a>,
             {
-                let mut bedrock: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigBedrockOptions,
-                > = None;
+                let mut bedrock: Option<crate::datadogV2::model::LLMObsCustomEvalConfigBedrockOptions> = None;
                 let mut integration_account_id: Option<String> = None;
-                let mut integration_provider: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider,
-                > = None;
+                let mut integration_provider: Option<crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider> = None;
                 let mut model_name: Option<String> = None;
-                let mut vertex_ai: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigVertexAIOptions,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut vertex_ai: Option<crate::datadogV2::model::LLMObsCustomEvalConfigVertexAIOptions> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -137,20 +116,18 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMProvider {
                                 continue;
                             }
                             bedrock = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "integration_account_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integration_account_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integration_account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "integration_provider" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integration_provider =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            integration_provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _integration_provider) = integration_provider {
                                 match _integration_provider {
                                     crate::datadogV2::model::LLMObsCustomEvalConfigIntegrationProvider::UnparsedObject(_integration_provider) => {
@@ -159,24 +136,24 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMProvider {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "model_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             model_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "vertex_ai" => {
                             if v.is_null() {
                                 continue;
                             }
                             vertex_ai = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

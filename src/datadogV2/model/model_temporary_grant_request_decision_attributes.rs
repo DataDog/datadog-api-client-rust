@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Binary decision. Overrides, reason fields, and unknown attributes are rejected, including null values.
 #[non_exhaustive]
@@ -16,19 +16,20 @@ pub struct TemporaryGrantRequestDecisionAttributes {
     pub decision: crate::datadogV2::model::TemporaryGrantRequestDecision,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TemporaryGrantRequestDecisionAttributes {
-    pub fn new(
-        decision: crate::datadogV2::model::TemporaryGrantRequestDecision,
-    ) -> TemporaryGrantRequestDecisionAttributes {
+    pub fn new(decision: crate::datadogV2::model::TemporaryGrantRequestDecision) -> TemporaryGrantRequestDecisionAttributes {
         TemporaryGrantRequestDecisionAttributes {
             decision,
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for TemporaryGrantRequestDecisionAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -47,8 +48,7 @@ impl<'de> Deserialize<'de> for TemporaryGrantRequestDecisionAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut decision: Option<crate::datadogV2::model::TemporaryGrantRequestDecision> =
-                    None;
+                let mut decision: Option<crate::datadogV2::model::TemporaryGrantRequestDecision> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -63,12 +63,10 @@ impl<'de> Deserialize<'de> for TemporaryGrantRequestDecisionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let decision = decision.ok_or_else(|| M::Error::missing_field("decision"))?;

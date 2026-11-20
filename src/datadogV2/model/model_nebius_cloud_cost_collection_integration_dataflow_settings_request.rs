@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the Cloud Cost Management dataflow. Only the fields provided are changed.
 #[non_exhaustive]
@@ -28,7 +28,7 @@ pub struct NebiusCloudCostCollectionIntegrationDataflowSettingsRequest {
     pub bucket_region: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudCostCollectionIntegrationDataflowSettingsRequest {
@@ -42,32 +42,34 @@ impl NebiusCloudCostCollectionIntegrationDataflowSettingsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn access_key_id(mut self, value: String) -> Self {
         self.access_key_id = Some(value);
         self
     }
-
+    
     pub fn access_key_secret(mut self, value: String) -> Self {
         self.access_key_secret = Some(value);
         self
     }
-
+    
     pub fn bucket_name(mut self, value: String) -> Self {
         self.bucket_name = Some(value);
         self
     }
-
+    
     pub fn bucket_prefix_path(mut self, value: String) -> Self {
         self.bucket_prefix_path = Some(value);
         self
     }
-
+    
     pub fn bucket_region(mut self, value: String) -> Self {
         self.bucket_region = Some(value);
         self
     }
+    
 }
+
 
 impl Default for NebiusCloudCostCollectionIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -105,42 +107,35 @@ impl<'de> Deserialize<'de> for NebiusCloudCostCollectionIntegrationDataflowSetti
                             if v.is_null() {
                                 continue;
                             }
-                            access_key_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            access_key_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "access_key_secret" => {
                             if v.is_null() {
                                 continue;
                             }
-                            access_key_secret =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            access_key_secret = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_prefix_path" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_prefix_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_prefix_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_region" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -157,7 +152,6 @@ impl<'de> Deserialize<'de> for NebiusCloudCostCollectionIntegrationDataflowSetti
             }
         }
 
-        deserializer
-            .deserialize_any(NebiusCloudCostCollectionIntegrationDataflowSettingsRequestVisitor)
+        deserializer.deserialize_any(NebiusCloudCostCollectionIntegrationDataflowSettingsRequestVisitor)
     }
 }

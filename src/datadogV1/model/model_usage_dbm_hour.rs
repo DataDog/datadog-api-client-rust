@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Database Monitoring usage for a given organization for a given hour.
 #[non_exhaustive]
@@ -12,18 +12,10 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageDBMHour {
     /// The total number of Database Monitoring host hours from the start of the given hour’s month until the given hour.
-    #[serde(
-        rename = "dbm_host_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "dbm_host_count", default, with = "::serde_with::rust::double_option")]
     pub dbm_host_count: Option<Option<i64>>,
     /// The total number of normalized Database Monitoring queries from the start of the given hour’s month until the given hour.
-    #[serde(
-        rename = "dbm_queries_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "dbm_queries_count", default, with = "::serde_with::rust::double_option")]
     pub dbm_queries_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
@@ -38,7 +30,7 @@ pub struct UsageDBMHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageDBMHour {
@@ -53,40 +45,38 @@ impl UsageDBMHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn dbm_host_count(mut self, value: Option<i64>) -> Self {
         self.dbm_host_count = Some(value);
         self
     }
-
+    
     pub fn dbm_queries_count(mut self, value: Option<i64>) -> Self {
         self.dbm_queries_count = Some(value);
         self
     }
-
+    
     pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageDBMHour {
     fn default() -> Self {
@@ -116,45 +106,40 @@ impl<'de> Deserialize<'de> for UsageDBMHour {
                 let mut hour: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "dbm_host_count" => {
-                            dbm_host_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_host_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_queries_count" => {
-                            dbm_queries_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_queries_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hour" => {
                             if v.is_null() {
                                 continue;
                             }
                             hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

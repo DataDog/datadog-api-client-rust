@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating an Agent Observability experiment.
 #[non_exhaustive]
@@ -45,7 +45,7 @@ pub struct LLMObsExperimentDataAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsExperimentDataAttributesRequest {
@@ -65,58 +65,54 @@ impl LLMObsExperimentDataAttributesRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
-
+    
     pub fn dataset_id(mut self, value: String) -> Self {
         self.dataset_id = Some(value);
         self
     }
-
+    
     pub fn dataset_version(mut self, value: i64) -> Self {
         self.dataset_version = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn ensure_unique(mut self, value: bool) -> Self {
         self.ensure_unique = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn parent_experiment_id(mut self, value: String) -> Self {
         self.parent_experiment_id = Some(value);
         self
     }
-
+    
     pub fn run_count(mut self, value: i32) -> Self {
         self.run_count = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -135,22 +131,17 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut dataset_id: Option<String> = None;
                 let mut dataset_version: Option<i64> = None;
                 let mut description: Option<String> = None;
                 let mut ensure_unique: Option<bool> = None;
-                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut name: Option<String> = None;
                 let mut parent_experiment_id: Option<String> = None;
                 let mut project_id: Option<String> = None;
                 let mut run_count: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,64 +151,60 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                                 continue;
                             }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dataset_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             dataset_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dataset_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dataset_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dataset_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ensure_unique" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ensure_unique =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ensure_unique = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parent_experiment_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            parent_experiment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            parent_experiment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "run_count" => {
                             if v.is_null() {
                                 continue;
                             }
                             run_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The incident's relationships from a response.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct IncidentResponseRelationships {
     #[serde(rename = "attachments")]
     pub attachments: Option<crate::datadogV2::model::RelationshipToIncidentAttachment>,
     /// Relationship to user.
-    #[serde(
-        rename = "commander_user",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "commander_user", default, with = "::serde_with::rust::double_option")]
     pub commander_user: Option<Option<crate::datadogV2::model::NullableRelationshipToUser>>,
     /// Relationship to user.
     #[serde(rename = "created_by_user")]
@@ -44,13 +40,12 @@ pub struct IncidentResponseRelationships {
     pub responders: Option<crate::datadogV2::model::RelationshipToIncidentResponders>,
     /// Relationship to incident user defined fields.
     #[serde(rename = "user_defined_fields")]
-    pub user_defined_fields:
-        Option<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields>,
+    pub user_defined_fields: Option<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentResponseRelationships {
@@ -70,89 +65,63 @@ impl IncidentResponseRelationships {
             _unparsed: false,
         }
     }
-
-    pub fn attachments(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentAttachment,
-    ) -> Self {
+    
+    pub fn attachments(mut self, value: crate::datadogV2::model::RelationshipToIncidentAttachment) -> Self {
         self.attachments = Some(value);
         self
     }
-
-    pub fn commander_user(
-        mut self,
-        value: Option<crate::datadogV2::model::NullableRelationshipToUser>,
-    ) -> Self {
+    
+    pub fn commander_user(mut self, value: Option<crate::datadogV2::model::NullableRelationshipToUser>) -> Self {
         self.commander_user = Some(value);
         self
     }
-
+    
     pub fn created_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.created_by_user = Some(value);
         self
     }
-
+    
     pub fn declared_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.declared_by_user = Some(value);
         self
     }
-
-    pub fn impacts(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentImpacts,
-    ) -> Self {
+    
+    pub fn impacts(mut self, value: crate::datadogV2::model::RelationshipToIncidentImpacts) -> Self {
         self.impacts = Some(value);
         self
     }
-
-    pub fn incident_type(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentType,
-    ) -> Self {
+    
+    pub fn incident_type(mut self, value: crate::datadogV2::model::RelationshipToIncidentType) -> Self {
         self.incident_type = Some(value);
         self
     }
-
-    pub fn integrations(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
-    ) -> Self {
+    
+    pub fn integrations(mut self, value: crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas) -> Self {
         self.integrations = Some(value);
         self
     }
-
-    pub fn last_modified_by_user(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToUser,
-    ) -> Self {
+    
+    pub fn last_modified_by_user(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }
-
-    pub fn responders(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentResponders,
-    ) -> Self {
+    
+    pub fn responders(mut self, value: crate::datadogV2::model::RelationshipToIncidentResponders) -> Self {
         self.responders = Some(value);
         self
     }
-
-    pub fn user_defined_fields(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
-    ) -> Self {
+    
+    pub fn user_defined_fields(mut self, value: crate::datadogV2::model::RelationshipToIncidentUserDefinedFields) -> Self {
         self.user_defined_fields = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentResponseRelationships {
     fn default() -> Self {
@@ -177,34 +146,17 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut attachments: Option<
-                    crate::datadogV2::model::RelationshipToIncidentAttachment,
-                > = None;
-                let mut commander_user: Option<
-                    Option<crate::datadogV2::model::NullableRelationshipToUser>,
-                > = None;
+                let mut attachments: Option<crate::datadogV2::model::RelationshipToIncidentAttachment> = None;
+                let mut commander_user: Option<Option<crate::datadogV2::model::NullableRelationshipToUser>> = None;
                 let mut created_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
-                let mut declared_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
-                    None;
-                let mut impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts> =
-                    None;
-                let mut incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType> =
-                    None;
-                let mut integrations: Option<
-                    crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas,
-                > = None;
-                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
-                    None;
-                let mut responders: Option<
-                    crate::datadogV2::model::RelationshipToIncidentResponders,
-                > = None;
-                let mut user_defined_fields: Option<
-                    crate::datadogV2::model::RelationshipToIncidentUserDefinedFields,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut declared_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                let mut impacts: Option<crate::datadogV2::model::RelationshipToIncidentImpacts> = None;
+                let mut incident_type: Option<crate::datadogV2::model::RelationshipToIncidentType> = None;
+                let mut integrations: Option<crate::datadogV2::model::RelationshipToIncidentIntegrationMetadatas> = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> = None;
+                let mut responders: Option<crate::datadogV2::model::RelationshipToIncidentResponders> = None;
+                let mut user_defined_fields: Option<crate::datadogV2::model::RelationshipToIncidentUserDefinedFields> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -213,72 +165,64 @@ impl<'de> Deserialize<'de> for IncidentResponseRelationships {
                             if v.is_null() {
                                 continue;
                             }
-                            attachments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            attachments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "commander_user" => {
-                            commander_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            commander_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            created_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "declared_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            declared_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            declared_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "impacts" => {
                             if v.is_null() {
                                 continue;
                             }
                             impacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "incident_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_modified_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "responders" => {
                             if v.is_null() {
                                 continue;
                             }
                             responders = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_defined_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            user_defined_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            user_defined_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

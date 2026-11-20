@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleTypeRead {
-    LOG_DETECTION,
-    INFRASTRUCTURE_CONFIGURATION,
-    WORKLOAD_SECURITY,
-    CLOUD_CONFIGURATION,
-    APPLICATION_SECURITY,
-    API_SECURITY,
-    WORKLOAD_ACTIVITY,
-    WORKLOAD_HARDENING,
+	LOG_DETECTION,
+	INFRASTRUCTURE_CONFIGURATION,
+	WORKLOAD_SECURITY,
+	CLOUD_CONFIGURATION,
+	APPLICATION_SECURITY,
+	API_SECURITY,
+	WORKLOAD_ACTIVITY,
+	WORKLOAD_HARDENING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeRead {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "log_detection" => Self::LOG_DETECTION,
-            "infrastructure_configuration" => Self::INFRASTRUCTURE_CONFIGURATION,
-            "workload_security" => Self::WORKLOAD_SECURITY,
-            "cloud_configuration" => Self::CLOUD_CONFIGURATION,
-            "application_security" => Self::APPLICATION_SECURITY,
-            "api_security" => Self::API_SECURITY,
-            "workload_activity" => Self::WORKLOAD_ACTIVITY,
-            "workload_hardening" => Self::WORKLOAD_HARDENING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"log_detection" => Self::LOG_DETECTION,"infrastructure_configuration" => Self::INFRASTRUCTURE_CONFIGURATION,"workload_security" => Self::WORKLOAD_SECURITY,"cloud_configuration" => Self::CLOUD_CONFIGURATION,"application_security" => Self::APPLICATION_SECURITY,"api_security" => Self::API_SECURITY,"workload_activity" => Self::WORKLOAD_ACTIVITY,"workload_hardening" => Self::WORKLOAD_HARDENING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

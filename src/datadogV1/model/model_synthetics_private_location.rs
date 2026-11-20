@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing information about the private location to create.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct SyntheticsPrivateLocation {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsPrivateLocation {
@@ -49,36 +49,29 @@ impl SyntheticsPrivateLocation {
             _unparsed: false,
         }
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsPrivateLocationMetadata,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: crate::datadogV1::model::SyntheticsPrivateLocationMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
-
-    pub fn secrets(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsPrivateLocationSecrets,
-    ) -> Self {
+    
+    pub fn secrets(mut self, value: crate::datadogV1::model::SyntheticsPrivateLocationSecrets) -> Self {
         self.secrets = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsPrivateLocation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -99,58 +92,50 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocation {
             {
                 let mut description: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut metadata: Option<
-                    crate::datadogV1::model::SyntheticsPrivateLocationMetadata,
-                > = None;
+                let mut metadata: Option<crate::datadogV1::model::SyntheticsPrivateLocationMetadata> = None;
                 let mut name: Option<String> = None;
-                let mut secrets: Option<crate::datadogV1::model::SyntheticsPrivateLocationSecrets> =
-                    None;
+                let mut secrets: Option<crate::datadogV1::model::SyntheticsPrivateLocationSecrets> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "secrets" => {
                             if v.is_null() {
                                 continue;
                             }
                             secrets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
 

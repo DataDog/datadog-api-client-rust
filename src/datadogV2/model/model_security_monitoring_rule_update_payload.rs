@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Update an existing rule.
 #[non_exhaustive]
@@ -19,8 +19,7 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>>,
     /// How to generate compliance signals. Useful for cloud_configuration rules only.
     #[serde(rename = "complianceSignalOptions")]
-    pub compliance_signal_options:
-        Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
+    pub compliance_signal_options: Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions>,
     /// Custom/Overridden Message for generated signals (used in case of Default rule update).
     #[serde(rename = "customMessage")]
     pub custom_message: Option<String>,
@@ -55,20 +54,14 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     #[serde(rename = "referenceTables")]
     pub reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>>,
     /// Options for scheduled rules. When this field is present, the rule runs based on the schedule. When absent, it runs real-time on ingested logs.
-    #[serde(
-        rename = "schedulingOptions",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub scheduling_options:
-        Option<Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>>,
+    #[serde(rename = "schedulingOptions", default, with = "::serde_with::rust::double_option")]
+    pub scheduling_options: Option<Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>>,
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// Cases for generating signals from third-party rules. Only available for third-party rules.
     #[serde(rename = "thirdPartyCases")]
-    pub third_party_cases:
-        Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>>,
+    pub third_party_cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>>,
     /// The version of the rule being updated.
     #[serde(rename = "version")]
     pub version: Option<i32>,
@@ -76,7 +69,7 @@ pub struct SecurityMonitoringRuleUpdatePayload {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleUpdatePayload {
@@ -104,132 +97,103 @@ impl SecurityMonitoringRuleUpdatePayload {
             _unparsed: false,
         }
     }
-
-    pub fn calculated_fields(
-        mut self,
-        value: Vec<crate::datadogV2::model::CalculatedField>,
-    ) -> Self {
+    
+    pub fn calculated_fields(mut self, value: Vec<crate::datadogV2::model::CalculatedField>) -> Self {
         self.calculated_fields = Some(value);
         self
     }
-
-    pub fn cases(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
-    ) -> Self {
+    
+    pub fn cases(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>) -> Self {
         self.cases = Some(value);
         self
     }
-
-    pub fn compliance_signal_options(
-        mut self,
-        value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
-    ) -> Self {
+    
+    pub fn compliance_signal_options(mut self, value: crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions) -> Self {
         self.compliance_signal_options = Some(value);
         self
     }
-
+    
     pub fn custom_message(mut self, value: String) -> Self {
         self.custom_message = Some(value);
         self
     }
-
+    
     pub fn custom_name(mut self, value: String) -> Self {
         self.custom_name = Some(value);
         self
     }
-
-    pub fn filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> Self {
+    
+    pub fn filters(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn group_signals_by(mut self, value: Vec<String>) -> Self {
         self.group_signals_by = Some(value);
         self
     }
-
+    
     pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
         self
     }
-
+    
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn options(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-    ) -> Self {
+    
+    pub fn options(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleOptions) -> Self {
         self.options = Some(value);
         self
     }
-
-    pub fn queries(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>,
-    ) -> Self {
+    
+    pub fn queries(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>) -> Self {
         self.queries = Some(value);
         self
     }
-
-    pub fn reference_tables(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
-    ) -> Self {
+    
+    pub fn reference_tables(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>) -> Self {
         self.reference_tables = Some(value);
         self
     }
-
-    pub fn scheduling_options(
-        mut self,
-        value: Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>,
-    ) -> Self {
+    
+    pub fn scheduling_options(mut self, value: Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>) -> Self {
         self.scheduling_options = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn third_party_cases(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
-    ) -> Self {
+    
+    pub fn third_party_cases(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>) -> Self {
         self.third_party_cases = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i32) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleUpdatePayload {
     fn default() -> Self {
@@ -254,41 +218,25 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
             where
                 M: MapAccess<'a>,
             {
-                let mut calculated_fields: Option<Vec<crate::datadogV2::model::CalculatedField>> =
-                    None;
-                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
-                    None;
-                let mut compliance_signal_options: Option<
-                    crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions,
-                > = None;
+                let mut calculated_fields: Option<Vec<crate::datadogV2::model::CalculatedField>> = None;
+                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> = None;
+                let mut compliance_signal_options: Option<crate::datadogV2::model::CloudConfigurationRuleComplianceSignalOptions> = None;
                 let mut custom_message: Option<String> = None;
                 let mut custom_name: Option<String> = None;
-                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
-                    None;
+                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> = None;
                 let mut group_signals_by: Option<Vec<String>> = None;
                 let mut has_extended_title: Option<bool> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
-                    None;
-                let mut queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>> =
-                    None;
-                let mut reference_tables: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
-                > = None;
-                let mut scheduling_options: Option<
-                    Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>,
-                > = None;
+                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleQuery>> = None;
+                let mut reference_tables: Option<Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>> = None;
+                let mut scheduling_options: Option<Option<crate::datadogV2::model::SecurityMonitoringSchedulingOptions>> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut third_party_cases: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>,
-                > = None;
+                let mut third_party_cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCase>> = None;
                 let mut version: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -297,121 +245,112 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleUpdatePayload {
                             if v.is_null() {
                                 continue;
                             }
-                            calculated_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            calculated_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cases" => {
                             if v.is_null() {
                                 continue;
                             }
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "complianceSignalOptions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compliance_signal_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compliance_signal_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "customMessage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "customName" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "groupSignalsBy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            group_signals_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            group_signals_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hasExtendedTitle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_extended_title =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_extended_title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "isEnabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             if v.is_null() {
                                 continue;
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "queries" => {
                             if v.is_null() {
                                 continue;
                             }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "referenceTables" => {
                             if v.is_null() {
                                 continue;
                             }
-                            reference_tables =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            reference_tables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "schedulingOptions" => {
-                            scheduling_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scheduling_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "thirdPartyCases" => {
                             if v.is_null() {
                                 continue;
                             }
-                            third_party_cases =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            third_party_cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

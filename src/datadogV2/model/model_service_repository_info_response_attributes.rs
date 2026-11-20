@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the service repository information.
 #[non_exhaustive]
@@ -24,13 +24,11 @@ pub struct ServiceRepositoryInfoResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ServiceRepositoryInfoResponseAttributes {
-    pub fn new(
-        status: crate::datadogV2::model::ServiceRepositoryInfoStatus,
-    ) -> ServiceRepositoryInfoResponseAttributes {
+    pub fn new(status: crate::datadogV2::model::ServiceRepositoryInfoStatus) -> ServiceRepositoryInfoResponseAttributes {
         ServiceRepositoryInfoResponseAttributes {
             commit_sha: None,
             repository_url: None,
@@ -39,25 +37,24 @@ impl ServiceRepositoryInfoResponseAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn commit_sha(mut self, value: String) -> Self {
         self.commit_sha = Some(value);
         self
     }
-
+    
     pub fn repository_url(mut self, value: String) -> Self {
         self.repository_url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ServiceRepositoryInfoResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,10 +76,7 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoResponseAttributes {
                 let mut commit_sha: Option<String> = None;
                 let mut repository_url: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::ServiceRepositoryInfoStatus> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -92,14 +86,13 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoResponseAttributes {
                                 continue;
                             }
                             commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "repository_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -110,12 +103,12 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Schema for queue entities.
 #[non_exhaustive]
@@ -34,15 +34,11 @@ pub struct EntityV3Queue {
     pub spec: Option<crate::datadogV2::model::EntityV3QueueSpec>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl EntityV3Queue {
-    pub fn new(
-        api_version: crate::datadogV2::model::EntityV3APIVersion,
-        kind: crate::datadogV2::model::EntityV3QueueKind,
-        metadata: crate::datadogV2::model::EntityV3Metadata,
-    ) -> EntityV3Queue {
+    pub fn new(api_version: crate::datadogV2::model::EntityV3APIVersion, kind: crate::datadogV2::model::EntityV3QueueKind, metadata: crate::datadogV2::model::EntityV3Metadata) -> EntityV3Queue {
         EntityV3Queue {
             api_version,
             datadog: None,
@@ -54,30 +50,30 @@ impl EntityV3Queue {
             _unparsed: false,
         }
     }
-
+    
     pub fn datadog(mut self, value: crate::datadogV2::model::EntityV3QueueDatadog) -> Self {
         self.datadog = Some(value);
         self
     }
-
-    pub fn extensions(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn extensions(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.extensions = Some(value);
         self
     }
-
+    
     pub fn integrations(mut self, value: crate::datadogV2::model::EntityV3Integrations) -> Self {
         self.integrations = Some(value);
         self
     }
-
+    
     pub fn spec(mut self, value: crate::datadogV2::model::EntityV3QueueSpec) -> Self {
         self.spec = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for EntityV3Queue {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -98,8 +94,7 @@ impl<'de> Deserialize<'de> for EntityV3Queue {
             {
                 let mut api_version: Option<crate::datadogV2::model::EntityV3APIVersion> = None;
                 let mut datadog: Option<crate::datadogV2::model::EntityV3QueueDatadog> = None;
-                let mut extensions: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut extensions: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut integrations: Option<crate::datadogV2::model::EntityV3Integrations> = None;
                 let mut kind: Option<crate::datadogV2::model::EntityV3QueueKind> = None;
                 let mut metadata: Option<crate::datadogV2::model::EntityV3Metadata> = None;
@@ -109,69 +104,60 @@ impl<'de> Deserialize<'de> for EntityV3Queue {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "apiVersion" => {
-                            api_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            api_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _api_version) = api_version {
                                 match _api_version {
-                                    crate::datadogV2::model::EntityV3APIVersion::UnparsedObject(
-                                        _api_version,
-                                    ) => {
+                                    crate::datadogV2::model::EntityV3APIVersion::UnparsedObject(_api_version) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "datadog" => {
                             if v.is_null() {
                                 continue;
                             }
                             datadog = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "extensions" => {
                             if v.is_null() {
                                 continue;
                             }
                             extensions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "kind" => {
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _kind) = kind {
                                 match _kind {
-                                    crate::datadogV2::model::EntityV3QueueKind::UnparsedObject(
-                                        _kind,
-                                    ) => {
+                                    crate::datadogV2::model::EntityV3QueueKind::UnparsedObject(_kind) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "metadata" => {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "spec" => {
                             if v.is_null() {
                                 continue;
                             }
                             spec = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let api_version =
-                    api_version.ok_or_else(|| M::Error::missing_field("api_version"))?;
+                let api_version = api_version.ok_or_else(|| M::Error::missing_field("api_version"))?;
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;
                 let metadata = metadata.ok_or_else(|| M::Error::missing_field("metadata"))?;
 

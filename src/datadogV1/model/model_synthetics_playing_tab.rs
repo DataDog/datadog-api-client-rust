@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsPlayingTab {
-    MAIN_TAB,
-    NEW_TAB,
-    TAB_1,
-    TAB_2,
-    TAB_3,
+	MAIN_TAB,
+	NEW_TAB,
+	TAB_1,
+	TAB_2,
+	TAB_3,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,15 +38,8 @@ impl<'de> Deserialize<'de> for SyntheticsPlayingTab {
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
-        Ok(match s {
-            -1 => Self::MAIN_TAB,
-            0 => Self::NEW_TAB,
-            1 => Self::TAB_1,
-            2 => Self::TAB_2,
-            3 => Self::TAB_3,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {-1 => Self::MAIN_TAB,0 => Self::NEW_TAB,1 => Self::TAB_1,2 => Self::TAB_2,3 => Self::TAB_3,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

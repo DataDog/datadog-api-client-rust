@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumPermanentRetentionFilterID {
-    RUM_APM_FLAT_SAMPLING,
-    SYNTHETICS_SESSIONS,
-    FORCED_REPLAY_SESSIONS,
+	RUM_APM_FLAT_SAMPLING,
+	SYNTHETICS_SESSIONS,
+	FORCED_REPLAY_SESSIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterID {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "rum_apm_flat_sampling" => Self::RUM_APM_FLAT_SAMPLING,
-            "synthetics_sessions" => Self::SYNTHETICS_SESSIONS,
-            "forced_replay_sessions" => Self::FORCED_REPLAY_SESSIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"rum_apm_flat_sampling" => Self::RUM_APM_FLAT_SAMPLING,"synthetics_sessions" => Self::SYNTHETICS_SESSIONS,"forced_replay_sessions" => Self::FORCED_REPLAY_SESSIONS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

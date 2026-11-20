@@ -1,17 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Authentication configured on the Twilio integration account.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum TwilioIntegrationAccountAuthenticationResponse {
-    TwilioIntegrationAccountBasicAuthResponse(
-        Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthResponse>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	TwilioIntegrationAccountBasicAuthResponse(Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthResponse>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for TwilioIntegrationAccountAuthenticationResponse {
@@ -20,19 +18,12 @@ impl<'de> Deserialize<'de> for TwilioIntegrationAccountAuthenticationResponse {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthResponse>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthResponse>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TwilioIntegrationAccountAuthenticationResponse::TwilioIntegrationAccountBasicAuthResponse(_v));
             }
         }
-
-        return Ok(
-            TwilioIntegrationAccountAuthenticationResponse::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(TwilioIntegrationAccountAuthenticationResponse::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

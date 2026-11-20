@@ -1,16 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A single inferred journey item, either a candidate or an ignored journey.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum DemInferredJourneyItem {
-    DemInferredJourneyCandidateData(Box<crate::datadogV2::model::DemInferredJourneyCandidateData>),
-    DemInferredJourneyIgnoredData(Box<crate::datadogV2::model::DemInferredJourneyIgnoredData>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	DemInferredJourneyCandidateData(Box<crate::datadogV2::model::DemInferredJourneyCandidateData>),
+	DemInferredJourneyIgnoredData(Box<crate::datadogV2::model::DemInferredJourneyIgnoredData>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for DemInferredJourneyItem {
@@ -19,25 +19,17 @@ impl<'de> Deserialize<'de> for DemInferredJourneyItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::DemInferredJourneyCandidateData>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::DemInferredJourneyCandidateData>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(DemInferredJourneyItem::DemInferredJourneyCandidateData(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::DemInferredJourneyIgnoredData>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::DemInferredJourneyIgnoredData>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(DemInferredJourneyItem::DemInferredJourneyIgnoredData(_v));
             }
         }
-
-        return Ok(DemInferredJourneyItem::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(DemInferredJourneyItem::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A template variable that viewers can modify on the shared dashboard.
 #[non_exhaustive]
@@ -33,18 +33,11 @@ pub struct SharedDashboardSelectableTemplateVariable {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SharedDashboardSelectableTemplateVariable {
-    pub fn new(
-        allow_any_value: bool,
-        default_values: Vec<String>,
-        name: String,
-        prefix: String,
-        type_: String,
-        visible_tags: Vec<String>,
-    ) -> SharedDashboardSelectableTemplateVariable {
+    pub fn new(allow_any_value: bool, default_values: Vec<String>, name: String, prefix: String, type_: String, visible_tags: Vec<String>) -> SharedDashboardSelectableTemplateVariable {
         SharedDashboardSelectableTemplateVariable {
             allow_any_value,
             default_values,
@@ -56,15 +49,14 @@ impl SharedDashboardSelectableTemplateVariable {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SharedDashboardSelectableTemplateVariable {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -89,51 +81,42 @@ impl<'de> Deserialize<'de> for SharedDashboardSelectableTemplateVariable {
                 let mut prefix: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut visible_tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "allow_any_value" => {
-                            allow_any_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_any_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default_values" => {
-                            default_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prefix" => {
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "visible_tags" => {
-                            visible_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            visible_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let allow_any_value =
-                    allow_any_value.ok_or_else(|| M::Error::missing_field("allow_any_value"))?;
-                let default_values =
-                    default_values.ok_or_else(|| M::Error::missing_field("default_values"))?;
+                let allow_any_value = allow_any_value.ok_or_else(|| M::Error::missing_field("allow_any_value"))?;
+                let default_values = default_values.ok_or_else(|| M::Error::missing_field("default_values"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let prefix = prefix.ok_or_else(|| M::Error::missing_field("prefix"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let visible_tags =
-                    visible_tags.ok_or_else(|| M::Error::missing_field("visible_tags"))?;
+                let visible_tags = visible_tags.ok_or_else(|| M::Error::missing_field("visible_tags"))?;
 
                 let content = SharedDashboardSelectableTemplateVariable {
                     allow_any_value,

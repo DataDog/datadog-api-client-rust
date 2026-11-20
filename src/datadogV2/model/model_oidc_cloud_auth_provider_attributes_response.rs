@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Stored Custom OIDC provider attributes.
 #[non_exhaustive]
@@ -48,7 +48,7 @@ pub struct OIDCCloudAuthProviderAttributesResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OIDCCloudAuthProviderAttributesResponse {
@@ -69,79 +69,68 @@ impl OIDCCloudAuthProviderAttributesResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn audiences(mut self, value: Vec<String>) -> Self {
         self.audiences = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: uuid::Uuid) -> Self {
         self.created_by = Some(value);
         self
     }
-
-    pub fn discovery_type(
-        mut self,
-        value: crate::datadogV2::model::OIDCCloudAuthDiscoveryType,
-    ) -> Self {
+    
+    pub fn discovery_type(mut self, value: crate::datadogV2::model::OIDCCloudAuthDiscoveryType) -> Self {
         self.discovery_type = Some(value);
         self
     }
-
+    
     pub fn identity_claim_name(mut self, value: String) -> Self {
         self.identity_claim_name = Some(value);
         self
     }
-
+    
     pub fn issuer_url(mut self, value: String) -> Self {
         self.issuer_url = Some(value);
         self
     }
-
+    
     pub fn jwks_url(mut self, value: String) -> Self {
         self.jwks_url = Some(value);
         self
     }
-
+    
     pub fn org_uuid_claim_name(mut self, value: String) -> Self {
         self.org_uuid_claim_name = Some(value);
         self
     }
-
-    pub fn org_uuid_source(
-        mut self,
-        value: crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource,
-    ) -> Self {
+    
+    pub fn org_uuid_source(mut self, value: crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource) -> Self {
         self.org_uuid_source = Some(value);
         self
     }
-
+    
     pub fn provider_name(mut self, value: String) -> Self {
         self.provider_name = Some(value);
         self
     }
-
-    pub fn required_claims(
-        mut self,
-        value: Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcher>,
-    ) -> Self {
+    
+    pub fn required_claims(mut self, value: Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcher>) -> Self {
         self.required_claims = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for OIDCCloudAuthProviderAttributesResponse {
     fn default() -> Self {
@@ -169,24 +158,15 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderAttributesResponse {
                 let mut audiences: Option<Vec<String>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<uuid::Uuid> = None;
-                let mut discovery_type: Option<
-                    crate::datadogV2::model::OIDCCloudAuthDiscoveryType,
-                > = None;
+                let mut discovery_type: Option<crate::datadogV2::model::OIDCCloudAuthDiscoveryType> = None;
                 let mut identity_claim_name: Option<String> = None;
                 let mut issuer_url: Option<String> = None;
                 let mut jwks_url: Option<String> = None;
                 let mut org_uuid_claim_name: Option<String> = None;
-                let mut org_uuid_source: Option<
-                    crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource,
-                > = None;
+                let mut org_uuid_source: Option<crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource> = None;
                 let mut provider_name: Option<String> = None;
-                let mut required_claims: Option<
-                    Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcher>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut required_claims: Option<Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcher>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,25 +176,24 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderAttributesResponse {
                                 continue;
                             }
                             audiences = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "discovery_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            discovery_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            discovery_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_type) = discovery_type {
                                 match _discovery_type {
                                     crate::datadogV2::model::OIDCCloudAuthDiscoveryType::UnparsedObject(_discovery_type) => {
@@ -223,39 +202,36 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderAttributesResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "identity_claim_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            identity_claim_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            identity_claim_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issuer_url" => {
                             if v.is_null() {
                                 continue;
                             }
                             issuer_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "jwks_url" => {
                             if v.is_null() {
                                 continue;
                             }
                             jwks_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_uuid_claim_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_uuid_claim_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            org_uuid_claim_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_uuid_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_uuid_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            org_uuid_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _org_uuid_source) = org_uuid_source {
                                 match _org_uuid_source {
                                     crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource::UnparsedObject(_org_uuid_source) => {
@@ -264,26 +240,24 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderAttributesResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "provider_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            provider_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "required_claims" => {
                             if v.is_null() {
                                 continue;
                             }
-                            required_claims =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            required_claims = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

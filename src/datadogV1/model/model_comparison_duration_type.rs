@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ComparisonDurationType {
-    PREVIOUS_TIMEFRAME,
-    CUSTOM_TIMEFRAME,
-    PREVIOUS_DAY,
-    PREVIOUS_WEEK,
-    PREVIOUS_MONTH,
+	PREVIOUS_TIMEFRAME,
+	CUSTOM_TIMEFRAME,
+	PREVIOUS_DAY,
+	PREVIOUS_WEEK,
+	PREVIOUS_MONTH,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ComparisonDurationType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "previous_timeframe" => Self::PREVIOUS_TIMEFRAME,
-            "custom_timeframe" => Self::CUSTOM_TIMEFRAME,
-            "previous_day" => Self::PREVIOUS_DAY,
-            "previous_week" => Self::PREVIOUS_WEEK,
-            "previous_month" => Self::PREVIOUS_MONTH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"previous_timeframe" => Self::PREVIOUS_TIMEFRAME,"custom_timeframe" => Self::CUSTOM_TIMEFRAME,"previous_day" => Self::PREVIOUS_DAY,"previous_week" => Self::PREVIOUS_WEEK,"previous_month" => Self::PREVIOUS_MONTH,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

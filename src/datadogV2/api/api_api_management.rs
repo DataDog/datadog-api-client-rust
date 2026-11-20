@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 
 /// CreateOpenAPIOptionalParams is a struct for passing parameters to the method [`APIManagementAPI::create_open_api`]
 #[non_exhaustive]
@@ -68,6 +68,9 @@ impl UpdateOpenAPIOptionalParams {
     }
 }
 
+
+
+
 /// CreateOpenAPIError is a struct for typed errors of method [`APIManagementAPI::create_open_api`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -76,6 +79,7 @@ pub enum CreateOpenAPIError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOpenAPIError is a struct for typed errors of method [`APIManagementAPI::delete_open_api`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -86,6 +90,7 @@ pub enum DeleteOpenAPIError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOpenAPIError is a struct for typed errors of method [`APIManagementAPI::get_open_api`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -94,6 +99,7 @@ pub enum GetOpenAPIError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAPIsError is a struct for typed errors of method [`APIManagementAPI::list_apis`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -104,6 +110,7 @@ pub enum ListAPIsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOpenAPIError is a struct for typed errors of method [`APIManagementAPI::update_open_api`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -112,6 +119,7 @@ pub enum UpdateOpenAPIError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your API endpoints through the Datadog API.
 #[derive(Debug, Clone)]
@@ -135,7 +143,8 @@ impl APIManagementAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -180,47 +189,35 @@ impl APIManagementAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new API from the [OpenAPI](<https://spec.openapis.org/oas/latest.html>) specification given.
-    /// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
-    /// information about the possible metadata.
-    /// It returns the created API ID.
-    pub async fn create_open_api(
-        &self,
-        params: CreateOpenAPIOptionalParams,
-    ) -> Result<crate::datadogV2::model::CreateOpenAPIResponse, datadog::Error<CreateOpenAPIError>>
-    {
-        match self.create_open_api_with_http_info(params).await {
+/// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
+/// information about the possible metadata.
+/// It returns the created API ID.
+    pub async fn create_open_api(&self, params: CreateOpenAPIOptionalParams) -> Result<crate::datadogV2::model::CreateOpenAPIResponse, datadog::Error<CreateOpenAPIError>> {
+        match self.create_open_api_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new API from the [OpenAPI](<https://spec.openapis.org/oas/latest.html>) specification given.
-    /// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
-    /// information about the possible metadata.
-    /// It returns the created API ID.
-    pub async fn create_open_api_with_http_info(
-        &self,
-        params: CreateOpenAPIOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CreateOpenAPIResponse>,
-        datadog::Error<CreateOpenAPIError>,
-    > {
+/// See the [API Catalog documentation](<https://docs.datadoghq.com/api_catalog/add_metadata/>) for additional
+/// information about the possible metadata.
+/// It returns the created API ID.
+    pub async fn create_open_api_with_http_info(&self, params: CreateOpenAPIOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CreateOpenAPIResponse>, datadog::Error<CreateOpenAPIError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_open_api";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -232,6 +229,7 @@ impl APIManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let openapi_spec_file = params.openapi_spec_file;
 
@@ -239,18 +237,17 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/openapi",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Content-Type",
-            HeaderValue::from_static("multipart/form-data"),
-        );
+        headers.insert("Content-Type", HeaderValue::from_static("multipart/form-data"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -263,23 +260,16 @@ impl APIManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
@@ -300,7 +290,7 @@ impl APIManagementAPI {
             match form_result {
                 Ok(form) => local_req_builder = local_req_builder.body(form),
                 Err(e) => return Err(crate::datadog::Error::Io(e)),
-            };
+            };    
         };
 
         local_req_builder = local_req_builder.headers(headers);
@@ -313,46 +303,32 @@ impl APIManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CreateOpenAPIResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CreateOpenAPIResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOpenAPIError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOpenAPIError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a specific API by ID.
-    pub async fn delete_open_api(
-        &self,
-        id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOpenAPIError>> {
+    pub async fn delete_open_api(&self, id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOpenAPIError>> {
         match self.delete_open_api_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a specific API by ID.
-    pub async fn delete_open_api_with_http_info(
-        &self,
-        id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpenAPIError>> {
+    pub async fn delete_open_api_with_http_info(&self, id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpenAPIError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_open_api";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -364,19 +340,24 @@ impl APIManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -389,22 +370,16 @@ impl APIManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -422,41 +397,29 @@ impl APIManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOpenAPIError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOpenAPIError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve information about a specific API in [OpenAPI](<https://spec.openapis.org/oas/latest.html>) format file.
-    pub async fn get_open_api(
-        &self,
-        id: uuid::Uuid,
-    ) -> Result<Vec<u8>, datadog::Error<GetOpenAPIError>> {
+    pub async fn get_open_api(&self, id: uuid::Uuid) -> Result<Vec<u8>, datadog::Error<GetOpenAPIError>> {
         match self.get_open_api_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve information about a specific API in [OpenAPI](<https://spec.openapis.org/oas/latest.html>) format file.
-    pub async fn get_open_api_with_http_info(
-        &self,
-        id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetOpenAPIError>> {
+    pub async fn get_open_api_with_http_info(&self, id: uuid::Uuid) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetOpenAPIError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_open_api";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -468,19 +431,24 @@ impl APIManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -493,22 +461,16 @@ impl APIManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -527,42 +489,28 @@ impl APIManagementAPI {
             })
         } else {
             let local_entity: Option<GetOpenAPIError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List APIs and their IDs.
-    pub async fn list_apis(
-        &self,
-        params: ListAPIsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListAPIsResponse, datadog::Error<ListAPIsError>> {
-        match self.list_apis_with_http_info(params).await {
+    pub async fn list_apis(&self, params: ListAPIsOptionalParams) -> Result<crate::datadogV2::model::ListAPIsResponse, datadog::Error<ListAPIsError>> {
+        match self.list_apis_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List APIs and their IDs.
-    pub async fn list_apis_with_http_info(
-        &self,
-        params: ListAPIsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListAPIsResponse>,
-        datadog::Error<ListAPIsError>,
-    > {
+    pub async fn list_apis_with_http_info(&self, params: ListAPIsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListAPIsResponse>, datadog::Error<ListAPIsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_apis";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -574,6 +522,7 @@ impl APIManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let query = params.query;
         let page_limit = params.page_limit;
@@ -583,27 +532,25 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -616,22 +563,16 @@ impl APIManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -643,60 +584,40 @@ impl APIManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListAPIsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListAPIsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAPIsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update information about a specific API. The given content will replace all API content of the given ID.
-    /// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
-    pub async fn update_open_api(
-        &self,
-        id: uuid::Uuid,
-        params: UpdateOpenAPIOptionalParams,
-    ) -> Result<crate::datadogV2::model::UpdateOpenAPIResponse, datadog::Error<UpdateOpenAPIError>>
-    {
-        match self.update_open_api_with_http_info(id, params).await {
+/// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
+    pub async fn update_open_api(&self, id: uuid::Uuid, params: UpdateOpenAPIOptionalParams) -> Result<crate::datadogV2::model::UpdateOpenAPIResponse, datadog::Error<UpdateOpenAPIError>> {
+        match self.update_open_api_with_http_info(id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update information about a specific API. The given content will replace all API content of the given ID.
-    /// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
-    pub async fn update_open_api_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        params: UpdateOpenAPIOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpdateOpenAPIResponse>,
-        datadog::Error<UpdateOpenAPIError>,
-    > {
+/// The ID is returned by the create API, or can be found in the URL in the API catalog UI.
+    pub async fn update_open_api_with_http_info(&self, id: uuid::Uuid, params: UpdateOpenAPIOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpdateOpenAPIResponse>, datadog::Error<UpdateOpenAPIError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_open_api";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -708,6 +629,7 @@ impl APIManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let openapi_spec_file = params.openapi_spec_file;
 
@@ -715,19 +637,19 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Content-Type",
-            HeaderValue::from_static("multipart/form-data"),
-        );
+        headers.insert("Content-Type", HeaderValue::from_static("multipart/form-data"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -740,23 +662,16 @@ impl APIManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build form parameters
         if let Some(openapi_spec_file) = openapi_spec_file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
@@ -777,7 +692,7 @@ impl APIManagementAPI {
             match form_result {
                 Ok(form) => local_req_builder = local_req_builder.body(form),
                 Err(e) => return Err(crate::datadog::Error::Io(e)),
-            };
+            };    
         };
 
         local_req_builder = local_req_builder.headers(headers);
@@ -790,26 +705,17 @@ impl APIManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpdateOpenAPIResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpdateOpenAPIResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOpenAPIError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOpenAPIError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

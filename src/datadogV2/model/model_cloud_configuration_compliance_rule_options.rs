@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Options for cloud_configuration rules.
 /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudConfigurationComplianceRuleOptions {
     /// Whether the rule is a complex one.
-    /// Must be set to true if `regoRule.resourceTypes` contains more than one item. Defaults to false.
+/// Must be set to true if `regoRule.resourceTypes` contains more than one item. Defaults to false.
     #[serde(rename = "complexRule")]
     pub complex_rule: Option<bool>,
     /// Rule details.
@@ -26,7 +26,7 @@ pub struct CloudConfigurationComplianceRuleOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CloudConfigurationComplianceRuleOptions {
@@ -39,30 +39,28 @@ impl CloudConfigurationComplianceRuleOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn complex_rule(mut self, value: bool) -> Self {
         self.complex_rule = Some(value);
         self
     }
-
+    
     pub fn rego_rule(mut self, value: crate::datadogV2::model::CloudConfigurationRegoRule) -> Self {
         self.rego_rule = Some(value);
         self
     }
-
+    
     pub fn resource_type(mut self, value: String) -> Self {
         self.resource_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CloudConfigurationComplianceRuleOptions {
     fn default() -> Self {
@@ -88,13 +86,9 @@ impl<'de> Deserialize<'de> for CloudConfigurationComplianceRuleOptions {
                 M: MapAccess<'a>,
             {
                 let mut complex_rule: Option<bool> = None;
-                let mut rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule> =
-                    None;
+                let mut rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule> = None;
                 let mut resource_type: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,27 +97,25 @@ impl<'de> Deserialize<'de> for CloudConfigurationComplianceRuleOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            complex_rule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            complex_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "regoRule" => {
                             if v.is_null() {
                                 continue;
                             }
                             rego_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resourceType" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

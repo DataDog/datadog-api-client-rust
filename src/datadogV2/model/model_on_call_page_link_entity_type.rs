@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OnCallPageLinkEntityType {
-    CASE,
-    INCIDENT,
-    PAGE,
-    AGENT_CONVERSATION,
+	CASE,
+	INCIDENT,
+	PAGE,
+	AGENT_CONVERSATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for OnCallPageLinkEntityType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "case" => Self::CASE,
-            "incident" => Self::INCIDENT,
-            "page" => Self::PAGE,
-            "agent_conversation" => Self::AGENT_CONVERSATION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"case" => Self::CASE,"incident" => Self::INCIDENT,"page" => Self::PAGE,"agent_conversation" => Self::AGENT_CONVERSATION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

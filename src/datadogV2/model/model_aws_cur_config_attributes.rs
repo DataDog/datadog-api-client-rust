@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for An AWS CUR config.
 #[non_exhaustive]
@@ -27,14 +27,10 @@ pub struct AwsCURConfigAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
     /// The error messages for the AWS CUR config.
-    #[serde(
-        rename = "error_messages",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "error_messages", default, with = "::serde_with::rust::double_option")]
     pub error_messages: Option<Option<Vec<String>>>,
     /// The number of months the report has been backfilled.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "months")]
     pub months: Option<i32>,
     /// The name of the Cost and Usage Report.
@@ -56,18 +52,11 @@ pub struct AwsCURConfigAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AwsCURConfigAttributes {
-    pub fn new(
-        account_id: String,
-        bucket_name: String,
-        bucket_region: String,
-        report_name: String,
-        report_prefix: String,
-        status: String,
-    ) -> AwsCURConfigAttributes {
+    pub fn new(account_id: String, bucket_name: String, bucket_region: String, report_name: String, report_prefix: String, status: String) -> AwsCURConfigAttributes {
         #[allow(deprecated)]
         AwsCURConfigAttributes {
             account_filters: None,
@@ -86,54 +75,50 @@ impl AwsCURConfigAttributes {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn account_filters(
-        mut self,
-        value: crate::datadogV2::model::AccountFilteringConfig,
-    ) -> Self {
+    pub fn account_filters(mut self, value: crate::datadogV2::model::AccountFilteringConfig) -> Self {
         self.account_filters = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn error_messages(mut self, value: Option<Vec<String>>) -> Self {
         self.error_messages = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn months(mut self, value: i32) -> Self {
         self.months = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn status_updated_at(mut self, value: String) -> Self {
         self.status_updated_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -152,8 +137,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut account_filters: Option<crate::datadogV2::model::AccountFilteringConfig> =
-                    None;
+                let mut account_filters: Option<crate::datadogV2::model::AccountFilteringConfig> = None;
                 let mut account_id: Option<String> = None;
                 let mut bucket_name: Option<String> = None;
                 let mut bucket_region: Option<String> = None;
@@ -165,10 +149,7 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
                 let mut status: Option<String> = None;
                 let mut status_updated_at: Option<String> = None;
                 let mut updated_at: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -177,76 +158,65 @@ impl<'de> Deserialize<'de> for AwsCURConfigAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            account_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "account_id" => {
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bucket_name" => {
-                            bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_region" => {
-                            bucket_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error_messages" => {
-                            error_messages =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_messages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "months" => {
                             if v.is_null() {
                                 continue;
                             }
                             months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "report_name" => {
-                            report_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            report_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "report_prefix" => {
-                            report_prefix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            report_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            status_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            status_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
-                let bucket_name =
-                    bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
-                let bucket_region =
-                    bucket_region.ok_or_else(|| M::Error::missing_field("bucket_region"))?;
-                let report_name =
-                    report_name.ok_or_else(|| M::Error::missing_field("report_name"))?;
-                let report_prefix =
-                    report_prefix.ok_or_else(|| M::Error::missing_field("report_prefix"))?;
+                let bucket_name = bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
+                let bucket_region = bucket_region.ok_or_else(|| M::Error::missing_field("bucket_region"))?;
+                let report_name = report_name.ok_or_else(|| M::Error::missing_field("report_name"))?;
+                let report_prefix = report_prefix.ok_or_else(|| M::Error::missing_field("report_prefix"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
                 #[allow(deprecated)]

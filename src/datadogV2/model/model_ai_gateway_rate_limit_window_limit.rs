@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A limit on one metric over a rolling window longer than a minute.
 #[non_exhaustive]
@@ -24,15 +24,11 @@ pub struct AiGatewayRateLimitWindowLimit {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRateLimitWindowLimit {
-    pub fn new(
-        amount: i64,
-        metric: crate::datadogV2::model::AiGatewayRateLimitWindowLimitMetric,
-        window: crate::datadogV2::model::AiGatewayRateLimitWindowLimitWindow,
-    ) -> AiGatewayRateLimitWindowLimit {
+    pub fn new(amount: i64, metric: crate::datadogV2::model::AiGatewayRateLimitWindowLimitMetric, window: crate::datadogV2::model::AiGatewayRateLimitWindowLimitWindow) -> AiGatewayRateLimitWindowLimit {
         AiGatewayRateLimitWindowLimit {
             amount,
             metric,
@@ -41,15 +37,14 @@ impl AiGatewayRateLimitWindowLimit {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayRateLimitWindowLimit {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -69,23 +64,16 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitWindowLimit {
                 M: MapAccess<'a>,
             {
                 let mut amount: Option<i64> = None;
-                let mut metric: Option<
-                    crate::datadogV2::model::AiGatewayRateLimitWindowLimitMetric,
-                > = None;
-                let mut window: Option<
-                    crate::datadogV2::model::AiGatewayRateLimitWindowLimitWindow,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut metric: Option<crate::datadogV2::model::AiGatewayRateLimitWindowLimitMetric> = None;
+                let mut window: Option<crate::datadogV2::model::AiGatewayRateLimitWindowLimitWindow> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "amount" => {
                             amount = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric) = metric {
@@ -96,7 +84,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitWindowLimit {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "window" => {
                             window = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _window) = window {
@@ -107,12 +95,12 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitWindowLimit {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let amount = amount.ok_or_else(|| M::Error::missing_field("amount"))?;

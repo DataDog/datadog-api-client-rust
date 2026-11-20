@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Google Cloud Platform storage access configuration.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetai
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
@@ -41,35 +41,33 @@ impl PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
             _unparsed: false,
         }
     }
-
+    
     pub fn file_path(mut self, value: String) -> Self {
         self.file_path = Some(value);
         self
     }
-
+    
     pub fn gcp_bucket_name(mut self, value: String) -> Self {
         self.gcp_bucket_name = Some(value);
         self
     }
-
+    
     pub fn gcp_project_id(mut self, value: String) -> Self {
         self.gcp_project_id = Some(value);
         self
     }
-
+    
     pub fn gcp_service_account_email(mut self, value: String) -> Self {
         self.gcp_service_account_email = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
     fn default() -> Self {
@@ -77,17 +75,13 @@ impl Default for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGc
     }
 }
 
-impl<'de> Deserialize<'de>
-    for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail
-{
+impl<'de> Deserialize<'de> for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetailVisitor;
-        impl<'a> Visitor<'a>
-            for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetailVisitor
-        {
+        impl<'a> Visitor<'a> for PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetailVisitor {
             type Value = PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -102,10 +96,7 @@ impl<'de> Deserialize<'de>
                 let mut gcp_bucket_name: Option<String> = None;
                 let mut gcp_project_id: Option<String> = None;
                 let mut gcp_service_account_email: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,52 +106,46 @@ impl<'de> Deserialize<'de>
                                 continue;
                             }
                             file_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "gcp_bucket_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            gcp_bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_project_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            gcp_project_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_service_account_email" => {
                             if v.is_null() {
                                 continue;
                             }
-                            gcp_service_account_email =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_service_account_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
-                let content =
-                    PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
-                        file_path,
-                        gcp_bucket_name,
-                        gcp_project_id,
-                        gcp_service_account_email,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetail {
+                    file_path,
+                    gcp_bucket_name,
+                    gcp_project_id,
+                    gcp_service_account_email,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetailVisitor,
-        )
+        deserializer.deserialize_any(PatchTableRequestDataAttributesFileMetadataOneOfAccessDetailsGcpDetailVisitor)
     }
 }

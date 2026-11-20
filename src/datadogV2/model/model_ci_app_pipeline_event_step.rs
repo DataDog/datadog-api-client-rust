@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Details of a CI step.
 #[non_exhaustive]
@@ -18,7 +18,7 @@ pub struct CIAppPipelineEventStep {
     #[serde(rename = "error", default, with = "::serde_with::rust::double_option")]
     pub error: Option<Option<crate::datadogV2::model::CIAppCIError>>,
     /// If pipelines are triggered due to actions to a Git repository, then all payloads must contain this.
-    /// Note that either `tag` or `branch` has to be provided, but not both.
+/// Note that either `tag` or `branch` has to be provided, but not both.
     #[serde(rename = "git", default, with = "::serde_with::rust::double_option")]
     pub git: Option<Option<crate::datadogV2::model::CIAppGitInfo>>,
     /// UUID for the step. It has to be unique within each pipeline execution.
@@ -28,21 +28,13 @@ pub struct CIAppPipelineEventStep {
     #[serde(rename = "job_id", default, with = "::serde_with::rust::double_option")]
     pub job_id: Option<Option<String>>,
     /// The parent job name (if applicable).
-    #[serde(
-        rename = "job_name",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "job_name", default, with = "::serde_with::rust::double_option")]
     pub job_name: Option<Option<String>>,
     /// Used to distinguish between pipelines, stages, jobs and steps.
     #[serde(rename = "level")]
     pub level: crate::datadogV2::model::CIAppPipelineEventStepLevel,
     /// A list of user-defined metrics. The metrics must follow the `key:value` pattern and the value must be numeric.
-    #[serde(
-        rename = "metrics",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "metrics", default, with = "::serde_with::rust::double_option")]
     pub metrics: Option<Option<Vec<String>>>,
     /// The name for the step.
     #[serde(rename = "name")]
@@ -51,11 +43,7 @@ pub struct CIAppPipelineEventStep {
     #[serde(rename = "node", default, with = "::serde_with::rust::double_option")]
     pub node: Option<Option<crate::datadogV2::model::CIAppHostInfo>>,
     /// A map of key-value parameters or environment variables that were defined for the pipeline.
-    #[serde(
-        rename = "parameters",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "parameters", default, with = "::serde_with::rust::double_option")]
     pub parameters: Option<Option<std::collections::BTreeMap<String, String>>>,
     /// The parent pipeline name.
     #[serde(rename = "pipeline_name")]
@@ -64,18 +52,10 @@ pub struct CIAppPipelineEventStep {
     #[serde(rename = "pipeline_unique_id")]
     pub pipeline_unique_id: String,
     /// The parent stage UUID (if applicable).
-    #[serde(
-        rename = "stage_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "stage_id", default, with = "::serde_with::rust::double_option")]
     pub stage_id: Option<Option<String>>,
     /// The parent stage name (if applicable).
-    #[serde(
-        rename = "stage_name",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "stage_name", default, with = "::serde_with::rust::double_option")]
     pub stage_name: Option<Option<String>>,
     /// Time when the step run started. The time format must be RFC3339.
     #[serde(rename = "start")]
@@ -93,20 +73,11 @@ pub struct CIAppPipelineEventStep {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CIAppPipelineEventStep {
-    pub fn new(
-        end: chrono::DateTime<chrono::Utc>,
-        id: String,
-        level: crate::datadogV2::model::CIAppPipelineEventStepLevel,
-        name: String,
-        pipeline_name: String,
-        pipeline_unique_id: String,
-        start: chrono::DateTime<chrono::Utc>,
-        status: crate::datadogV2::model::CIAppPipelineEventStepStatus,
-    ) -> CIAppPipelineEventStep {
+    pub fn new(end: chrono::DateTime<chrono::Utc>, id: String, level: crate::datadogV2::model::CIAppPipelineEventStepLevel, name: String, pipeline_name: String, pipeline_unique_id: String, start: chrono::DateTime<chrono::Utc>, status: crate::datadogV2::model::CIAppPipelineEventStepStatus) -> CIAppPipelineEventStep {
         CIAppPipelineEventStep {
             end,
             error: None,
@@ -131,70 +102,69 @@ impl CIAppPipelineEventStep {
             _unparsed: false,
         }
     }
-
+    
     pub fn error(mut self, value: Option<crate::datadogV2::model::CIAppCIError>) -> Self {
         self.error = Some(value);
         self
     }
-
+    
     pub fn git(mut self, value: Option<crate::datadogV2::model::CIAppGitInfo>) -> Self {
         self.git = Some(value);
         self
     }
-
+    
     pub fn job_id(mut self, value: Option<String>) -> Self {
         self.job_id = Some(value);
         self
     }
-
+    
     pub fn job_name(mut self, value: Option<String>) -> Self {
         self.job_name = Some(value);
         self
     }
-
+    
     pub fn metrics(mut self, value: Option<Vec<String>>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     pub fn node(mut self, value: Option<crate::datadogV2::model::CIAppHostInfo>) -> Self {
         self.node = Some(value);
         self
     }
-
+    
     pub fn parameters(mut self, value: Option<std::collections::BTreeMap<String, String>>) -> Self {
         self.parameters = Some(value);
         self
     }
-
+    
     pub fn stage_id(mut self, value: Option<String>) -> Self {
         self.stage_id = Some(value);
         self
     }
-
+    
     pub fn stage_name(mut self, value: Option<String>) -> Self {
         self.stage_name = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn url(mut self, value: Option<String>) -> Self {
         self.url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CIAppPipelineEventStep {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -223,43 +193,38 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStep {
                 let mut metrics: Option<Option<Vec<String>>> = None;
                 let mut name: Option<String> = None;
                 let mut node: Option<Option<crate::datadogV2::model::CIAppHostInfo>> = None;
-                let mut parameters: Option<Option<std::collections::BTreeMap<String, String>>> =
-                    None;
+                let mut parameters: Option<Option<std::collections::BTreeMap<String, String>>> = None;
                 let mut pipeline_name: Option<String> = None;
                 let mut pipeline_unique_id: Option<String> = None;
                 let mut stage_id: Option<Option<String>> = None;
                 let mut stage_name: Option<Option<String>> = None;
                 let mut start: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut status: Option<crate::datadogV2::model::CIAppPipelineEventStepStatus> =
-                    None;
+                let mut status: Option<crate::datadogV2::model::CIAppPipelineEventStepStatus> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;
                 let mut url: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error" => {
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "git" => {
                             git = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "job_id" => {
                             job_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "job_name" => {
                             job_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "level" => {
                             level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _level) = level {
@@ -270,36 +235,34 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStep {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "metrics" => {
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "node" => {
                             node = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parameters" => {
                             parameters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pipeline_name" => {
-                            pipeline_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pipeline_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pipeline_unique_id" => {
-                            pipeline_unique_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pipeline_unique_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "stage_id" => {
                             stage_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "stage_name" => {
                             stage_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -310,28 +273,26 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventStep {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "url" => {
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let end = end.ok_or_else(|| M::Error::missing_field("end"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let level = level.ok_or_else(|| M::Error::missing_field("level"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let pipeline_name =
-                    pipeline_name.ok_or_else(|| M::Error::missing_field("pipeline_name"))?;
-                let pipeline_unique_id = pipeline_unique_id
-                    .ok_or_else(|| M::Error::missing_field("pipeline_unique_id"))?;
+                let pipeline_name = pipeline_name.ok_or_else(|| M::Error::missing_field("pipeline_name"))?;
+                let pipeline_unique_id = pipeline_unique_id.ok_or_else(|| M::Error::missing_field("pipeline_unique_id"))?;
                 let start = start.ok_or_else(|| M::Error::missing_field("start"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 

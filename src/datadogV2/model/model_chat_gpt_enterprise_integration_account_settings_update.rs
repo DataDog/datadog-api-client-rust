@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings for updating the ChatGPT Enterprise integration account. Only the fields provided are changed.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct ChatGPTEnterpriseIntegrationAccountSettingsUpdate {
     pub openai_org_id: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChatGPTEnterpriseIntegrationAccountSettingsUpdate {
@@ -26,12 +26,14 @@ impl ChatGPTEnterpriseIntegrationAccountSettingsUpdate {
             _unparsed: false,
         }
     }
-
+    
     pub fn openai_org_id(mut self, value: String) -> Self {
         self.openai_org_id = Some(value);
         self
     }
+    
 }
+
 
 impl Default for ChatGPTEnterpriseIntegrationAccountSettingsUpdate {
     fn default() -> Self {
@@ -65,14 +67,11 @@ impl<'de> Deserialize<'de> for ChatGPTEnterpriseIntegrationAccountSettingsUpdate
                             if v.is_null() {
                                 continue;
                             }
-                            openai_org_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            openai_org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

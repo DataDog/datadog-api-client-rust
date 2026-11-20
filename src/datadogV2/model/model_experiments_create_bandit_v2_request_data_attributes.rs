@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The new draft's setup. Only `name` is required. Whether the draft is ready to run is checked when it starts.
 #[non_exhaustive]
@@ -18,13 +18,8 @@ pub struct ExperimentsCreateBanditV2RequestDataAttributes {
     #[serde(rename = "bayesian_prior")]
     pub bayesian_prior: Option<crate::datadogV2::model::ExperimentsBanditBayesianPriorInputV2>,
     /// The flag and environment the bandit serves on, and who it serves there. The server chooses the rule's `allocation_key`. On create, `feature_flag_id` and `environment_id` are required, and `null` is the same as omitting it. On update, omitted fields are unchanged, and `null` takes a draft off its flag, which also clears its variants and scheduled end. Moving a draft to another flag clears its variants unless the request sets them. Only a draft can change it.
-    #[serde(
-        rename = "datadog_flag_configuration",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub datadog_flag_configuration:
-        Option<Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>>,
+    #[serde(rename = "datadog_flag_configuration", default, with = "::serde_with::rust::double_option")]
+    pub datadog_flag_configuration: Option<Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>>,
     /// The bandit's description. Defaults to empty.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -65,7 +60,7 @@ pub struct ExperimentsCreateBanditV2RequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsCreateBanditV2RequestDataAttributes {
@@ -90,94 +85,84 @@ impl ExperimentsCreateBanditV2RequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggregation_window_seconds(mut self, value: i64) -> Self {
         self.aggregation_window_seconds = Some(value);
         self
     }
-
-    pub fn bayesian_prior(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsBanditBayesianPriorInputV2,
-    ) -> Self {
+    
+    pub fn bayesian_prior(mut self, value: crate::datadogV2::model::ExperimentsBanditBayesianPriorInputV2) -> Self {
         self.bayesian_prior = Some(value);
         self
     }
-
-    pub fn datadog_flag_configuration(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>,
-    ) -> Self {
+    
+    pub fn datadog_flag_configuration(mut self, value: Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>) -> Self {
         self.datadog_flag_configuration = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn exposure_sql_model_id(mut self, value: uuid::Uuid) -> Self {
         self.exposure_sql_model_id = Some(value);
         self
     }
-
+    
     pub fn lookback_seconds(mut self, value: i64) -> Self {
         self.lookback_seconds = Some(value);
         self
     }
-
+    
     pub fn metric_id(mut self, value: uuid::Uuid) -> Self {
         self.metric_id = Some(value);
         self
     }
-
+    
     pub fn refresh_schedule_id(mut self, value: String) -> Self {
         self.refresh_schedule_id = Some(value);
         self
     }
-
+    
     pub fn scheduled_end_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.scheduled_end_at = Some(value);
         self
     }
-
+    
     pub fn subject_type_id(mut self, value: uuid::Uuid) -> Self {
         self.subject_type_id = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn teams(mut self, value: Vec<String>) -> Self {
         self.teams = Some(value);
         self
     }
-
-    pub fn variants(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsBanditVariantInputV2>,
-    ) -> Self {
+    
+    pub fn variants(mut self, value: Vec<crate::datadogV2::model::ExperimentsBanditVariantInputV2>) -> Self {
         self.variants = Some(value);
         self
     }
-
+    
     pub fn warmup_seconds(mut self, value: i64) -> Self {
         self.warmup_seconds = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsCreateBanditV2RequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -197,12 +182,8 @@ impl<'de> Deserialize<'de> for ExperimentsCreateBanditV2RequestDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut aggregation_window_seconds: Option<i64> = None;
-                let mut bayesian_prior: Option<
-                    crate::datadogV2::model::ExperimentsBanditBayesianPriorInputV2,
-                > = None;
-                let mut datadog_flag_configuration: Option<
-                    Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>,
-                > = None;
+                let mut bayesian_prior: Option<crate::datadogV2::model::ExperimentsBanditBayesianPriorInputV2> = None;
+                let mut datadog_flag_configuration: Option<Option<crate::datadogV2::model::ExperimentsBanditFlagConfigurationInputV2>> = None;
                 let mut description: Option<String> = None;
                 let mut exposure_sql_model_id: Option<uuid::Uuid> = None;
                 let mut lookback_seconds: Option<i64> = None;
@@ -213,14 +194,9 @@ impl<'de> Deserialize<'de> for ExperimentsCreateBanditV2RequestDataAttributes {
                 let mut subject_type_id: Option<uuid::Uuid> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut teams: Option<Vec<String>> = None;
-                let mut variants: Option<
-                    Vec<crate::datadogV2::model::ExperimentsBanditVariantInputV2>,
-                > = None;
+                let mut variants: Option<Vec<crate::datadogV2::model::ExperimentsBanditVariantInputV2>> = None;
                 let mut warmup_seconds: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -229,101 +205,91 @@ impl<'de> Deserialize<'de> for ExperimentsCreateBanditV2RequestDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation_window_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregation_window_seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bayesian_prior" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bayesian_prior =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bayesian_prior = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datadog_flag_configuration" => {
-                            datadog_flag_configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            datadog_flag_configuration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exposure_sql_model_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exposure_sql_model_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exposure_sql_model_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lookback_seconds" => {
                             if v.is_null() {
                                 continue;
                             }
-                            lookback_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lookback_seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "refresh_schedule_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            refresh_schedule_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            refresh_schedule_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scheduled_end_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            scheduled_end_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scheduled_end_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject_type_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subject_type_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "teams" => {
                             if v.is_null() {
                                 continue;
                             }
                             teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variants" => {
                             if v.is_null() {
                                 continue;
                             }
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "warmup_seconds" => {
                             if v.is_null() {
                                 continue;
                             }
-                            warmup_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            warmup_seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

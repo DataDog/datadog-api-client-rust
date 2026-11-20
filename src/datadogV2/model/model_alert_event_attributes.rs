@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Alert event attributes.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct AlertEventAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AlertEventAttributes {
@@ -61,66 +61,58 @@ impl AlertEventAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
         self
     }
-
+    
     pub fn custom(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.custom = Some(value);
         self
     }
-
+    
     pub fn evt(mut self, value: crate::datadogV2::model::EventSystemAttributes) -> Self {
         self.evt = Some(value);
         self
     }
-
-    pub fn links(
-        mut self,
-        value: Vec<crate::datadogV2::model::AlertEventAttributesLinksItem>,
-    ) -> Self {
+    
+    pub fn links(mut self, value: Vec<crate::datadogV2::model::AlertEventAttributesLinksItem>) -> Self {
         self.links = Some(value);
         self
     }
-
-    pub fn priority(
-        mut self,
-        value: crate::datadogV2::model::AlertEventAttributesPriority,
-    ) -> Self {
+    
+    pub fn priority(mut self, value: crate::datadogV2::model::AlertEventAttributesPriority) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::AlertEventAttributesStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn timestamp(mut self, value: i64) -> Self {
         self.timestamp = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AlertEventAttributes {
     fn default() -> Self {
@@ -146,21 +138,15 @@ impl<'de> Deserialize<'de> for AlertEventAttributes {
                 M: MapAccess<'a>,
             {
                 let mut aggregation_key: Option<String> = None;
-                let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut evt: Option<crate::datadogV2::model::EventSystemAttributes> = None;
-                let mut links: Option<Vec<crate::datadogV2::model::AlertEventAttributesLinksItem>> =
-                    None;
-                let mut priority: Option<crate::datadogV2::model::AlertEventAttributesPriority> =
-                    None;
+                let mut links: Option<Vec<crate::datadogV2::model::AlertEventAttributesLinksItem>> = None;
+                let mut priority: Option<crate::datadogV2::model::AlertEventAttributesPriority> = None;
                 let mut service: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::AlertEventAttributesStatus> = None;
                 let mut timestamp: Option<i64> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -169,27 +155,26 @@ impl<'de> Deserialize<'de> for AlertEventAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregation_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom" => {
                             if v.is_null() {
                                 continue;
                             }
                             custom = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "evt" => {
                             if v.is_null() {
                                 continue;
                             }
                             evt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "links" => {
                             if v.is_null() {
                                 continue;
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
@@ -203,13 +188,13 @@ impl<'de> Deserialize<'de> for AlertEventAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -223,24 +208,24 @@ impl<'de> Deserialize<'de> for AlertEventAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "timestamp" => {
                             if v.is_null() {
                                 continue;
                             }
                             timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

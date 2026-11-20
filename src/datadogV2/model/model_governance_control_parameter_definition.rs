@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of a configurable parameter on a control or mitigation.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GovernanceControlParameterDefinition {
     /// The default value of the parameter. The JSON type depends on the parameter's `type`. `null` when the parameter has no default.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "default_value")]
     pub default_value: Option<serde_json::Value>,
     /// A human-readable description of the parameter.
@@ -28,7 +28,7 @@ pub struct GovernanceControlParameterDefinition {
     #[serde(rename = "required")]
     pub required: bool,
     /// The supported values for an enumerated parameter. `null` when the parameter is not an enumerated type.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "supported_values")]
     pub supported_values: Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
     /// The type of the parameter, such as `integer`, `string`, `boolean`, `enum`, or `pattern_list`.
@@ -38,19 +38,11 @@ pub struct GovernanceControlParameterDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GovernanceControlParameterDefinition {
-    pub fn new(
-        default_value: Option<serde_json::Value>,
-        description: String,
-        display_name: String,
-        name: String,
-        required: bool,
-        supported_values: Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
-        type_: String,
-    ) -> GovernanceControlParameterDefinition {
+    pub fn new(default_value: Option<serde_json::Value>, description: String, display_name: String, name: String, required: bool, supported_values: Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>, type_: String) -> GovernanceControlParameterDefinition {
         GovernanceControlParameterDefinition {
             default_value,
             description,
@@ -63,15 +55,14 @@ impl GovernanceControlParameterDefinition {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -95,60 +86,47 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                 let mut display_name: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut required: Option<bool> = None;
-                let mut supported_values: Option<
-                    Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
-                > = None;
+                let mut supported_values: Option<Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>> = None;
                 let mut type_: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "default_value" => {
-                            default_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_name" => {
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "required" => {
                             required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "supported_values" => {
-                            supported_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            supported_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let default_value =
-                    default_value.ok_or_else(|| M::Error::missing_field("default_value"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let display_name =
-                    display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
+                let default_value = default_value.ok_or_else(|| M::Error::missing_field("default_value"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let display_name = display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let required = required.ok_or_else(|| M::Error::missing_field("required"))?;
-                let supported_values =
-                    supported_values.ok_or_else(|| M::Error::missing_field("supported_values"))?;
+                let supported_values = supported_values.ok_or_else(|| M::Error::missing_field("supported_values"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GovernanceControlParameterDefinition {

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Used to perform a histogram computation (only for measure facets).
 /// At most, 100 buckets are allowed, the number of buckets is `(max - min)/interval`.
@@ -16,18 +16,18 @@ pub struct CIAppGroupByHistogram {
     #[serde(rename = "interval")]
     pub interval: f64,
     /// The maximum value for the measure used in the histogram
-    /// (values greater than this one are filtered out).
+/// (values greater than this one are filtered out).
     #[serde(rename = "max")]
     pub max: f64,
     /// The minimum value for the measure used in the histogram
-    /// (values smaller than this one are filtered out).
+/// (values smaller than this one are filtered out).
     #[serde(rename = "min")]
     pub min: f64,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CIAppGroupByHistogram {
@@ -40,15 +40,14 @@ impl CIAppGroupByHistogram {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CIAppGroupByHistogram {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -70,28 +69,25 @@ impl<'de> Deserialize<'de> for CIAppGroupByHistogram {
                 let mut interval: Option<f64> = None;
                 let mut max: Option<f64> = None;
                 let mut min: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "interval" => {
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "max" => {
                             max = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "min" => {
                             min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let interval = interval.ok_or_else(|| M::Error::missing_field("interval"))?;

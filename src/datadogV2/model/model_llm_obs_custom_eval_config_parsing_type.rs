@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsCustomEvalConfigParsingType {
-    STRUCTURED_OUTPUT,
-    JSON,
-    KEYWORD_SEARCH,
-    TYPED_QUESTIONS,
+	STRUCTURED_OUTPUT,
+	JSON,
+	KEYWORD_SEARCH,
+	TYPED_QUESTIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigParsingType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "structured_output" => Self::STRUCTURED_OUTPUT,
-            "json" => Self::JSON,
-            "keyword_search" => Self::KEYWORD_SEARCH,
-            "typed_questions" => Self::TYPED_QUESTIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"structured_output" => Self::STRUCTURED_OUTPUT,"json" => Self::JSON,"keyword_search" => Self::KEYWORD_SEARCH,"typed_questions" => Self::TYPED_QUESTIONS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

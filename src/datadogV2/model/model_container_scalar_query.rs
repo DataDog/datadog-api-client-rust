@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A query for container-level metrics such as CPU and memory usage.
 #[non_exhaustive]
@@ -45,15 +45,11 @@ pub struct ContainerScalarQuery {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ContainerScalarQuery {
-    pub fn new(
-        data_source: crate::datadogV2::model::ContainerDataSource,
-        metric: String,
-        name: String,
-    ) -> ContainerScalarQuery {
+    pub fn new(data_source: crate::datadogV2::model::ContainerDataSource, metric: String, name: String) -> ContainerScalarQuery {
         ContainerScalarQuery {
             aggregator: None,
             cross_org_uuids: None,
@@ -69,50 +65,49 @@ impl ContainerScalarQuery {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggregator(mut self, value: crate::datadogV2::model::MetricsAggregator) -> Self {
         self.aggregator = Some(value);
         self
     }
-
+    
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
         self
     }
-
+    
     pub fn is_normalized_cpu(mut self, value: bool) -> Self {
         self.is_normalized_cpu = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV2::model::QuerySortOrder) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn tag_filters(mut self, value: Vec<String>) -> Self {
         self.tag_filters = Some(value);
         self
     }
-
+    
     pub fn text_filter(mut self, value: String) -> Self {
         self.text_filter = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ContainerScalarQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -141,10 +136,7 @@ impl<'de> Deserialize<'de> for ContainerScalarQuery {
                 let mut sort: Option<crate::datadogV2::model::QuerySortOrder> = None;
                 let mut tag_filters: Option<Vec<String>> = None;
                 let mut text_filter: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -156,25 +148,21 @@ impl<'de> Deserialize<'de> for ContainerScalarQuery {
                             aggregator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregator) = aggregator {
                                 match _aggregator {
-                                    crate::datadogV2::model::MetricsAggregator::UnparsedObject(
-                                        _aggregator,
-                                    ) => {
+                                    crate::datadogV2::model::MetricsAggregator::UnparsedObject(_aggregator) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "cross_org_uuids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cross_org_uuids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cross_org_uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV2::model::ContainerDataSource::UnparsedObject(_data_source) => {
@@ -183,26 +171,25 @@ impl<'de> Deserialize<'de> for ContainerScalarQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "is_normalized_cpu" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_normalized_cpu =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_normalized_cpu = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
@@ -210,38 +197,33 @@ impl<'de> Deserialize<'de> for ContainerScalarQuery {
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _sort) = sort {
                                 match _sort {
-                                    crate::datadogV2::model::QuerySortOrder::UnparsedObject(
-                                        _sort,
-                                    ) => {
+                                    crate::datadogV2::model::QuerySortOrder::UnparsedObject(_sort) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tag_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "text_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            text_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            text_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let metric = metric.ok_or_else(|| M::Error::missing_field("metric"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 

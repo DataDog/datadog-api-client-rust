@@ -2,45 +2,46 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ApplicationSecurityWafCustomRuleConditionInputAddress {
-    SERVER_DB_STATEMENT,
-    SERVER_IO_FS_FILE,
-    SERVER_IO_FS_FILE_WRITE,
-    SERVER_IO_NET_URL,
-    SERVER_SYS_SHELL_CMD,
-    SERVER_REQUEST_METHOD,
-    SERVER_REQUEST_URI_RAW,
-    SERVER_REQUEST_PATH_PARAMS,
-    SERVER_REQUEST_QUERY,
-    SERVER_REQUEST_HEADERS,
-    SERVER_REQUEST_HEADERS_NO_COOKIES,
-    SERVER_REQUEST_CUSTOM_AUTH,
-    SERVER_REQUEST_COOKIES,
-    SERVER_REQUEST_TRAILERS,
-    SERVER_REQUEST_BODY,
-    SERVER_REQUEST_BODY_FILENAMES,
-    SERVER_REQUEST_BODY_FILES_CONTENT,
-    SERVER_RESPONSE_STATUS,
-    SERVER_RESPONSE_HEADERS_NO_COOKIES,
-    SERVER_RESPONSE_TRAILERS,
-    SERVER_RESPONSE_BODY,
-    SERVER_RESPONSE_BODY_RAW,
-    GRPC_SERVER_REQUEST_METADATA,
-    GRPC_SERVER_REQUEST_MESSAGE,
-    GRPC_SERVER_METHOD,
-    GRAPHQL_SERVER_ALL_RESOLVERS,
-    USR_ID,
-    HTTP_CLIENT_IP,
-    SERVER_LLM_EVENT,
-    SERVER_LLM_GUARD_VERDICT,
-    DD_APPSEC_FP_HTTP_HEADER,
-    DD_APPSEC_FP_HTTP_NETWORK,
-    DD_APPSEC_FP_SESSION,
-    DD_APPSEC_FP_HTTP_ENDPOINT,
+	SERVER_DB_STATEMENT,
+	SERVER_IO_FS_FILE,
+	SERVER_IO_FS_FILE_WRITE,
+	SERVER_IO_NET_URL,
+	SERVER_SYS_SHELL_CMD,
+	SERVER_REQUEST_METHOD,
+	SERVER_REQUEST_URI_RAW,
+	SERVER_REQUEST_PATH_PARAMS,
+	SERVER_REQUEST_QUERY,
+	SERVER_REQUEST_HEADERS,
+	SERVER_REQUEST_HEADERS_NO_COOKIES,
+	SERVER_REQUEST_CUSTOM_AUTH,
+	SERVER_REQUEST_COOKIES,
+	SERVER_REQUEST_TRAILERS,
+	SERVER_REQUEST_BODY,
+	SERVER_REQUEST_BODY_FILENAMES,
+	SERVER_REQUEST_BODY_FILES_CONTENT,
+	SERVER_RESPONSE_STATUS,
+	SERVER_RESPONSE_HEADERS_NO_COOKIES,
+	SERVER_RESPONSE_TRAILERS,
+	SERVER_RESPONSE_BODY,
+	SERVER_RESPONSE_BODY_RAW,
+	GRPC_SERVER_REQUEST_METADATA,
+	GRPC_SERVER_REQUEST_MESSAGE,
+	GRPC_SERVER_METHOD,
+	GRAPHQL_SERVER_ALL_RESOLVERS,
+	USR_ID,
+	HTTP_CLIENT_IP,
+	SERVER_LLM_EVENT,
+	SERVER_LLM_GUARD_VERDICT,
+	DD_APPSEC_FP_HTTP_HEADER,
+	DD_APPSEC_FP_HTTP_NETWORK,
+	DD_APPSEC_FP_SESSION,
+	DD_APPSEC_FP_HTTP_ENDPOINT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -57,21 +58,15 @@ impl ToString for ApplicationSecurityWafCustomRuleConditionInputAddress {
             Self::SERVER_REQUEST_PATH_PARAMS => String::from("server.request.path_params"),
             Self::SERVER_REQUEST_QUERY => String::from("server.request.query"),
             Self::SERVER_REQUEST_HEADERS => String::from("server.request.headers"),
-            Self::SERVER_REQUEST_HEADERS_NO_COOKIES => {
-                String::from("server.request.headers.no_cookies")
-            }
+            Self::SERVER_REQUEST_HEADERS_NO_COOKIES => String::from("server.request.headers.no_cookies"),
             Self::SERVER_REQUEST_CUSTOM_AUTH => String::from("server.request.custom-auth"),
             Self::SERVER_REQUEST_COOKIES => String::from("server.request.cookies"),
             Self::SERVER_REQUEST_TRAILERS => String::from("server.request.trailers"),
             Self::SERVER_REQUEST_BODY => String::from("server.request.body"),
             Self::SERVER_REQUEST_BODY_FILENAMES => String::from("server.request.body.filenames"),
-            Self::SERVER_REQUEST_BODY_FILES_CONTENT => {
-                String::from("server.request.body.files_content")
-            }
+            Self::SERVER_REQUEST_BODY_FILES_CONTENT => String::from("server.request.body.files_content"),
             Self::SERVER_RESPONSE_STATUS => String::from("server.response.status"),
-            Self::SERVER_RESPONSE_HEADERS_NO_COOKIES => {
-                String::from("server.response.headers.no_cookies")
-            }
+            Self::SERVER_RESPONSE_HEADERS_NO_COOKIES => String::from("server.response.headers.no_cookies"),
             Self::SERVER_RESPONSE_TRAILERS => String::from("server.response.trailers"),
             Self::SERVER_RESPONSE_BODY => String::from("server.response.body"),
             Self::SERVER_RESPONSE_BODY_RAW => String::from("server.response.body.raw"),
@@ -110,44 +105,8 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionInputAdd
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "server.db.statement" => Self::SERVER_DB_STATEMENT,
-            "server.io.fs.file" => Self::SERVER_IO_FS_FILE,
-            "server.io.fs.file_write" => Self::SERVER_IO_FS_FILE_WRITE,
-            "server.io.net.url" => Self::SERVER_IO_NET_URL,
-            "server.sys.shell.cmd" => Self::SERVER_SYS_SHELL_CMD,
-            "server.request.method" => Self::SERVER_REQUEST_METHOD,
-            "server.request.uri.raw" => Self::SERVER_REQUEST_URI_RAW,
-            "server.request.path_params" => Self::SERVER_REQUEST_PATH_PARAMS,
-            "server.request.query" => Self::SERVER_REQUEST_QUERY,
-            "server.request.headers" => Self::SERVER_REQUEST_HEADERS,
-            "server.request.headers.no_cookies" => Self::SERVER_REQUEST_HEADERS_NO_COOKIES,
-            "server.request.custom-auth" => Self::SERVER_REQUEST_CUSTOM_AUTH,
-            "server.request.cookies" => Self::SERVER_REQUEST_COOKIES,
-            "server.request.trailers" => Self::SERVER_REQUEST_TRAILERS,
-            "server.request.body" => Self::SERVER_REQUEST_BODY,
-            "server.request.body.filenames" => Self::SERVER_REQUEST_BODY_FILENAMES,
-            "server.request.body.files_content" => Self::SERVER_REQUEST_BODY_FILES_CONTENT,
-            "server.response.status" => Self::SERVER_RESPONSE_STATUS,
-            "server.response.headers.no_cookies" => Self::SERVER_RESPONSE_HEADERS_NO_COOKIES,
-            "server.response.trailers" => Self::SERVER_RESPONSE_TRAILERS,
-            "server.response.body" => Self::SERVER_RESPONSE_BODY,
-            "server.response.body.raw" => Self::SERVER_RESPONSE_BODY_RAW,
-            "grpc.server.request.metadata" => Self::GRPC_SERVER_REQUEST_METADATA,
-            "grpc.server.request.message" => Self::GRPC_SERVER_REQUEST_MESSAGE,
-            "grpc.server.method" => Self::GRPC_SERVER_METHOD,
-            "graphql.server.all_resolvers" => Self::GRAPHQL_SERVER_ALL_RESOLVERS,
-            "usr.id" => Self::USR_ID,
-            "http.client_ip" => Self::HTTP_CLIENT_IP,
-            "server.llm.event" => Self::SERVER_LLM_EVENT,
-            "server.llm.guard.verdict" => Self::SERVER_LLM_GUARD_VERDICT,
-            "_dd.appsec.fp.http.header" => Self::DD_APPSEC_FP_HTTP_HEADER,
-            "_dd.appsec.fp.http.network" => Self::DD_APPSEC_FP_HTTP_NETWORK,
-            "_dd.appsec.fp.session" => Self::DD_APPSEC_FP_SESSION,
-            "_dd.appsec.fp.http.endpoint" => Self::DD_APPSEC_FP_HTTP_ENDPOINT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"server.db.statement" => Self::SERVER_DB_STATEMENT,"server.io.fs.file" => Self::SERVER_IO_FS_FILE,"server.io.fs.file_write" => Self::SERVER_IO_FS_FILE_WRITE,"server.io.net.url" => Self::SERVER_IO_NET_URL,"server.sys.shell.cmd" => Self::SERVER_SYS_SHELL_CMD,"server.request.method" => Self::SERVER_REQUEST_METHOD,"server.request.uri.raw" => Self::SERVER_REQUEST_URI_RAW,"server.request.path_params" => Self::SERVER_REQUEST_PATH_PARAMS,"server.request.query" => Self::SERVER_REQUEST_QUERY,"server.request.headers" => Self::SERVER_REQUEST_HEADERS,"server.request.headers.no_cookies" => Self::SERVER_REQUEST_HEADERS_NO_COOKIES,"server.request.custom-auth" => Self::SERVER_REQUEST_CUSTOM_AUTH,"server.request.cookies" => Self::SERVER_REQUEST_COOKIES,"server.request.trailers" => Self::SERVER_REQUEST_TRAILERS,"server.request.body" => Self::SERVER_REQUEST_BODY,"server.request.body.filenames" => Self::SERVER_REQUEST_BODY_FILENAMES,"server.request.body.files_content" => Self::SERVER_REQUEST_BODY_FILES_CONTENT,"server.response.status" => Self::SERVER_RESPONSE_STATUS,"server.response.headers.no_cookies" => Self::SERVER_RESPONSE_HEADERS_NO_COOKIES,"server.response.trailers" => Self::SERVER_RESPONSE_TRAILERS,"server.response.body" => Self::SERVER_RESPONSE_BODY,"server.response.body.raw" => Self::SERVER_RESPONSE_BODY_RAW,"grpc.server.request.metadata" => Self::GRPC_SERVER_REQUEST_METADATA,"grpc.server.request.message" => Self::GRPC_SERVER_REQUEST_MESSAGE,"grpc.server.method" => Self::GRPC_SERVER_METHOD,"graphql.server.all_resolvers" => Self::GRAPHQL_SERVER_ALL_RESOLVERS,"usr.id" => Self::USR_ID,"http.client_ip" => Self::HTTP_CLIENT_IP,"server.llm.event" => Self::SERVER_LLM_EVENT,"server.llm.guard.verdict" => Self::SERVER_LLM_GUARD_VERDICT,"_dd.appsec.fp.http.header" => Self::DD_APPSEC_FP_HTTP_HEADER,"_dd.appsec.fp.http.network" => Self::DD_APPSEC_FP_HTTP_NETWORK,"_dd.appsec.fp.session" => Self::DD_APPSEC_FP_SESSION,"_dd.appsec.fp.http.endpoint" => Self::DD_APPSEC_FP_HTTP_ENDPOINT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

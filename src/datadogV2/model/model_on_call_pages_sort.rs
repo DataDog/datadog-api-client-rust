@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OnCallPagesSort {
-    CREATED_AT_ASCENDING,
-    CREATED_AT_DESCENDING,
-    MODIFIED_AT_ASCENDING,
-    MODIFIED_AT_DESCENDING,
-    STATUS_ASCENDING,
-    STATUS_DESCENDING,
-    PRIORITY_ASCENDING,
-    PRIORITY_DESCENDING,
+	CREATED_AT_ASCENDING,
+	CREATED_AT_DESCENDING,
+	MODIFIED_AT_ASCENDING,
+	MODIFIED_AT_DESCENDING,
+	STATUS_ASCENDING,
+	STATUS_DESCENDING,
+	PRIORITY_ASCENDING,
+	PRIORITY_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for OnCallPagesSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "created_at" => Self::CREATED_AT_ASCENDING,
-            "-created_at" => Self::CREATED_AT_DESCENDING,
-            "modified_at" => Self::MODIFIED_AT_ASCENDING,
-            "-modified_at" => Self::MODIFIED_AT_DESCENDING,
-            "status" => Self::STATUS_ASCENDING,
-            "-status" => Self::STATUS_DESCENDING,
-            "priority" => Self::PRIORITY_ASCENDING,
-            "-priority" => Self::PRIORITY_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"created_at" => Self::CREATED_AT_ASCENDING,"-created_at" => Self::CREATED_AT_DESCENDING,"modified_at" => Self::MODIFIED_AT_ASCENDING,"-modified_at" => Self::MODIFIED_AT_DESCENDING,"status" => Self::STATUS_ASCENDING,"-status" => Self::STATUS_DESCENDING,"priority" => Self::PRIORITY_ASCENDING,"-priority" => Self::PRIORITY_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

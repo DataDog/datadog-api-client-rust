@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsBanditResultsState {
-    WAITING_FOR_FIRST_REFRESH,
-    WARMUP,
-    OPTIMIZING,
-    STATS_UNAVAILABLE,
-    ENDED,
+	WAITING_FOR_FIRST_REFRESH,
+	WARMUP,
+	OPTIMIZING,
+	STATS_UNAVAILABLE,
+	ENDED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ExperimentsBanditResultsState {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "WAITING_FOR_FIRST_REFRESH" => Self::WAITING_FOR_FIRST_REFRESH,
-            "WARMUP" => Self::WARMUP,
-            "OPTIMIZING" => Self::OPTIMIZING,
-            "STATS_UNAVAILABLE" => Self::STATS_UNAVAILABLE,
-            "ENDED" => Self::ENDED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"WAITING_FOR_FIRST_REFRESH" => Self::WAITING_FOR_FIRST_REFRESH,"WARMUP" => Self::WARMUP,"OPTIMIZING" => Self::OPTIMIZING,"STATS_UNAVAILABLE" => Self::STATS_UNAVAILABLE,"ENDED" => Self::ENDED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

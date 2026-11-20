@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Target application configuration for a custom evaluator.
 #[non_exhaustive]
@@ -27,24 +27,16 @@ pub struct LLMObsCustomEvalConfigTarget {
     #[serde(rename = "filter", default, with = "::serde_with::rust::double_option")]
     pub filter: Option<Option<String>>,
     /// When true, only root spans are evaluated.
-    #[serde(
-        rename = "root_spans_only",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "root_spans_only", default, with = "::serde_with::rust::double_option")]
     pub root_spans_only: Option<Option<bool>>,
     /// Percentage of traces to evaluate. Must be greater than 0 and at most 100.
-    #[serde(
-        rename = "sampling_percentage",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "sampling_percentage", default, with = "::serde_with::rust::double_option")]
     pub sampling_percentage: Option<Option<f64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCustomEvalConfigTarget {
@@ -61,43 +53,39 @@ impl LLMObsCustomEvalConfigTarget {
             _unparsed: false,
         }
     }
-
-    pub fn eval_scope(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope,
-    ) -> Self {
+    
+    pub fn eval_scope(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope) -> Self {
         self.eval_scope = Some(value);
         self
     }
-
+    
     pub fn experiment_project_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.experiment_project_ids = Some(value);
         self
     }
-
+    
     pub fn filter(mut self, value: Option<String>) -> Self {
         self.filter = Some(value);
         self
     }
-
+    
     pub fn root_spans_only(mut self, value: Option<bool>) -> Self {
         self.root_spans_only = Some(value);
         self
     }
-
+    
     pub fn sampling_percentage(mut self, value: Option<f64>) -> Self {
         self.sampling_percentage = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -118,28 +106,22 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
             {
                 let mut application_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
-                let mut eval_scope: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope,
-                > = None;
+                let mut eval_scope: Option<crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope> = None;
                 let mut experiment_project_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut filter: Option<Option<String>> = None;
                 let mut root_spans_only: Option<Option<bool>> = None;
                 let mut sampling_percentage: Option<Option<f64>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "application_name" => {
-                            application_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "eval_scope" => {
                             if v.is_null() {
                                 continue;
@@ -153,37 +135,33 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "experiment_project_ids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            experiment_project_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_project_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "root_spans_only" => {
-                            root_spans_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            root_spans_only = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sampling_percentage" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            sampling_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sampling_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let application_name =
-                    application_name.ok_or_else(|| M::Error::missing_field("application_name"))?;
+                let application_name = application_name.ok_or_else(|| M::Error::missing_field("application_name"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
 
                 let content = LLMObsCustomEvalConfigTarget {

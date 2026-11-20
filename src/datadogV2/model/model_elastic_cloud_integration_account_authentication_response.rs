@@ -1,17 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Authentication configured on the Elastic Cloud integration account.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ElasticCloudIntegrationAccountAuthenticationResponse {
-    ElasticCloudIntegrationAccountBasicAuthResponse(
-        Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthResponse>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ElasticCloudIntegrationAccountBasicAuthResponse(Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthResponse>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountAuthenticationResponse {
@@ -20,19 +18,12 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountAuthenticationRespo
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthResponse>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthResponse>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ElasticCloudIntegrationAccountAuthenticationResponse::ElasticCloudIntegrationAccountBasicAuthResponse(_v));
             }
         }
-
-        return Ok(
-            ElasticCloudIntegrationAccountAuthenticationResponse::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(ElasticCloudIntegrationAccountAuthenticationResponse::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Read-only. Whether the provider is working, based on the model sync and live calls. Omitted for
 /// providers that are never checked, which include providers without an integration account, and
@@ -38,20 +38,18 @@ pub struct AiGatewayProviderStatus {
     #[serde(rename = "reason")]
     pub reason: Option<String>,
     /// Whether the provider is working. `checking` means no observation has been recorded yet, not that a
-    /// check is running.
+/// check is running.
     #[serde(rename = "state")]
     pub state: crate::datadogV2::model::AiGatewayProviderStatusState,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayProviderStatus {
-    pub fn new(
-        state: crate::datadogV2::model::AiGatewayProviderStatusState,
-    ) -> AiGatewayProviderStatus {
+    pub fn new(state: crate::datadogV2::model::AiGatewayProviderStatusState) -> AiGatewayProviderStatus {
         AiGatewayProviderStatus {
             checked_at: None,
             endpoint: None,
@@ -66,55 +64,54 @@ impl AiGatewayProviderStatus {
             _unparsed: false,
         }
     }
-
+    
     pub fn checked_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.checked_at = Some(value);
         self
     }
-
+    
     pub fn endpoint(mut self, value: String) -> Self {
         self.endpoint = Some(value);
         self
     }
-
+    
     pub fn fix(mut self, value: String) -> Self {
         self.fix = Some(value);
         self
     }
-
+    
     pub fn http_status(mut self, value: i64) -> Self {
         self.http_status = Some(value);
         self
     }
-
+    
     pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
-
+    
     pub fn last_ok_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_ok_at = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn reason(mut self, value: String) -> Self {
         self.reason = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayProviderStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -142,10 +139,7 @@ impl<'de> Deserialize<'de> for AiGatewayProviderStatus {
                 let mut message: Option<String> = None;
                 let mut reason: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::AiGatewayProviderStatusState> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,50 +149,49 @@ impl<'de> Deserialize<'de> for AiGatewayProviderStatus {
                                 continue;
                             }
                             checked_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "endpoint" => {
                             if v.is_null() {
                                 continue;
                             }
                             endpoint = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "fix" => {
                             if v.is_null() {
                                 continue;
                             }
                             fix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "http_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            http_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            http_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label" => {
                             if v.is_null() {
                                 continue;
                             }
                             label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_ok_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             last_ok_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "reason" => {
                             if v.is_null() {
                                 continue;
                             }
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "state" => {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _state) = state {
@@ -209,12 +202,12 @@ impl<'de> Deserialize<'de> for AiGatewayProviderStatus {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let state = state.ok_or_else(|| M::Error::missing_field("state"))?;

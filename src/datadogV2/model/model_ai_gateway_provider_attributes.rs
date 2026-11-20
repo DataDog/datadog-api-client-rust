@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// AI Gateway provider configuration and metadata.
 #[non_exhaustive]
@@ -18,8 +18,8 @@ pub struct AiGatewayProviderAttributes {
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// Whose credential the gateway sends to the provider. `integration_account` sends the integration
-    /// account's credential. `subscription` forwards each caller's own subscription sign-in (`ChatGPT` for
-    /// `openai`, `claude.ai` for `anthropic`) and needs no integration account.
+/// account's credential. `subscription` forwards each caller's own subscription sign-in (`ChatGPT` for
+/// `openai`, `claude.ai` for `anthropic`) and needs no integration account.
     #[serde(rename = "credential_source")]
     pub credential_source: Option<crate::datadogV2::model::AiGatewayProviderCredentialSource>,
     /// Provider integration account identifier.
@@ -38,8 +38,8 @@ pub struct AiGatewayProviderAttributes {
     #[serde(rename = "slug")]
     pub slug: String,
     /// Read-only. Whether the provider is working, based on the model sync and live calls. Omitted for
-    /// providers that are never checked, which include providers without an integration account, and
-    /// Azure OpenAI and Gemini providers until live traffic records a status.
+/// providers that are never checked, which include providers without an integration account, and
+/// Azure OpenAI and Gemini providers until live traffic records a status.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::AiGatewayProviderStatus>,
     /// Time when the resource was last updated.
@@ -52,19 +52,11 @@ pub struct AiGatewayProviderAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayProviderAttributes {
-    pub fn new(
-        cost_multiplier: f64,
-        created_at: chrono::DateTime<chrono::Utc>,
-        integration_account_id: String,
-        known_provider: crate::datadogV2::model::AiGatewayKnownProvider,
-        name: String,
-        slug: String,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> AiGatewayProviderAttributes {
+    pub fn new(cost_multiplier: f64, created_at: chrono::DateTime<chrono::Utc>, integration_account_id: String, known_provider: crate::datadogV2::model::AiGatewayKnownProvider, name: String, slug: String, updated_at: chrono::DateTime<chrono::Utc>) -> AiGatewayProviderAttributes {
         AiGatewayProviderAttributes {
             cost_multiplier,
             created_at,
@@ -81,41 +73,34 @@ impl AiGatewayProviderAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn credential_source(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayProviderCredentialSource,
-    ) -> Self {
+    
+    pub fn credential_source(mut self, value: crate::datadogV2::model::AiGatewayProviderCredentialSource) -> Self {
         self.credential_source = Some(value);
         self
     }
-
-    pub fn integration_config(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayProviderIntegrationConfig,
-    ) -> Self {
+    
+    pub fn integration_config(mut self, value: crate::datadogV2::model::AiGatewayProviderIntegrationConfig) -> Self {
         self.integration_config = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::AiGatewayProviderStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn zdr_eligible(mut self, value: bool) -> Self {
         self.zdr_eligible = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -136,41 +121,31 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
             {
                 let mut cost_multiplier: Option<f64> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut credential_source: Option<
-                    crate::datadogV2::model::AiGatewayProviderCredentialSource,
-                > = None;
+                let mut credential_source: Option<crate::datadogV2::model::AiGatewayProviderCredentialSource> = None;
                 let mut integration_account_id: Option<String> = None;
-                let mut integration_config: Option<
-                    crate::datadogV2::model::AiGatewayProviderIntegrationConfig,
-                > = None;
-                let mut known_provider: Option<crate::datadogV2::model::AiGatewayKnownProvider> =
-                    None;
+                let mut integration_config: Option<crate::datadogV2::model::AiGatewayProviderIntegrationConfig> = None;
+                let mut known_provider: Option<crate::datadogV2::model::AiGatewayKnownProvider> = None;
                 let mut name: Option<String> = None;
                 let mut slug: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::AiGatewayProviderStatus> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut zdr_eligible: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cost_multiplier" => {
-                            cost_multiplier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cost_multiplier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "credential_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            credential_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            credential_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _credential_source) = credential_source {
                                 match _credential_source {
                                     crate::datadogV2::model::AiGatewayProviderCredentialSource::UnparsedObject(_credential_source) => {
@@ -179,21 +154,18 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "integration_account_id" => {
-                            integration_account_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integration_account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "integration_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integration_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integration_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "known_provider" => {
-                            known_provider =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            known_provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _known_provider) = known_provider {
                                 match _known_provider {
                                     crate::datadogV2::model::AiGatewayKnownProvider::UnparsedObject(_known_provider) => {
@@ -202,43 +174,39 @@ impl<'de> Deserialize<'de> for AiGatewayProviderAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slug" => {
                             slug = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "zdr_eligible" => {
                             if v.is_null() {
                                 continue;
                             }
-                            zdr_eligible =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            zdr_eligible = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let cost_multiplier =
-                    cost_multiplier.ok_or_else(|| M::Error::missing_field("cost_multiplier"))?;
+                let cost_multiplier = cost_multiplier.ok_or_else(|| M::Error::missing_field("cost_multiplier"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let integration_account_id = integration_account_id
-                    .ok_or_else(|| M::Error::missing_field("integration_account_id"))?;
-                let known_provider =
-                    known_provider.ok_or_else(|| M::Error::missing_field("known_provider"))?;
+                let integration_account_id = integration_account_id.ok_or_else(|| M::Error::missing_field("integration_account_id"))?;
+                let known_provider = known_provider.ok_or_else(|| M::Error::missing_field("known_provider"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let slug = slug.ok_or_else(|| M::Error::missing_field("slug"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;

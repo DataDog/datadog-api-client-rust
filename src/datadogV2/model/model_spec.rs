@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A complete Workflow Automation definition, including its triggers, steps, and connections.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct Spec {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl Spec {
@@ -53,50 +53,48 @@ impl Spec {
             _unparsed: false,
         }
     }
-
+    
     pub fn annotations(mut self, value: Vec<crate::datadogV2::model::Annotation>) -> Self {
         self.annotations = Some(value);
         self
     }
-
+    
     pub fn connection_envs(mut self, value: Vec<crate::datadogV2::model::ConnectionEnv>) -> Self {
         self.connection_envs = Some(value);
         self
     }
-
+    
     pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
-
+    
     pub fn input_schema(mut self, value: crate::datadogV2::model::InputSchema) -> Self {
         self.input_schema = Some(value);
         self
     }
-
+    
     pub fn output_schema(mut self, value: crate::datadogV2::model::OutputSchema) -> Self {
         self.output_schema = Some(value);
         self
     }
-
+    
     pub fn steps(mut self, value: Vec<crate::datadogV2::model::Step>) -> Self {
         self.steps = Some(value);
         self
     }
-
+    
     pub fn triggers(mut self, value: Vec<crate::datadogV2::model::Trigger>) -> Self {
         self.triggers = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for Spec {
     fn default() -> Self {
@@ -128,10 +126,7 @@ impl<'de> Deserialize<'de> for Spec {
                 let mut output_schema: Option<crate::datadogV2::model::OutputSchema> = None;
                 let mut steps: Option<Vec<crate::datadogV2::model::Step>> = None;
                 let mut triggers: Option<Vec<crate::datadogV2::model::Trigger>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,53 +135,49 @@ impl<'de> Deserialize<'de> for Spec {
                             if v.is_null() {
                                 continue;
                             }
-                            annotations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            annotations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "connectionEnvs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            connection_envs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            connection_envs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "handle" => {
                             if v.is_null() {
                                 continue;
                             }
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputSchema" => {
                             if v.is_null() {
                                 continue;
                             }
-                            input_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            input_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "outputSchema" => {
                             if v.is_null() {
                                 continue;
                             }
-                            output_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            output_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "steps" => {
                             if v.is_null() {
                                 continue;
                             }
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "triggers" => {
                             if v.is_null() {
                                 continue;
                             }
                             triggers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

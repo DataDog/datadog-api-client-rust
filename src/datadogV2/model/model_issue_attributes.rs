@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the information of an issue.
 #[non_exhaustive]
@@ -57,7 +57,7 @@ pub struct IssueAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssueAttributes {
@@ -81,85 +81,83 @@ impl IssueAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn error_message(mut self, value: String) -> Self {
         self.error_message = Some(value);
         self
     }
-
+    
     pub fn error_type(mut self, value: String) -> Self {
         self.error_type = Some(value);
         self
     }
-
+    
     pub fn file_path(mut self, value: String) -> Self {
         self.file_path = Some(value);
         self
     }
-
+    
     pub fn first_seen(mut self, value: i64) -> Self {
         self.first_seen = Some(value);
         self
     }
-
+    
     pub fn first_seen_version(mut self, value: String) -> Self {
         self.first_seen_version = Some(value);
         self
     }
-
+    
     pub fn function_name(mut self, value: String) -> Self {
         self.function_name = Some(value);
         self
     }
-
+    
     pub fn is_crash(mut self, value: bool) -> Self {
         self.is_crash = Some(value);
         self
     }
-
+    
     pub fn languages(mut self, value: Vec<crate::datadogV2::model::IssueLanguage>) -> Self {
         self.languages = Some(value);
         self
     }
-
+    
     pub fn last_seen(mut self, value: i64) -> Self {
         self.last_seen = Some(value);
         self
     }
-
+    
     pub fn last_seen_version(mut self, value: String) -> Self {
         self.last_seen_version = Some(value);
         self
     }
-
+    
     pub fn platform(mut self, value: crate::datadogV2::model::IssuePlatform) -> Self {
         self.platform = Some(value);
         self
     }
-
+    
     pub fn regression(mut self, value: crate::datadogV2::model::IssueRegression) -> Self {
         self.regression = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn state(mut self, value: crate::datadogV2::model::IssueState) -> Self {
         self.state = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IssueAttributes {
     fn default() -> Self {
@@ -198,10 +196,7 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                 let mut regression: Option<crate::datadogV2::model::IssueRegression> = None;
                 let mut service: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::IssueState> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -210,66 +205,62 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            error_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_type" => {
                             if v.is_null() {
                                 continue;
                             }
                             error_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "file_path" => {
                             if v.is_null() {
                                 continue;
                             }
                             file_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "first_seen" => {
                             if v.is_null() {
                                 continue;
                             }
                             first_seen = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "first_seen_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_seen_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_seen_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "function_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            function_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            function_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_crash" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_crash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "languages" => {
                             if v.is_null() {
                                 continue;
                             }
                             languages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_seen" => {
                             if v.is_null() {
                                 continue;
                             }
                             last_seen = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_seen_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_seen_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_seen_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "platform" => {
                             if v.is_null() {
                                 continue;
@@ -277,27 +268,25 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                             platform = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _platform) = platform {
                                 match _platform {
-                                    crate::datadogV2::model::IssuePlatform::UnparsedObject(
-                                        _platform,
-                                    ) => {
+                                    crate::datadogV2::model::IssuePlatform::UnparsedObject(_platform) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "regression" => {
                             if v.is_null() {
                                 continue;
                             }
                             regression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "state" => {
                             if v.is_null() {
                                 continue;
@@ -307,16 +296,16 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                                 match _state {
                                     crate::datadogV2::model::IssueState::UnparsedObject(_state) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

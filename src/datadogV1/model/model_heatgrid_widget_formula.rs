@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A formula for a heatgrid widget request.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct HeatgridWidgetFormula {
     #[serde(rename = "alias")]
     pub alias: Option<String>,
     /// Conditional formatting rules. These rules do not affect heatgrid rendering.
-    /// Use the widget-level `color` configuration to control cell colors.
+/// Use the widget-level `color` configuration to control cell colors.
     #[serde(rename = "conditional_formats")]
     pub conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>>,
     /// String expression built from queries, formulas, and functions.
@@ -32,7 +32,7 @@ pub struct HeatgridWidgetFormula {
     pub style: Option<crate::datadogV1::model::WidgetFormulaStyle>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HeatgridWidgetFormula {
@@ -47,35 +47,35 @@ impl HeatgridWidgetFormula {
             _unparsed: false,
         }
     }
-
+    
     pub fn alias(mut self, value: String) -> Self {
         self.alias = Some(value);
         self
     }
-
-    pub fn conditional_formats(
-        mut self,
-        value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-    ) -> Self {
+    
+    pub fn conditional_formats(mut self, value: Vec<crate::datadogV1::model::WidgetConditionalFormat>) -> Self {
         self.conditional_formats = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn number_format(mut self, value: crate::datadogV1::model::WidgetNumberFormat) -> Self {
         self.number_format = Some(value);
         self
     }
-
+    
     pub fn style(mut self, value: crate::datadogV1::model::WidgetFormulaStyle) -> Self {
         self.style = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for HeatgridWidgetFormula {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -95,9 +95,7 @@ impl<'de> Deserialize<'de> for HeatgridWidgetFormula {
                 M: MapAccess<'a>,
             {
                 let mut alias: Option<String> = None;
-                let mut conditional_formats: Option<
-                    Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-                > = None;
+                let mut conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>> = None;
                 let mut formula: Option<String> = None;
                 let mut limit: Option<crate::datadogV1::model::WidgetFormulaLimit> = None;
                 let mut number_format: Option<crate::datadogV1::model::WidgetNumberFormat> = None;
@@ -111,41 +109,37 @@ impl<'de> Deserialize<'de> for HeatgridWidgetFormula {
                                 continue;
                             }
                             alias = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "conditional_formats" => {
                             if v.is_null() {
                                 continue;
                             }
-                            conditional_formats =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            conditional_formats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "formula" => {
                             formula = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "number_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            number_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            number_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "style" => {
                             if v.is_null() {
                                 continue;
                             }
                             style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let formula = formula.ok_or_else(|| M::Error::missing_field("formula"))?;

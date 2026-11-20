@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata associated with your host.
 #[non_exhaustive]
@@ -60,7 +60,7 @@ pub struct HostMeta {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HostMeta {
@@ -85,90 +85,88 @@ impl HostMeta {
             _unparsed: false,
         }
     }
-
+    
     pub fn agent_checks(mut self, value: Vec<Vec<serde_json::Value>>) -> Self {
         self.agent_checks = Some(value);
         self
     }
-
+    
     pub fn agent_version(mut self, value: String) -> Self {
         self.agent_version = Some(value);
         self
     }
-
+    
     pub fn cpu_cores(mut self, value: i64) -> Self {
         self.cpu_cores = Some(value);
         self
     }
-
+    
     pub fn fbsd_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.fbsd_v = Some(value);
         self
     }
-
+    
     pub fn gohai(mut self, value: String) -> Self {
         self.gohai = Some(value);
         self
     }
-
+    
     pub fn install_method(mut self, value: crate::datadogV1::model::HostMetaInstallMethod) -> Self {
         self.install_method = Some(value);
         self
     }
-
+    
     pub fn mac_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.mac_v = Some(value);
         self
     }
-
+    
     pub fn machine(mut self, value: String) -> Self {
         self.machine = Some(value);
         self
     }
-
+    
     pub fn nix_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.nix_v = Some(value);
         self
     }
-
+    
     pub fn platform(mut self, value: String) -> Self {
         self.platform = Some(value);
         self
     }
-
+    
     pub fn processor(mut self, value: String) -> Self {
         self.processor = Some(value);
         self
     }
-
+    
     pub fn python_v(mut self, value: String) -> Self {
         self.python_v = Some(value);
         self
     }
-
+    
     pub fn socket_fqdn(mut self, value: String) -> Self {
         self.socket_fqdn = Some(value);
         self
     }
-
+    
     pub fn socket_hostname(mut self, value: String) -> Self {
         self.socket_hostname = Some(value);
         self
     }
-
+    
     pub fn win_v(mut self, value: Vec<serde_json::Value>) -> Self {
         self.win_v = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for HostMeta {
     fn default() -> Self {
@@ -198,8 +196,7 @@ impl<'de> Deserialize<'de> for HostMeta {
                 let mut cpu_cores: Option<i64> = None;
                 let mut fbsd_v: Option<Vec<serde_json::Value>> = None;
                 let mut gohai: Option<String> = None;
-                let mut install_method: Option<crate::datadogV1::model::HostMetaInstallMethod> =
-                    None;
+                let mut install_method: Option<crate::datadogV1::model::HostMetaInstallMethod> = None;
                 let mut mac_v: Option<Vec<serde_json::Value>> = None;
                 let mut machine: Option<String> = None;
                 let mut nix_v: Option<Vec<serde_json::Value>> = None;
@@ -209,10 +206,7 @@ impl<'de> Deserialize<'de> for HostMeta {
                 let mut socket_fqdn: Option<String> = None;
                 let mut socket_hostname: Option<String> = None;
                 let mut win_v: Option<Vec<serde_json::Value>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -221,102 +215,97 @@ impl<'de> Deserialize<'de> for HostMeta {
                             if v.is_null() {
                                 continue;
                             }
-                            agent_checks =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_checks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "agent_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            agent_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cpuCores" => {
                             if v.is_null() {
                                 continue;
                             }
                             cpu_cores = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "fbsdV" => {
                             if v.is_null() {
                                 continue;
                             }
                             fbsd_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "gohai" => {
                             if v.is_null() {
                                 continue;
                             }
                             gohai = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "install_method" => {
                             if v.is_null() {
                                 continue;
                             }
-                            install_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            install_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "macV" => {
                             if v.is_null() {
                                 continue;
                             }
                             mac_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "machine" => {
                             if v.is_null() {
                                 continue;
                             }
                             machine = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "nixV" => {
                             if v.is_null() {
                                 continue;
                             }
                             nix_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "platform" => {
                             if v.is_null() {
                                 continue;
                             }
                             platform = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "processor" => {
                             if v.is_null() {
                                 continue;
                             }
                             processor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pythonV" => {
                             if v.is_null() {
                                 continue;
                             }
                             python_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "socket-fqdn" => {
                             if v.is_null() {
                                 continue;
                             }
-                            socket_fqdn =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            socket_fqdn = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "socket-hostname" => {
                             if v.is_null() {
                                 continue;
                             }
-                            socket_hostname =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            socket_hostname = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "winV" => {
                             if v.is_null() {
                                 continue;
                             }
                             win_v = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

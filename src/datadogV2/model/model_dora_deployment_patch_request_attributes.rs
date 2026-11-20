@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for patching a DORA deployment event.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct DORADeploymentPatchRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DORADeploymentPatchRequestAttributes {
@@ -33,28 +33,23 @@ impl DORADeploymentPatchRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn change_failure(mut self, value: bool) -> Self {
         self.change_failure = Some(value);
         self
     }
-
-    pub fn remediation(
-        mut self,
-        value: crate::datadogV2::model::DORADeploymentPatchRemediation,
-    ) -> Self {
+    
+    pub fn remediation(mut self, value: crate::datadogV2::model::DORADeploymentPatchRemediation) -> Self {
         self.remediation = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DORADeploymentPatchRequestAttributes {
     fn default() -> Self {
@@ -80,13 +75,8 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut change_failure: Option<bool> = None;
-                let mut remediation: Option<
-                    crate::datadogV2::model::DORADeploymentPatchRemediation,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut remediation: Option<crate::datadogV2::model::DORADeploymentPatchRemediation> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,21 +85,19 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRequestAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            change_failure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            change_failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "remediation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            remediation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            remediation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single annotation on an interaction.
 #[non_exhaustive]
@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationItem {
     /// Caller-supplied name or identifier for the external person or automated system that produced the labels.
-    /// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
-    /// resolved against Datadog users.
+/// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
+/// resolved against Datadog users.
     #[serde(rename = "annotator")]
     pub annotator: Option<String>,
     /// Timestamp when the annotation was created.
@@ -41,19 +41,11 @@ pub struct LLMObsAnnotationItem {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsAnnotationItem {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        id: String,
-        interaction_id: String,
-        label_values: std::collections::BTreeMap<String, serde_json::Value>,
-        modified_at: chrono::DateTime<chrono::Utc>,
-        modified_by: String,
-    ) -> LLMObsAnnotationItem {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: String, id: String, interaction_id: String, label_values: std::collections::BTreeMap<String, serde_json::Value>, modified_at: chrono::DateTime<chrono::Utc>, modified_by: String) -> LLMObsAnnotationItem {
         LLMObsAnnotationItem {
             annotator: None,
             created_at,
@@ -67,20 +59,19 @@ impl LLMObsAnnotationItem {
             _unparsed: false,
         }
     }
-
+    
     pub fn annotator(mut self, value: String) -> Self {
         self.annotator = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsAnnotationItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -104,15 +95,10 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationItem {
                 let mut created_by: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut interaction_id: Option<String> = None;
-                let mut label_values: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
+                let mut label_values: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_by: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -122,50 +108,42 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationItem {
                                 continue;
                             }
                             annotator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "interaction_id" => {
-                            interaction_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            interaction_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label_values" => {
-                            label_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            label_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_by" => {
-                            modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let interaction_id =
-                    interaction_id.ok_or_else(|| M::Error::missing_field("interaction_id"))?;
-                let label_values =
-                    label_values.ok_or_else(|| M::Error::missing_field("label_values"))?;
-                let modified_at =
-                    modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
-                let modified_by =
-                    modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
+                let interaction_id = interaction_id.ok_or_else(|| M::Error::missing_field("interaction_id"))?;
+                let label_values = label_values.ok_or_else(|| M::Error::missing_field("label_values"))?;
+                let modified_at = modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
+                let modified_by = modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
 
                 let content = LLMObsAnnotationItem {
                     annotator,

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes for creating a notification rule.
 #[non_exhaustive]
@@ -28,21 +28,16 @@ pub struct IncidentNotificationRuleCreateAttributes {
     pub trigger: String,
     /// The visibility of the notification rule.
     #[serde(rename = "visibility")]
-    pub visibility:
-        Option<crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility>,
+    pub visibility: Option<crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentNotificationRuleCreateAttributes {
-    pub fn new(
-        conditions: Vec<crate::datadogV2::model::IncidentNotificationRuleConditionsItems>,
-        handles: Vec<String>,
-        trigger: String,
-    ) -> IncidentNotificationRuleCreateAttributes {
+    pub fn new(conditions: Vec<crate::datadogV2::model::IncidentNotificationRuleConditionsItems>, handles: Vec<String>, trigger: String) -> IncidentNotificationRuleCreateAttributes {
         IncidentNotificationRuleCreateAttributes {
             conditions,
             enabled: None,
@@ -54,33 +49,29 @@ impl IncidentNotificationRuleCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn renotify_on(mut self, value: Vec<String>) -> Self {
         self.renotify_on = Some(value);
         self
     }
-
-    pub fn visibility(
-        mut self,
-        value: crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility,
-    ) -> Self {
+    
+    pub fn visibility(mut self, value: crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility) -> Self {
         self.visibility = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentNotificationRuleCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -99,46 +90,38 @@ impl<'de> Deserialize<'de> for IncidentNotificationRuleCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut conditions: Option<
-                    Vec<crate::datadogV2::model::IncidentNotificationRuleConditionsItems>,
-                > = None;
+                let mut conditions: Option<Vec<crate::datadogV2::model::IncidentNotificationRuleConditionsItems>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut handles: Option<Vec<String>> = None;
                 let mut renotify_on: Option<Vec<String>> = None;
                 let mut trigger: Option<String> = None;
-                let mut visibility: Option<
-                    crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut visibility: Option<crate::datadogV2::model::IncidentNotificationRuleCreateAttributesVisibility> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "conditions" => {
                             conditions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "handles" => {
                             handles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "renotify_on" => {
                             if v.is_null() {
                                 continue;
                             }
-                            renotify_on =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            renotify_on = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trigger" => {
                             trigger = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "visibility" => {
                             if v.is_null() {
                                 continue;
@@ -152,12 +135,12 @@ impl<'de> Deserialize<'de> for IncidentNotificationRuleCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let conditions = conditions.ok_or_else(|| M::Error::missing_field("conditions"))?;

@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppPipelineLevel {
-    PIPELINE,
-    STAGE,
-    JOB,
-    STEP,
-    CUSTOM,
+	PIPELINE,
+	STAGE,
+	JOB,
+	STEP,
+	CUSTOM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for CIAppPipelineLevel {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "pipeline" => Self::PIPELINE,
-            "stage" => Self::STAGE,
-            "job" => Self::JOB,
-            "step" => Self::STEP,
-            "custom" => Self::CUSTOM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"pipeline" => Self::PIPELINE,"stage" => Self::STAGE,"job" => Self::JOB,"step" => Self::STEP,"custom" => Self::CUSTOM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentImpactFieldValueType {
-    DROPDOWN,
-    TEXT,
-    TEXTARRAY,
-    METRICTAG,
-    NUMBER,
-    DATETIME,
-    MULTISELECT,
+	DROPDOWN,
+	TEXT,
+	TEXTARRAY,
+	METRICTAG,
+	NUMBER,
+	DATETIME,
+	MULTISELECT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for IncidentImpactFieldValueType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "dropdown" => Self::DROPDOWN,
-            "text" => Self::TEXT,
-            "textarray" => Self::TEXTARRAY,
-            "metrictag" => Self::METRICTAG,
-            "number" => Self::NUMBER,
-            "datetime" => Self::DATETIME,
-            "multiselect" => Self::MULTISELECT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"dropdown" => Self::DROPDOWN,"text" => Self::TEXT,"textarray" => Self::TEXTARRAY,"metrictag" => Self::METRICTAG,"number" => Self::NUMBER,"datetime" => Self::DATETIME,"multiselect" => Self::MULTISELECT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

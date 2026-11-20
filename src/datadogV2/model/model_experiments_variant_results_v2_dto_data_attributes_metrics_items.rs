@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metric values and statistical results for one variant.
 #[non_exhaustive]
@@ -74,84 +74,73 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItems {
             _unparsed: false,
         }
     }
-
-    pub fn analyses(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems>,
-    ) -> Self {
+    
+    pub fn analyses(mut self, value: Vec<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems>) -> Self {
         self.analyses = Some(value);
         self
     }
-
+    
     pub fn assignment_count(mut self, value: i64) -> Self {
         self.assignment_count = Some(value);
         self
     }
-
+    
     pub fn coverage(mut self, value: f64) -> Self {
         self.coverage = Some(value);
         self
     }
-
-    pub fn coverage_summary(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsCoverageSummary,
-    ) -> Self {
+    
+    pub fn coverage_summary(mut self, value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsCoverageSummary) -> Self {
         self.coverage_summary = Some(value);
         self
     }
-
+    
     pub fn coverage_unavailable_reason(mut self, value: String) -> Self {
         self.coverage_unavailable_reason = Some(value);
         self
     }
-
+    
     pub fn denominator(mut self, value: Option<f64>) -> Self {
         self.denominator = Some(value);
         self
     }
-
-    pub fn desired_change(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsMetricV2DTODataAttributesDesiredChange,
-    ) -> Self {
+    
+    pub fn desired_change(mut self, value: crate::datadogV2::model::ExperimentsMetricV2DTODataAttributesDesiredChange) -> Self {
         self.desired_change = Some(value);
         self
     }
-
+    
     pub fn metric_id(mut self, value: String) -> Self {
         self.metric_id = Some(value);
         self
     }
-
+    
     pub fn metric_name(mut self, value: String) -> Self {
         self.metric_name = Some(value);
         self
     }
-
+    
     pub fn numerator(mut self, value: Option<f64>) -> Self {
         self.numerator = Some(value);
         self
     }
-
+    
     pub fn sub_metric_property_name(mut self, value: String) -> Self {
         self.sub_metric_property_name = Some(value);
         self
     }
-
+    
     pub fn sub_metric_property_value(mut self, value: String) -> Self {
         self.sub_metric_property_value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsVariantResultsV2DTODataAttributesMetricsItems {
     fn default() -> Self {
@@ -182,18 +171,13 @@ impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetri
                 let mut coverage_summary: Option<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsCoverageSummary> = None;
                 let mut coverage_unavailable_reason: Option<String> = None;
                 let mut denominator: Option<Option<f64>> = None;
-                let mut desired_change: Option<
-                    crate::datadogV2::model::ExperimentsMetricV2DTODataAttributesDesiredChange,
-                > = None;
+                let mut desired_change: Option<crate::datadogV2::model::ExperimentsMetricV2DTODataAttributesDesiredChange> = None;
                 let mut metric_id: Option<String> = None;
                 let mut metric_name: Option<String> = None;
                 let mut numerator: Option<Option<f64>> = None;
                 let mut sub_metric_property_name: Option<String> = None;
                 let mut sub_metric_property_value: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -203,47 +187,42 @@ impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetri
                                 continue;
                             }
                             analyses = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "assignment_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assignment_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "coverage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             coverage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "coverage_summary" => {
                             if v.is_null() {
                                 continue;
                             }
-                            coverage_summary =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            coverage_summary = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "coverage_unavailable_reason" => {
                             if v.is_null() {
                                 continue;
                             }
-                            coverage_unavailable_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            coverage_unavailable_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "denominator" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            denominator =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            denominator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "desired_change" => {
                             if v.is_null() {
                                 continue;
                             }
-                            desired_change =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            desired_change = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _desired_change) = desired_change {
                                 match _desired_change {
                                     crate::datadogV2::model::ExperimentsMetricV2DTODataAttributesDesiredChange::UnparsedObject(_desired_change) => {
@@ -252,45 +231,42 @@ impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetri
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "metric_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "numerator" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             numerator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sub_metric_property_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sub_metric_property_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sub_metric_property_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sub_metric_property_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sub_metric_property_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sub_metric_property_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
@@ -315,7 +291,6 @@ impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetri
             }
         }
 
-        deserializer
-            .deserialize_any(ExperimentsVariantResultsV2DTODataAttributesMetricsItemsVisitor)
+        deserializer.deserialize_any(ExperimentsVariantResultsV2DTODataAttributesMetricsItemsVisitor)
     }
 }

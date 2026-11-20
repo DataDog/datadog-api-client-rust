@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ArbitraryRuleTagValueTransformType {
-    STRING_REPLACE,
-    REGEX_EXTRACT,
-    REGEX_REPLACE,
-    LOOKUP_MAP,
+	STRING_REPLACE,
+	REGEX_EXTRACT,
+	REGEX_REPLACE,
+	LOOKUP_MAP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for ArbitraryRuleTagValueTransformType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "string_replace" => Self::STRING_REPLACE,
-            "regex_extract" => Self::REGEX_EXTRACT,
-            "regex_replace" => Self::REGEX_REPLACE,
-            "lookup_map" => Self::LOOKUP_MAP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"string_replace" => Self::STRING_REPLACE,"regex_extract" => Self::REGEX_EXTRACT,"regex_replace" => Self::REGEX_REPLACE,"lookup_map" => Self::LOOKUP_MAP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

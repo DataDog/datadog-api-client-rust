@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing suppressions for a rule, or the recommended suppression lists published by a standard pattern.
 /// There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
@@ -24,14 +24,14 @@ pub struct SensitiveDataScannerSuppressions {
     #[serde(rename = "starts_with")]
     pub starts_with: Option<Vec<String>>,
     /// Should the rule use the underlying standard pattern suppression configuration. If set to `true`, the rule must be tied
-    /// to a standard pattern. If set to `false`, the specified suppressions are applied.
+/// to a standard pattern. If set to `false`, the specified suppressions are applied.
     #[serde(rename = "use_recommended_suppressions")]
     pub use_recommended_suppressions: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SensitiveDataScannerSuppressions {
@@ -45,35 +45,33 @@ impl SensitiveDataScannerSuppressions {
             _unparsed: false,
         }
     }
-
+    
     pub fn ends_with(mut self, value: Vec<String>) -> Self {
         self.ends_with = Some(value);
         self
     }
-
+    
     pub fn exact_match(mut self, value: Vec<String>) -> Self {
         self.exact_match = Some(value);
         self
     }
-
+    
     pub fn starts_with(mut self, value: Vec<String>) -> Self {
         self.starts_with = Some(value);
         self
     }
-
+    
     pub fn use_recommended_suppressions(mut self, value: bool) -> Self {
         self.use_recommended_suppressions = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SensitiveDataScannerSuppressions {
     fn default() -> Self {
@@ -102,10 +100,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerSuppressions {
                 let mut exact_match: Option<Vec<String>> = None;
                 let mut starts_with: Option<Vec<String>> = None;
                 let mut use_recommended_suppressions: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,33 +110,30 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerSuppressions {
                                 continue;
                             }
                             ends_with = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "exact_match" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exact_match =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exact_match = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "starts_with" => {
                             if v.is_null() {
                                 continue;
                             }
-                            starts_with =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            starts_with = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "use_recommended_suppressions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            use_recommended_suppressions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            use_recommended_suppressions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

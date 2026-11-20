@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateAIImpactUserActivityError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_ai_impact_user_activity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum CreateAIImpactUserActivityError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -27,6 +28,7 @@ pub enum CreateDORADeploymentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,6 +39,7 @@ pub enum CreateDORAFailureError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateDORAIncidentError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -45,6 +48,7 @@ pub enum CreateDORAIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::delete_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -55,6 +59,7 @@ pub enum DeleteDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::delete_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -63,6 +68,7 @@ pub enum DeleteDORAFailureError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::get_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -73,6 +79,7 @@ pub enum GetDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::get_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -81,6 +88,7 @@ pub enum GetDORAFailureError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListDORADeploymentsError is a struct for typed errors of method [`DeliveryPerformanceAPI::list_dora_deployments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -91,6 +99,7 @@ pub enum ListDORADeploymentsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDORAFailuresError is a struct for typed errors of method [`DeliveryPerformanceAPI::list_dora_failures`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -99,6 +108,7 @@ pub enum ListDORAFailuresError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PatchDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::patch_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,6 +119,7 @@ pub enum PatchDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// PatchDORADeploymentByVersionError is a struct for typed errors of method [`DeliveryPerformanceAPI::patch_dora_deployment_by_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -117,6 +128,7 @@ pub enum PatchDORADeploymentByVersionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Search, send, or delete events for Delivery Performance (formerly DORA Metrics) to measure and improve your software delivery performance. See the [Delivery Performance page](<https://docs.datadoghq.com/delivery_performance/>) for more information.
 ///
@@ -142,7 +154,8 @@ impl DeliveryPerformanceAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -187,54 +200,49 @@ impl DeliveryPerformanceAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Send daily AI coding tool activity for one or more users. Each entry records whether a
-    /// user was active on a given day, along with the AI tools and models they used. An entry
-    /// is stored once per tool, and sending the same user, day, and tool again overwrites the
-    /// previous value.
-    pub async fn create_ai_impact_user_activity(
-        &self,
-        body: crate::datadogV2::model::AIImpactUserActivityRequest,
-    ) -> Result<(), datadog::Error<CreateAIImpactUserActivityError>> {
-        match self
-            .create_ai_impact_user_activity_with_http_info(body)
-            .await
-        {
+/// user was active on a given day, along with the AI tools and models they used. An entry
+/// is stored once per tool, and sending the same user, day, and tool again overwrites the
+/// previous value.
+    pub async fn create_ai_impact_user_activity(&self, body: crate::datadogV2::model::AIImpactUserActivityRequest) -> Result<(), datadog::Error<CreateAIImpactUserActivityError>> {
+        match self.create_ai_impact_user_activity_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Send daily AI coding tool activity for one or more users. Each entry records whether a
-    /// user was active on a given day, along with the AI tools and models they used. An entry
-    /// is stored once per tool, and sending the same user, day, and tool again overwrites the
-    /// previous value.
-    pub async fn create_ai_impact_user_activity_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AIImpactUserActivityRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAIImpactUserActivityError>> {
+/// user was active on a given day, along with the AI tools and models they used. An entry
+/// is stored once per tool, and sending the same user, day, and tool again overwrites the
+/// previous value.
+    pub async fn create_ai_impact_user_activity_with_http_info(&self, body: crate::datadogV2::model::AIImpactUserActivityRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAIImpactUserActivityError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_ai_impact_user_activity";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ai_impact/user_activity",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -247,16 +255,13 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -264,7 +269,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -274,7 +282,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -296,7 +307,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -319,75 +330,61 @@ impl DeliveryPerformanceAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateAIImpactUserActivityError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAIImpactUserActivityError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to provide deployment data.
-    ///
-    /// This is necessary for:
-    /// - Deployment Frequency
-    /// - Change Lead Time
-    /// - Change Failure Rate
-    /// - Failed Deployment Recovery Time
-    pub async fn create_dora_deployment(
-        &self,
-        body: crate::datadogV2::model::DORADeploymentRequest,
-    ) -> Result<
-        crate::datadogV2::model::DORADeploymentResponse,
-        datadog::Error<CreateDORADeploymentError>,
-    > {
+///
+/// This is necessary for:
+/// - Deployment Frequency
+/// - Change Lead Time
+/// - Change Failure Rate
+/// - Failed Deployment Recovery Time
+    pub async fn create_dora_deployment(&self, body: crate::datadogV2::model::DORADeploymentRequest) -> Result<crate::datadogV2::model::DORADeploymentResponse, datadog::Error<CreateDORADeploymentError>> {
         match self.create_dora_deployment_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to provide deployment data.
-    ///
-    /// This is necessary for:
-    /// - Deployment Frequency
-    /// - Change Lead Time
-    /// - Change Failure Rate
-    /// - Failed Deployment Recovery Time
-    pub async fn create_dora_deployment_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORADeploymentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORADeploymentResponse>,
-        datadog::Error<CreateDORADeploymentError>,
-    > {
+///
+/// This is necessary for:
+/// - Deployment Frequency
+/// - Change Lead Time
+/// - Change Failure Rate
+/// - Failed Deployment Recovery Time
+    pub async fn create_dora_deployment_with_http_info(&self, body: crate::datadogV2::model::DORADeploymentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORADeploymentResponse>, datadog::Error<CreateDORADeploymentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_dora_deployment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployment",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -400,16 +397,13 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -417,7 +411,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -427,7 +424,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -449,7 +449,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -466,78 +466,62 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDORADeploymentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDORADeploymentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to provide incident data for DORA Metrics.
-    /// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
-    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
-    pub async fn create_dora_failure(
-        &self,
-        body: crate::datadogV2::model::DORAFailureRequest,
-    ) -> Result<crate::datadogV2::model::DORAFailureResponse, datadog::Error<CreateDORAFailureError>>
-    {
+/// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
+/// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
+    pub async fn create_dora_failure(&self, body: crate::datadogV2::model::DORAFailureRequest) -> Result<crate::datadogV2::model::DORAFailureResponse, datadog::Error<CreateDORAFailureError>> {
         match self.create_dora_failure_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to provide incident data for DORA Metrics.
-    /// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
-    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
-    pub async fn create_dora_failure_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORAFailureRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFailureResponse>,
-        datadog::Error<CreateDORAFailureError>,
-    > {
+/// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
+/// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
+    pub async fn create_dora_failure_with_http_info(&self, body: crate::datadogV2::model::DORAFailureRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORAFailureResponse>, datadog::Error<CreateDORAFailureError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_dora_failure";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failure",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -550,16 +534,13 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -567,7 +548,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -577,7 +561,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -599,7 +586,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -616,80 +603,64 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFailureResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailureResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDORAFailureError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDORAFailureError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
-    ///
-    /// Use this API endpoint to provide incident data.
-    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
-    pub async fn create_dora_incident(
-        &self,
-        body: crate::datadogV2::model::DORAFailureRequest,
-    ) -> Result<crate::datadogV2::model::DORAFailureResponse, datadog::Error<CreateDORAIncidentError>>
-    {
+///
+/// Use this API endpoint to provide incident data.
+/// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
+    pub async fn create_dora_incident(&self, body: crate::datadogV2::model::DORAFailureRequest) -> Result<crate::datadogV2::model::DORAFailureResponse, datadog::Error<CreateDORAIncidentError>> {
         match self.create_dora_incident_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
-    ///
-    /// Use this API endpoint to provide incident data.
-    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
-    pub async fn create_dora_incident_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORAFailureRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFailureResponse>,
-        datadog::Error<CreateDORAIncidentError>,
-    > {
+///
+/// Use this API endpoint to provide incident data.
+/// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
+    pub async fn create_dora_incident_with_http_info(&self, body: crate::datadogV2::model::DORAFailureRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORAFailureResponse>, datadog::Error<CreateDORAIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_dora_incident";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/incident",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -702,16 +673,13 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -719,7 +687,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -729,7 +700,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -751,7 +725,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -768,65 +742,53 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFailureResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailureResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDORAIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDORAIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to delete a deployment event.
-    pub async fn delete_dora_deployment(
-        &self,
-        deployment_id: String,
-    ) -> Result<(), datadog::Error<DeleteDORADeploymentError>> {
-        match self
-            .delete_dora_deployment_with_http_info(deployment_id)
-            .await
-        {
+    pub async fn delete_dora_deployment(&self, deployment_id: String) -> Result<(), datadog::Error<DeleteDORADeploymentError>> {
+        match self.delete_dora_deployment_with_http_info(deployment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to delete a deployment event.
-    pub async fn delete_dora_deployment_with_http_info(
-        &self,
-        deployment_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORADeploymentError>> {
+    pub async fn delete_dora_deployment_with_http_info(&self, deployment_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORADeploymentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_dora_deployment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployment/{deployment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            deployment_id = datadog::urlencode(deployment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), deployment_id=
+            datadog::urlencode(deployment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -839,22 +801,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -872,49 +828,44 @@ impl DeliveryPerformanceAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteDORADeploymentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDORADeploymentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to delete an incident event.
-    pub async fn delete_dora_failure(
-        &self,
-        failure_id: String,
-    ) -> Result<(), datadog::Error<DeleteDORAFailureError>> {
+    pub async fn delete_dora_failure(&self, failure_id: String) -> Result<(), datadog::Error<DeleteDORAFailureError>> {
         match self.delete_dora_failure_with_http_info(failure_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to delete an incident event.
-    pub async fn delete_dora_failure_with_http_info(
-        &self,
-        failure_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORAFailureError>> {
+    pub async fn delete_dora_failure_with_http_info(&self, failure_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORAFailureError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_dora_failure";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failure/{failure_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            failure_id = datadog::urlencode(failure_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), failure_id=
+            datadog::urlencode(failure_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -927,22 +878,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -960,63 +905,50 @@ impl DeliveryPerformanceAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteDORAFailureError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDORAFailureError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to get a deployment event.
-    pub async fn get_dora_deployment(
-        &self,
-        deployment_id: String,
-    ) -> Result<
-        crate::datadogV2::model::DORADeploymentFetchResponse,
-        datadog::Error<GetDORADeploymentError>,
-    > {
+    pub async fn get_dora_deployment(&self, deployment_id: String) -> Result<crate::datadogV2::model::DORADeploymentFetchResponse, datadog::Error<GetDORADeploymentError>> {
         match self.get_dora_deployment_with_http_info(deployment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to get a deployment event.
-    pub async fn get_dora_deployment_with_http_info(
-        &self,
-        deployment_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORADeploymentFetchResponse>,
-        datadog::Error<GetDORADeploymentError>,
-    > {
+    pub async fn get_dora_deployment_with_http_info(&self, deployment_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORADeploymentFetchResponse>, datadog::Error<GetDORADeploymentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_dora_deployment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments/{deployment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            deployment_id = datadog::urlencode(deployment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), deployment_id=
+            datadog::urlencode(deployment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1029,22 +961,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1056,76 +982,59 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentFetchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentFetchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetDORADeploymentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetDORADeploymentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to get an incident event.
-    pub async fn get_dora_failure(
-        &self,
-        failure_id: String,
-    ) -> Result<
-        crate::datadogV2::model::DORAFailureFetchResponse,
-        datadog::Error<GetDORAFailureError>,
-    > {
+    pub async fn get_dora_failure(&self, failure_id: String) -> Result<crate::datadogV2::model::DORAFailureFetchResponse, datadog::Error<GetDORAFailureError>> {
         match self.get_dora_failure_with_http_info(failure_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to get an incident event.
-    pub async fn get_dora_failure_with_http_info(
-        &self,
-        failure_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFailureFetchResponse>,
-        datadog::Error<GetDORAFailureError>,
-    > {
+    pub async fn get_dora_failure_with_http_info(&self, failure_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORAFailureFetchResponse>, datadog::Error<GetDORAFailureError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_dora_failure";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failures/{failure_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            failure_id = datadog::urlencode(failure_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), failure_id=
+            datadog::urlencode(failure_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1138,22 +1047,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1165,76 +1068,58 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFailureFetchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailureFetchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetDORAFailureError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetDORAFailureError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to get a list of deployment events.
-    pub async fn list_dora_deployments(
-        &self,
-        body: crate::datadogV2::model::DORAListDeploymentsRequest,
-    ) -> Result<
-        crate::datadogV2::model::DORADeploymentsListResponse,
-        datadog::Error<ListDORADeploymentsError>,
-    > {
+    pub async fn list_dora_deployments(&self, body: crate::datadogV2::model::DORAListDeploymentsRequest) -> Result<crate::datadogV2::model::DORADeploymentsListResponse, datadog::Error<ListDORADeploymentsError>> {
         match self.list_dora_deployments_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to get a list of deployment events.
-    pub async fn list_dora_deployments_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORAListDeploymentsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORADeploymentsListResponse>,
-        datadog::Error<ListDORADeploymentsError>,
-    > {
+    pub async fn list_dora_deployments_with_http_info(&self, body: crate::datadogV2::model::DORAListDeploymentsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORADeploymentsListResponse>, datadog::Error<ListDORADeploymentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_dora_deployments";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1247,23 +1132,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1271,7 +1149,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1281,7 +1162,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1303,7 +1187,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1320,77 +1204,59 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORADeploymentsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDORADeploymentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDORADeploymentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Use this API endpoint to get a list of incident events.
-    pub async fn list_dora_failures(
-        &self,
-        body: crate::datadogV2::model::DORAListFailuresRequest,
-    ) -> Result<
-        crate::datadogV2::model::DORAFailuresListResponse,
-        datadog::Error<ListDORAFailuresError>,
-    > {
+    pub async fn list_dora_failures(&self, body: crate::datadogV2::model::DORAListFailuresRequest) -> Result<crate::datadogV2::model::DORAFailuresListResponse, datadog::Error<ListDORAFailuresError>> {
         match self.list_dora_failures_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Use this API endpoint to get a list of incident events.
-    pub async fn list_dora_failures_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORAListFailuresRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DORAFailuresListResponse>,
-        datadog::Error<ListDORAFailuresError>,
-    > {
+    pub async fn list_dora_failures_with_http_info(&self, body: crate::datadogV2::model::DORAListFailuresRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DORAFailuresListResponse>, datadog::Error<ListDORAFailuresError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_dora_failures";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failures",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -1402,23 +1268,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1426,7 +1285,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1436,7 +1298,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1458,7 +1323,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1475,68 +1340,54 @@ impl DeliveryPerformanceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DORAFailuresListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DORAFailuresListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDORAFailuresError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDORAFailuresError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a deployment's change failure status. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation.
-    pub async fn patch_dora_deployment(
-        &self,
-        deployment_id: String,
-        body: crate::datadogV2::model::DORADeploymentPatchRequest,
-    ) -> Result<(), datadog::Error<PatchDORADeploymentError>> {
-        match self
-            .patch_dora_deployment_with_http_info(deployment_id, body)
-            .await
-        {
+    pub async fn patch_dora_deployment(&self, deployment_id: String, body: crate::datadogV2::model::DORADeploymentPatchRequest) -> Result<(), datadog::Error<PatchDORADeploymentError>> {
+        match self.patch_dora_deployment_with_http_info(deployment_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a deployment's change failure status. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation.
-    pub async fn patch_dora_deployment_with_http_info(
-        &self,
-        deployment_id: String,
-        body: crate::datadogV2::model::DORADeploymentPatchRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<PatchDORADeploymentError>> {
+    pub async fn patch_dora_deployment_with_http_info(&self, deployment_id: String, body: crate::datadogV2::model::DORADeploymentPatchRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<PatchDORADeploymentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_dora_deployment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments/{deployment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            deployment_id = datadog::urlencode(deployment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), deployment_id=
+            datadog::urlencode(deployment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1549,23 +1400,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1573,7 +1417,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1583,7 +1430,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1605,7 +1455,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1628,53 +1478,43 @@ impl DeliveryPerformanceAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<PatchDORADeploymentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchDORADeploymentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a deployment's change failure status, identifying the deployment by its service, environment, and version instead of its ID. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation. If multiple deployments match the given service, environment, and version, the most recently finished one is updated.
-    pub async fn patch_dora_deployment_by_version(
-        &self,
-        body: crate::datadogV2::model::DORADeploymentPatchByVersionRequest,
-    ) -> Result<(), datadog::Error<PatchDORADeploymentByVersionError>> {
-        match self
-            .patch_dora_deployment_by_version_with_http_info(body)
-            .await
-        {
+    pub async fn patch_dora_deployment_by_version(&self, body: crate::datadogV2::model::DORADeploymentPatchByVersionRequest) -> Result<(), datadog::Error<PatchDORADeploymentByVersionError>> {
+        match self.patch_dora_deployment_by_version_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a deployment's change failure status, identifying the deployment by its service, environment, and version instead of its ID. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation. If multiple deployments match the given service, environment, and version, the most recently finished one is updated.
-    pub async fn patch_dora_deployment_by_version_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DORADeploymentPatchByVersionRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<PatchDORADeploymentByVersionError>>
-    {
+    pub async fn patch_dora_deployment_by_version_with_http_info(&self, body: crate::datadogV2::model::DORADeploymentPatchByVersionRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<PatchDORADeploymentByVersionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_dora_deployment_by_version";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1687,23 +1527,16 @@ impl DeliveryPerformanceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1711,7 +1544,10 @@ impl DeliveryPerformanceAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1721,7 +1557,10 @@ impl DeliveryPerformanceAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1743,7 +1582,7 @@ impl DeliveryPerformanceAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1766,13 +1605,8 @@ impl DeliveryPerformanceAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<PatchDORADeploymentByVersionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchDORADeploymentByVersionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

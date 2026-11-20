@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumRecoveryDiscoveryStatus {
-    QUEUED,
-    PENDING,
-    SLICING,
-    DISCOVERED,
-    PROCESSING,
-    COMPLETED,
-    FAILED,
-    CANCELLED,
+	QUEUED,
+	PENDING,
+	SLICING,
+	DISCOVERED,
+	PROCESSING,
+	COMPLETED,
+	FAILED,
+	CANCELLED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for RumRecoveryDiscoveryStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "QUEUED" => Self::QUEUED,
-            "PENDING" => Self::PENDING,
-            "SLICING" => Self::SLICING,
-            "DISCOVERED" => Self::DISCOVERED,
-            "PROCESSING" => Self::PROCESSING,
-            "COMPLETED" => Self::COMPLETED,
-            "FAILED" => Self::FAILED,
-            "CANCELLED" => Self::CANCELLED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"QUEUED" => Self::QUEUED,"PENDING" => Self::PENDING,"SLICING" => Self::SLICING,"DISCOVERED" => Self::DISCOVERED,"PROCESSING" => Self::PROCESSING,"COMPLETED" => Self::COMPLETED,"FAILED" => Self::FAILED,"CANCELLED" => Self::CANCELLED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

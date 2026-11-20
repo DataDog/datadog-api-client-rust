@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumSdkConfigTracingUrlPropagatorType {
-    DATADOG,
-    B3,
-    B3MULTI,
-    TRACECONTEXT,
+	DATADOG,
+	B3,
+	B3MULTI,
+	TRACECONTEXT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlPropagatorType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "datadog" => Self::DATADOG,
-            "b3" => Self::B3,
-            "b3multi" => Self::B3MULTI,
-            "tracecontext" => Self::TRACECONTEXT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"datadog" => Self::DATADOG,"b3" => Self::B3,"b3multi" => Self::B3MULTI,"tracecontext" => Self::TRACECONTEXT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

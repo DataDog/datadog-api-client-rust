@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A traffic split the bandit served, with the same fields as `active_policy`.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct ExperimentsBanditPolicyHistoryV2DTODataAttributes {
     #[serde(rename = "reason")]
     pub reason: crate::datadogV2::model::ExperimentsBanditPolicyReason,
     /// The refresh that proposed the policy. `null` for policies no refresh proposed, such as the first split and the policy served after the bandit ends.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "refresh_id")]
     pub refresh_id: Option<uuid::Uuid>,
     /// Each variant's share of traffic. The probabilities add up to 1. A variant served as an arm keeps the key the arm had, even if the arm was removed later.
@@ -40,20 +40,11 @@ pub struct ExperimentsBanditPolicyHistoryV2DTODataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsBanditPolicyHistoryV2DTODataAttributes {
-    pub fn new(
-        applied_at: chrono::DateTime<chrono::Utc>,
-        config_version: i64,
-        is_active: bool,
-        kind: crate::datadogV2::model::ExperimentsBanditPolicyKind,
-        policy_number: i64,
-        reason: crate::datadogV2::model::ExperimentsBanditPolicyReason,
-        refresh_id: Option<uuid::Uuid>,
-        variants: Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>,
-    ) -> ExperimentsBanditPolicyHistoryV2DTODataAttributes {
+    pub fn new(applied_at: chrono::DateTime<chrono::Utc>, config_version: i64, is_active: bool, kind: crate::datadogV2::model::ExperimentsBanditPolicyKind, policy_number: i64, reason: crate::datadogV2::model::ExperimentsBanditPolicyReason, refresh_id: Option<uuid::Uuid>, variants: Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>) -> ExperimentsBanditPolicyHistoryV2DTODataAttributes {
         ExperimentsBanditPolicyHistoryV2DTODataAttributes {
             applied_at,
             config_version,
@@ -67,15 +58,14 @@ impl ExperimentsBanditPolicyHistoryV2DTODataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsBanditPolicyHistoryV2DTODataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -99,30 +89,23 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyHistoryV2DTODataAttributes
                 let mut is_active: Option<bool> = None;
                 let mut kind: Option<crate::datadogV2::model::ExperimentsBanditPolicyKind> = None;
                 let mut policy_number: Option<i64> = None;
-                let mut reason: Option<crate::datadogV2::model::ExperimentsBanditPolicyReason> =
-                    None;
+                let mut reason: Option<crate::datadogV2::model::ExperimentsBanditPolicyReason> = None;
                 let mut refresh_id: Option<Option<uuid::Uuid>> = None;
-                let mut variants: Option<
-                    Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut variants: Option<Vec<crate::datadogV2::model::ExperimentsBanditPolicyVariantV2>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "applied_at" => {
                             applied_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "config_version" => {
-                            config_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_active" => {
                             is_active = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "kind" => {
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _kind) = kind {
@@ -133,11 +116,10 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyHistoryV2DTODataAttributes
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "policy_number" => {
-                            policy_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            policy_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reason" => {
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _reason) = reason {
@@ -148,27 +130,25 @@ impl<'de> Deserialize<'de> for ExperimentsBanditPolicyHistoryV2DTODataAttributes
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "refresh_id" => {
                             refresh_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variants" => {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let applied_at = applied_at.ok_or_else(|| M::Error::missing_field("applied_at"))?;
-                let config_version =
-                    config_version.ok_or_else(|| M::Error::missing_field("config_version"))?;
+                let config_version = config_version.ok_or_else(|| M::Error::missing_field("config_version"))?;
                 let is_active = is_active.ok_or_else(|| M::Error::missing_field("is_active"))?;
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;
-                let policy_number =
-                    policy_number.ok_or_else(|| M::Error::missing_field("policy_number"))?;
+                let policy_number = policy_number.ok_or_else(|| M::Error::missing_field("policy_number"))?;
                 let reason = reason.ok_or_else(|| M::Error::missing_field("reason"))?;
                 let refresh_id = refresh_id.ok_or_else(|| M::Error::missing_field("refresh_id"))?;
                 let variants = variants.ok_or_else(|| M::Error::missing_field("variants"))?;

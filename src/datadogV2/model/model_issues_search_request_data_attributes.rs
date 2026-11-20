@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing a search issue request.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct IssuesSearchRequestDataAttributes {
     #[serde(rename = "order_by")]
     pub order_by: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy>,
     /// Persona for the search. Either `track` or `persona` must be specified.
-    /// Ignored if `track` is specified.
+/// Ignored if `track` is specified.
     #[serde(rename = "persona")]
     pub persona: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona>,
     /// Search query following the event search syntax.
@@ -37,14 +37,14 @@ pub struct IssuesSearchRequestDataAttributes {
     #[serde(rename = "to")]
     pub to: i64,
     /// Track of the events to query. Either `track` or `persona` must be specified.
-    /// If both are specified, `persona` is ignored.
+/// If both are specified, `persona` is ignored.
     #[serde(rename = "track")]
     pub track: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssuesSearchRequestDataAttributes {
@@ -63,54 +63,44 @@ impl IssuesSearchRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignee_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.assignee_ids = Some(value);
         self
     }
-
-    pub fn order_by(
-        mut self,
-        value: crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy,
-    ) -> Self {
+    
+    pub fn order_by(mut self, value: crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy) -> Self {
         self.order_by = Some(value);
         self
     }
-
-    pub fn persona(
-        mut self,
-        value: crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
-    ) -> Self {
+    
+    pub fn persona(mut self, value: crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona) -> Self {
         self.persona = Some(value);
         self
     }
-
+    
     pub fn states(mut self, value: Vec<crate::datadogV2::model::IssueState>) -> Self {
         self.states = Some(value);
         self
     }
-
+    
     pub fn team_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.team_ids = Some(value);
         self
     }
-
-    pub fn track(
-        mut self,
-        value: crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack,
-    ) -> Self {
+    
+    pub fn track(mut self, value: crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack) -> Self {
         self.track = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -131,23 +121,14 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
             {
                 let mut assignee_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut from: Option<i64> = None;
-                let mut order_by: Option<
-                    crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy,
-                > = None;
-                let mut persona: Option<
-                    crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
-                > = None;
+                let mut order_by: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy> = None;
+                let mut persona: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona> = None;
                 let mut query: Option<String> = None;
                 let mut states: Option<Vec<crate::datadogV2::model::IssueState>> = None;
                 let mut team_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut to: Option<i64> = None;
-                let mut track: Option<
-                    crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut track: Option<crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -156,12 +137,11 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            assignee_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignee_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "order_by" => {
                             if v.is_null() {
                                 continue;
@@ -175,7 +155,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "persona" => {
                             if v.is_null() {
                                 continue;
@@ -189,25 +169,25 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "states" => {
                             if v.is_null() {
                                 continue;
                             }
                             states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team_ids" => {
                             if v.is_null() {
                                 continue;
                             }
                             team_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "to" => {
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "track" => {
                             if v.is_null() {
                                 continue;
@@ -221,12 +201,12 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;

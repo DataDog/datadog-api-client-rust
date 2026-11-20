@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceDefinitionV2LinkType {
-    DOC,
-    WIKI,
-    RUNBOOK,
-    URL,
-    REPO,
-    DASHBOARD,
-    ONCALL,
-    CODE,
-    LINK,
+	DOC,
+	WIKI,
+	RUNBOOK,
+	URL,
+	REPO,
+	DASHBOARD,
+	ONCALL,
+	CODE,
+	LINK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2LinkType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "doc" => Self::DOC,
-            "wiki" => Self::WIKI,
-            "runbook" => Self::RUNBOOK,
-            "url" => Self::URL,
-            "repo" => Self::REPO,
-            "dashboard" => Self::DASHBOARD,
-            "oncall" => Self::ONCALL,
-            "code" => Self::CODE,
-            "link" => Self::LINK,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"doc" => Self::DOC,"wiki" => Self::WIKI,"runbook" => Self::RUNBOOK,"url" => Self::URL,"repo" => Self::REPO,"dashboard" => Self::DASHBOARD,"oncall" => Self::ONCALL,"code" => Self::CODE,"link" => Self::LINK,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

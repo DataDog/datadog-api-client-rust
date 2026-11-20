@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single label value entry in an annotation response.
 /// In addition to the submitted fields, the server populates `type` and
@@ -37,14 +37,11 @@ pub struct LLMObsAnnotationLabelValueResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsAnnotationLabelValueResponse {
-    pub fn new(
-        label_schema_id: String,
-        value: crate::datadogV2::model::LLMObsAnnotationLabelValueValue,
-    ) -> LLMObsAnnotationLabelValueResponse {
+    pub fn new(label_schema_id: String, value: crate::datadogV2::model::LLMObsAnnotationLabelValueValue) -> LLMObsAnnotationLabelValueResponse {
         LLMObsAnnotationLabelValueResponse {
             assessment: None,
             label_schema_id,
@@ -56,38 +53,34 @@ impl LLMObsAnnotationLabelValueResponse {
             _unparsed: false,
         }
     }
-
-    pub fn assessment(
-        mut self,
-        value: crate::datadogV2::model::LLMObsAnnotationAssessment,
-    ) -> Self {
+    
+    pub fn assessment(mut self, value: crate::datadogV2::model::LLMObsAnnotationAssessment) -> Self {
         self.assessment = Some(value);
         self
     }
-
+    
     pub fn name_when_saved(mut self, value: String) -> Self {
         self.name_when_saved = Some(value);
         self
     }
-
+    
     pub fn reasoning(mut self, value: String) -> Self {
         self.reasoning = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: crate::datadogV2::model::LLMObsLabelSchemaType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsAnnotationLabelValueResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -106,18 +99,13 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationLabelValueResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut assessment: Option<crate::datadogV2::model::LLMObsAnnotationAssessment> =
-                    None;
+                let mut assessment: Option<crate::datadogV2::model::LLMObsAnnotationAssessment> = None;
                 let mut label_schema_id: Option<String> = None;
                 let mut name_when_saved: Option<String> = None;
                 let mut reasoning: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::LLMObsLabelSchemaType> = None;
-                let mut value: Option<crate::datadogV2::model::LLMObsAnnotationLabelValueValue> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut value: Option<crate::datadogV2::model::LLMObsAnnotationLabelValueValue> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -135,24 +123,22 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationLabelValueResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "label_schema_id" => {
-                            label_schema_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            label_schema_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name_when_saved" => {
                             if v.is_null() {
                                 continue;
                             }
-                            name_when_saved =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            name_when_saved = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reasoning" => {
                             if v.is_null() {
                                 continue;
                             }
                             reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -166,7 +152,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationLabelValueResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _value) = value {
@@ -177,16 +163,15 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationLabelValueResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let label_schema_id =
-                    label_schema_id.ok_or_else(|| M::Error::missing_field("label_schema_id"))?;
+                let label_schema_id = label_schema_id.ok_or_else(|| M::Error::missing_field("label_schema_id"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
                 let content = LLMObsAnnotationLabelValueResponse {

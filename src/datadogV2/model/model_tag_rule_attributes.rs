@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a tag rule resource.
 #[non_exhaustive]
@@ -18,18 +18,10 @@ pub struct TagRuleAttributes {
     #[serde(rename = "created_by")]
     pub created_by: String,
     /// The RFC 3339 timestamp at which the rule was soft-deleted. `null` if the rule has not been deleted. Only present when `include_deleted=true` is requested.
-    #[serde(
-        rename = "deleted_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "deleted_at", default, with = "::serde_with::rust::double_option")]
     pub deleted_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The identifier of the user who soft-deleted the rule. `null` if the rule has not been deleted.
-    #[serde(
-        rename = "deleted_by",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "deleted_by", default, with = "::serde_with::rust::double_option")]
     pub deleted_by: Option<Option<String>>,
     /// Whether the rule is currently enforced.
     #[serde(rename = "enabled")]
@@ -50,8 +42,8 @@ pub struct TagRuleAttributes {
     #[serde(rename = "required")]
     pub required: bool,
     /// How the rule is enforced. `blocking` rejects telemetry that violates the rule.
-    /// `surfacing` only highlights non-compliant telemetry without blocking it.
-    /// RUM supports only `surfacing` rules.
+/// `surfacing` only highlights non-compliant telemetry without blocking it.
+/// RUM supports only `surfacing` rules.
     #[serde(rename = "rule_type")]
     pub rule_type: crate::datadogV2::model::TagRuleType,
     /// The scope the rule applies within.
@@ -73,26 +65,11 @@ pub struct TagRuleAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TagRuleAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        enabled: bool,
-        modified_at: chrono::DateTime<chrono::Utc>,
-        modified_by: String,
-        name: String,
-        negated: bool,
-        required: bool,
-        rule_type: crate::datadogV2::model::TagRuleType,
-        scope: String,
-        source: crate::datadogV2::model::TagRuleSource,
-        tag_key: String,
-        tag_value_patterns: Vec<String>,
-        version: i64,
-    ) -> TagRuleAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: String, enabled: bool, modified_at: chrono::DateTime<chrono::Utc>, modified_by: String, name: String, negated: bool, required: bool, rule_type: crate::datadogV2::model::TagRuleType, scope: String, source: crate::datadogV2::model::TagRuleSource, tag_key: String, tag_value_patterns: Vec<String>, version: i64) -> TagRuleAttributes {
         TagRuleAttributes {
             created_at,
             created_by,
@@ -114,25 +91,24 @@ impl TagRuleAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn deleted_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.deleted_at = Some(value);
         self
     }
-
+    
     pub fn deleted_by(mut self, value: Option<String>) -> Self {
         self.deleted_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TagRuleAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -167,99 +143,87 @@ impl<'de> Deserialize<'de> for TagRuleAttributes {
                 let mut tag_key: Option<String> = None;
                 let mut tag_value_patterns: Option<Vec<String>> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "deleted_at" => {
                             deleted_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "deleted_by" => {
                             deleted_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_by" => {
-                            modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "negated" => {
                             negated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "required" => {
                             required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_type" => {
                             rule_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rule_type) = rule_type {
                                 match _rule_type {
-                                    crate::datadogV2::model::TagRuleType::UnparsedObject(
-                                        _rule_type,
-                                    ) => {
+                                    crate::datadogV2::model::TagRuleType::UnparsedObject(_rule_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "scope" => {
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
                                 match _source {
-                                    crate::datadogV2::model::TagRuleSource::UnparsedObject(
-                                        _source,
-                                    ) => {
+                                    crate::datadogV2::model::TagRuleSource::UnparsedObject(_source) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tag_key" => {
                             tag_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_value_patterns" => {
-                            tag_value_patterns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_value_patterns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let modified_at =
-                    modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
-                let modified_by =
-                    modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
+                let modified_at = modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
+                let modified_by = modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let negated = negated.ok_or_else(|| M::Error::missing_field("negated"))?;
                 let required = required.ok_or_else(|| M::Error::missing_field("required"))?;
@@ -267,8 +231,7 @@ impl<'de> Deserialize<'de> for TagRuleAttributes {
                 let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
                 let tag_key = tag_key.ok_or_else(|| M::Error::missing_field("tag_key"))?;
-                let tag_value_patterns = tag_value_patterns
-                    .ok_or_else(|| M::Error::missing_field("tag_value_patterns"))?;
+                let tag_value_patterns = tag_value_patterns.ok_or_else(|| M::Error::missing_field("tag_value_patterns"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
                 let content = TagRuleAttributes {

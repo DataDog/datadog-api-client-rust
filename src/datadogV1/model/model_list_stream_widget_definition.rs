@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The list stream visualization displays a table of recent events in your application that
 /// match a search criteria using user-defined columns.
@@ -43,14 +43,11 @@ pub struct ListStreamWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ListStreamWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::ListStreamWidgetRequest>,
-        type_: crate::datadogV1::model::ListStreamWidgetDefinitionType,
-    ) -> ListStreamWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::ListStreamWidgetRequest>, type_: crate::datadogV1::model::ListStreamWidgetDefinitionType) -> ListStreamWidgetDefinition {
         ListStreamWidgetDefinition {
             description: None,
             legend_size: None,
@@ -65,50 +62,49 @@ impl ListStreamWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
-
+    
     pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -129,19 +125,14 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
             {
                 let mut description: Option<String> = None;
                 let mut legend_size: Option<String> = None;
-                let mut requests: Option<Vec<crate::datadogV1::model::ListStreamWidgetRequest>> =
-                    None;
+                let mut requests: Option<Vec<crate::datadogV1::model::ListStreamWidgetRequest>> = None;
                 let mut show_legend: Option<bool> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::ListStreamWidgetDefinitionType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::ListStreamWidgetDefinitionType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -150,26 +141,23 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "legend_size" => {
                             if v.is_null() {
                                 continue;
                             }
-                            legend_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            legend_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_legend" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_legend =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_legend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -179,40 +167,37 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -223,12 +208,12 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

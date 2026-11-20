@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Incident todo's attributes.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct IncidentTodoAttributes {
     #[serde(rename = "assignees")]
     pub assignees: Vec<crate::datadogV2::model::IncidentTodoAssignee>,
     /// Timestamp when the todo was completed.
-    #[serde(
-        rename = "completed",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "completed", default, with = "::serde_with::rust::double_option")]
     pub completed: Option<Option<String>>,
     /// The follow-up task's content.
     #[serde(rename = "content")]
@@ -28,11 +24,7 @@ pub struct IncidentTodoAttributes {
     #[serde(rename = "created")]
     pub created: Option<chrono::DateTime<chrono::Utc>>,
     /// Timestamp when the todo should be completed by.
-    #[serde(
-        rename = "due_date",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "due_date", default, with = "::serde_with::rust::double_option")]
     pub due_date: Option<Option<String>>,
     /// UUID of the incident this todo is connected to.
     #[serde(rename = "incident_id")]
@@ -44,14 +36,11 @@ pub struct IncidentTodoAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentTodoAttributes {
-    pub fn new(
-        assignees: Vec<crate::datadogV2::model::IncidentTodoAssignee>,
-        content: String,
-    ) -> IncidentTodoAttributes {
+    pub fn new(assignees: Vec<crate::datadogV2::model::IncidentTodoAssignee>, content: String) -> IncidentTodoAttributes {
         IncidentTodoAttributes {
             assignees,
             completed: None,
@@ -64,40 +53,39 @@ impl IncidentTodoAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn completed(mut self, value: Option<String>) -> Self {
         self.completed = Some(value);
         self
     }
-
+    
     pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
-
+    
     pub fn due_date(mut self, value: Option<String>) -> Self {
         self.due_date = Some(value);
         self
     }
-
+    
     pub fn incident_id(mut self, value: String) -> Self {
         self.incident_id = Some(value);
         self
     }
-
+    
     pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentTodoAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -116,58 +104,53 @@ impl<'de> Deserialize<'de> for IncidentTodoAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut assignees: Option<Vec<crate::datadogV2::model::IncidentTodoAssignee>> =
-                    None;
+                let mut assignees: Option<Vec<crate::datadogV2::model::IncidentTodoAssignee>> = None;
                 let mut completed: Option<Option<String>> = None;
                 let mut content: Option<String> = None;
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut due_date: Option<Option<String>> = None;
                 let mut incident_id: Option<String> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assignees" => {
                             assignees = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "completed" => {
                             completed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "content" => {
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created" => {
                             if v.is_null() {
                                 continue;
                             }
                             created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "due_date" => {
                             due_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "incident_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified" => {
                             if v.is_null() {
                                 continue;
                             }
                             modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let assignees = assignees.ok_or_else(|| M::Error::missing_field("assignees"))?;

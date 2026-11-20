@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// CountCasesOptionalParams is a struct for passing parameters to the method [`CaseManagementAPI::count_cases`]
 #[non_exhaustive]
@@ -132,6 +129,9 @@ impl SearchCasesOptionalParams {
     }
 }
 
+
+
+
 /// AddCaseInsightsError is a struct for typed errors of method [`CaseManagementAPI::add_case_insights`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -141,6 +141,7 @@ pub enum AddCaseInsightsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// AggregateCasesError is a struct for typed errors of method [`CaseManagementAPI::aggregate_cases`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -148,6 +149,7 @@ pub enum AggregateCasesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ArchiveCaseError is a struct for typed errors of method [`CaseManagementAPI::archive_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -157,6 +159,7 @@ pub enum ArchiveCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// AssignCaseError is a struct for typed errors of method [`CaseManagementAPI::assign_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -164,6 +167,7 @@ pub enum AssignCaseError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// BulkUpdateCasesError is a struct for typed errors of method [`CaseManagementAPI::bulk_update_cases`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -173,6 +177,7 @@ pub enum BulkUpdateCasesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CommentCaseError is a struct for typed errors of method [`CaseManagementAPI::comment_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -180,6 +185,7 @@ pub enum CommentCaseError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CountCasesError is a struct for typed errors of method [`CaseManagementAPI::count_cases`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -189,6 +195,7 @@ pub enum CountCasesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCaseError is a struct for typed errors of method [`CaseManagementAPI::create_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -197,6 +204,7 @@ pub enum CreateCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::create_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -204,6 +212,7 @@ pub enum CreateCaseAutomationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateCaseJiraIssueError is a struct for typed errors of method [`CaseManagementAPI::create_case_jira_issue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -214,6 +223,7 @@ pub enum CreateCaseJiraIssueError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCaseLinkError is a struct for typed errors of method [`CaseManagementAPI::create_case_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -221,6 +231,7 @@ pub enum CreateCaseLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateCaseNotebookError is a struct for typed errors of method [`CaseManagementAPI::create_case_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -231,6 +242,7 @@ pub enum CreateCaseNotebookError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCaseServiceNowTicketError is a struct for typed errors of method [`CaseManagementAPI::create_case_service_now_ticket`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -240,6 +252,7 @@ pub enum CreateCaseServiceNowTicketError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCaseViewError is a struct for typed errors of method [`CaseManagementAPI::create_case_view`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -247,6 +260,7 @@ pub enum CreateCaseViewError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateMaintenanceWindowError is a struct for typed errors of method [`CaseManagementAPI::create_maintenance_window`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -256,6 +270,7 @@ pub enum CreateMaintenanceWindowError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateProjectError is a struct for typed errors of method [`CaseManagementAPI::create_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -263,6 +278,7 @@ pub enum CreateProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateProjectNotificationRuleError is a struct for typed errors of method [`CaseManagementAPI::create_project_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -272,6 +288,7 @@ pub enum CreateProjectNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::delete_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -279,6 +296,7 @@ pub enum DeleteCaseAutomationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteCaseCommentError is a struct for typed errors of method [`CaseManagementAPI::delete_case_comment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -288,6 +306,7 @@ pub enum DeleteCaseCommentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteCaseCustomAttributeError is a struct for typed errors of method [`CaseManagementAPI::delete_case_custom_attribute`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -295,6 +314,7 @@ pub enum DeleteCaseCustomAttributeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteCaseLinkError is a struct for typed errors of method [`CaseManagementAPI::delete_case_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -304,6 +324,7 @@ pub enum DeleteCaseLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteCaseViewError is a struct for typed errors of method [`CaseManagementAPI::delete_case_view`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -311,6 +332,7 @@ pub enum DeleteCaseViewError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteMaintenanceWindowError is a struct for typed errors of method [`CaseManagementAPI::delete_maintenance_window`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -320,6 +342,7 @@ pub enum DeleteMaintenanceWindowError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteProjectError is a struct for typed errors of method [`CaseManagementAPI::delete_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -327,6 +350,7 @@ pub enum DeleteProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteProjectNotificationRuleError is a struct for typed errors of method [`CaseManagementAPI::delete_project_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -336,6 +360,7 @@ pub enum DeleteProjectNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DisableCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::disable_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -343,6 +368,7 @@ pub enum DisableCaseAutomationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// EnableCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::enable_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -352,6 +378,7 @@ pub enum EnableCaseAutomationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// FavoriteCaseProjectError is a struct for typed errors of method [`CaseManagementAPI::favorite_case_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -359,6 +386,7 @@ pub enum FavoriteCaseProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCaseError is a struct for typed errors of method [`CaseManagementAPI::get_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -368,6 +396,7 @@ pub enum GetCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::get_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -375,6 +404,7 @@ pub enum GetCaseAutomationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCaseViewError is a struct for typed errors of method [`CaseManagementAPI::get_case_view`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -384,6 +414,7 @@ pub enum GetCaseViewError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetProjectError is a struct for typed errors of method [`CaseManagementAPI::get_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -391,6 +422,7 @@ pub enum GetProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetProjectNotificationRulesError is a struct for typed errors of method [`CaseManagementAPI::get_project_notification_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -400,6 +432,7 @@ pub enum GetProjectNotificationRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetProjectsError is a struct for typed errors of method [`CaseManagementAPI::get_projects`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -407,6 +440,7 @@ pub enum GetProjectsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// LinkIncidentError is a struct for typed errors of method [`CaseManagementAPI::link_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -417,6 +451,7 @@ pub enum LinkIncidentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// LinkJiraIssueToCaseError is a struct for typed errors of method [`CaseManagementAPI::link_jira_issue_to_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -426,6 +461,7 @@ pub enum LinkJiraIssueToCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCaseAutomationRulesError is a struct for typed errors of method [`CaseManagementAPI::list_case_automation_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -433,6 +469,7 @@ pub enum ListCaseAutomationRulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCaseLinksError is a struct for typed errors of method [`CaseManagementAPI::list_case_links`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -442,6 +479,7 @@ pub enum ListCaseLinksError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCaseTimelineError is a struct for typed errors of method [`CaseManagementAPI::list_case_timeline`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -449,6 +487,7 @@ pub enum ListCaseTimelineError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCaseViewsError is a struct for typed errors of method [`CaseManagementAPI::list_case_views`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -458,6 +497,7 @@ pub enum ListCaseViewsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCaseWatchersError is a struct for typed errors of method [`CaseManagementAPI::list_case_watchers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -465,6 +505,7 @@ pub enum ListCaseWatchersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListMaintenanceWindowsError is a struct for typed errors of method [`CaseManagementAPI::list_maintenance_windows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -474,6 +515,7 @@ pub enum ListMaintenanceWindowsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListUserCaseProjectFavoritesError is a struct for typed errors of method [`CaseManagementAPI::list_user_case_project_favorites`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -481,6 +523,7 @@ pub enum ListUserCaseProjectFavoritesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// MoveCaseToProjectError is a struct for typed errors of method [`CaseManagementAPI::move_case_to_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -491,6 +534,7 @@ pub enum MoveCaseToProjectError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RemoveCaseInsightsError is a struct for typed errors of method [`CaseManagementAPI::remove_case_insights`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -500,6 +544,7 @@ pub enum RemoveCaseInsightsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SearchCasesError is a struct for typed errors of method [`CaseManagementAPI::search_cases`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -507,6 +552,7 @@ pub enum SearchCasesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UnarchiveCaseError is a struct for typed errors of method [`CaseManagementAPI::unarchive_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -516,6 +562,7 @@ pub enum UnarchiveCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnassignCaseError is a struct for typed errors of method [`CaseManagementAPI::unassign_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -524,6 +571,7 @@ pub enum UnassignCaseError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnfavoriteCaseProjectError is a struct for typed errors of method [`CaseManagementAPI::unfavorite_case_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -531,6 +579,7 @@ pub enum UnfavoriteCaseProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UnlinkJiraIssueError is a struct for typed errors of method [`CaseManagementAPI::unlink_jira_issue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -541,6 +590,7 @@ pub enum UnlinkJiraIssueError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnwatchCaseError is a struct for typed errors of method [`CaseManagementAPI::unwatch_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -548,6 +598,7 @@ pub enum UnwatchCaseError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateAttributesError is a struct for typed errors of method [`CaseManagementAPI::update_attributes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -557,6 +608,7 @@ pub enum UpdateAttributesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCaseAutomationRuleError is a struct for typed errors of method [`CaseManagementAPI::update_case_automation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -564,6 +616,7 @@ pub enum UpdateCaseAutomationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateCaseCommentError is a struct for typed errors of method [`CaseManagementAPI::update_case_comment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -573,6 +626,7 @@ pub enum UpdateCaseCommentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCaseCustomAttributeError is a struct for typed errors of method [`CaseManagementAPI::update_case_custom_attribute`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -580,6 +634,7 @@ pub enum UpdateCaseCustomAttributeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateCaseDescriptionError is a struct for typed errors of method [`CaseManagementAPI::update_case_description`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -589,6 +644,7 @@ pub enum UpdateCaseDescriptionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCaseDueDateError is a struct for typed errors of method [`CaseManagementAPI::update_case_due_date`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -596,6 +652,7 @@ pub enum UpdateCaseDueDateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateCaseResolvedReasonError is a struct for typed errors of method [`CaseManagementAPI::update_case_resolved_reason`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -605,6 +662,7 @@ pub enum UpdateCaseResolvedReasonError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCaseTitleError is a struct for typed errors of method [`CaseManagementAPI::update_case_title`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -612,6 +670,7 @@ pub enum UpdateCaseTitleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateCaseViewError is a struct for typed errors of method [`CaseManagementAPI::update_case_view`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -621,6 +680,7 @@ pub enum UpdateCaseViewError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateMaintenanceWindowError is a struct for typed errors of method [`CaseManagementAPI::update_maintenance_window`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -628,6 +688,7 @@ pub enum UpdateMaintenanceWindowError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdatePriorityError is a struct for typed errors of method [`CaseManagementAPI::update_priority`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -637,6 +698,7 @@ pub enum UpdatePriorityError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateProjectError is a struct for typed errors of method [`CaseManagementAPI::update_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -644,6 +706,7 @@ pub enum UpdateProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateProjectNotificationRuleError is a struct for typed errors of method [`CaseManagementAPI::update_project_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -653,6 +716,7 @@ pub enum UpdateProjectNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateStatusError is a struct for typed errors of method [`CaseManagementAPI::update_status`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -661,6 +725,7 @@ pub enum UpdateStatusError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// WatchCaseError is a struct for typed errors of method [`CaseManagementAPI::watch_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -668,6 +733,7 @@ pub enum WatchCaseError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// View and manage work items and projects within Work Management. API paths, resource types, and permissions retain `case` terminology. For more information, see [Work Management](<https://docs.datadoghq.com/incident_response/work_management/>).
 #[derive(Debug, Clone)]
@@ -691,7 +757,8 @@ impl CaseManagementAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -736,59 +803,51 @@ impl CaseManagementAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Adds one or more insights to a work item. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
-    pub async fn add_case_insights(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInsightsRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<AddCaseInsightsError>> {
+    pub async fn add_case_insights(&self, case_id: String, body: crate::datadogV2::model::CaseInsightsRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<AddCaseInsightsError>> {
         match self.add_case_insights_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Adds one or more insights to a work item. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
-    pub async fn add_case_insights_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInsightsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<AddCaseInsightsError>,
-    > {
+    pub async fn add_case_insights_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseInsightsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<AddCaseInsightsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_case_insights";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/insights",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -801,23 +860,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -825,7 +877,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -835,7 +890,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -857,7 +915,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -875,71 +933,57 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AddCaseInsightsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddCaseInsightsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Performs an aggregation query over work items, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
-    pub async fn aggregate_cases(
-        &self,
-        body: crate::datadogV2::model::CaseAggregateRequest,
-    ) -> Result<crate::datadogV2::model::CaseAggregateResponse, datadog::Error<AggregateCasesError>>
-    {
+    pub async fn aggregate_cases(&self, body: crate::datadogV2::model::CaseAggregateRequest) -> Result<crate::datadogV2::model::CaseAggregateResponse, datadog::Error<AggregateCasesError>> {
         match self.aggregate_cases_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Performs an aggregation query over work items, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
-    pub async fn aggregate_cases_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CaseAggregateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseAggregateResponse>,
-        datadog::Error<AggregateCasesError>,
-    > {
+    pub async fn aggregate_cases_with_http_info(&self, body: crate::datadogV2::model::CaseAggregateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseAggregateResponse>, datadog::Error<AggregateCasesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.aggregate_cases";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/aggregate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -952,23 +996,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -976,7 +1013,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -986,7 +1026,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1008,7 +1051,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1025,76 +1068,60 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseAggregateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseAggregateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AggregateCasesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AggregateCasesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Archive work item
-    pub async fn archive_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<ArchiveCaseError>> {
+    pub async fn archive_case(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<ArchiveCaseError>> {
         match self.archive_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Archive work item
-    pub async fn archive_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<ArchiveCaseError>,
-    > {
+    pub async fn archive_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<ArchiveCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.archive_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/archive",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1107,23 +1134,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1131,7 +1151,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1141,7 +1164,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1163,7 +1189,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1181,72 +1207,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ArchiveCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Assign work item to a user
-    pub async fn assign_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseAssignRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<AssignCaseError>> {
+    pub async fn assign_case(&self, case_id: String, body: crate::datadogV2::model::CaseAssignRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<AssignCaseError>> {
         match self.assign_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Assign work item to a user
-    pub async fn assign_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseAssignRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<AssignCaseError>,
-    > {
+    pub async fn assign_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseAssignRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<AssignCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.assign_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/assign",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1259,23 +1272,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1283,7 +1289,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1293,7 +1302,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1315,7 +1327,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1333,58 +1345,51 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<AssignCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple work items at once. The list of work item IDs and the action type with its payload are specified in the request body.
-    pub async fn bulk_update_cases(
-        &self,
-        body: crate::datadogV2::model::CaseBulkUpdateRequest,
-    ) -> Result<(), datadog::Error<BulkUpdateCasesError>> {
+    pub async fn bulk_update_cases(&self, body: crate::datadogV2::model::CaseBulkUpdateRequest) -> Result<(), datadog::Error<BulkUpdateCasesError>> {
         match self.bulk_update_cases_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple work items at once. The list of work item IDs and the action type with its payload are specified in the request body.
-    pub async fn bulk_update_cases_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CaseBulkUpdateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<BulkUpdateCasesError>> {
+    pub async fn bulk_update_cases_with_http_info(&self, body: crate::datadogV2::model::CaseBulkUpdateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<BulkUpdateCasesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.bulk_update_cases";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/bulk",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1397,23 +1402,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1421,7 +1419,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1431,7 +1432,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1453,7 +1457,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1476,63 +1480,51 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<BulkUpdateCasesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BulkUpdateCasesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a comment to a work item.
-    pub async fn comment_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseCommentRequest,
-    ) -> Result<crate::datadogV2::model::TimelineResponse, datadog::Error<CommentCaseError>> {
+    pub async fn comment_case(&self, case_id: String, body: crate::datadogV2::model::CaseCommentRequest) -> Result<crate::datadogV2::model::TimelineResponse, datadog::Error<CommentCaseError>> {
         match self.comment_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a comment to a work item.
-    pub async fn comment_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseCommentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TimelineResponse>,
-        datadog::Error<CommentCaseError>,
-    > {
+    pub async fn comment_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseCommentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TimelineResponse>, datadog::Error<CommentCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.comment_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1545,23 +1537,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1569,7 +1554,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1579,7 +1567,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1601,7 +1592,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1618,58 +1609,42 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TimelineResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TimelineResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CommentCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns work item counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
-    pub async fn count_cases(
-        &self,
-        params: CountCasesOptionalParams,
-    ) -> Result<crate::datadogV2::model::CaseCountResponse, datadog::Error<CountCasesError>> {
-        match self.count_cases_with_http_info(params).await {
+    pub async fn count_cases(&self, params: CountCasesOptionalParams) -> Result<crate::datadogV2::model::CaseCountResponse, datadog::Error<CountCasesError>> {
+        match self.count_cases_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns work item counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
-    pub async fn count_cases_with_http_info(
-        &self,
-        params: CountCasesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseCountResponse>,
-        datadog::Error<CountCasesError>,
-    > {
+    pub async fn count_cases_with_http_info(&self, params: CountCasesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseCountResponse>, datadog::Error<CountCasesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.count_cases";
 
+        
         // unbox and build optional parameters
         let query_filter = params.query_filter;
         let group_bys = params.group_bys;
@@ -1679,27 +1654,25 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/count",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = query_filter {
-            local_req_builder =
-                local_req_builder.query(&[("query_filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query_filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = group_bys {
-            local_req_builder =
-                local_req_builder.query(&[("group_bys", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("group_bys", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1712,22 +1685,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1739,71 +1706,58 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseCountResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseCountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CountCasesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a work item
-    pub async fn create_case(
-        &self,
-        body: crate::datadogV2::model::CaseCreateRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<CreateCaseError>> {
+    pub async fn create_case(&self, body: crate::datadogV2::model::CaseCreateRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<CreateCaseError>> {
         match self.create_case_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a work item
-    pub async fn create_case_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CaseCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<CreateCaseError>,
-    > {
+    pub async fn create_case_with_http_info(&self, body: crate::datadogV2::model::CaseCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<CreateCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1816,23 +1770,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1840,7 +1787,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1850,7 +1800,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1872,7 +1825,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1890,78 +1843,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates an automation rule for a project. The rule defines a trigger event (for example, work item created, status transitioned) and an action to execute.
-    pub async fn create_case_automation_rule(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::AutomationRuleCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRuleResponse,
-        datadog::Error<CreateCaseAutomationRuleError>,
-    > {
-        match self
-            .create_case_automation_rule_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn create_case_automation_rule(&self, project_id: String, body: crate::datadogV2::model::AutomationRuleCreateRequest) -> Result<crate::datadogV2::model::AutomationRuleResponse, datadog::Error<CreateCaseAutomationRuleError>> {
+        match self.create_case_automation_rule_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates an automation rule for a project. The rule defines a trigger event (for example, work item created, status transitioned) and an action to execute.
-    pub async fn create_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::AutomationRuleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>,
-        datadog::Error<CreateCaseAutomationRuleError>,
-    > {
+    pub async fn create_case_automation_rule_with_http_info(&self, project_id: String, body: crate::datadogV2::model::AutomationRuleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>, datadog::Error<CreateCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1974,23 +1908,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1998,7 +1925,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2008,7 +1938,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2030,7 +1963,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2047,68 +1980,54 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new Jira issue and link it to a work item
-    pub async fn create_case_jira_issue(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::JiraIssueCreateRequest,
-    ) -> Result<(), datadog::Error<CreateCaseJiraIssueError>> {
-        match self
-            .create_case_jira_issue_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn create_case_jira_issue(&self, case_id: String, body: crate::datadogV2::model::JiraIssueCreateRequest) -> Result<(), datadog::Error<CreateCaseJiraIssueError>> {
+        match self.create_case_jira_issue_with_http_info(case_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new Jira issue and link it to a work item
-    pub async fn create_case_jira_issue_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::JiraIssueCreateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseJiraIssueError>> {
+    pub async fn create_case_jira_issue_with_http_info(&self, case_id: String, body: crate::datadogV2::model::JiraIssueCreateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseJiraIssueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_jira_issue";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2121,23 +2040,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2145,7 +2057,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2155,7 +2070,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2177,7 +2095,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2200,61 +2118,49 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateCaseJiraIssueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseJiraIssueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a directional link between two work items (for example, work item A blocks work item B). The parent and child work items and their relationship type must be specified.
-    pub async fn create_case_link(
-        &self,
-        body: crate::datadogV2::model::CaseLinkCreateRequest,
-    ) -> Result<crate::datadogV2::model::CaseLinkResponse, datadog::Error<CreateCaseLinkError>>
-    {
+    pub async fn create_case_link(&self, body: crate::datadogV2::model::CaseLinkCreateRequest) -> Result<crate::datadogV2::model::CaseLinkResponse, datadog::Error<CreateCaseLinkError>> {
         match self.create_case_link_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a directional link between two work items (for example, work item A blocks work item B). The parent and child work items and their relationship type must be specified.
-    pub async fn create_case_link_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CaseLinkCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseLinkResponse>,
-        datadog::Error<CreateCaseLinkError>,
-    > {
+    pub async fn create_case_link_with_http_info(&self, body: crate::datadogV2::model::CaseLinkCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseLinkResponse>, datadog::Error<CreateCaseLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2267,23 +2173,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2291,7 +2190,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2301,7 +2203,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2323,7 +2228,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2340,67 +2245,54 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseLinkResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCaseLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new investigation notebook and link it to a work item
-    pub async fn create_case_notebook(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest,
-    ) -> Result<(), datadog::Error<CreateCaseNotebookError>> {
-        match self
-            .create_case_notebook_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn create_case_notebook(&self, case_id: String, body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest) -> Result<(), datadog::Error<CreateCaseNotebookError>> {
+        match self.create_case_notebook_with_http_info(case_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new investigation notebook and link it to a work item
-    pub async fn create_case_notebook_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseNotebookError>> {
+    pub async fn create_case_notebook_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_notebook";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/notebook",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2413,23 +2305,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2437,7 +2322,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2447,7 +2335,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2469,7 +2360,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2492,55 +2383,45 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateCaseNotebookError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseNotebookError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new ServiceNow incident ticket and link it to a work item
-    pub async fn create_case_service_now_ticket(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::ServiceNowTicketCreateRequest,
-    ) -> Result<(), datadog::Error<CreateCaseServiceNowTicketError>> {
-        match self
-            .create_case_service_now_ticket_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn create_case_service_now_ticket(&self, case_id: String, body: crate::datadogV2::model::ServiceNowTicketCreateRequest) -> Result<(), datadog::Error<CreateCaseServiceNowTicketError>> {
+        match self.create_case_service_now_ticket_with_http_info(case_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new ServiceNow incident ticket and link it to a work item
-    pub async fn create_case_service_now_ticket_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::ServiceNowTicketCreateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseServiceNowTicketError>> {
+    pub async fn create_case_service_now_ticket_with_http_info(&self, case_id: String, body: crate::datadogV2::model::ServiceNowTicketCreateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseServiceNowTicketError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_service_now_ticket";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/servicenow_tickets",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2553,23 +2434,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2577,7 +2451,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2587,7 +2464,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2609,7 +2489,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2632,61 +2512,49 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateCaseServiceNowTicketError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseServiceNowTicketError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new saved work item view with a name, filter query, and associated project.
-    pub async fn create_case_view(
-        &self,
-        body: crate::datadogV2::model::CaseViewCreateRequest,
-    ) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<CreateCaseViewError>>
-    {
+    pub async fn create_case_view(&self, body: crate::datadogV2::model::CaseViewCreateRequest) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<CreateCaseViewError>> {
         match self.create_case_view_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new saved work item view with a name, filter query, and associated project.
-    pub async fn create_case_view_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CaseViewCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>,
-        datadog::Error<CreateCaseViewError>,
-    > {
+    pub async fn create_case_view_with_http_info(&self, body: crate::datadogV2::model::CaseViewCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>, datadog::Error<CreateCaseViewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_view";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2699,23 +2567,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2723,7 +2584,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2733,7 +2597,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2755,7 +2622,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2772,75 +2639,58 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCaseViewError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCaseViewError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a maintenance window for event management work items with a name, work item filter query, and time range (start and end).
-    pub async fn create_maintenance_window(
-        &self,
-        body: crate::datadogV2::model::MaintenanceWindowCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::MaintenanceWindowResponse,
-        datadog::Error<CreateMaintenanceWindowError>,
-    > {
+    pub async fn create_maintenance_window(&self, body: crate::datadogV2::model::MaintenanceWindowCreateRequest) -> Result<crate::datadogV2::model::MaintenanceWindowResponse, datadog::Error<CreateMaintenanceWindowError>> {
         match self.create_maintenance_window_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a maintenance window for event management work items with a name, work item filter query, and time range (start and end).
-    pub async fn create_maintenance_window_with_http_info(
-        &self,
-        body: crate::datadogV2::model::MaintenanceWindowCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowResponse>,
-        datadog::Error<CreateMaintenanceWindowError>,
-    > {
+    pub async fn create_maintenance_window_with_http_info(&self, body: crate::datadogV2::model::MaintenanceWindowCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowResponse>, datadog::Error<CreateMaintenanceWindowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_maintenance_window";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2853,23 +2703,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2877,7 +2720,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2887,7 +2733,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2909,7 +2758,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2926,73 +2775,58 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateMaintenanceWindowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateMaintenanceWindowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a project.
-    pub async fn create_project(
-        &self,
-        body: crate::datadogV2::model::ProjectCreateRequest,
-    ) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<CreateProjectError>> {
+    pub async fn create_project(&self, body: crate::datadogV2::model::ProjectCreateRequest) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<CreateProjectError>> {
         match self.create_project_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a project.
-    pub async fn create_project_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ProjectCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>,
-        datadog::Error<CreateProjectError>,
-    > {
+    pub async fn create_project_with_http_info(&self, body: crate::datadogV2::model::ProjectCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>, datadog::Error<CreateProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3005,23 +2839,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3029,7 +2856,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3039,7 +2869,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3061,7 +2894,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3079,79 +2912,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ProjectResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a notification rule for a project.
-    pub async fn create_project_notification_rule(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::CaseNotificationRuleCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::CaseNotificationRuleResponse,
-        datadog::Error<CreateProjectNotificationRuleError>,
-    > {
-        match self
-            .create_project_notification_rule_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn create_project_notification_rule(&self, project_id: String, body: crate::datadogV2::model::CaseNotificationRuleCreateRequest) -> Result<crate::datadogV2::model::CaseNotificationRuleResponse, datadog::Error<CreateProjectNotificationRuleError>> {
+        match self.create_project_notification_rule_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a notification rule for a project.
-    pub async fn create_project_notification_rule_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::CaseNotificationRuleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseNotificationRuleResponse>,
-        datadog::Error<CreateProjectNotificationRuleError>,
-    > {
+    pub async fn create_project_notification_rule_with_http_info(&self, project_id: String, body: crate::datadogV2::model::CaseNotificationRuleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseNotificationRuleResponse>, datadog::Error<CreateProjectNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_project_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3164,23 +2977,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3188,7 +2994,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3198,7 +3007,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3220,7 +3032,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3237,68 +3049,55 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseNotificationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseNotificationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateProjectNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateProjectNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Permanently deletes an automation rule from a project.
-    pub async fn delete_case_automation_rule(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteCaseAutomationRuleError>> {
-        match self
-            .delete_case_automation_rule_with_http_info(project_id, rule_id)
-            .await
-        {
+    pub async fn delete_case_automation_rule(&self, project_id: String, rule_id: String) -> Result<(), datadog::Error<DeleteCaseAutomationRuleError>> {
+        match self.delete_case_automation_rule_with_http_info(project_id, rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Permanently deletes an automation rule from a project.
-    pub async fn delete_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseAutomationRuleError>> {
+    pub async fn delete_case_automation_rule_with_http_info(&self, project_id: String, rule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3311,22 +3110,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3344,55 +3137,46 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete work item comment
-    pub async fn delete_case_comment(
-        &self,
-        case_id: String,
-        cell_id: String,
-    ) -> Result<(), datadog::Error<DeleteCaseCommentError>> {
-        match self
-            .delete_case_comment_with_http_info(case_id, cell_id)
-            .await
-        {
+    pub async fn delete_case_comment(&self, case_id: String, cell_id: String) -> Result<(), datadog::Error<DeleteCaseCommentError>> {
+        match self.delete_case_comment_with_http_info(case_id, cell_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete work item comment
-    pub async fn delete_case_comment_with_http_info(
-        &self,
-        case_id: String,
-        cell_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseCommentError>> {
+    pub async fn delete_case_comment_with_http_info(&self, case_id: String, cell_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseCommentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_case_comment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment/{cell_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            cell_id = datadog::urlencode(cell_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , cell_id=
+            datadog::urlencode(cell_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3405,22 +3189,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3438,67 +3216,52 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCaseCommentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCaseCommentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete custom attribute from work item
-    pub async fn delete_case_custom_attribute(
-        &self,
-        case_id: String,
-        custom_attribute_key: String,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<DeleteCaseCustomAttributeError>>
-    {
-        match self
-            .delete_case_custom_attribute_with_http_info(case_id, custom_attribute_key)
-            .await
-        {
+    pub async fn delete_case_custom_attribute(&self, case_id: String, custom_attribute_key: String) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<DeleteCaseCustomAttributeError>> {
+        match self.delete_case_custom_attribute_with_http_info(case_id, custom_attribute_key).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete custom attribute from work item
-    pub async fn delete_case_custom_attribute_with_http_info(
-        &self,
-        case_id: String,
-        custom_attribute_key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<DeleteCaseCustomAttributeError>,
-    > {
+    pub async fn delete_case_custom_attribute_with_http_info(&self, case_id: String, custom_attribute_key: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<DeleteCaseCustomAttributeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_case_custom_attribute";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/custom_attributes/{custom_attribute_key}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            custom_attribute_key = datadog::urlencode(custom_attribute_key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , custom_attribute_key=
+            datadog::urlencode(custom_attribute_key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3511,22 +3274,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3539,59 +3296,52 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteCaseCustomAttributeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCaseCustomAttributeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes an existing link between work items by link ID.
-    pub async fn delete_case_link(
-        &self,
-        link_id: String,
-    ) -> Result<(), datadog::Error<DeleteCaseLinkError>> {
+    pub async fn delete_case_link(&self, link_id: String) -> Result<(), datadog::Error<DeleteCaseLinkError>> {
         match self.delete_case_link_with_http_info(link_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes an existing link between work items by link ID.
-    pub async fn delete_case_link_with_http_info(
-        &self,
-        link_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseLinkError>> {
+    pub async fn delete_case_link_with_http_info(&self, link_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_case_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3604,22 +3354,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3637,49 +3381,44 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCaseLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCaseLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Permanently deletes a saved work item view.
-    pub async fn delete_case_view(
-        &self,
-        view_id: String,
-    ) -> Result<(), datadog::Error<DeleteCaseViewError>> {
+    pub async fn delete_case_view(&self, view_id: String) -> Result<(), datadog::Error<DeleteCaseViewError>> {
         match self.delete_case_view_with_http_info(view_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Permanently deletes a saved work item view.
-    pub async fn delete_case_view_with_http_info(
-        &self,
-        view_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseViewError>> {
+    pub async fn delete_case_view_with_http_info(&self, view_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseViewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_case_view";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            view_id = datadog::urlencode(view_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), view_id=
+            datadog::urlencode(view_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3692,22 +3431,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3725,52 +3458,44 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCaseViewError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCaseViewError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Permanently deletes a maintenance window.
-    pub async fn delete_maintenance_window(
-        &self,
-        maintenance_window_id: String,
-    ) -> Result<(), datadog::Error<DeleteMaintenanceWindowError>> {
-        match self
-            .delete_maintenance_window_with_http_info(maintenance_window_id)
-            .await
-        {
+    pub async fn delete_maintenance_window(&self, maintenance_window_id: String) -> Result<(), datadog::Error<DeleteMaintenanceWindowError>> {
+        match self.delete_maintenance_window_with_http_info(maintenance_window_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Permanently deletes a maintenance window.
-    pub async fn delete_maintenance_window_with_http_info(
-        &self,
-        maintenance_window_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMaintenanceWindowError>> {
+    pub async fn delete_maintenance_window_with_http_info(&self, maintenance_window_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMaintenanceWindowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_maintenance_window";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows/{maintenance_window_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            maintenance_window_id = datadog::urlencode(maintenance_window_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), maintenance_window_id=
+            datadog::urlencode(maintenance_window_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3783,22 +3508,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3816,49 +3535,44 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteMaintenanceWindowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteMaintenanceWindowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a project using the project's `id`.
-    pub async fn delete_project(
-        &self,
-        project_id: String,
-    ) -> Result<(), datadog::Error<DeleteProjectError>> {
+    pub async fn delete_project(&self, project_id: String) -> Result<(), datadog::Error<DeleteProjectError>> {
         match self.delete_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a project using the project's `id`.
-    pub async fn delete_project_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectError>> {
+    pub async fn delete_project_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3871,22 +3585,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3904,56 +3612,46 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a notification rule using the notification rule's `id`.
-    pub async fn delete_project_notification_rule(
-        &self,
-        project_id: String,
-        notification_rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteProjectNotificationRuleError>> {
-        match self
-            .delete_project_notification_rule_with_http_info(project_id, notification_rule_id)
-            .await
-        {
+    pub async fn delete_project_notification_rule(&self, project_id: String, notification_rule_id: String) -> Result<(), datadog::Error<DeleteProjectNotificationRuleError>> {
+        match self.delete_project_notification_rule_with_http_info(project_id, notification_rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a notification rule using the notification rule's `id`.
-    pub async fn delete_project_notification_rule_with_http_info(
-        &self,
-        project_id: String,
-        notification_rule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectNotificationRuleError>>
-    {
+    pub async fn delete_project_notification_rule_with_http_info(&self, project_id: String, notification_rule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_project_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules/{notification_rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            notification_rule_id = datadog::urlencode(notification_rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , notification_rule_id=
+            datadog::urlencode(notification_rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3966,22 +3664,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3999,69 +3691,52 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteProjectNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteProjectNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disables an automation rule so it no longer triggers on work item events. The rule configuration is preserved.
-    pub async fn disable_case_automation_rule(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRuleResponse,
-        datadog::Error<DisableCaseAutomationRuleError>,
-    > {
-        match self
-            .disable_case_automation_rule_with_http_info(project_id, rule_id)
-            .await
-        {
+    pub async fn disable_case_automation_rule(&self, project_id: String, rule_id: String) -> Result<crate::datadogV2::model::AutomationRuleResponse, datadog::Error<DisableCaseAutomationRuleError>> {
+        match self.disable_case_automation_rule_with_http_info(project_id, rule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disables an automation rule so it no longer triggers on work item events. The rule configuration is preserved.
-    pub async fn disable_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>,
-        datadog::Error<DisableCaseAutomationRuleError>,
-    > {
+    pub async fn disable_case_automation_rule_with_http_info(&self, project_id: String, rule_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>, datadog::Error<DisableCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.disable_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}/disable",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4074,22 +3749,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4101,82 +3770,61 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DisableCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DisableCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enables a previously disabled automation rule so it triggers on matching work item events.
-    pub async fn enable_case_automation_rule(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRuleResponse,
-        datadog::Error<EnableCaseAutomationRuleError>,
-    > {
-        match self
-            .enable_case_automation_rule_with_http_info(project_id, rule_id)
-            .await
-        {
+    pub async fn enable_case_automation_rule(&self, project_id: String, rule_id: String) -> Result<crate::datadogV2::model::AutomationRuleResponse, datadog::Error<EnableCaseAutomationRuleError>> {
+        match self.enable_case_automation_rule_with_http_info(project_id, rule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enables a previously disabled automation rule so it triggers on matching work item events.
-    pub async fn enable_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>,
-        datadog::Error<EnableCaseAutomationRuleError>,
-    > {
+    pub async fn enable_case_automation_rule_with_http_info(&self, project_id: String, rule_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>, datadog::Error<EnableCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.enable_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}/enable",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4189,22 +3837,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4216,62 +3858,53 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<EnableCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<EnableCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Marks a Work Management project as a favorite for the current authenticated user.
-    pub async fn favorite_case_project(
-        &self,
-        project_id: String,
-    ) -> Result<(), datadog::Error<FavoriteCaseProjectError>> {
+    pub async fn favorite_case_project(&self, project_id: String) -> Result<(), datadog::Error<FavoriteCaseProjectError>> {
         match self.favorite_case_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Marks a Work Management project as a favorite for the current authenticated user.
-    pub async fn favorite_case_project_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<FavoriteCaseProjectError>> {
+    pub async fn favorite_case_project_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<FavoriteCaseProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.favorite_case_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/favorites",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4284,22 +3917,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4317,60 +3944,50 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<FavoriteCaseProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<FavoriteCaseProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the details of a work item by `case_id`.
-    pub async fn get_case(
-        &self,
-        case_id: String,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<GetCaseError>> {
+    pub async fn get_case(&self, case_id: String) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<GetCaseError>> {
         match self.get_case_with_http_info(case_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the details of a work item by `case_id`.
-    pub async fn get_case_with_http_info(
-        &self,
-        case_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<GetCaseError>,
-    > {
+    pub async fn get_case_with_http_info(&self, case_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<GetCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4383,22 +4000,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4411,78 +4022,60 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a single automation rule identified by its UUID, including its trigger, action, and current state (enabled/disabled).
-    pub async fn get_case_automation_rule(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRuleResponse,
-        datadog::Error<GetCaseAutomationRuleError>,
-    > {
-        match self
-            .get_case_automation_rule_with_http_info(project_id, rule_id)
-            .await
-        {
+    pub async fn get_case_automation_rule(&self, project_id: String, rule_id: String) -> Result<crate::datadogV2::model::AutomationRuleResponse, datadog::Error<GetCaseAutomationRuleError>> {
+        match self.get_case_automation_rule_with_http_info(project_id, rule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a single automation rule identified by its UUID, including its trigger, action, and current state (enabled/disabled).
-    pub async fn get_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        rule_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>,
-        datadog::Error<GetCaseAutomationRuleError>,
-    > {
+    pub async fn get_case_automation_rule_with_http_info(&self, project_id: String, rule_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>, datadog::Error<GetCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4495,22 +4088,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4522,73 +4109,59 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a single saved work item view identified by its UUID, including its query, associated project, and timestamps.
-    pub async fn get_case_view(
-        &self,
-        view_id: String,
-    ) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<GetCaseViewError>> {
+    pub async fn get_case_view(&self, view_id: String) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<GetCaseViewError>> {
         match self.get_case_view_with_http_info(view_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a single saved work item view identified by its UUID, including its query, associated project, and timestamps.
-    pub async fn get_case_view_with_http_info(
-        &self,
-        view_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>,
-        datadog::Error<GetCaseViewError>,
-    > {
+    pub async fn get_case_view_with_http_info(&self, view_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>, datadog::Error<GetCaseViewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_case_view";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            view_id = datadog::urlencode(view_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), view_id=
+            datadog::urlencode(view_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4601,22 +4174,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4628,71 +4195,59 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetCaseViewError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the details of a project by `project_id`.
-    pub async fn get_project(
-        &self,
-        project_id: String,
-    ) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<GetProjectError>> {
+    pub async fn get_project(&self, project_id: String) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<GetProjectError>> {
         match self.get_project_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the details of a project by `project_id`.
-    pub async fn get_project_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>,
-        datadog::Error<GetProjectError>,
-    > {
+    pub async fn get_project_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>, datadog::Error<GetProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4705,22 +4260,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4733,75 +4282,58 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ProjectResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetProjectError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all notification rules for a project.
-    pub async fn get_project_notification_rules(
-        &self,
-        project_id: String,
-    ) -> Result<
-        crate::datadogV2::model::CaseNotificationRulesResponse,
-        datadog::Error<GetProjectNotificationRulesError>,
-    > {
-        match self
-            .get_project_notification_rules_with_http_info(project_id)
-            .await
-        {
+    pub async fn get_project_notification_rules(&self, project_id: String) -> Result<crate::datadogV2::model::CaseNotificationRulesResponse, datadog::Error<GetProjectNotificationRulesError>> {
+        match self.get_project_notification_rules_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all notification rules for a project.
-    pub async fn get_project_notification_rules_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseNotificationRulesResponse>,
-        datadog::Error<GetProjectNotificationRulesError>,
-    > {
+    pub async fn get_project_notification_rules_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseNotificationRulesResponse>, datadog::Error<GetProjectNotificationRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_project_notification_rules";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4814,22 +4346,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4841,70 +4367,57 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseNotificationRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseNotificationRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetProjectNotificationRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetProjectNotificationRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all projects.
-    pub async fn get_projects(
-        &self,
-    ) -> Result<crate::datadogV2::model::ProjectsResponse, datadog::Error<GetProjectsError>> {
+    pub async fn get_projects(&self) -> Result<crate::datadogV2::model::ProjectsResponse, datadog::Error<GetProjectsError>> {
         match self.get_projects_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all projects.
-    pub async fn get_projects_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectsResponse>,
-        datadog::Error<GetProjectsError>,
-    > {
+    pub async fn get_projects_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectsResponse>, datadog::Error<GetProjectsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_projects";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4917,22 +4430,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4944,75 +4451,61 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ProjectsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ProjectsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetProjectsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Link an incident to a work item
-    pub async fn link_incident(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::RelationshipToIncidentRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<LinkIncidentError>> {
+    pub async fn link_incident(&self, case_id: String, body: crate::datadogV2::model::RelationshipToIncidentRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<LinkIncidentError>> {
         match self.link_incident_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Link an incident to a work item
-    pub async fn link_incident_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::RelationshipToIncidentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<LinkIncidentError>,
-    > {
+    pub async fn link_incident_with_http_info(&self, case_id: String, body: crate::datadogV2::model::RelationshipToIncidentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<LinkIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.link_incident";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/incidents",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -5024,23 +4517,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5048,7 +4534,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5058,7 +4547,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5080,7 +4572,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5098,64 +4590,53 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<LinkIncidentError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Link an existing Jira issue to a work item
-    pub async fn link_jira_issue_to_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::JiraIssueLinkRequest,
-    ) -> Result<(), datadog::Error<LinkJiraIssueToCaseError>> {
-        match self
-            .link_jira_issue_to_case_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn link_jira_issue_to_case(&self, case_id: String, body: crate::datadogV2::model::JiraIssueLinkRequest) -> Result<(), datadog::Error<LinkJiraIssueToCaseError>> {
+        match self.link_jira_issue_to_case_with_http_info(case_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Link an existing Jira issue to a work item
-    pub async fn link_jira_issue_to_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::JiraIssueLinkRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<LinkJiraIssueToCaseError>> {
+    pub async fn link_jira_issue_to_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::JiraIssueLinkRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<LinkJiraIssueToCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.link_jira_issue_to_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5168,23 +4649,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5192,7 +4666,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5202,7 +4679,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5224,7 +4704,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5247,66 +4727,50 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<LinkJiraIssueToCaseError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<LinkJiraIssueToCaseError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by work item events like creation, status transitions, or attribute changes.
-    pub async fn list_case_automation_rules(
-        &self,
-        project_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRulesResponse,
-        datadog::Error<ListCaseAutomationRulesError>,
-    > {
-        match self
-            .list_case_automation_rules_with_http_info(project_id)
-            .await
-        {
+    pub async fn list_case_automation_rules(&self, project_id: String) -> Result<crate::datadogV2::model::AutomationRulesResponse, datadog::Error<ListCaseAutomationRulesError>> {
+        match self.list_case_automation_rules_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by work item events like creation, status transitions, or attribute changes.
-    pub async fn list_case_automation_rules_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRulesResponse>,
-        datadog::Error<ListCaseAutomationRulesError>,
-    > {
+    pub async fn list_case_automation_rules_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRulesResponse>, datadog::Error<ListCaseAutomationRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_case_automation_rules";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5319,22 +4783,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5346,68 +4804,42 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCaseAutomationRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCaseAutomationRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all links associated with a work item. Links define relationships (for example, BLOCKS) between work items. Requires entity_type and entity_id query parameters.
-    pub async fn list_case_links(
-        &self,
-        entity_type: String,
-        entity_id: String,
-        params: ListCaseLinksOptionalParams,
-    ) -> Result<crate::datadogV2::model::CaseLinksResponse, datadog::Error<ListCaseLinksError>>
-    {
-        match self
-            .list_case_links_with_http_info(entity_type, entity_id, params)
-            .await
-        {
+    pub async fn list_case_links(&self, entity_type: String, entity_id: String, params: ListCaseLinksOptionalParams) -> Result<crate::datadogV2::model::CaseLinksResponse, datadog::Error<ListCaseLinksError>> {
+        match self.list_case_links_with_http_info(entity_type, entity_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns all links associated with a work item. Links define relationships (for example, BLOCKS) between work items. Requires entity_type and entity_id query parameters.
-    pub async fn list_case_links_with_http_info(
-        &self,
-        entity_type: String,
-        entity_id: String,
-        params: ListCaseLinksOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseLinksResponse>,
-        datadog::Error<ListCaseLinksError>,
-    > {
+    pub async fn list_case_links_with_http_info(&self, entity_type: String, entity_id: String, params: ListCaseLinksOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseLinksResponse>, datadog::Error<ListCaseLinksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_case_links";
 
+        
         // unbox and build optional parameters
         let relationship = params.relationship;
 
@@ -5415,21 +4847,21 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("entity_type", &entity_type.to_string())]);
-        local_req_builder = local_req_builder.query(&[("entity_id", &entity_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("entity_type", &entity_type.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("entity_id", &entity_id.to_string() )]);
         if let Some(ref local_query_param) = relationship {
-            local_req_builder =
-                local_req_builder.query(&[("relationship", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("relationship", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5442,22 +4874,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5469,65 +4895,42 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseLinksResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseLinksResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCaseLinksError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCaseLinksError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the timeline of events for a work item, including comments, status changes, and other activity. Supports pagination and sort order.
-    pub async fn list_case_timeline(
-        &self,
-        case_id: String,
-        params: ListCaseTimelineOptionalParams,
-    ) -> Result<crate::datadogV2::model::TimelineResponse, datadog::Error<ListCaseTimelineError>>
-    {
-        match self
-            .list_case_timeline_with_http_info(case_id, params)
-            .await
-        {
+    pub async fn list_case_timeline(&self, case_id: String, params: ListCaseTimelineOptionalParams) -> Result<crate::datadogV2::model::TimelineResponse, datadog::Error<ListCaseTimelineError>> {
+        match self.list_case_timeline_with_http_info(case_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the timeline of events for a work item, including comments, status changes, and other activity. Supports pagination and sort order.
-    pub async fn list_case_timeline_with_http_info(
-        &self,
-        case_id: String,
-        params: ListCaseTimelineOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TimelineResponse>,
-        datadog::Error<ListCaseTimelineError>,
-    > {
+    pub async fn list_case_timeline_with_http_info(&self, case_id: String, params: ListCaseTimelineOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TimelineResponse>, datadog::Error<ListCaseTimelineError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_case_timeline";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -5537,28 +4940,27 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/timelines",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_ascending {
-            local_req_builder =
-                local_req_builder.query(&[("sort[ascending]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort[ascending]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5571,22 +4973,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5598,74 +4994,58 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TimelineResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TimelineResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCaseTimelineError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCaseTimelineError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all saved work item views for a given project. Views are saved search queries that allow quick access to filtered lists of work items.
-    pub async fn list_case_views(
-        &self,
-        project_id: String,
-    ) -> Result<crate::datadogV2::model::CaseViewsResponse, datadog::Error<ListCaseViewsError>>
-    {
+    pub async fn list_case_views(&self, project_id: String) -> Result<crate::datadogV2::model::CaseViewsResponse, datadog::Error<ListCaseViewsError>> {
         match self.list_case_views_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns all saved work item views for a given project. Views are saved search queries that allow quick access to filtered lists of work items.
-    pub async fn list_case_views_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseViewsResponse>,
-        datadog::Error<ListCaseViewsError>,
-    > {
+    pub async fn list_case_views_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseViewsResponse>, datadog::Error<ListCaseViewsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_case_views";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("project_id", &project_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("project_id", &project_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5678,22 +5058,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5705,73 +5079,59 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseViewsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseViewsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCaseViewsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCaseViewsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the list of users who are watching a work item. Watchers receive notifications about updates to the work item.
-    pub async fn list_case_watchers(
-        &self,
-        case_id: String,
-    ) -> Result<crate::datadogV2::model::CaseWatchersResponse, datadog::Error<ListCaseWatchersError>>
-    {
+    pub async fn list_case_watchers(&self, case_id: String) -> Result<crate::datadogV2::model::CaseWatchersResponse, datadog::Error<ListCaseWatchersError>> {
         match self.list_case_watchers_with_http_info(case_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the list of users who are watching a work item. Watchers receive notifications about updates to the work item.
-    pub async fn list_case_watchers_with_http_info(
-        &self,
-        case_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseWatchersResponse>,
-        datadog::Error<ListCaseWatchersError>,
-    > {
+    pub async fn list_case_watchers_with_http_info(&self, case_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseWatchersResponse>, datadog::Error<ListCaseWatchersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_case_watchers";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5784,22 +5144,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5811,73 +5165,57 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseWatchersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseWatchersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCaseWatchersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCaseWatchersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all configured maintenance windows for event management work items. Maintenance windows define time periods during which work item notifications and automation rules are suppressed for work items matching a given query.
-    pub async fn list_maintenance_windows(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::MaintenanceWindowsResponse,
-        datadog::Error<ListMaintenanceWindowsError>,
-    > {
+    pub async fn list_maintenance_windows(&self) -> Result<crate::datadogV2::model::MaintenanceWindowsResponse, datadog::Error<ListMaintenanceWindowsError>> {
         match self.list_maintenance_windows_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns all configured maintenance windows for event management work items. Maintenance windows define time periods during which work item notifications and automation rules are suppressed for work items matching a given query.
-    pub async fn list_maintenance_windows_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowsResponse>,
-        datadog::Error<ListMaintenanceWindowsError>,
-    > {
+    pub async fn list_maintenance_windows_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowsResponse>, datadog::Error<ListMaintenanceWindowsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_maintenance_windows";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5890,22 +5228,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5917,73 +5249,57 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMaintenanceWindowsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMaintenanceWindowsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the list of Work Management projects that the current authenticated user has marked as favorites.
-    pub async fn list_user_case_project_favorites(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ProjectFavoritesResponse,
-        datadog::Error<ListUserCaseProjectFavoritesError>,
-    > {
+    pub async fn list_user_case_project_favorites(&self) -> Result<crate::datadogV2::model::ProjectFavoritesResponse, datadog::Error<ListUserCaseProjectFavoritesError>> {
         match self.list_user_case_project_favorites_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the list of Work Management projects that the current authenticated user has marked as favorites.
-    pub async fn list_user_case_project_favorites_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectFavoritesResponse>,
-        datadog::Error<ListUserCaseProjectFavoritesError>,
-    > {
+    pub async fn list_user_case_project_favorites_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectFavoritesResponse>, datadog::Error<ListUserCaseProjectFavoritesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_user_case_project_favorites";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/favorites",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5996,22 +5312,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6023,79 +5333,60 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ProjectFavoritesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ProjectFavoritesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListUserCaseProjectFavoritesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListUserCaseProjectFavoritesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the project associated with a work item
-    pub async fn move_case_to_project(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::ProjectRelationship,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<MoveCaseToProjectError>> {
-        match self
-            .move_case_to_project_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn move_case_to_project(&self, case_id: String, body: crate::datadogV2::model::ProjectRelationship) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<MoveCaseToProjectError>> {
+        match self.move_case_to_project_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the project associated with a work item
-    pub async fn move_case_to_project_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::ProjectRelationship,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<MoveCaseToProjectError>,
-    > {
+    pub async fn move_case_to_project_with_http_info(&self, case_id: String, body: crate::datadogV2::model::ProjectRelationship) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<MoveCaseToProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.move_case_to_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/project",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6108,23 +5399,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -6132,7 +5416,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6142,7 +5429,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6164,7 +5454,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -6182,77 +5472,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<MoveCaseToProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<MoveCaseToProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Removes one or more previously added insights from a work item by specifying their type and resource identifier in the request body.
-    pub async fn remove_case_insights(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInsightsRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<RemoveCaseInsightsError>>
-    {
-        match self
-            .remove_case_insights_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn remove_case_insights(&self, case_id: String, body: crate::datadogV2::model::CaseInsightsRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<RemoveCaseInsightsError>> {
+        match self.remove_case_insights_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Removes one or more previously added insights from a work item by specifying their type and resource identifier in the request body.
-    pub async fn remove_case_insights_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseInsightsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<RemoveCaseInsightsError>,
-    > {
+    pub async fn remove_case_insights_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseInsightsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<RemoveCaseInsightsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_case_insights";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/insights",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6265,23 +5537,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -6289,7 +5554,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6299,7 +5567,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6321,7 +5592,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -6339,49 +5610,36 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RemoveCaseInsightsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveCaseInsightsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search work items.
-    pub async fn search_cases(
-        &self,
-        params: SearchCasesOptionalParams,
-    ) -> Result<crate::datadogV2::model::CasesResponse, datadog::Error<SearchCasesError>> {
-        match self.search_cases_with_http_info(params).await {
+    pub async fn search_cases(&self, params: SearchCasesOptionalParams) -> Result<crate::datadogV2::model::CasesResponse, datadog::Error<SearchCasesError>> {
+        match self.search_cases_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn search_cases_with_pagination(
-        &self,
-        mut params: SearchCasesOptionalParams,
+        &self, mut params: SearchCasesOptionalParams
     ) -> impl Stream<Item = Result<crate::datadogV2::model::Case, datadog::Error<SearchCasesError>>> + '_
     {
         try_stream! {
@@ -6411,17 +5669,13 @@ impl CaseManagementAPI {
         }
     }
 
+    
     /// Search work items.
-    pub async fn search_cases_with_http_info(
-        &self,
-        params: SearchCasesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CasesResponse>,
-        datadog::Error<SearchCasesError>,
-    > {
+    pub async fn search_cases_with_http_info(&self, params: SearchCasesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CasesResponse>, datadog::Error<SearchCasesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_cases";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -6433,35 +5687,31 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_field {
-            local_req_builder =
-                local_req_builder.query(&[("sort[field]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort[field]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_asc {
-            local_req_builder =
-                local_req_builder.query(&[("sort[asc]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort[asc]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6474,22 +5724,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6502,72 +5746,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CasesResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchCasesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Unarchive work item
-    pub async fn unarchive_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnarchiveCaseError>> {
+    pub async fn unarchive_case(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnarchiveCaseError>> {
         match self.unarchive_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Unarchive work item
-    pub async fn unarchive_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UnarchiveCaseError>,
-    > {
+    pub async fn unarchive_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UnarchiveCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unarchive_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unarchive",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6580,23 +5811,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -6604,7 +5828,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6614,7 +5841,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6636,7 +5866,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -6654,73 +5884,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UnarchiveCaseError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnarchiveCaseError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Unassign work item
-    pub async fn unassign_case(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnassignCaseError>> {
+    pub async fn unassign_case(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UnassignCaseError>> {
         match self.unassign_case_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Unassign work item
-    pub async fn unassign_case_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseEmptyRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UnassignCaseError>,
-    > {
+    pub async fn unassign_case_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseEmptyRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UnassignCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unassign_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unassign",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6733,23 +5949,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -6757,7 +5966,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6767,7 +5979,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -6789,7 +6004,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -6807,61 +6022,52 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UnassignCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Removes a Work Management project from the current user's favorites list.
-    pub async fn unfavorite_case_project(
-        &self,
-        project_id: String,
-    ) -> Result<(), datadog::Error<UnfavoriteCaseProjectError>> {
-        match self
-            .unfavorite_case_project_with_http_info(project_id)
-            .await
-        {
+    pub async fn unfavorite_case_project(&self, project_id: String) -> Result<(), datadog::Error<UnfavoriteCaseProjectError>> {
+        match self.unfavorite_case_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Removes a Work Management project from the current user's favorites list.
-    pub async fn unfavorite_case_project_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnfavoriteCaseProjectError>> {
+    pub async fn unfavorite_case_project_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<UnfavoriteCaseProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unfavorite_case_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/favorites",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6874,22 +6080,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6907,49 +6107,44 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnfavoriteCaseProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnfavoriteCaseProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove the link between a Jira issue and a work item
-    pub async fn unlink_jira_issue(
-        &self,
-        case_id: String,
-    ) -> Result<(), datadog::Error<UnlinkJiraIssueError>> {
+    pub async fn unlink_jira_issue(&self, case_id: String) -> Result<(), datadog::Error<UnlinkJiraIssueError>> {
         match self.unlink_jira_issue_with_http_info(case_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove the link between a Jira issue and a work item
-    pub async fn unlink_jira_issue_with_http_info(
-        &self,
-        case_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlinkJiraIssueError>> {
+    pub async fn unlink_jira_issue_with_http_info(&self, case_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlinkJiraIssueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unlink_jira_issue";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6962,22 +6157,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6995,52 +6184,46 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnlinkJiraIssueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnlinkJiraIssueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Removes a user from the watchers list of a work item. The user no longer receives notifications about updates to the work item.
-    pub async fn unwatch_case(
-        &self,
-        case_id: String,
-        user_uuid: String,
-    ) -> Result<(), datadog::Error<UnwatchCaseError>> {
+    pub async fn unwatch_case(&self, case_id: String, user_uuid: String) -> Result<(), datadog::Error<UnwatchCaseError>> {
         match self.unwatch_case_with_http_info(case_id, user_uuid).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Removes a user from the watchers list of a work item. The user no longer receives notifications about updates to the work item.
-    pub async fn unwatch_case_with_http_info(
-        &self,
-        case_id: String,
-        user_uuid: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnwatchCaseError>> {
+    pub async fn unwatch_case_with_http_info(&self, case_id: String, user_uuid: String) -> Result<datadog::ResponseContent<()>, datadog::Error<UnwatchCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unwatch_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers/{user_uuid}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            user_uuid = datadog::urlencode(user_uuid)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , user_uuid=
+            datadog::urlencode(user_uuid)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7053,22 +6236,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7087,61 +6264,50 @@ impl CaseManagementAPI {
             })
         } else {
             let local_entity: Option<UnwatchCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item attributes
-    pub async fn update_attributes(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateAttributesRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateAttributesError>> {
+    pub async fn update_attributes(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateAttributesRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateAttributesError>> {
         match self.update_attributes_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item attributes
-    pub async fn update_attributes_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateAttributesRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateAttributesError>,
-    > {
+    pub async fn update_attributes_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateAttributesRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateAttributesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_attributes";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/attributes",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7154,23 +6320,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7178,7 +6337,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7188,7 +6350,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7210,7 +6375,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7228,82 +6393,61 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateAttributesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAttributesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the trigger, action, name, or state of an existing automation rule.
-    pub async fn update_case_automation_rule(
-        &self,
-        project_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::AutomationRuleUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AutomationRuleResponse,
-        datadog::Error<UpdateCaseAutomationRuleError>,
-    > {
-        match self
-            .update_case_automation_rule_with_http_info(project_id, rule_id, body)
-            .await
-        {
+    pub async fn update_case_automation_rule(&self, project_id: String, rule_id: String, body: crate::datadogV2::model::AutomationRuleUpdateRequest) -> Result<crate::datadogV2::model::AutomationRuleResponse, datadog::Error<UpdateCaseAutomationRuleError>> {
+        match self.update_case_automation_rule_with_http_info(project_id, rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the trigger, action, name, or state of an existing automation rule.
-    pub async fn update_case_automation_rule_with_http_info(
-        &self,
-        project_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::AutomationRuleUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>,
-        datadog::Error<UpdateCaseAutomationRuleError>,
-    > {
+    pub async fn update_case_automation_rule_with_http_info(&self, project_id: String, rule_id: String, body: crate::datadogV2::model::AutomationRuleUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AutomationRuleResponse>, datadog::Error<UpdateCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_automation_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7316,23 +6460,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7340,7 +6477,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7350,7 +6490,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7372,7 +6515,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7389,71 +6532,56 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AutomationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseAutomationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseAutomationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the text content of an existing comment on a work item timeline. The comment is identified by its cell ID.
-    pub async fn update_case_comment(
-        &self,
-        case_id: String,
-        cell_id: String,
-        body: crate::datadogV2::model::CaseUpdateCommentRequest,
-    ) -> Result<(), datadog::Error<UpdateCaseCommentError>> {
-        match self
-            .update_case_comment_with_http_info(case_id, cell_id, body)
-            .await
-        {
+    pub async fn update_case_comment(&self, case_id: String, cell_id: String, body: crate::datadogV2::model::CaseUpdateCommentRequest) -> Result<(), datadog::Error<UpdateCaseCommentError>> {
+        match self.update_case_comment_with_http_info(case_id, cell_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the text content of an existing comment on a work item timeline. The comment is identified by its cell ID.
-    pub async fn update_case_comment_with_http_info(
-        &self,
-        case_id: String,
-        cell_id: String,
-        body: crate::datadogV2::model::CaseUpdateCommentRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateCaseCommentError>> {
+    pub async fn update_case_comment_with_http_info(&self, case_id: String, cell_id: String, body: crate::datadogV2::model::CaseUpdateCommentRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateCaseCommentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_comment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment/{cell_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            cell_id = datadog::urlencode(cell_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , cell_id=
+            datadog::urlencode(cell_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7466,23 +6594,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7490,7 +6611,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7500,7 +6624,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7522,7 +6649,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7545,70 +6672,53 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateCaseCommentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseCommentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item custom attribute
-    pub async fn update_case_custom_attribute(
-        &self,
-        case_id: String,
-        custom_attribute_key: String,
-        body: crate::datadogV2::model::CaseUpdateCustomAttributeRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseCustomAttributeError>>
-    {
-        match self
-            .update_case_custom_attribute_with_http_info(case_id, custom_attribute_key, body)
-            .await
-        {
+    pub async fn update_case_custom_attribute(&self, case_id: String, custom_attribute_key: String, body: crate::datadogV2::model::CaseUpdateCustomAttributeRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseCustomAttributeError>> {
+        match self.update_case_custom_attribute_with_http_info(case_id, custom_attribute_key, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item custom attribute
-    pub async fn update_case_custom_attribute_with_http_info(
-        &self,
-        case_id: String,
-        custom_attribute_key: String,
-        body: crate::datadogV2::model::CaseUpdateCustomAttributeRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateCaseCustomAttributeError>,
-    > {
+    pub async fn update_case_custom_attribute_with_http_info(&self, case_id: String, custom_attribute_key: String, body: crate::datadogV2::model::CaseUpdateCustomAttributeRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateCaseCustomAttributeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_custom_attribute";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/custom_attributes/{custom_attribute_key}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            custom_attribute_key = datadog::urlencode(custom_attribute_key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , custom_attribute_key=
+            datadog::urlencode(custom_attribute_key)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7621,23 +6731,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7645,7 +6748,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7655,7 +6761,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7677,7 +6786,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7695,77 +6804,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseCustomAttributeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseCustomAttributeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item description
-    pub async fn update_case_description(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateDescriptionRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseDescriptionError>>
-    {
-        match self
-            .update_case_description_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn update_case_description(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateDescriptionRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseDescriptionError>> {
+        match self.update_case_description_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item description
-    pub async fn update_case_description_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateDescriptionRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateCaseDescriptionError>,
-    > {
+    pub async fn update_case_description_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateDescriptionRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateCaseDescriptionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_description";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/description",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7778,23 +6869,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7802,7 +6886,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7812,7 +6899,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7834,7 +6924,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7852,76 +6942,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseDescriptionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseDescriptionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Sets or updates the due date for a work item. The due date is a calendar date (without a time component) indicating when the work item should be resolved.
-    pub async fn update_case_due_date(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateDueDateRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseDueDateError>> {
-        match self
-            .update_case_due_date_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn update_case_due_date(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateDueDateRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseDueDateError>> {
+        match self.update_case_due_date_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Sets or updates the due date for a work item. The due date is a calendar date (without a time component) indicating when the work item should be resolved.
-    pub async fn update_case_due_date_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateDueDateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateCaseDueDateError>,
-    > {
+    pub async fn update_case_due_date_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateDueDateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateCaseDueDateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_due_date";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/due_date",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7934,23 +7007,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7958,7 +7024,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7968,7 +7037,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7990,7 +7062,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8008,77 +7080,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseDueDateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseDueDateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Sets the resolved reason for a security work item (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type work items.
-    pub async fn update_case_resolved_reason(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateResolvedReasonRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseResolvedReasonError>>
-    {
-        match self
-            .update_case_resolved_reason_with_http_info(case_id, body)
-            .await
-        {
+    pub async fn update_case_resolved_reason(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateResolvedReasonRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseResolvedReasonError>> {
+        match self.update_case_resolved_reason_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Sets the resolved reason for a security work item (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type work items.
-    pub async fn update_case_resolved_reason_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateResolvedReasonRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateCaseResolvedReasonError>,
-    > {
+    pub async fn update_case_resolved_reason_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateResolvedReasonRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateCaseResolvedReasonError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_resolved_reason";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/resolved_reason",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8091,23 +7145,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8115,7 +7162,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8125,7 +7175,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8147,7 +7200,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8165,73 +7218,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseResolvedReasonError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseResolvedReasonError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item title
-    pub async fn update_case_title(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateTitleRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseTitleError>> {
+    pub async fn update_case_title(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateTitleRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateCaseTitleError>> {
         match self.update_case_title_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item title
-    pub async fn update_case_title_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateTitleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateCaseTitleError>,
-    > {
+    pub async fn update_case_title_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateTitleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateCaseTitleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_title";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/title",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8244,23 +7283,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8268,7 +7300,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8278,7 +7313,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8300,7 +7338,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8318,74 +7356,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseTitleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseTitleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the name or query of an existing work item view.
-    pub async fn update_case_view(
-        &self,
-        view_id: String,
-        body: crate::datadogV2::model::CaseViewUpdateRequest,
-    ) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<UpdateCaseViewError>>
-    {
+    pub async fn update_case_view(&self, view_id: String, body: crate::datadogV2::model::CaseViewUpdateRequest) -> Result<crate::datadogV2::model::CaseViewResponse, datadog::Error<UpdateCaseViewError>> {
         match self.update_case_view_with_http_info(view_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the name or query of an existing work item view.
-    pub async fn update_case_view_with_http_info(
-        &self,
-        view_id: String,
-        body: crate::datadogV2::model::CaseViewUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>,
-        datadog::Error<UpdateCaseViewError>,
-    > {
+    pub async fn update_case_view_with_http_info(&self, view_id: String, body: crate::datadogV2::model::CaseViewUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseViewResponse>, datadog::Error<UpdateCaseViewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_case_view";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            view_id = datadog::urlencode(view_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), view_id=
+            datadog::urlencode(view_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8398,23 +7421,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8422,7 +7438,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8432,7 +7451,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8454,7 +7476,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8471,81 +7493,60 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CaseViewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCaseViewError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCaseViewError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the name, query, start time, or end time of an existing maintenance window.
-    pub async fn update_maintenance_window(
-        &self,
-        maintenance_window_id: String,
-        body: crate::datadogV2::model::MaintenanceWindowUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::MaintenanceWindowResponse,
-        datadog::Error<UpdateMaintenanceWindowError>,
-    > {
-        match self
-            .update_maintenance_window_with_http_info(maintenance_window_id, body)
-            .await
-        {
+    pub async fn update_maintenance_window(&self, maintenance_window_id: String, body: crate::datadogV2::model::MaintenanceWindowUpdateRequest) -> Result<crate::datadogV2::model::MaintenanceWindowResponse, datadog::Error<UpdateMaintenanceWindowError>> {
+        match self.update_maintenance_window_with_http_info(maintenance_window_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the name, query, start time, or end time of an existing maintenance window.
-    pub async fn update_maintenance_window_with_http_info(
-        &self,
-        maintenance_window_id: String,
-        body: crate::datadogV2::model::MaintenanceWindowUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowResponse>,
-        datadog::Error<UpdateMaintenanceWindowError>,
-    > {
+    pub async fn update_maintenance_window_with_http_info(&self, maintenance_window_id: String, body: crate::datadogV2::model::MaintenanceWindowUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::MaintenanceWindowResponse>, datadog::Error<UpdateMaintenanceWindowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_maintenance_window";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows/{maintenance_window_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            maintenance_window_id = datadog::urlencode(maintenance_window_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), maintenance_window_id=
+            datadog::urlencode(maintenance_window_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8558,23 +7559,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8582,7 +7576,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8592,7 +7589,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8614,7 +7614,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8631,76 +7631,60 @@ impl CaseManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceWindowResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateMaintenanceWindowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateMaintenanceWindowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item priority
-    pub async fn update_priority(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdatePriorityRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdatePriorityError>> {
+    pub async fn update_priority(&self, case_id: String, body: crate::datadogV2::model::CaseUpdatePriorityRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdatePriorityError>> {
         match self.update_priority_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item priority
-    pub async fn update_priority_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdatePriorityRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdatePriorityError>,
-    > {
+    pub async fn update_priority_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdatePriorityRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdatePriorityError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_priority";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/priority",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8713,23 +7697,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8737,7 +7714,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8747,7 +7727,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8769,7 +7752,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8787,73 +7770,59 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdatePriorityError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdatePriorityError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a project.
-    pub async fn update_project(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::ProjectUpdateRequest,
-    ) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<UpdateProjectError>> {
+    pub async fn update_project(&self, project_id: String, body: crate::datadogV2::model::ProjectUpdateRequest) -> Result<crate::datadogV2::model::ProjectResponse, datadog::Error<UpdateProjectError>> {
         match self.update_project_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a project.
-    pub async fn update_project_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::ProjectUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>,
-        datadog::Error<UpdateProjectError>,
-    > {
+    pub async fn update_project_with_http_info(&self, project_id: String, body: crate::datadogV2::model::ProjectUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProjectResponse>, datadog::Error<UpdateProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_project";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8866,23 +7835,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8890,7 +7852,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8900,7 +7865,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8922,7 +7890,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8940,69 +7908,55 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::ProjectResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a notification rule.
-    pub async fn update_project_notification_rule(
-        &self,
-        project_id: String,
-        notification_rule_id: String,
-        body: crate::datadogV2::model::CaseNotificationRuleUpdateRequest,
-    ) -> Result<(), datadog::Error<UpdateProjectNotificationRuleError>> {
-        match self
-            .update_project_notification_rule_with_http_info(project_id, notification_rule_id, body)
-            .await
-        {
+    pub async fn update_project_notification_rule(&self, project_id: String, notification_rule_id: String, body: crate::datadogV2::model::CaseNotificationRuleUpdateRequest) -> Result<(), datadog::Error<UpdateProjectNotificationRuleError>> {
+        match self.update_project_notification_rule_with_http_info(project_id, notification_rule_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a notification rule.
-    pub async fn update_project_notification_rule_with_http_info(
-        &self,
-        project_id: String,
-        notification_rule_id: String,
-        body: crate::datadogV2::model::CaseNotificationRuleUpdateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateProjectNotificationRuleError>>
-    {
+    pub async fn update_project_notification_rule_with_http_info(&self, project_id: String, notification_rule_id: String, body: crate::datadogV2::model::CaseNotificationRuleUpdateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateProjectNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_project_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules/{notification_rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            notification_rule_id = datadog::urlencode(notification_rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , notification_rule_id=
+            datadog::urlencode(notification_rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9015,23 +7969,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9039,7 +7986,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9049,7 +7999,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9071,7 +8024,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9094,63 +8047,51 @@ impl CaseManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateProjectNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateProjectNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update work item status
-    pub async fn update_status(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateStatusRequest,
-    ) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateStatusError>> {
+    pub async fn update_status(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateStatusRequest) -> Result<crate::datadogV2::model::CaseResponse, datadog::Error<UpdateStatusError>> {
         match self.update_status_with_http_info(case_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update work item status
-    pub async fn update_status_with_http_info(
-        &self,
-        case_id: String,
-        body: crate::datadogV2::model::CaseUpdateStatusRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CaseResponse>,
-        datadog::Error<UpdateStatusError>,
-    > {
+    pub async fn update_status_with_http_info(&self, case_id: String, body: crate::datadogV2::model::CaseUpdateStatusRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CaseResponse>, datadog::Error<UpdateStatusError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_status";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/status",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9163,23 +8104,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9187,7 +8121,10 @@ impl CaseManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9197,7 +8134,10 @@ impl CaseManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9219,7 +8159,7 @@ impl CaseManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9237,61 +8177,54 @@ impl CaseManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::CaseResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateStatusError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Adds a user (identified by their UUID) as a watcher of a work item. The user receives notifications about subsequent updates to the work item.
-    pub async fn watch_case(
-        &self,
-        case_id: String,
-        user_uuid: String,
-    ) -> Result<(), datadog::Error<WatchCaseError>> {
+    pub async fn watch_case(&self, case_id: String, user_uuid: String) -> Result<(), datadog::Error<WatchCaseError>> {
         match self.watch_case_with_http_info(case_id, user_uuid).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Adds a user (identified by their UUID) as a watcher of a work item. The user receives notifications about subsequent updates to the work item.
-    pub async fn watch_case_with_http_info(
-        &self,
-        case_id: String,
-        user_uuid: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<WatchCaseError>> {
+    pub async fn watch_case_with_http_info(&self, case_id: String, user_uuid: String) -> Result<datadog::ResponseContent<()>, datadog::Error<WatchCaseError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.watch_case";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers/{user_uuid}",
-            local_configuration.get_operation_host(local_operation_id),
-            case_id = datadog::urlencode(case_id),
-            user_uuid = datadog::urlencode(user_uuid)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), case_id=
+            datadog::urlencode(case_id)
+            , user_uuid=
+            datadog::urlencode(user_uuid)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9304,22 +8237,16 @@ impl CaseManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9338,11 +8265,7 @@ impl CaseManagementAPI {
             })
         } else {
             let local_entity: Option<WatchCaseError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

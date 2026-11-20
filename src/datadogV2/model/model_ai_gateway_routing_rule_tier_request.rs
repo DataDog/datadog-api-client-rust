@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Routing fallback tier used to create or replace a rule.
 #[non_exhaustive]
@@ -12,18 +12,10 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleTierRequest {
     /// Decision model and settings for a classified tier. Omission preserves the saved classifier; null clears it. Newly selected models require provider View.
-    #[serde(
-        rename = "classifier",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "classifier", default, with = "::serde_with::rust::double_option")]
     pub classifier: Option<Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>>,
     /// How a tier orders its targets. Omission preserves the saved same-position tier on update; null resets to configured. New tiers default to configured. The weighted_affinity ordering distributes first-choice assignments by relative target weights and accepts only model targets with an explicit provider, without repeated provider and model pairs in the same tier. The `classified` ordering is allowed only in the first tier and requires a classifier, destination rubrics, and one default destination. Its targets are model targets that each name one provider, not "*". Besides the default, it needs 1 to 9 destinations, each with a different rubric. Classified routing is in Preview: saving a classified tier returns 403 Forbidden unless the feature is enabled for the organization.
-    #[serde(
-        rename = "ordering",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "ordering", default, with = "::serde_with::rust::double_option")]
     pub ordering: Option<Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>>,
     #[serde(rename = "targets")]
     pub targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
@@ -31,13 +23,11 @@ pub struct AiGatewayRoutingRuleTierRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRoutingRuleTierRequest {
-    pub fn new(
-        targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
-    ) -> AiGatewayRoutingRuleTierRequest {
+    pub fn new(targets: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>) -> AiGatewayRoutingRuleTierRequest {
         AiGatewayRoutingRuleTierRequest {
             classifier: None,
             ordering: None,
@@ -46,31 +36,24 @@ impl AiGatewayRoutingRuleTierRequest {
             _unparsed: false,
         }
     }
-
-    pub fn classifier(
-        mut self,
-        value: Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>,
-    ) -> Self {
+    
+    pub fn classifier(mut self, value: Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>) -> Self {
         self.classifier = Some(value);
         self
     }
-
-    pub fn ordering(
-        mut self,
-        value: Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>,
-    ) -> Self {
+    
+    pub fn ordering(mut self, value: Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>) -> Self {
         self.ordering = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -89,26 +72,17 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut classifier: Option<
-                    Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>,
-                > = None;
-                let mut ordering: Option<
-                    Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>,
-                > = None;
-                let mut targets: Option<
-                    Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut classifier: Option<Option<crate::datadogV2::model::AiGatewayRoutingClassifierRequest>> = None;
+                let mut ordering: Option<Option<crate::datadogV2::model::AiGatewayNullableRoutingRuleTierOrdering>> = None;
+                let mut targets: Option<Vec<crate::datadogV2::model::AiGatewayRoutingRuleTargetRequest>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "classifier" => {
                             classifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ordering" => {
                             ordering = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _ordering) = ordering {
@@ -119,15 +93,15 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleTierRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "targets" => {
                             targets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let targets = targets.ok_or_else(|| M::Error::missing_field("targets"))?;

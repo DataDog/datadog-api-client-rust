@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SBOMComponentType {
-    APPLICATION,
-    CONTAINER,
-    DATA,
-    DEVICE,
-    DEVICE_DRIVER,
-    FILE,
-    FIRMWARE,
-    FRAMEWORK,
-    LIBRARY,
-    MACHINE_LEARNING_MODEL,
-    OPERATING_SYSTEM,
-    PLATFORM,
+	APPLICATION,
+	CONTAINER,
+	DATA,
+	DEVICE,
+	DEVICE_DRIVER,
+	FILE,
+	FIRMWARE,
+	FRAMEWORK,
+	LIBRARY,
+	MACHINE_LEARNING_MODEL,
+	OPERATING_SYSTEM,
+	PLATFORM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -60,22 +61,8 @@ impl<'de> Deserialize<'de> for SBOMComponentType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "application" => Self::APPLICATION,
-            "container" => Self::CONTAINER,
-            "data" => Self::DATA,
-            "device" => Self::DEVICE,
-            "device-driver" => Self::DEVICE_DRIVER,
-            "file" => Self::FILE,
-            "firmware" => Self::FIRMWARE,
-            "framework" => Self::FRAMEWORK,
-            "library" => Self::LIBRARY,
-            "machine-learning-model" => Self::MACHINE_LEARNING_MODEL,
-            "operating-system" => Self::OPERATING_SYSTEM,
-            "platform" => Self::PLATFORM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"application" => Self::APPLICATION,"container" => Self::CONTAINER,"data" => Self::DATA,"device" => Self::DEVICE,"device-driver" => Self::DEVICE_DRIVER,"file" => Self::FILE,"firmware" => Self::FIRMWARE,"framework" => Self::FRAMEWORK,"library" => Self::LIBRARY,"machine-learning-model" => Self::MACHINE_LEARNING_MODEL,"operating-system" => Self::OPERATING_SYSTEM,"platform" => Self::PLATFORM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

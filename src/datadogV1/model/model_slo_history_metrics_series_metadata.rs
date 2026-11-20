@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query metadata.
 #[non_exhaustive]
@@ -12,36 +12,35 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOHistoryMetricsSeriesMetadata {
     /// Query aggregator function.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "aggr")]
     pub aggr: Option<String>,
     /// Query expression.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "expression")]
     pub expression: Option<String>,
     /// Query metric used.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "metric")]
     pub metric: Option<String>,
     /// Query index from original combined query.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "query_index")]
     pub query_index: Option<i64>,
     /// Query scope.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "scope")]
     pub scope: Option<String>,
     /// An array of metric units that contains up to two unit objects.
-    /// For example, bytes represents one unit object and bytes per second represents two unit objects.
-    /// If a metric query only has one unit object, the second array element is null.
+/// For example, bytes represents one unit object and bytes per second represents two unit objects.
+/// If a metric query only has one unit object, the second array element is null.
     #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
-    pub unit:
-        Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>>,
+    pub unit: Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SLOHistoryMetricsSeriesMetadata {
@@ -58,54 +57,49 @@ impl SLOHistoryMetricsSeriesMetadata {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn aggr(mut self, value: String) -> Self {
         self.aggr = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn query_index(mut self, value: i64) -> Self {
         self.query_index = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn unit(
-        mut self,
-        value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>,
-    ) -> Self {
+    pub fn unit(mut self, value: Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>) -> Self {
         self.unit = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SLOHistoryMetricsSeriesMetadata {
     fn default() -> Self {
@@ -135,15 +129,8 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                 let mut metric: Option<String> = None;
                 let mut query_index: Option<i64> = None;
                 let mut scope: Option<String> = None;
-                let mut unit: Option<
-                    Option<
-                        Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>,
-                    >,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut unit: Option<Option<Vec<Option<crate::datadogV1::model::SLOHistoryMetricsSeriesMetadataUnit>>>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -153,40 +140,39 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeriesMetadata {
                                 continue;
                             }
                             aggr = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "expression" => {
                             if v.is_null() {
                                 continue;
                             }
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query_index" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_index =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "unit" => {
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// GitHub Actions OIDC claims to match against. Each field is a regular expression.
 /// The `sub` claim is required; all other claims are optional. A token matches only when
@@ -59,8 +59,8 @@ pub struct GitHubOIDCClaimPatterns {
     #[serde(rename = "runner_environment")]
     pub runner_environment: Option<String>,
     /// Regular expression matched against the entire `sub` (subject) claim, the primary GitHub Actions OIDC
-    /// identifier (for example, `repo:<OWNER>/<REPO>:ref:refs/heads/main`). The pattern must begin with
-    /// `repo:<OWNER>/`, where `<OWNER>` is a literal repository-owner name rather than a regular expression.
+/// identifier (for example, `repo:<OWNER>/<REPO>:ref:refs/heads/main`). The pattern must begin with
+/// `repo:<OWNER>/`, where `<OWNER>` is a literal repository-owner name rather than a regular expression.
     #[serde(rename = "sub")]
     pub sub: String,
     /// Regular expression matched against the `workflow` claim.
@@ -71,7 +71,7 @@ pub struct GitHubOIDCClaimPatterns {
     pub workflow_ref: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GitHubOIDCClaimPatterns {
@@ -98,92 +98,95 @@ impl GitHubOIDCClaimPatterns {
             _unparsed: false,
         }
     }
-
+    
     pub fn actor(mut self, value: String) -> Self {
         self.actor = Some(value);
         self
     }
-
+    
     pub fn actor_id(mut self, value: String) -> Self {
         self.actor_id = Some(value);
         self
     }
-
+    
     pub fn enterprise(mut self, value: String) -> Self {
         self.enterprise = Some(value);
         self
     }
-
+    
     pub fn enterprise_id(mut self, value: String) -> Self {
         self.enterprise_id = Some(value);
         self
     }
-
+    
     pub fn environment(mut self, value: String) -> Self {
         self.environment = Some(value);
         self
     }
-
+    
     pub fn event_name(mut self, value: String) -> Self {
         self.event_name = Some(value);
         self
     }
-
+    
     pub fn job_workflow_ref(mut self, value: String) -> Self {
         self.job_workflow_ref = Some(value);
         self
     }
-
+    
     pub fn ref_(mut self, value: String) -> Self {
         self.ref_ = Some(value);
         self
     }
-
+    
     pub fn ref_type(mut self, value: String) -> Self {
         self.ref_type = Some(value);
         self
     }
-
+    
     pub fn repository(mut self, value: String) -> Self {
         self.repository = Some(value);
         self
     }
-
+    
     pub fn repository_id(mut self, value: String) -> Self {
         self.repository_id = Some(value);
         self
     }
-
+    
     pub fn repository_owner(mut self, value: String) -> Self {
         self.repository_owner = Some(value);
         self
     }
-
+    
     pub fn repository_owner_id(mut self, value: String) -> Self {
         self.repository_owner_id = Some(value);
         self
     }
-
+    
     pub fn repository_visibility(mut self, value: String) -> Self {
         self.repository_visibility = Some(value);
         self
     }
-
+    
     pub fn runner_environment(mut self, value: String) -> Self {
         self.runner_environment = Some(value);
         self
     }
-
+    
     pub fn workflow(mut self, value: String) -> Self {
         self.workflow = Some(value);
         self
     }
-
+    
     pub fn workflow_ref(mut self, value: String) -> Self {
         self.workflow_ref = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for GitHubOIDCClaimPatterns {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -229,120 +232,109 @@ impl<'de> Deserialize<'de> for GitHubOIDCClaimPatterns {
                                 continue;
                             }
                             actor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "actor_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             actor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enterprise" => {
                             if v.is_null() {
                                 continue;
                             }
                             enterprise = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enterprise_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enterprise_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enterprise_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "environment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            environment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             event_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "job_workflow_ref" => {
                             if v.is_null() {
                                 continue;
                             }
-                            job_workflow_ref =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            job_workflow_ref = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ref" => {
                             if v.is_null() {
                                 continue;
                             }
                             ref_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ref_type" => {
                             if v.is_null() {
                                 continue;
                             }
                             ref_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "repository" => {
                             if v.is_null() {
                                 continue;
                             }
                             repository = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "repository_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "repository_owner" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_owner =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_owner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "repository_owner_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_owner_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_owner_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "repository_visibility" => {
                             if v.is_null() {
                                 continue;
                             }
-                            repository_visibility =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            repository_visibility = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "runner_environment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            runner_environment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            runner_environment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sub" => {
                             sub = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "workflow" => {
                             if v.is_null() {
                                 continue;
                             }
                             workflow = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "workflow_ref" => {
                             if v.is_null() {
                                 continue;
                             }
-                            workflow_ref =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workflow_ref = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let sub = sub.ok_or_else(|| M::Error::missing_field("sub"))?;

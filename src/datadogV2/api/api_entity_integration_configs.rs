@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// DeleteEntityIntegrationConfigError is a struct for typed errors of method [`EntityIntegrationConfigsAPI::delete_entity_integration_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -20,6 +20,7 @@ pub enum DeleteEntityIntegrationConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetEntityIntegrationConfigError is a struct for typed errors of method [`EntityIntegrationConfigsAPI::get_entity_integration_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -29,6 +30,7 @@ pub enum GetEntityIntegrationConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateEntityIntegrationConfigError is a struct for typed errors of method [`EntityIntegrationConfigsAPI::update_entity_integration_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -37,6 +39,7 @@ pub enum UpdateEntityIntegrationConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage per-integration configurations for the Internal Developer Portal (IDP). These configurations control which external resources (for example, GitHub repositories, Jira projects, or PagerDuty services) are synced as entities into the Software Catalog.
 #[derive(Debug, Clone)]
@@ -60,7 +63,8 @@ impl EntityIntegrationConfigsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -105,33 +109,23 @@ impl EntityIntegrationConfigsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete the configuration stored for a given integration in the caller's organization.
-    pub async fn delete_entity_integration_config(
-        &self,
-        integration_id: String,
-    ) -> Result<(), datadog::Error<DeleteEntityIntegrationConfigError>> {
-        match self
-            .delete_entity_integration_config_with_http_info(integration_id)
-            .await
-        {
+    pub async fn delete_entity_integration_config(&self, integration_id: String) -> Result<(), datadog::Error<DeleteEntityIntegrationConfigError>> {
+        match self.delete_entity_integration_config_with_http_info(integration_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the configuration stored for a given integration in the caller's organization.
-    pub async fn delete_entity_integration_config_with_http_info(
-        &self,
-        integration_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteEntityIntegrationConfigError>>
-    {
+    pub async fn delete_entity_integration_config_with_http_info(&self, integration_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteEntityIntegrationConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_entity_integration_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -143,19 +137,24 @@ impl EntityIntegrationConfigsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_id = datadog::urlencode(integration_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_id=
+            datadog::urlencode(integration_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -168,22 +167,16 @@ impl EntityIntegrationConfigsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -201,50 +194,29 @@ impl EntityIntegrationConfigsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteEntityIntegrationConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteEntityIntegrationConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the configuration currently stored for a given integration in the caller's organization.
-    pub async fn get_entity_integration_config(
-        &self,
-        integration_id: String,
-    ) -> Result<
-        crate::datadogV2::model::EntityIntegrationConfigResponse,
-        datadog::Error<GetEntityIntegrationConfigError>,
-    > {
-        match self
-            .get_entity_integration_config_with_http_info(integration_id)
-            .await
-        {
+    pub async fn get_entity_integration_config(&self, integration_id: String) -> Result<crate::datadogV2::model::EntityIntegrationConfigResponse, datadog::Error<GetEntityIntegrationConfigError>> {
+        match self.get_entity_integration_config_with_http_info(integration_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the configuration currently stored for a given integration in the caller's organization.
-    pub async fn get_entity_integration_config_with_http_info(
-        &self,
-        integration_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EntityIntegrationConfigResponse>,
-        datadog::Error<GetEntityIntegrationConfigError>,
-    > {
+    pub async fn get_entity_integration_config_with_http_info(&self, integration_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::EntityIntegrationConfigResponse>, datadog::Error<GetEntityIntegrationConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_entity_integration_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -256,19 +228,24 @@ impl EntityIntegrationConfigsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_id = datadog::urlencode(integration_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_id=
+            datadog::urlencode(integration_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -281,22 +258,16 @@ impl EntityIntegrationConfigsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -308,73 +279,46 @@ impl EntityIntegrationConfigsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EntityIntegrationConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EntityIntegrationConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetEntityIntegrationConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetEntityIntegrationConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or replace the configuration for a given integration in the caller's organization. The shape of `data.attributes.config` depends on the integration:
-    ///
-    /// - For `github`: `config` must contain an `enabled_repos` array of objects with `hostname`, `github_org_name`, and `repo_name`.
-    /// - For `jira`: `config` must contain an `enabled_projects` array of objects with `hostname`, `account_id`, and `project_key`.
-    /// - For `pagerduty`: `config` must contain an `accounts` array of objects with a required `enabled` boolean and an optional `subdomain` string.
-    pub async fn update_entity_integration_config(
-        &self,
-        integration_id: String,
-        body: crate::datadogV2::model::EntityIntegrationConfigRequest,
-    ) -> Result<
-        crate::datadogV2::model::EntityIntegrationConfigResponse,
-        datadog::Error<UpdateEntityIntegrationConfigError>,
-    > {
-        match self
-            .update_entity_integration_config_with_http_info(integration_id, body)
-            .await
-        {
+///
+/// - For `github`: `config` must contain an `enabled_repos` array of objects with `hostname`, `github_org_name`, and `repo_name`.
+/// - For `jira`: `config` must contain an `enabled_projects` array of objects with `hostname`, `account_id`, and `project_key`.
+/// - For `pagerduty`: `config` must contain an `accounts` array of objects with a required `enabled` boolean and an optional `subdomain` string.
+    pub async fn update_entity_integration_config(&self, integration_id: String, body: crate::datadogV2::model::EntityIntegrationConfigRequest) -> Result<crate::datadogV2::model::EntityIntegrationConfigResponse, datadog::Error<UpdateEntityIntegrationConfigError>> {
+        match self.update_entity_integration_config_with_http_info(integration_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or replace the configuration for a given integration in the caller's organization. The shape of `data.attributes.config` depends on the integration:
-    ///
-    /// - For `github`: `config` must contain an `enabled_repos` array of objects with `hostname`, `github_org_name`, and `repo_name`.
-    /// - For `jira`: `config` must contain an `enabled_projects` array of objects with `hostname`, `account_id`, and `project_key`.
-    /// - For `pagerduty`: `config` must contain an `accounts` array of objects with a required `enabled` boolean and an optional `subdomain` string.
-    pub async fn update_entity_integration_config_with_http_info(
-        &self,
-        integration_id: String,
-        body: crate::datadogV2::model::EntityIntegrationConfigRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EntityIntegrationConfigResponse>,
-        datadog::Error<UpdateEntityIntegrationConfigError>,
-    > {
+///
+/// - For `github`: `config` must contain an `enabled_repos` array of objects with `hostname`, `github_org_name`, and `repo_name`.
+/// - For `jira`: `config` must contain an `enabled_projects` array of objects with `hostname`, `account_id`, and `project_key`.
+/// - For `pagerduty`: `config` must contain an `accounts` array of objects with a required `enabled` boolean and an optional `subdomain` string.
+    pub async fn update_entity_integration_config_with_http_info(&self, integration_id: String, body: crate::datadogV2::model::EntityIntegrationConfigRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::EntityIntegrationConfigResponse>, datadog::Error<UpdateEntityIntegrationConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_entity_integration_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -386,20 +330,25 @@ impl EntityIntegrationConfigsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            integration_id = datadog::urlencode(integration_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration_id=
+            datadog::urlencode(integration_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -412,23 +361,16 @@ impl EntityIntegrationConfigsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -436,7 +378,10 @@ impl EntityIntegrationConfigsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -446,7 +391,10 @@ impl EntityIntegrationConfigsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -468,7 +416,7 @@ impl EntityIntegrationConfigsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -485,26 +433,17 @@ impl EntityIntegrationConfigsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EntityIntegrationConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EntityIntegrationConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateEntityIntegrationConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateEntityIntegrationConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

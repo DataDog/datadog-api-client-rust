@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A backfilled maintenance update entry.
 #[non_exhaustive]
@@ -13,9 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
     /// The components affected.
     #[serde(rename = "components_affected")]
-    pub components_affected: Option<
-        Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>,
-    >,
+    pub components_affected: Option<Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>>,
     /// A description of the update.
     #[serde(rename = "description")]
     pub description: String,
@@ -29,15 +27,11 @@ pub struct CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
-    pub fn new(
-        description: String,
-        started_at: chrono::DateTime<chrono::Utc>,
-        status: crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItemsStatus,
-    ) -> CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
+    pub fn new(description: String, started_at: chrono::DateTime<chrono::Utc>, status: crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItemsStatus) -> CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
         CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
             components_affected: None,
             description,
@@ -47,25 +41,19 @@ impl CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
             _unparsed: false,
         }
     }
-
-    pub fn components_affected(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
-        >,
-    ) -> Self {
+    
+    pub fn components_affected(mut self, value: Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>) -> Self {
         self.components_affected = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -88,10 +76,7 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
                 let mut description: Option<String> = None;
                 let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItemsStatus> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,16 +85,14 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
                             if v.is_null() {
                                 continue;
                             }
-                            components_affected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            components_affected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "started_at" => {
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -120,16 +103,15 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
@@ -146,7 +128,6 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
             }
         }
 
-        deserializer
-            .deserialize_any(CreateBackfilledMaintenanceRequestDataAttributesUpdatesItemsVisitor)
+        deserializer.deserialize_any(CreateBackfilledMaintenanceRequestDataAttributesUpdatesItemsVisitor)
     }
 }

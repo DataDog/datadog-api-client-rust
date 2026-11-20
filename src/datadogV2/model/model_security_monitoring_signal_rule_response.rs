@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Rule.
 #[non_exhaustive]
@@ -78,7 +78,7 @@ pub struct SecurityMonitoringSignalRuleResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringSignalRuleResponse {
@@ -109,135 +109,118 @@ impl SecurityMonitoringSignalRuleResponse {
             _unparsed: false,
         }
     }
-
-    pub fn cases(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
-    ) -> Self {
+    
+    pub fn cases(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>) -> Self {
         self.cases = Some(value);
         self
     }
-
+    
     pub fn compatible_version(mut self, value: i64) -> Self {
         self.compatible_version = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: i64) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn creation_author_id(mut self, value: i64) -> Self {
         self.creation_author_id = Some(value);
         self
     }
-
+    
     pub fn custom_message(mut self, value: String) -> Self {
         self.custom_message = Some(value);
         self
     }
-
+    
     pub fn custom_name(mut self, value: String) -> Self {
         self.custom_name = Some(value);
         self
     }
-
+    
     pub fn deprecation_date(mut self, value: i64) -> Self {
         self.deprecation_date = Some(value);
         self
     }
-
-    pub fn filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> Self {
+    
+    pub fn filters(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn is_default(mut self, value: bool) -> Self {
         self.is_default = Some(value);
         self
     }
-
+    
     pub fn is_deleted(mut self, value: bool) -> Self {
         self.is_deleted = Some(value);
         self
     }
-
+    
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn options(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-    ) -> Self {
+    
+    pub fn options(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleOptions) -> Self {
         self.options = Some(value);
         self
     }
-
-    pub fn queries(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleResponseQuery>,
-    ) -> Self {
+    
+    pub fn queries(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleResponseQuery>) -> Self {
         self.queries = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSignalRuleType,
-    ) -> Self {
+    
+    pub fn type_(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalRuleType) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn update_author_id(mut self, value: i64) -> Self {
         self.update_author_id = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringSignalRuleResponse {
     fn default() -> Self {
@@ -262,16 +245,14 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
-                    None;
+                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> = None;
                 let mut compatible_version: Option<i64> = None;
                 let mut created_at: Option<i64> = None;
                 let mut creation_author_id: Option<i64> = None;
                 let mut custom_message: Option<String> = None;
                 let mut custom_name: Option<String> = None;
                 let mut deprecation_date: Option<i64> = None;
-                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
-                    None;
+                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> = None;
                 let mut has_extended_title: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut is_default: Option<bool> = None;
@@ -279,20 +260,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                 let mut is_enabled: Option<bool> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
-                    None;
-                let mut queries: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleResponseQuery>,
-                > = None;
+                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleResponseQuery>> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> =
-                    None;
+                let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> = None;
                 let mut update_author_id: Option<i64> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -302,115 +276,109 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                                 continue;
                             }
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "compatibleVersion" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compatible_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compatible_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "createdAt" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "creationAuthorId" => {
                             if v.is_null() {
                                 continue;
                             }
-                            creation_author_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            creation_author_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "customMessage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "customName" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "deprecationDate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            deprecation_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            deprecation_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hasExtendedTitle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_extended_title =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_extended_title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "isDefault" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "isDeleted" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_deleted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "isEnabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             if v.is_null() {
                                 continue;
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "queries" => {
                             if v.is_null() {
                                 continue;
                             }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -424,25 +392,24 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "updateAuthorId" => {
                             if v.is_null() {
                                 continue;
                             }
-                            update_author_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            update_author_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

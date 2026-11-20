@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a usage quota bulk write result. On success, quota fields are present as applicable, and pending fields are present only when a change is scheduled. On failure, only `error` is present and the other fields are omitted.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct UsageQuotaBulkResultAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageQuotaBulkResultAttributes {
@@ -53,50 +53,48 @@ impl UsageQuotaBulkResultAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn enforced(mut self, value: bool) -> Self {
         self.enforced = Some(value);
         self
     }
-
+    
     pub fn error(mut self, value: String) -> Self {
         self.error = Some(value);
         self
     }
-
+    
     pub fn org_public_id(mut self, value: String) -> Self {
         self.org_public_id = Some(value);
         self
     }
-
+    
     pub fn pending_effective_from(mut self, value: String) -> Self {
         self.pending_effective_from = Some(value);
         self
     }
-
+    
     pub fn pending_usage_limit(mut self, value: f64) -> Self {
         self.pending_usage_limit = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn usage_limit(mut self, value: f64) -> Self {
         self.usage_limit = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageQuotaBulkResultAttributes {
     fn default() -> Self {
@@ -128,10 +126,7 @@ impl<'de> Deserialize<'de> for UsageQuotaBulkResultAttributes {
                 let mut pending_usage_limit: Option<f64> = None;
                 let mut scope: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut usage_limit: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -141,52 +136,48 @@ impl<'de> Deserialize<'de> for UsageQuotaBulkResultAttributes {
                                 continue;
                             }
                             enforced = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error" => {
                             if v.is_null() {
                                 continue;
                             }
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_public_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_public_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            org_public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pending_effective_from" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pending_effective_from =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pending_effective_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pending_usage_limit" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            pending_usage_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pending_usage_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "usage_limit" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            usage_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            usage_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of the suppression rule.
 #[non_exhaustive]
@@ -60,7 +60,7 @@ pub struct SecurityMonitoringSuppressionAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringSuppressionAttributes {
@@ -85,90 +85,88 @@ impl SecurityMonitoringSuppressionAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn creation_date(mut self, value: i64) -> Self {
         self.creation_date = Some(value);
         self
     }
-
+    
     pub fn creator(mut self, value: crate::datadogV2::model::SecurityMonitoringUser) -> Self {
         self.creator = Some(value);
         self
     }
-
+    
     pub fn data_exclusion_query(mut self, value: String) -> Self {
         self.data_exclusion_query = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn editable(mut self, value: bool) -> Self {
         self.editable = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn expiration_date(mut self, value: i64) -> Self {
         self.expiration_date = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn rule_query(mut self, value: String) -> Self {
         self.rule_query = Some(value);
         self
     }
-
+    
     pub fn start_date(mut self, value: i64) -> Self {
         self.start_date = Some(value);
         self
     }
-
+    
     pub fn suppression_query(mut self, value: String) -> Self {
         self.suppression_query = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn update_date(mut self, value: i64) -> Self {
         self.update_date = Some(value);
         self
     }
-
+    
     pub fn updater(mut self, value: crate::datadogV2::model::SecurityMonitoringUser) -> Self {
         self.updater = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i32) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringSuppressionAttributes {
     fn default() -> Self {
@@ -208,10 +206,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                 let mut update_date: Option<i64> = None;
                 let mut updater: Option<crate::datadogV2::model::SecurityMonitoringUser> = None;
                 let mut version: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -220,103 +215,97 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            creation_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            creation_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "creator" => {
                             if v.is_null() {
                                 continue;
                             }
                             creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "data_exclusion_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_exclusion_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_exclusion_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "editable" => {
                             if v.is_null() {
                                 continue;
                             }
                             editable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "expiration_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            expiration_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expiration_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_query" => {
                             if v.is_null() {
                                 continue;
                             }
                             rule_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "suppression_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            suppression_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            suppression_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "update_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            update_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            update_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updater" => {
                             if v.is_null() {
                                 continue;
                             }
                             updater = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

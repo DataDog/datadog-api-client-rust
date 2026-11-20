@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of the `GCPServiceAccount` object.
 #[non_exhaustive]
@@ -24,15 +24,11 @@ pub struct GCPServiceAccount {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GCPServiceAccount {
-    pub fn new(
-        private_key: crate::datadogV2::model::GCPServiceAccountPrivateKey,
-        service_account_email: crate::datadogV2::model::GCPServiceAccountServiceAccountEmail,
-        type_: crate::datadogV2::model::GCPServiceAccountCredentialType,
-    ) -> GCPServiceAccount {
+    pub fn new(private_key: crate::datadogV2::model::GCPServiceAccountPrivateKey, service_account_email: crate::datadogV2::model::GCPServiceAccountServiceAccountEmail, type_: crate::datadogV2::model::GCPServiceAccountCredentialType) -> GCPServiceAccount {
         GCPServiceAccount {
             private_key,
             service_account_email,
@@ -41,15 +37,14 @@ impl GCPServiceAccount {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GCPServiceAccount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -68,24 +63,16 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
             where
                 M: MapAccess<'a>,
             {
-                let mut private_key: Option<crate::datadogV2::model::GCPServiceAccountPrivateKey> =
-                    None;
-                let mut service_account_email: Option<
-                    crate::datadogV2::model::GCPServiceAccountServiceAccountEmail,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::GCPServiceAccountCredentialType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut private_key: Option<crate::datadogV2::model::GCPServiceAccountPrivateKey> = None;
+                let mut service_account_email: Option<crate::datadogV2::model::GCPServiceAccountServiceAccountEmail> = None;
+                let mut type_: Option<crate::datadogV2::model::GCPServiceAccountCredentialType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "private_key" => {
-                            private_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            private_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _private_key) = private_key {
                                 match _private_key {
                                     crate::datadogV2::model::GCPServiceAccountPrivateKey::UnparsedObject(_private_key) => {
@@ -94,10 +81,9 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "service_account_email" => {
-                            service_account_email =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            service_account_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _service_account_email) = service_account_email {
                                 match _service_account_email {
                                     crate::datadogV2::model::GCPServiceAccountServiceAccountEmail::UnparsedObject(_service_account_email) => {
@@ -106,7 +92,7 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -117,18 +103,16 @@ impl<'de> Deserialize<'de> for GCPServiceAccount {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let private_key =
-                    private_key.ok_or_else(|| M::Error::missing_field("private_key"))?;
-                let service_account_email = service_account_email
-                    .ok_or_else(|| M::Error::missing_field("service_account_email"))?;
+                let private_key = private_key.ok_or_else(|| M::Error::missing_field("private_key"))?;
+                let service_account_email = service_account_email.ok_or_else(|| M::Error::missing_field("service_account_email"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GCPServiceAccount {

@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// DeleteRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::delete_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum DeleteRumQuotaConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::get_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -28,6 +29,7 @@ pub enum GetRumQuotaConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::upsert_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -36,6 +38,7 @@ pub enum UpsertRumQuotaConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage RUM retention quota configurations for your organization's RUM applications.
 #[derive(Debug, Clone)]
@@ -59,7 +62,8 @@ impl RUMRetentionQuotasAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -104,51 +108,46 @@ impl RUMRetentionQuotasAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete the RUM retention quota configuration for a given scope.
-    pub async fn delete_rum_quota_config(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-    ) -> Result<(), datadog::Error<DeleteRumQuotaConfigError>> {
-        match self
-            .delete_rum_quota_config_with_http_info(scope_type, scope_id)
-            .await
-        {
+    pub async fn delete_rum_quota_config(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String) -> Result<(), datadog::Error<DeleteRumQuotaConfigError>> {
+        match self.delete_rum_quota_config_with_http_info(scope_type, scope_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the RUM retention quota configuration for a given scope.
-    pub async fn delete_rum_quota_config_with_http_info(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumQuotaConfigError>> {
+    pub async fn delete_rum_quota_config_with_http_info(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumQuotaConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_quota_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/retention-quota/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            scope_type = datadog::urlencode(scope_type.to_string()),
-            scope_id = datadog::urlencode(scope_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), scope_type=
+            datadog::urlencode(scope_type.to_string())
+            , scope_id=
+            datadog::urlencode(scope_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -161,22 +160,16 @@ impl RUMRetentionQuotasAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -194,69 +187,52 @@ impl RUMRetentionQuotasAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumQuotaConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRumQuotaConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the RUM retention quota configuration for a given scope.
-    pub async fn get_rum_quota_config(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-    ) -> Result<
-        crate::datadogV2::model::RumRetentionQuotaConfigResponse,
-        datadog::Error<GetRumQuotaConfigError>,
-    > {
-        match self
-            .get_rum_quota_config_with_http_info(scope_type, scope_id)
-            .await
-        {
+    pub async fn get_rum_quota_config(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String) -> Result<crate::datadogV2::model::RumRetentionQuotaConfigResponse, datadog::Error<GetRumQuotaConfigError>> {
+        match self.get_rum_quota_config_with_http_info(scope_type, scope_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the RUM retention quota configuration for a given scope.
-    pub async fn get_rum_quota_config_with_http_info(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionQuotaConfigResponse>,
-        datadog::Error<GetRumQuotaConfigError>,
-    > {
+    pub async fn get_rum_quota_config_with_http_info(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumRetentionQuotaConfigResponse>, datadog::Error<GetRumQuotaConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_quota_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/retention-quota/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            scope_type = datadog::urlencode(scope_type.to_string()),
-            scope_id = datadog::urlencode(scope_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), scope_type=
+            datadog::urlencode(scope_type.to_string())
+            , scope_id=
+            datadog::urlencode(scope_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -269,22 +245,16 @@ impl RUMRetentionQuotasAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -296,87 +266,64 @@ impl RUMRetentionQuotasAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionQuotaConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumRetentionQuotaConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRumQuotaConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRumQuotaConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update the RUM retention quota configuration for a given scope.
-    /// Returns the retention quota configuration object when the request is successful.
-    pub async fn upsert_rum_quota_config(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-        body: crate::datadogV2::model::RumRetentionQuotaConfigUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RumRetentionQuotaConfigResponse,
-        datadog::Error<UpsertRumQuotaConfigError>,
-    > {
-        match self
-            .upsert_rum_quota_config_with_http_info(scope_type, scope_id, body)
-            .await
-        {
+/// Returns the retention quota configuration object when the request is successful.
+    pub async fn upsert_rum_quota_config(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String, body: crate::datadogV2::model::RumRetentionQuotaConfigUpdateRequest) -> Result<crate::datadogV2::model::RumRetentionQuotaConfigResponse, datadog::Error<UpsertRumQuotaConfigError>> {
+        match self.upsert_rum_quota_config_with_http_info(scope_type, scope_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update the RUM retention quota configuration for a given scope.
-    /// Returns the retention quota configuration object when the request is successful.
-    pub async fn upsert_rum_quota_config_with_http_info(
-        &self,
-        scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType,
-        scope_id: String,
-        body: crate::datadogV2::model::RumRetentionQuotaConfigUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionQuotaConfigResponse>,
-        datadog::Error<UpsertRumQuotaConfigError>,
-    > {
+/// Returns the retention quota configuration object when the request is successful.
+    pub async fn upsert_rum_quota_config_with_http_info(&self, scope_type: crate::datadogV2::model::RumRetentionQuotaScopeType, scope_id: String, body: crate::datadogV2::model::RumRetentionQuotaConfigUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumRetentionQuotaConfigResponse>, datadog::Error<UpsertRumQuotaConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_rum_quota_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/retention-quota/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            scope_type = datadog::urlencode(scope_type.to_string()),
-            scope_id = datadog::urlencode(scope_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), scope_type=
+            datadog::urlencode(scope_type.to_string())
+            , scope_id=
+            datadog::urlencode(scope_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -389,23 +336,16 @@ impl RUMRetentionQuotasAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -413,7 +353,10 @@ impl RUMRetentionQuotasAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -423,7 +366,10 @@ impl RUMRetentionQuotasAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -445,7 +391,7 @@ impl RUMRetentionQuotasAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -462,26 +408,17 @@ impl RUMRetentionQuotasAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionQuotaConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumRetentionQuotaConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertRumQuotaConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertRumQuotaConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

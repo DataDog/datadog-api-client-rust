@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Field synchronization properties for Jira integration.
 #[non_exhaustive]
@@ -19,12 +19,7 @@ pub struct IntegrationJiraSyncProperties {
     pub comments: Option<crate::datadogV2::model::SyncProperty>,
     /// Map of custom field identifiers to their sync configurations.
     #[serde(rename = "custom_fields")]
-    pub custom_fields: Option<
-        std::collections::BTreeMap<
-            String,
-            crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties,
-        >,
-    >,
+    pub custom_fields: Option<std::collections::BTreeMap<String, crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties>>,
     /// Sync property configuration.
     #[serde(rename = "description")]
     pub description: Option<crate::datadogV2::model::SyncProperty>,
@@ -44,7 +39,7 @@ pub struct IntegrationJiraSyncProperties {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IntegrationJiraSyncProperties {
@@ -62,61 +57,53 @@ impl IntegrationJiraSyncProperties {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignee(mut self, value: crate::datadogV2::model::SyncProperty) -> Self {
         self.assignee = Some(value);
         self
     }
-
+    
     pub fn comments(mut self, value: crate::datadogV2::model::SyncProperty) -> Self {
         self.comments = Some(value);
         self
     }
-
-    pub fn custom_fields(
-        mut self,
-        value: std::collections::BTreeMap<
-            String,
-            crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties,
-        >,
-    ) -> Self {
+    
+    pub fn custom_fields(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties>) -> Self {
         self.custom_fields = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: crate::datadogV2::model::SyncProperty) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn due_date(mut self, value: crate::datadogV2::model::IntegrationJiraSyncDueDate) -> Self {
         self.due_date = Some(value);
         self
     }
-
+    
     pub fn priority(mut self, value: crate::datadogV2::model::SyncPropertyWithMapping) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::SyncPropertyWithMapping) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: crate::datadogV2::model::SyncProperty) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IntegrationJiraSyncProperties {
     fn default() -> Self {
@@ -145,15 +132,11 @@ impl<'de> Deserialize<'de> for IntegrationJiraSyncProperties {
                 let mut comments: Option<crate::datadogV2::model::SyncProperty> = None;
                 let mut custom_fields: Option<std::collections::BTreeMap<String, crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties>> = None;
                 let mut description: Option<crate::datadogV2::model::SyncProperty> = None;
-                let mut due_date: Option<crate::datadogV2::model::IntegrationJiraSyncDueDate> =
-                    None;
+                let mut due_date: Option<crate::datadogV2::model::IntegrationJiraSyncDueDate> = None;
                 let mut priority: Option<crate::datadogV2::model::SyncPropertyWithMapping> = None;
                 let mut status: Option<crate::datadogV2::model::SyncPropertyWithMapping> = None;
                 let mut title: Option<crate::datadogV2::model::SyncProperty> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -163,56 +146,54 @@ impl<'de> Deserialize<'de> for IntegrationJiraSyncProperties {
                                 continue;
                             }
                             assignee = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "comments" => {
                             if v.is_null() {
                                 continue;
                             }
                             comments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "custom_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "due_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             due_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

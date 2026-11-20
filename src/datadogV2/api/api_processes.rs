@@ -1,78 +1,78 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
 use futures_core::stream::Stream;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// ListProcessesOptionalParams is a struct for passing parameters to the method [`ProcessesAPI::list_processes`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListProcessesOptionalParams {
     /// Free-text search over process fields such as the executable and user. When it contains several
-    /// words, a process must match all of them. Use `tags` for exact values such as host.
+/// words, a process must match all of them. Use `tags` for exact values such as host.
     pub search: Option<String>,
     /// Comma-separated `key:value` tags. A process must match every tag. Each tag starts with a letter and
-    /// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
-    /// case-sensitive (tags are usually lowercase, so `env:PROD` matches nothing if the tag is `env:prod`).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
-    /// `service:*web*` matches `service:checkout-web-1`, and `env:*` matches any process with an `env` tag.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
-    /// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. A `*` in the
-    /// value of `started`, `infra_type`, or `apm_instrumented` also returns 400, but its `detail` is only
-    /// `Bad Request`. To match unrelated values of one key, make one request per value.
+/// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
+/// case-sensitive (tags are usually lowercase, so `env:PROD` matches nothing if the tag is `env:prod`).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
+/// `service:*web*` matches `service:checkout-web-1`, and `env:*` matches any process with an `env` tag.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
+/// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. A `*` in the
+/// value of `started`, `infra_type`, or `apm_instrumented` also returns 400, but its `detail` is only
+/// `Bad Request`. To match unrelated values of one key, make one request per value.
     pub tags: Option<String>,
     /// Start of the query window, in Unix seconds. Must be within the past 36 hours and at most 1 hour
-    /// before `to`. If not provided, the start of the query window is 15 minutes before the `to` timestamp.
-    /// If neither `from` nor `to` is provided, the query window is `[now - 15m, now]`.
+/// before `to`. If not provided, the start of the query window is 15 minutes before the `to` timestamp.
+/// If neither `from` nor `to` is provided, the query window is `[now - 15m, now]`.
     pub from: Option<i64>,
     /// End of the query window, in Unix seconds. Must be at most 1 hour after `from`. If not provided, the
-    /// end of the query window is 15 minutes after the `from` timestamp. If neither `from` nor `to` is
-    /// provided, the query window is `[now - 15m, now]`.
+/// end of the query window is 15 minutes after the `from` timestamp. If neither `from` nor `to` is
+/// provided, the query window is `[now - 15m, now]`.
     pub to: Option<i64>,
     /// Maximum number of results returned.
     pub page_limit: Option<i32>,
     /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.page.after`.
+/// This key is provided with each valid response from the API in `meta.page.after`.
     pub page_cursor: Option<String>,
 }
 
 impl ListProcessesOptionalParams {
     /// Free-text search over process fields such as the executable and user. When it contains several
-    /// words, a process must match all of them. Use `tags` for exact values such as host.
+/// words, a process must match all of them. Use `tags` for exact values such as host.
     pub fn search(mut self, value: String) -> Self {
         self.search = Some(value);
         self
     }
     /// Comma-separated `key:value` tags. A process must match every tag. Each tag starts with a letter and
-    /// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
-    /// case-sensitive (tags are usually lowercase, so `env:PROD` matches nothing if the tag is `env:prod`).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
-    /// `service:*web*` matches `service:checkout-web-1`, and `env:*` matches any process with an `env` tag.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
-    /// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. A `*` in the
-    /// value of `started`, `infra_type`, or `apm_instrumented` also returns 400, but its `detail` is only
-    /// `Bad Request`. To match unrelated values of one key, make one request per value.
+/// contains only letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are
+/// case-sensitive (tags are usually lowercase, so `env:PROD` matches nothing if the tag is `env:prod`).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `env:prod*` matches `env:prod` and `env:prod-eu`,
+/// `service:*web*` matches `service:checkout-web-1`, and `env:*` matches any process with an `env` tag.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`kube_*:prod`, `*:prod`, `prod*`), a `?`, a leading `-` (negation), spaces (so `OR` and
+/// `IN (...)` can't be used), an empty value (`env:`), and more than 1024 characters in total. A `*` in the
+/// value of `started`, `infra_type`, or `apm_instrumented` also returns 400, but its `detail` is only
+/// `Bad Request`. To match unrelated values of one key, make one request per value.
     pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
         self
     }
     /// Start of the query window, in Unix seconds. Must be within the past 36 hours and at most 1 hour
-    /// before `to`. If not provided, the start of the query window is 15 minutes before the `to` timestamp.
-    /// If neither `from` nor `to` is provided, the query window is `[now - 15m, now]`.
+/// before `to`. If not provided, the start of the query window is 15 minutes before the `to` timestamp.
+/// If neither `from` nor `to` is provided, the query window is `[now - 15m, now]`.
     pub fn from(mut self, value: i64) -> Self {
         self.from = Some(value);
         self
     }
     /// End of the query window, in Unix seconds. Must be at most 1 hour after `from`. If not provided, the
-    /// end of the query window is 15 minutes after the `from` timestamp. If neither `from` nor `to` is
-    /// provided, the query window is `[now - 15m, now]`.
+/// end of the query window is 15 minutes after the `from` timestamp. If neither `from` nor `to` is
+/// provided, the query window is `[now - 15m, now]`.
     pub fn to(mut self, value: i64) -> Self {
         self.to = Some(value);
         self
@@ -83,12 +83,15 @@ impl ListProcessesOptionalParams {
         self
     }
     /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.page.after`.
+/// This key is provided with each valid response from the API in `meta.page.after`.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
 }
+
+
+
 
 /// ListProcessesError is a struct for typed errors of method [`ProcessesAPI::list_processes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -97,6 +100,7 @@ pub enum ListProcessesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The processes API allows you to query processes data for your organization. See the [Live Processes page](<https://docs.datadoghq.com/infrastructure/process/>) for more information.
 #[derive(Debug, Clone)]
@@ -120,7 +124,8 @@ impl ProcessesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -165,45 +170,36 @@ impl ProcessesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get processes collected by Live Processes for your organization. One request covers a window of
-    /// at most 1 hour that starts within the past 36 hours. To cover a longer period, make one request
-    /// per hour. Older data is not available from this endpoint.
-    ///
-    /// When a process includes `identifying_tags`, pass them as `tag_filters` in a `process` data source
-    /// query to `/api/v2/query/scalar` or `/api/v2/query/timeseries` to get CPU or memory metrics for that
-    /// one process. If absent, don't substitute an empty filter, which would query all processes.
-    pub async fn list_processes(
-        &self,
-        params: ListProcessesOptionalParams,
-    ) -> Result<crate::datadogV2::model::ProcessSummariesResponse, datadog::Error<ListProcessesError>>
-    {
-        match self.list_processes_with_http_info(params).await {
+/// at most 1 hour that starts within the past 36 hours. To cover a longer period, make one request
+/// per hour. Older data is not available from this endpoint.
+///
+/// When a process includes `identifying_tags`, pass them as `tag_filters` in a `process` data source
+/// query to `/api/v2/query/scalar` or `/api/v2/query/timeseries` to get CPU or memory metrics for that
+/// one process. If absent, don't substitute an empty filter, which would query all processes.
+    pub async fn list_processes(&self, params: ListProcessesOptionalParams) -> Result<crate::datadogV2::model::ProcessSummariesResponse, datadog::Error<ListProcessesError>> {
+        match self.list_processes_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_processes_with_pagination(
-        &self,
-        mut params: ListProcessesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::ProcessSummary, datadog::Error<ListProcessesError>>,
-    > + '_ {
+        &self, mut params: ListProcessesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ProcessSummary, datadog::Error<ListProcessesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 1000;
             if params.page_limit.is_none() {
@@ -232,23 +228,19 @@ impl ProcessesAPI {
         }
     }
 
+    
     /// Get processes collected by Live Processes for your organization. One request covers a window of
-    /// at most 1 hour that starts within the past 36 hours. To cover a longer period, make one request
-    /// per hour. Older data is not available from this endpoint.
-    ///
-    /// When a process includes `identifying_tags`, pass them as `tag_filters` in a `process` data source
-    /// query to `/api/v2/query/scalar` or `/api/v2/query/timeseries` to get CPU or memory metrics for that
-    /// one process. If absent, don't substitute an empty filter, which would query all processes.
-    pub async fn list_processes_with_http_info(
-        &self,
-        params: ListProcessesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ProcessSummariesResponse>,
-        datadog::Error<ListProcessesError>,
-    > {
+/// at most 1 hour that starts within the past 36 hours. To cover a longer period, make one request
+/// per hour. Older data is not available from this endpoint.
+///
+/// When a process includes `identifying_tags`, pass them as `tag_filters` in a `process` data source
+/// query to `/api/v2/query/scalar` or `/api/v2/query/timeseries` to get CPU or memory metrics for that
+/// one process. If absent, don't substitute an empty filter, which would query all processes.
+    pub async fn list_processes_with_http_info(&self, params: ListProcessesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ProcessSummariesResponse>, datadog::Error<ListProcessesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_processes";
 
+        
         // unbox and build optional parameters
         let search = params.search;
         let tags = params.tags;
@@ -261,38 +253,34 @@ impl ProcessesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/processes",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = tags {
-            local_req_builder =
-                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("tags", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = from {
-            local_req_builder =
-                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("from", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = to {
-            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -305,22 +293,16 @@ impl ProcessesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -332,26 +314,17 @@ impl ProcessesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ProcessSummariesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ProcessSummariesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListProcessesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListProcessesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

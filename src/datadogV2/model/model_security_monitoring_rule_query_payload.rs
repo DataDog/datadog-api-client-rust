@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Payload to test a rule query with the expected result.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct SecurityMonitoringRuleQueryPayload {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleQueryPayload {
@@ -37,33 +37,28 @@ impl SecurityMonitoringRuleQueryPayload {
             _unparsed: false,
         }
     }
-
+    
     pub fn expected_result(mut self, value: bool) -> Self {
         self.expected_result = Some(value);
         self
     }
-
+    
     pub fn index(mut self, value: i64) -> Self {
         self.index = Some(value);
         self
     }
-
-    pub fn payload(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData,
-    ) -> Self {
+    
+    pub fn payload(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData) -> Self {
         self.payload = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleQueryPayload {
     fn default() -> Self {
@@ -90,13 +85,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryPayload {
             {
                 let mut expected_result: Option<bool> = None;
                 let mut index: Option<i64> = None;
-                let mut payload: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut payload: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryPayloadData> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,26 +95,25 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryPayload {
                             if v.is_null() {
                                 continue;
                             }
-                            expected_result =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expected_result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "index" => {
                             if v.is_null() {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "payload" => {
                             if v.is_null() {
                                 continue;
                             }
                             payload = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

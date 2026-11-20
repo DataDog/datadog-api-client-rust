@@ -1,11 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
 use futures_core::stream::Stream;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// ListUserAuthorizedClientsOptionalParams is a struct for passing parameters to the method [`UserAuthorizedClientsAPI::list_user_authorized_clients`]
 #[non_exhaustive]
@@ -51,6 +51,9 @@ impl ListUserAuthorizedClientsOptionalParams {
     }
 }
 
+
+
+
 /// DeleteUserAuthorizedClientError is a struct for typed errors of method [`UserAuthorizedClientsAPI::delete_user_authorized_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -59,6 +62,7 @@ pub enum DeleteUserAuthorizedClientError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteUserAuthorizedClientsByClientError is a struct for typed errors of method [`UserAuthorizedClientsAPI::delete_user_authorized_clients_by_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -69,6 +73,7 @@ pub enum DeleteUserAuthorizedClientsByClientError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUserAuthorizedClientError is a struct for typed errors of method [`UserAuthorizedClientsAPI::get_user_authorized_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -78,6 +83,7 @@ pub enum GetUserAuthorizedClientError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListUserAuthorizedClientsError is a struct for typed errors of method [`UserAuthorizedClientsAPI::list_user_authorized_clients`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -86,6 +92,7 @@ pub enum ListUserAuthorizedClientsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage OAuth2 client authorizations at the user level.
 #[derive(Debug, Clone)]
@@ -109,7 +116,8 @@ impl UserAuthorizedClientsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -154,48 +162,44 @@ impl UserAuthorizedClientsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Disable the current user's authorization for the specified OAuth2 client.
-    pub async fn delete_user_authorized_client(
-        &self,
-        user_authorized_client_id: String,
-    ) -> Result<(), datadog::Error<DeleteUserAuthorizedClientError>> {
-        match self
-            .delete_user_authorized_client_with_http_info(user_authorized_client_id)
-            .await
-        {
+    pub async fn delete_user_authorized_client(&self, user_authorized_client_id: String) -> Result<(), datadog::Error<DeleteUserAuthorizedClientError>> {
+        match self.delete_user_authorized_client_with_http_info(user_authorized_client_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable the current user's authorization for the specified OAuth2 client.
-    pub async fn delete_user_authorized_client_with_http_info(
-        &self,
-        user_authorized_client_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserAuthorizedClientError>> {
+    pub async fn delete_user_authorized_client_with_http_info(&self, user_authorized_client_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserAuthorizedClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_user_authorized_client";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/{user_authorized_client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_authorized_client_id = datadog::urlencode(user_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_authorized_client_id=
+            datadog::urlencode(user_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -208,22 +212,16 @@ impl UserAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -241,55 +239,44 @@ impl UserAuthorizedClientsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteUserAuthorizedClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteUserAuthorizedClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disable all authorizations the current user has granted to the specified OAuth2 client.
-    pub async fn delete_user_authorized_clients_by_client(
-        &self,
-        client_id: String,
-    ) -> Result<(), datadog::Error<DeleteUserAuthorizedClientsByClientError>> {
-        match self
-            .delete_user_authorized_clients_by_client_with_http_info(client_id)
-            .await
-        {
+    pub async fn delete_user_authorized_clients_by_client(&self, client_id: String) -> Result<(), datadog::Error<DeleteUserAuthorizedClientsByClientError>> {
+        match self.delete_user_authorized_clients_by_client_with_http_info(client_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable all authorizations the current user has granted to the specified OAuth2 client.
-    pub async fn delete_user_authorized_clients_by_client_with_http_info(
-        &self,
-        client_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteUserAuthorizedClientsByClientError>,
-    > {
+    pub async fn delete_user_authorized_clients_by_client_with_http_info(&self, client_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserAuthorizedClientsByClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_user_authorized_clients_by_client";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/client/{client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            client_id = datadog::urlencode(client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), client_id=
+            datadog::urlencode(client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -302,22 +289,16 @@ impl UserAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -335,66 +316,50 @@ impl UserAuthorizedClientsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteUserAuthorizedClientsByClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteUserAuthorizedClientsByClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single OAuth2 client authorization for the current user.
-    pub async fn get_user_authorized_client(
-        &self,
-        user_authorized_client_id: String,
-    ) -> Result<
-        crate::datadogV2::model::UserAuthorizedClientResponse,
-        datadog::Error<GetUserAuthorizedClientError>,
-    > {
-        match self
-            .get_user_authorized_client_with_http_info(user_authorized_client_id)
-            .await
-        {
+    pub async fn get_user_authorized_client(&self, user_authorized_client_id: String) -> Result<crate::datadogV2::model::UserAuthorizedClientResponse, datadog::Error<GetUserAuthorizedClientError>> {
+        match self.get_user_authorized_client_with_http_info(user_authorized_client_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single OAuth2 client authorization for the current user.
-    pub async fn get_user_authorized_client_with_http_info(
-        &self,
-        user_authorized_client_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientResponse>,
-        datadog::Error<GetUserAuthorizedClientError>,
-    > {
+    pub async fn get_user_authorized_client_with_http_info(&self, user_authorized_client_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientResponse>, datadog::Error<GetUserAuthorizedClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_user_authorized_client";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/{user_authorized_client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_authorized_client_id = datadog::urlencode(user_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_authorized_client_id=
+            datadog::urlencode(user_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -407,22 +372,16 @@ impl UserAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -434,64 +393,39 @@ impl UserAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUserAuthorizedClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUserAuthorizedClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all OAuth2 clients authorized by the current user.
-    pub async fn list_user_authorized_clients(
-        &self,
-        params: ListUserAuthorizedClientsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UserAuthorizedClientsResponse,
-        datadog::Error<ListUserAuthorizedClientsError>,
-    > {
-        match self
-            .list_user_authorized_clients_with_http_info(params)
-            .await
-        {
+    pub async fn list_user_authorized_clients(&self, params: ListUserAuthorizedClientsOptionalParams) -> Result<crate::datadogV2::model::UserAuthorizedClientsResponse, datadog::Error<ListUserAuthorizedClientsError>> {
+        match self.list_user_authorized_clients_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_user_authorized_clients_with_pagination(
-        &self,
-        mut params: ListUserAuthorizedClientsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::UserAuthorizedClientData,
-            datadog::Error<ListUserAuthorizedClientsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListUserAuthorizedClientsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserAuthorizedClientData, datadog::Error<ListUserAuthorizedClientsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -518,17 +452,13 @@ impl UserAuthorizedClientsAPI {
         }
     }
 
+    
     /// Get a list of all OAuth2 clients authorized by the current user.
-    pub async fn list_user_authorized_clients_with_http_info(
-        &self,
-        params: ListUserAuthorizedClientsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientsResponse>,
-        datadog::Error<ListUserAuthorizedClientsError>,
-    > {
+    pub async fn list_user_authorized_clients_with_http_info(&self, params: ListUserAuthorizedClientsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientsResponse>, datadog::Error<ListUserAuthorizedClientsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_user_authorized_clients";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -540,35 +470,31 @@ impl UserAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_disabled {
-            local_req_builder =
-                local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -581,22 +507,16 @@ impl UserAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -608,26 +528,17 @@ impl UserAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListUserAuthorizedClientsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListUserAuthorizedClientsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

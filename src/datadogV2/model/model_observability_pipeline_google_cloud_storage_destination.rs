@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `google_cloud_storage` destination stores logs in a Google Cloud Storage (GCS) bucket.
 /// It requires a bucket name, Google Cloud authentication, and metadata fields.
@@ -27,11 +27,9 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Compression configuration for archived logs. When omitted, logs are compressed with gzip
-    /// for backward compatibility.
+/// for backward compatibility.
     #[serde(rename = "compression")]
-    pub compression: Option<
-        crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression,
-    >,
+    pub compression: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression>,
     /// Unique identifier for the destination component.
     #[serde(rename = "id")]
     pub id: String,
@@ -46,8 +44,7 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     pub metadata: Option<Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>>,
     /// Storage class used for objects stored in GCS.
     #[serde(rename = "storage_class")]
-    pub storage_class:
-        crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass,
+    pub storage_class: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass,
     /// The destination type. Always `google_cloud_storage`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType,
@@ -55,17 +52,11 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineGoogleCloudStorageDestination {
-    pub fn new(
-        bucket: String,
-        id: String,
-        inputs: Vec<String>,
-        storage_class: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass,
-        type_: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType,
-    ) -> ObservabilityPipelineGoogleCloudStorageDestination {
+    pub fn new(bucket: String, id: String, inputs: Vec<String>, storage_class: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass, type_: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType) -> ObservabilityPipelineGoogleCloudStorageDestination {
         ObservabilityPipelineGoogleCloudStorageDestination {
             acl: None,
             auth: None,
@@ -82,57 +73,44 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
             _unparsed: false,
         }
     }
-
-    pub fn acl(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
-    ) -> Self {
+    
+    pub fn acl(mut self, value: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl) -> Self {
         self.acl = Some(value);
         self
     }
-
+    
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
         self.auth = Some(value);
         self
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
-    pub fn compression(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression,
-    ) -> Self {
+    
+    pub fn compression(mut self, value: crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression) -> Self {
         self.compression = Some(value);
         self
     }
-
+    
     pub fn key_prefix(mut self, value: String) -> Self {
         self.key_prefix = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>) -> Self {
         self.metadata = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -151,29 +129,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
             where
                 M: MapAccess<'a>,
             {
-                let mut acl: Option<
-                    crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl,
-                > = None;
+                let mut acl: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl> = None;
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth> = None;
                 let mut bucket: Option<String> = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
                 let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_prefix: Option<String> = None;
-                let mut metadata: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>,
-                > = None;
+                let mut metadata: Option<Vec<crate::datadogV2::model::ObservabilityPipelineMetadataEntry>> = None;
                 let mut storage_class: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -191,16 +158,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "auth" => {
                             if v.is_null() {
                                 continue;
                             }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -214,13 +181,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "compression" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compression =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            compression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _compression) = compression {
                                 match _compression {
                                     crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationCompression::UnparsedObject(_compression) => {
@@ -229,28 +195,27 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "key_prefix" => {
                             if v.is_null() {
                                 continue;
                             }
                             key_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "storage_class" => {
-                            storage_class =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            storage_class = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _storage_class) = storage_class {
                                 match _storage_class {
                                     crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationStorageClass::UnparsedObject(_storage_class) => {
@@ -259,7 +224,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -270,19 +235,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let bucket = bucket.ok_or_else(|| M::Error::missing_field("bucket"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
-                let storage_class =
-                    storage_class.ok_or_else(|| M::Error::missing_field("storage_class"))?;
+                let storage_class = storage_class.ok_or_else(|| M::Error::missing_field("storage_class"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineGoogleCloudStorageDestination {

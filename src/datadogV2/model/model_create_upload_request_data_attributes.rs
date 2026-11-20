@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Upload configuration specifying how data is uploaded by the user, and properties of the table to associate the upload with.
 #[non_exhaustive]
@@ -27,16 +27,11 @@ pub struct CreateUploadRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateUploadRequestDataAttributes {
-    pub fn new(
-        headers: Vec<String>,
-        part_count: i32,
-        part_size: i64,
-        table_name: String,
-    ) -> CreateUploadRequestDataAttributes {
+    pub fn new(headers: Vec<String>, part_count: i32, part_size: i64, table_name: String) -> CreateUploadRequestDataAttributes {
         CreateUploadRequestDataAttributes {
             headers,
             part_count,
@@ -46,15 +41,14 @@ impl CreateUploadRequestDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateUploadRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,31 +71,28 @@ impl<'de> Deserialize<'de> for CreateUploadRequestDataAttributes {
                 let mut part_count: Option<i32> = None;
                 let mut part_size: Option<i64> = None;
                 let mut table_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "headers" => {
                             headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "part_count" => {
                             part_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "part_size" => {
                             part_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "table_name" => {
                             table_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let headers = headers.ok_or_else(|| M::Error::missing_field("headers"))?;

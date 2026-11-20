@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `UpdateRulesetRequestDataAttributesRulesItemsReferenceTable` object.
 #[non_exhaustive]
@@ -38,11 +38,7 @@ pub struct UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
 }
 
 impl UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
-    pub fn new(
-        field_pairs: Vec<crate::datadogV2::model::UpdateRulesetRequestDataAttributesRulesItemsReferenceTableFieldPairsItems>,
-        source_keys: Vec<String>,
-        table_name: String,
-    ) -> UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
+    pub fn new(field_pairs: Vec<crate::datadogV2::model::UpdateRulesetRequestDataAttributesRulesItemsReferenceTableFieldPairsItems>, source_keys: Vec<String>, table_name: String) -> UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
         #[allow(deprecated)]
         UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
             case_insensitivity: None,
@@ -55,36 +51,32 @@ impl UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn case_insensitivity(mut self, value: bool) -> Self {
         self.case_insensitivity = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn if_not_exists(mut self, value: bool) -> Self {
         self.if_not_exists = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn if_tag_exists(
-        mut self,
-        value: crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
-    ) -> Self {
+    pub fn if_tag_exists(mut self, value: crate::datadogV2::model::DataAttributesRulesItemsIfTagExists) -> Self {
         self.if_tag_exists = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsReferenceTable {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -106,15 +98,10 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsRefer
                 let mut case_insensitivity: Option<bool> = None;
                 let mut field_pairs: Option<Vec<crate::datadogV2::model::UpdateRulesetRequestDataAttributesRulesItemsReferenceTableFieldPairsItems>> = None;
                 let mut if_not_exists: Option<bool> = None;
-                let mut if_tag_exists: Option<
-                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
-                > = None;
+                let mut if_tag_exists: Option<crate::datadogV2::model::DataAttributesRulesItemsIfTagExists> = None;
                 let mut source_keys: Option<Vec<String>> = None;
                 let mut table_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -123,26 +110,22 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsRefer
                             if v.is_null() {
                                 continue;
                             }
-                            case_insensitivity =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            case_insensitivity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "field_pairs" => {
-                            field_pairs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            field_pairs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "if_not_exists" => {
                             if v.is_null() {
                                 continue;
                             }
-                            if_not_exists =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            if_not_exists = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "if_tag_exists" => {
                             if v.is_null() {
                                 continue;
                             }
-                            if_tag_exists =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if_tag_exists = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _if_tag_exists) = if_tag_exists {
                                 match _if_tag_exists {
                                     crate::datadogV2::model::DataAttributesRulesItemsIfTagExists::UnparsedObject(_if_tag_exists) => {
@@ -151,25 +134,22 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsRefer
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "source_keys" => {
-                            source_keys =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "table_name" => {
                             table_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let field_pairs =
-                    field_pairs.ok_or_else(|| M::Error::missing_field("field_pairs"))?;
-                let source_keys =
-                    source_keys.ok_or_else(|| M::Error::missing_field("source_keys"))?;
+                let field_pairs = field_pairs.ok_or_else(|| M::Error::missing_field("field_pairs"))?;
+                let source_keys = source_keys.ok_or_else(|| M::Error::missing_field("source_keys"))?;
                 let table_name = table_name.ok_or_else(|| M::Error::missing_field("table_name"))?;
 
                 #[allow(deprecated)]
@@ -188,7 +168,6 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsRefer
             }
         }
 
-        deserializer
-            .deserialize_any(UpdateRulesetRequestDataAttributesRulesItemsReferenceTableVisitor)
+        deserializer.deserialize_any(UpdateRulesetRequestDataAttributesRulesItemsReferenceTableVisitor)
     }
 }

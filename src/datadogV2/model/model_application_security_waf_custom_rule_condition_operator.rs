@@ -2,26 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ApplicationSecurityWafCustomRuleConditionOperator {
-    MATCH_REGEX,
-    NOT_MATCH_REGEX,
-    PHRASE_MATCH,
-    NOT_PHRASE_MATCH,
-    IS_XSS,
-    IS_SQLI,
-    EXACT_MATCH,
-    NOT_EXACT_MATCH,
-    IP_MATCH,
-    NOT_IP_MATCH,
-    CAPTURE_DATA,
-    EXISTS,
-    NOT_EXISTS,
-    EQUALS,
-    NOT_EQUALS,
+	MATCH_REGEX,
+	NOT_MATCH_REGEX,
+	PHRASE_MATCH,
+	NOT_PHRASE_MATCH,
+	IS_XSS,
+	IS_SQLI,
+	EXACT_MATCH,
+	NOT_EXACT_MATCH,
+	IP_MATCH,
+	NOT_IP_MATCH,
+	CAPTURE_DATA,
+	EXISTS,
+	NOT_EXISTS,
+	EQUALS,
+	NOT_EQUALS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -66,25 +67,8 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionOperator
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "match_regex" => Self::MATCH_REGEX,
-            "!match_regex" => Self::NOT_MATCH_REGEX,
-            "phrase_match" => Self::PHRASE_MATCH,
-            "!phrase_match" => Self::NOT_PHRASE_MATCH,
-            "is_xss" => Self::IS_XSS,
-            "is_sqli" => Self::IS_SQLI,
-            "exact_match" => Self::EXACT_MATCH,
-            "!exact_match" => Self::NOT_EXACT_MATCH,
-            "ip_match" => Self::IP_MATCH,
-            "!ip_match" => Self::NOT_IP_MATCH,
-            "capture_data" => Self::CAPTURE_DATA,
-            "exists" => Self::EXISTS,
-            "!exists" => Self::NOT_EXISTS,
-            "equals" => Self::EQUALS,
-            "!equals" => Self::NOT_EQUALS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"match_regex" => Self::MATCH_REGEX,"!match_regex" => Self::NOT_MATCH_REGEX,"phrase_match" => Self::PHRASE_MATCH,"!phrase_match" => Self::NOT_PHRASE_MATCH,"is_xss" => Self::IS_XSS,"is_sqli" => Self::IS_SQLI,"exact_match" => Self::EXACT_MATCH,"!exact_match" => Self::NOT_EXACT_MATCH,"ip_match" => Self::IP_MATCH,"!ip_match" => Self::NOT_IP_MATCH,"capture_data" => Self::CAPTURE_DATA,"exists" => Self::EXISTS,"!exists" => Self::NOT_EXISTS,"equals" => Self::EQUALS,"!equals" => Self::NOT_EQUALS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

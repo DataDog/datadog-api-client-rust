@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A test case of a forwarded static analysis rule.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct AnalysisRequestRuleTest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AnalysisRequestRuleTest {
@@ -37,30 +37,28 @@ impl AnalysisRequestRuleTest {
             _unparsed: false,
         }
     }
-
+    
     pub fn annotation_count(mut self, value: i64) -> Self {
         self.annotation_count = Some(value);
         self
     }
-
+    
     pub fn code(mut self, value: String) -> Self {
         self.code = Some(value);
         self
     }
-
+    
     pub fn filename(mut self, value: String) -> Self {
         self.filename = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AnalysisRequestRuleTest {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRuleTest {
                 let mut annotation_count: Option<i64> = None;
                 let mut code: Option<String> = None;
                 let mut filename: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,26 +95,25 @@ impl<'de> Deserialize<'de> for AnalysisRequestRuleTest {
                             if v.is_null() {
                                 continue;
                             }
-                            annotation_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            annotation_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code" => {
                             if v.is_null() {
                                 continue;
                             }
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "filename" => {
                             if v.is_null() {
                                 continue;
                             }
                             filename = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

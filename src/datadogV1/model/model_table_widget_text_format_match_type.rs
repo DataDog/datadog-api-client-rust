@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TableWidgetTextFormatMatchType {
-    IS,
-    IS_NOT,
-    CONTAINS,
-    DOES_NOT_CONTAIN,
-    STARTS_WITH,
-    ENDS_WITH,
+	IS,
+	IS_NOT,
+	CONTAINS,
+	DOES_NOT_CONTAIN,
+	STARTS_WITH,
+	ENDS_WITH,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for TableWidgetTextFormatMatchType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "is" => Self::IS,
-            "is_not" => Self::IS_NOT,
-            "contains" => Self::CONTAINS,
-            "does_not_contain" => Self::DOES_NOT_CONTAIN,
-            "starts_with" => Self::STARTS_WITH,
-            "ends_with" => Self::ENDS_WITH,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"is" => Self::IS,"is_not" => Self::IS_NOT,"contains" => Self::CONTAINS,"does_not_contain" => Self::DOES_NOT_CONTAIN,"starts_with" => Self::STARTS_WITH,"ends_with" => Self::ENDS_WITH,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

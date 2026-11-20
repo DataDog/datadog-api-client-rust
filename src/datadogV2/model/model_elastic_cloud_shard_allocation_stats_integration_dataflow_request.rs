@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metrics for how many shards are allocated to each data node, and the disk space they use.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct ElasticCloudShardAllocationStatsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ElasticCloudShardAllocationStatsIntegrationDataflowRequest {
@@ -26,12 +26,14 @@ impl ElasticCloudShardAllocationStatsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for ElasticCloudShardAllocationStatsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -66,12 +68,10 @@ impl<'de> Deserialize<'de> for ElasticCloudShardAllocationStatsIntegrationDatafl
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -84,7 +84,6 @@ impl<'de> Deserialize<'de> for ElasticCloudShardAllocationStatsIntegrationDatafl
             }
         }
 
-        deserializer
-            .deserialize_any(ElasticCloudShardAllocationStatsIntegrationDataflowRequestVisitor)
+        deserializer.deserialize_any(ElasticCloudShardAllocationStatsIntegrationDataflowRequestVisitor)
     }
 }

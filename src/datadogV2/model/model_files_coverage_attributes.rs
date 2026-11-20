@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the per-file code coverage response.
 #[non_exhaustive]
@@ -19,8 +19,7 @@ pub struct FilesCoverageAttributes {
     pub event_timestamp: Option<i64>,
     /// Map of file paths to per-file coverage line data.
     #[serde(rename = "files")]
-    pub files:
-        Option<std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>>,
+    pub files: Option<std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>>,
     /// The SHA of the head commit for which coverage was evaluated.
     #[serde(rename = "head_commit_sha")]
     pub head_commit_sha: Option<String>,
@@ -31,7 +30,7 @@ pub struct FilesCoverageAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FilesCoverageAttributes {
@@ -46,43 +45,38 @@ impl FilesCoverageAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn base_commit_sha(mut self, value: String) -> Self {
         self.base_commit_sha = Some(value);
         self
     }
-
+    
     pub fn event_timestamp(mut self, value: i64) -> Self {
         self.event_timestamp = Some(value);
         self
     }
-
-    pub fn files(
-        mut self,
-        value: std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>,
-    ) -> Self {
+    
+    pub fn files(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>) -> Self {
         self.files = Some(value);
         self
     }
-
+    
     pub fn head_commit_sha(mut self, value: String) -> Self {
         self.head_commit_sha = Some(value);
         self
     }
-
+    
     pub fn report_count(mut self, value: i64) -> Self {
         self.report_count = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FilesCoverageAttributes {
     fn default() -> Self {
@@ -109,15 +103,10 @@ impl<'de> Deserialize<'de> for FilesCoverageAttributes {
             {
                 let mut base_commit_sha: Option<String> = None;
                 let mut event_timestamp: Option<i64> = None;
-                let mut files: Option<
-                    std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>,
-                > = None;
+                let mut files: Option<std::collections::BTreeMap<String, crate::datadogV2::model::FileCoverageLines>> = None;
                 let mut head_commit_sha: Option<String> = None;
                 let mut report_count: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,41 +115,37 @@ impl<'de> Deserialize<'de> for FilesCoverageAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            base_commit_sha =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            base_commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_timestamp" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_timestamp =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "files" => {
                             if v.is_null() {
                                 continue;
                             }
                             files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "head_commit_sha" => {
                             if v.is_null() {
                                 continue;
                             }
-                            head_commit_sha =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            head_commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "report_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            report_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            report_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Filters narrowing the events considered by a retention query.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct ProductAnalyticsRetentionFilters {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsRetentionFilters {
@@ -33,28 +33,23 @@ impl ProductAnalyticsRetentionFilters {
             _unparsed: false,
         }
     }
-
-    pub fn audience_filters(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsAudienceFilters,
-    ) -> Self {
+    
+    pub fn audience_filters(mut self, value: crate::datadogV2::model::ProductAnalyticsAudienceFilters) -> Self {
         self.audience_filters = Some(value);
         self
     }
-
+    
     pub fn string_filter(mut self, value: String) -> Self {
         self.string_filter = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ProductAnalyticsRetentionFilters {
     fn default() -> Self {
@@ -79,14 +74,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionFilters {
             where
                 M: MapAccess<'a>,
             {
-                let mut audience_filters: Option<
-                    crate::datadogV2::model::ProductAnalyticsAudienceFilters,
-                > = None;
+                let mut audience_filters: Option<crate::datadogV2::model::ProductAnalyticsAudienceFilters> = None;
                 let mut string_filter: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,21 +85,19 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionFilters {
                             if v.is_null() {
                                 continue;
                             }
-                            audience_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audience_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "string_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            string_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            string_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

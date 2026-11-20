@@ -1,18 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Details of the CI pipeline event.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum CIAppCreatePipelineEventRequestAttributesResource {
-    CIAppPipelineEventPipeline(Box<crate::datadogV2::model::CIAppPipelineEventPipeline>),
-    CIAppPipelineEventStage(Box<crate::datadogV2::model::CIAppPipelineEventStage>),
-    CIAppPipelineEventJob(Box<crate::datadogV2::model::CIAppPipelineEventJob>),
-    CIAppPipelineEventStep(Box<crate::datadogV2::model::CIAppPipelineEventStep>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	CIAppPipelineEventPipeline(Box<crate::datadogV2::model::CIAppPipelineEventPipeline>),
+	CIAppPipelineEventStage(Box<crate::datadogV2::model::CIAppPipelineEventStage>),
+	CIAppPipelineEventJob(Box<crate::datadogV2::model::CIAppPipelineEventJob>),
+	CIAppPipelineEventStep(Box<crate::datadogV2::model::CIAppPipelineEventStep>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource {
@@ -21,57 +21,33 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::CIAppPipelineEventPipeline>,
-        >(value.clone())
-        {
-            match *_v {
-                crate::datadogV2::model::CIAppPipelineEventPipeline::UnparsedObject(_v) => {}
-                _ => return Ok(
-                    CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(
-                        _v,
-                    ),
-                ),
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventPipeline>>(value.clone()) {
+			match *_v {
+				crate::datadogV2::model::CIAppPipelineEventPipeline::UnparsedObject(_v) => {},
+				_ => {
+					return Ok(CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventPipeline(_v))
+				}
+			}
+		}
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventStage>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventStage(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::CIAppPipelineEventStage>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventStage(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventJob>>(value.clone()) {
+			match *_v {
+				crate::datadogV2::model::CIAppPipelineEventJob::UnparsedObject(_v) => {},
+				_ => {
+					return Ok(CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventJob(_v))
+				}
+			}
+		}
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventStep>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventStep(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventJob>>(
-            value.clone(),
-        ) {
-            match *_v {
-                crate::datadogV2::model::CIAppPipelineEventJob::UnparsedObject(_v) => {}
-                _ => {
-                    return Ok(
-                        CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventJob(
-                            _v,
-                        ),
-                    )
-                }
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventStep>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
-                return Ok(
-                    CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventStep(_v),
-                );
-            }
-        }
-
-        return Ok(
-            CIAppCreatePipelineEventRequestAttributesResource::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(CIAppCreatePipelineEventRequestAttributesResource::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

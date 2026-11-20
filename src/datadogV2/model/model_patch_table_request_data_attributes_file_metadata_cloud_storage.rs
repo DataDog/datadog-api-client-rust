@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Cloud storage file metadata for patch requests. Allows partial updates of access_details and sync_enabled.
 #[non_exhaustive]
@@ -13,15 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct PatchTableRequestDataAttributesFileMetadataCloudStorage {
     /// Cloud storage access configuration for the reference table data file.
     #[serde(rename = "access_details")]
-    pub access_details: Option<
-        crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails,
-    >,
+    pub access_details: Option<crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails>,
     /// Whether this table is synced automatically.
     #[serde(rename = "sync_enabled")]
     pub sync_enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PatchTableRequestDataAttributesFileMetadataCloudStorage {
@@ -32,20 +30,19 @@ impl PatchTableRequestDataAttributesFileMetadataCloudStorage {
             _unparsed: false,
         }
     }
-
-    pub fn access_details(
-        mut self,
-        value: crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails,
-    ) -> Self {
+    
+    pub fn access_details(mut self, value: crate::datadogV2::model::PatchTableRequestDataAttributesFileMetadataOneOfAccessDetails) -> Self {
         self.access_details = Some(value);
         self
     }
-
+    
     pub fn sync_enabled(mut self, value: bool) -> Self {
         self.sync_enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for PatchTableRequestDataAttributesFileMetadataCloudStorage {
     fn default() -> Self {
@@ -80,21 +77,17 @@ impl<'de> Deserialize<'de> for PatchTableRequestDataAttributesFileMetadataCloudS
                             if v.is_null() {
                                 continue;
                             }
-                            access_details =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            access_details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sync_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sync_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sync_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

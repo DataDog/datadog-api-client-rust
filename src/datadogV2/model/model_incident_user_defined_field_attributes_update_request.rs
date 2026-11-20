@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating an incident user-defined field. All fields are optional.
 #[non_exhaustive]
@@ -12,56 +12,31 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentUserDefinedFieldAttributesUpdateRequest {
     /// The section in which the field appears: "what_happened" or "why_it_happened". When null, the field appears in the Attributes section.
-    #[serde(
-        rename = "category",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "category", default, with = "::serde_with::rust::double_option")]
     pub category: Option<Option<crate::datadogV2::model::IncidentUserDefinedFieldCategory>>,
     /// The lifecycle stage at which the app prompts users to fill out this field. Cannot be set on required fields.
-    #[serde(
-        rename = "collected",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "collected", default, with = "::serde_with::rust::double_option")]
     pub collected: Option<Option<crate::datadogV2::model::IncidentUserDefinedFieldCollected>>,
     /// The default value for the field. Must be one of the valid values when valid_values is set.
-    #[serde(
-        rename = "default_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "default_value", default, with = "::serde_with::rust::double_option")]
     pub default_value: Option<Option<String>>,
     /// The human-readable name shown in the UI.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
     /// A decimal string representing the field's display order in the UI.
-    #[serde(
-        rename = "ordinal",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "ordinal", default, with = "::serde_with::rust::double_option")]
     pub ordinal: Option<Option<String>>,
     /// When true, users must fill out this field on incidents.
-    #[serde(
-        rename = "required",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "required", default, with = "::serde_with::rust::double_option")]
     pub required: Option<Option<bool>>,
     /// The list of allowed values for dropdown and multiselect fields. Limited to 1000 values.
-    #[serde(
-        rename = "valid_values",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub valid_values:
-        Option<Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>>,
+    #[serde(rename = "valid_values", default, with = "::serde_with::rust::double_option")]
+    pub valid_values: Option<Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentUserDefinedFieldAttributesUpdateRequest {
@@ -78,59 +53,48 @@ impl IncidentUserDefinedFieldAttributesUpdateRequest {
             _unparsed: false,
         }
     }
-
-    pub fn category(
-        mut self,
-        value: Option<crate::datadogV2::model::IncidentUserDefinedFieldCategory>,
-    ) -> Self {
+    
+    pub fn category(mut self, value: Option<crate::datadogV2::model::IncidentUserDefinedFieldCategory>) -> Self {
         self.category = Some(value);
         self
     }
-
-    pub fn collected(
-        mut self,
-        value: Option<crate::datadogV2::model::IncidentUserDefinedFieldCollected>,
-    ) -> Self {
+    
+    pub fn collected(mut self, value: Option<crate::datadogV2::model::IncidentUserDefinedFieldCollected>) -> Self {
         self.collected = Some(value);
         self
     }
-
+    
     pub fn default_value(mut self, value: Option<String>) -> Self {
         self.default_value = Some(value);
         self
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn ordinal(mut self, value: Option<String>) -> Self {
         self.ordinal = Some(value);
         self
     }
-
+    
     pub fn required(mut self, value: Option<bool>) -> Self {
         self.required = Some(value);
         self
     }
-
-    pub fn valid_values(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>,
-    ) -> Self {
+    
+    pub fn valid_values(mut self, value: Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>) -> Self {
         self.valid_values = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentUserDefinedFieldAttributesUpdateRequest {
     fn default() -> Self {
@@ -155,23 +119,14 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedFieldAttributesUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut category: Option<
-                    Option<crate::datadogV2::model::IncidentUserDefinedFieldCategory>,
-                > = None;
-                let mut collected: Option<
-                    Option<crate::datadogV2::model::IncidentUserDefinedFieldCollected>,
-                > = None;
+                let mut category: Option<Option<crate::datadogV2::model::IncidentUserDefinedFieldCategory>> = None;
+                let mut collected: Option<Option<crate::datadogV2::model::IncidentUserDefinedFieldCollected>> = None;
                 let mut default_value: Option<Option<String>> = None;
                 let mut display_name: Option<String> = None;
                 let mut ordinal: Option<Option<String>> = None;
                 let mut required: Option<Option<bool>> = None;
-                let mut valid_values: Option<
-                    Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut valid_values: Option<Option<Vec<crate::datadogV2::model::IncidentUserDefinedFieldValidValue>>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -186,7 +141,7 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedFieldAttributesUpdateRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "collected" => {
                             collected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _collected) = collected {
@@ -197,33 +152,30 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedFieldAttributesUpdateRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "default_value" => {
-                            default_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ordinal" => {
                             ordinal = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "required" => {
                             required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid_values" => {
-                            valid_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

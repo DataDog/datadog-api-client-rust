@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Number of Lambda functions and sum of the invocations of all Lambda functions
 /// for each hour for a given organization.
@@ -13,21 +13,13 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageLambdaHour {
     /// Contains the number of different functions for each region and AWS account.
-    #[serde(
-        rename = "func_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "func_count", default, with = "::serde_with::rust::double_option")]
     pub func_count: Option<Option<i64>>,
     /// The hour for the usage.
     #[serde(rename = "hour")]
     pub hour: Option<chrono::DateTime<chrono::Utc>>,
     /// Contains the sum of invocations of all functions.
-    #[serde(
-        rename = "invocations_sum",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "invocations_sum", default, with = "::serde_with::rust::double_option")]
     pub invocations_sum: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]
@@ -39,7 +31,7 @@ pub struct UsageLambdaHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageLambdaHour {
@@ -54,40 +46,38 @@ impl UsageLambdaHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn func_count(mut self, value: Option<i64>) -> Self {
         self.func_count = Some(value);
         self
     }
-
+    
     pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
-
+    
     pub fn invocations_sum(mut self, value: Option<i64>) -> Self {
         self.invocations_sum = Some(value);
         self
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageLambdaHour {
     fn default() -> Self {
@@ -117,44 +107,40 @@ impl<'de> Deserialize<'de> for UsageLambdaHour {
                 let mut invocations_sum: Option<Option<i64>> = None;
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "func_count" => {
                             func_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hour" => {
                             if v.is_null() {
                                 continue;
                             }
                             hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "invocations_sum" => {
-                            invocations_sum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            invocations_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

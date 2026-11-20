@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ScheduleTriggerOverlapBehavior {
-    EXCLUSIVE_RUN,
-    OVERLAP_ALLOWED,
+	EXCLUSIVE_RUN,
+	OVERLAP_ALLOWED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,12 +41,8 @@ impl<'de> Deserialize<'de> for ScheduleTriggerOverlapBehavior {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "EXCLUSIVE_RUN" => Self::EXCLUSIVE_RUN,
-            "OVERLAP_ALLOWED" => Self::OVERLAP_ALLOWED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"EXCLUSIVE_RUN" => Self::EXCLUSIVE_RUN,"OVERLAP_ALLOWED" => Self::OVERLAP_ALLOWED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

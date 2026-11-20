@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of the analysis request, containing the source code and rules to apply.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct AnalysisRequestDataAttributes {
     #[serde(rename = "language")]
     pub language: String,
     /// Analyzer options sent by browser-based clients. Accepted but ignored: the API always runs
-    /// the analysis with tree-sitter enabled and rule output logged.
+/// the analysis with tree-sitter enabled and rule output logged.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::AnalysisRequestOptions>,
     /// The list of static analysis rules to apply during analysis.
@@ -34,17 +34,11 @@ pub struct AnalysisRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AnalysisRequestDataAttributes {
-    pub fn new(
-        code: String,
-        file_encoding: String,
-        filename: String,
-        language: String,
-        rules: Vec<crate::datadogV2::model::AnalysisRequestRule>,
-    ) -> AnalysisRequestDataAttributes {
+    pub fn new(code: String, file_encoding: String, filename: String, language: String, rules: Vec<crate::datadogV2::model::AnalysisRequestRule>) -> AnalysisRequestDataAttributes {
         AnalysisRequestDataAttributes {
             code,
             file_encoding,
@@ -56,20 +50,19 @@ impl AnalysisRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn options(mut self, value: crate::datadogV2::model::AnalysisRequestOptions) -> Self {
         self.options = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AnalysisRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -94,46 +87,41 @@ impl<'de> Deserialize<'de> for AnalysisRequestDataAttributes {
                 let mut language: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::AnalysisRequestOptions> = None;
                 let mut rules: Option<Vec<crate::datadogV2::model::AnalysisRequestRule>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "code" => {
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "file_encoding" => {
-                            file_encoding =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            file_encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filename" => {
                             filename = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "language" => {
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             if v.is_null() {
                                 continue;
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rules" => {
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let code = code.ok_or_else(|| M::Error::missing_field("code"))?;
-                let file_encoding =
-                    file_encoding.ok_or_else(|| M::Error::missing_field("file_encoding"))?;
+                let file_encoding = file_encoding.ok_or_else(|| M::Error::missing_field("file_encoding"))?;
                 let filename = filename.ok_or_else(|| M::Error::missing_field("filename"))?;
                 let language = language.ok_or_else(|| M::Error::missing_field("language"))?;
                 let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;

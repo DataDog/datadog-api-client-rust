@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// User journey search configuration.
 #[non_exhaustive]
@@ -22,24 +22,17 @@ pub struct UserJourneySearch {
     pub join_keys: Option<crate::datadogV1::model::UserJourneyJoinKeys>,
     /// Node objects mapping.
     #[serde(rename = "node_objects")]
-    pub node_objects:
-        std::collections::BTreeMap<String, crate::datadogV1::model::ProductAnalyticsBaseQuery>,
+    pub node_objects: std::collections::BTreeMap<String, crate::datadogV1::model::ProductAnalyticsBaseQuery>,
     /// Step aliases mapping.
     #[serde(rename = "step_aliases")]
     pub step_aliases: Option<std::collections::BTreeMap<String, String>>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UserJourneySearch {
-    pub fn new(
-        expression: String,
-        node_objects: std::collections::BTreeMap<
-            String,
-            crate::datadogV1::model::ProductAnalyticsBaseQuery,
-        >,
-    ) -> UserJourneySearch {
+    pub fn new(expression: String, node_objects: std::collections::BTreeMap<String, crate::datadogV1::model::ProductAnalyticsBaseQuery>) -> UserJourneySearch {
         UserJourneySearch {
             expression,
             filters: None,
@@ -49,22 +42,25 @@ impl UserJourneySearch {
             _unparsed: false,
         }
     }
-
+    
     pub fn filters(mut self, value: crate::datadogV1::model::UserJourneySearchFilters) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn join_keys(mut self, value: crate::datadogV1::model::UserJourneyJoinKeys) -> Self {
         self.join_keys = Some(value);
         self
     }
-
+    
     pub fn step_aliases(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.step_aliases = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for UserJourneySearch {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -86,12 +82,7 @@ impl<'de> Deserialize<'de> for UserJourneySearch {
                 let mut expression: Option<String> = None;
                 let mut filters: Option<crate::datadogV1::model::UserJourneySearchFilters> = None;
                 let mut join_keys: Option<crate::datadogV1::model::UserJourneyJoinKeys> = None;
-                let mut node_objects: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV1::model::ProductAnalyticsBaseQuery,
-                    >,
-                > = None;
+                let mut node_objects: Option<std::collections::BTreeMap<String, crate::datadogV1::model::ProductAnalyticsBaseQuery>> = None;
                 let mut step_aliases: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut _unparsed = false;
 
@@ -99,40 +90,35 @@ impl<'de> Deserialize<'de> for UserJourneySearch {
                     match k.as_str() {
                         "expression" => {
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "join_keys" => {
                             if v.is_null() {
                                 continue;
                             }
                             join_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "node_objects" => {
-                            node_objects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            node_objects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "step_aliases" => {
                             if v.is_null() {
                                 continue;
                             }
-                            step_aliases =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            step_aliases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let expression = expression.ok_or_else(|| M::Error::missing_field("expression"))?;
-                let node_objects =
-                    node_objects.ok_or_else(|| M::Error::missing_field("node_objects"))?;
+                let node_objects = node_objects.ok_or_else(|| M::Error::missing_field("node_objects"))?;
 
                 let content = UserJourneySearch {
                     expression,

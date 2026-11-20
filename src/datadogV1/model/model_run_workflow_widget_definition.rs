@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Run workflow is widget that allows you to run a workflow from a dashboard.
 #[non_exhaustive]
@@ -42,14 +42,11 @@ pub struct RunWorkflowWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RunWorkflowWidgetDefinition {
-    pub fn new(
-        type_: crate::datadogV1::model::RunWorkflowWidgetDefinitionType,
-        workflow_id: String,
-    ) -> RunWorkflowWidgetDefinition {
+    pub fn new(type_: crate::datadogV1::model::RunWorkflowWidgetDefinitionType, workflow_id: String) -> RunWorkflowWidgetDefinition {
         RunWorkflowWidgetDefinition {
             custom_links: None,
             description: None,
@@ -64,50 +61,49 @@ impl RunWorkflowWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn inputs(mut self, value: Vec<crate::datadogV1::model::RunWorkflowWidgetInput>) -> Self {
         self.inputs = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -133,13 +129,9 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::RunWorkflowWidgetDefinitionType> =
-                    None;
+                let mut type_: Option<crate::datadogV1::model::RunWorkflowWidgetDefinitionType> = None;
                 let mut workflow_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -148,22 +140,20 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "inputs" => {
                             if v.is_null() {
                                 continue;
                             }
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -173,40 +163,37 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -217,21 +204,19 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "workflow_id" => {
-                            workflow_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workflow_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let workflow_id =
-                    workflow_id.ok_or_else(|| M::Error::missing_field("workflow_id"))?;
+                let workflow_id = workflow_id.ok_or_else(|| M::Error::missing_field("workflow_id"))?;
 
                 let content = RunWorkflowWidgetDefinition {
                     custom_links,

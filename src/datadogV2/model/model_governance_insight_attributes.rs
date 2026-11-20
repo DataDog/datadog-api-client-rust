@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a governance insight. Exactly one of `metric_query`, `event_query`,
 /// `usage_query`, `audit_query`, or `percentage_query` is populated, depending on the data
@@ -53,18 +53,11 @@ pub struct GovernanceInsightAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GovernanceInsightAttributes {
-    pub fn new(
-        description: String,
-        display_name: String,
-        product: String,
-        sub_product: String,
-        time_range: String,
-        unit_name: String,
-    ) -> GovernanceInsightAttributes {
+    pub fn new(description: String, display_name: String, product: String, sub_product: String, time_range: String, unit_name: String) -> GovernanceInsightAttributes {
         GovernanceInsightAttributes {
             audit_query: None,
             description,
@@ -82,63 +75,44 @@ impl GovernanceInsightAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn audit_query(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightAuditQuery,
-    ) -> Self {
+    
+    pub fn audit_query(mut self, value: crate::datadogV2::model::GovernanceInsightAuditQuery) -> Self {
         self.audit_query = Some(value);
         self
     }
-
-    pub fn event_query(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightEventQuery,
-    ) -> Self {
+    
+    pub fn event_query(mut self, value: crate::datadogV2::model::GovernanceInsightEventQuery) -> Self {
         self.event_query = Some(value);
         self
     }
-
-    pub fn metric_query(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightMetricQuery,
-    ) -> Self {
+    
+    pub fn metric_query(mut self, value: crate::datadogV2::model::GovernanceInsightMetricQuery) -> Self {
         self.metric_query = Some(value);
         self
     }
-
-    pub fn percentage_query(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightPercentageQuery,
-    ) -> Self {
+    
+    pub fn percentage_query(mut self, value: crate::datadogV2::model::GovernanceInsightPercentageQuery) -> Self {
         self.percentage_query = Some(value);
         self
     }
-
-    pub fn query_config(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightQueryConfig,
-    ) -> Self {
+    
+    pub fn query_config(mut self, value: crate::datadogV2::model::GovernanceInsightQueryConfig) -> Self {
         self.query_config = Some(value);
         self
     }
-
-    pub fn usage_query(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightUsageQuery,
-    ) -> Self {
+    
+    pub fn usage_query(mut self, value: crate::datadogV2::model::GovernanceInsightUsageQuery) -> Self {
         self.usage_query = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GovernanceInsightAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -157,31 +131,19 @@ impl<'de> Deserialize<'de> for GovernanceInsightAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut audit_query: Option<crate::datadogV2::model::GovernanceInsightAuditQuery> =
-                    None;
+                let mut audit_query: Option<crate::datadogV2::model::GovernanceInsightAuditQuery> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
-                let mut event_query: Option<crate::datadogV2::model::GovernanceInsightEventQuery> =
-                    None;
-                let mut metric_query: Option<
-                    crate::datadogV2::model::GovernanceInsightMetricQuery,
-                > = None;
-                let mut percentage_query: Option<
-                    crate::datadogV2::model::GovernanceInsightPercentageQuery,
-                > = None;
+                let mut event_query: Option<crate::datadogV2::model::GovernanceInsightEventQuery> = None;
+                let mut metric_query: Option<crate::datadogV2::model::GovernanceInsightMetricQuery> = None;
+                let mut percentage_query: Option<crate::datadogV2::model::GovernanceInsightPercentageQuery> = None;
                 let mut product: Option<String> = None;
-                let mut query_config: Option<
-                    crate::datadogV2::model::GovernanceInsightQueryConfig,
-                > = None;
+                let mut query_config: Option<crate::datadogV2::model::GovernanceInsightQueryConfig> = None;
                 let mut sub_product: Option<String> = None;
                 let mut time_range: Option<String> = None;
                 let mut unit_name: Option<String> = None;
-                let mut usage_query: Option<crate::datadogV2::model::GovernanceInsightUsageQuery> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut usage_query: Option<crate::datadogV2::model::GovernanceInsightUsageQuery> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -190,79 +152,67 @@ impl<'de> Deserialize<'de> for GovernanceInsightAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            audit_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audit_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_name" => {
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "percentage_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            percentage_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            percentage_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "product" => {
                             product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sub_product" => {
-                            sub_product =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sub_product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time_range" => {
                             time_range = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "unit_name" => {
                             unit_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "usage_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            usage_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            usage_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let display_name =
-                    display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let display_name = display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
                 let product = product.ok_or_else(|| M::Error::missing_field("product"))?;
-                let sub_product =
-                    sub_product.ok_or_else(|| M::Error::missing_field("sub_product"))?;
+                let sub_product = sub_product.ok_or_else(|| M::Error::missing_field("sub_product"))?;
                 let time_range = time_range.ok_or_else(|| M::Error::missing_field("time_range"))?;
                 let unit_name = unit_name.ok_or_else(|| M::Error::missing_field("unit_name"))?;
 

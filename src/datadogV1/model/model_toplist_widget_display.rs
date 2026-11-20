@@ -1,16 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Top list widget display options.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ToplistWidgetDisplay {
-    ToplistWidgetStacked(Box<crate::datadogV1::model::ToplistWidgetStacked>),
-    ToplistWidgetFlat(Box<crate::datadogV1::model::ToplistWidgetFlat>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ToplistWidgetStacked(Box<crate::datadogV1::model::ToplistWidgetStacked>),
+	ToplistWidgetFlat(Box<crate::datadogV1::model::ToplistWidgetFlat>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ToplistWidgetDisplay {
@@ -19,23 +19,17 @@ impl<'de> Deserialize<'de> for ToplistWidgetDisplay {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ToplistWidgetStacked>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ToplistWidgetStacked>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ToplistWidgetDisplay::ToplistWidgetStacked(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV1::model::ToplistWidgetFlat>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ToplistWidgetFlat>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ToplistWidgetDisplay::ToplistWidgetFlat(_v));
             }
         }
-
-        return Ok(ToplistWidgetDisplay::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(ToplistWidgetDisplay::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

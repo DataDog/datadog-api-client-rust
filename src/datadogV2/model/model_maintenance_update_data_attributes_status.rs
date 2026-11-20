@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MaintenanceUpdateDataAttributesStatus {
-    SCHEDULED,
-    IN_PROGRESS,
-    COMPLETED,
-    CANCELED,
+	SCHEDULED,
+	IN_PROGRESS,
+	COMPLETED,
+	CANCELED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for MaintenanceUpdateDataAttributesStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "scheduled" => Self::SCHEDULED,
-            "in_progress" => Self::IN_PROGRESS,
-            "completed" => Self::COMPLETED,
-            "canceled" => Self::CANCELED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"scheduled" => Self::SCHEDULED,"in_progress" => Self::IN_PROGRESS,"completed" => Self::COMPLETED,"canceled" => Self::CANCELED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

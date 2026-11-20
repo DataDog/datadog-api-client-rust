@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Authentication settings for the Elasticsearch destination.
 /// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
@@ -17,8 +17,7 @@ pub struct ObservabilityPipelineElasticsearchDestinationAuth {
     pub password_key: Option<String>,
     /// The authentication strategy to use.
     #[serde(rename = "strategy")]
-    pub strategy:
-        crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
+    pub strategy: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
     /// Name of the environment variable or secret that holds the Elasticsearch username (used when `strategy` is `basic`).
     #[serde(rename = "username_key")]
     pub username_key: Option<String>,
@@ -26,13 +25,11 @@ pub struct ObservabilityPipelineElasticsearchDestinationAuth {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineElasticsearchDestinationAuth {
-    pub fn new(
-        strategy: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
-    ) -> ObservabilityPipelineElasticsearchDestinationAuth {
+    pub fn new(strategy: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy) -> ObservabilityPipelineElasticsearchDestinationAuth {
         ObservabilityPipelineElasticsearchDestinationAuth {
             password_key: None,
             strategy,
@@ -41,25 +38,24 @@ impl ObservabilityPipelineElasticsearchDestinationAuth {
             _unparsed: false,
         }
     }
-
+    
     pub fn password_key(mut self, value: String) -> Self {
         self.password_key = Some(value);
         self
     }
-
+    
     pub fn username_key(mut self, value: String) -> Self {
         self.username_key = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationAuth {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,10 +77,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationAuth
                 let mut password_key: Option<String> = None;
                 let mut strategy: Option<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy> = None;
                 let mut username_key: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -93,9 +86,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationAuth
                             if v.is_null() {
                                 continue;
                             }
-                            password_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            password_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "strategy" => {
                             strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _strategy) = strategy {
@@ -106,19 +98,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationAuth
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "username_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            username_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            username_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;

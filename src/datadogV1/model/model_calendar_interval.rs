@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Calendar interval definition.
 #[non_exhaustive]
@@ -25,7 +25,7 @@ pub struct CalendarInterval {
     pub type_: crate::datadogV1::model::CalendarIntervalType,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CalendarInterval {
@@ -38,22 +38,25 @@ impl CalendarInterval {
             _unparsed: false,
         }
     }
-
+    
     pub fn alignment(mut self, value: String) -> Self {
         self.alignment = Some(value);
         self
     }
-
+    
     pub fn quantity(mut self, value: i64) -> Self {
         self.quantity = Some(value);
         self
     }
-
+    
     pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for CalendarInterval {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,19 +88,19 @@ impl<'de> Deserialize<'de> for CalendarInterval {
                                 continue;
                             }
                             alignment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "quantity" => {
                             if v.is_null() {
                                 continue;
                             }
                             quantity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timezone" => {
                             if v.is_null() {
                                 continue;
                             }
                             timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -108,12 +111,10 @@ impl<'de> Deserialize<'de> for CalendarInterval {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

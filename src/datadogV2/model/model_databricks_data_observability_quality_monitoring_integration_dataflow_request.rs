@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data Observability, which collects lineage and data quality information from your Databricks catalogs so you can explore how data flows and detect, resolve, and prevent quality issues.
 #[non_exhaustive]
@@ -30,20 +30,19 @@ impl DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest) -> Self {
         self.settings = Some(value);
         self
     }
+    
 }
+
 
 impl Default for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest {
     fn default() -> Self {
@@ -51,17 +50,13 @@ impl Default for DatabricksDataObservabilityQualityMonitoringIntegrationDataflow
     }
 }
 
-impl<'de> Deserialize<'de>
-    for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest
-{
+impl<'de> Deserialize<'de> for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequestVisitor;
-        impl<'a> Visitor<'a>
-            for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequestVisitor
-        {
+        impl<'a> Visitor<'a> for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequestVisitor {
             type Value = DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -83,34 +78,29 @@ impl<'de> Deserialize<'de>
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content =
-                    DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest {
-                        enabled,
-                        settings,
-                        _unparsed,
-                    };
+                let content = DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequest {
+                    enabled,
+                    settings,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequestVisitor,
-        )
+        deserializer.deserialize_any(DatabricksDataObservabilityQualityMonitoringIntegrationDataflowRequestVisitor)
     }
 }

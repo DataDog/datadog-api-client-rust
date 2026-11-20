@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata object containing the publication creation information.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct DeploymentMetadata {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DeploymentMetadata {
@@ -41,35 +41,33 @@ impl DeploymentMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn user_id(mut self, value: i64) -> Self {
         self.user_id = Some(value);
         self
     }
-
+    
     pub fn user_name(mut self, value: String) -> Self {
         self.user_name = Some(value);
         self
     }
-
+    
     pub fn user_uuid(mut self, value: uuid::Uuid) -> Self {
         self.user_uuid = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DeploymentMetadata {
     fn default() -> Self {
@@ -98,10 +96,7 @@ impl<'de> Deserialize<'de> for DeploymentMetadata {
                 let mut user_id: Option<i64> = None;
                 let mut user_name: Option<String> = None;
                 let mut user_uuid: Option<uuid::Uuid> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,30 +106,30 @@ impl<'de> Deserialize<'de> for DeploymentMetadata {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_uuid" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

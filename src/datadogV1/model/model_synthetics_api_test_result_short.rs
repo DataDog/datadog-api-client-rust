@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object with the results of a single Synthetic API test.
 #[non_exhaustive]
@@ -24,16 +24,16 @@ pub struct SyntheticsAPITestResultShort {
     #[serde(rename = "result_id")]
     pub result_id: Option<String>,
     /// The status of your Synthetic monitor.
-    /// * `O` for not triggered
-    /// * `1` for triggered
-    /// * `2` for no data
+/// * `O` for not triggered
+/// * `1` for triggered
+/// * `2` for no data
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsAPITestResultShort {
@@ -48,43 +48,38 @@ impl SyntheticsAPITestResultShort {
             _unparsed: false,
         }
     }
-
+    
     pub fn check_time(mut self, value: f64) -> Self {
         self.check_time = Some(value);
         self
     }
-
+    
     pub fn probe_dc(mut self, value: String) -> Self {
         self.probe_dc = Some(value);
         self
     }
-
-    pub fn result(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsAPITestResultShortResult,
-    ) -> Self {
+    
+    pub fn result(mut self, value: crate::datadogV1::model::SyntheticsAPITestResultShortResult) -> Self {
         self.result = Some(value);
         self
     }
-
+    
     pub fn result_id(mut self, value: String) -> Self {
         self.result_id = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestMonitorStatus) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsAPITestResultShort {
     fn default() -> Self {
@@ -111,15 +106,10 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultShort {
             {
                 let mut check_time: Option<f64> = None;
                 let mut probe_dc: Option<String> = None;
-                let mut result: Option<
-                    crate::datadogV1::model::SyntheticsAPITestResultShortResult,
-                > = None;
+                let mut result: Option<crate::datadogV1::model::SyntheticsAPITestResultShortResult> = None;
                 let mut result_id: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::SyntheticsTestMonitorStatus> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -129,25 +119,25 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultShort {
                                 continue;
                             }
                             check_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "probe_dc" => {
                             if v.is_null() {
                                 continue;
                             }
                             probe_dc = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "result" => {
                             if v.is_null() {
                                 continue;
                             }
                             result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "result_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             result_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -161,12 +151,12 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultShort {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

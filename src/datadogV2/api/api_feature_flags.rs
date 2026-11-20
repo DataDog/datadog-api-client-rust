@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ExportFeatureFlagHistoryOptionalParams is a struct for passing parameters to the method [`FeatureFlagsAPI::export_feature_flag_history`]
 #[non_exhaustive]
@@ -212,18 +209,12 @@ impl ListFeatureFlagsOptionalParams {
         self
     }
     /// Filter by status across production environments. Use repeated parameters to match any selected status. `ENABLED` matches at least one enabled production environment without a variant override. `OVERRIDDEN` matches at least one enabled production environment with a variant override. `DISABLED` matches flags whose associated production environments are all disabled. A flag can match both `ENABLED` and `OVERRIDDEN` in different environments. Flags without associated production environments do not match. This does not filter by a specific environment. Unknown values do not match any status.
-    pub fn production_status(
-        mut self,
-        value: Vec<crate::datadogV2::model::FeatureFlagProductionStatus>,
-    ) -> Self {
+    pub fn production_status(mut self, value: Vec<crate::datadogV2::model::FeatureFlagProductionStatus>) -> Self {
         self.production_status = Some(value);
         self
     }
     /// Filter by SDK availability. `CLIENT` returns flags with channel `CLIENT` or `ALL`. `SERVER` returns flags with channel `SERVER` or `ALL`. `ALL`, an empty value, or omission applies no channel restriction; it does not select only flags whose channel is `ALL`. Values are case-insensitive and surrounding white space is ignored. Invalid values return a bad request error.
-    pub fn distribution_channel(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagDistributionChannel,
-    ) -> Self {
+    pub fn distribution_channel(mut self, value: crate::datadogV2::model::FeatureFlagDistributionChannel) -> Self {
         self.distribution_channel = Some(value);
         self
     }
@@ -248,10 +239,7 @@ impl ListFeatureFlagsOptionalParams {
         self
     }
     /// Filter by the computed staleness status: `ACTIVE`, `STALE`, or `PERMANENT`. Values are case-insensitive and surrounding white space is ignored. An empty value or omission applies no restriction. Invalid values return a bad request error. Read the computed result from `staleness_details.staleness_status`, not the legacy `staleness_status` response field.
-    pub fn staleness_status(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagStalenessStatus,
-    ) -> Self {
+    pub fn staleness_status(mut self, value: crate::datadogV2::model::FeatureFlagStalenessStatus) -> Self {
         self.staleness_status = Some(value);
         self
     }
@@ -321,6 +309,9 @@ impl ListFeatureFlagsEnvironmentsOptionalParams {
     }
 }
 
+
+
+
 /// ArchiveFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::archive_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -328,6 +319,7 @@ pub enum ArchiveFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAllocationsForFeatureFlagInEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::create_allocations_for_feature_flag_in_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -337,6 +329,7 @@ pub enum CreateAllocationsForFeatureFlagInEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::create_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -344,6 +337,7 @@ pub enum CreateFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateFeatureFlagsEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::create_feature_flags_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -353,6 +347,7 @@ pub enum CreateFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateVariantForFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::create_variant_for_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -360,6 +355,7 @@ pub enum CreateVariantForFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteFeatureFlagsEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::delete_feature_flags_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -369,6 +365,7 @@ pub enum DeleteFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteVariantFromFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::delete_variant_from_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -376,6 +373,7 @@ pub enum DeleteVariantFromFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DisableFeatureFlagEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::disable_feature_flag_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -385,6 +383,7 @@ pub enum DisableFeatureFlagEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// EnableFeatureFlagEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::enable_feature_flag_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -392,6 +391,7 @@ pub enum EnableFeatureFlagEnvironmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ExportFeatureFlagHistoryError is a struct for typed errors of method [`FeatureFlagsAPI::export_feature_flag_history`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -402,6 +402,7 @@ pub enum ExportFeatureFlagHistoryError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::get_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -410,6 +411,7 @@ pub enum GetFeatureFlagError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetFeatureFlagsEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::get_feature_flags_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -417,6 +419,7 @@ pub enum GetFeatureFlagsEnvironmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetSavedFilterError is a struct for typed errors of method [`FeatureFlagsAPI::get_saved_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -427,6 +430,7 @@ pub enum GetSavedFilterError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListFeatureFlagHistoryError is a struct for typed errors of method [`FeatureFlagsAPI::list_feature_flag_history`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -435,6 +439,7 @@ pub enum ListFeatureFlagHistoryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListFeatureFlagsError is a struct for typed errors of method [`FeatureFlagsAPI::list_feature_flags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -445,6 +450,7 @@ pub enum ListFeatureFlagsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListFeatureFlagsEnvironmentsError is a struct for typed errors of method [`FeatureFlagsAPI::list_feature_flags_environments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -452,6 +458,7 @@ pub enum ListFeatureFlagsEnvironmentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PauseExposureScheduleError is a struct for typed errors of method [`FeatureFlagsAPI::pause_exposure_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -461,6 +468,7 @@ pub enum PauseExposureScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ResumeExposureScheduleError is a struct for typed errors of method [`FeatureFlagsAPI::resume_exposure_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -468,6 +476,7 @@ pub enum ResumeExposureScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// StartExposureScheduleError is a struct for typed errors of method [`FeatureFlagsAPI::start_exposure_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -477,6 +486,7 @@ pub enum StartExposureScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// StopExposureScheduleError is a struct for typed errors of method [`FeatureFlagsAPI::stop_exposure_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -484,6 +494,7 @@ pub enum StopExposureScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UnarchiveFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::unarchive_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -493,6 +504,7 @@ pub enum UnarchiveFeatureFlagError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateAllocationsForFeatureFlagInEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::update_allocations_for_feature_flag_in_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -500,6 +512,7 @@ pub enum UpdateAllocationsForFeatureFlagInEnvironmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::update_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -509,6 +522,7 @@ pub enum UpdateFeatureFlagError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateFeatureFlagsEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::update_feature_flags_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -516,6 +530,7 @@ pub enum UpdateFeatureFlagsEnvironmentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateSavedFilterAttributesError is a struct for typed errors of method [`FeatureFlagsAPI::update_saved_filter_attributes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -528,6 +543,7 @@ pub enum UpdateSavedFilterAttributesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateVariantForFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::update_variant_for_feature_flag`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -535,6 +551,7 @@ pub enum UpdateVariantForFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage feature flags and environments.
 #[derive(Debug, Clone)]
@@ -558,7 +575,8 @@ impl FeatureFlagsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -603,62 +621,52 @@ impl FeatureFlagsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Archives a feature flag. Archived flags are
-    /// hidden from the main list but remain accessible and can be unarchived.
-    pub async fn archive_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<ArchiveFeatureFlagError>>
-    {
-        match self
-            .archive_feature_flag_with_http_info(feature_flag_id)
-            .await
-        {
+/// hidden from the main list but remain accessible and can be unarchived.
+    pub async fn archive_feature_flag(&self, feature_flag_id: uuid::Uuid) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<ArchiveFeatureFlagError>> {
+        match self.archive_feature_flag_with_http_info(feature_flag_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Archives a feature flag. Archived flags are
-    /// hidden from the main list but remain accessible and can be unarchived.
-    pub async fn archive_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
-        datadog::Error<ArchiveFeatureFlagError>,
-    > {
+/// hidden from the main list but remain accessible and can be unarchived.
+    pub async fn archive_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>, datadog::Error<ArchiveFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.archive_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/archive",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -671,22 +679,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -698,89 +700,62 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ArchiveFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ArchiveFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new targeting rule (allocation) for a specific feature flag in a specific environment.
-    pub async fn create_allocations_for_feature_flag_in_environment(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateAllocationsRequest,
-    ) -> Result<
-        crate::datadogV2::model::AllocationResponse,
-        datadog::Error<CreateAllocationsForFeatureFlagInEnvironmentError>,
-    > {
-        match self
-            .create_allocations_for_feature_flag_in_environment_with_http_info(
-                feature_flag_id,
-                environment_id,
-                body,
-            )
-            .await
-        {
+    pub async fn create_allocations_for_feature_flag_in_environment(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid, body: crate::datadogV2::model::CreateAllocationsRequest) -> Result<crate::datadogV2::model::AllocationResponse, datadog::Error<CreateAllocationsForFeatureFlagInEnvironmentError>> {
+        match self.create_allocations_for_feature_flag_in_environment_with_http_info(feature_flag_id, environment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new targeting rule (allocation) for a specific feature flag in a specific environment.
-    pub async fn create_allocations_for_feature_flag_in_environment_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateAllocationsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AllocationResponse>,
-        datadog::Error<CreateAllocationsForFeatureFlagInEnvironmentError>,
-    > {
+    pub async fn create_allocations_for_feature_flag_in_environment_with_http_info(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid, body: crate::datadogV2::model::CreateAllocationsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AllocationResponse>, datadog::Error<CreateAllocationsForFeatureFlagInEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_allocations_for_feature_flag_in_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/allocations",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -793,23 +768,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -817,7 +785,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -827,7 +798,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -849,7 +823,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -866,74 +840,58 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AllocationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AllocationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAllocationsForFeatureFlagInEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAllocationsForFeatureFlagInEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new feature flag with variants.
-    pub async fn create_feature_flag(
-        &self,
-        body: crate::datadogV2::model::CreateFeatureFlagRequest,
-    ) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<CreateFeatureFlagError>>
-    {
+    pub async fn create_feature_flag(&self, body: crate::datadogV2::model::CreateFeatureFlagRequest) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<CreateFeatureFlagError>> {
         match self.create_feature_flag_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new feature flag with variants.
-    pub async fn create_feature_flag_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateFeatureFlagRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
-        datadog::Error<CreateFeatureFlagError>,
-    > {
+    pub async fn create_feature_flag_with_http_info(&self, body: crate::datadogV2::model::CreateFeatureFlagRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>, datadog::Error<CreateFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -946,23 +904,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -970,7 +921,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -980,7 +934,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1002,7 +959,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1019,79 +976,58 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new environment for organizing feature flags.
-    pub async fn create_feature_flags_environment(
-        &self,
-        body: crate::datadogV2::model::CreateEnvironmentRequest,
-    ) -> Result<
-        crate::datadogV2::model::EnvironmentResponse,
-        datadog::Error<CreateFeatureFlagsEnvironmentError>,
-    > {
-        match self
-            .create_feature_flags_environment_with_http_info(body)
-            .await
-        {
+    pub async fn create_feature_flags_environment(&self, body: crate::datadogV2::model::CreateEnvironmentRequest) -> Result<crate::datadogV2::model::EnvironmentResponse, datadog::Error<CreateFeatureFlagsEnvironmentError>> {
+        match self.create_feature_flags_environment_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new environment for organizing feature flags.
-    pub async fn create_feature_flags_environment_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateEnvironmentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>,
-        datadog::Error<CreateFeatureFlagsEnvironmentError>,
-    > {
+    pub async fn create_feature_flags_environment_with_http_info(&self, body: crate::datadogV2::model::CreateEnvironmentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>, datadog::Error<CreateFeatureFlagsEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_feature_flags_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1104,23 +1040,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1128,7 +1057,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1138,7 +1070,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1160,7 +1095,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1177,94 +1112,72 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFeatureFlagsEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateFeatureFlagsEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Adds a single new variant to an existing feature flag. This endpoint is
-    /// additive-only: it never modifies existing variants. A request whose `key`
-    /// already exists on the flag is rejected with `409 Conflict`; a `value`
-    /// whose type does not match the flag's `value_type` is rejected with `400`.
-    /// The server generates the variant UUID and returns it in the response body;
-    /// callers (for example, the flag-migration tool) need this UUID to reference
-    /// the new variant in subsequent allocation syncs.
-    pub async fn create_variant_for_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateVariantRequest,
-    ) -> Result<
-        crate::datadogV2::model::VariantResponse,
-        datadog::Error<CreateVariantForFeatureFlagError>,
-    > {
-        match self
-            .create_variant_for_feature_flag_with_http_info(feature_flag_id, body)
-            .await
-        {
+/// additive-only: it never modifies existing variants. A request whose `key`
+/// already exists on the flag is rejected with `409 Conflict`; a `value`
+/// whose type does not match the flag's `value_type` is rejected with `400`.
+/// The server generates the variant UUID and returns it in the response body;
+/// callers (for example, the flag-migration tool) need this UUID to reference
+/// the new variant in subsequent allocation syncs.
+    pub async fn create_variant_for_feature_flag(&self, feature_flag_id: uuid::Uuid, body: crate::datadogV2::model::CreateVariantRequest) -> Result<crate::datadogV2::model::VariantResponse, datadog::Error<CreateVariantForFeatureFlagError>> {
+        match self.create_variant_for_feature_flag_with_http_info(feature_flag_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Adds a single new variant to an existing feature flag. This endpoint is
-    /// additive-only: it never modifies existing variants. A request whose `key`
-    /// already exists on the flag is rejected with `409 Conflict`; a `value`
-    /// whose type does not match the flag's `value_type` is rejected with `400`.
-    /// The server generates the variant UUID and returns it in the response body;
-    /// callers (for example, the flag-migration tool) need this UUID to reference
-    /// the new variant in subsequent allocation syncs.
-    pub async fn create_variant_for_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::CreateVariantRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::VariantResponse>,
-        datadog::Error<CreateVariantForFeatureFlagError>,
-    > {
+/// additive-only: it never modifies existing variants. A request whose `key`
+/// already exists on the flag is rejected with `409 Conflict`; a `value`
+/// whose type does not match the flag's `value_type` is rejected with `400`.
+/// The server generates the variant UUID and returns it in the response body;
+/// callers (for example, the flag-migration tool) need this UUID to reference
+/// the new variant in subsequent allocation syncs.
+    pub async fn create_variant_for_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid, body: crate::datadogV2::model::CreateVariantRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::VariantResponse>, datadog::Error<CreateVariantForFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_variant_for_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1277,23 +1190,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1301,7 +1207,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1311,7 +1220,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1333,7 +1245,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1351,63 +1263,52 @@ impl FeatureFlagsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::VariantResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateVariantForFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateVariantForFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes an environment. This operation cannot be undone.
-    pub async fn delete_feature_flags_environment(
-        &self,
-        environment_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteFeatureFlagsEnvironmentError>> {
-        match self
-            .delete_feature_flags_environment_with_http_info(environment_id)
-            .await
-        {
+    pub async fn delete_feature_flags_environment(&self, environment_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteFeatureFlagsEnvironmentError>> {
+        match self.delete_feature_flags_environment_with_http_info(environment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes an environment. This operation cannot be undone.
-    pub async fn delete_feature_flags_environment_with_http_info(
-        &self,
-        environment_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFeatureFlagsEnvironmentError>>
-    {
+    pub async fn delete_feature_flags_environment_with_http_info(&self, environment_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFeatureFlagsEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_feature_flags_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1420,22 +1321,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1453,60 +1348,50 @@ impl FeatureFlagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteFeatureFlagsEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteFeatureFlagsEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a variant from a feature flag.
-    ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
-    pub async fn delete_variant_from_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        variant_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteVariantFromFeatureFlagError>> {
-        match self
-            .delete_variant_from_feature_flag_with_http_info(feature_flag_id, variant_id)
-            .await
-        {
+///
+/// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn delete_variant_from_feature_flag(&self, feature_flag_id: uuid::Uuid, variant_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteVariantFromFeatureFlagError>> {
+        match self.delete_variant_from_feature_flag_with_http_info(feature_flag_id, variant_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a variant from a feature flag.
-    ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
-    pub async fn delete_variant_from_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        variant_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteVariantFromFeatureFlagError>>
-    {
+///
+/// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn delete_variant_from_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid, variant_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteVariantFromFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_variant_from_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            variant_id = datadog::urlencode(variant_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , variant_id=
+            datadog::urlencode(variant_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1519,22 +1404,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1552,56 +1431,46 @@ impl FeatureFlagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteVariantFromFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteVariantFromFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disable a feature flag in a specific environment.
-    pub async fn disable_feature_flag_environment(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DisableFeatureFlagEnvironmentError>> {
-        match self
-            .disable_feature_flag_environment_with_http_info(feature_flag_id, environment_id)
-            .await
-        {
+    pub async fn disable_feature_flag_environment(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid) -> Result<(), datadog::Error<DisableFeatureFlagEnvironmentError>> {
+        match self.disable_feature_flag_environment_with_http_info(feature_flag_id, environment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable a feature flag in a specific environment.
-    pub async fn disable_feature_flag_environment_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DisableFeatureFlagEnvironmentError>>
-    {
+    pub async fn disable_feature_flag_environment_with_http_info(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DisableFeatureFlagEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.disable_feature_flag_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/disable",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1614,22 +1483,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1647,56 +1510,46 @@ impl FeatureFlagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DisableFeatureFlagEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DisableFeatureFlagEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable a feature flag in a specific environment.
-    pub async fn enable_feature_flag_environment(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<EnableFeatureFlagEnvironmentError>> {
-        match self
-            .enable_feature_flag_environment_with_http_info(feature_flag_id, environment_id)
-            .await
-        {
+    pub async fn enable_feature_flag_environment(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid) -> Result<(), datadog::Error<EnableFeatureFlagEnvironmentError>> {
+        match self.enable_feature_flag_environment_with_http_info(feature_flag_id, environment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable a feature flag in a specific environment.
-    pub async fn enable_feature_flag_environment_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<EnableFeatureFlagEnvironmentError>>
-    {
+    pub async fn enable_feature_flag_environment_with_http_info(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<EnableFeatureFlagEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.enable_feature_flag_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/enable",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1709,22 +1562,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1742,62 +1589,47 @@ impl FeatureFlagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<EnableFeatureFlagEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<EnableFeatureFlagEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Exports the organization's feature flag change events as a CSV file, newest first, without pagination.
-    /// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
-    /// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
-    ///
-    /// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
-    /// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
-    /// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
-    /// narrow the date range.
-    pub async fn export_feature_flag_history(
-        &self,
-        params: ExportFeatureFlagHistoryOptionalParams,
-    ) -> Result<String, datadog::Error<ExportFeatureFlagHistoryError>> {
-        match self
-            .export_feature_flag_history_with_http_info(params)
-            .await
-        {
+/// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
+/// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
+///
+/// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
+/// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
+/// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
+/// narrow the date range.
+    pub async fn export_feature_flag_history(&self, params: ExportFeatureFlagHistoryOptionalParams) -> Result<String, datadog::Error<ExportFeatureFlagHistoryError>> {
+        match self.export_feature_flag_history_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Exports the organization's feature flag change events as a CSV file, newest first, without pagination.
-    /// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
-    /// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
-    ///
-    /// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
-    /// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
-    /// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
-    /// narrow the date range.
-    pub async fn export_feature_flag_history_with_http_info(
-        &self,
-        params: ExportFeatureFlagHistoryOptionalParams,
-    ) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportFeatureFlagHistoryError>>
-    {
+/// It accepts the same filters as the List feature flag change history endpoint, and its columns match the CSV export on the flag history page:
+/// Flag Version, Flag Name, Flag Key, Flag UUID, Action, User Name, User Email, User Type, Environment, and Timestamp.
+///
+/// If an export fails before the file starts, the response is a JSON:API error. Large exports stream as they are read.
+/// If an export fails after streaming starts, the connection closes before the file ends, so the download fails instead of
+/// returning a file with missing rows. An export must finish within the 60-second request timeout. If an export times out,
+/// narrow the date range.
+    pub async fn export_feature_flag_history_with_http_info(&self, params: ExportFeatureFlagHistoryOptionalParams) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportFeatureFlagHistoryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.export_feature_flag_history";
 
+        
         // unbox and build optional parameters
         let start_date = params.start_date;
         let end_date = params.end_date;
@@ -1811,49 +1643,39 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/history/export",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = start_date {
-            local_req_builder = local_req_builder.query(&[(
-                "start_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("start_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = end_date {
-            local_req_builder = local_req_builder.query(&[(
-                "end_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
-        if let Some(ref local) = teams {
-            for param in local {
+        if let Some(ref local) = teams {for param in local {
                 local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
             }
         };
-        if let Some(ref local) = tags {
-            for param in local {
+        if let Some(ref local) = tags {for param in local {
                 local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = feature_flag_id {
-            local_req_builder =
-                local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = environment_id {
-            local_req_builder =
-                local_req_builder.query(&[("environment_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("environment_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_suggestion_events {
-            local_req_builder = local_req_builder
-                .query(&[("include_suggestion_events", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_suggestion_events", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1866,22 +1688,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1899,63 +1715,52 @@ impl FeatureFlagsAPI {
                 entity: Some(local_content),
             })
         } else {
-            let local_entity: Option<ExportFeatureFlagHistoryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ExportFeatureFlagHistoryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the details of a specific feature flag
-    /// including variants and environment status.
-    pub async fn get_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<GetFeatureFlagError>>
-    {
+/// including variants and environment status.
+    pub async fn get_feature_flag(&self, feature_flag_id: uuid::Uuid) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<GetFeatureFlagError>> {
         match self.get_feature_flag_with_http_info(feature_flag_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the details of a specific feature flag
-    /// including variants and environment status.
-    pub async fn get_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
-        datadog::Error<GetFeatureFlagError>,
-    > {
+/// including variants and environment status.
+    pub async fn get_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>, datadog::Error<GetFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1968,22 +1773,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1995,79 +1794,59 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the details of a specific environment.
-    pub async fn get_feature_flags_environment(
-        &self,
-        environment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::EnvironmentResponse,
-        datadog::Error<GetFeatureFlagsEnvironmentError>,
-    > {
-        match self
-            .get_feature_flags_environment_with_http_info(environment_id)
-            .await
-        {
+    pub async fn get_feature_flags_environment(&self, environment_id: uuid::Uuid) -> Result<crate::datadogV2::model::EnvironmentResponse, datadog::Error<GetFeatureFlagsEnvironmentError>> {
+        match self.get_feature_flags_environment_with_http_info(environment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the details of a specific environment.
-    pub async fn get_feature_flags_environment_with_http_info(
-        &self,
-        environment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>,
-        datadog::Error<GetFeatureFlagsEnvironmentError>,
-    > {
+    pub async fn get_feature_flags_environment_with_http_info(&self, environment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>, datadog::Error<GetFeatureFlagsEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_feature_flags_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2080,22 +1859,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2107,82 +1880,67 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFeatureFlagsEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetFeatureFlagsEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a saved filter by ID, including its full targeting rules, conditions, and values.
-    /// Supports both saved lists and saved rules. Targeting rules are combined with OR,
-    /// and conditions within each rule are combined with AND.
-    /// Returns the stored filter definition rather than evaluating it against users or organizations.
-    /// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
-    pub async fn get_saved_filter(
-        &self,
-        saved_filter_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::SavedFilterResponse, datadog::Error<GetSavedFilterError>>
-    {
+/// Supports both saved lists and saved rules. Targeting rules are combined with OR,
+/// and conditions within each rule are combined with AND.
+/// Returns the stored filter definition rather than evaluating it against users or organizations.
+/// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
+    pub async fn get_saved_filter(&self, saved_filter_id: uuid::Uuid) -> Result<crate::datadogV2::model::SavedFilterResponse, datadog::Error<GetSavedFilterError>> {
         match self.get_saved_filter_with_http_info(saved_filter_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a saved filter by ID, including its full targeting rules, conditions, and values.
-    /// Supports both saved lists and saved rules. Targeting rules are combined with OR,
-    /// and conditions within each rule are combined with AND.
-    /// Returns the stored filter definition rather than evaluating it against users or organizations.
-    /// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
-    pub async fn get_saved_filter_with_http_info(
-        &self,
-        saved_filter_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SavedFilterResponse>,
-        datadog::Error<GetSavedFilterError>,
-    > {
+/// Supports both saved lists and saved rules. Targeting rules are combined with OR,
+/// and conditions within each rule are combined with AND.
+/// Returns the stored filter definition rather than evaluating it against users or organizations.
+/// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
+    pub async fn get_saved_filter_with_http_info(&self, saved_filter_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::SavedFilterResponse>, datadog::Error<GetSavedFilterError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_saved_filter";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/saved-filters/{saved_filter_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            saved_filter_id = datadog::urlencode(saved_filter_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), saved_filter_id=
+            datadog::urlencode(saved_filter_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2195,22 +1953,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2222,69 +1974,48 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SavedFilterResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SavedFilterResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetSavedFilterError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetSavedFilterError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the organization's feature flag change events, newest first.
-    /// Each event includes a readable description of the change.
-    /// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
-    /// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
-    pub async fn list_feature_flag_history(
-        &self,
-        params: ListFeatureFlagHistoryOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListFeatureFlagHistoryResponse,
-        datadog::Error<ListFeatureFlagHistoryError>,
-    > {
-        match self.list_feature_flag_history_with_http_info(params).await {
+/// Each event includes a readable description of the change.
+/// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
+/// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
+    pub async fn list_feature_flag_history(&self, params: ListFeatureFlagHistoryOptionalParams) -> Result<crate::datadogV2::model::ListFeatureFlagHistoryResponse, datadog::Error<ListFeatureFlagHistoryError>> {
+        match self.list_feature_flag_history_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the organization's feature flag change events, newest first.
-    /// Each event includes a readable description of the change.
-    /// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
-    /// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
-    pub async fn list_feature_flag_history_with_http_info(
-        &self,
-        params: ListFeatureFlagHistoryOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListFeatureFlagHistoryResponse>,
-        datadog::Error<ListFeatureFlagHistoryError>,
-    > {
+/// Each event includes a readable description of the change.
+/// All filters are optional, and events must match every filter you set. Without a date range, the whole history is listed.
+/// Results are paginated with `page[limit]` and `page[offset]`; follow `links.next` to read further back.
+    pub async fn list_feature_flag_history_with_http_info(&self, params: ListFeatureFlagHistoryOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListFeatureFlagHistoryResponse>, datadog::Error<ListFeatureFlagHistoryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_feature_flag_history";
 
+        
         // unbox and build optional parameters
         let start_date = params.start_date;
         let end_date = params.end_date;
@@ -2300,57 +2031,45 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/history",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = start_date {
-            local_req_builder = local_req_builder.query(&[(
-                "start_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("start_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = end_date {
-            local_req_builder = local_req_builder.query(&[(
-                "end_date",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("end_date", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
-        if let Some(ref local) = teams {
-            for param in local {
+        if let Some(ref local) = teams {for param in local {
                 local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
             }
         };
-        if let Some(ref local) = tags {
-            for param in local {
+        if let Some(ref local) = tags {for param in local {
                 local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = feature_flag_id {
-            local_req_builder =
-                local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("feature_flag_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = environment_id {
-            local_req_builder =
-                local_req_builder.query(&[("environment_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("environment_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_suggestion_events {
-            local_req_builder = local_req_builder
-                .query(&[("include_suggestion_events", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_suggestion_events", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2363,22 +2082,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2390,67 +2103,46 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListFeatureFlagHistoryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListFeatureFlagHistoryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFeatureFlagHistoryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListFeatureFlagHistoryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a paginated list of feature flags for the organization.
-    /// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
-    /// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
-    pub async fn list_feature_flags(
-        &self,
-        params: ListFeatureFlagsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListFeatureFlagsResponse,
-        datadog::Error<ListFeatureFlagsError>,
-    > {
-        match self.list_feature_flags_with_http_info(params).await {
+/// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
+/// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
+    pub async fn list_feature_flags(&self, params: ListFeatureFlagsOptionalParams) -> Result<crate::datadogV2::model::ListFeatureFlagsResponse, datadog::Error<ListFeatureFlagsError>> {
+        match self.list_feature_flags_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a paginated list of feature flags for the organization.
-    /// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
-    /// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
-    pub async fn list_feature_flags_with_http_info(
-        &self,
-        params: ListFeatureFlagsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListFeatureFlagsResponse>,
-        datadog::Error<ListFeatureFlagsError>,
-    > {
+/// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
+/// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
+    pub async fn list_feature_flags_with_http_info(&self, params: ListFeatureFlagsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListFeatureFlagsResponse>, datadog::Error<ListFeatureFlagsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_feature_flags";
 
+        
         // unbox and build optional parameters
         let key = params.key;
         let is_archived = params.is_archived;
@@ -2474,89 +2166,73 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = key {
-            local_req_builder = local_req_builder.query(&[("key", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("key", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = is_archived {
-            local_req_builder =
-                local_req_builder.query(&[("is_archived", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("is_archived", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = offset {
-            local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("offset", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = tags {
-            for param in local {
+        if let Some(ref local) = tags {for param in local {
                 local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
             }
         };
-        if let Some(ref local) = teams {
-            for param in local {
+        if let Some(ref local) = teams {for param in local {
                 local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
             }
         };
-        if let Some(ref local) = production_status {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("production_status", &param.to_string())]);
+        if let Some(ref local) = production_status {for param in local {
+                local_req_builder = local_req_builder.query(&[("production_status", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = distribution_channel {
-            local_req_builder = local_req_builder
-                .query(&[("distribution_channel", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("distribution_channel", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = value_type {
-            for param in local {
+        if let Some(ref local) = value_type {for param in local {
                 local_req_builder = local_req_builder.query(&[("value_type", &param.to_string())]);
             }
         };
-        if let Some(ref local) = created_by {
-            for param in local {
+        if let Some(ref local) = created_by {for param in local {
                 local_req_builder = local_req_builder.query(&[("created_by", &param.to_string())]);
             }
         };
-        if let Some(ref local) = flag_ids {
-            for param in local {
+        if let Some(ref local) = flag_ids {for param in local {
                 local_req_builder = local_req_builder.query(&[("flag_ids", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = staleness_status {
-            local_req_builder =
-                local_req_builder.query(&[("staleness_status", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("staleness_status", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = saved_filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("saved_filter_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("saved_filter_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2569,22 +2245,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2596,68 +2266,44 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListFeatureFlagsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListFeatureFlagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFeatureFlagsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListFeatureFlagsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a list of environments for the organization.
-    /// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
-    pub async fn list_feature_flags_environments(
-        &self,
-        params: ListFeatureFlagsEnvironmentsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListEnvironmentsResponse,
-        datadog::Error<ListFeatureFlagsEnvironmentsError>,
-    > {
-        match self
-            .list_feature_flags_environments_with_http_info(params)
-            .await
-        {
+/// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
+    pub async fn list_feature_flags_environments(&self, params: ListFeatureFlagsEnvironmentsOptionalParams) -> Result<crate::datadogV2::model::ListEnvironmentsResponse, datadog::Error<ListFeatureFlagsEnvironmentsError>> {
+        match self.list_feature_flags_environments_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a list of environments for the organization.
-    /// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
-    pub async fn list_feature_flags_environments_with_http_info(
-        &self,
-        params: ListFeatureFlagsEnvironmentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListEnvironmentsResponse>,
-        datadog::Error<ListFeatureFlagsEnvironmentsError>,
-    > {
+/// Use `dd_env` to filter by an exact DD_ENV value in an environment's `queries` list.
+    pub async fn list_feature_flags_environments_with_http_info(&self, params: ListFeatureFlagsEnvironmentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListEnvironmentsResponse>, datadog::Error<ListFeatureFlagsEnvironmentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_feature_flags_environments";
 
+        
         // unbox and build optional parameters
         let name = params.name;
         let key = params.key;
@@ -2669,34 +2315,31 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = name {
-            local_req_builder =
-                local_req_builder.query(&[("name", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("name", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = key {
-            local_req_builder = local_req_builder.query(&[("key", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("key", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = dd_env {
-            local_req_builder =
-                local_req_builder.query(&[("dd_env", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("dd_env", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = offset {
-            local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("offset", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2709,22 +2352,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2736,79 +2373,59 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListEnvironmentsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListEnvironmentsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFeatureFlagsEnvironmentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListFeatureFlagsEnvironmentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Pauses a progressive rollout while preserving rollout state.
-    pub async fn pause_exposure_schedule(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::AllocationExposureScheduleResponse,
-        datadog::Error<PauseExposureScheduleError>,
-    > {
-        match self
-            .pause_exposure_schedule_with_http_info(exposure_schedule_id)
-            .await
-        {
+    pub async fn pause_exposure_schedule(&self, exposure_schedule_id: uuid::Uuid) -> Result<crate::datadogV2::model::AllocationExposureScheduleResponse, datadog::Error<PauseExposureScheduleError>> {
+        match self.pause_exposure_schedule_with_http_info(exposure_schedule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Pauses a progressive rollout while preserving rollout state.
-    pub async fn pause_exposure_schedule_with_http_info(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>,
-        datadog::Error<PauseExposureScheduleError>,
-    > {
+    pub async fn pause_exposure_schedule_with_http_info(&self, exposure_schedule_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>, datadog::Error<PauseExposureScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.pause_exposure_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/pause",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_schedule_id=
+            datadog::urlencode(exposure_schedule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2821,22 +2438,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2848,79 +2459,59 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PauseExposureScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PauseExposureScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Resumes progression for a previously paused progressive rollout.
-    pub async fn resume_exposure_schedule(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::AllocationExposureScheduleResponse,
-        datadog::Error<ResumeExposureScheduleError>,
-    > {
-        match self
-            .resume_exposure_schedule_with_http_info(exposure_schedule_id)
-            .await
-        {
+    pub async fn resume_exposure_schedule(&self, exposure_schedule_id: uuid::Uuid) -> Result<crate::datadogV2::model::AllocationExposureScheduleResponse, datadog::Error<ResumeExposureScheduleError>> {
+        match self.resume_exposure_schedule_with_http_info(exposure_schedule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Resumes progression for a previously paused progressive rollout.
-    pub async fn resume_exposure_schedule_with_http_info(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>,
-        datadog::Error<ResumeExposureScheduleError>,
-    > {
+    pub async fn resume_exposure_schedule_with_http_info(&self, exposure_schedule_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>, datadog::Error<ResumeExposureScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.resume_exposure_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/resume",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_schedule_id=
+            datadog::urlencode(exposure_schedule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2933,22 +2524,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2960,79 +2545,59 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ResumeExposureScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ResumeExposureScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Starts a progressive rollout and begins progression.
-    pub async fn start_exposure_schedule(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::AllocationExposureScheduleResponse,
-        datadog::Error<StartExposureScheduleError>,
-    > {
-        match self
-            .start_exposure_schedule_with_http_info(exposure_schedule_id)
-            .await
-        {
+    pub async fn start_exposure_schedule(&self, exposure_schedule_id: uuid::Uuid) -> Result<crate::datadogV2::model::AllocationExposureScheduleResponse, datadog::Error<StartExposureScheduleError>> {
+        match self.start_exposure_schedule_with_http_info(exposure_schedule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Starts a progressive rollout and begins progression.
-    pub async fn start_exposure_schedule_with_http_info(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>,
-        datadog::Error<StartExposureScheduleError>,
-    > {
+    pub async fn start_exposure_schedule_with_http_info(&self, exposure_schedule_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>, datadog::Error<StartExposureScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.start_exposure_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/start",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_schedule_id=
+            datadog::urlencode(exposure_schedule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3045,22 +2610,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3072,79 +2631,59 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<StartExposureScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<StartExposureScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Stops a progressive rollout and marks it as aborted.
-    pub async fn stop_exposure_schedule(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::AllocationExposureScheduleResponse,
-        datadog::Error<StopExposureScheduleError>,
-    > {
-        match self
-            .stop_exposure_schedule_with_http_info(exposure_schedule_id)
-            .await
-        {
+    pub async fn stop_exposure_schedule(&self, exposure_schedule_id: uuid::Uuid) -> Result<crate::datadogV2::model::AllocationExposureScheduleResponse, datadog::Error<StopExposureScheduleError>> {
+        match self.stop_exposure_schedule_with_http_info(exposure_schedule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Stops a progressive rollout and marks it as aborted.
-    pub async fn stop_exposure_schedule_with_http_info(
-        &self,
-        exposure_schedule_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>,
-        datadog::Error<StopExposureScheduleError>,
-    > {
+    pub async fn stop_exposure_schedule_with_http_info(&self, exposure_schedule_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::AllocationExposureScheduleResponse>, datadog::Error<StopExposureScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.stop_exposure_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/stop",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_schedule_id=
+            datadog::urlencode(exposure_schedule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3157,22 +2696,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3184,81 +2717,61 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AllocationExposureScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<StopExposureScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<StopExposureScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Unarchives a previously archived feature flag,
-    /// making it visible in the main list again.
-    pub async fn unarchive_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::FeatureFlagResponse,
-        datadog::Error<UnarchiveFeatureFlagError>,
-    > {
-        match self
-            .unarchive_feature_flag_with_http_info(feature_flag_id)
-            .await
-        {
+/// making it visible in the main list again.
+    pub async fn unarchive_feature_flag(&self, feature_flag_id: uuid::Uuid) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<UnarchiveFeatureFlagError>> {
+        match self.unarchive_feature_flag_with_http_info(feature_flag_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Unarchives a previously archived feature flag,
-    /// making it visible in the main list again.
-    pub async fn unarchive_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
-        datadog::Error<UnarchiveFeatureFlagError>,
-    > {
+/// making it visible in the main list again.
+    pub async fn unarchive_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>, datadog::Error<UnarchiveFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unarchive_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/unarchive",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3271,22 +2784,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3298,91 +2805,64 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UnarchiveFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnarchiveFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates targeting rules (allocations) for a specific feature flag in a specific environment.
-    /// This operation replaces the existing allocation set with the request payload.
-    pub async fn update_allocations_for_feature_flag_in_environment(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::OverwriteAllocationsRequest,
-    ) -> Result<
-        crate::datadogV2::model::ListAllocationsResponse,
-        datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>,
-    > {
-        match self
-            .update_allocations_for_feature_flag_in_environment_with_http_info(
-                feature_flag_id,
-                environment_id,
-                body,
-            )
-            .await
-        {
+/// This operation replaces the existing allocation set with the request payload.
+    pub async fn update_allocations_for_feature_flag_in_environment(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid, body: crate::datadogV2::model::OverwriteAllocationsRequest) -> Result<crate::datadogV2::model::ListAllocationsResponse, datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>> {
+        match self.update_allocations_for_feature_flag_in_environment_with_http_info(feature_flag_id, environment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates targeting rules (allocations) for a specific feature flag in a specific environment.
-    /// This operation replaces the existing allocation set with the request payload.
-    pub async fn update_allocations_for_feature_flag_in_environment_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::OverwriteAllocationsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListAllocationsResponse>,
-        datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>,
-    > {
+/// This operation replaces the existing allocation set with the request payload.
+    pub async fn update_allocations_for_feature_flag_in_environment_with_http_info(&self, feature_flag_id: uuid::Uuid, environment_id: uuid::Uuid, body: crate::datadogV2::model::OverwriteAllocationsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListAllocationsResponse>, datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_allocations_for_feature_flag_in_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/allocations",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3395,23 +2875,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3419,7 +2892,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3429,7 +2905,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3451,7 +2930,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3468,92 +2947,72 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListAllocationsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListAllocationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateAllocationsForFeatureFlagInEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAllocationsForFeatureFlagInEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing feature flag's metadata such as
-    ///  name and description. Does not modify targeting rules or allocations.
-    ///
-    /// To change the owning team, update `tags` and include a tag of the form
-    /// `team:<team-handle>` in the array. `tags` is a full replacement of the
-    /// existing tag set (including any `team:` tag), so include every tag you
-    /// want to keep, not just the ones you're adding.
-    pub async fn update_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateFeatureFlagRequest,
-    ) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<UpdateFeatureFlagError>>
-    {
-        match self
-            .update_feature_flag_with_http_info(feature_flag_id, body)
-            .await
-        {
+///  name and description. Does not modify targeting rules or allocations.
+///
+/// To change the owning team, update `tags` and include a tag of the form
+/// `team:<team-handle>` in the array. `tags` is a full replacement of the
+/// existing tag set (including any `team:` tag), so include every tag you
+/// want to keep, not just the ones you're adding.
+    pub async fn update_feature_flag(&self, feature_flag_id: uuid::Uuid, body: crate::datadogV2::model::UpdateFeatureFlagRequest) -> Result<crate::datadogV2::model::FeatureFlagResponse, datadog::Error<UpdateFeatureFlagError>> {
+        match self.update_feature_flag_with_http_info(feature_flag_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing feature flag's metadata such as
-    ///  name and description. Does not modify targeting rules or allocations.
-    ///
-    /// To change the owning team, update `tags` and include a tag of the form
-    /// `team:<team-handle>` in the array. `tags` is a full replacement of the
-    /// existing tag set (including any `team:` tag), so include every tag you
-    /// want to keep, not just the ones you're adding.
-    pub async fn update_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateFeatureFlagRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>,
-        datadog::Error<UpdateFeatureFlagError>,
-    > {
+///  name and description. Does not modify targeting rules or allocations.
+///
+/// To change the owning team, update `tags` and include a tag of the form
+/// `team:<team-handle>` in the array. `tags` is a full replacement of the
+/// existing tag set (including any `team:` tag), so include every tag you
+/// want to keep, not just the ones you're adding.
+    pub async fn update_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid, body: crate::datadogV2::model::UpdateFeatureFlagRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FeatureFlagResponse>, datadog::Error<UpdateFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3566,23 +3025,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3590,7 +3042,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3600,7 +3055,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3622,7 +3080,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3639,94 +3097,72 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FeatureFlagResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an environment's name, DD_ENV values, and settings.
-    ///
-    /// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
-    /// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
-    ///
-    /// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
-    /// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
-    pub async fn update_feature_flags_environment(
-        &self,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateEnvironmentRequest,
-    ) -> Result<
-        crate::datadogV2::model::EnvironmentResponse,
-        datadog::Error<UpdateFeatureFlagsEnvironmentError>,
-    > {
-        match self
-            .update_feature_flags_environment_with_http_info(environment_id, body)
-            .await
-        {
+///
+/// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
+/// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
+///
+/// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
+/// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
+    pub async fn update_feature_flags_environment(&self, environment_id: uuid::Uuid, body: crate::datadogV2::model::UpdateEnvironmentRequest) -> Result<crate::datadogV2::model::EnvironmentResponse, datadog::Error<UpdateFeatureFlagsEnvironmentError>> {
+        match self.update_feature_flags_environment_with_http_info(environment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an environment's name, DD_ENV values, and settings.
-    ///
-    /// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
-    /// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
-    ///
-    /// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
-    /// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
-    pub async fn update_feature_flags_environment_with_http_info(
-        &self,
-        environment_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateEnvironmentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>,
-        datadog::Error<UpdateFeatureFlagsEnvironmentError>,
-    > {
+///
+/// Every request must include `name` and `queries`, even when changing only `observe_full_evaluation_data`.
+/// To preserve the current name and DD_ENV values, get the environment first and include those values in the request.
+///
+/// Omitting `is_production` or `require_feature_flag_approval` resets that setting to `false`.
+/// Include their current values to preserve them. Omitting `observe_full_evaluation_data` preserves its current value.
+    pub async fn update_feature_flags_environment_with_http_info(&self, environment_id: uuid::Uuid, body: crate::datadogV2::model::UpdateEnvironmentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::EnvironmentResponse>, datadog::Error<UpdateFeatureFlagsEnvironmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_feature_flags_environment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            environment_id = datadog::urlencode(environment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), environment_id=
+            datadog::urlencode(environment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3739,23 +3175,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3763,7 +3192,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3773,7 +3205,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3795,7 +3230,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3812,96 +3247,74 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EnvironmentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFeatureFlagsEnvironmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFeatureFlagsEnvironmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially updates a saved filter. Supports both `LIST` and `RULES` filters.
-    /// Supply at least one of `name`, `description`, or `targeting_rules`. Omitted or null fields
-    /// are preserved. Supplying `targeting_rules` replaces the entire collection and propagates
-    /// changes to every feature flag that references the saved filter.
-    /// Metadata-only updates do not require edit permission or approval on those feature flags.
-    /// Rule updates require edit permission on all consumer flags and are rejected when approval
-    /// is required, unless the caller has the `feature_flag_approvals_override` permission.
-    /// The optional `last_updated_at` field detects stale updates. It does not set the update time.
-    pub async fn update_saved_filter_attributes(
-        &self,
-        saved_filter_id: uuid::Uuid,
-        body: crate::datadogV2::model::PatchSavedFilterRequest,
-    ) -> Result<
-        crate::datadogV2::model::SavedFilterResponse,
-        datadog::Error<UpdateSavedFilterAttributesError>,
-    > {
-        match self
-            .update_saved_filter_attributes_with_http_info(saved_filter_id, body)
-            .await
-        {
+/// Supply at least one of `name`, `description`, or `targeting_rules`. Omitted or null fields
+/// are preserved. Supplying `targeting_rules` replaces the entire collection and propagates
+/// changes to every feature flag that references the saved filter.
+/// Metadata-only updates do not require edit permission or approval on those feature flags.
+/// Rule updates require edit permission on all consumer flags and are rejected when approval
+/// is required, unless the caller has the `feature_flag_approvals_override` permission.
+/// The optional `last_updated_at` field detects stale updates. It does not set the update time.
+    pub async fn update_saved_filter_attributes(&self, saved_filter_id: uuid::Uuid, body: crate::datadogV2::model::PatchSavedFilterRequest) -> Result<crate::datadogV2::model::SavedFilterResponse, datadog::Error<UpdateSavedFilterAttributesError>> {
+        match self.update_saved_filter_attributes_with_http_info(saved_filter_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially updates a saved filter. Supports both `LIST` and `RULES` filters.
-    /// Supply at least one of `name`, `description`, or `targeting_rules`. Omitted or null fields
-    /// are preserved. Supplying `targeting_rules` replaces the entire collection and propagates
-    /// changes to every feature flag that references the saved filter.
-    /// Metadata-only updates do not require edit permission or approval on those feature flags.
-    /// Rule updates require edit permission on all consumer flags and are rejected when approval
-    /// is required, unless the caller has the `feature_flag_approvals_override` permission.
-    /// The optional `last_updated_at` field detects stale updates. It does not set the update time.
-    pub async fn update_saved_filter_attributes_with_http_info(
-        &self,
-        saved_filter_id: uuid::Uuid,
-        body: crate::datadogV2::model::PatchSavedFilterRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SavedFilterResponse>,
-        datadog::Error<UpdateSavedFilterAttributesError>,
-    > {
+/// Supply at least one of `name`, `description`, or `targeting_rules`. Omitted or null fields
+/// are preserved. Supplying `targeting_rules` replaces the entire collection and propagates
+/// changes to every feature flag that references the saved filter.
+/// Metadata-only updates do not require edit permission or approval on those feature flags.
+/// Rule updates require edit permission on all consumer flags and are rejected when approval
+/// is required, unless the caller has the `feature_flag_approvals_override` permission.
+/// The optional `last_updated_at` field detects stale updates. It does not set the update time.
+    pub async fn update_saved_filter_attributes_with_http_info(&self, saved_filter_id: uuid::Uuid, body: crate::datadogV2::model::PatchSavedFilterRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::SavedFilterResponse>, datadog::Error<UpdateSavedFilterAttributesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_saved_filter_attributes";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/saved-filters/{saved_filter_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            saved_filter_id = datadog::urlencode(saved_filter_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), saved_filter_id=
+            datadog::urlencode(saved_filter_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3914,23 +3327,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3938,7 +3344,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3948,7 +3357,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3970,7 +3382,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3987,77 +3399,61 @@ impl FeatureFlagsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SavedFilterResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SavedFilterResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateSavedFilterAttributesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateSavedFilterAttributesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the name and value of an existing variant on a feature flag.
-    ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
-    pub async fn update_variant_for_feature_flag(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        variant_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateVariantRequest,
-    ) -> Result<(), datadog::Error<UpdateVariantForFeatureFlagError>> {
-        match self
-            .update_variant_for_feature_flag_with_http_info(feature_flag_id, variant_id, body)
-            .await
-        {
+///
+/// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn update_variant_for_feature_flag(&self, feature_flag_id: uuid::Uuid, variant_id: uuid::Uuid, body: crate::datadogV2::model::UpdateVariantRequest) -> Result<(), datadog::Error<UpdateVariantForFeatureFlagError>> {
+        match self.update_variant_for_feature_flag_with_http_info(feature_flag_id, variant_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the name and value of an existing variant on a feature flag.
-    ///
-    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
-    pub async fn update_variant_for_feature_flag_with_http_info(
-        &self,
-        feature_flag_id: uuid::Uuid,
-        variant_id: uuid::Uuid,
-        body: crate::datadogV2::model::UpdateVariantRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateVariantForFeatureFlagError>>
-    {
+///
+/// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn update_variant_for_feature_flag_with_http_info(&self, feature_flag_id: uuid::Uuid, variant_id: uuid::Uuid, body: crate::datadogV2::model::UpdateVariantRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateVariantForFeatureFlagError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_variant_for_feature_flag";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
-            variant_id = datadog::urlencode(variant_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), feature_flag_id=
+            datadog::urlencode(feature_flag_id.to_string())
+            , variant_id=
+            datadog::urlencode(variant_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -4069,23 +3465,16 @@ impl FeatureFlagsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4093,7 +3482,10 @@ impl FeatureFlagsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4103,7 +3495,10 @@ impl FeatureFlagsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4125,7 +3520,7 @@ impl FeatureFlagsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4148,13 +3543,8 @@ impl FeatureFlagsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateVariantForFeatureFlagError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateVariantForFeatureFlagError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

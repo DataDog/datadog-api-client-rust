@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating a Custom OIDC provider.
 #[non_exhaustive]
@@ -42,16 +42,11 @@ pub struct OIDCCloudAuthProviderCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OIDCCloudAuthProviderCreateAttributes {
-    pub fn new(
-        audiences: Vec<String>,
-        discovery_type: crate::datadogV2::model::OIDCCloudAuthDiscoveryType,
-        issuer_url: String,
-        provider_name: String,
-    ) -> OIDCCloudAuthProviderCreateAttributes {
+    pub fn new(audiences: Vec<String>, discovery_type: crate::datadogV2::model::OIDCCloudAuthDiscoveryType, issuer_url: String, provider_name: String) -> OIDCCloudAuthProviderCreateAttributes {
         OIDCCloudAuthProviderCreateAttributes {
             audiences,
             discovery_type,
@@ -66,46 +61,39 @@ impl OIDCCloudAuthProviderCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn identity_claim_name(mut self, value: String) -> Self {
         self.identity_claim_name = Some(value);
         self
     }
-
+    
     pub fn jwks_url(mut self, value: String) -> Self {
         self.jwks_url = Some(value);
         self
     }
-
+    
     pub fn org_uuid_claim_name(mut self, value: String) -> Self {
         self.org_uuid_claim_name = Some(value);
         self
     }
-
-    pub fn org_uuid_source(
-        mut self,
-        value: crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource,
-    ) -> Self {
+    
+    pub fn org_uuid_source(mut self, value: crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource) -> Self {
         self.org_uuid_source = Some(value);
         self
     }
-
-    pub fn required_claims(
-        mut self,
-        value: Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcherCreate>,
-    ) -> Self {
+    
+    pub fn required_claims(mut self, value: Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcherCreate>) -> Self {
         self.required_claims = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OIDCCloudAuthProviderCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -125,34 +113,24 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut audiences: Option<Vec<String>> = None;
-                let mut discovery_type: Option<
-                    crate::datadogV2::model::OIDCCloudAuthDiscoveryType,
-                > = None;
+                let mut discovery_type: Option<crate::datadogV2::model::OIDCCloudAuthDiscoveryType> = None;
                 let mut identity_claim_name: Option<String> = None;
                 let mut issuer_url: Option<String> = None;
                 let mut jwks_url: Option<String> = None;
                 let mut org_uuid_claim_name: Option<String> = None;
-                let mut org_uuid_source: Option<
-                    crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource,
-                > = None;
+                let mut org_uuid_source: Option<crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource> = None;
                 let mut provider_name: Option<String> = None;
-                let mut required_claims: Option<
-                    Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcherCreate>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut required_claims: Option<Vec<crate::datadogV2::model::OIDCCloudAuthClaimMatcherCreate>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "audiences" => {
                             audiences = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "discovery_type" => {
-                            discovery_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            discovery_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_type) = discovery_type {
                                 match _discovery_type {
                                     crate::datadogV2::model::OIDCCloudAuthDiscoveryType::UnparsedObject(_discovery_type) => {
@@ -161,36 +139,33 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "identity_claim_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            identity_claim_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            identity_claim_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issuer_url" => {
                             issuer_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "jwks_url" => {
                             if v.is_null() {
                                 continue;
                             }
                             jwks_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_uuid_claim_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_uuid_claim_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            org_uuid_claim_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_uuid_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_uuid_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            org_uuid_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _org_uuid_source) = org_uuid_source {
                                 match _org_uuid_source {
                                     crate::datadogV2::model::OIDCCloudAuthOrgUUIDSource::UnparsedObject(_org_uuid_source) => {
@@ -199,31 +174,27 @@ impl<'de> Deserialize<'de> for OIDCCloudAuthProviderCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "provider_name" => {
-                            provider_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "required_claims" => {
                             if v.is_null() {
                                 continue;
                             }
-                            required_claims =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            required_claims = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let audiences = audiences.ok_or_else(|| M::Error::missing_field("audiences"))?;
-                let discovery_type =
-                    discovery_type.ok_or_else(|| M::Error::missing_field("discovery_type"))?;
+                let discovery_type = discovery_type.ok_or_else(|| M::Error::missing_field("discovery_type"))?;
                 let issuer_url = issuer_url.ok_or_else(|| M::Error::missing_field("issuer_url"))?;
-                let provider_name =
-                    provider_name.ok_or_else(|| M::Error::missing_field("provider_name"))?;
+                let provider_name = provider_name.ok_or_else(|| M::Error::missing_field("provider_name"))?;
 
                 let content = OIDCCloudAuthProviderCreateAttributes {
                     audiences,

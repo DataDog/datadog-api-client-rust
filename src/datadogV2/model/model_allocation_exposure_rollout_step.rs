@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Exposure progression step details.
 #[non_exhaustive]
@@ -27,11 +27,7 @@ pub struct AllocationExposureRolloutStep {
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// Step duration in milliseconds.
-    #[serde(
-        rename = "interval_ms",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "interval_ms", default, with = "::serde_with::rust::double_option")]
     pub interval_ms: Option<Option<i64>>,
     /// Whether this step represents a pause record.
     #[serde(rename = "is_pause_record")]
@@ -46,20 +42,11 @@ pub struct AllocationExposureRolloutStep {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AllocationExposureRolloutStep {
-    pub fn new(
-        allocation_exposure_schedule_id: uuid::Uuid,
-        created_at: chrono::DateTime<chrono::Utc>,
-        exposure_ratio: f64,
-        grouped_step_index: i64,
-        id: uuid::Uuid,
-        is_pause_record: bool,
-        order_position: i64,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> AllocationExposureRolloutStep {
+    pub fn new(allocation_exposure_schedule_id: uuid::Uuid, created_at: chrono::DateTime<chrono::Utc>, exposure_ratio: f64, grouped_step_index: i64, id: uuid::Uuid, is_pause_record: bool, order_position: i64, updated_at: chrono::DateTime<chrono::Utc>) -> AllocationExposureRolloutStep {
         AllocationExposureRolloutStep {
             allocation_exposure_schedule_id,
             created_at,
@@ -74,20 +61,19 @@ impl AllocationExposureRolloutStep {
             _unparsed: false,
         }
     }
-
+    
     pub fn interval_ms(mut self, value: Option<i64>) -> Self {
         self.interval_ms = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AllocationExposureRolloutStep {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -115,66 +101,52 @@ impl<'de> Deserialize<'de> for AllocationExposureRolloutStep {
                 let mut is_pause_record: Option<bool> = None;
                 let mut order_position: Option<i64> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "allocation_exposure_schedule_id" => {
-                            allocation_exposure_schedule_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocation_exposure_schedule_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "exposure_ratio" => {
-                            exposure_ratio =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exposure_ratio = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "grouped_step_index" => {
-                            grouped_step_index =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            grouped_step_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "interval_ms" => {
-                            interval_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            interval_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_pause_record" => {
-                            is_pause_record =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_pause_record = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "order_position" => {
-                            order_position =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            order_position = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let allocation_exposure_schedule_id = allocation_exposure_schedule_id
-                    .ok_or_else(|| M::Error::missing_field("allocation_exposure_schedule_id"))?;
+                let allocation_exposure_schedule_id = allocation_exposure_schedule_id.ok_or_else(|| M::Error::missing_field("allocation_exposure_schedule_id"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let exposure_ratio =
-                    exposure_ratio.ok_or_else(|| M::Error::missing_field("exposure_ratio"))?;
-                let grouped_step_index = grouped_step_index
-                    .ok_or_else(|| M::Error::missing_field("grouped_step_index"))?;
+                let exposure_ratio = exposure_ratio.ok_or_else(|| M::Error::missing_field("exposure_ratio"))?;
+                let grouped_step_index = grouped_step_index.ok_or_else(|| M::Error::missing_field("grouped_step_index"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let is_pause_record =
-                    is_pause_record.ok_or_else(|| M::Error::missing_field("is_pause_record"))?;
-                let order_position =
-                    order_position.ok_or_else(|| M::Error::missing_field("order_position"))?;
+                let is_pause_record = is_pause_record.ok_or_else(|| M::Error::missing_field("is_pause_record"))?;
+                let order_position = order_position.ok_or_else(|| M::Error::missing_field("order_position"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = AllocationExposureRolloutStep {

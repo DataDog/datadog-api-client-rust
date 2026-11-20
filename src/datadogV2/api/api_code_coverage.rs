@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// GetCodeCoverageBranchSummaryError is a struct for typed errors of method [`CodeCoverageAPI::get_code_coverage_branch_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum GetCodeCoverageBranchSummaryError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCodeCoverageCommitSummaryError is a struct for typed errors of method [`CodeCoverageAPI::get_code_coverage_commit_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum GetCodeCoverageCommitSummaryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCodeCoverageFilesError is a struct for typed errors of method [`CodeCoverageAPI::get_code_coverage_files`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum GetCodeCoverageFilesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCodeCoveragePRSummaryError is a struct for typed errors of method [`CodeCoverageAPI::get_code_coverage_pr_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum GetCodeCoveragePRSummaryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Retrieve and analyze code coverage data from Code Coverage. See the [Code Coverage page](<https://docs.datadoghq.com/code_coverage/>) for more information.
 #[derive(Debug, Clone)]
@@ -64,7 +68,8 @@ impl CodeCoverageAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -109,66 +114,53 @@ impl CodeCoverageAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Retrieve aggregated code coverage statistics for a specific branch in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    pub async fn get_code_coverage_branch_summary(
-        &self,
-        body: crate::datadogV2::model::BranchCoverageSummaryRequest,
-    ) -> Result<
-        crate::datadogV2::model::CoverageSummaryResponse,
-        datadog::Error<GetCodeCoverageBranchSummaryError>,
-    > {
-        match self
-            .get_code_coverage_branch_summary_with_http_info(body)
-            .await
-        {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+    pub async fn get_code_coverage_branch_summary(&self, body: crate::datadogV2::model::BranchCoverageSummaryRequest) -> Result<crate::datadogV2::model::CoverageSummaryResponse, datadog::Error<GetCodeCoverageBranchSummaryError>> {
+        match self.get_code_coverage_branch_summary_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve aggregated code coverage statistics for a specific branch in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    pub async fn get_code_coverage_branch_summary_with_http_info(
-        &self,
-        body: crate::datadogV2::model::BranchCoverageSummaryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>,
-        datadog::Error<GetCodeCoverageBranchSummaryError>,
-    > {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+    pub async fn get_code_coverage_branch_summary_with_http_info(&self, body: crate::datadogV2::model::BranchCoverageSummaryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>, datadog::Error<GetCodeCoverageBranchSummaryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_code_coverage_branch_summary";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/branch/summary",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -181,23 +173,16 @@ impl CodeCoverageAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -205,7 +190,10 @@ impl CodeCoverageAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -215,7 +203,10 @@ impl CodeCoverageAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -237,7 +228,7 @@ impl CodeCoverageAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -254,87 +245,66 @@ impl CodeCoverageAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCodeCoverageBranchSummaryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCodeCoverageBranchSummaryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve aggregated code coverage statistics for a specific commit in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    ///
-    /// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
-    pub async fn get_code_coverage_commit_summary(
-        &self,
-        body: crate::datadogV2::model::CommitCoverageSummaryRequest,
-    ) -> Result<
-        crate::datadogV2::model::CoverageSummaryResponse,
-        datadog::Error<GetCodeCoverageCommitSummaryError>,
-    > {
-        match self
-            .get_code_coverage_commit_summary_with_http_info(body)
-            .await
-        {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+///
+/// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
+    pub async fn get_code_coverage_commit_summary(&self, body: crate::datadogV2::model::CommitCoverageSummaryRequest) -> Result<crate::datadogV2::model::CoverageSummaryResponse, datadog::Error<GetCodeCoverageCommitSummaryError>> {
+        match self.get_code_coverage_commit_summary_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve aggregated code coverage statistics for a specific commit in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    ///
-    /// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
-    pub async fn get_code_coverage_commit_summary_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CommitCoverageSummaryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>,
-        datadog::Error<GetCodeCoverageCommitSummaryError>,
-    > {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+///
+/// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
+    pub async fn get_code_coverage_commit_summary_with_http_info(&self, body: crate::datadogV2::model::CommitCoverageSummaryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>, datadog::Error<GetCodeCoverageCommitSummaryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_code_coverage_commit_summary";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/commit/summary",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -347,23 +317,16 @@ impl CodeCoverageAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -371,7 +334,10 @@ impl CodeCoverageAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -381,7 +347,10 @@ impl CodeCoverageAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -403,7 +372,7 @@ impl CodeCoverageAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -420,80 +389,62 @@ impl CodeCoverageAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCodeCoverageCommitSummaryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCodeCoverageCommitSummaryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve per-file code coverage data for a specific commit, branch, or pull request.
-    /// Exactly one of `commit_sha`, `branch`, or `pr_number` must be provided.
-    /// Optionally filter by `service`, `codeowner`, or `flag` (at most one).
-    pub async fn get_code_coverage_files(
-        &self,
-        body: crate::datadogV2::model::FilesCoverageRequest,
-    ) -> Result<
-        crate::datadogV2::model::FilesCoverageResponse,
-        datadog::Error<GetCodeCoverageFilesError>,
-    > {
+/// Exactly one of `commit_sha`, `branch`, or `pr_number` must be provided.
+/// Optionally filter by `service`, `codeowner`, or `flag` (at most one).
+    pub async fn get_code_coverage_files(&self, body: crate::datadogV2::model::FilesCoverageRequest) -> Result<crate::datadogV2::model::FilesCoverageResponse, datadog::Error<GetCodeCoverageFilesError>> {
         match self.get_code_coverage_files_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve per-file code coverage data for a specific commit, branch, or pull request.
-    /// Exactly one of `commit_sha`, `branch`, or `pr_number` must be provided.
-    /// Optionally filter by `service`, `codeowner`, or `flag` (at most one).
-    pub async fn get_code_coverage_files_with_http_info(
-        &self,
-        body: crate::datadogV2::model::FilesCoverageRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FilesCoverageResponse>,
-        datadog::Error<GetCodeCoverageFilesError>,
-    > {
+/// Exactly one of `commit_sha`, `branch`, or `pr_number` must be provided.
+/// Optionally filter by `service`, `codeowner`, or `flag` (at most one).
+    pub async fn get_code_coverage_files_with_http_info(&self, body: crate::datadogV2::model::FilesCoverageRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FilesCoverageResponse>, datadog::Error<GetCodeCoverageFilesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_code_coverage_files";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/files",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -506,23 +457,16 @@ impl CodeCoverageAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -530,7 +474,10 @@ impl CodeCoverageAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -540,7 +487,10 @@ impl CodeCoverageAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -562,7 +512,7 @@ impl CodeCoverageAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -579,80 +529,62 @@ impl CodeCoverageAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FilesCoverageResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FilesCoverageResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCodeCoverageFilesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCodeCoverageFilesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve aggregated code coverage statistics for a specific pull request in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    pub async fn get_code_coverage_pr_summary(
-        &self,
-        body: crate::datadogV2::model::PRCoverageSummaryRequest,
-    ) -> Result<
-        crate::datadogV2::model::CoverageSummaryResponse,
-        datadog::Error<GetCodeCoveragePRSummaryError>,
-    > {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+    pub async fn get_code_coverage_pr_summary(&self, body: crate::datadogV2::model::PRCoverageSummaryRequest) -> Result<crate::datadogV2::model::CoverageSummaryResponse, datadog::Error<GetCodeCoveragePRSummaryError>> {
         match self.get_code_coverage_pr_summary_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve aggregated code coverage statistics for a specific pull request in a repository.
-    /// This endpoint provides overall coverage metrics as well as breakdowns by service,
-    /// code owner, and flag.
-    pub async fn get_code_coverage_pr_summary_with_http_info(
-        &self,
-        body: crate::datadogV2::model::PRCoverageSummaryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>,
-        datadog::Error<GetCodeCoveragePRSummaryError>,
-    > {
+/// This endpoint provides overall coverage metrics as well as breakdowns by service,
+/// code owner, and flag.
+    pub async fn get_code_coverage_pr_summary_with_http_info(&self, body: crate::datadogV2::model::PRCoverageSummaryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CoverageSummaryResponse>, datadog::Error<GetCodeCoveragePRSummaryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_code_coverage_pr_summary";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/pr/summary",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -665,23 +597,16 @@ impl CodeCoverageAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -689,7 +614,10 @@ impl CodeCoverageAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -699,7 +627,10 @@ impl CodeCoverageAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -721,7 +652,7 @@ impl CodeCoverageAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -738,26 +669,17 @@ impl CodeCoverageAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CoverageSummaryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCodeCoveragePRSummaryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCodeCoveragePRSummaryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

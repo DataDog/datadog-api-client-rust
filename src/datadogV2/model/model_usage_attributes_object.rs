@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Usage attributes data.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct UsageAttributesObject {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageAttributesObject {
@@ -49,48 +49,43 @@ impl UsageAttributesObject {
             _unparsed: false,
         }
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn product_family(mut self, value: String) -> Self {
         self.product_family = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
-
-    pub fn timeseries(
-        mut self,
-        value: Vec<crate::datadogV2::model::UsageTimeSeriesObject>,
-    ) -> Self {
+    
+    pub fn timeseries(mut self, value: Vec<crate::datadogV2::model::UsageTimeSeriesObject>) -> Self {
         self.timeseries = Some(value);
         self
     }
-
+    
     pub fn usage_type(mut self, value: crate::datadogV2::model::HourlyUsageType) -> Self {
         self.usage_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageAttributesObject {
     fn default() -> Self {
@@ -119,13 +114,9 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                 let mut product_family: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut region: Option<String> = None;
-                let mut timeseries: Option<Vec<crate::datadogV2::model::UsageTimeSeriesObject>> =
-                    None;
+                let mut timeseries: Option<Vec<crate::datadogV2::model::UsageTimeSeriesObject>> = None;
                 let mut usage_type: Option<crate::datadogV2::model::HourlyUsageType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -135,32 +126,31 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "product_family" => {
                             if v.is_null() {
                                 continue;
                             }
-                            product_family =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_family = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "region" => {
                             if v.is_null() {
                                 continue;
                             }
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timeseries" => {
                             if v.is_null() {
                                 continue;
                             }
                             timeseries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "usage_type" => {
                             if v.is_null() {
                                 continue;
@@ -168,20 +158,18 @@ impl<'de> Deserialize<'de> for UsageAttributesObject {
                             usage_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _usage_type) = usage_type {
                                 match _usage_type {
-                                    crate::datadogV2::model::HourlyUsageType::UnparsedObject(
-                                        _usage_type,
-                                    ) => {
+                                    crate::datadogV2::model::HourlyUsageType::UnparsedObject(_usage_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

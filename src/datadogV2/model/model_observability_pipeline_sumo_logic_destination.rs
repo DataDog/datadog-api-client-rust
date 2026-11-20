@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `sumo_logic` destination forwards logs to Sumo Logic.
 ///
@@ -51,11 +51,7 @@ pub struct ObservabilityPipelineSumoLogicDestination {
 }
 
 impl ObservabilityPipelineSumoLogicDestination {
-    pub fn new(
-        id: String,
-        inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationType,
-    ) -> ObservabilityPipelineSumoLogicDestination {
+    pub fn new(id: String, inputs: Vec<String>, type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationType) -> ObservabilityPipelineSumoLogicDestination {
         ObservabilityPipelineSumoLogicDestination {
             buffer: None,
             encoding: None,
@@ -71,59 +67,49 @@ impl ObservabilityPipelineSumoLogicDestination {
             _unparsed: false,
         }
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
-    pub fn encoding(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding,
-    ) -> Self {
+    
+    pub fn encoding(mut self, value: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding) -> Self {
         self.encoding = Some(value);
         self
     }
-
+    
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
         self
     }
-
-    pub fn header_custom_fields(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationHeaderCustomFieldsItem>,
-    ) -> Self {
+    
+    pub fn header_custom_fields(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationHeaderCustomFieldsItem>) -> Self {
         self.header_custom_fields = Some(value);
         self
     }
-
+    
     pub fn header_host_name(mut self, value: String) -> Self {
         self.header_host_name = Some(value);
         self
     }
-
+    
     pub fn header_source_category(mut self, value: String) -> Self {
         self.header_source_category = Some(value);
         self
     }
-
+    
     pub fn header_source_name(mut self, value: String) -> Self {
         self.header_source_name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -142,12 +128,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
             where
                 M: MapAccess<'a>,
             {
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
-                let mut encoding: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
+                let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding> = None;
                 let mut endpoint_url_key: Option<String> = None;
                 let mut header_custom_fields: Option<Vec<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationHeaderCustomFieldsItem>> = None;
                 let mut header_host_name: Option<String> = None;
@@ -155,13 +137,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                 let mut header_source_name: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -179,7 +156,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "encoding" => {
                             if v.is_null() {
                                 continue;
@@ -193,48 +170,43 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "endpoint_url_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            endpoint_url_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            endpoint_url_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "header_custom_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            header_custom_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            header_custom_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "header_host_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            header_host_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            header_host_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "header_source_category" => {
                             if v.is_null() {
                                 continue;
                             }
-                            header_source_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            header_source_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "header_source_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            header_source_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            header_source_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -245,12 +217,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

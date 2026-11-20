@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object representing a graph snapshot.
 #[non_exhaustive]
@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GraphSnapshot {
     /// A JSON document defining the graph. `graph_def` can be used instead of `metric_query`.
-    /// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
-    /// and should be formatted to a single line then URL encoded.
+/// The JSON document uses the [grammar defined here](<https://docs.datadoghq.com/graphing/graphing_json/#grammar>)
+/// and should be formatted to a single line then URL encoded.
     #[serde(rename = "graph_def")]
     pub graph_def: Option<String>,
     /// The metric query. One of `metric_query` or `graph_def` is required.
@@ -26,7 +26,7 @@ pub struct GraphSnapshot {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GraphSnapshot {
@@ -39,30 +39,28 @@ impl GraphSnapshot {
             _unparsed: false,
         }
     }
-
+    
     pub fn graph_def(mut self, value: String) -> Self {
         self.graph_def = Some(value);
         self
     }
-
+    
     pub fn metric_query(mut self, value: String) -> Self {
         self.metric_query = Some(value);
         self
     }
-
+    
     pub fn snapshot_url(mut self, value: String) -> Self {
         self.snapshot_url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for GraphSnapshot {
     fn default() -> Self {
@@ -90,10 +88,7 @@ impl<'de> Deserialize<'de> for GraphSnapshot {
                 let mut graph_def: Option<String> = None;
                 let mut metric_query: Option<String> = None;
                 let mut snapshot_url: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,26 +98,24 @@ impl<'de> Deserialize<'de> for GraphSnapshot {
                                 continue;
                             }
                             graph_def = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snapshot_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snapshot_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snapshot_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

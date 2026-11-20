@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Selected experiment result run, its recorded EVSI forecast, and results freshness.
 #[non_exhaustive]
@@ -15,18 +15,14 @@ pub struct ExperimentsExperimentResultsV2MetaDTO {
     #[serde(rename = "evsi_context")]
     pub evsi_context: Option<crate::datadogV2::model::ExperimentsEVSIContext>,
     /// Whether the saved results require a refresh or their freshness cannot be confirmed. See stale_reasons for
-    /// details.
+/// details.
     #[serde(rename = "is_stale")]
     pub is_stale: Option<bool>,
     /// ID of the successful experiment run that produced these results.
     #[serde(rename = "result_run_id")]
     pub result_run_id: uuid::Uuid,
     /// Time when the experiment results were last updated.
-    #[serde(
-        rename = "results_last_updated",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "results_last_updated", default, with = "::serde_with::rust::double_option")]
     pub results_last_updated: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Reasons the saved experiment results are stale.
     #[serde(rename = "stale_reasons")]
@@ -35,7 +31,7 @@ pub struct ExperimentsExperimentResultsV2MetaDTO {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsExperimentResultsV2MetaDTO {
@@ -50,35 +46,34 @@ impl ExperimentsExperimentResultsV2MetaDTO {
             _unparsed: false,
         }
     }
-
+    
     pub fn evsi_context(mut self, value: crate::datadogV2::model::ExperimentsEVSIContext) -> Self {
         self.evsi_context = Some(value);
         self
     }
-
+    
     pub fn is_stale(mut self, value: bool) -> Self {
         self.is_stale = Some(value);
         self
     }
-
+    
     pub fn results_last_updated(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.results_last_updated = Some(value);
         self
     }
-
+    
     pub fn stale_reasons(mut self, value: Vec<String>) -> Self {
         self.stale_reasons = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsExperimentResultsV2MetaDTO {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -97,16 +92,12 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentResultsV2MetaDTO {
             where
                 M: MapAccess<'a>,
             {
-                let mut evsi_context: Option<crate::datadogV2::model::ExperimentsEVSIContext> =
-                    None;
+                let mut evsi_context: Option<crate::datadogV2::model::ExperimentsEVSIContext> = None;
                 let mut is_stale: Option<bool> = None;
                 let mut result_run_id: Option<uuid::Uuid> = None;
                 let mut results_last_updated: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut stale_reasons: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,39 +106,34 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentResultsV2MetaDTO {
                             if v.is_null() {
                                 continue;
                             }
-                            evsi_context =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evsi_context = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_stale" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_stale = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "result_run_id" => {
-                            result_run_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            result_run_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "results_last_updated" => {
-                            results_last_updated =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            results_last_updated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "stale_reasons" => {
                             if v.is_null() {
                                 continue;
                             }
-                            stale_reasons =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            stale_reasons = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let result_run_id =
-                    result_run_id.ok_or_else(|| M::Error::missing_field("result_run_id"))?;
+                let result_run_id = result_run_id.ok_or_else(|| M::Error::missing_field("result_run_id"))?;
 
                 let content = ExperimentsExperimentResultsV2MetaDTO {
                     evsi_context,

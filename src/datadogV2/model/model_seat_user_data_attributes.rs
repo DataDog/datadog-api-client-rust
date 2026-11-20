@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a user assigned to a seat, including their email, name, and assignment timestamp.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SeatUserDataAttributes {
     /// The date and time the seat was assigned.
-    #[serde(
-        rename = "assigned_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "assigned_at", default, with = "::serde_with::rust::double_option")]
     pub assigned_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The email of the user.
     #[serde(rename = "email", default, with = "::serde_with::rust::double_option")]
@@ -28,7 +24,7 @@ pub struct SeatUserDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SeatUserDataAttributes {
@@ -41,30 +37,28 @@ impl SeatUserDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn assigned_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.assigned_at = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: Option<String>) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SeatUserDataAttributes {
     fn default() -> Self {
@@ -92,29 +86,25 @@ impl<'de> Deserialize<'de> for SeatUserDataAttributes {
                 let mut assigned_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut email: Option<Option<String>> = None;
                 let mut name: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assigned_at" => {
-                            assigned_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assigned_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "email" => {
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

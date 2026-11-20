@@ -1,101 +1,104 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
 use futures_core::stream::Stream;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// ListContainerImagesOptionalParams is a struct for passing parameters to the method [`ContainerImagesAPI::list_container_images`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListContainerImagesOptionalParams {
     /// Comma-separated `key:value` tags. An image must match every tag. Use keys such as `short_image`,
-    /// `image_tag`, `image_registry`, and `image_repository`. Each tag starts with a letter and contains only
-    /// letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are case-sensitive
-    /// (`short_image:Redis` matches nothing if the image is `redis`).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `short_image:redis*` matches `redis` and
-    /// `redis-stack`, and `image_tag:v1.*` matches `v1.2.0`.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`image_*:latest`, `*:latest`, `redis*`), a `?`, a leading `-` (negation), spaces (so `OR`
-    /// and `IN (...)` can't be used), an empty value (`image_tag:`), and more than 1024 characters in total.
-    /// A `*` in the value of the numeric and date keys `size`, `container_count`, `built_at`, `published_at`,
-    /// and `vulnerability_scan_at` also returns 400, but its `detail` is only `Bad Request`. To match unrelated
-    /// values of one key, make one request per value.
+/// `image_tag`, `image_registry`, and `image_repository`. Each tag starts with a letter and contains only
+/// letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are case-sensitive
+/// (`short_image:Redis` matches nothing if the image is `redis`).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `short_image:redis*` matches `redis` and
+/// `redis-stack`, and `image_tag:v1.*` matches `v1.2.0`.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`image_*:latest`, `*:latest`, `redis*`), a `?`, a leading `-` (negation), spaces (so `OR`
+/// and `IN (...)` can't be used), an empty value (`image_tag:`), and more than 1024 characters in total.
+/// A `*` in the value of the numeric and date keys `size`, `container_count`, `built_at`, `published_at`,
+/// and `vulnerability_scan_at` also returns 400, but its `detail` is only `Bad Request`. To match unrelated
+/// values of one key, make one request per value.
     pub filter_tags: Option<String>,
     /// Comma-separated list of up to three tag keys, such as `image_registry,image_tag`. Returns
-    /// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
-    /// not support pagination. Images missing a grouping key are excluded. An image with multiple
-    /// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
-    /// Compare counts only within the returned groups; they do not establish the most common tags
-    /// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
-    /// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
-    /// use `meta.pagination.total` from a query without grouping.
+/// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
+/// not support pagination. Images missing a grouping key are excluded. An image with multiple
+/// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
+/// Compare counts only within the returned groups; they do not establish the most common tags
+/// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
+/// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
+/// use `meta.pagination.total` from a query without grouping.
     pub group_by: Option<String>,
     /// Attribute to sort individual images by, such as `size` or `container_count`.
-    /// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
-    /// descending order, such as `-size`. Ignored when `group_by` is specified.
+/// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
+/// descending order, such as `-size`. Ignored when `group_by` is specified.
     pub sort: Option<String>,
     /// Maximum number of results returned. Grouped queries default to `100`, with a maximum of `1000` groups.
-    /// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
+/// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
     pub page_size: Option<i32>,
     /// Opaque cursor from `meta.pagination.next_cursor` for individual images. Keep the same filters
-    /// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
+/// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
     pub page_cursor: Option<String>,
 }
 
 impl ListContainerImagesOptionalParams {
     /// Comma-separated `key:value` tags. An image must match every tag. Use keys such as `short_image`,
-    /// `image_tag`, `image_registry`, and `image_repository`. Each tag starts with a letter and contains only
-    /// letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are case-sensitive
-    /// (`short_image:Redis` matches nothing if the image is `redis`).
-    /// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
-    /// more than once, and it can't be escaped. For example, `short_image:redis*` matches `redis` and
-    /// `redis-stack`, and `image_tag:v1.*` matches `v1.2.0`.
-    /// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
-    /// without `:` (`image_*:latest`, `*:latest`, `redis*`), a `?`, a leading `-` (negation), spaces (so `OR`
-    /// and `IN (...)` can't be used), an empty value (`image_tag:`), and more than 1024 characters in total.
-    /// A `*` in the value of the numeric and date keys `size`, `container_count`, `built_at`, `published_at`,
-    /// and `vulnerability_scan_at` also returns 400, but its `detail` is only `Bad Request`. To match unrelated
-    /// values of one key, make one request per value.
+/// `image_tag`, `image_registry`, and `image_repository`. Each tag starts with a letter and contains only
+/// letters, digits, `_`, `-`, `.`, `/`, `@`, and `:`. Values match exactly and are case-sensitive
+/// (`short_image:Redis` matches nothing if the image is `redis`).
+/// In a value, `*` matches any run of characters, including none. It can appear anywhere in the value and
+/// more than once, and it can't be escaped. For example, `short_image:redis*` matches `redis` and
+/// `redis-stack`, and `image_tag:v1.*` matches `v1.2.0`.
+/// These return `400 Bad Request`, with the reason in `errors[0].detail`: a `*` in a key or in a tag
+/// without `:` (`image_*:latest`, `*:latest`, `redis*`), a `?`, a leading `-` (negation), spaces (so `OR`
+/// and `IN (...)` can't be used), an empty value (`image_tag:`), and more than 1024 characters in total.
+/// A `*` in the value of the numeric and date keys `size`, `container_count`, `built_at`, `published_at`,
+/// and `vulnerability_scan_at` also returns 400, but its `detail` is only `Bad Request`. To match unrelated
+/// values of one key, make one request per value.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Comma-separated list of up to three tag keys, such as `image_registry,image_tag`. Returns
-    /// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
-    /// not support pagination. Images missing a grouping key are excluded. An image with multiple
-    /// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
-    /// Compare counts only within the returned groups; they do not establish the most common tags
-    /// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
-    /// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
-    /// use `meta.pagination.total` from a query without grouping.
+/// `container_image_group` objects with counts and tags. Grouped results ignore `sort` and do
+/// not support pagination. Images missing a grouping key are excluded. An image with multiple
+/// values for a grouping tag can appear in multiple groups. Grouped results may be incomplete.
+/// Compare counts only within the returned groups; they do not establish the most common tags
+/// or proportions across the inventory. For inventory-wide comparisons, omit `group_by`, keep the
+/// same filters, paginate all results, and deduplicate by returned image ID. For an inventory total,
+/// use `meta.pagination.total` from a query without grouping.
     pub fn group_by(mut self, value: String) -> Self {
         self.group_by = Some(value);
         self
     }
     /// Attribute to sort individual images by, such as `size` or `container_count`.
-    /// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
-    /// descending order, such as `-size`. Ignored when `group_by` is specified.
+/// Defaults to `image_name` in ascending order. Prefix the attribute with `-` for
+/// descending order, such as `-size`. Ignored when `group_by` is specified.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
     }
     /// Maximum number of results returned. Grouped queries default to `100`, with a maximum of `1000` groups.
-    /// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
+/// Without grouping, queries default to `1000`, with a maximum of `10000` images. Minimum is `1`.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Opaque cursor from `meta.pagination.next_cursor` for individual images. Keep the same filters
-    /// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
+/// and sort order. Stop when absent or empty. Grouped queries do not support pagination.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
 }
+
+
+
 
 /// ListContainerImagesError is a struct for typed errors of method [`ContainerImagesAPI::list_container_images`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -104,6 +107,7 @@ pub enum ListContainerImagesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Container Images API allows you to query Container Image data for your organization. See the [Container Images View page](<https://docs.datadoghq.com/infrastructure/containers/container_images/>) for more information.
 #[derive(Debug, Clone)]
@@ -127,7 +131,8 @@ impl ContainerImagesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -172,50 +177,36 @@ impl ContainerImagesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get all container images for your organization. This endpoint queries current
-    /// inventory and does not support time-range parameters.
-    ///
-    /// Use `group_by` to return image groups with counts. Grouped results are limited
-    /// by `page[size]`, may be incomplete, and do not support pagination.
-    ///
-    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
-    pub async fn list_container_images(
-        &self,
-        params: ListContainerImagesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ContainerImagesResponse,
-        datadog::Error<ListContainerImagesError>,
-    > {
-        match self.list_container_images_with_http_info(params).await {
+/// inventory and does not support time-range parameters.
+///
+/// Use `group_by` to return image groups with counts. Grouped results are limited
+/// by `page[size]`, may be incomplete, and do not support pagination.
+///
+/// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
+    pub async fn list_container_images(&self, params: ListContainerImagesOptionalParams) -> Result<crate::datadogV2::model::ContainerImagesResponse, datadog::Error<ListContainerImagesError>> {
+        match self.list_container_images_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_container_images_with_pagination(
-        &self,
-        mut params: ListContainerImagesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::ContainerImageItem,
-            datadog::Error<ListContainerImagesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListContainerImagesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ContainerImageItem, datadog::Error<ListContainerImagesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 1000;
             if params.page_size.is_none() {
@@ -244,23 +235,19 @@ impl ContainerImagesAPI {
         }
     }
 
+    
     /// Get all container images for your organization. This endpoint queries current
-    /// inventory and does not support time-range parameters.
-    ///
-    /// Use `group_by` to return image groups with counts. Grouped results are limited
-    /// by `page[size]`, may be incomplete, and do not support pagination.
-    ///
-    /// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
-    pub async fn list_container_images_with_http_info(
-        &self,
-        params: ListContainerImagesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ContainerImagesResponse>,
-        datadog::Error<ListContainerImagesError>,
-    > {
+/// inventory and does not support time-range parameters.
+///
+/// Use `group_by` to return image groups with counts. Grouped results are limited
+/// by `page[size]`, may be incomplete, and do not support pagination.
+///
+/// **Note**: To enrich the data returned by this endpoint with security scans, see the new [api/v2/security/scanned-assets-metadata](<https://docs.datadoghq.com/api/latest/security-monitoring/#list-scanned-assets-metadata>) endpoint.
+    pub async fn list_container_images_with_http_info(&self, params: ListContainerImagesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ContainerImagesResponse>, datadog::Error<ListContainerImagesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_container_images";
 
+        
         // unbox and build optional parameters
         let filter_tags = params.filter_tags;
         let group_by = params.group_by;
@@ -272,35 +259,31 @@ impl ContainerImagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/container_images",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = group_by {
-            local_req_builder =
-                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("group_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -313,22 +296,16 @@ impl ContainerImagesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -340,26 +317,17 @@ impl ContainerImagesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ContainerImagesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ContainerImagesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListContainerImagesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListContainerImagesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

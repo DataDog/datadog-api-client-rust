@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the monitor notification rule.
 #[non_exhaustive]
@@ -12,13 +12,12 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleAttributes {
     /// Use bundle config to enable alert bundling to reduce monitor signal noises. **Note**: This feature is in preview and is subject to change.
-    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+/// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
     #[serde(rename = "bundle_config")]
     pub bundle_config: Option<crate::datadogV2::model::MonitorNotificationRuleBundleConfig>,
     /// Use conditional recipients to define different recipients for different situations. Cannot be used with `recipients`.
     #[serde(rename = "conditional_recipients")]
-    pub conditional_recipients:
-        Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
+    pub conditional_recipients: Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
     /// Specifies the matching criteria for monitor notifications.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter>,
@@ -33,7 +32,7 @@ pub struct MonitorNotificationRuleAttributes {
     pub rule_options: Option<crate::datadogV2::model::MonitorNotificationRuleOptions>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorNotificationRuleAttributes {
@@ -48,41 +47,35 @@ impl MonitorNotificationRuleAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn bundle_config(
-        mut self,
-        value: crate::datadogV2::model::MonitorNotificationRuleBundleConfig,
-    ) -> Self {
+    
+    pub fn bundle_config(mut self, value: crate::datadogV2::model::MonitorNotificationRuleBundleConfig) -> Self {
         self.bundle_config = Some(value);
         self
     }
-
-    pub fn conditional_recipients(
-        mut self,
-        value: crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
-    ) -> Self {
+    
+    pub fn conditional_recipients(mut self, value: crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients) -> Self {
         self.conditional_recipients = Some(value);
         self
     }
-
+    
     pub fn filter(mut self, value: crate::datadogV2::model::MonitorNotificationRuleFilter) -> Self {
         self.filter = Some(value);
         self
     }
-
+    
     pub fn recipients(mut self, value: Vec<String>) -> Self {
         self.recipients = Some(value);
         self
     }
-
-    pub fn rule_options(
-        mut self,
-        value: crate::datadogV2::model::MonitorNotificationRuleOptions,
-    ) -> Self {
+    
+    pub fn rule_options(mut self, value: crate::datadogV2::model::MonitorNotificationRuleOptions) -> Self {
         self.rule_options = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -101,19 +94,12 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut bundle_config: Option<
-                    crate::datadogV2::model::MonitorNotificationRuleBundleConfig,
-                > = None;
-                let mut conditional_recipients: Option<
-                    crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
-                > = None;
-                let mut filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter> =
-                    None;
+                let mut bundle_config: Option<crate::datadogV2::model::MonitorNotificationRuleBundleConfig> = None;
+                let mut conditional_recipients: Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients> = None;
+                let mut filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter> = None;
                 let mut name: Option<String> = None;
                 let mut recipients: Option<Vec<String>> = None;
-                let mut rule_options: Option<
-                    crate::datadogV2::model::MonitorNotificationRuleOptions,
-                > = None;
+                let mut rule_options: Option<crate::datadogV2::model::MonitorNotificationRuleOptions> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -122,16 +108,14 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            bundle_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bundle_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conditional_recipients" => {
                             if v.is_null() {
                                 continue;
                             }
-                            conditional_recipients =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            conditional_recipients = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -145,28 +129,25 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "recipients" => {
                             if v.is_null() {
                                 continue;
                             }
                             recipients = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_options" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rule_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rule_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

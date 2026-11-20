@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IssuePlatform {
-    ANDROID,
-    BACKEND,
-    BROWSER,
-    ELECTRON,
-    FLUTTER,
-    IOS,
-    REACT_NATIVE,
-    ROKU,
-    UNKNOWN,
+	ANDROID,
+	BACKEND,
+	BROWSER,
+	ELECTRON,
+	FLUTTER,
+	IOS,
+	REACT_NATIVE,
+	ROKU,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for IssuePlatform {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "ANDROID" => Self::ANDROID,
-            "BACKEND" => Self::BACKEND,
-            "BROWSER" => Self::BROWSER,
-            "ELECTRON" => Self::ELECTRON,
-            "FLUTTER" => Self::FLUTTER,
-            "IOS" => Self::IOS,
-            "REACT_NATIVE" => Self::REACT_NATIVE,
-            "ROKU" => Self::ROKU,
-            "UNKNOWN" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"ANDROID" => Self::ANDROID,"BACKEND" => Self::BACKEND,"BROWSER" => Self::BROWSER,"ELECTRON" => Self::ELECTRON,"FLUTTER" => Self::FLUTTER,"IOS" => Self::IOS,"REACT_NATIVE" => Self::REACT_NATIVE,"ROKU" => Self::ROKU,"UNKNOWN" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

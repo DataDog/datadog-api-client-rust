@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Tag attributes of a monitor configuration policy.
 #[non_exhaustive]
@@ -22,15 +22,11 @@ pub struct MonitorConfigPolicyTagPolicyCreateRequest {
     pub valid_tag_values: Vec<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorConfigPolicyTagPolicyCreateRequest {
-    pub fn new(
-        tag_key: String,
-        tag_key_required: bool,
-        valid_tag_values: Vec<String>,
-    ) -> MonitorConfigPolicyTagPolicyCreateRequest {
+    pub fn new(tag_key: String, tag_key_required: bool, valid_tag_values: Vec<String>) -> MonitorConfigPolicyTagPolicyCreateRequest {
         MonitorConfigPolicyTagPolicyCreateRequest {
             tag_key,
             tag_key_required,
@@ -38,7 +34,10 @@ impl MonitorConfigPolicyTagPolicyCreateRequest {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for MonitorConfigPolicyTagPolicyCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -66,27 +65,21 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyTagPolicyCreateRequest {
                     match k.as_str() {
                         "tag_key" => {
                             tag_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_key_required" => {
-                            tag_key_required =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_key_required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "valid_tag_values" => {
-                            valid_tag_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_tag_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let tag_key = tag_key.ok_or_else(|| M::Error::missing_field("tag_key"))?;
-                let tag_key_required =
-                    tag_key_required.ok_or_else(|| M::Error::missing_field("tag_key_required"))?;
-                let valid_tag_values =
-                    valid_tag_values.ok_or_else(|| M::Error::missing_field("valid_tag_values"))?;
+                let tag_key_required = tag_key_required.ok_or_else(|| M::Error::missing_field("tag_key_required"))?;
+                let valid_tag_values = valid_tag_values.ok_or_else(|| M::Error::missing_field("valid_tag_values"))?;
 
                 let content = MonitorConfigPolicyTagPolicyCreateRequest {
                     tag_key,

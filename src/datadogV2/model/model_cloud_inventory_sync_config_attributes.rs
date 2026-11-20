@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for a Storage Management configuration. Fields other than `id` may be empty in the response immediately after a create or update; subsequent reads return the full configuration.
 #[non_exhaustive]
@@ -57,26 +57,11 @@ pub struct CloudInventorySyncConfigAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CloudInventorySyncConfigAttributes {
-    pub fn new(
-        aws_account_id: String,
-        aws_bucket_name: String,
-        aws_region: String,
-        azure_client_id: String,
-        azure_container_name: String,
-        azure_storage_account_name: String,
-        azure_tenant_id: String,
-        cloud_provider: crate::datadogV2::model::CloudInventoryCloudProviderId,
-        error: String,
-        error_code: String,
-        gcp_bucket_name: String,
-        gcp_project_id: String,
-        gcp_service_account_email: String,
-        prefix: String,
-    ) -> CloudInventorySyncConfigAttributes {
+    pub fn new(aws_account_id: String, aws_bucket_name: String, aws_region: String, azure_client_id: String, azure_container_name: String, azure_storage_account_name: String, azure_tenant_id: String, cloud_provider: crate::datadogV2::model::CloudInventoryCloudProviderId, error: String, error_code: String, gcp_bucket_name: String, gcp_project_id: String, gcp_service_account_email: String, prefix: String) -> CloudInventorySyncConfigAttributes {
         CloudInventorySyncConfigAttributes {
             aws_account_id,
             aws_bucket_name,
@@ -96,15 +81,14 @@ impl CloudInventorySyncConfigAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CloudInventorySyncConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -130,53 +114,41 @@ impl<'de> Deserialize<'de> for CloudInventorySyncConfigAttributes {
                 let mut azure_container_name: Option<String> = None;
                 let mut azure_storage_account_name: Option<String> = None;
                 let mut azure_tenant_id: Option<String> = None;
-                let mut cloud_provider: Option<
-                    crate::datadogV2::model::CloudInventoryCloudProviderId,
-                > = None;
+                let mut cloud_provider: Option<crate::datadogV2::model::CloudInventoryCloudProviderId> = None;
                 let mut error: Option<String> = None;
                 let mut error_code: Option<String> = None;
                 let mut gcp_bucket_name: Option<String> = None;
                 let mut gcp_project_id: Option<String> = None;
                 let mut gcp_service_account_email: Option<String> = None;
                 let mut prefix: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aws_account_id" => {
-                            aws_account_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_bucket_name" => {
-                            aws_bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_region" => {
                             aws_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "azure_client_id" => {
-                            azure_client_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_container_name" => {
-                            azure_container_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_container_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_storage_account_name" => {
-                            azure_storage_account_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_storage_account_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_tenant_id" => {
-                            azure_tenant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_tenant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_provider" => {
-                            cloud_provider =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            cloud_provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _cloud_provider) = cloud_provider {
                                 match _cloud_provider {
                                     crate::datadogV2::model::CloudInventoryCloudProviderId::UnparsedObject(_cloud_provider) => {
@@ -185,58 +157,45 @@ impl<'de> Deserialize<'de> for CloudInventorySyncConfigAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "error" => {
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error_code" => {
                             error_code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "gcp_bucket_name" => {
-                            gcp_bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_project_id" => {
-                            gcp_project_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_service_account_email" => {
-                            gcp_service_account_email =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            gcp_service_account_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "prefix" => {
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let aws_account_id =
-                    aws_account_id.ok_or_else(|| M::Error::missing_field("aws_account_id"))?;
-                let aws_bucket_name =
-                    aws_bucket_name.ok_or_else(|| M::Error::missing_field("aws_bucket_name"))?;
+                let aws_account_id = aws_account_id.ok_or_else(|| M::Error::missing_field("aws_account_id"))?;
+                let aws_bucket_name = aws_bucket_name.ok_or_else(|| M::Error::missing_field("aws_bucket_name"))?;
                 let aws_region = aws_region.ok_or_else(|| M::Error::missing_field("aws_region"))?;
-                let azure_client_id =
-                    azure_client_id.ok_or_else(|| M::Error::missing_field("azure_client_id"))?;
-                let azure_container_name = azure_container_name
-                    .ok_or_else(|| M::Error::missing_field("azure_container_name"))?;
-                let azure_storage_account_name = azure_storage_account_name
-                    .ok_or_else(|| M::Error::missing_field("azure_storage_account_name"))?;
-                let azure_tenant_id =
-                    azure_tenant_id.ok_or_else(|| M::Error::missing_field("azure_tenant_id"))?;
-                let cloud_provider =
-                    cloud_provider.ok_or_else(|| M::Error::missing_field("cloud_provider"))?;
+                let azure_client_id = azure_client_id.ok_or_else(|| M::Error::missing_field("azure_client_id"))?;
+                let azure_container_name = azure_container_name.ok_or_else(|| M::Error::missing_field("azure_container_name"))?;
+                let azure_storage_account_name = azure_storage_account_name.ok_or_else(|| M::Error::missing_field("azure_storage_account_name"))?;
+                let azure_tenant_id = azure_tenant_id.ok_or_else(|| M::Error::missing_field("azure_tenant_id"))?;
+                let cloud_provider = cloud_provider.ok_or_else(|| M::Error::missing_field("cloud_provider"))?;
                 let error = error.ok_or_else(|| M::Error::missing_field("error"))?;
                 let error_code = error_code.ok_or_else(|| M::Error::missing_field("error_code"))?;
-                let gcp_bucket_name =
-                    gcp_bucket_name.ok_or_else(|| M::Error::missing_field("gcp_bucket_name"))?;
-                let gcp_project_id =
-                    gcp_project_id.ok_or_else(|| M::Error::missing_field("gcp_project_id"))?;
-                let gcp_service_account_email = gcp_service_account_email
-                    .ok_or_else(|| M::Error::missing_field("gcp_service_account_email"))?;
+                let gcp_bucket_name = gcp_bucket_name.ok_or_else(|| M::Error::missing_field("gcp_bucket_name"))?;
+                let gcp_project_id = gcp_project_id.ok_or_else(|| M::Error::missing_field("gcp_project_id"))?;
+                let gcp_service_account_email = gcp_service_account_email.ok_or_else(|| M::Error::missing_field("gcp_service_account_email"))?;
                 let prefix = prefix.ok_or_else(|| M::Error::missing_field("prefix"))?;
 
                 let content = CloudInventorySyncConfigAttributes {

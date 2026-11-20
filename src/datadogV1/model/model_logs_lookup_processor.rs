@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Use the Lookup Processor to define a mapping between a log attribute
 /// and a human readable value saved in the processors mapping table.
@@ -23,7 +23,7 @@ pub struct LogsLookupProcessor {
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
     /// Mapping table of values for the source attribute and their associated target attribute values,
-    /// formatted as `["source_key1,target_value1", "source_key2,target_value2"]`
+/// formatted as `["source_key1,target_value1", "source_key2,target_value2"]`
     #[serde(rename = "lookup_table")]
     pub lookup_table: Vec<String>,
     /// Name of the processor.
@@ -33,7 +33,7 @@ pub struct LogsLookupProcessor {
     #[serde(rename = "source")]
     pub source: String,
     /// Name of the attribute that contains the corresponding value in the mapping list
-    /// or the `default_lookup` if not found in the mapping list.
+/// or the `default_lookup` if not found in the mapping list.
     #[serde(rename = "target")]
     pub target: String,
     /// Type of logs lookup processor.
@@ -43,16 +43,11 @@ pub struct LogsLookupProcessor {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsLookupProcessor {
-    pub fn new(
-        lookup_table: Vec<String>,
-        source: String,
-        target: String,
-        type_: crate::datadogV1::model::LogsLookupProcessorType,
-    ) -> LogsLookupProcessor {
+    pub fn new(lookup_table: Vec<String>, source: String, target: String, type_: crate::datadogV1::model::LogsLookupProcessorType) -> LogsLookupProcessor {
         LogsLookupProcessor {
             default_lookup: None,
             is_enabled: None,
@@ -65,30 +60,29 @@ impl LogsLookupProcessor {
             _unparsed: false,
         }
     }
-
+    
     pub fn default_lookup(mut self, value: String) -> Self {
         self.default_lookup = Some(value);
         self
     }
-
+    
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsLookupProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -114,10 +108,7 @@ impl<'de> Deserialize<'de> for LogsLookupProcessor {
                 let mut source: Option<String> = None;
                 let mut target: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::LogsLookupProcessorType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,31 +117,29 @@ impl<'de> Deserialize<'de> for LogsLookupProcessor {
                             if v.is_null() {
                                 continue;
                             }
-                            default_lookup =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_lookup = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "lookup_table" => {
-                            lookup_table =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lookup_table = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -161,16 +150,15 @@ impl<'de> Deserialize<'de> for LogsLookupProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let lookup_table =
-                    lookup_table.ok_or_else(|| M::Error::missing_field("lookup_table"))?;
+                let lookup_table = lookup_table.ok_or_else(|| M::Error::missing_field("lookup_table"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
                 let target = target.ok_or_else(|| M::Error::missing_field("target"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

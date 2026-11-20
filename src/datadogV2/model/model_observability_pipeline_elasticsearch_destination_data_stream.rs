@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration options for writing to Elasticsearch Data Streams instead of a fixed index.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct ObservabilityPipelineElasticsearchDestinationDataStream {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineElasticsearchDestinationDataStream {
@@ -45,40 +45,38 @@ impl ObservabilityPipelineElasticsearchDestinationDataStream {
             _unparsed: false,
         }
     }
-
+    
     pub fn auto_routing(mut self, value: bool) -> Self {
         self.auto_routing = Some(value);
         self
     }
-
+    
     pub fn dataset(mut self, value: String) -> Self {
         self.dataset = Some(value);
         self
     }
-
+    
     pub fn dtype(mut self, value: String) -> Self {
         self.dtype = Some(value);
         self
     }
-
+    
     pub fn namespace(mut self, value: String) -> Self {
         self.namespace = Some(value);
         self
     }
-
+    
     pub fn sync_fields(mut self, value: bool) -> Self {
         self.sync_fields = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ObservabilityPipelineElasticsearchDestinationDataStream {
     fn default() -> Self {
@@ -108,10 +106,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
                 let mut dtype: Option<String> = None;
                 let mut namespace: Option<String> = None;
                 let mut sync_fields: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -120,39 +115,37 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
                             if v.is_null() {
                                 continue;
                             }
-                            auto_routing =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auto_routing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dataset" => {
                             if v.is_null() {
                                 continue;
                             }
                             dataset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dtype" => {
                             if v.is_null() {
                                 continue;
                             }
                             dtype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "namespace" => {
                             if v.is_null() {
                                 continue;
                             }
                             namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sync_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sync_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sync_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

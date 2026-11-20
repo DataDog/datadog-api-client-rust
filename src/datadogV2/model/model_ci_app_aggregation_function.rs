@@ -2,27 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppAggregationFunction {
-    COUNT,
-    CARDINALITY,
-    PERCENTILE_75,
-    PERCENTILE_90,
-    PERCENTILE_95,
-    PERCENTILE_98,
-    PERCENTILE_99,
-    SUM,
-    MIN,
-    MAX,
-    AVG,
-    MEDIAN,
-    LATEST,
-    EARLIEST,
-    MOST_FREQUENT,
-    DELTA,
+	COUNT,
+	CARDINALITY,
+	PERCENTILE_75,
+	PERCENTILE_90,
+	PERCENTILE_95,
+	PERCENTILE_98,
+	PERCENTILE_99,
+	SUM,
+	MIN,
+	MAX,
+	AVG,
+	MEDIAN,
+	LATEST,
+	EARLIEST,
+	MOST_FREQUENT,
+	DELTA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -68,26 +69,8 @@ impl<'de> Deserialize<'de> for CIAppAggregationFunction {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "count" => Self::COUNT,
-            "cardinality" => Self::CARDINALITY,
-            "pc75" => Self::PERCENTILE_75,
-            "pc90" => Self::PERCENTILE_90,
-            "pc95" => Self::PERCENTILE_95,
-            "pc98" => Self::PERCENTILE_98,
-            "pc99" => Self::PERCENTILE_99,
-            "sum" => Self::SUM,
-            "min" => Self::MIN,
-            "max" => Self::MAX,
-            "avg" => Self::AVG,
-            "median" => Self::MEDIAN,
-            "latest" => Self::LATEST,
-            "earliest" => Self::EARLIEST,
-            "most_frequent" => Self::MOST_FREQUENT,
-            "delta" => Self::DELTA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"count" => Self::COUNT,"cardinality" => Self::CARDINALITY,"pc75" => Self::PERCENTILE_75,"pc90" => Self::PERCENTILE_90,"pc95" => Self::PERCENTILE_95,"pc98" => Self::PERCENTILE_98,"pc99" => Self::PERCENTILE_99,"sum" => Self::SUM,"min" => Self::MIN,"max" => Self::MAX,"avg" => Self::AVG,"median" => Self::MEDIAN,"latest" => Self::LATEST,"earliest" => Self::EARLIEST,"most_frequent" => Self::MOST_FREQUENT,"delta" => Self::DELTA,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

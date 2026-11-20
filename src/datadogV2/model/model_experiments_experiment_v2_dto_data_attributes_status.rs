@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsExperimentV2DTODataAttributesStatus {
-    DRAFT,
-    SCHEDULED,
-    IN_PROGRESS,
-    READY_FOR_DECISION,
-    DECISION_MADE,
-    CANCELLED,
-    UNKNOWN,
+	DRAFT,
+	SCHEDULED,
+	IN_PROGRESS,
+	READY_FOR_DECISION,
+	DECISION_MADE,
+	CANCELLED,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentV2DTODataAttributesStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "DRAFT" => Self::DRAFT,
-            "SCHEDULED" => Self::SCHEDULED,
-            "IN_PROGRESS" => Self::IN_PROGRESS,
-            "READY_FOR_DECISION" => Self::READY_FOR_DECISION,
-            "DECISION_MADE" => Self::DECISION_MADE,
-            "CANCELLED" => Self::CANCELLED,
-            "UNKNOWN" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"DRAFT" => Self::DRAFT,"SCHEDULED" => Self::SCHEDULED,"IN_PROGRESS" => Self::IN_PROGRESS,"READY_FOR_DECISION" => Self::READY_FOR_DECISION,"DECISION_MADE" => Self::DECISION_MADE,"CANCELLED" => Self::CANCELLED,"UNKNOWN" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

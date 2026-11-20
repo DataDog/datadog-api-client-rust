@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing a patch in the diff.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct SyntheticsTestVersionDiffPatches {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestVersionDiffPatches {
@@ -45,43 +45,38 @@ impl SyntheticsTestVersionDiffPatches {
             _unparsed: false,
         }
     }
-
-    pub fn diffs(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatchDiff>,
-    ) -> Self {
+    
+    pub fn diffs(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatchDiff>) -> Self {
         self.diffs = Some(value);
         self
     }
-
+    
     pub fn length1(mut self, value: i64) -> Self {
         self.length1 = Some(value);
         self
     }
-
+    
     pub fn length2(mut self, value: i64) -> Self {
         self.length2 = Some(value);
         self
     }
-
+    
     pub fn start1(mut self, value: i64) -> Self {
         self.start1 = Some(value);
         self
     }
-
+    
     pub fn start2(mut self, value: i64) -> Self {
         self.start2 = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestVersionDiffPatches {
     fn default() -> Self {
@@ -106,17 +101,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestVersionDiffPatches {
             where
                 M: MapAccess<'a>,
             {
-                let mut diffs: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatchDiff>,
-                > = None;
+                let mut diffs: Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatchDiff>> = None;
                 let mut length1: Option<i64> = None;
                 let mut length2: Option<i64> = None;
                 let mut start1: Option<i64> = None;
                 let mut start2: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,36 +116,36 @@ impl<'de> Deserialize<'de> for SyntheticsTestVersionDiffPatches {
                                 continue;
                             }
                             diffs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "length1" => {
                             if v.is_null() {
                                 continue;
                             }
                             length1 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "length2" => {
                             if v.is_null() {
                                 continue;
                             }
                             length2 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start1" => {
                             if v.is_null() {
                                 continue;
                             }
                             start1 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start2" => {
                             if v.is_null() {
                                 continue;
                             }
                             start2 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

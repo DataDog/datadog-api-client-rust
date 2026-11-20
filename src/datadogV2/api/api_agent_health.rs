@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 
 /// ListAgentHealthHostIssuesOptionalParams is a struct for passing parameters to the method [`AgentHealthAPI::list_agent_health_host_issues`]
 #[non_exhaustive]
@@ -29,24 +29,24 @@ pub struct ListAgentHealthIssuesOptionalParams {
     /// Set to `issue_type` to include `meta.page` with `total_count` and per-issue-type counts. If you don't set this parameter, the response omits `meta`. Only `issue_type` is supported.
     pub count_by: Option<crate::datadogV2::model::AgentHealthIssuesCountBy>,
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub filter_severity: Option<String>,
     /// Filter by a comma-separated list of exact `category` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub filter_category: Option<String>,
     /// Filter by a comma-separated list of exact `issue_type` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub filter_issue_type: Option<String>,
     /// Filter by a comma-separated list of exact `resource_kind` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub filter_resource_kind: Option<String>,
     /// Filter by a comma-separated list of exact `resource_id` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub filter_resource_id: Option<String>,
 }
 
@@ -57,41 +57,44 @@ impl ListAgentHealthIssuesOptionalParams {
         self
     }
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub fn filter_severity(mut self, value: String) -> Self {
         self.filter_severity = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `category` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub fn filter_category(mut self, value: String) -> Self {
         self.filter_category = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `issue_type` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub fn filter_issue_type(mut self, value: String) -> Self {
         self.filter_issue_type = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `resource_kind` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub fn filter_resource_kind(mut self, value: String) -> Self {
         self.filter_resource_kind = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `resource_id` values, up to 50 values
-    /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
-    /// Blank entries are ignored; an all-blank filter is treated as absent.
+/// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
+/// Blank entries are ignored; an all-blank filter is treated as absent.
     pub fn filter_resource_id(mut self, value: String) -> Self {
         self.filter_resource_id = Some(value);
         self
     }
 }
+
+
+
 
 /// GetAgentHealthIssueError is a struct for typed errors of method [`AgentHealthAPI::get_agent_health_issue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -102,6 +105,7 @@ pub enum GetAgentHealthIssueError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAgentHealthHostIssuesError is a struct for typed errors of method [`AgentHealthAPI::list_agent_health_host_issues`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -109,6 +113,7 @@ pub enum ListAgentHealthHostIssuesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAgentHealthIssuesError is a struct for typed errors of method [`AgentHealthAPI::list_agent_health_issues`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -118,6 +123,7 @@ pub enum ListAgentHealthIssuesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// List open Agent Health issues across your organization and get an issue with its available remediation. Issues are reported by node Agents, Cluster Agents, and OpenTelemetry collectors. The meaning of `resource_id` depends on `resource_kind`: hostname for `host`, DaemonSet UID for `deployment` (node Agent), cluster UUID for `cluster`, hostname of the host running the Cluster Agent for `cluster_agent`, or OpenTelemetry collector ID for `otel`.
 #[derive(Debug, Clone)]
@@ -141,7 +147,8 @@ impl AgentHealthAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -186,55 +193,41 @@ impl AgentHealthAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get an Agent Health issue and its available remediation in your organization.
-    /// Only open issues are returned. The `remediation` attribute is omitted when
-    /// the issue has no remediation.
-    ///
-    /// Returns `404` if the issue does not exist, is not open, belongs to another
-    /// organization, or you do not have access to its data. This response does not
-    /// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
-    pub async fn get_agent_health_issue(
-        &self,
-        issue_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AgentHealthIssueResponse,
-        datadog::Error<GetAgentHealthIssueError>,
-    > {
+/// Only open issues are returned. The `remediation` attribute is omitted when
+/// the issue has no remediation.
+///
+/// Returns `404` if the issue does not exist, is not open, belongs to another
+/// organization, or you do not have access to its data. This response does not
+/// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
+    pub async fn get_agent_health_issue(&self, issue_id: String) -> Result<crate::datadogV2::model::AgentHealthIssueResponse, datadog::Error<GetAgentHealthIssueError>> {
         match self.get_agent_health_issue_with_http_info(issue_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an Agent Health issue and its available remediation in your organization.
-    /// Only open issues are returned. The `remediation` attribute is omitted when
-    /// the issue has no remediation.
-    ///
-    /// Returns `404` if the issue does not exist, is not open, belongs to another
-    /// organization, or you do not have access to its data. This response does not
-    /// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
-    pub async fn get_agent_health_issue_with_http_info(
-        &self,
-        issue_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AgentHealthIssueResponse>,
-        datadog::Error<GetAgentHealthIssueError>,
-    > {
+/// Only open issues are returned. The `remediation` attribute is omitted when
+/// the issue has no remediation.
+///
+/// Returns `404` if the issue does not exist, is not open, belongs to another
+/// organization, or you do not have access to its data. This response does not
+/// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
+    pub async fn get_agent_health_issue_with_http_info(&self, issue_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AgentHealthIssueResponse>, datadog::Error<GetAgentHealthIssueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_agent_health_issue";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -246,19 +239,24 @@ impl AgentHealthAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agenthealth/issues/{issue_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            issue_id = datadog::urlencode(issue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), issue_id=
+            datadog::urlencode(issue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -271,22 +269,16 @@ impl AgentHealthAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -298,68 +290,42 @@ impl AgentHealthAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AgentHealthIssueResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AgentHealthIssueResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAgentHealthIssueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAgentHealthIssueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the active Agent Health issues for a node Agent or Cluster Agent resource.
-    pub async fn list_agent_health_host_issues(
-        &self,
-        resource_id: String,
-        params: ListAgentHealthHostIssuesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::AgentHealthHostIssuesResponse,
-        datadog::Error<ListAgentHealthHostIssuesError>,
-    > {
-        match self
-            .list_agent_health_host_issues_with_http_info(resource_id, params)
-            .await
-        {
+    pub async fn list_agent_health_host_issues(&self, resource_id: String, params: ListAgentHealthHostIssuesOptionalParams) -> Result<crate::datadogV2::model::AgentHealthHostIssuesResponse, datadog::Error<ListAgentHealthHostIssuesError>> {
+        match self.list_agent_health_host_issues_with_http_info(resource_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the active Agent Health issues for a node Agent or Cluster Agent resource.
-    pub async fn list_agent_health_host_issues_with_http_info(
-        &self,
-        resource_id: String,
-        params: ListAgentHealthHostIssuesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AgentHealthHostIssuesResponse>,
-        datadog::Error<ListAgentHealthHostIssuesError>,
-    > {
+    pub async fn list_agent_health_host_issues_with_http_info(&self, resource_id: String, params: ListAgentHealthHostIssuesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AgentHealthHostIssuesResponse>, datadog::Error<ListAgentHealthHostIssuesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_agent_health_host_issues";
 
+        
         // unbox and build optional parameters
         let agent_type = params.agent_type;
 
@@ -367,20 +333,21 @@ impl AgentHealthAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/agenthealth/hosts/{resource_id}/issues",
-            local_configuration.get_operation_host(local_operation_id),
-            resource_id = datadog::urlencode(resource_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), resource_id=
+            datadog::urlencode(resource_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = agent_type {
-            local_req_builder =
-                local_req_builder.query(&[("agent_type", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("agent_type", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -393,15 +360,13 @@ impl AgentHealthAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -413,88 +378,66 @@ impl AgentHealthAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AgentHealthHostIssuesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AgentHealthHostIssuesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAgentHealthHostIssuesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAgentHealthHostIssuesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List open Agent Health issues across your organization. Returns `403` if you
-    /// lack the `hosts_read` permission.
-    ///
-    /// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
-    /// fields, including its `issue_type`. Issues use a stable order: severity rank
-    /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
-    /// missing timestamps last, then issue ID ascending.
-    ///
-    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
-    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
-    /// `meta` is omitted when `count_by` is not requested.
-    ///
-    /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
-    /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
-    /// is treated as absent.
-    pub async fn list_agent_health_issues(
-        &self,
-        params: ListAgentHealthIssuesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::AgentHealthIssuesResponse,
-        datadog::Error<ListAgentHealthIssuesError>,
-    > {
-        match self.list_agent_health_issues_with_http_info(params).await {
+/// lack the `hosts_read` permission.
+///
+/// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
+/// fields, including its `issue_type`. Issues use a stable order: severity rank
+/// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
+/// missing timestamps last, then issue ID ascending.
+///
+/// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
+/// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
+/// `meta` is omitted when `count_by` is not requested.
+///
+/// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
+/// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
+/// is treated as absent.
+    pub async fn list_agent_health_issues(&self, params: ListAgentHealthIssuesOptionalParams) -> Result<crate::datadogV2::model::AgentHealthIssuesResponse, datadog::Error<ListAgentHealthIssuesError>> {
+        match self.list_agent_health_issues_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List open Agent Health issues across your organization. Returns `403` if you
-    /// lack the `hosts_read` permission.
-    ///
-    /// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
-    /// fields, including its `issue_type`. Issues use a stable order: severity rank
-    /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
-    /// missing timestamps last, then issue ID ascending.
-    ///
-    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
-    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
-    /// `meta` is omitted when `count_by` is not requested.
-    ///
-    /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
-    /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
-    /// is treated as absent.
-    pub async fn list_agent_health_issues_with_http_info(
-        &self,
-        params: ListAgentHealthIssuesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AgentHealthIssuesResponse>,
-        datadog::Error<ListAgentHealthIssuesError>,
-    > {
+/// lack the `hosts_read` permission.
+///
+/// Each item in `data` is a JSON:API resource object whose `attributes` hold the issue
+/// fields, including its `issue_type`. Issues use a stable order: severity rank
+/// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
+/// missing timestamps last, then issue ID ascending.
+///
+/// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
+/// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
+/// `meta` is omitted when `count_by` is not requested.
+///
+/// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
+/// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
+/// is treated as absent.
+    pub async fn list_agent_health_issues_with_http_info(&self, params: ListAgentHealthIssuesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AgentHealthIssuesResponse>, datadog::Error<ListAgentHealthIssuesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_agent_health_issues";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -506,6 +449,7 @@ impl AgentHealthAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let count_by = params.count_by;
         let filter_severity = params.filter_severity;
@@ -518,39 +462,34 @@ impl AgentHealthAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/agenthealth/issues",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = count_by {
-            local_req_builder =
-                local_req_builder.query(&[("count_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("count_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_severity {
-            local_req_builder =
-                local_req_builder.query(&[("filter[severity]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[severity]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_category {
-            local_req_builder =
-                local_req_builder.query(&[("filter[category]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[category]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_issue_type {
-            local_req_builder =
-                local_req_builder.query(&[("filter[issue_type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[issue_type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_resource_kind {
-            local_req_builder = local_req_builder
-                .query(&[("filter[resource_kind]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[resource_kind]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_resource_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[resource_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[resource_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -563,22 +502,16 @@ impl AgentHealthAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -590,26 +523,17 @@ impl AgentHealthAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AgentHealthIssuesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AgentHealthIssuesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAgentHealthIssuesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAgentHealthIssuesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

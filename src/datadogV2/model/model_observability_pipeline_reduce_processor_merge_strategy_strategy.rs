@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineReduceProcessorMergeStrategyStrategy {
-    DISCARD,
-    RETAIN,
-    SUM,
-    MAX,
-    MIN,
-    ARRAY,
-    CONCAT,
-    CONCAT_NEWLINE,
-    CONCAT_RAW,
-    SHORTEST_ARRAY,
-    LONGEST_ARRAY,
-    FLAT_UNIQUE,
+	DISCARD,
+	RETAIN,
+	SUM,
+	MAX,
+	MIN,
+	ARRAY,
+	CONCAT,
+	CONCAT_NEWLINE,
+	CONCAT_RAW,
+	SHORTEST_ARRAY,
+	LONGEST_ARRAY,
+	FLAT_UNIQUE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -60,22 +61,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineReduceProcessorMergeStrategy
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "discard" => Self::DISCARD,
-            "retain" => Self::RETAIN,
-            "sum" => Self::SUM,
-            "max" => Self::MAX,
-            "min" => Self::MIN,
-            "array" => Self::ARRAY,
-            "concat" => Self::CONCAT,
-            "concat_newline" => Self::CONCAT_NEWLINE,
-            "concat_raw" => Self::CONCAT_RAW,
-            "shortest_array" => Self::SHORTEST_ARRAY,
-            "longest_array" => Self::LONGEST_ARRAY,
-            "flat_unique" => Self::FLAT_UNIQUE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"discard" => Self::DISCARD,"retain" => Self::RETAIN,"sum" => Self::SUM,"max" => Self::MAX,"min" => Self::MIN,"array" => Self::ARRAY,"concat" => Self::CONCAT,"concat_newline" => Self::CONCAT_NEWLINE,"concat_raw" => Self::CONCAT_RAW,"shortest_array" => Self::SHORTEST_ARRAY,"longest_array" => Self::LONGEST_ARRAY,"flat_unique" => Self::FLAT_UNIQUE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

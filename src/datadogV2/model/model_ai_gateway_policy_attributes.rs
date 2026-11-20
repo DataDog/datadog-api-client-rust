@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Routing policy configuration.
 #[non_exhaustive]
@@ -20,14 +20,11 @@ pub struct AiGatewayPolicyAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayPolicyAttributes {
-    pub fn new(
-        priority: i64,
-        tiers: Vec<crate::datadogV2::model::AiGatewayPolicyTier>,
-    ) -> AiGatewayPolicyAttributes {
+    pub fn new(priority: i64, tiers: Vec<crate::datadogV2::model::AiGatewayPolicyTier>) -> AiGatewayPolicyAttributes {
         AiGatewayPolicyAttributes {
             priority,
             tiers,
@@ -35,15 +32,14 @@ impl AiGatewayPolicyAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayPolicyAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -64,25 +60,22 @@ impl<'de> Deserialize<'de> for AiGatewayPolicyAttributes {
             {
                 let mut priority: Option<i64> = None;
                 let mut tiers: Option<Vec<crate::datadogV2::model::AiGatewayPolicyTier>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "priority" => {
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tiers" => {
                             tiers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let priority = priority.ok_or_else(|| M::Error::missing_field("priority"))?;

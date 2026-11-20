@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DeploymentGatesEvaluationResponseDataType {
-    DEPLOYMENT_GATES_EVALUATION_RESPONSE,
+	DEPLOYMENT_GATES_EVALUATION_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DeploymentGatesEvaluationResponseDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::DEPLOYMENT_GATES_EVALUATION_RESPONSE => {
-                String::from("deployment_gates_evaluation_response")
-            }
+            Self::DEPLOYMENT_GATES_EVALUATION_RESPONSE => String::from("deployment_gates_evaluation_response"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for DeploymentGatesEvaluationResponseDataType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "deployment_gates_evaluation_response" => Self::DEPLOYMENT_GATES_EVALUATION_RESPONSE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"deployment_gates_evaluation_response" => Self::DEPLOYMENT_GATES_EVALUATION_RESPONSE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

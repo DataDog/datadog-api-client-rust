@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsMethod {
-    FIXED_SAMPLE,
-    BAYESIAN,
-    SEQUENTIAL,
-    SEQUENTIAL_FIXED_HYBRID,
-    UNKNOWN,
+	FIXED_SAMPLE,
+	BAYESIAN,
+	SEQUENTIAL,
+	SEQUENTIAL_FIXED_HYBRID,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,23 +41,14 @@ impl Serialize for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnaly
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsMethod
-{
+impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsMethod {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "FIXED_SAMPLE" => Self::FIXED_SAMPLE,
-            "BAYESIAN" => Self::BAYESIAN,
-            "SEQUENTIAL" => Self::SEQUENTIAL,
-            "SEQUENTIAL_FIXED_HYBRID" => Self::SEQUENTIAL_FIXED_HYBRID,
-            "UNKNOWN" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"FIXED_SAMPLE" => Self::FIXED_SAMPLE,"BAYESIAN" => Self::BAYESIAN,"SEQUENTIAL" => Self::SEQUENTIAL,"SEQUENTIAL_FIXED_HYBRID" => Self::SEQUENTIAL_FIXED_HYBRID,"UNKNOWN" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

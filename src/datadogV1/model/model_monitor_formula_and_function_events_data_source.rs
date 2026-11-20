@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorFormulaAndFunctionEventsDataSource {
-    RUM,
-    CI_PIPELINES,
-    CI_TESTS,
-    AUDIT,
-    EVENTS,
-    LOGS,
-    SPANS,
-    DATABASE_QUERIES,
-    NETWORK,
-    NETWORK_PATH,
-    LLM_OBSERVABILITY,
+	RUM,
+	CI_PIPELINES,
+	CI_TESTS,
+	AUDIT,
+	EVENTS,
+	LOGS,
+	SPANS,
+	DATABASE_QUERIES,
+	NETWORK,
+	NETWORK_PATH,
+	LLM_OBSERVABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -58,21 +59,8 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventsDataSource {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "rum" => Self::RUM,
-            "ci_pipelines" => Self::CI_PIPELINES,
-            "ci_tests" => Self::CI_TESTS,
-            "audit" => Self::AUDIT,
-            "events" => Self::EVENTS,
-            "logs" => Self::LOGS,
-            "spans" => Self::SPANS,
-            "database_queries" => Self::DATABASE_QUERIES,
-            "network" => Self::NETWORK,
-            "network_path" => Self::NETWORK_PATH,
-            "llm_observability" => Self::LLM_OBSERVABILITY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"rum" => Self::RUM,"ci_pipelines" => Self::CI_PIPELINES,"ci_tests" => Self::CI_TESTS,"audit" => Self::AUDIT,"events" => Self::EVENTS,"logs" => Self::LOGS,"spans" => Self::SPANS,"database_queries" => Self::DATABASE_QUERIES,"network" => Self::NETWORK,"network_path" => Self::NETWORK_PATH,"llm_observability" => Self::LLM_OBSERVABILITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

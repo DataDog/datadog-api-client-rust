@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Cohort criteria for retention queries.
 #[non_exhaustive]
@@ -19,21 +19,21 @@ pub struct RetentionCohortCriteria {
     pub time_interval: crate::datadogV1::model::RetentionCohortCriteriaTimeInterval,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RetentionCohortCriteria {
-    pub fn new(
-        base_query: crate::datadogV1::model::ProductAnalyticsBaseQuery,
-        time_interval: crate::datadogV1::model::RetentionCohortCriteriaTimeInterval,
-    ) -> RetentionCohortCriteria {
+    pub fn new(base_query: crate::datadogV1::model::ProductAnalyticsBaseQuery, time_interval: crate::datadogV1::model::RetentionCohortCriteriaTimeInterval) -> RetentionCohortCriteria {
         RetentionCohortCriteria {
             base_query,
             time_interval,
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for RetentionCohortCriteria {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -52,32 +52,25 @@ impl<'de> Deserialize<'de> for RetentionCohortCriteria {
             where
                 M: MapAccess<'a>,
             {
-                let mut base_query: Option<crate::datadogV1::model::ProductAnalyticsBaseQuery> =
-                    None;
-                let mut time_interval: Option<
-                    crate::datadogV1::model::RetentionCohortCriteriaTimeInterval,
-                > = None;
+                let mut base_query: Option<crate::datadogV1::model::ProductAnalyticsBaseQuery> = None;
+                let mut time_interval: Option<crate::datadogV1::model::RetentionCohortCriteriaTimeInterval> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "base_query" => {
                             base_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time_interval" => {
-                            time_interval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            time_interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let base_query = base_query.ok_or_else(|| M::Error::missing_field("base_query"))?;
-                let time_interval =
-                    time_interval.ok_or_else(|| M::Error::missing_field("time_interval"))?;
+                let time_interval = time_interval.ok_or_else(|| M::Error::missing_field("time_interval"))?;
 
                 let content = RetentionCohortCriteria {
                     base_query,

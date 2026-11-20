@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A metric associated with an Agent Observability experiment span.
 #[non_exhaustive]
@@ -54,16 +54,11 @@ pub struct LLMObsExperimentMetric {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsExperimentMetric {
-    pub fn new(
-        label: String,
-        metric_type: crate::datadogV2::model::LLMObsMetricScoreType,
-        span_id: String,
-        timestamp_ms: i64,
-    ) -> LLMObsExperimentMetric {
+    pub fn new(label: String, metric_type: crate::datadogV2::model::LLMObsMetricScoreType, span_id: String, timestamp_ms: i64) -> LLMObsExperimentMetric {
         LLMObsExperimentMetric {
             assessment: None,
             boolean_value: None,
@@ -82,66 +77,59 @@ impl LLMObsExperimentMetric {
             _unparsed: false,
         }
     }
-
+    
     pub fn assessment(mut self, value: crate::datadogV2::model::LLMObsMetricAssessment) -> Self {
         self.assessment = Some(value);
         self
     }
-
+    
     pub fn boolean_value(mut self, value: bool) -> Self {
         self.boolean_value = Some(value);
         self
     }
-
+    
     pub fn categorical_value(mut self, value: String) -> Self {
         self.categorical_value = Some(value);
         self
     }
-
+    
     pub fn error(mut self, value: crate::datadogV2::model::LLMObsExperimentMetricError) -> Self {
         self.error = Some(value);
         self
     }
-
-    pub fn json_value(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn json_value(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.json_value = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn reasoning(mut self, value: String) -> Self {
         self.reasoning = Some(value);
         self
     }
-
+    
     pub fn score_value(mut self, value: f64) -> Self {
         self.score_value = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -164,21 +152,16 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                 let mut boolean_value: Option<bool> = None;
                 let mut categorical_value: Option<String> = None;
                 let mut error: Option<crate::datadogV2::model::LLMObsExperimentMetricError> = None;
-                let mut json_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut json_value: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut label: Option<String> = None;
-                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut metric_type: Option<crate::datadogV2::model::LLMObsMetricScoreType> = None;
                 let mut reasoning: Option<String> = None;
                 let mut score_value: Option<f64> = None;
                 let mut span_id: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp_ms: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,45 +179,42 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "boolean_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            boolean_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            boolean_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "categorical_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            categorical_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            categorical_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error" => {
                             if v.is_null() {
                                 continue;
                             }
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "json_value" => {
                             if v.is_null() {
                                 continue;
                             }
                             json_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "label" => {
                             label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_type" => {
-                            metric_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            metric_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric_type) = metric_type {
                                 match _metric_type {
                                     crate::datadogV2::model::LLMObsMetricScoreType::UnparsedObject(_metric_type) => {
@@ -243,46 +223,42 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "reasoning" => {
                             if v.is_null() {
                                 continue;
                             }
                             reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "score_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            score_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            score_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "span_id" => {
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp_ms" => {
-                            timestamp_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timestamp_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let label = label.ok_or_else(|| M::Error::missing_field("label"))?;
-                let metric_type =
-                    metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
+                let metric_type = metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
                 let span_id = span_id.ok_or_else(|| M::Error::missing_field("span_id"))?;
-                let timestamp_ms =
-                    timestamp_ms.ok_or_else(|| M::Error::missing_field("timestamp_ms"))?;
+                let timestamp_ms = timestamp_ms.ok_or_else(|| M::Error::missing_field("timestamp_ms"))?;
 
                 let content = LLMObsExperimentMetric {
                     assessment,

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of the `GCPServiceAccount` object.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct GCPServiceAccountUpdate {
     pub private_key: Option<crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey>,
     /// The `GCPServiceAccountUpdate` `service_account_email`.
     #[serde(rename = "service_account_email")]
-    pub service_account_email:
-        Option<crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail>,
+    pub service_account_email: Option<crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail>,
     /// The definition of the `GCPServiceAccount` object.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GCPServiceAccountCredentialType,
@@ -25,13 +24,11 @@ pub struct GCPServiceAccountUpdate {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GCPServiceAccountUpdate {
-    pub fn new(
-        type_: crate::datadogV2::model::GCPServiceAccountCredentialType,
-    ) -> GCPServiceAccountUpdate {
+    pub fn new(type_: crate::datadogV2::model::GCPServiceAccountCredentialType) -> GCPServiceAccountUpdate {
         GCPServiceAccountUpdate {
             private_key: None,
             service_account_email: None,
@@ -40,31 +37,24 @@ impl GCPServiceAccountUpdate {
             _unparsed: false,
         }
     }
-
-    pub fn private_key(
-        mut self,
-        value: crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey,
-    ) -> Self {
+    
+    pub fn private_key(mut self, value: crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey) -> Self {
         self.private_key = Some(value);
         self
     }
-
-    pub fn service_account_email(
-        mut self,
-        value: crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail,
-    ) -> Self {
+    
+    pub fn service_account_email(mut self, value: crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail) -> Self {
         self.service_account_email = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -83,18 +73,10 @@ impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut private_key: Option<
-                    crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey,
-                > = None;
-                let mut service_account_email: Option<
-                    crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::GCPServiceAccountCredentialType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut private_key: Option<crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey> = None;
+                let mut service_account_email: Option<crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail> = None;
+                let mut type_: Option<crate::datadogV2::model::GCPServiceAccountCredentialType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,8 +85,7 @@ impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
                             if v.is_null() {
                                 continue;
                             }
-                            private_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            private_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _private_key) = private_key {
                                 match _private_key {
                                     crate::datadogV2::model::GCPServiceAccountUpdatePrivateKey::UnparsedObject(_private_key) => {
@@ -113,13 +94,12 @@ impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "service_account_email" => {
                             if v.is_null() {
                                 continue;
                             }
-                            service_account_email =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            service_account_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _service_account_email) = service_account_email {
                                 match _service_account_email {
                                     crate::datadogV2::model::GCPServiceAccountUpdateServiceAccountEmail::UnparsedObject(_service_account_email) => {
@@ -128,7 +108,7 @@ impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -139,12 +119,12 @@ impl<'de> Deserialize<'de> for GCPServiceAccountUpdate {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

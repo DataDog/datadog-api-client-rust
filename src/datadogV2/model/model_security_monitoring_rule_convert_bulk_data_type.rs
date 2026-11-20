@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleConvertBulkDataType {
-    SECURITY_MONITORING_RULES_CONVERT_BULK,
+	SECURITY_MONITORING_RULES_CONVERT_BULK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for SecurityMonitoringRuleConvertBulkDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::SECURITY_MONITORING_RULES_CONVERT_BULK => {
-                String::from("security_monitoring_rules_convert_bulk")
-            }
+            Self::SECURITY_MONITORING_RULES_CONVERT_BULK => String::from("security_monitoring_rules_convert_bulk"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,13 +39,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleConvertBulkDataType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "security_monitoring_rules_convert_bulk" => {
-                Self::SECURITY_MONITORING_RULES_CONVERT_BULK
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"security_monitoring_rules_convert_bulk" => Self::SECURITY_MONITORING_RULES_CONVERT_BULK,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

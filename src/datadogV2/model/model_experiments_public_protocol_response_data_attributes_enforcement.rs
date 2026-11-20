@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Controls that determine which protocol settings can be changed in an experiment.
 #[non_exhaustive]
@@ -60,7 +60,7 @@ pub struct ExperimentsPublicProtocolResponseDataAttributesEnforcement {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsPublicProtocolResponseDataAttributesEnforcement {
@@ -85,90 +85,88 @@ impl ExperimentsPublicProtocolResponseDataAttributesEnforcement {
             _unparsed: false,
         }
     }
-
+    
     pub fn confidence_interval_method(mut self, value: String) -> Self {
         self.confidence_interval_method = Some(value);
         self
     }
-
+    
     pub fn confidence_level(mut self, value: String) -> Self {
         self.confidence_level = Some(value);
         self
     }
-
+    
     pub fn cuped_calculation(mut self, value: String) -> Self {
         self.cuped_calculation = Some(value);
         self
     }
-
+    
     pub fn default_duration(mut self, value: String) -> Self {
         self.default_duration = Some(value);
         self
     }
-
+    
     pub fn environment(mut self, value: String) -> Self {
         self.environment = Some(value);
         self
     }
-
+    
     pub fn flag_source(mut self, value: String) -> Self {
         self.flag_source = Some(value);
         self
     }
-
+    
     pub fn multiple_testing_correction(mut self, value: String) -> Self {
         self.multiple_testing_correction = Some(value);
         self
     }
-
+    
     pub fn notifications(mut self, value: String) -> Self {
         self.notifications = Some(value);
         self
     }
-
+    
     pub fn primary_metric(mut self, value: String) -> Self {
         self.primary_metric = Some(value);
         self
     }
-
+    
     pub fn secondary_metrics(mut self, value: String) -> Self {
         self.secondary_metrics = Some(value);
         self
     }
-
+    
     pub fn split_by_exploration_dimensions(mut self, value: String) -> Self {
         self.split_by_exploration_dimensions = Some(value);
         self
     }
-
+    
     pub fn subject_type(mut self, value: String) -> Self {
         self.subject_type = Some(value);
         self
     }
-
+    
     pub fn targeting_rules(mut self, value: String) -> Self {
         self.targeting_rules = Some(value);
         self
     }
-
+    
     pub fn traffic_exposure(mut self, value: String) -> Self {
         self.traffic_exposure = Some(value);
         self
     }
-
+    
     pub fn warehouse_exposure_source(mut self, value: String) -> Self {
         self.warehouse_exposure_source = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsPublicProtocolResponseDataAttributesEnforcement {
     fn default() -> Self {
@@ -208,10 +206,7 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributesEn
                 let mut targeting_rules: Option<String> = None;
                 let mut traffic_exposure: Option<String> = None;
                 let mut warehouse_exposure_source: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -220,112 +215,97 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributesEn
                             if v.is_null() {
                                 continue;
                             }
-                            confidence_interval_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            confidence_interval_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "confidence_level" => {
                             if v.is_null() {
                                 continue;
                             }
-                            confidence_level =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            confidence_level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cuped_calculation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cuped_calculation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cuped_calculation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default_duration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "environment" => {
                             if v.is_null() {
                                 continue;
                             }
-                            environment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flag_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flag_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flag_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "multiple_testing_correction" => {
                             if v.is_null() {
                                 continue;
                             }
-                            multiple_testing_correction =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            multiple_testing_correction = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notifications" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notifications =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notifications = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "primary_metric" => {
                             if v.is_null() {
                                 continue;
                             }
-                            primary_metric =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            primary_metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "secondary_metrics" => {
                             if v.is_null() {
                                 continue;
                             }
-                            secondary_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            secondary_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "split_by_exploration_dimensions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            split_by_exploration_dimensions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            split_by_exploration_dimensions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subject_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "targeting_rules" => {
                             if v.is_null() {
                                 continue;
                             }
-                            targeting_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            targeting_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "traffic_exposure" => {
                             if v.is_null() {
                                 continue;
                             }
-                            traffic_exposure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            traffic_exposure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "warehouse_exposure_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            warehouse_exposure_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            warehouse_exposure_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
@@ -353,7 +333,6 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributesEn
             }
         }
 
-        deserializer
-            .deserialize_any(ExperimentsPublicProtocolResponseDataAttributesEnforcementVisitor)
+        deserializer.deserialize_any(ExperimentsPublicProtocolResponseDataAttributesEnforcementVisitor)
     }
 }

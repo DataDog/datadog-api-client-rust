@@ -1,47 +1,25 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A formula and function query.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum FormulaAndFunctionQueryDefinition {
-    FormulaAndFunctionMetricQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>,
-    ),
-    FormulaAndFunctionEventQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>,
-    ),
-    FormulaAndFunctionProcessQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition>,
-    ),
-    FormulaAndFunctionApmDependencyStatsQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition>,
-    ),
-    FormulaAndFunctionApmResourceStatsQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
-    ),
-    FormulaAndFunctionApmMetricsQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>,
-    ),
-    FormulaAndFunctionSLOQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>,
-    ),
-    FormulaAndFunctionCloudCostQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>,
-    ),
-    FormulaAndFunctionProductAnalyticsExtendedQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>,
-    ),
-    FormulaAndFunctionUserJourneyQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>,
-    ),
-    FormulaAndFunctionRetentionQueryDefinition(
-        Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	FormulaAndFunctionMetricQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>),
+	FormulaAndFunctionEventQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>),
+	FormulaAndFunctionProcessQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition>),
+	FormulaAndFunctionApmDependencyStatsQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition>),
+	FormulaAndFunctionApmResourceStatsQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>),
+	FormulaAndFunctionApmMetricsQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>),
+	FormulaAndFunctionSLOQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>),
+	FormulaAndFunctionCloudCostQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>),
+	FormulaAndFunctionProductAnalyticsExtendedQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>),
+	FormulaAndFunctionUserJourneyQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>),
+	FormulaAndFunctionRetentionQueryDefinition(Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
@@ -50,121 +28,62 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionMetricQueryDefinition(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionMetricQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionEventQueryDefinition(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionEventQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionEventQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionProcessQueryDefinition(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionProcessQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionProcessQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionApmDependencyStatsQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmDependencyStatsQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmResourceStatsQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmMetricsQueryDefinition(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmMetricsQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionSLOQueryDefinition(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionSLOQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionCloudCostQueryDefinition(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionCloudCostQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionUserJourneyQueryDefinition(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionUserJourneyQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionRetentionQueryDefinition(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionRetentionQueryDefinition(_v));
             }
         }
-
-        return Ok(FormulaAndFunctionQueryDefinition::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(FormulaAndFunctionQueryDefinition::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

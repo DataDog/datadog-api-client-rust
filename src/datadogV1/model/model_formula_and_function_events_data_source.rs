@@ -2,27 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FormulaAndFunctionEventsDataSource {
-    LOGS,
-    SPANS,
-    NETWORK,
-    NETWORK_DEVICE_FLOWS,
-    RUM,
-    SECURITY_SIGNALS,
-    PROFILES,
-    AUDIT,
-    EVENTS,
-    CI_TESTS,
-    CI_PIPELINES,
-    INCIDENT_ANALYTICS,
-    PRODUCT_ANALYTICS,
-    ON_CALL_EVENTS,
-    ERRORS,
-    LLM_OBSERVABILITY,
+	LOGS,
+	SPANS,
+	NETWORK,
+	NETWORK_DEVICE_FLOWS,
+	RUM,
+	SECURITY_SIGNALS,
+	PROFILES,
+	AUDIT,
+	EVENTS,
+	CI_TESTS,
+	CI_PIPELINES,
+	INCIDENT_ANALYTICS,
+	PRODUCT_ANALYTICS,
+	ON_CALL_EVENTS,
+	ERRORS,
+	LLM_OBSERVABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -68,26 +69,8 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventsDataSource {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "logs" => Self::LOGS,
-            "spans" => Self::SPANS,
-            "network" => Self::NETWORK,
-            "network_device_flows" => Self::NETWORK_DEVICE_FLOWS,
-            "rum" => Self::RUM,
-            "security_signals" => Self::SECURITY_SIGNALS,
-            "profiles" => Self::PROFILES,
-            "audit" => Self::AUDIT,
-            "events" => Self::EVENTS,
-            "ci_tests" => Self::CI_TESTS,
-            "ci_pipelines" => Self::CI_PIPELINES,
-            "incident_analytics" => Self::INCIDENT_ANALYTICS,
-            "product_analytics" => Self::PRODUCT_ANALYTICS,
-            "on_call_events" => Self::ON_CALL_EVENTS,
-            "errors" => Self::ERRORS,
-            "llm_observability" => Self::LLM_OBSERVABILITY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"logs" => Self::LOGS,"spans" => Self::SPANS,"network" => Self::NETWORK,"network_device_flows" => Self::NETWORK_DEVICE_FLOWS,"rum" => Self::RUM,"security_signals" => Self::SECURITY_SIGNALS,"profiles" => Self::PROFILES,"audit" => Self::AUDIT,"events" => Self::EVENTS,"ci_tests" => Self::CI_TESTS,"ci_pipelines" => Self::CI_PIPELINES,"incident_analytics" => Self::INCIDENT_ANALYTICS,"product_analytics" => Self::PRODUCT_ANALYTICS,"on_call_events" => Self::ON_CALL_EVENTS,"errors" => Self::ERRORS,"llm_observability" => Self::LLM_OBSERVABILITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

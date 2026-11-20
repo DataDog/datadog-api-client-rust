@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A sensitive data finding from the Sensitive Data Scanner.
 #[non_exhaustive]
@@ -27,16 +27,11 @@ pub struct AIGuardSdsFinding {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AIGuardSdsFinding {
-    pub fn new(
-        category: String,
-        location: crate::datadogV2::model::AIGuardSdsFindingLocation,
-        rule_display_name: String,
-        rule_tag: String,
-    ) -> AIGuardSdsFinding {
+    pub fn new(category: String, location: crate::datadogV2::model::AIGuardSdsFindingLocation, rule_display_name: String, rule_tag: String) -> AIGuardSdsFinding {
         AIGuardSdsFinding {
             category,
             location,
@@ -46,15 +41,14 @@ impl AIGuardSdsFinding {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AIGuardSdsFinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,38 +71,33 @@ impl<'de> Deserialize<'de> for AIGuardSdsFinding {
                 let mut location: Option<crate::datadogV2::model::AIGuardSdsFindingLocation> = None;
                 let mut rule_display_name: Option<String> = None;
                 let mut rule_tag: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "category" => {
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "location" => {
                             location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_display_name" => {
-                            rule_display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rule_display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rule_tag" => {
                             rule_tag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
                 let location = location.ok_or_else(|| M::Error::missing_field("location"))?;
-                let rule_display_name = rule_display_name
-                    .ok_or_else(|| M::Error::missing_field("rule_display_name"))?;
+                let rule_display_name = rule_display_name.ok_or_else(|| M::Error::missing_field("rule_display_name"))?;
                 let rule_tag = rule_tag.ok_or_else(|| M::Error::missing_field("rule_tag"))?;
 
                 let content = AIGuardSdsFinding {

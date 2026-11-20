@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FindingMuteReason {
-    PENDING_FIX,
-    FALSE_POSITIVE,
-    ACCEPTED_RISK,
-    NO_PENDING_FIX,
-    HUMAN_ERROR,
-    NO_LONGER_ACCEPTED_RISK,
-    OTHER,
+	PENDING_FIX,
+	FALSE_POSITIVE,
+	ACCEPTED_RISK,
+	NO_PENDING_FIX,
+	HUMAN_ERROR,
+	NO_LONGER_ACCEPTED_RISK,
+	OTHER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for FindingMuteReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "PENDING_FIX" => Self::PENDING_FIX,
-            "FALSE_POSITIVE" => Self::FALSE_POSITIVE,
-            "ACCEPTED_RISK" => Self::ACCEPTED_RISK,
-            "NO_PENDING_FIX" => Self::NO_PENDING_FIX,
-            "HUMAN_ERROR" => Self::HUMAN_ERROR,
-            "NO_LONGER_ACCEPTED_RISK" => Self::NO_LONGER_ACCEPTED_RISK,
-            "OTHER" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"PENDING_FIX" => Self::PENDING_FIX,"FALSE_POSITIVE" => Self::FALSE_POSITIVE,"ACCEPTED_RISK" => Self::ACCEPTED_RISK,"NO_PENDING_FIX" => Self::NO_PENDING_FIX,"HUMAN_ERROR" => Self::HUMAN_ERROR,"NO_LONGER_ACCEPTED_RISK" => Self::NO_LONGER_ACCEPTED_RISK,"OTHER" => Self::OTHER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

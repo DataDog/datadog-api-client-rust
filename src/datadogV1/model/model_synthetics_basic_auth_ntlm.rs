@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object to handle `NTLM` authentication when performing the test.
 #[non_exhaustive]
@@ -30,13 +30,11 @@ pub struct SyntheticsBasicAuthNTLM {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsBasicAuthNTLM {
-    pub fn new(
-        type_: crate::datadogV1::model::SyntheticsBasicAuthNTLMType,
-    ) -> SyntheticsBasicAuthNTLM {
+    pub fn new(type_: crate::datadogV1::model::SyntheticsBasicAuthNTLMType) -> SyntheticsBasicAuthNTLM {
         SyntheticsBasicAuthNTLM {
             domain: None,
             password: None,
@@ -47,35 +45,34 @@ impl SyntheticsBasicAuthNTLM {
             _unparsed: false,
         }
     }
-
+    
     pub fn domain(mut self, value: String) -> Self {
         self.domain = Some(value);
         self
     }
-
+    
     pub fn password(mut self, value: String) -> Self {
         self.password = Some(value);
         self
     }
-
+    
     pub fn username(mut self, value: String) -> Self {
         self.username = Some(value);
         self
     }
-
+    
     pub fn workstation(mut self, value: String) -> Self {
         self.workstation = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsBasicAuthNTLM {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -99,10 +96,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthNTLM {
                 let mut type_: Option<crate::datadogV1::model::SyntheticsBasicAuthNTLMType> = None;
                 let mut username: Option<String> = None;
                 let mut workstation: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -112,13 +106,13 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthNTLM {
                                 continue;
                             }
                             domain = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "password" => {
                             if v.is_null() {
                                 continue;
                             }
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -129,25 +123,24 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthNTLM {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "username" => {
                             if v.is_null() {
                                 continue;
                             }
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "workstation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            workstation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workstation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

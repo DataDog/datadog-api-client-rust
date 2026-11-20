@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `spike_protection` processor learns the normal ingestion volume for the logs that match a specified filter and takes action when the volume spikes unexpectedly.
 ///
@@ -64,14 +64,7 @@ pub struct ObservabilityPipelineSpikeProtectionProcessor {
 }
 
 impl ObservabilityPipelineSpikeProtectionProcessor {
-    pub fn new(
-        enabled: bool,
-        id: String,
-        include: String,
-        name: String,
-        spike_action: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorSpikeAction,
-        type_: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorType,
-    ) -> ObservabilityPipelineSpikeProtectionProcessor {
+    pub fn new(enabled: bool, id: String, include: String, name: String, spike_action: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorSpikeAction, type_: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorType) -> ObservabilityPipelineSpikeProtectionProcessor {
         ObservabilityPipelineSpikeProtectionProcessor {
             action_when_missing_partitions: None,
             display_name: None,
@@ -89,53 +82,44 @@ impl ObservabilityPipelineSpikeProtectionProcessor {
             _unparsed: false,
         }
     }
-
-    pub fn action_when_missing_partitions(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorActionWhenMissingPartitions,
-    ) -> Self {
+    
+    pub fn action_when_missing_partitions(mut self, value: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorActionWhenMissingPartitions) -> Self {
         self.action_when_missing_partitions = Some(value);
         self
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn minimal_threshold(mut self, value: i64) -> Self {
         self.minimal_threshold = Some(value);
         self
     }
-
-    pub fn minimal_threshold_overrides(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorThresholdOverride,
-        >,
-    ) -> Self {
+    
+    pub fn minimal_threshold_overrides(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorThresholdOverride>) -> Self {
         self.minimal_threshold_overrides = Some(value);
         self
     }
-
+    
     pub fn partition_fields(mut self, value: Vec<String>) -> Self {
         self.partition_fields = Some(value);
         self
     }
-
+    
     pub fn spike_threshold(mut self, value: f64) -> Self {
         self.spike_threshold = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -165,13 +149,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
                 let mut partition_fields: Option<Vec<String>> = None;
                 let mut spike_action: Option<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorSpikeAction> = None;
                 let mut spike_threshold: Option<f64> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -180,11 +159,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
                             if v.is_null() {
                                 continue;
                             }
-                            action_when_missing_partitions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _action_when_missing_partitions) =
-                                action_when_missing_partitions
-                            {
+                            action_when_missing_partitions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _action_when_missing_partitions) = action_when_missing_partitions {
                                 match _action_when_missing_partitions {
                                     crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorActionWhenMissingPartitions::UnparsedObject(_action_when_missing_partitions) => {
                                         _unparsed = true;
@@ -192,50 +168,45 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "display_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "minimal_threshold" => {
                             if v.is_null() {
                                 continue;
                             }
-                            minimal_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimal_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "minimal_threshold_overrides" => {
                             if v.is_null() {
                                 continue;
                             }
-                            minimal_threshold_overrides =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimal_threshold_overrides = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "partition_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            partition_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            partition_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "spike_action" => {
-                            spike_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            spike_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _spike_action) = spike_action {
                                 match _spike_action {
                                     crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorSpikeAction::UnparsedObject(_spike_action) => {
@@ -244,14 +215,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "spike_threshold" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            spike_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            spike_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -262,20 +232,19 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let spike_action =
-                    spike_action.ok_or_else(|| M::Error::missing_field("spike_action"))?;
+                let spike_action = spike_action.ok_or_else(|| M::Error::missing_field("spike_action"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSpikeProtectionProcessor {

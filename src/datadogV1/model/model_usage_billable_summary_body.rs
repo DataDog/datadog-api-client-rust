@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Response with properties for each aggregated usage type.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct UsageBillableSummaryBody {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageBillableSummaryBody {
@@ -61,60 +61,58 @@ impl UsageBillableSummaryBody {
             _unparsed: false,
         }
     }
-
+    
     pub fn account_billable_usage(mut self, value: i64) -> Self {
         self.account_billable_usage = Some(value);
         self
     }
-
+    
     pub fn account_committed_usage(mut self, value: i64) -> Self {
         self.account_committed_usage = Some(value);
         self
     }
-
+    
     pub fn account_on_demand_usage(mut self, value: i64) -> Self {
         self.account_on_demand_usage = Some(value);
         self
     }
-
+    
     pub fn elapsed_usage_hours(mut self, value: i64) -> Self {
         self.elapsed_usage_hours = Some(value);
         self
     }
-
+    
     pub fn first_billable_usage_hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.first_billable_usage_hour = Some(value);
         self
     }
-
+    
     pub fn last_billable_usage_hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_billable_usage_hour = Some(value);
         self
     }
-
+    
     pub fn org_billable_usage(mut self, value: i64) -> Self {
         self.org_billable_usage = Some(value);
         self
     }
-
+    
     pub fn percentage_in_account(mut self, value: f64) -> Self {
         self.percentage_in_account = Some(value);
         self
     }
-
+    
     pub fn usage_unit(mut self, value: String) -> Self {
         self.usage_unit = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageBillableSummaryBody {
     fn default() -> Self {
@@ -148,10 +146,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
                 let mut org_billable_usage: Option<i64> = None;
                 let mut percentage_in_account: Option<f64> = None;
                 let mut usage_unit: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,69 +155,61 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
                             if v.is_null() {
                                 continue;
                             }
-                            account_billable_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_billable_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "account_committed_usage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            account_committed_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_committed_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "account_on_demand_usage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            account_on_demand_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_on_demand_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "elapsed_usage_hours" => {
                             if v.is_null() {
                                 continue;
                             }
-                            elapsed_usage_hours =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            elapsed_usage_hours = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "first_billable_usage_hour" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_billable_usage_hour =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_billable_usage_hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_billable_usage_hour" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_billable_usage_hour =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_billable_usage_hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_billable_usage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            org_billable_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            org_billable_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "percentage_in_account" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            percentage_in_account =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            percentage_in_account = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "usage_unit" => {
                             if v.is_null() {
                                 continue;
                             }
                             usage_unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// EstimateMetricsOutputSeriesOptionalParams is a struct for passing parameters to the method [`MetricsAPI::estimate_metrics_output_series`]
 #[non_exhaustive]
@@ -22,14 +19,14 @@ pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// When `true`, `filter[groups]` is treated as an exclude list instead of an include list. Defaults to `false`.
     pub filter_exclude_tags_mode: Option<bool>,
     /// The number of hours of look back (from now) to estimate cardinality with.
-    /// If unspecified, it defaults to 0 hours (the most recent data). Values below 0 return `400 Bad Request`.
+/// If unspecified, it defaults to 0 hours (the most recent data). Values below 0 return `400 Bad Request`.
     pub filter_hours_ago: Option<i32>,
     /// Deprecated. Number of aggregations has no impact on volume.
     pub filter_num_aggregations: Option<i32>,
     /// Deprecated. This query parameter has no effect on the estimate.
     pub filter_pct: Option<bool>,
     /// A window, in hours, from the look back to estimate cardinality with. The minimum and default is 1 hour.
-    /// Smaller values return `400 Bad Request`.
+/// Smaller values return `400 Bad Request`.
     pub filter_timespan_h: Option<i32>,
 }
 
@@ -45,7 +42,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self
     }
     /// The number of hours of look back (from now) to estimate cardinality with.
-    /// If unspecified, it defaults to 0 hours (the most recent data). Values below 0 return `400 Bad Request`.
+/// If unspecified, it defaults to 0 hours (the most recent data). Values below 0 return `400 Bad Request`.
     pub fn filter_hours_ago(mut self, value: i32) -> Self {
         self.filter_hours_ago = Some(value);
         self
@@ -61,7 +58,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self
     }
     /// A window, in hours, from the look back to estimate cardinality with. The minimum and default is 1 hour.
-    /// Smaller values return `400 Bad Request`.
+/// Smaller values return `400 Bad Request`.
     pub fn filter_timespan_h(mut self, value: i32) -> Self {
         self.filter_timespan_h = Some(value);
         self
@@ -73,15 +70,15 @@ impl EstimateMetricsOutputSeriesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
-    /// Default value is 604,800 (1 week), and the minimum value is 14,400 (4 hours).
-    /// Values below the minimum return `400 Bad Request`.
+/// Default value is 604,800 (1 week), and the minimum value is 14,400 (4 hours).
+/// Values below the minimum return `400 Bad Request`.
     pub window_seconds: Option<i64>,
 }
 
 impl ListActiveMetricConfigurationsOptionalParams {
     /// The number of seconds of look back (from now).
-    /// Default value is 604,800 (1 week), and the minimum value is 14,400 (4 hours).
-    /// Values below the minimum return `400 Bad Request`.
+/// Default value is 604,800 (1 week), and the minimum value is 14,400 (4 hours).
+/// Values below the minimum return `400 Bad Request`.
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
@@ -99,10 +96,9 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Only return metrics that have the given tag key(s) in their Metrics Without Limits configuration (included or excluded).
     pub filter_tags_configured: Option<String>,
     /// Only return metrics of the given metric type. If omitted, metrics of all types are returned.
-    /// `distribution` also matches OpenTelemetry histograms; use `exponential_histogram` or `explicit_histogram`
-    /// to return only one kind of OpenTelemetry histogram.
-    pub filter_metric_type:
-        Option<crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory>,
+/// `distribution` also matches OpenTelemetry histograms; use `exponential_histogram` or `explicit_histogram`
+/// to return only one kind of OpenTelemetry histogram.
+    pub filter_metric_type: Option<crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory>,
     /// Only return distribution metrics that have percentile aggregations enabled (true) or disabled (false).
     pub filter_include_percentiles: Option<bool>,
     /// Only return metrics that have been queried (true) or not queried (false) in the look back window. Set the window with `filter[queried][window][seconds]`; if omitted, a default window is used.
@@ -114,16 +110,16 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub filter_related_assets: Option<bool>,
     /// Only return metrics whose name matches this value.
-    /// A value without `*` matches metric names that contain it, ignoring case (for example, `http.request`
-    /// matches `app.HTTP.request.count`). A full metric name also matches longer names that contain it.
-    /// `*` is a wildcard that can appear anywhere and more than once, and these patterns also ignore case:
-    /// `*.request.count` matches names that end with `.request.count`, and `app.*.count` matches names that
-    /// start with `app.` and end with `.count`. The exception is a value whose only `*` is at the end (for
-    /// example, `http.request*`): it matches names that start with that text and is case-sensitive.
-    /// Spaces are treated as `*`. Only one value is accepted; repeating the parameter returns
-    /// `400 Bad Request`. Allowed characters are letters, digits, `_`, `.`, `*`, and spaces. Surrounding spaces
-    /// are ignored, and an empty or spaces-only value is ignored. The value can be at most 200 characters (the
-    /// longest metric name); a longer value returns `400 Bad Request`.
+/// A value without `*` matches metric names that contain it, ignoring case (for example, `http.request`
+/// matches `app.HTTP.request.count`). A full metric name also matches longer names that contain it.
+/// `*` is a wildcard that can appear anywhere and more than once, and these patterns also ignore case:
+/// `*.request.count` matches names that end with `.request.count`, and `app.*.count` matches names that
+/// start with `app.` and end with `.count`. The exception is a value whose only `*` is at the end (for
+/// example, `http.request*`): it matches names that start with that text and is case-sensitive.
+/// Spaces are treated as `*`. Only one value is accepted; repeating the parameter returns
+/// `400 Bad Request`. Allowed characters are letters, digits, `_`, `.`, `*`, and spaces. Surrounding spaces
+/// are ignored, and an empty or spaces-only value is ignored. The value can be at most 200 characters (the
+/// longest metric name); a longer value returns `400 Bad Request`.
     pub filter_metrics_id: Option<String>,
     /// Only return metrics that have historical metrics ingestion enabled (`true`) or not enabled (`false`).
     pub filter_historical_metrics: Option<bool>,
@@ -134,14 +130,14 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Only return metrics that have been actively reporting in this window. The default value is 3,600 seconds (1 hour), the maximum value is 5,184,000 seconds (60 days), and the minimum value is 0. With `0`, the API returns only metrics that reported in the last few minutes.
     pub window_seconds: Option<i64>,
     /// Maximum number of results per page. Always send it: without `page[size]` or `page[cursor]`, the response
-    /// is not paginated and is capped at 250,000 metrics by default, with no indication when results are left
-    /// out. Send `page[size]` on the first request to opt in to pagination. On subsequent requests, send
-    /// `page[cursor]` set to the value of `meta.pagination.next_cursor` from the previous response. To retain a
-    /// custom page size, include `page[size]` on every request. The default value is 10000, the maximum value is
-    /// 10000, and the minimum value is 1.
+/// is not paginated and is capped at 250,000 metrics by default, with no indication when results are left
+/// out. Send `page[size]` on the first request to opt in to pagination. On subsequent requests, send
+/// `page[cursor]` set to the value of `meta.pagination.next_cursor` from the previous response. To retain a
+/// custom page size, include `page[size]` on every request. The default value is 10000, the maximum value is
+/// 10000, and the minimum value is 1.
     pub page_size: Option<i32>,
     /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
-    /// An expired cursor returns `410 Gone`; restart from the first page without `page[cursor]`.
+/// An expired cursor returns `410 Gone`; restart from the first page without `page[cursor]`.
     pub page_cursor: Option<String>,
 }
 
@@ -162,12 +158,9 @@ impl ListTagConfigurationsOptionalParams {
         self
     }
     /// Only return metrics of the given metric type. If omitted, metrics of all types are returned.
-    /// `distribution` also matches OpenTelemetry histograms; use `exponential_histogram` or `explicit_histogram`
-    /// to return only one kind of OpenTelemetry histogram.
-    pub fn filter_metric_type(
-        mut self,
-        value: crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory,
-    ) -> Self {
+/// `distribution` also matches OpenTelemetry histograms; use `exponential_histogram` or `explicit_histogram`
+/// to return only one kind of OpenTelemetry histogram.
+    pub fn filter_metric_type(mut self, value: crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory) -> Self {
         self.filter_metric_type = Some(value);
         self
     }
@@ -197,16 +190,16 @@ impl ListTagConfigurationsOptionalParams {
         self
     }
     /// Only return metrics whose name matches this value.
-    /// A value without `*` matches metric names that contain it, ignoring case (for example, `http.request`
-    /// matches `app.HTTP.request.count`). A full metric name also matches longer names that contain it.
-    /// `*` is a wildcard that can appear anywhere and more than once, and these patterns also ignore case:
-    /// `*.request.count` matches names that end with `.request.count`, and `app.*.count` matches names that
-    /// start with `app.` and end with `.count`. The exception is a value whose only `*` is at the end (for
-    /// example, `http.request*`): it matches names that start with that text and is case-sensitive.
-    /// Spaces are treated as `*`. Only one value is accepted; repeating the parameter returns
-    /// `400 Bad Request`. Allowed characters are letters, digits, `_`, `.`, `*`, and spaces. Surrounding spaces
-    /// are ignored, and an empty or spaces-only value is ignored. The value can be at most 200 characters (the
-    /// longest metric name); a longer value returns `400 Bad Request`.
+/// A value without `*` matches metric names that contain it, ignoring case (for example, `http.request`
+/// matches `app.HTTP.request.count`). A full metric name also matches longer names that contain it.
+/// `*` is a wildcard that can appear anywhere and more than once, and these patterns also ignore case:
+/// `*.request.count` matches names that end with `.request.count`, and `app.*.count` matches names that
+/// start with `app.` and end with `.count`. The exception is a value whose only `*` is at the end (for
+/// example, `http.request*`): it matches names that start with that text and is case-sensitive.
+/// Spaces are treated as `*`. Only one value is accepted; repeating the parameter returns
+/// `400 Bad Request`. Allowed characters are letters, digits, `_`, `.`, `*`, and spaces. Surrounding spaces
+/// are ignored, and an empty or spaces-only value is ignored. The value can be at most 200 characters (the
+/// longest metric name); a longer value returns `400 Bad Request`.
     pub fn filter_metrics_id(mut self, value: String) -> Self {
         self.filter_metrics_id = Some(value);
         self
@@ -232,17 +225,17 @@ impl ListTagConfigurationsOptionalParams {
         self
     }
     /// Maximum number of results per page. Always send it: without `page[size]` or `page[cursor]`, the response
-    /// is not paginated and is capped at 250,000 metrics by default, with no indication when results are left
-    /// out. Send `page[size]` on the first request to opt in to pagination. On subsequent requests, send
-    /// `page[cursor]` set to the value of `meta.pagination.next_cursor` from the previous response. To retain a
-    /// custom page size, include `page[size]` on every request. The default value is 10000, the maximum value is
-    /// 10000, and the minimum value is 1.
+/// is not paginated and is capped at 250,000 metrics by default, with no indication when results are left
+/// out. Send `page[size]` on the first request to opt in to pagination. On subsequent requests, send
+/// `page[cursor]` set to the value of `meta.pagination.next_cursor` from the previous response. To retain a
+/// custom page size, include `page[size]` on every request. The default value is 10000, the maximum value is
+/// 10000, and the minimum value is 1.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
-    /// An expired cursor returns `410 Gone`; restart from the first page without `page[cursor]`.
+/// An expired cursor returns `410 Gone`; restart from the first page without `page[cursor]`.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
@@ -254,20 +247,20 @@ impl ListTagConfigurationsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListTagIndexingRuleExemptionsOptionalParams {
     /// Filter exemptions to metrics whose names start with this literal prefix.
-    /// Matching is case-sensitive. Wildcard characters are treated literally.
+/// Matching is case-sensitive. Wildcard characters are treated literally.
     pub filter_metric_prefix: Option<String>,
     /// Filter exemptions by whether they are safe to remove. An exemption is considered safe when a fresh, usable
-    /// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
-    /// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
-    /// or `false` to return all other exemptions, including those with unavailable or stale estimates.
+/// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
+/// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
+/// or `false` to return all other exemptions, including those with unavailable or stale estimates.
     pub filter_safe: Option<bool>,
     /// Filter exemptions to metrics matched by the tag indexing rule with this UUID.
     pub filter_tag_indexing_rule_id: Option<uuid::Uuid>,
     /// Sort field. Prefix the field with `-` for descending order. The default is `estimated_change_in_volume` in ascending order, with the largest reductions (most negative values) first.
     pub sort: Option<crate::datadogV2::model::TagIndexingRuleExemptionSort>,
     /// Maximum number of results per page. Defaults to 10000; accepts values from 1 to 10000. If
-    /// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
-    /// Continue until `next_cursor` is null.
+/// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
+/// Continue until `next_cursor` is null.
     pub page_size: Option<i32>,
     /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
     pub page_cursor: Option<String>,
@@ -275,15 +268,15 @@ pub struct ListTagIndexingRuleExemptionsOptionalParams {
 
 impl ListTagIndexingRuleExemptionsOptionalParams {
     /// Filter exemptions to metrics whose names start with this literal prefix.
-    /// Matching is case-sensitive. Wildcard characters are treated literally.
+/// Matching is case-sensitive. Wildcard characters are treated literally.
     pub fn filter_metric_prefix(mut self, value: String) -> Self {
         self.filter_metric_prefix = Some(value);
         self
     }
     /// Filter exemptions by whether they are safe to remove. An exemption is considered safe when a fresh, usable
-    /// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
-    /// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
-    /// or `false` to return all other exemptions, including those with unavailable or stale estimates.
+/// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
+/// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
+/// or `false` to return all other exemptions, including those with unavailable or stale estimates.
     pub fn filter_safe(mut self, value: bool) -> Self {
         self.filter_safe = Some(value);
         self
@@ -299,8 +292,8 @@ impl ListTagIndexingRuleExemptionsOptionalParams {
         self
     }
     /// Maximum number of results per page. Defaults to 10000; accepts values from 1 to 10000. If
-    /// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
-    /// Continue until `next_cursor` is null.
+/// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
+/// Continue until `next_cursor` is null.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
@@ -347,21 +340,21 @@ impl ListTagIndexingRulesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListTagsByMetricNameOptionalParams {
     /// The number of seconds of look back (from now) to query for tag data.
-    /// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
-    /// If you send a value below 14400, the request still succeeds, but the API uses 14400 (4 hours) instead
-    /// of your value.
+/// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
+/// If you send a value below 14400, the request still succeeds, but the API uses 14400 (4 hours) instead
+/// of your value.
     pub window_seconds: Option<i64>,
     /// Filter results to tags from data points that have the specified tags.
-    /// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
+/// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
     pub filter_tags: Option<String>,
     /// Filter returned tags to those matching a substring.
-    /// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
+/// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
     pub filter_match: Option<String>,
     /// Whether to include tag values in the response.
-    /// Defaults to true.
+/// Defaults to true.
     pub filter_include_tag_values: Option<bool>,
     /// Whether to allow partial results.
-    /// Defaults to false.
+/// Defaults to false.
     pub filter_allow_partial: Option<bool>,
     /// Maximum number of results to return.
     pub page_limit: Option<i32>,
@@ -369,33 +362,33 @@ pub struct ListTagsByMetricNameOptionalParams {
 
 impl ListTagsByMetricNameOptionalParams {
     /// The number of seconds of look back (from now) to query for tag data.
-    /// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
-    /// If you send a value below 14400, the request still succeeds, but the API uses 14400 (4 hours) instead
-    /// of your value.
+/// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
+/// If you send a value below 14400, the request still succeeds, but the API uses 14400 (4 hours) instead
+/// of your value.
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
     /// Filter results to tags from data points that have the specified tags.
-    /// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
+/// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
     /// Filter returned tags to those matching a substring.
-    /// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
+/// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
     pub fn filter_match(mut self, value: String) -> Self {
         self.filter_match = Some(value);
         self
     }
     /// Whether to include tag values in the response.
-    /// Defaults to true.
+/// Defaults to true.
     pub fn filter_include_tag_values(mut self, value: bool) -> Self {
         self.filter_include_tag_values = Some(value);
         self
     }
     /// Whether to allow partial results.
-    /// Defaults to false.
+/// Defaults to false.
     pub fn filter_allow_partial(mut self, value: bool) -> Self {
         self.filter_allow_partial = Some(value);
         self
@@ -412,13 +405,13 @@ impl ListTagsByMetricNameOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListVolumesByMetricNameOptionalParams {
     /// The number of seconds of look back (from now).
-    /// Default value is 3,600 (1 hour), maximum value is 2,592,000 (1 month).
+/// Default value is 3,600 (1 hour), maximum value is 2,592,000 (1 month).
     pub window_seconds: Option<i64>,
 }
 
 impl ListVolumesByMetricNameOptionalParams {
     /// The number of seconds of look back (from now).
-    /// Default value is 3,600 (1 hour), maximum value is 2,592,000 (1 month).
+/// Default value is 3,600 (1 hour), maximum value is 2,592,000 (1 month).
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
@@ -435,14 +428,14 @@ pub struct SubmitMetricsOptionalParams {
 
 impl SubmitMetricsOptionalParams {
     /// HTTP header used to compress the media-type.
-    pub fn content_encoding(
-        mut self,
-        value: crate::datadogV2::model::MetricContentEncoding,
-    ) -> Self {
+    pub fn content_encoding(mut self, value: crate::datadogV2::model::MetricContentEncoding) -> Self {
         self.content_encoding = Some(value);
         self
     }
 }
+
+
+
 
 /// CreateDerivedMetricError is a struct for typed errors of method [`MetricsAPI::create_derived_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -451,6 +444,7 @@ pub enum CreateDerivedMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateHistoricalMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::create_historical_metrics_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -461,6 +455,7 @@ pub enum CreateHistoricalMetricsConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTagConfigurationError is a struct for typed errors of method [`MetricsAPI::create_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -468,6 +463,7 @@ pub enum CreateTagConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateTagIndexingRuleError is a struct for typed errors of method [`MetricsAPI::create_tag_indexing_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -477,6 +473,7 @@ pub enum CreateTagIndexingRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTagIndexingRuleExemptionError is a struct for typed errors of method [`MetricsAPI::create_tag_indexing_rule_exemption`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -485,6 +482,7 @@ pub enum CreateTagIndexingRuleExemptionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteDerivedMetricError is a struct for typed errors of method [`MetricsAPI::delete_derived_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -492,6 +490,7 @@ pub enum DeleteDerivedMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteHistoricalMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::delete_historical_metrics_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -502,6 +501,7 @@ pub enum DeleteHistoricalMetricsConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTagConfigurationError is a struct for typed errors of method [`MetricsAPI::delete_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -509,6 +509,7 @@ pub enum DeleteTagConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTagIndexingRuleError is a struct for typed errors of method [`MetricsAPI::delete_tag_indexing_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -518,6 +519,7 @@ pub enum DeleteTagIndexingRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTagIndexingRuleExemptionError is a struct for typed errors of method [`MetricsAPI::delete_tag_indexing_rule_exemption`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -525,6 +527,7 @@ pub enum DeleteTagIndexingRuleExemptionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// EstimateMetricsOutputSeriesError is a struct for typed errors of method [`MetricsAPI::estimate_metrics_output_series`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -534,6 +537,7 @@ pub enum EstimateMetricsOutputSeriesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetDerivedMetricError is a struct for typed errors of method [`MetricsAPI::get_derived_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -541,6 +545,7 @@ pub enum GetDerivedMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetHistoricalMetricsConfigurationError is a struct for typed errors of method [`MetricsAPI::get_historical_metrics_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -551,6 +556,7 @@ pub enum GetHistoricalMetricsConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetMetricTagCardinalityDetailsError is a struct for typed errors of method [`MetricsAPI::get_metric_tag_cardinality_details`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -558,6 +564,7 @@ pub enum GetMetricTagCardinalityDetailsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTagIndexingRuleError is a struct for typed errors of method [`MetricsAPI::get_tag_indexing_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -567,6 +574,7 @@ pub enum GetTagIndexingRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTagIndexingRuleExemptionError is a struct for typed errors of method [`MetricsAPI::get_tag_indexing_rule_exemption`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -574,6 +582,7 @@ pub enum GetTagIndexingRuleExemptionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListActiveMetricConfigurationsError is a struct for typed errors of method [`MetricsAPI::list_active_metric_configurations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -583,6 +592,7 @@ pub enum ListActiveMetricConfigurationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListMetricAssetsError is a struct for typed errors of method [`MetricsAPI::list_metric_assets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -590,6 +600,7 @@ pub enum ListMetricAssetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTagConfigurationByNameError is a struct for typed errors of method [`MetricsAPI::list_tag_configuration_by_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -599,6 +610,7 @@ pub enum ListTagConfigurationByNameError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTagConfigurationsError is a struct for typed errors of method [`MetricsAPI::list_tag_configurations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -606,6 +618,7 @@ pub enum ListTagConfigurationsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTagIndexingRuleExemptionsError is a struct for typed errors of method [`MetricsAPI::list_tag_indexing_rule_exemptions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -615,6 +628,7 @@ pub enum ListTagIndexingRuleExemptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTagIndexingRulesError is a struct for typed errors of method [`MetricsAPI::list_tag_indexing_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -622,6 +636,7 @@ pub enum ListTagIndexingRulesError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTagIndexingRulesForMetricError is a struct for typed errors of method [`MetricsAPI::list_tag_indexing_rules_for_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -631,6 +646,7 @@ pub enum ListTagIndexingRulesForMetricError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTagsByMetricNameError is a struct for typed errors of method [`MetricsAPI::list_tags_by_metric_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -638,6 +654,7 @@ pub enum ListTagsByMetricNameError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListVolumesByMetricNameError is a struct for typed errors of method [`MetricsAPI::list_volumes_by_metric_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -647,6 +664,7 @@ pub enum ListVolumesByMetricNameError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// QueryScalarDataError is a struct for typed errors of method [`MetricsAPI::query_scalar_data`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -654,6 +672,7 @@ pub enum QueryScalarDataError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// QueryTimeseriesDataError is a struct for typed errors of method [`MetricsAPI::query_timeseries_data`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -663,6 +682,7 @@ pub enum QueryTimeseriesDataError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ReorderTagIndexingRulesError is a struct for typed errors of method [`MetricsAPI::reorder_tag_indexing_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -670,6 +690,7 @@ pub enum ReorderTagIndexingRulesError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// SubmitMetricsError is a struct for typed errors of method [`MetricsAPI::submit_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -679,6 +700,7 @@ pub enum SubmitMetricsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateDerivedMetricError is a struct for typed errors of method [`MetricsAPI::update_derived_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -686,6 +708,7 @@ pub enum UpdateDerivedMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateTagConfigurationError is a struct for typed errors of method [`MetricsAPI::update_tag_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -695,6 +718,7 @@ pub enum UpdateTagConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTagIndexingRuleError is a struct for typed errors of method [`MetricsAPI::update_tag_indexing_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -703,6 +727,7 @@ pub enum UpdateTagIndexingRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTagIndexingRuleExemptionError is a struct for typed errors of method [`MetricsAPI::update_tag_indexing_rule_exemption`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -710,6 +735,7 @@ pub enum UpdateTagIndexingRuleExemptionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The metrics endpoint allows you to:
 ///
@@ -747,7 +773,8 @@ impl MetricsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -792,63 +819,53 @@ impl MetricsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a derived metric for the org. The metric name is supplied as the resource `id`,
-    /// and the `definition` sets the formula and the queries the formula is computed from.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn create_derived_metric(
-        &self,
-        body: crate::datadogV2::model::DerivedMetricCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::DerivedMetricResponse,
-        datadog::Error<CreateDerivedMetricError>,
-    > {
+/// and the `definition` sets the formula and the queries the formula is computed from.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn create_derived_metric(&self, body: crate::datadogV2::model::DerivedMetricCreateRequest) -> Result<crate::datadogV2::model::DerivedMetricResponse, datadog::Error<CreateDerivedMetricError>> {
         match self.create_derived_metric_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a derived metric for the org. The metric name is supplied as the resource `id`,
-    /// and the `definition` sets the formula and the queries the formula is computed from.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn create_derived_metric_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DerivedMetricCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>,
-        datadog::Error<CreateDerivedMetricError>,
-    > {
+/// and the `definition` sets the formula and the queries the formula is computed from.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn create_derived_metric_with_http_info(&self, body: crate::datadogV2::model::DerivedMetricCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>, datadog::Error<CreateDerivedMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_derived_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/derived-metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -861,23 +878,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -885,7 +895,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -895,7 +908,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -917,7 +933,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -934,85 +950,64 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDerivedMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDerivedMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable historical metrics ingestion for a metric. Idempotent:
-    /// enabling an already-enabled metric returns 200 instead of 201. Not supported for
-    /// distribution metrics, metrics with an existing tag configuration, or most standard
-    /// (non-custom) metrics.
-    pub async fn create_historical_metrics_configuration(
-        &self,
-        body: crate::datadogV2::model::HistoricalMetricsConfigurationCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::HistoricalMetricsConfigurationResponse,
-        datadog::Error<CreateHistoricalMetricsConfigurationError>,
-    > {
-        match self
-            .create_historical_metrics_configuration_with_http_info(body)
-            .await
-        {
+/// enabling an already-enabled metric returns 200 instead of 201. Not supported for
+/// distribution metrics, metrics with an existing tag configuration, or most standard
+/// (non-custom) metrics.
+    pub async fn create_historical_metrics_configuration(&self, body: crate::datadogV2::model::HistoricalMetricsConfigurationCreateRequest) -> Result<crate::datadogV2::model::HistoricalMetricsConfigurationResponse, datadog::Error<CreateHistoricalMetricsConfigurationError>> {
+        match self.create_historical_metrics_configuration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable historical metrics ingestion for a metric. Idempotent:
-    /// enabling an already-enabled metric returns 200 instead of 201. Not supported for
-    /// distribution metrics, metrics with an existing tag configuration, or most standard
-    /// (non-custom) metrics.
-    pub async fn create_historical_metrics_configuration_with_http_info(
-        &self,
-        body: crate::datadogV2::model::HistoricalMetricsConfigurationCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>,
-        datadog::Error<CreateHistoricalMetricsConfigurationError>,
-    > {
+/// enabling an already-enabled metric returns 200 instead of 201. Not supported for
+/// distribution metrics, metrics with an existing tag configuration, or most standard
+/// (non-custom) metrics.
+    pub async fn create_historical_metrics_configuration_with_http_info(&self, body: crate::datadogV2::model::HistoricalMetricsConfigurationCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>, datadog::Error<CreateHistoricalMetricsConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_historical_metrics_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/historical-metrics-configurations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1025,23 +1020,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1049,7 +1037,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1059,7 +1050,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1081,7 +1075,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1098,91 +1092,68 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::HistoricalMetricsConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateHistoricalMetricsConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateHistoricalMetricsConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Define queryable tag keys for an existing count, gauge, rate, distribution, or native histogram metric.
-    /// Distribution and native histogram metrics support percentile aggregations. By setting `exclude_tags_mode`
-    /// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
-    /// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
-    /// permission.
-    pub async fn create_tag_configuration(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::MetricTagConfigurationResponse,
-        datadog::Error<CreateTagConfigurationError>,
-    > {
-        match self
-            .create_tag_configuration_with_http_info(metric_name, body)
-            .await
-        {
+/// Distribution and native histogram metrics support percentile aggregations. By setting `exclude_tags_mode`
+/// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
+/// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
+/// permission.
+    pub async fn create_tag_configuration(&self, metric_name: String, body: crate::datadogV2::model::MetricTagConfigurationCreateRequest) -> Result<crate::datadogV2::model::MetricTagConfigurationResponse, datadog::Error<CreateTagConfigurationError>> {
+        match self.create_tag_configuration_with_http_info(metric_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Define queryable tag keys for an existing count, gauge, rate, distribution, or native histogram metric.
-    /// Distribution and native histogram metrics support percentile aggregations. By setting `exclude_tags_mode`
-    /// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
-    /// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
-    /// permission.
-    pub async fn create_tag_configuration_with_http_info(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::MetricTagConfigurationCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        datadog::Error<CreateTagConfigurationError>,
-    > {
+/// Distribution and native histogram metrics support percentile aggregations. By setting `exclude_tags_mode`
+/// to true, the behavior is changed from an allow-list to a deny-list, and tags in the defined list are
+/// not queryable. Can only be used with application keys of users with the `Manage Tags for Metrics`
+/// permission.
+    pub async fn create_tag_configuration_with_http_info(&self, metric_name: String, body: crate::datadogV2::model::MetricTagConfigurationCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>, datadog::Error<CreateTagConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_tag_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1195,23 +1166,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1219,7 +1183,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1229,7 +1196,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1251,7 +1221,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1268,106 +1238,88 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTagConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTagConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a tag indexing rule for the org. `rule_order` is assigned server-side as max+1
-    /// among existing rules; use the reorder endpoint to change the evaluation order.
-    /// Every rule that matches a metric applies, in `rule_order`; a rule with
-    /// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
-    /// rules, and a rule with `override_previous_rules` set to `true` replaces them.
-    /// Requires the `Manage Tags for Metrics` permission.
-    ///
-    /// Limits:
-    /// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
-    ///   already has 1,000 active rules returns a 403 error with the title
-    ///   `Tag indexing rule limit reached`.
-    /// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
-    ///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
-    /// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
-    ///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
-    ///   400 error.
-    pub async fn create_tag_indexing_rule(
-        &self,
-        body: crate::datadogV2::model::TagIndexingRuleCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleResponse,
-        datadog::Error<CreateTagIndexingRuleError>,
-    > {
+/// among existing rules; use the reorder endpoint to change the evaluation order.
+/// Every rule that matches a metric applies, in `rule_order`; a rule with
+/// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
+/// rules, and a rule with `override_previous_rules` set to `true` replaces them.
+/// Requires the `Manage Tags for Metrics` permission.
+///
+/// Limits:
+/// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
+///   already has 1,000 active rules returns a 403 error with the title
+///   `Tag indexing rule limit reached`.
+/// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
+///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
+/// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
+///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
+///   400 error.
+    pub async fn create_tag_indexing_rule(&self, body: crate::datadogV2::model::TagIndexingRuleCreateRequest) -> Result<crate::datadogV2::model::TagIndexingRuleResponse, datadog::Error<CreateTagIndexingRuleError>> {
         match self.create_tag_indexing_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a tag indexing rule for the org. `rule_order` is assigned server-side as max+1
-    /// among existing rules; use the reorder endpoint to change the evaluation order.
-    /// Every rule that matches a metric applies, in `rule_order`; a rule with
-    /// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
-    /// rules, and a rule with `override_previous_rules` set to `true` replaces them.
-    /// Requires the `Manage Tags for Metrics` permission.
-    ///
-    /// Limits:
-    /// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
-    ///   already has 1,000 active rules returns a 403 error with the title
-    ///   `Tag indexing rule limit reached`.
-    /// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
-    ///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
-    /// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
-    ///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
-    ///   400 error.
-    pub async fn create_tag_indexing_rule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TagIndexingRuleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>,
-        datadog::Error<CreateTagIndexingRuleError>,
-    > {
+/// among existing rules; use the reorder endpoint to change the evaluation order.
+/// Every rule that matches a metric applies, in `rule_order`; a rule with
+/// `override_previous_rules` set to `false` (merge) adds to the tags configured by earlier
+/// rules, and a rule with `override_previous_rules` set to `true` replaces them.
+/// Requires the `Manage Tags for Metrics` permission.
+///
+/// Limits:
+/// - An org can have at most 1,000 active tag indexing rules. Creating a rule when the org
+///   already has 1,000 active rules returns a 403 error with the title
+///   `Tag indexing rule limit reached`.
+/// - Tag indexing rules are unavailable for orgs with more than 700,000 custom metrics;
+///   requests from those orgs return a 403 error with the title `Tag indexing rules unavailable`.
+/// - `name` can be at most 200 characters, and `metric_name_matches` can contain at most
+///   50 patterns of at most 200 characters each. Requests that exceed these limits return a
+///   400 error.
+    pub async fn create_tag_indexing_rule_with_http_info(&self, body: crate::datadogV2::model::TagIndexingRuleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>, datadog::Error<CreateTagIndexingRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_tag_indexing_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1380,23 +1332,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1404,7 +1349,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1414,7 +1362,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1436,7 +1387,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1453,67 +1404,40 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTagIndexingRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTagIndexingRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Exempt a metric from all tag indexing rules. The response includes the created
-    /// exemption resource. Requires the `Manage Tags for Metrics` permission.
-    pub async fn create_tag_indexing_rule_exemption(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::TagIndexingRuleExemptionCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleExemptionResponse,
-        datadog::Error<CreateTagIndexingRuleExemptionError>,
-    > {
-        match self
-            .create_tag_indexing_rule_exemption_with_http_info(metric_name, body)
-            .await
-        {
+/// exemption resource. Requires the `Manage Tags for Metrics` permission.
+    pub async fn create_tag_indexing_rule_exemption(&self, metric_name: String, body: crate::datadogV2::model::TagIndexingRuleExemptionCreateRequest) -> Result<crate::datadogV2::model::TagIndexingRuleExemptionResponse, datadog::Error<CreateTagIndexingRuleExemptionError>> {
+        match self.create_tag_indexing_rule_exemption_with_http_info(metric_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Exempt a metric from all tag indexing rules. The response includes the created
-    /// exemption resource. Requires the `Manage Tags for Metrics` permission.
-    pub async fn create_tag_indexing_rule_exemption_with_http_info(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::TagIndexingRuleExemptionCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>,
-        datadog::Error<CreateTagIndexingRuleExemptionError>,
-    > {
+/// exemption resource. Requires the `Manage Tags for Metrics` permission.
+    pub async fn create_tag_indexing_rule_exemption_with_http_info(&self, metric_name: String, body: crate::datadogV2::model::TagIndexingRuleExemptionCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>, datadog::Error<CreateTagIndexingRuleExemptionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_tag_indexing_rule_exemption";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1525,20 +1449,25 @@ impl MetricsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1551,23 +1480,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1575,7 +1497,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1585,7 +1510,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1607,7 +1535,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1624,64 +1552,55 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTagIndexingRuleExemptionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTagIndexingRuleExemptionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a derived metric by name. Idempotent: returns 204 regardless of whether the derived
-    /// metric existed. Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_derived_metric(
-        &self,
-        metric_name: String,
-    ) -> Result<(), datadog::Error<DeleteDerivedMetricError>> {
+/// metric existed. Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_derived_metric(&self, metric_name: String) -> Result<(), datadog::Error<DeleteDerivedMetricError>> {
         match self.delete_derived_metric_with_http_info(metric_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a derived metric by name. Idempotent: returns 204 regardless of whether the derived
-    /// metric existed. Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_derived_metric_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDerivedMetricError>> {
+/// metric existed. Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_derived_metric_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDerivedMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_derived_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/derived-metrics/{metric_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1694,22 +1613,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1727,59 +1640,48 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteDerivedMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDerivedMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disable historical metrics ingestion for a metric. Idempotent: always returns 204,
-    /// whether or not the configuration existed or the metric itself still exists, so that
-    /// Terraform destroy succeeds for a metric removed out-of-band.
-    pub async fn delete_historical_metrics_configuration(
-        &self,
-        metric_name: String,
-    ) -> Result<(), datadog::Error<DeleteHistoricalMetricsConfigurationError>> {
-        match self
-            .delete_historical_metrics_configuration_with_http_info(metric_name)
-            .await
-        {
+/// whether or not the configuration existed or the metric itself still exists, so that
+/// Terraform destroy succeeds for a metric removed out-of-band.
+    pub async fn delete_historical_metrics_configuration(&self, metric_name: String) -> Result<(), datadog::Error<DeleteHistoricalMetricsConfigurationError>> {
+        match self.delete_historical_metrics_configuration_with_http_info(metric_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable historical metrics ingestion for a metric. Idempotent: always returns 204,
-    /// whether or not the configuration existed or the metric itself still exists, so that
-    /// Terraform destroy succeeds for a metric removed out-of-band.
-    pub async fn delete_historical_metrics_configuration_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteHistoricalMetricsConfigurationError>,
-    > {
+/// whether or not the configuration existed or the metric itself still exists, so that
+/// Terraform destroy succeeds for a metric removed out-of-band.
+    pub async fn delete_historical_metrics_configuration_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteHistoricalMetricsConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_historical_metrics_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/historical-metrics-configurations/{metric_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1792,22 +1694,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1825,56 +1721,48 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteHistoricalMetricsConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteHistoricalMetricsConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a metric's tag configuration. Can only be used with application
-    /// keys from users with the `Manage Tags for Metrics` permission.
-    /// Note: This operation is irreversible.
-    pub async fn delete_tag_configuration(
-        &self,
-        metric_name: String,
-    ) -> Result<(), datadog::Error<DeleteTagConfigurationError>> {
-        match self
-            .delete_tag_configuration_with_http_info(metric_name)
-            .await
-        {
+/// keys from users with the `Manage Tags for Metrics` permission.
+/// Note: This operation is irreversible.
+    pub async fn delete_tag_configuration(&self, metric_name: String) -> Result<(), datadog::Error<DeleteTagConfigurationError>> {
+        match self.delete_tag_configuration_with_http_info(metric_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a metric's tag configuration. Can only be used with application
-    /// keys from users with the `Manage Tags for Metrics` permission.
-    /// Note: This operation is irreversible.
-    pub async fn delete_tag_configuration_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagConfigurationError>> {
+/// keys from users with the `Manage Tags for Metrics` permission.
+/// Note: This operation is irreversible.
+    pub async fn delete_tag_configuration_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_tag_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1887,22 +1775,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1920,53 +1802,48 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTagConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTagConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Soft-delete a tag indexing rule. Idempotent: returns 204 whether the rule existed or was already deleted.
-    /// Remaining rules in the org are automatically re-sequenced to keep `rule_order` dense and 1-based.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_tag_indexing_rule(
-        &self,
-        id: String,
-    ) -> Result<(), datadog::Error<DeleteTagIndexingRuleError>> {
+/// Remaining rules in the org are automatically re-sequenced to keep `rule_order` dense and 1-based.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_tag_indexing_rule(&self, id: String) -> Result<(), datadog::Error<DeleteTagIndexingRuleError>> {
         match self.delete_tag_indexing_rule_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Soft-delete a tag indexing rule. Idempotent: returns 204 whether the rule existed or was already deleted.
-    /// Remaining rules in the org are automatically re-sequenced to keep `rule_order` dense and 1-based.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_tag_indexing_rule_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleError>> {
+/// Remaining rules in the org are automatically re-sequenced to keep `rule_order` dense and 1-based.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_tag_indexing_rule_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_tag_indexing_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1979,22 +1856,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2012,41 +1883,27 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTagIndexingRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTagIndexingRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a metric's exemption from tag indexing rules. Idempotent: returns 204 whether or not
-    /// an exemption existed. Any associated legacy tag configuration record is also removed.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_tag_indexing_rule_exemption(
-        &self,
-        metric_name: String,
-    ) -> Result<(), datadog::Error<DeleteTagIndexingRuleExemptionError>> {
-        match self
-            .delete_tag_indexing_rule_exemption_with_http_info(metric_name)
-            .await
-        {
+/// an exemption existed. Any associated legacy tag configuration record is also removed.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_tag_indexing_rule_exemption(&self, metric_name: String) -> Result<(), datadog::Error<DeleteTagIndexingRuleExemptionError>> {
+        match self.delete_tag_indexing_rule_exemption_with_http_info(metric_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a metric's exemption from tag indexing rules. Idempotent: returns 204 whether or not
-    /// an exemption existed. Any associated legacy tag configuration record is also removed.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn delete_tag_indexing_rule_exemption_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleExemptionError>>
-    {
+/// an exemption existed. Any associated legacy tag configuration record is also removed.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn delete_tag_indexing_rule_exemption_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleExemptionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_tag_indexing_rule_exemption";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2058,19 +1915,24 @@ impl MetricsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2083,22 +1945,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2116,73 +1972,51 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTagIndexingRuleExemptionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTagIndexingRuleExemptionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the estimated cardinality for a metric with a given tag, percentile and number of aggregations
-    /// configuration using Metrics without Limits&trade;.
-    ///
-    /// To compare current volumes across many metrics, use `GET /api/v2/metrics` with `include=metric_volumes`
-    /// instead of calling this endpoint for each metric.
-    ///
-    /// A `404 Not Found` response means that no metric with this name exists in your organization. A
-    /// `400 Bad Request` response means that a query parameter is invalid, or that the metric has no data in the
-    /// queried window. For no data, the error message says so and names the window that was queried, which can
-    /// differ from the requested one.
-    pub async fn estimate_metrics_output_series(
-        &self,
-        metric_name: String,
-        params: EstimateMetricsOutputSeriesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MetricEstimateResponse,
-        datadog::Error<EstimateMetricsOutputSeriesError>,
-    > {
-        match self
-            .estimate_metrics_output_series_with_http_info(metric_name, params)
-            .await
-        {
+/// configuration using Metrics without Limits&trade;.
+///
+/// To compare current volumes across many metrics, use `GET /api/v2/metrics` with `include=metric_volumes`
+/// instead of calling this endpoint for each metric.
+///
+/// A `404 Not Found` response means that no metric with this name exists in your organization. A
+/// `400 Bad Request` response means that a query parameter is invalid, or that the metric has no data in the
+/// queried window. For no data, the error message says so and names the window that was queried, which can
+/// differ from the requested one.
+    pub async fn estimate_metrics_output_series(&self, metric_name: String, params: EstimateMetricsOutputSeriesOptionalParams) -> Result<crate::datadogV2::model::MetricEstimateResponse, datadog::Error<EstimateMetricsOutputSeriesError>> {
+        match self.estimate_metrics_output_series_with_http_info(metric_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the estimated cardinality for a metric with a given tag, percentile and number of aggregations
-    /// configuration using Metrics without Limits&trade;.
-    ///
-    /// To compare current volumes across many metrics, use `GET /api/v2/metrics` with `include=metric_volumes`
-    /// instead of calling this endpoint for each metric.
-    ///
-    /// A `404 Not Found` response means that no metric with this name exists in your organization. A
-    /// `400 Bad Request` response means that a query parameter is invalid, or that the metric has no data in the
-    /// queried window. For no data, the error message says so and names the window that was queried, which can
-    /// differ from the requested one.
-    pub async fn estimate_metrics_output_series_with_http_info(
-        &self,
-        metric_name: String,
-        params: EstimateMetricsOutputSeriesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricEstimateResponse>,
-        datadog::Error<EstimateMetricsOutputSeriesError>,
-    > {
+/// configuration using Metrics without Limits&trade;.
+///
+/// To compare current volumes across many metrics, use `GET /api/v2/metrics` with `include=metric_volumes`
+/// instead of calling this endpoint for each metric.
+///
+/// A `404 Not Found` response means that no metric with this name exists in your organization. A
+/// `400 Bad Request` response means that a query parameter is invalid, or that the metric has no data in the
+/// queried window. For no data, the error message says so and names the window that was queried, which can
+/// differ from the requested one.
+    pub async fn estimate_metrics_output_series_with_http_info(&self, metric_name: String, params: EstimateMetricsOutputSeriesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricEstimateResponse>, datadog::Error<EstimateMetricsOutputSeriesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.estimate_metrics_output_series";
 
+        
         // unbox and build optional parameters
         let filter_groups = params.filter_groups;
         let filter_exclude_tags_mode = params.filter_exclude_tags_mode;
@@ -2195,40 +2029,36 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/estimate",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_groups {
-            local_req_builder =
-                local_req_builder.query(&[("filter[groups]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[groups]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_exclude_tags_mode {
-            local_req_builder = local_req_builder
-                .query(&[("filter[exclude_tags_mode]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[exclude_tags_mode]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_hours_ago {
-            local_req_builder =
-                local_req_builder.query(&[("filter[hours_ago]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[hours_ago]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_num_aggregations {
-            local_req_builder = local_req_builder
-                .query(&[("filter[num_aggregations]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[num_aggregations]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_pct {
-            local_req_builder =
-                local_req_builder.query(&[("filter[pct]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[pct]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_timespan_h {
-            local_req_builder =
-                local_req_builder.query(&[("filter[timespan_h]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[timespan_h]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2241,22 +2071,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2268,74 +2092,59 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricEstimateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricEstimateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<EstimateMetricsOutputSeriesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<EstimateMetricsOutputSeriesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the definition of a derived metric by name.
-    pub async fn get_derived_metric(
-        &self,
-        metric_name: String,
-    ) -> Result<crate::datadogV2::model::DerivedMetricResponse, datadog::Error<GetDerivedMetricError>>
-    {
+    pub async fn get_derived_metric(&self, metric_name: String) -> Result<crate::datadogV2::model::DerivedMetricResponse, datadog::Error<GetDerivedMetricError>> {
         match self.get_derived_metric_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the definition of a derived metric by name.
-    pub async fn get_derived_metric_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>,
-        datadog::Error<GetDerivedMetricError>,
-    > {
+    pub async fn get_derived_metric_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>, datadog::Error<GetDerivedMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_derived_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/derived-metrics/{metric_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2348,22 +2157,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2375,83 +2178,63 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetDerivedMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetDerivedMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the historical metrics ingestion configuration for a metric. Existence of the
-    /// resource means historical metrics ingestion is enabled; returns 404 when it is not
-    /// enabled for the metric.
-    pub async fn get_historical_metrics_configuration(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        crate::datadogV2::model::HistoricalMetricsConfigurationResponse,
-        datadog::Error<GetHistoricalMetricsConfigurationError>,
-    > {
-        match self
-            .get_historical_metrics_configuration_with_http_info(metric_name)
-            .await
-        {
+/// resource means historical metrics ingestion is enabled; returns 404 when it is not
+/// enabled for the metric.
+    pub async fn get_historical_metrics_configuration(&self, metric_name: String) -> Result<crate::datadogV2::model::HistoricalMetricsConfigurationResponse, datadog::Error<GetHistoricalMetricsConfigurationError>> {
+        match self.get_historical_metrics_configuration_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the historical metrics ingestion configuration for a metric. Existence of the
-    /// resource means historical metrics ingestion is enabled; returns 404 when it is not
-    /// enabled for the metric.
-    pub async fn get_historical_metrics_configuration_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>,
-        datadog::Error<GetHistoricalMetricsConfigurationError>,
-    > {
+/// resource means historical metrics ingestion is enabled; returns 404 when it is not
+/// enabled for the metric.
+    pub async fn get_historical_metrics_configuration_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>, datadog::Error<GetHistoricalMetricsConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_historical_metrics_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/historical-metrics-configurations/{metric_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2464,22 +2247,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2491,80 +2268,59 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::HistoricalMetricsConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::HistoricalMetricsConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetHistoricalMetricsConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetHistoricalMetricsConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the cardinality details of tags for a specific metric.
-    pub async fn get_metric_tag_cardinality_details(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        crate::datadogV2::model::MetricTagCardinalitiesResponse,
-        datadog::Error<GetMetricTagCardinalityDetailsError>,
-    > {
-        match self
-            .get_metric_tag_cardinality_details_with_http_info(metric_name)
-            .await
-        {
+    pub async fn get_metric_tag_cardinality_details(&self, metric_name: String) -> Result<crate::datadogV2::model::MetricTagCardinalitiesResponse, datadog::Error<GetMetricTagCardinalityDetailsError>> {
+        match self.get_metric_tag_cardinality_details_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the cardinality details of tags for a specific metric.
-    pub async fn get_metric_tag_cardinality_details_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricTagCardinalitiesResponse>,
-        datadog::Error<GetMetricTagCardinalityDetailsError>,
-    > {
+    pub async fn get_metric_tag_cardinality_details_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricTagCardinalitiesResponse>, datadog::Error<GetMetricTagCardinalityDetailsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_metric_tag_cardinality_details";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-cardinalities",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2577,22 +2333,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2604,76 +2354,59 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricTagCardinalitiesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagCardinalitiesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetMetricTagCardinalityDetailsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetMetricTagCardinalityDetailsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single tag indexing rule by its UUID.
-    pub async fn get_tag_indexing_rule(
-        &self,
-        id: String,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleResponse,
-        datadog::Error<GetTagIndexingRuleError>,
-    > {
+    pub async fn get_tag_indexing_rule(&self, id: String) -> Result<crate::datadogV2::model::TagIndexingRuleResponse, datadog::Error<GetTagIndexingRuleError>> {
         match self.get_tag_indexing_rule_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single tag indexing rule by its UUID.
-    pub async fn get_tag_indexing_rule_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>,
-        datadog::Error<GetTagIndexingRuleError>,
-    > {
+    pub async fn get_tag_indexing_rule_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>, datadog::Error<GetTagIndexingRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_tag_indexing_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2686,22 +2419,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2713,69 +2440,44 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTagIndexingRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTagIndexingRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns why a metric is excluded from tag indexing rules.
-    /// Returns 200 with `kind=exemption` when an explicit exemption exists, 200 with
-    /// `kind=legacy_tag_configuration` when the metric has a legacy tag configuration acting as an
-    /// implicit exclusion, or 404 when neither applies.
-    pub async fn get_tag_indexing_rule_exemption(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleExemptionResponse,
-        datadog::Error<GetTagIndexingRuleExemptionError>,
-    > {
-        match self
-            .get_tag_indexing_rule_exemption_with_http_info(metric_name)
-            .await
-        {
+/// Returns 200 with `kind=exemption` when an explicit exemption exists, 200 with
+/// `kind=legacy_tag_configuration` when the metric has a legacy tag configuration acting as an
+/// implicit exclusion, or 404 when neither applies.
+    pub async fn get_tag_indexing_rule_exemption(&self, metric_name: String) -> Result<crate::datadogV2::model::TagIndexingRuleExemptionResponse, datadog::Error<GetTagIndexingRuleExemptionError>> {
+        match self.get_tag_indexing_rule_exemption_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns why a metric is excluded from tag indexing rules.
-    /// Returns 200 with `kind=exemption` when an explicit exemption exists, 200 with
-    /// `kind=legacy_tag_configuration` when the metric has a legacy tag configuration acting as an
-    /// implicit exclusion, or 404 when neither applies.
-    pub async fn get_tag_indexing_rule_exemption_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>,
-        datadog::Error<GetTagIndexingRuleExemptionError>,
-    > {
+/// Returns 200 with `kind=exemption` when an explicit exemption exists, 200 with
+/// `kind=legacy_tag_configuration` when the metric has a legacy tag configuration acting as an
+/// implicit exclusion, or 404 when neither applies.
+    pub async fn get_tag_indexing_rule_exemption_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>, datadog::Error<GetTagIndexingRuleExemptionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_tag_indexing_rule_exemption";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2787,19 +2489,24 @@ impl MetricsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2812,22 +2519,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2839,76 +2540,48 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTagIndexingRuleExemptionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTagIndexingRuleExemptionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, the Metrics Explorer, and using the API for a given metric name.
-    ///
-    /// To find which of many metrics are queried or not queried, use `GET /api/v2/metrics` with `filter[queried]`
-    /// instead of calling this endpoint for each metric.
-    pub async fn list_active_metric_configurations(
-        &self,
-        metric_name: String,
-        params: ListActiveMetricConfigurationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
-        datadog::Error<ListActiveMetricConfigurationsError>,
-    > {
-        match self
-            .list_active_metric_configurations_with_http_info(metric_name, params)
-            .await
-        {
+///
+/// To find which of many metrics are queried or not queried, use `GET /api/v2/metrics` with `filter[queried]`
+/// instead of calling this endpoint for each metric.
+    pub async fn list_active_metric_configurations(&self, metric_name: String, params: ListActiveMetricConfigurationsOptionalParams) -> Result<crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse, datadog::Error<ListActiveMetricConfigurationsError>> {
+        match self.list_active_metric_configurations_with_http_info(metric_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List tags and aggregations that are actively queried on dashboards, notebooks, monitors, the Metrics Explorer, and using the API for a given metric name.
-    ///
-    /// To find which of many metrics are queried or not queried, use `GET /api/v2/metrics` with `filter[queried]`
-    /// instead of calling this endpoint for each metric.
-    pub async fn list_active_metric_configurations_with_http_info(
-        &self,
-        metric_name: String,
-        params: ListActiveMetricConfigurationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
-        >,
-        datadog::Error<ListActiveMetricConfigurationsError>,
-    > {
+///
+/// To find which of many metrics are queried or not queried, use `GET /api/v2/metrics` with `filter[queried]`
+/// instead of calling this endpoint for each metric.
+    pub async fn list_active_metric_configurations_with_http_info(&self, metric_name: String, params: ListActiveMetricConfigurationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse>, datadog::Error<ListActiveMetricConfigurationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_active_metric_configurations";
 
+        
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
 
@@ -2916,20 +2589,21 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/active-configurations",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = window_seconds {
-            local_req_builder =
-                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("window[seconds]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2942,22 +2616,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2969,75 +2637,59 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricSuggestedTagsAndAggregationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListActiveMetricConfigurationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListActiveMetricConfigurationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns dashboards, monitors, notebooks, and SLOs that a metric is stored in, if any.  Updated every 24 hours.
-    pub async fn list_metric_assets(
-        &self,
-        metric_name: String,
-    ) -> Result<crate::datadogV2::model::MetricAssetsResponse, datadog::Error<ListMetricAssetsError>>
-    {
+    pub async fn list_metric_assets(&self, metric_name: String) -> Result<crate::datadogV2::model::MetricAssetsResponse, datadog::Error<ListMetricAssetsError>> {
         match self.list_metric_assets_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns dashboards, monitors, notebooks, and SLOs that a metric is stored in, if any.  Updated every 24 hours.
-    pub async fn list_metric_assets_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricAssetsResponse>,
-        datadog::Error<ListMetricAssetsError>,
-    > {
+    pub async fn list_metric_assets_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricAssetsResponse>, datadog::Error<ListMetricAssetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_metric_assets";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/assets",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3050,22 +2702,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3077,93 +2723,73 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricAssetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricAssetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMetricAssetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMetricAssetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the tag configuration for the given metric name.
-    ///
-    /// A metric may exist and submit data without having a tag configuration. Both cases return `404 Not Found`,
-    /// with different messages: `No tag configuration for <metric_name>` when the metric exists without a tag
-    /// configuration, and `<metric_name> not found` when no metric with this name exists in your organization.
-    ///
-    /// To list tag configurations for many metrics, use `GET /api/v2/metrics` with `filter[configured]=true`
-    /// instead of calling this endpoint for each metric.
-    pub async fn list_tag_configuration_by_name(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        crate::datadogV2::model::MetricTagConfigurationResponse,
-        datadog::Error<ListTagConfigurationByNameError>,
-    > {
-        match self
-            .list_tag_configuration_by_name_with_http_info(metric_name)
-            .await
-        {
+///
+/// A metric may exist and submit data without having a tag configuration. Both cases return `404 Not Found`,
+/// with different messages: `No tag configuration for <metric_name>` when the metric exists without a tag
+/// configuration, and `<metric_name> not found` when no metric with this name exists in your organization.
+///
+/// To list tag configurations for many metrics, use `GET /api/v2/metrics` with `filter[configured]=true`
+/// instead of calling this endpoint for each metric.
+    pub async fn list_tag_configuration_by_name(&self, metric_name: String) -> Result<crate::datadogV2::model::MetricTagConfigurationResponse, datadog::Error<ListTagConfigurationByNameError>> {
+        match self.list_tag_configuration_by_name_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the tag configuration for the given metric name.
-    ///
-    /// A metric may exist and submit data without having a tag configuration. Both cases return `404 Not Found`,
-    /// with different messages: `No tag configuration for <metric_name>` when the metric exists without a tag
-    /// configuration, and `<metric_name> not found` when no metric with this name exists in your organization.
-    ///
-    /// To list tag configurations for many metrics, use `GET /api/v2/metrics` with `filter[configured]=true`
-    /// instead of calling this endpoint for each metric.
-    pub async fn list_tag_configuration_by_name_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        datadog::Error<ListTagConfigurationByNameError>,
-    > {
+///
+/// A metric may exist and submit data without having a tag configuration. Both cases return `404 Not Found`,
+/// with different messages: `No tag configuration for <metric_name>` when the metric exists without a tag
+/// configuration, and `<metric_name> not found` when no metric with this name exists in your organization.
+///
+/// To list tag configurations for many metrics, use `GET /api/v2/metrics` with `filter[configured]=true`
+/// instead of calling this endpoint for each metric.
+    pub async fn list_tag_configuration_by_name_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>, datadog::Error<ListTagConfigurationByNameError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_configuration_by_name";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3176,22 +2802,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3203,109 +2823,87 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagConfigurationByNameError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagConfigurationByNameError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of actively reporting metrics for your organization, with optional volumes, query activity,
-    /// and tag configuration filters. When you need volumes, query activity, or tag configuration status for
-    /// many metrics, use this endpoint instead of calling per-metric endpoints (such as
-    /// `GET /api/v2/metrics/{metric_name}/volumes` or `GET /api/v2/metrics/{metric_name}/tags`) in a loop,
-    /// which is slower and quickly reaches rate limits. This endpoint does not return the tag keys or values
-    /// that a metric was submitted with.
-    ///
-    /// Always paginate: send `page[size]` (up to 10000; a few hundred to a few thousand is typical) and follow
-    /// `meta.pagination.next_cursor` (or `links.next`) until it is null or missing. Without `page[size]` or `page[cursor]`,
-    /// the response is not paginated: it returns matching metrics in one response, with no pagination metadata,
-    /// up to a limit of 250,000 metrics by default (some organizations have a different limit). Metrics beyond
-    /// the limit are left out without any indication. Unpaginated requests in large organizations can also be
-    /// slow or time out, and clients with response-size limits may fail or truncate the response.
-    /// If a request with `page[cursor]` returns `410 Gone`, the cursor has expired: restart from the first page
-    /// (send `page[size]` without `page[cursor]`).
-    ///
-    /// - **Volumes**: `include=metric_volumes` adds the indexed and ingested volume of each metric. The volume is a
-    ///   fixed one-hour value and is not affected by `window[seconds]`. Volumes are not returned inside `data`:
-    ///   each metric with volume data has a `relationships.metric_volumes.data` reference, and the volumes
-    ///   themselves are returned as `metric_volumes` resources in the top-level `included` array. To join them,
-    ///   match `included[].id` to the `id` of `data[]` items with type `metrics`; both are the metric name.
-    ///   `manage_tags` items in `data` repeat the same `id`, so skip them when joining. Metrics without volume
-    ///   data, such as standard (non-custom) metrics, have no `metric_volumes` reference or entry.
-    /// - **Top metrics by volume**: `sort=-metric_volumes.indexed_volume` together with `include=metric_volumes`
-    ///   and `page[size]` (for example, `page[size]=20`) returns the metrics with the highest indexed volume
-    ///   first. Sorting requires a paginated request.
-    /// - **Volume for a family of metrics**: `filter[metrics.id]=http.request*` with `include=metric_volumes`
-    ///   and `page[size]` returns volumes for every metric whose name starts with `http.request` (a value whose
-    ///   only `*` is at the end is case-sensitive). A value without `*` matches names that contain it, ignoring
-    ///   case.
-    /// - **Unqueried metrics**: `filter[queried]=false` with `filter[queried][window][seconds]` (for example,
-    ///   `2592000` for 30 days) and `page[size]` returns metrics that were not queried in that window.
-    /// - **Metrics without a tag configuration**: `filter[configured]=false` with `page[size]` returns custom
-    ///   metrics that have no Metrics without Limits&trade; tag configuration.
-    /// - **Metric types**: if `filter[metric_type]` is omitted, metrics of all types are returned.
-    ///
-    /// Examples:
-    /// - Top 20 metrics by indexed volume:
-    ///   `GET /api/v2/metrics?include=metric_volumes&sort=-metric_volumes.indexed_volume&page[size]=20`
-    /// - Metrics not queried in the last 30 days, with their volumes:
-    ///   `GET /api/v2/metrics?filter[queried]=false&filter[queried][window][seconds]=2592000&include=metric_volumes&page[size]=1000`
-    /// - Metrics without a tag configuration:
-    ///   `GET /api/v2/metrics?filter[configured]=false&page[size]=1000`
-    /// - Volumes for metrics whose name starts with `http.request`:
-    ///   `GET /api/v2/metrics?filter[metrics.id]=http.request*&include=metric_volumes&page[size]=1000`
-    ///
-    /// Query parameters use bracket notation (for example, `filter[tags]`, `filter[queried][window][seconds]`).
-    /// Pass them as standard URL query strings, URL-encoding the brackets if your client does not handle them.
-    /// For example: `GET /api/v2/metrics?filter[tags]=env:prod&window[seconds]=86400&page[size]=500`.
-    pub async fn list_tag_configurations(
-        &self,
-        params: ListTagConfigurationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
-        datadog::Error<ListTagConfigurationsError>,
-    > {
-        match self.list_tag_configurations_with_http_info(params).await {
+/// and tag configuration filters. When you need volumes, query activity, or tag configuration status for
+/// many metrics, use this endpoint instead of calling per-metric endpoints (such as
+/// `GET /api/v2/metrics/{metric_name}/volumes` or `GET /api/v2/metrics/{metric_name}/tags`) in a loop,
+/// which is slower and quickly reaches rate limits. This endpoint does not return the tag keys or values
+/// that a metric was submitted with.
+///
+/// Always paginate: send `page[size]` (up to 10000; a few hundred to a few thousand is typical) and follow
+/// `meta.pagination.next_cursor` (or `links.next`) until it is null or missing. Without `page[size]` or `page[cursor]`,
+/// the response is not paginated: it returns matching metrics in one response, with no pagination metadata,
+/// up to a limit of 250,000 metrics by default (some organizations have a different limit). Metrics beyond
+/// the limit are left out without any indication. Unpaginated requests in large organizations can also be
+/// slow or time out, and clients with response-size limits may fail or truncate the response.
+/// If a request with `page[cursor]` returns `410 Gone`, the cursor has expired: restart from the first page
+/// (send `page[size]` without `page[cursor]`).
+///
+/// - **Volumes**: `include=metric_volumes` adds the indexed and ingested volume of each metric. The volume is a
+///   fixed one-hour value and is not affected by `window[seconds]`. Volumes are not returned inside `data`:
+///   each metric with volume data has a `relationships.metric_volumes.data` reference, and the volumes
+///   themselves are returned as `metric_volumes` resources in the top-level `included` array. To join them,
+///   match `included[].id` to the `id` of `data[]` items with type `metrics`; both are the metric name.
+///   `manage_tags` items in `data` repeat the same `id`, so skip them when joining. Metrics without volume
+///   data, such as standard (non-custom) metrics, have no `metric_volumes` reference or entry.
+/// - **Top metrics by volume**: `sort=-metric_volumes.indexed_volume` together with `include=metric_volumes`
+///   and `page[size]` (for example, `page[size]=20`) returns the metrics with the highest indexed volume
+///   first. Sorting requires a paginated request.
+/// - **Volume for a family of metrics**: `filter[metrics.id]=http.request*` with `include=metric_volumes`
+///   and `page[size]` returns volumes for every metric whose name starts with `http.request` (a value whose
+///   only `*` is at the end is case-sensitive). A value without `*` matches names that contain it, ignoring
+///   case.
+/// - **Unqueried metrics**: `filter[queried]=false` with `filter[queried][window][seconds]` (for example,
+///   `2592000` for 30 days) and `page[size]` returns metrics that were not queried in that window.
+/// - **Metrics without a tag configuration**: `filter[configured]=false` with `page[size]` returns custom
+///   metrics that have no Metrics without Limits&trade; tag configuration.
+/// - **Metric types**: if `filter[metric_type]` is omitted, metrics of all types are returned.
+///
+/// Examples:
+/// - Top 20 metrics by indexed volume:
+///   `GET /api/v2/metrics?include=metric_volumes&sort=-metric_volumes.indexed_volume&page[size]=20`
+/// - Metrics not queried in the last 30 days, with their volumes:
+///   `GET /api/v2/metrics?filter[queried]=false&filter[queried][window][seconds]=2592000&include=metric_volumes&page[size]=1000`
+/// - Metrics without a tag configuration:
+///   `GET /api/v2/metrics?filter[configured]=false&page[size]=1000`
+/// - Volumes for metrics whose name starts with `http.request`:
+///   `GET /api/v2/metrics?filter[metrics.id]=http.request*&include=metric_volumes&page[size]=1000`
+///
+/// Query parameters use bracket notation (for example, `filter[tags]`, `filter[queried][window][seconds]`).
+/// Pass them as standard URL query strings, URL-encoding the brackets if your client does not handle them.
+/// For example: `GET /api/v2/metrics?filter[tags]=env:prod&window[seconds]=86400&page[size]=500`.
+    pub async fn list_tag_configurations(&self, params: ListTagConfigurationsOptionalParams) -> Result<crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse, datadog::Error<ListTagConfigurationsError>> {
+        match self.list_tag_configurations_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_tag_configurations_with_pagination(
-        &self,
-        mut params: ListTagConfigurationsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::MetricsAndMetricTagConfigurations,
-            datadog::Error<ListTagConfigurationsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListTagConfigurationsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::MetricsAndMetricTagConfigurations, datadog::Error<ListTagConfigurationsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10000;
             if params.page_size.is_none() {
@@ -3334,67 +2932,61 @@ impl MetricsAPI {
         }
     }
 
+    
     /// Get a list of actively reporting metrics for your organization, with optional volumes, query activity,
-    /// and tag configuration filters. When you need volumes, query activity, or tag configuration status for
-    /// many metrics, use this endpoint instead of calling per-metric endpoints (such as
-    /// `GET /api/v2/metrics/{metric_name}/volumes` or `GET /api/v2/metrics/{metric_name}/tags`) in a loop,
-    /// which is slower and quickly reaches rate limits. This endpoint does not return the tag keys or values
-    /// that a metric was submitted with.
-    ///
-    /// Always paginate: send `page[size]` (up to 10000; a few hundred to a few thousand is typical) and follow
-    /// `meta.pagination.next_cursor` (or `links.next`) until it is null or missing. Without `page[size]` or `page[cursor]`,
-    /// the response is not paginated: it returns matching metrics in one response, with no pagination metadata,
-    /// up to a limit of 250,000 metrics by default (some organizations have a different limit). Metrics beyond
-    /// the limit are left out without any indication. Unpaginated requests in large organizations can also be
-    /// slow or time out, and clients with response-size limits may fail or truncate the response.
-    /// If a request with `page[cursor]` returns `410 Gone`, the cursor has expired: restart from the first page
-    /// (send `page[size]` without `page[cursor]`).
-    ///
-    /// - **Volumes**: `include=metric_volumes` adds the indexed and ingested volume of each metric. The volume is a
-    ///   fixed one-hour value and is not affected by `window[seconds]`. Volumes are not returned inside `data`:
-    ///   each metric with volume data has a `relationships.metric_volumes.data` reference, and the volumes
-    ///   themselves are returned as `metric_volumes` resources in the top-level `included` array. To join them,
-    ///   match `included[].id` to the `id` of `data[]` items with type `metrics`; both are the metric name.
-    ///   `manage_tags` items in `data` repeat the same `id`, so skip them when joining. Metrics without volume
-    ///   data, such as standard (non-custom) metrics, have no `metric_volumes` reference or entry.
-    /// - **Top metrics by volume**: `sort=-metric_volumes.indexed_volume` together with `include=metric_volumes`
-    ///   and `page[size]` (for example, `page[size]=20`) returns the metrics with the highest indexed volume
-    ///   first. Sorting requires a paginated request.
-    /// - **Volume for a family of metrics**: `filter[metrics.id]=http.request*` with `include=metric_volumes`
-    ///   and `page[size]` returns volumes for every metric whose name starts with `http.request` (a value whose
-    ///   only `*` is at the end is case-sensitive). A value without `*` matches names that contain it, ignoring
-    ///   case.
-    /// - **Unqueried metrics**: `filter[queried]=false` with `filter[queried][window][seconds]` (for example,
-    ///   `2592000` for 30 days) and `page[size]` returns metrics that were not queried in that window.
-    /// - **Metrics without a tag configuration**: `filter[configured]=false` with `page[size]` returns custom
-    ///   metrics that have no Metrics without Limits&trade; tag configuration.
-    /// - **Metric types**: if `filter[metric_type]` is omitted, metrics of all types are returned.
-    ///
-    /// Examples:
-    /// - Top 20 metrics by indexed volume:
-    ///   `GET /api/v2/metrics?include=metric_volumes&sort=-metric_volumes.indexed_volume&page[size]=20`
-    /// - Metrics not queried in the last 30 days, with their volumes:
-    ///   `GET /api/v2/metrics?filter[queried]=false&filter[queried][window][seconds]=2592000&include=metric_volumes&page[size]=1000`
-    /// - Metrics without a tag configuration:
-    ///   `GET /api/v2/metrics?filter[configured]=false&page[size]=1000`
-    /// - Volumes for metrics whose name starts with `http.request`:
-    ///   `GET /api/v2/metrics?filter[metrics.id]=http.request*&include=metric_volumes&page[size]=1000`
-    ///
-    /// Query parameters use bracket notation (for example, `filter[tags]`, `filter[queried][window][seconds]`).
-    /// Pass them as standard URL query strings, URL-encoding the brackets if your client does not handle them.
-    /// For example: `GET /api/v2/metrics?filter[tags]=env:prod&window[seconds]=86400&page[size]=500`.
-    pub async fn list_tag_configurations_with_http_info(
-        &self,
-        params: ListTagConfigurationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
-        >,
-        datadog::Error<ListTagConfigurationsError>,
-    > {
+/// and tag configuration filters. When you need volumes, query activity, or tag configuration status for
+/// many metrics, use this endpoint instead of calling per-metric endpoints (such as
+/// `GET /api/v2/metrics/{metric_name}/volumes` or `GET /api/v2/metrics/{metric_name}/tags`) in a loop,
+/// which is slower and quickly reaches rate limits. This endpoint does not return the tag keys or values
+/// that a metric was submitted with.
+///
+/// Always paginate: send `page[size]` (up to 10000; a few hundred to a few thousand is typical) and follow
+/// `meta.pagination.next_cursor` (or `links.next`) until it is null or missing. Without `page[size]` or `page[cursor]`,
+/// the response is not paginated: it returns matching metrics in one response, with no pagination metadata,
+/// up to a limit of 250,000 metrics by default (some organizations have a different limit). Metrics beyond
+/// the limit are left out without any indication. Unpaginated requests in large organizations can also be
+/// slow or time out, and clients with response-size limits may fail or truncate the response.
+/// If a request with `page[cursor]` returns `410 Gone`, the cursor has expired: restart from the first page
+/// (send `page[size]` without `page[cursor]`).
+///
+/// - **Volumes**: `include=metric_volumes` adds the indexed and ingested volume of each metric. The volume is a
+///   fixed one-hour value and is not affected by `window[seconds]`. Volumes are not returned inside `data`:
+///   each metric with volume data has a `relationships.metric_volumes.data` reference, and the volumes
+///   themselves are returned as `metric_volumes` resources in the top-level `included` array. To join them,
+///   match `included[].id` to the `id` of `data[]` items with type `metrics`; both are the metric name.
+///   `manage_tags` items in `data` repeat the same `id`, so skip them when joining. Metrics without volume
+///   data, such as standard (non-custom) metrics, have no `metric_volumes` reference or entry.
+/// - **Top metrics by volume**: `sort=-metric_volumes.indexed_volume` together with `include=metric_volumes`
+///   and `page[size]` (for example, `page[size]=20`) returns the metrics with the highest indexed volume
+///   first. Sorting requires a paginated request.
+/// - **Volume for a family of metrics**: `filter[metrics.id]=http.request*` with `include=metric_volumes`
+///   and `page[size]` returns volumes for every metric whose name starts with `http.request` (a value whose
+///   only `*` is at the end is case-sensitive). A value without `*` matches names that contain it, ignoring
+///   case.
+/// - **Unqueried metrics**: `filter[queried]=false` with `filter[queried][window][seconds]` (for example,
+///   `2592000` for 30 days) and `page[size]` returns metrics that were not queried in that window.
+/// - **Metrics without a tag configuration**: `filter[configured]=false` with `page[size]` returns custom
+///   metrics that have no Metrics without Limits&trade; tag configuration.
+/// - **Metric types**: if `filter[metric_type]` is omitted, metrics of all types are returned.
+///
+/// Examples:
+/// - Top 20 metrics by indexed volume:
+///   `GET /api/v2/metrics?include=metric_volumes&sort=-metric_volumes.indexed_volume&page[size]=20`
+/// - Metrics not queried in the last 30 days, with their volumes:
+///   `GET /api/v2/metrics?filter[queried]=false&filter[queried][window][seconds]=2592000&include=metric_volumes&page[size]=1000`
+/// - Metrics without a tag configuration:
+///   `GET /api/v2/metrics?filter[configured]=false&page[size]=1000`
+/// - Volumes for metrics whose name starts with `http.request`:
+///   `GET /api/v2/metrics?filter[metrics.id]=http.request*&include=metric_volumes&page[size]=1000`
+///
+/// Query parameters use bracket notation (for example, `filter[tags]`, `filter[queried][window][seconds]`).
+/// Pass them as standard URL query strings, URL-encoding the brackets if your client does not handle them.
+/// For example: `GET /api/v2/metrics?filter[tags]=env:prod&window[seconds]=86400&page[size]=500`.
+    pub async fn list_tag_configurations_with_http_info(&self, params: ListTagConfigurationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse>, datadog::Error<ListTagConfigurationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_configurations";
 
+        
         // unbox and build optional parameters
         let filter_configured = params.filter_configured;
         let filter_is_configurable = params.filter_is_configurable;
@@ -3417,83 +3009,64 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_configured {
-            local_req_builder =
-                local_req_builder.query(&[("filter[configured]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[configured]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_is_configurable {
-            local_req_builder = local_req_builder
-                .query(&[("filter[is_configurable]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[is_configurable]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags_configured {
-            local_req_builder = local_req_builder
-                .query(&[("filter[tags_configured]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags_configured]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_metric_type {
-            local_req_builder =
-                local_req_builder.query(&[("filter[metric_type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[metric_type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_percentiles {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[include_percentiles]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[include_percentiles]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_queried {
-            local_req_builder =
-                local_req_builder.query(&[("filter[queried]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[queried]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_queried_window_seconds {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[queried][window][seconds]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[queried][window][seconds]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_related_assets {
-            local_req_builder = local_req_builder
-                .query(&[("filter[related_assets]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[related_assets]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_metrics_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[metrics.id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[metrics.id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_historical_metrics {
-            local_req_builder = local_req_builder
-                .query(&[("filter[historical_metrics]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[historical_metrics]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = window_seconds {
-            local_req_builder =
-                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("window[seconds]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3506,22 +3079,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3533,67 +3100,41 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricsAndMetricTagConfigurationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagConfigurationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagConfigurationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns explicit exemptions and legacy tag configurations that exclude metrics from tag indexing rules.
-    /// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
-    /// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
-    pub async fn list_tag_indexing_rule_exemptions(
-        &self,
-        params: ListTagIndexingRuleExemptionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleExemptionsResponse,
-        datadog::Error<ListTagIndexingRuleExemptionsError>,
-    > {
-        match self
-            .list_tag_indexing_rule_exemptions_with_http_info(params)
-            .await
-        {
+/// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
+/// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
+    pub async fn list_tag_indexing_rule_exemptions(&self, params: ListTagIndexingRuleExemptionsOptionalParams) -> Result<crate::datadogV2::model::TagIndexingRuleExemptionsResponse, datadog::Error<ListTagIndexingRuleExemptionsError>> {
+        match self.list_tag_indexing_rule_exemptions_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_tag_indexing_rule_exemptions_with_pagination(
-        &self,
-        mut params: ListTagIndexingRuleExemptionsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TagIndexingRuleExemptionData,
-            datadog::Error<ListTagIndexingRuleExemptionsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListTagIndexingRuleExemptionsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TagIndexingRuleExemptionData, datadog::Error<ListTagIndexingRuleExemptionsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10000;
             if params.page_size.is_none() {
@@ -3622,16 +3163,11 @@ impl MetricsAPI {
         }
     }
 
+    
     /// Returns explicit exemptions and legacy tag configurations that exclude metrics from tag indexing rules.
-    /// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
-    /// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
-    pub async fn list_tag_indexing_rule_exemptions_with_http_info(
-        &self,
-        params: ListTagIndexingRuleExemptionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>,
-        datadog::Error<ListTagIndexingRuleExemptionsError>,
-    > {
+/// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
+/// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
+    pub async fn list_tag_indexing_rule_exemptions_with_http_info(&self, params: ListTagIndexingRuleExemptionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>, datadog::Error<ListTagIndexingRuleExemptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_indexing_rule_exemptions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3643,6 +3179,7 @@ impl MetricsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_metric_prefix = params.filter_metric_prefix;
         let filter_safe = params.filter_safe;
@@ -3655,41 +3192,34 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/list-tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_metric_prefix {
-            local_req_builder = local_req_builder
-                .query(&[("filter[metric_prefix]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[metric_prefix]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_safe {
-            local_req_builder =
-                local_req_builder.query(&[("filter[safe]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[safe]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tag_indexing_rule_id {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[tag_indexing_rule_id]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[tag_indexing_rule_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3702,22 +3232,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3729,63 +3253,42 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagIndexingRuleExemptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagIndexingRuleExemptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List tag indexing rules for an org, sorted by `rule_order`, with offset/limit pagination.
-    pub async fn list_tag_indexing_rules(
-        &self,
-        params: ListTagIndexingRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRulesResponse,
-        datadog::Error<ListTagIndexingRulesError>,
-    > {
-        match self.list_tag_indexing_rules_with_http_info(params).await {
+    pub async fn list_tag_indexing_rules(&self, params: ListTagIndexingRulesOptionalParams) -> Result<crate::datadogV2::model::TagIndexingRulesResponse, datadog::Error<ListTagIndexingRulesError>> {
+        match self.list_tag_indexing_rules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List tag indexing rules for an org, sorted by `rule_order`, with offset/limit pagination.
-    pub async fn list_tag_indexing_rules_with_http_info(
-        &self,
-        params: ListTagIndexingRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRulesResponse>,
-        datadog::Error<ListTagIndexingRulesError>,
-    > {
+    pub async fn list_tag_indexing_rules_with_http_info(&self, params: ListTagIndexingRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRulesResponse>, datadog::Error<ListTagIndexingRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_indexing_rules";
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
@@ -3795,27 +3298,25 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3828,22 +3329,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3855,81 +3350,61 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagIndexingRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagIndexingRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the tag indexing rules that apply to a given metric, sorted by `rule_order`.
-    /// Matching is performed server-side using each rule's `metric_name_matches` glob patterns.
-    pub async fn list_tag_indexing_rules_for_metric(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRulesResponse,
-        datadog::Error<ListTagIndexingRulesForMetricError>,
-    > {
-        match self
-            .list_tag_indexing_rules_for_metric_with_http_info(metric_name)
-            .await
-        {
+/// Matching is performed server-side using each rule's `metric_name_matches` glob patterns.
+    pub async fn list_tag_indexing_rules_for_metric(&self, metric_name: String) -> Result<crate::datadogV2::model::TagIndexingRulesResponse, datadog::Error<ListTagIndexingRulesForMetricError>> {
+        match self.list_tag_indexing_rules_for_metric_with_http_info(metric_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the tag indexing rules that apply to a given metric, sorted by `rule_order`.
-    /// Matching is performed server-side using each rule's `metric_name_matches` glob patterns.
-    pub async fn list_tag_indexing_rules_for_metric_with_http_info(
-        &self,
-        metric_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRulesResponse>,
-        datadog::Error<ListTagIndexingRulesForMetricError>,
-    > {
+/// Matching is performed server-side using each rule's `metric_name_matches` glob patterns.
+    pub async fn list_tag_indexing_rules_for_metric_with_http_info(&self, metric_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRulesResponse>, datadog::Error<ListTagIndexingRulesForMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tag_indexing_rules_for_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3942,22 +3417,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3969,86 +3438,60 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagIndexingRulesForMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagIndexingRulesForMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// View indexed and ingested tags for a given metric name.
-    /// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
-    /// This window only limits which tags are returned; it does not affect whether the metric is found.
-    ///
-    /// A `404 Not Found` response means that no metric with this exact name exists in your organization.
-    /// Metric names must match exactly. Distribution metrics do not have suffixes such as `.avg` or `.count`,
-    /// so use the base metric name.
-    ///
-    /// For high-cardinality metrics, keep responses small with `filter[include_tag_values]=false`,
-    /// `page[limit]`, and `filter[match]`.
-    pub async fn list_tags_by_metric_name(
-        &self,
-        metric_name: String,
-        params: ListTagsByMetricNameOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MetricAllTagsResponse,
-        datadog::Error<ListTagsByMetricNameError>,
-    > {
-        match self
-            .list_tags_by_metric_name_with_http_info(metric_name, params)
-            .await
-        {
+/// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
+/// This window only limits which tags are returned; it does not affect whether the metric is found.
+///
+/// A `404 Not Found` response means that no metric with this exact name exists in your organization.
+/// Metric names must match exactly. Distribution metrics do not have suffixes such as `.avg` or `.count`,
+/// so use the base metric name.
+///
+/// For high-cardinality metrics, keep responses small with `filter[include_tag_values]=false`,
+/// `page[limit]`, and `filter[match]`.
+    pub async fn list_tags_by_metric_name(&self, metric_name: String, params: ListTagsByMetricNameOptionalParams) -> Result<crate::datadogV2::model::MetricAllTagsResponse, datadog::Error<ListTagsByMetricNameError>> {
+        match self.list_tags_by_metric_name_with_http_info(metric_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// View indexed and ingested tags for a given metric name.
-    /// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
-    /// This window only limits which tags are returned; it does not affect whether the metric is found.
-    ///
-    /// A `404 Not Found` response means that no metric with this exact name exists in your organization.
-    /// Metric names must match exactly. Distribution metrics do not have suffixes such as `.avg` or `.count`,
-    /// so use the base metric name.
-    ///
-    /// For high-cardinality metrics, keep responses small with `filter[include_tag_values]=false`,
-    /// `page[limit]`, and `filter[match]`.
-    pub async fn list_tags_by_metric_name_with_http_info(
-        &self,
-        metric_name: String,
-        params: ListTagsByMetricNameOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricAllTagsResponse>,
-        datadog::Error<ListTagsByMetricNameError>,
-    > {
+/// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
+/// This window only limits which tags are returned; it does not affect whether the metric is found.
+///
+/// A `404 Not Found` response means that no metric with this exact name exists in your organization.
+/// Metric names must match exactly. Distribution metrics do not have suffixes such as `.avg` or `.count`,
+/// so use the base metric name.
+///
+/// For high-cardinality metrics, keep responses small with `filter[include_tag_values]=false`,
+/// `page[limit]`, and `filter[match]`.
+    pub async fn list_tags_by_metric_name_with_http_info(&self, metric_name: String, params: ListTagsByMetricNameOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricAllTagsResponse>, datadog::Error<ListTagsByMetricNameError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tags_by_metric_name";
 
+        
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
         let filter_tags = params.filter_tags;
@@ -4061,40 +3504,36 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/all-tags",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = window_seconds {
-            local_req_builder =
-                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("window[seconds]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_match {
-            local_req_builder =
-                local_req_builder.query(&[("filter[match]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[match]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_tag_values {
-            local_req_builder = local_req_builder
-                .query(&[("filter[include_tag_values]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[include_tag_values]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_allow_partial {
-            local_req_builder = local_req_builder
-                .query(&[("filter[allow_partial]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[allow_partial]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4107,22 +3546,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4134,80 +3567,54 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricAllTagsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricAllTagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagsByMetricNameError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTagsByMetricNameError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// View hourly average cardinality for the given metric name over the look back period.
-    /// For Metric Name Pricing customers, view total point volume for the given metric name
-    /// over the look back period.
-    ///
-    /// To get the last hour's indexed and ingested volumes for many metrics, use `GET /api/v2/metrics` with
-    /// `include=metric_volumes` instead of calling this endpoint for each metric. Use this endpoint when you need
-    /// a longer look-back for a single metric.
-    pub async fn list_volumes_by_metric_name(
-        &self,
-        metric_name: String,
-        params: ListVolumesByMetricNameOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::MetricVolumesResponse,
-        datadog::Error<ListVolumesByMetricNameError>,
-    > {
-        match self
-            .list_volumes_by_metric_name_with_http_info(metric_name, params)
-            .await
-        {
+/// For Metric Name Pricing customers, view total point volume for the given metric name
+/// over the look back period.
+///
+/// To get the last hour's indexed and ingested volumes for many metrics, use `GET /api/v2/metrics` with
+/// `include=metric_volumes` instead of calling this endpoint for each metric. Use this endpoint when you need
+/// a longer look-back for a single metric.
+    pub async fn list_volumes_by_metric_name(&self, metric_name: String, params: ListVolumesByMetricNameOptionalParams) -> Result<crate::datadogV2::model::MetricVolumesResponse, datadog::Error<ListVolumesByMetricNameError>> {
+        match self.list_volumes_by_metric_name_with_http_info(metric_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// View hourly average cardinality for the given metric name over the look back period.
-    /// For Metric Name Pricing customers, view total point volume for the given metric name
-    /// over the look back period.
-    ///
-    /// To get the last hour's indexed and ingested volumes for many metrics, use `GET /api/v2/metrics` with
-    /// `include=metric_volumes` instead of calling this endpoint for each metric. Use this endpoint when you need
-    /// a longer look-back for a single metric.
-    pub async fn list_volumes_by_metric_name_with_http_info(
-        &self,
-        metric_name: String,
-        params: ListVolumesByMetricNameOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricVolumesResponse>,
-        datadog::Error<ListVolumesByMetricNameError>,
-    > {
+/// For Metric Name Pricing customers, view total point volume for the given metric name
+/// over the look back period.
+///
+/// To get the last hour's indexed and ingested volumes for many metrics, use `GET /api/v2/metrics` with
+/// `include=metric_volumes` instead of calling this endpoint for each metric. Use this endpoint when you need
+/// a longer look-back for a single metric.
+    pub async fn list_volumes_by_metric_name_with_http_info(&self, metric_name: String, params: ListVolumesByMetricNameOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricVolumesResponse>, datadog::Error<ListVolumesByMetricNameError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_volumes_by_metric_name";
 
+        
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
 
@@ -4215,20 +3622,21 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/volumes",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = window_seconds {
-            local_req_builder =
-                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("window[seconds]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4241,22 +3649,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4268,80 +3670,62 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricVolumesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricVolumesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListVolumesByMetricNameError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListVolumesByMetricNameError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Query scalar values (as seen on Query Value, Table, and Toplist widgets).
-    /// Multiple data sources are supported with the ability to
-    /// process the data using formulas and functions.
-    pub async fn query_scalar_data(
-        &self,
-        body: crate::datadogV2::model::ScalarFormulaQueryRequest,
-    ) -> Result<
-        crate::datadogV2::model::ScalarFormulaQueryResponse,
-        datadog::Error<QueryScalarDataError>,
-    > {
+/// Multiple data sources are supported with the ability to
+/// process the data using formulas and functions.
+    pub async fn query_scalar_data(&self, body: crate::datadogV2::model::ScalarFormulaQueryRequest) -> Result<crate::datadogV2::model::ScalarFormulaQueryResponse, datadog::Error<QueryScalarDataError>> {
         match self.query_scalar_data_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Query scalar values (as seen on Query Value, Table, and Toplist widgets).
-    /// Multiple data sources are supported with the ability to
-    /// process the data using formulas and functions.
-    pub async fn query_scalar_data_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ScalarFormulaQueryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>,
-        datadog::Error<QueryScalarDataError>,
-    > {
+/// Multiple data sources are supported with the ability to
+/// process the data using formulas and functions.
+    pub async fn query_scalar_data_with_http_info(&self, body: crate::datadogV2::model::ScalarFormulaQueryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ScalarFormulaQueryResponse>, datadog::Error<QueryScalarDataError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.query_scalar_data";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/scalar",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4354,23 +3738,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4378,7 +3755,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4388,7 +3768,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4410,7 +3793,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4427,82 +3810,64 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ScalarFormulaQueryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ScalarFormulaQueryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<QueryScalarDataError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<QueryScalarDataError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Query timeseries data across various data sources and
-    /// process the data by applying formulas and functions. Datadog recommends
-    /// using this endpoint over the v1 `/api/v1/query` endpoint for querying
-    /// timeseries data.
-    pub async fn query_timeseries_data(
-        &self,
-        body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
-    ) -> Result<
-        crate::datadogV2::model::TimeseriesFormulaQueryResponse,
-        datadog::Error<QueryTimeseriesDataError>,
-    > {
+/// process the data by applying formulas and functions. Datadog recommends
+/// using this endpoint over the v1 `/api/v1/query` endpoint for querying
+/// timeseries data.
+    pub async fn query_timeseries_data(&self, body: crate::datadogV2::model::TimeseriesFormulaQueryRequest) -> Result<crate::datadogV2::model::TimeseriesFormulaQueryResponse, datadog::Error<QueryTimeseriesDataError>> {
         match self.query_timeseries_data_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Query timeseries data across various data sources and
-    /// process the data by applying formulas and functions. Datadog recommends
-    /// using this endpoint over the v1 `/api/v1/query` endpoint for querying
-    /// timeseries data.
-    pub async fn query_timeseries_data_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>,
-        datadog::Error<QueryTimeseriesDataError>,
-    > {
+/// process the data by applying formulas and functions. Datadog recommends
+/// using this endpoint over the v1 `/api/v1/query` endpoint for querying
+/// timeseries data.
+    pub async fn query_timeseries_data_with_http_info(&self, body: crate::datadogV2::model::TimeseriesFormulaQueryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TimeseriesFormulaQueryResponse>, datadog::Error<QueryTimeseriesDataError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.query_timeseries_data";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/timeseries",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4515,23 +3880,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4539,7 +3897,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4549,7 +3910,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4571,7 +3935,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4588,70 +3952,60 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TimeseriesFormulaQueryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TimeseriesFormulaQueryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<QueryTimeseriesDataError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<QueryTimeseriesDataError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
-    /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
-    /// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
-    /// returns a 400 error.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn reorder_tag_indexing_rules(
-        &self,
-        body: crate::datadogV2::model::TagIndexingRuleOrderRequest,
-    ) -> Result<(), datadog::Error<ReorderTagIndexingRulesError>> {
+/// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
+/// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
+/// returns a 400 error.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn reorder_tag_indexing_rules(&self, body: crate::datadogV2::model::TagIndexingRuleOrderRequest) -> Result<(), datadog::Error<ReorderTagIndexingRulesError>> {
         match self.reorder_tag_indexing_rules_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
-    /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
-    /// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
-    /// returns a 400 error.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn reorder_tag_indexing_rules_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TagIndexingRuleOrderRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderTagIndexingRulesError>> {
+/// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
+/// The UUIDs of all active rules (at most 1,000) must be provided; omitting any active rule UUID
+/// returns a 400 error.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn reorder_tag_indexing_rules_with_http_info(&self, body: crate::datadogV2::model::TagIndexingRuleOrderRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderTagIndexingRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.reorder_tag_indexing_rules";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/order",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4664,23 +4018,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4688,7 +4035,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4698,7 +4048,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4720,7 +4073,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4743,72 +4096,55 @@ impl MetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<ReorderTagIndexingRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ReorderTagIndexingRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// The metrics end-point allows you to post time-series data that can be graphed on Datadog’s dashboards.
-    /// The maximum payload size is 500 kilobytes (512000 bytes). Compressed payloads must have a decompressed size of less than 5 megabytes (5242880 bytes).
-    ///
-    /// If you’re submitting metrics directly to the Datadog API without using DogStatsD, expect:
-    ///
-    /// - 64 bits for the timestamp
-    /// - 64 bits for the value
-    /// - 20 bytes for the metric names
-    /// - 50 bytes for the timeseries
-    /// - The full payload is approximately 100 bytes.
-    ///
-    /// Host name is one of the resources in the Resources field.
-    pub async fn submit_metrics(
-        &self,
-        body: crate::datadogV2::model::MetricPayload,
-        params: SubmitMetricsOptionalParams,
-    ) -> Result<crate::datadogV2::model::IntakePayloadAccepted, datadog::Error<SubmitMetricsError>>
-    {
-        match self.submit_metrics_with_http_info(body, params).await {
+/// The maximum payload size is 500 kilobytes (512000 bytes). Compressed payloads must have a decompressed size of less than 5 megabytes (5242880 bytes).
+///
+/// If you’re submitting metrics directly to the Datadog API without using DogStatsD, expect:
+///
+/// - 64 bits for the timestamp
+/// - 64 bits for the value
+/// - 20 bytes for the metric names
+/// - 50 bytes for the timeseries
+/// - The full payload is approximately 100 bytes.
+///
+/// Host name is one of the resources in the Resources field.
+    pub async fn submit_metrics(&self, body: crate::datadogV2::model::MetricPayload, params: SubmitMetricsOptionalParams) -> Result<crate::datadogV2::model::IntakePayloadAccepted, datadog::Error<SubmitMetricsError>> {
+        match self.submit_metrics_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// The metrics end-point allows you to post time-series data that can be graphed on Datadog’s dashboards.
-    /// The maximum payload size is 500 kilobytes (512000 bytes). Compressed payloads must have a decompressed size of less than 5 megabytes (5242880 bytes).
-    ///
-    /// If you’re submitting metrics directly to the Datadog API without using DogStatsD, expect:
-    ///
-    /// - 64 bits for the timestamp
-    /// - 64 bits for the value
-    /// - 20 bytes for the metric names
-    /// - 50 bytes for the timeseries
-    /// - The full payload is approximately 100 bytes.
-    ///
-    /// Host name is one of the resources in the Resources field.
-    pub async fn submit_metrics_with_http_info(
-        &self,
-        body: crate::datadogV2::model::MetricPayload,
-        params: SubmitMetricsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IntakePayloadAccepted>,
-        datadog::Error<SubmitMetricsError>,
-    > {
+/// The maximum payload size is 500 kilobytes (512000 bytes). Compressed payloads must have a decompressed size of less than 5 megabytes (5242880 bytes).
+///
+/// If you’re submitting metrics directly to the Datadog API without using DogStatsD, expect:
+///
+/// - 64 bits for the timestamp
+/// - 64 bits for the value
+/// - 20 bytes for the metric names
+/// - 50 bytes for the timeseries
+/// - The full payload is approximately 100 bytes.
+///
+/// Host name is one of the resources in the Resources field.
+    pub async fn submit_metrics_with_http_info(&self, body: crate::datadogV2::model::MetricPayload, params: SubmitMetricsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IntakePayloadAccepted>, datadog::Error<SubmitMetricsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.submit_metrics";
 
+        
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
 
@@ -4816,24 +4152,19 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/series",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
         if let Some(ref local) = content_encoding {
-            headers.insert(
-                "Content-Encoding",
-                local
-                    .to_string()
-                    .parse()
-                    .expect("failed to parse Content-Encoding header"),
-            );
+            headers.insert("Content-Encoding", local.to_string().parse().expect("failed to parse Content-Encoding header"));
         }
 
         // build user agent
@@ -4847,16 +4178,13 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4864,7 +4192,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4874,7 +4205,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4896,7 +4230,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4913,84 +4247,62 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IntakePayloadAccepted>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IntakePayloadAccepted>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SubmitMetricsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SubmitMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the definition of an existing derived metric. The `id` in the request body
-    /// must match the `metric_name` path parameter. Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_derived_metric(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::DerivedMetricCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::DerivedMetricResponse,
-        datadog::Error<UpdateDerivedMetricError>,
-    > {
-        match self
-            .update_derived_metric_with_http_info(metric_name, body)
-            .await
-        {
+/// must match the `metric_name` path parameter. Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_derived_metric(&self, metric_name: String, body: crate::datadogV2::model::DerivedMetricCreateRequest) -> Result<crate::datadogV2::model::DerivedMetricResponse, datadog::Error<UpdateDerivedMetricError>> {
+        match self.update_derived_metric_with_http_info(metric_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the definition of an existing derived metric. The `id` in the request body
-    /// must match the `metric_name` path parameter. Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_derived_metric_with_http_info(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::DerivedMetricCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>,
-        datadog::Error<UpdateDerivedMetricError>,
-    > {
+/// must match the `metric_name` path parameter. Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_derived_metric_with_http_info(&self, metric_name: String, body: crate::datadogV2::model::DerivedMetricCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DerivedMetricResponse>, datadog::Error<UpdateDerivedMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_derived_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/derived-metrics/{metric_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5003,23 +4315,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5027,7 +4332,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5037,7 +4345,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5059,7 +4370,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5076,90 +4387,68 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DerivedMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateDerivedMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateDerivedMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the tag configuration of a metric, percentile aggregations of a distribution or native histogram metric,
-    /// or custom aggregations of a count, rate, or gauge metric. By setting `exclude_tags_mode` to true, the behavior changes
-    /// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
-    /// Can only be used with application keys from users with the `Manage Tags for Metrics` permission. This endpoint requires
-    /// a tag configuration to be created first.
-    pub async fn update_tag_configuration(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::MetricTagConfigurationResponse,
-        datadog::Error<UpdateTagConfigurationError>,
-    > {
-        match self
-            .update_tag_configuration_with_http_info(metric_name, body)
-            .await
-        {
+/// or custom aggregations of a count, rate, or gauge metric. By setting `exclude_tags_mode` to true, the behavior changes
+/// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
+/// Can only be used with application keys from users with the `Manage Tags for Metrics` permission. This endpoint requires
+/// a tag configuration to be created first.
+    pub async fn update_tag_configuration(&self, metric_name: String, body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest) -> Result<crate::datadogV2::model::MetricTagConfigurationResponse, datadog::Error<UpdateTagConfigurationError>> {
+        match self.update_tag_configuration_with_http_info(metric_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the tag configuration of a metric, percentile aggregations of a distribution or native histogram metric,
-    /// or custom aggregations of a count, rate, or gauge metric. By setting `exclude_tags_mode` to true, the behavior changes
-    /// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
-    /// Can only be used with application keys from users with the `Manage Tags for Metrics` permission. This endpoint requires
-    /// a tag configuration to be created first.
-    pub async fn update_tag_configuration_with_http_info(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>,
-        datadog::Error<UpdateTagConfigurationError>,
-    > {
+/// or custom aggregations of a count, rate, or gauge metric. By setting `exclude_tags_mode` to true, the behavior changes
+/// from an allow-list to a deny-list, and tags in the defined list will not be queryable.
+/// Can only be used with application keys from users with the `Manage Tags for Metrics` permission. This endpoint requires
+/// a tag configuration to be created first.
+    pub async fn update_tag_configuration_with_http_info(&self, metric_name: String, body: crate::datadogV2::model::MetricTagConfigurationUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::MetricTagConfigurationResponse>, datadog::Error<UpdateTagConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_tag_configuration";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5172,23 +4461,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5196,7 +4478,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5206,7 +4491,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5228,7 +4516,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5245,89 +4533,70 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::MetricTagConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTagConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTagConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update a tag indexing rule. Fields omitted from the request body are left unchanged.
-    /// Setting `rule_order` to a value already used by another rule returns 409; use the
-    /// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
-    /// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
-    /// requests that exceed these limits return a 400 error.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_tag_indexing_rule(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::TagIndexingRuleUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleResponse,
-        datadog::Error<UpdateTagIndexingRuleError>,
-    > {
+/// Setting `rule_order` to a value already used by another rule returns 409; use the
+/// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
+/// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
+/// requests that exceed these limits return a 400 error.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_tag_indexing_rule(&self, id: String, body: crate::datadogV2::model::TagIndexingRuleUpdateRequest) -> Result<crate::datadogV2::model::TagIndexingRuleResponse, datadog::Error<UpdateTagIndexingRuleError>> {
         match self.update_tag_indexing_rule_with_http_info(id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update a tag indexing rule. Fields omitted from the request body are left unchanged.
-    /// Setting `rule_order` to a value already used by another rule returns 409; use the
-    /// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
-    /// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
-    /// requests that exceed these limits return a 400 error.
-    /// Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_tag_indexing_rule_with_http_info(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::TagIndexingRuleUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>,
-        datadog::Error<UpdateTagIndexingRuleError>,
-    > {
+/// Setting `rule_order` to a value already used by another rule returns 409; use the
+/// reorder endpoint for atomic re-sequencing. `name` can be at most 200 characters, and
+/// `metric_name_matches` can contain at most 50 patterns of at most 200 characters each;
+/// requests that exceed these limits return a 400 error.
+/// Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_tag_indexing_rule_with_http_info(&self, id: String, body: crate::datadogV2::model::TagIndexingRuleUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleResponse>, datadog::Error<UpdateTagIndexingRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_tag_indexing_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5340,23 +4609,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5364,7 +4626,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5374,7 +4639,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5396,7 +4664,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5413,69 +4681,42 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTagIndexingRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTagIndexingRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the reason for an explicit tag indexing rule exemption. The exemption's `created_at` and
-    /// `created_by_handle` values remain unchanged. Returns 404 when the metric has no explicit exemption or has
-    /// only a legacy tag configuration. Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_tag_indexing_rule_exemption(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::TagIndexingRuleExemptionUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TagIndexingRuleExemptionResponse,
-        datadog::Error<UpdateTagIndexingRuleExemptionError>,
-    > {
-        match self
-            .update_tag_indexing_rule_exemption_with_http_info(metric_name, body)
-            .await
-        {
+/// `created_by_handle` values remain unchanged. Returns 404 when the metric has no explicit exemption or has
+/// only a legacy tag configuration. Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_tag_indexing_rule_exemption(&self, metric_name: String, body: crate::datadogV2::model::TagIndexingRuleExemptionUpdateRequest) -> Result<crate::datadogV2::model::TagIndexingRuleExemptionResponse, datadog::Error<UpdateTagIndexingRuleExemptionError>> {
+        match self.update_tag_indexing_rule_exemption_with_http_info(metric_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the reason for an explicit tag indexing rule exemption. The exemption's `created_at` and
-    /// `created_by_handle` values remain unchanged. Returns 404 when the metric has no explicit exemption or has
-    /// only a legacy tag configuration. Requires the `Manage Tags for Metrics` permission.
-    pub async fn update_tag_indexing_rule_exemption_with_http_info(
-        &self,
-        metric_name: String,
-        body: crate::datadogV2::model::TagIndexingRuleExemptionUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>,
-        datadog::Error<UpdateTagIndexingRuleExemptionError>,
-    > {
+/// `created_by_handle` values remain unchanged. Returns 404 when the metric has no explicit exemption or has
+/// only a legacy tag configuration. Requires the `Manage Tags for Metrics` permission.
+    pub async fn update_tag_indexing_rule_exemption_with_http_info(&self, metric_name: String, body: crate::datadogV2::model::TagIndexingRuleExemptionUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionResponse>, datadog::Error<UpdateTagIndexingRuleExemptionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_tag_indexing_rule_exemption";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5487,20 +4728,25 @@ impl MetricsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_name = datadog::urlencode(metric_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_name=
+            datadog::urlencode(metric_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5513,23 +4759,16 @@ impl MetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5537,7 +4776,10 @@ impl MetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5547,7 +4789,10 @@ impl MetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5569,7 +4814,7 @@ impl MetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5586,26 +4831,17 @@ impl MetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTagIndexingRuleExemptionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTagIndexingRuleExemptionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A pruned trace resource document.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct PrunedTraceData {
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::PrunedTraceAttributes,
     /// The trace ID as requested: a decimal ID is returned unchanged, and a hexadecimal ID is lowercased and
-    /// left-padded with zeros to 32 characters.
+/// left-padded with zeros to 32 characters.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the pruned trace resource. The value is always `pruned_trace`.
@@ -25,15 +25,11 @@ pub struct PrunedTraceData {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PrunedTraceData {
-    pub fn new(
-        attributes: crate::datadogV2::model::PrunedTraceAttributes,
-        id: String,
-        type_: crate::datadogV2::model::PrunedTraceType,
-    ) -> PrunedTraceData {
+    pub fn new(attributes: crate::datadogV2::model::PrunedTraceAttributes, id: String, type_: crate::datadogV2::model::PrunedTraceType) -> PrunedTraceData {
         PrunedTraceData {
             attributes,
             id,
@@ -42,15 +38,14 @@ impl PrunedTraceData {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for PrunedTraceData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -72,38 +67,33 @@ impl<'de> Deserialize<'de> for PrunedTraceData {
                 let mut attributes: Option<crate::datadogV2::model::PrunedTraceAttributes> = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::PrunedTraceType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::PrunedTraceType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::PrunedTraceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A query for SLO status, error budget, and burn rate metrics.
 #[non_exhaustive]
@@ -39,15 +39,11 @@ pub struct SloQuery {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SloQuery {
-    pub fn new(
-        data_source: crate::datadogV2::model::SloDataSource,
-        measure: crate::datadogV2::model::SlosMeasure,
-        slo_id: String,
-    ) -> SloQuery {
+    pub fn new(data_source: crate::datadogV2::model::SloDataSource, measure: crate::datadogV2::model::SlosMeasure, slo_id: String) -> SloQuery {
         SloQuery {
             additional_query_filters: None,
             cross_org_uuids: None,
@@ -61,40 +57,39 @@ impl SloQuery {
             _unparsed: false,
         }
     }
-
+    
     pub fn additional_query_filters(mut self, value: String) -> Self {
         self.additional_query_filters = Some(value);
         self
     }
-
+    
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
         self
     }
-
+    
     pub fn group_mode(mut self, value: crate::datadogV2::model::SlosGroupMode) -> Self {
         self.group_mode = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn slo_query_type(mut self, value: crate::datadogV2::model::SlosQueryType) -> Self {
         self.slo_query_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SloQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -121,10 +116,7 @@ impl<'de> Deserialize<'de> for SloQuery {
                 let mut name: Option<String> = None;
                 let mut slo_id: Option<String> = None;
                 let mut slo_query_type: Option<crate::datadogV2::model::SlosQueryType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -133,30 +125,25 @@ impl<'de> Deserialize<'de> for SloQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            additional_query_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            additional_query_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cross_org_uuids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cross_org_uuids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cross_org_uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
-                                    crate::datadogV2::model::SloDataSource::UnparsedObject(
-                                        _data_source,
-                                    ) => {
+                                    crate::datadogV2::model::SloDataSource::UnparsedObject(_data_source) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_mode" => {
                             if v.is_null() {
                                 continue;
@@ -164,63 +151,55 @@ impl<'de> Deserialize<'de> for SloQuery {
                             group_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _group_mode) = group_mode {
                                 match _group_mode {
-                                    crate::datadogV2::model::SlosGroupMode::UnparsedObject(
-                                        _group_mode,
-                                    ) => {
+                                    crate::datadogV2::model::SlosGroupMode::UnparsedObject(_group_mode) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "measure" => {
                             measure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _measure) = measure {
                                 match _measure {
-                                    crate::datadogV2::model::SlosMeasure::UnparsedObject(
-                                        _measure,
-                                    ) => {
+                                    crate::datadogV2::model::SlosMeasure::UnparsedObject(_measure) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slo_id" => {
                             slo_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slo_query_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            slo_query_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            slo_query_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _slo_query_type) = slo_query_type {
                                 match _slo_query_type {
-                                    crate::datadogV2::model::SlosQueryType::UnparsedObject(
-                                        _slo_query_type,
-                                    ) => {
+                                    crate::datadogV2::model::SlosQueryType::UnparsedObject(_slo_query_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let measure = measure.ok_or_else(|| M::Error::missing_field("measure"))?;
                 let slo_id = slo_id.ok_or_else(|| M::Error::missing_field("slo_id"))?;
 

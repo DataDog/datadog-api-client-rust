@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an OCI tenancy integration configuration, including authentication details, region settings, and collection options.
 #[non_exhaustive]
@@ -72,7 +72,7 @@ pub struct TenancyConfigDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TenancyConfigDataAttributes {
@@ -101,122 +101,108 @@ impl TenancyConfigDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn account_tags(mut self, value: Vec<String>) -> Self {
         self.account_tags = Some(value);
         self
     }
-
+    
     pub fn billing_plan_id(mut self, value: i32) -> Self {
         self.billing_plan_id = Some(value);
         self
     }
-
+    
     pub fn config_version(mut self, value: i64) -> Self {
         self.config_version = Some(value);
         self
     }
-
+    
     pub fn cost_collection_enabled(mut self, value: bool) -> Self {
         self.cost_collection_enabled = Some(value);
         self
     }
-
+    
     pub fn dd_compartment_id(mut self, value: String) -> Self {
         self.dd_compartment_id = Some(value);
         self
     }
-
+    
     pub fn dd_iac_version(mut self, value: String) -> Self {
         self.dd_iac_version = Some(value);
         self
     }
-
+    
     pub fn dd_stack_id(mut self, value: String) -> Self {
         self.dd_stack_id = Some(value);
         self
     }
-
+    
     pub fn defined_tags(mut self, value: Vec<String>) -> Self {
         self.defined_tags = Some(value);
         self
     }
-
+    
     pub fn events_collection_enabled(mut self, value: bool) -> Self {
         self.events_collection_enabled = Some(value);
         self
     }
-
-    pub fn grace_resource(
-        mut self,
-        value: crate::datadogV2::model::TenancyConfigDataAttributesGraceResource,
-    ) -> Self {
+    
+    pub fn grace_resource(mut self, value: crate::datadogV2::model::TenancyConfigDataAttributesGraceResource) -> Self {
         self.grace_resource = Some(value);
         self
     }
-
+    
     pub fn home_region(mut self, value: String) -> Self {
         self.home_region = Some(value);
         self
     }
-
-    pub fn logs_config(
-        mut self,
-        value: crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig,
-    ) -> Self {
+    
+    pub fn logs_config(mut self, value: crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig) -> Self {
         self.logs_config = Some(value);
         self
     }
-
-    pub fn metrics_config(
-        mut self,
-        value: crate::datadogV2::model::TenancyConfigDataAttributesMetricsConfig,
-    ) -> Self {
+    
+    pub fn metrics_config(mut self, value: crate::datadogV2::model::TenancyConfigDataAttributesMetricsConfig) -> Self {
         self.metrics_config = Some(value);
         self
     }
-
+    
     pub fn parent_tenancy_name(mut self, value: String) -> Self {
         self.parent_tenancy_name = Some(value);
         self
     }
-
-    pub fn regions_config(
-        mut self,
-        value: crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig,
-    ) -> Self {
+    
+    pub fn regions_config(mut self, value: crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig) -> Self {
         self.regions_config = Some(value);
         self
     }
-
+    
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
-
+    
     pub fn service_quota_collection_enabled(mut self, value: bool) -> Self {
         self.service_quota_collection_enabled = Some(value);
         self
     }
-
+    
     pub fn tenancy_name(mut self, value: String) -> Self {
         self.tenancy_name = Some(value);
         self
     }
-
+    
     pub fn user_ocid(mut self, value: String) -> Self {
         self.user_ocid = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TenancyConfigDataAttributes {
     fn default() -> Self {
@@ -250,28 +236,17 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                 let mut dd_stack_id: Option<String> = None;
                 let mut defined_tags: Option<Vec<String>> = None;
                 let mut events_collection_enabled: Option<bool> = None;
-                let mut grace_resource: Option<
-                    crate::datadogV2::model::TenancyConfigDataAttributesGraceResource,
-                > = None;
+                let mut grace_resource: Option<crate::datadogV2::model::TenancyConfigDataAttributesGraceResource> = None;
                 let mut home_region: Option<String> = None;
-                let mut logs_config: Option<
-                    crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig,
-                > = None;
-                let mut metrics_config: Option<
-                    crate::datadogV2::model::TenancyConfigDataAttributesMetricsConfig,
-                > = None;
+                let mut logs_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig> = None;
+                let mut metrics_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesMetricsConfig> = None;
                 let mut parent_tenancy_name: Option<String> = None;
-                let mut regions_config: Option<
-                    crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig,
-                > = None;
+                let mut regions_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut service_quota_collection_enabled: Option<bool> = None;
                 let mut tenancy_name: Option<String> = None;
                 let mut user_ocid: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -280,139 +255,121 @@ impl<'de> Deserialize<'de> for TenancyConfigDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            account_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "billing_plan_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            billing_plan_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            billing_plan_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "config_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            config_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cost_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cost_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cost_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dd_compartment_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dd_compartment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dd_compartment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dd_iac_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dd_iac_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dd_iac_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dd_stack_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dd_stack_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dd_stack_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "defined_tags" => {
                             if v.is_null() {
                                 continue;
                             }
-                            defined_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            defined_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "events_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            events_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            events_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "grace_resource" => {
                             if v.is_null() {
                                 continue;
                             }
-                            grace_resource =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            grace_resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "home_region" => {
                             if v.is_null() {
                                 continue;
                             }
-                            home_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            home_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metrics_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metrics_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "parent_tenancy_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            parent_tenancy_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            parent_tenancy_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "regions_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            regions_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            regions_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service_quota_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            service_quota_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            service_quota_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tenancy_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tenancy_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tenancy_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user_ocid" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_ocid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

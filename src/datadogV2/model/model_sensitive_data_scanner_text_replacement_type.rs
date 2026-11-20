@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerTextReplacementType {
-    NONE,
-    HASH,
-    REPLACEMENT_STRING,
-    PARTIAL_REPLACEMENT_FROM_BEGINNING,
-    PARTIAL_REPLACEMENT_FROM_END,
+	NONE,
+	HASH,
+	REPLACEMENT_STRING,
+	PARTIAL_REPLACEMENT_FROM_BEGINNING,
+	PARTIAL_REPLACEMENT_FROM_END,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,9 +22,7 @@ impl ToString for SensitiveDataScannerTextReplacementType {
             Self::NONE => String::from("none"),
             Self::HASH => String::from("hash"),
             Self::REPLACEMENT_STRING => String::from("replacement_string"),
-            Self::PARTIAL_REPLACEMENT_FROM_BEGINNING => {
-                String::from("partial_replacement_from_beginning")
-            }
+            Self::PARTIAL_REPLACEMENT_FROM_BEGINNING => String::from("partial_replacement_from_beginning"),
             Self::PARTIAL_REPLACEMENT_FROM_END => String::from("partial_replacement_from_end"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -48,15 +47,8 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerTextReplacementType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "none" => Self::NONE,
-            "hash" => Self::HASH,
-            "replacement_string" => Self::REPLACEMENT_STRING,
-            "partial_replacement_from_beginning" => Self::PARTIAL_REPLACEMENT_FROM_BEGINNING,
-            "partial_replacement_from_end" => Self::PARTIAL_REPLACEMENT_FROM_END,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"none" => Self::NONE,"hash" => Self::HASH,"replacement_string" => Self::REPLACEMENT_STRING,"partial_replacement_from_beginning" => Self::PARTIAL_REPLACEMENT_FROM_BEGINNING,"partial_replacement_from_end" => Self::PARTIAL_REPLACEMENT_FROM_END,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

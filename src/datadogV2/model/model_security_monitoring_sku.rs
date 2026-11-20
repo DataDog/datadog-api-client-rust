@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringSKU {
-    PER_GB_ANALYZED,
-    PER_EVENT_IN_SIEM_INDEX_2023,
-    ADD_ON_2024,
-    STANDALONE_INDEXED,
-    UNKNOWN,
+	PER_GB_ANALYZED,
+	PER_EVENT_IN_SIEM_INDEX_2023,
+	ADD_ON_2024,
+	STANDALONE_INDEXED,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSKU {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "per_gb_analyzed" => Self::PER_GB_ANALYZED,
-            "per_event_in_siem_index_2023" => Self::PER_EVENT_IN_SIEM_INDEX_2023,
-            "add_on_2024" => Self::ADD_ON_2024,
-            "standalone_indexed" => Self::STANDALONE_INDEXED,
-            "unknown" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"per_gb_analyzed" => Self::PER_GB_ANALYZED,"per_event_in_siem_index_2023" => Self::PER_EVENT_IN_SIEM_INDEX_2023,"add_on_2024" => Self::ADD_ON_2024,"standalone_indexed" => Self::STANDALONE_INDEXED,"unknown" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

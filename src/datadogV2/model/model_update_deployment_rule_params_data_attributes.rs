@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Parameters for updating a deployment rule.
 #[non_exhaustive]
@@ -24,15 +24,11 @@ pub struct UpdateDeploymentRuleParamsDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UpdateDeploymentRuleParamsDataAttributes {
-    pub fn new(
-        dry_run: bool,
-        name: String,
-        options: crate::datadogV2::model::DeploymentRulesOptions,
-    ) -> UpdateDeploymentRuleParamsDataAttributes {
+    pub fn new(dry_run: bool, name: String, options: crate::datadogV2::model::DeploymentRulesOptions) -> UpdateDeploymentRuleParamsDataAttributes {
         UpdateDeploymentRuleParamsDataAttributes {
             dry_run,
             name,
@@ -41,15 +37,14 @@ impl UpdateDeploymentRuleParamsDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for UpdateDeploymentRuleParamsDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -71,20 +66,17 @@ impl<'de> Deserialize<'de> for UpdateDeploymentRuleParamsDataAttributes {
                 let mut dry_run: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::DeploymentRulesOptions> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "dry_run" => {
                             dry_run = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _options) = options {
@@ -95,12 +87,12 @@ impl<'de> Deserialize<'de> for UpdateDeploymentRuleParamsDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let dry_run = dry_run.ok_or_else(|| M::Error::missing_field("dry_run"))?;

@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayModelMetadataSourceMatchedBy {
-    OVERRIDE,
-    WIRE_ID,
-    CANONICAL_ID,
-    WIRE_ID_DATE_SUFFIX,
-    CANONICAL_MODEL,
+	OVERRIDE,
+	WIRE_ID,
+	CANONICAL_ID,
+	WIRE_ID_DATE_SUFFIX,
+	CANONICAL_MODEL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for AiGatewayModelMetadataSourceMatchedBy {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "override" => Self::OVERRIDE,
-            "wire_id" => Self::WIRE_ID,
-            "canonical_id" => Self::CANONICAL_ID,
-            "wire_id_date_suffix" => Self::WIRE_ID_DATE_SUFFIX,
-            "canonical_model" => Self::CANONICAL_MODEL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"override" => Self::OVERRIDE,"wire_id" => Self::WIRE_ID,"canonical_id" => Self::CANONICAL_ID,"wire_id_date_suffix" => Self::WIRE_ID_DATE_SUFFIX,"canonical_model" => Self::CANONICAL_MODEL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

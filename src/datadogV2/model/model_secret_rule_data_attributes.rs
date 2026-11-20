@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a secret detection rule, including its pattern, priority, and validation configuration.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct SecretRuleDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecretRuleDataAttributes {
@@ -61,63 +61,58 @@ impl SecretRuleDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn default_included_keywords(mut self, value: Vec<String>) -> Self {
         self.default_included_keywords = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn license(mut self, value: String) -> Self {
         self.license = Some(value);
         self
     }
-
-    pub fn match_validation(
-        mut self,
-        value: crate::datadogV2::model::SecretRuleDataAttributesMatchValidation,
-    ) -> Self {
+    
+    pub fn match_validation(mut self, value: crate::datadogV2::model::SecretRuleDataAttributesMatchValidation) -> Self {
         self.match_validation = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
-
+    
     pub fn priority(mut self, value: String) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     pub fn sds_id(mut self, value: String) -> Self {
         self.sds_id = Some(value);
         self
     }
-
+    
     pub fn validators(mut self, value: Vec<String>) -> Self {
         self.validators = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecretRuleDataAttributes {
     fn default() -> Self {
@@ -145,18 +140,13 @@ impl<'de> Deserialize<'de> for SecretRuleDataAttributes {
                 let mut default_included_keywords: Option<Vec<String>> = None;
                 let mut description: Option<String> = None;
                 let mut license: Option<String> = None;
-                let mut match_validation: Option<
-                    crate::datadogV2::model::SecretRuleDataAttributesMatchValidation,
-                > = None;
+                let mut match_validation: Option<crate::datadogV2::model::SecretRuleDataAttributesMatchValidation> = None;
                 let mut name: Option<String> = None;
                 let mut pattern: Option<String> = None;
                 let mut priority: Option<String> = None;
                 let mut sds_id: Option<String> = None;
                 let mut validators: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -165,64 +155,61 @@ impl<'de> Deserialize<'de> for SecretRuleDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            default_included_keywords =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_included_keywords = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "license" => {
                             if v.is_null() {
                                 continue;
                             }
                             license = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "match_validation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            match_validation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            match_validation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pattern" => {
                             if v.is_null() {
                                 continue;
                             }
                             pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sds_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             sds_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "validators" => {
                             if v.is_null() {
                                 continue;
                             }
                             validators = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

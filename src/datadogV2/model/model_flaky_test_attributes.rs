@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a flaky test.
 #[non_exhaustive]
@@ -12,9 +12,9 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FlakyTestAttributes {
     /// Unique identifier for the attempt to fix this flaky test. Use this ID in the Git commit message in order to trigger the attempt to fix workflow.
-    ///
-    /// When the workflow is triggered the test is automatically retried by the tracer a certain number of configurable times. When all retries pass, the test is automatically marked as fixed in Flaky Test Management.
-    /// Test runs are tagged with @test.test_management.attempt_to_fix_passed and @test.test_management.is_attempt_to_fix when the attempt to fix workflow is triggered.
+///
+/// When the workflow is triggered the test is automatically retried by the tracer a certain number of configurable times. When all retries pass, the test is automatically marked as fixed in Flaky Test Management.
+/// Test runs are tagged with @test.test_management.attempt_to_fix_passed and @test.test_management.is_attempt_to_fix when the attempt to fix workflow is triggered.
     #[serde(rename = "attempt_to_fix_id")]
     pub attempt_to_fix_id: Option<String>,
     /// The name of the test's code owners as inferred from the repository configuration.
@@ -33,28 +33,20 @@ pub struct FlakyTestAttributes {
     #[serde(rename = "first_flaked_ts")]
     pub first_flaked_ts: Option<i64>,
     /// The category of a flaky test.
-    #[serde(
-        rename = "flaky_category",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "flaky_category", default, with = "::serde_with::rust::double_option")]
     pub flaky_category: Option<Option<String>>,
     /// The current state of the flaky test.
     #[serde(rename = "flaky_state")]
     pub flaky_state: Option<crate::datadogV2::model::FlakyTestAttributesFlakyState>,
     /// Chronological history of status changes for this flaky test, ordered from most recent to oldest.
-    /// Includes state transitions like new -> quarantined -> fixed, along with the associated commit SHA when available.
+/// Includes state transitions like new -> quarantined -> fixed, along with the associated commit SHA when available.
     #[serde(rename = "history")]
     pub history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>>,
     /// The impact level of the flaky test, derived from its impact score.
     #[serde(rename = "impact_level")]
     pub impact_level: Option<crate::datadogV2::model::FlakyTestImpactLevel>,
     /// A score from 0 to 1 indicating the impact of this flaky test, based on factors such as how often it fails and how many pipelines it affects.
-    #[serde(
-        rename = "impact_score",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "impact_score", default, with = "::serde_with::rust::double_option")]
     pub impact_score: Option<Option<f64>>,
     /// The branch name where the test exhibited flakiness for the last time.
     #[serde(rename = "last_flaked_branch")]
@@ -66,12 +58,12 @@ pub struct FlakyTestAttributes {
     #[serde(rename = "last_flaked_ts")]
     pub last_flaked_ts: Option<i64>,
     /// The name of the test module. The definition of module changes slightly per language:
-    /// - In .NET, a test module groups every test that is run under the same unit test project.
-    /// - In Swift, a test module groups every test that is run for a given bundle.
-    /// - In JavaScript, the test modules map one-to-one to test sessions.
-    /// - In Java, a test module groups every test that is run by the same Maven Surefire/Failsafe or Gradle Test task execution.
-    /// - In Python, a test module groups every test that is run under the same `.py` file as part of a test suite, which is typically managed by a framework like `unittest` or `pytest`.
-    /// - In Ruby, a test module groups every test that is run within the same test file, which is typically managed by a framework like `RSpec` or `Minitest`.
+/// - In .NET, a test module groups every test that is run under the same unit test project.
+/// - In Swift, a test module groups every test that is run for a given bundle.
+/// - In JavaScript, the test modules map one-to-one to test sessions.
+/// - In Java, a test module groups every test that is run by the same Maven Surefire/Failsafe or Gradle Test task execution.
+/// - In Python, a test module groups every test that is run under the same `.py` file as part of a test suite, which is typically managed by a framework like `unittest` or `pytest`.
+/// - In Ruby, a test module groups every test that is run within the same test file, which is typically managed by a framework like `RSpec` or `Minitest`.
     #[serde(rename = "module", default, with = "::serde_with::rust::double_option")]
     pub module: Option<Option<String>>,
     /// The test name. A concise name for a test case. Defined in the test itself.
@@ -81,8 +73,8 @@ pub struct FlakyTestAttributes {
     #[serde(rename = "pipeline_stats")]
     pub pipeline_stats: Option<crate::datadogV2::model::FlakyTestPipelineStats>,
     /// List of test service names where this test has been flaky.
-    ///
-    /// A test service is a group of tests associated with a project or repository. It contains all the individual tests for your code, optionally organized into test suites, which are like folders for your tests.
+///
+/// A test service is a group of tests associated with a project or repository. It contains all the individual tests for your code, optionally organized into test suites, which are like folders for your tests.
     #[serde(rename = "services")]
     pub services: Option<Vec<String>>,
     /// The name of the test suite. A group of tests exercising the same unit of code depending on your language and testing framework.
@@ -98,7 +90,7 @@ pub struct FlakyTestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FlakyTestAttributes {
@@ -129,129 +121,118 @@ impl FlakyTestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn attempt_to_fix_id(mut self, value: String) -> Self {
         self.attempt_to_fix_id = Some(value);
         self
     }
-
+    
     pub fn codeowners(mut self, value: Vec<String>) -> Self {
         self.codeowners = Some(value);
         self
     }
-
+    
     pub fn envs(mut self, value: Vec<String>) -> Self {
         self.envs = Some(value);
         self
     }
-
+    
     pub fn first_flaked_branch(mut self, value: String) -> Self {
         self.first_flaked_branch = Some(value);
         self
     }
-
+    
     pub fn first_flaked_sha(mut self, value: String) -> Self {
         self.first_flaked_sha = Some(value);
         self
     }
-
+    
     pub fn first_flaked_ts(mut self, value: i64) -> Self {
         self.first_flaked_ts = Some(value);
         self
     }
-
+    
     pub fn flaky_category(mut self, value: Option<String>) -> Self {
         self.flaky_category = Some(value);
         self
     }
-
-    pub fn flaky_state(
-        mut self,
-        value: crate::datadogV2::model::FlakyTestAttributesFlakyState,
-    ) -> Self {
+    
+    pub fn flaky_state(mut self, value: crate::datadogV2::model::FlakyTestAttributesFlakyState) -> Self {
         self.flaky_state = Some(value);
         self
     }
-
+    
     pub fn history(mut self, value: Vec<crate::datadogV2::model::FlakyTestHistory>) -> Self {
         self.history = Some(value);
         self
     }
-
+    
     pub fn impact_level(mut self, value: crate::datadogV2::model::FlakyTestImpactLevel) -> Self {
         self.impact_level = Some(value);
         self
     }
-
+    
     pub fn impact_score(mut self, value: Option<f64>) -> Self {
         self.impact_score = Some(value);
         self
     }
-
+    
     pub fn last_flaked_branch(mut self, value: String) -> Self {
         self.last_flaked_branch = Some(value);
         self
     }
-
+    
     pub fn last_flaked_sha(mut self, value: String) -> Self {
         self.last_flaked_sha = Some(value);
         self
     }
-
+    
     pub fn last_flaked_ts(mut self, value: i64) -> Self {
         self.last_flaked_ts = Some(value);
         self
     }
-
+    
     pub fn module(mut self, value: Option<String>) -> Self {
         self.module = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn pipeline_stats(
-        mut self,
-        value: crate::datadogV2::model::FlakyTestPipelineStats,
-    ) -> Self {
+    
+    pub fn pipeline_stats(mut self, value: crate::datadogV2::model::FlakyTestPipelineStats) -> Self {
         self.pipeline_stats = Some(value);
         self
     }
-
+    
     pub fn services(mut self, value: Vec<String>) -> Self {
         self.services = Some(value);
         self
     }
-
+    
     pub fn suite(mut self, value: String) -> Self {
         self.suite = Some(value);
         self
     }
-
-    pub fn test_run_metadata(
-        mut self,
-        value: crate::datadogV2::model::FlakyTestRunMetadata,
-    ) -> Self {
+    
+    pub fn test_run_metadata(mut self, value: crate::datadogV2::model::FlakyTestRunMetadata) -> Self {
         self.test_run_metadata = Some(value);
         self
     }
-
+    
     pub fn test_stats(mut self, value: crate::datadogV2::model::FlakyTestStats) -> Self {
         self.test_stats = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FlakyTestAttributes {
     fn default() -> Self {
@@ -283,9 +264,7 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                 let mut first_flaked_sha: Option<String> = None;
                 let mut first_flaked_ts: Option<i64> = None;
                 let mut flaky_category: Option<Option<String>> = None;
-                let mut flaky_state: Option<
-                    crate::datadogV2::model::FlakyTestAttributesFlakyState,
-                > = None;
+                let mut flaky_state: Option<crate::datadogV2::model::FlakyTestAttributesFlakyState> = None;
                 let mut history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>> = None;
                 let mut impact_level: Option<crate::datadogV2::model::FlakyTestImpactLevel> = None;
                 let mut impact_score: Option<Option<f64>> = None;
@@ -294,17 +273,12 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                 let mut last_flaked_ts: Option<i64> = None;
                 let mut module: Option<Option<String>> = None;
                 let mut name: Option<String> = None;
-                let mut pipeline_stats: Option<crate::datadogV2::model::FlakyTestPipelineStats> =
-                    None;
+                let mut pipeline_stats: Option<crate::datadogV2::model::FlakyTestPipelineStats> = None;
                 let mut services: Option<Vec<String>> = None;
                 let mut suite: Option<String> = None;
-                let mut test_run_metadata: Option<crate::datadogV2::model::FlakyTestRunMetadata> =
-                    None;
+                let mut test_run_metadata: Option<crate::datadogV2::model::FlakyTestRunMetadata> = None;
                 let mut test_stats: Option<crate::datadogV2::model::FlakyTestStats> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -313,52 +287,46 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            attempt_to_fix_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            attempt_to_fix_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "codeowners" => {
                             if v.is_null() {
                                 continue;
                             }
                             codeowners = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "envs" => {
                             if v.is_null() {
                                 continue;
                             }
                             envs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "first_flaked_branch" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_flaked_branch =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_flaked_branch = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "first_flaked_sha" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_flaked_sha =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_flaked_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "first_flaked_ts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_flaked_ts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_flaked_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flaky_category" => {
-                            flaky_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flaky_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flaky_state" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flaky_state =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            flaky_state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _flaky_state) = flaky_state {
                                 match _flaky_state {
                                     crate::datadogV2::model::FlakyTestAttributesFlakyState::UnparsedObject(_flaky_state) => {
@@ -367,19 +335,18 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "history" => {
                             if v.is_null() {
                                 continue;
                             }
                             history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "impact_level" => {
                             if v.is_null() {
                                 continue;
                             }
-                            impact_level =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            impact_level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _impact_level) = impact_level {
                                 match _impact_level {
                                     crate::datadogV2::model::FlakyTestImpactLevel::UnparsedObject(_impact_level) => {
@@ -388,81 +355,75 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "impact_score" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            impact_score =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            impact_score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_flaked_branch" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_flaked_branch =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_flaked_branch = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_flaked_sha" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_flaked_sha =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_flaked_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_flaked_ts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_flaked_ts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_flaked_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "module" => {
                             module = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pipeline_stats" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pipeline_stats =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pipeline_stats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "services" => {
                             if v.is_null() {
                                 continue;
                             }
                             services = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "suite" => {
                             if v.is_null() {
                                 continue;
                             }
                             suite = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "test_run_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            test_run_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            test_run_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "test_stats" => {
                             if v.is_null() {
                                 continue;
                             }
                             test_stats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Guardrail metric details.
 #[non_exhaustive]
@@ -18,24 +18,17 @@ pub struct GuardrailMetric {
     #[serde(rename = "trigger_action")]
     pub trigger_action: crate::datadogV2::model::GuardrailTriggerAction,
     /// The signal or system that triggered the action.
-    #[serde(
-        rename = "triggered_by",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "triggered_by", default, with = "::serde_with::rust::double_option")]
     pub triggered_by: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GuardrailMetric {
-    pub fn new(
-        metric_id: String,
-        trigger_action: crate::datadogV2::model::GuardrailTriggerAction,
-    ) -> GuardrailMetric {
+    pub fn new(metric_id: String, trigger_action: crate::datadogV2::model::GuardrailTriggerAction) -> GuardrailMetric {
         GuardrailMetric {
             metric_id,
             trigger_action,
@@ -44,20 +37,19 @@ impl GuardrailMetric {
             _unparsed: false,
         }
     }
-
+    
     pub fn triggered_by(mut self, value: Option<String>) -> Self {
         self.triggered_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GuardrailMetric {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,23 +69,18 @@ impl<'de> Deserialize<'de> for GuardrailMetric {
                 M: MapAccess<'a>,
             {
                 let mut metric_id: Option<String> = None;
-                let mut trigger_action: Option<crate::datadogV2::model::GuardrailTriggerAction> =
-                    None;
+                let mut trigger_action: Option<crate::datadogV2::model::GuardrailTriggerAction> = None;
                 let mut triggered_by: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "metric_id" => {
                             metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "trigger_action" => {
-                            trigger_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            trigger_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _trigger_action) = trigger_action {
                                 match _trigger_action {
                                     crate::datadogV2::model::GuardrailTriggerAction::UnparsedObject(_trigger_action) => {
@@ -102,21 +89,19 @@ impl<'de> Deserialize<'de> for GuardrailMetric {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "triggered_by" => {
-                            triggered_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            triggered_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let metric_id = metric_id.ok_or_else(|| M::Error::missing_field("metric_id"))?;
-                let trigger_action =
-                    trigger_action.ok_or_else(|| M::Error::missing_field("trigger_action"))?;
+                let trigger_action = trigger_action.ok_or_else(|| M::Error::missing_field("trigger_action"))?;
 
                 let content = GuardrailMetric {
                     metric_id,

@@ -2,27 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SavedFilterConditionOperator {
-    LT,
-    LTE,
-    GT,
-    GTE,
-    MATCHES,
-    NOT_MATCHES,
-    ONE_OF,
-    NOT_ONE_OF,
-    IS_NULL,
-    EQUALS,
-    SEMVER_EQ,
-    SEMVER_NEQ,
-    SEMVER_LT,
-    SEMVER_LTE,
-    SEMVER_GT,
-    SEMVER_GTE,
+	LT,
+	LTE,
+	GT,
+	GTE,
+	MATCHES,
+	NOT_MATCHES,
+	ONE_OF,
+	NOT_ONE_OF,
+	IS_NULL,
+	EQUALS,
+	SEMVER_EQ,
+	SEMVER_NEQ,
+	SEMVER_LT,
+	SEMVER_LTE,
+	SEMVER_GT,
+	SEMVER_GTE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -68,26 +69,8 @@ impl<'de> Deserialize<'de> for SavedFilterConditionOperator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "LT" => Self::LT,
-            "LTE" => Self::LTE,
-            "GT" => Self::GT,
-            "GTE" => Self::GTE,
-            "MATCHES" => Self::MATCHES,
-            "NOT_MATCHES" => Self::NOT_MATCHES,
-            "ONE_OF" => Self::ONE_OF,
-            "NOT_ONE_OF" => Self::NOT_ONE_OF,
-            "IS_NULL" => Self::IS_NULL,
-            "EQUALS" => Self::EQUALS,
-            "SEMVER_EQ" => Self::SEMVER_EQ,
-            "SEMVER_NEQ" => Self::SEMVER_NEQ,
-            "SEMVER_LT" => Self::SEMVER_LT,
-            "SEMVER_LTE" => Self::SEMVER_LTE,
-            "SEMVER_GT" => Self::SEMVER_GT,
-            "SEMVER_GTE" => Self::SEMVER_GTE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"LT" => Self::LT,"LTE" => Self::LTE,"GT" => Self::GT,"GTE" => Self::GTE,"MATCHES" => Self::MATCHES,"NOT_MATCHES" => Self::NOT_MATCHES,"ONE_OF" => Self::ONE_OF,"NOT_ONE_OF" => Self::NOT_ONE_OF,"IS_NULL" => Self::IS_NULL,"EQUALS" => Self::EQUALS,"SEMVER_EQ" => Self::SEMVER_EQ,"SEMVER_NEQ" => Self::SEMVER_NEQ,"SEMVER_LT" => Self::SEMVER_LT,"SEMVER_LTE" => Self::SEMVER_LTE,"SEMVER_GT" => Self::SEMVER_GT,"SEMVER_GTE" => Self::SEMVER_GTE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

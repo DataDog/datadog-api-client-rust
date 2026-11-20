@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Model features reported by the enrichment source. Omitted properties are unknown.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct AiGatewayModelCapabilities {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayModelCapabilities {
@@ -49,45 +49,43 @@ impl AiGatewayModelCapabilities {
             _unparsed: false,
         }
     }
-
+    
     pub fn attachment(mut self, value: bool) -> Self {
         self.attachment = Some(value);
         self
     }
-
+    
     pub fn interleaved_reasoning(mut self, value: bool) -> Self {
         self.interleaved_reasoning = Some(value);
         self
     }
-
+    
     pub fn reasoning(mut self, value: bool) -> Self {
         self.reasoning = Some(value);
         self
     }
-
+    
     pub fn structured_output(mut self, value: bool) -> Self {
         self.structured_output = Some(value);
         self
     }
-
+    
     pub fn temperature(mut self, value: bool) -> Self {
         self.temperature = Some(value);
         self
     }
-
+    
     pub fn tool_call(mut self, value: bool) -> Self {
         self.tool_call = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AiGatewayModelCapabilities {
     fn default() -> Self {
@@ -118,10 +116,7 @@ impl<'de> Deserialize<'de> for AiGatewayModelCapabilities {
                 let mut structured_output: Option<bool> = None;
                 let mut temperature: Option<bool> = None;
                 let mut tool_call: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -131,45 +126,42 @@ impl<'de> Deserialize<'de> for AiGatewayModelCapabilities {
                                 continue;
                             }
                             attachment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "interleaved_reasoning" => {
                             if v.is_null() {
                                 continue;
                             }
-                            interleaved_reasoning =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            interleaved_reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reasoning" => {
                             if v.is_null() {
                                 continue;
                             }
                             reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "structured_output" => {
                             if v.is_null() {
                                 continue;
                             }
-                            structured_output =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            structured_output = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "temperature" => {
                             if v.is_null() {
                                 continue;
                             }
-                            temperature =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            temperature = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tool_call" => {
                             if v.is_null() {
                                 continue;
                             }
                             tool_call = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

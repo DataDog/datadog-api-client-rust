@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The Change graph shows you the change in a value over the time period chosen.
 #[non_exhaustive]
@@ -18,9 +18,9 @@ pub struct ChangeWidgetDefinition {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Array of one request object to display in the widget.
-    ///
-    /// See the dedicated [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
-    ///  to learn how to build the `REQUEST_SCHEMA`.
+///
+/// See the dedicated [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
+///  to learn how to build the `REQUEST_SCHEMA`.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::ChangeWidgetRequest>,
     /// Time setting for the widget.
@@ -42,14 +42,11 @@ pub struct ChangeWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChangeWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::ChangeWidgetRequest>,
-        type_: crate::datadogV1::model::ChangeWidgetDefinitionType,
-    ) -> ChangeWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::ChangeWidgetRequest>, type_: crate::datadogV1::model::ChangeWidgetDefinitionType) -> ChangeWidgetDefinition {
         ChangeWidgetDefinition {
             custom_links: None,
             description: None,
@@ -63,45 +60,44 @@ impl ChangeWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -128,10 +124,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::ChangeWidgetDefinitionType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,19 +133,17 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -162,40 +153,37 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -206,12 +194,12 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

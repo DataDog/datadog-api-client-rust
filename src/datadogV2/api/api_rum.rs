@@ -1,41 +1,38 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// DeleteSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::delete_sourcemaps`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct DeleteSourcemapsOptionalParams {
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`.
+/// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
-    /// `wasm` with `symbol_type=sourcemap`.
+/// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+/// `wasm` with `symbol_type=sourcemap`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -46,7 +43,7 @@ pub struct DeleteSourcemapsOptionalParams {
     /// Filter by bundle name values (multiple values allowed). Supported for `react`.
     pub filter_bundle_name: Option<Vec<String>>,
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub filter_arch: Option<Vec<String>>,
     /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
     pub filter_symbol_source: Option<Vec<String>>,
@@ -68,22 +65,22 @@ pub struct DeleteSourcemapsOptionalParams {
 
 impl DeleteSourcemapsOptionalParams {
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
         self.symbol_type = Some(value);
         self
     }
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`.
+/// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
-    /// `wasm` with `symbol_type=sourcemap`.
+/// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+/// `wasm` with `symbol_type=sourcemap`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
         self
@@ -99,8 +96,8 @@ impl DeleteSourcemapsOptionalParams {
         self
     }
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -126,7 +123,7 @@ impl DeleteSourcemapsOptionalParams {
         self
     }
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub fn filter_arch(mut self, value: Vec<String>) -> Self {
         self.filter_arch = Some(value);
         self
@@ -188,8 +185,7 @@ pub struct GetRUMApplicationsOptionalParams {
     /// Only return applications with this RUM event processing state.
     pub filter_rum_event_processing_state: Option<crate::datadogV2::model::RUMEventProcessingState>,
     /// Only return applications with this Product Analytics retention state.
-    pub filter_product_analytics_retention_state:
-        Option<crate::datadogV2::model::RUMProductAnalyticsRetentionState>,
+    pub filter_product_analytics_retention_state: Option<crate::datadogV2::model::RUMProductAnalyticsRetentionState>,
 }
 
 impl GetRUMApplicationsOptionalParams {
@@ -214,18 +210,12 @@ impl GetRUMApplicationsOptionalParams {
         self
     }
     /// Only return applications with this RUM event processing state.
-    pub fn filter_rum_event_processing_state(
-        mut self,
-        value: crate::datadogV2::model::RUMEventProcessingState,
-    ) -> Self {
+    pub fn filter_rum_event_processing_state(mut self, value: crate::datadogV2::model::RUMEventProcessingState) -> Self {
         self.filter_rum_event_processing_state = Some(value);
         self
     }
     /// Only return applications with this Product Analytics retention state.
-    pub fn filter_product_analytics_retention_state(
-        mut self,
-        value: crate::datadogV2::model::RUMProductAnalyticsRetentionState,
-    ) -> Self {
+    pub fn filter_product_analytics_retention_state(mut self, value: crate::datadogV2::model::RUMProductAnalyticsRetentionState) -> Self {
         self.filter_product_analytics_retention_state = Some(value);
         self
     }
@@ -236,7 +226,7 @@ impl GetRUMApplicationsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetSourcemapsOptionalParams {
     /// The debug ID of the JavaScript source map, in UUID format. When provided,
-    /// filename, service, and version are not required and are ignored.
+/// filename, service, and version are not required and are ignored.
     pub debug_id: Option<uuid::Uuid>,
     /// The path to the source map file. Required when `debug_id` is omitted.
     pub filename: Option<String>,
@@ -248,7 +238,7 @@ pub struct GetSourcemapsOptionalParams {
 
 impl GetSourcemapsOptionalParams {
     /// The debug ID of the JavaScript source map, in UUID format. When provided,
-    /// filename, service, and version are not required and are ignored.
+/// filename, service, and version are not required and are ignored.
     pub fn debug_id(mut self, value: uuid::Uuid) -> Self {
         self.debug_id = Some(value);
         self
@@ -326,44 +316,44 @@ impl ListRUMEventsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListSourcemapsOptionalParams {
     /// Set to `debug_id` to browse JavaScript source maps indexed by debug ID.
-    /// Only supported for `mapkind=js`. Omit for service/version searches or a
-    /// specific `filter[debug_id]` lookup. In debug-ID browse mode, service,
-    /// version, and filename filters are not supported.
+/// Only supported for `mapkind=js`. Omit for service/version searches or a
+/// specific `filter[debug_id]` lookup. In debug-ID browse mode, service,
+/// version, and filename filters are not supported.
     pub search_by: Option<crate::datadogV2::model::SourcemapSearchBy>,
     /// The type of source map. Defaults to `js`.
     pub mapkind: Option<crate::datadogV2::model::SourcemapMapKind>,
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Cursor for the next page of a JavaScript listing. Use the value from
-    /// `meta.page.next_cursor` and keep the same search mode and filters.
-    /// Omit on the first request. Not supported for other map kinds or for
-    /// a specific `filter[debug_id]` lookup without `search_by=debug_id`.
+/// `meta.page.next_cursor` and keep the same search mode and filters.
+/// Omit on the first request. Not supported for other map kinds or for
+/// a specific `filter[debug_id]` lookup without `search_by=debug_id`.
     pub page_after: Option<String>,
     /// The number of results per page. Defaults to 100. Must be at least 1; values above 1000 are capped at 1000.
     pub page_size: Option<i64>,
     /// Legacy page number, starting from 1. Prefer `page[after]` for JavaScript
-    /// listings. Not supported with `search_by=debug_id`. Other map kinds
-    /// default to page 1 when pagination parameters are omitted.
+/// listings. Not supported with `search_by=debug_id`. Other map kinds
+/// default to page 1 when pagination parameters are omitted.
     pub page_number: Option<i64>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`. Also required for `js` unless
-    /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
+/// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`. Also required for `js` unless
+/// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`. Also required for `js` unless
-    /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
+/// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`. Also required for `js` unless
+/// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -374,7 +364,7 @@ pub struct ListSourcemapsOptionalParams {
     /// Filter by bundle name values (multiple values allowed). Supported for `react`.
     pub filter_bundle_name: Option<Vec<String>>,
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub filter_arch: Option<Vec<String>>,
     /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
     pub filter_symbol_source: Option<Vec<String>>,
@@ -385,8 +375,8 @@ pub struct ListSourcemapsOptionalParams {
     /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub filter_filename: Option<String>,
     /// Filter by a single debug ID in UUID format. Supported for `js` and `react`.
-    /// For `js`, the lookup returns at most one result and does not require
-    /// service/version filters. For `react`, service/version filters remain required.
+/// For `js`, the lookup returns at most one result and does not require
+/// service/version filters. For `react`, service/version filters remain required.
     pub filter_debug_id: Option<uuid::Uuid>,
     /// Filter by GNU build ID (single value). Supported for `elf`.
     pub filter_gnu_build_id: Option<String>,
@@ -398,9 +388,9 @@ pub struct ListSourcemapsOptionalParams {
 
 impl ListSourcemapsOptionalParams {
     /// Set to `debug_id` to browse JavaScript source maps indexed by debug ID.
-    /// Only supported for `mapkind=js`. Omit for service/version searches or a
-    /// specific `filter[debug_id]` lookup. In debug-ID browse mode, service,
-    /// version, and filename filters are not supported.
+/// Only supported for `mapkind=js`. Omit for service/version searches or a
+/// specific `filter[debug_id]` lookup. In debug-ID browse mode, service,
+/// version, and filename filters are not supported.
     pub fn search_by(mut self, value: crate::datadogV2::model::SourcemapSearchBy) -> Self {
         self.search_by = Some(value);
         self
@@ -411,16 +401,16 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
         self.symbol_type = Some(value);
         self
     }
     /// Cursor for the next page of a JavaScript listing. Use the value from
-    /// `meta.page.next_cursor` and keep the same search mode and filters.
-    /// Omit on the first request. Not supported for other map kinds or for
-    /// a specific `filter[debug_id]` lookup without `search_by=debug_id`.
+/// `meta.page.next_cursor` and keep the same search mode and filters.
+/// Omit on the first request. Not supported for other map kinds or for
+/// a specific `filter[debug_id]` lookup without `search_by=debug_id`.
     pub fn page_after(mut self, value: String) -> Self {
         self.page_after = Some(value);
         self
@@ -431,24 +421,24 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// Legacy page number, starting from 1. Prefer `page[after]` for JavaScript
-    /// listings. Not supported with `search_by=debug_id`. Other map kinds
-    /// default to page 1 when pagination parameters are omitted.
+/// listings. Not supported with `search_by=debug_id`. Other map kinds
+/// default to page 1 when pagination parameters are omitted.
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Filter by service names (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`. Also required for `js` unless
-    /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
+/// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`. Also required for `js` unless
+/// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed). Required for
-    /// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`. Also required for `js` unless
-    /// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
+/// `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`. Also required for `js` unless
+/// searching by `filter[debug_id]` or browsing with `search_by=debug_id`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
         self
@@ -464,8 +454,8 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -491,7 +481,7 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub fn filter_arch(mut self, value: Vec<String>) -> Self {
         self.filter_arch = Some(value);
         self
@@ -517,8 +507,8 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// Filter by a single debug ID in UUID format. Supported for `js` and `react`.
-    /// For `js`, the lookup returns at most one result and does not require
-    /// service/version filters. For `react`, service/version filters remain required.
+/// For `js`, the lookup returns at most one result and does not require
+/// service/version filters. For `react`, service/version filters remain required.
     pub fn filter_debug_id(mut self, value: uuid::Uuid) -> Self {
         self.filter_debug_id = Some(value);
         self
@@ -545,24 +535,24 @@ impl ListSourcemapsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct RestoreSourcemapsOptionalParams {
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub symbol_type: Option<crate::datadogV2::model::SourcemapSymbolType>,
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`.
+/// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`.
     pub filter_service: Option<Vec<String>>,
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
-    /// `wasm` with `symbol_type=sourcemap`.
+/// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+/// `wasm` with `symbol_type=sourcemap`.
     pub filter_version: Option<Vec<String>>,
     /// Filter by variant values (multiple values allowed). Supported for `jvm`.
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -573,7 +563,7 @@ pub struct RestoreSourcemapsOptionalParams {
     /// Filter by bundle name values (multiple values allowed). Supported for `react`.
     pub filter_bundle_name: Option<Vec<String>>,
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub filter_arch: Option<Vec<String>>,
     /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
     pub filter_symbol_source: Option<Vec<String>>,
@@ -595,22 +585,22 @@ pub struct RestoreSourcemapsOptionalParams {
 
 impl RestoreSourcemapsOptionalParams {
     /// WASM symbol representation. Only supported for `mapkind=wasm`.
-    /// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
-    /// requires `filter[service]` and `filter[version]`.
+/// Defaults to `dwarf`, which requires `filter[build_id]`. `sourcemap`
+/// requires `filter[service]` and `filter[version]`.
     pub fn symbol_type(mut self, value: crate::datadogV2::model::SourcemapSymbolType) -> Self {
         self.symbol_type = Some(value);
         self
     }
     /// Filter by service names (multiple values allowed). Required for
-    /// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
-    /// `symbol_type=sourcemap`.
+/// `js`, `jvm`, `react`, and `flutter` map kinds, and for `wasm` with
+/// `symbol_type=sourcemap`.
     pub fn filter_service(mut self, value: Vec<String>) -> Self {
         self.filter_service = Some(value);
         self
     }
     /// Filter by version values (multiple values allowed, maximum 10).
-    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
-    /// `wasm` with `symbol_type=sourcemap`.
+/// Required for `js`, `jvm`, `react`, and `flutter` map kinds, and for
+/// `wasm` with `symbol_type=sourcemap`.
     pub fn filter_version(mut self, value: Vec<String>) -> Self {
         self.filter_version = Some(value);
         self
@@ -626,8 +616,8 @@ impl RestoreSourcemapsOptionalParams {
         self
     }
     /// Filter by build ID values (multiple values allowed). Supported for `jvm`,
-    /// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
-    /// `symbol_type=dwarf`.
+/// `ndk`, `il2cpp`, `wasm`, and `portable_pdb`. Required for `wasm` with
+/// `symbol_type=dwarf`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -653,7 +643,7 @@ impl RestoreSourcemapsOptionalParams {
         self
     }
     /// Filter by architecture values (multiple values allowed). Supported
-    /// for `flutter`, `elf`, and `ndk`.
+/// for `flutter`, `elf`, and `ndk`.
     pub fn filter_arch(mut self, value: Vec<String>) -> Self {
         self.filter_arch = Some(value);
         self
@@ -700,6 +690,9 @@ impl RestoreSourcemapsOptionalParams {
     }
 }
 
+
+
+
 /// AggregateRUMEventsError is a struct for typed errors of method [`RUMAPI::aggregate_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -707,6 +700,7 @@ pub enum AggregateRUMEventsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateRUMApplicationError is a struct for typed errors of method [`RUMAPI::create_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -717,6 +711,7 @@ pub enum CreateRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteRUMApplicationError is a struct for typed errors of method [`RUMAPI::delete_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -725,6 +720,7 @@ pub enum DeleteRUMApplicationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteSourcemapsError is a struct for typed errors of method [`RUMAPI::delete_sourcemaps`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -735,6 +731,7 @@ pub enum DeleteSourcemapsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetRUMApplicationError is a struct for typed errors of method [`RUMAPI::get_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -743,6 +740,7 @@ pub enum GetRUMApplicationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRUMApplicationsError is a struct for typed errors of method [`RUMAPI::get_rum_applications`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -753,6 +751,7 @@ pub enum GetRUMApplicationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetServiceRepositoryInfoError is a struct for typed errors of method [`RUMAPI::get_service_repository_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -761,6 +760,7 @@ pub enum GetServiceRepositoryInfoError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetSourcemapsError is a struct for typed errors of method [`RUMAPI::get_sourcemaps`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -771,6 +771,7 @@ pub enum GetSourcemapsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRUMEventsError is a struct for typed errors of method [`RUMAPI::list_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -778,6 +779,7 @@ pub enum ListRUMEventsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListSourcemapsError is a struct for typed errors of method [`RUMAPI::list_sourcemaps`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -788,6 +790,7 @@ pub enum ListSourcemapsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RestoreSourcemapsError is a struct for typed errors of method [`RUMAPI::restore_sourcemaps`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -797,6 +800,7 @@ pub enum RestoreSourcemapsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SearchRUMEventsError is a struct for typed errors of method [`RUMAPI::search_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -804,6 +808,7 @@ pub enum SearchRUMEventsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateRUMApplicationError is a struct for typed errors of method [`RUMAPI::update_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -813,6 +818,7 @@ pub enum UpdateRUMApplicationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Real User Monitoring (RUM) applications, and search or aggregate your RUM events over HTTP. See the [RUM & Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>) for more information
 #[derive(Debug, Clone)]
@@ -836,7 +842,8 @@ impl RUMAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -881,67 +888,57 @@ impl RUMAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Aggregate RUM events into buckets of computed metrics and timeseries. Use this endpoint for counts, percentiles, top-N breakdowns, and timeseries. To read individual events, use `SearchRUMEvents` or `ListRUMEvents`.
-    ///
-    /// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates, and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`, and so on, in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
-    ///
-    /// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn aggregate_rum_events(
-        &self,
-        body: crate::datadogV2::model::RUMAggregateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMAnalyticsAggregateResponse,
-        datadog::Error<AggregateRUMEventsError>,
-    > {
+///
+/// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates, and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`, and so on, in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
+///
+/// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn aggregate_rum_events(&self, body: crate::datadogV2::model::RUMAggregateRequest) -> Result<crate::datadogV2::model::RUMAnalyticsAggregateResponse, datadog::Error<AggregateRUMEventsError>> {
         match self.aggregate_rum_events_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Aggregate RUM events into buckets of computed metrics and timeseries. Use this endpoint for counts, percentiles, top-N breakdowns, and timeseries. To read individual events, use `SearchRUMEvents` or `ListRUMEvents`.
-    ///
-    /// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates, and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`, and so on, in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
-    ///
-    /// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn aggregate_rum_events_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RUMAggregateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMAnalyticsAggregateResponse>,
-        datadog::Error<AggregateRUMEventsError>,
-    > {
+///
+/// `filter` selects the events with the [RUM search syntax][1] and a time range (`from` and `to` accept date math such as `now-15m`, ISO 8601 dates, and timestamps in milliseconds). Each `compute` rule produces one value (`type: total`) or one list of time points (`type: timeseries`) per bucket, keyed `c0`, `c1`, and so on, in the response. Each `group_by` rule splits the events into buckets by a facet, returned in `by`. Use `histogram` on a numeric facet to bucket it by ranges.
+///
+/// [1]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn aggregate_rum_events_with_http_info(&self, body: crate::datadogV2::model::RUMAggregateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMAnalyticsAggregateResponse>, datadog::Error<AggregateRUMEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.aggregate_rum_events";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/analytics/aggregate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -954,23 +951,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -978,7 +968,10 @@ impl RUMAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -988,7 +981,10 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1010,7 +1006,7 @@ impl RUMAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1027,80 +1023,62 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMAnalyticsAggregateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMAnalyticsAggregateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AggregateRUMEventsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AggregateRUMEventsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a RUM application in your organization.
-    /// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`. Use both to initialize the RUM SDK.
-    /// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
-    pub async fn create_rum_application(
-        &self,
-        body: crate::datadogV2::model::RUMApplicationCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMApplicationResponse,
-        datadog::Error<CreateRUMApplicationError>,
-    > {
+/// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`. Use both to initialize the RUM SDK.
+/// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
+    pub async fn create_rum_application(&self, body: crate::datadogV2::model::RUMApplicationCreateRequest) -> Result<crate::datadogV2::model::RUMApplicationResponse, datadog::Error<CreateRUMApplicationError>> {
         match self.create_rum_application_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a RUM application in your organization.
-    /// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`. Use both to initialize the RUM SDK.
-    /// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
-    pub async fn create_rum_application_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RUMApplicationCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        datadog::Error<CreateRUMApplicationError>,
-    > {
+/// The application ID is generated by Datadog and returned in `data.attributes.application_id`. A client token is created with the application and returned in `data.attributes.client_token`. Use both to initialize the RUM SDK.
+/// The application is created with the default retention filters unless `create_default_retention_filters` is `false`.
+    pub async fn create_rum_application_with_http_info(&self, body: crate::datadogV2::model::RUMApplicationCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>, datadog::Error<CreateRUMApplicationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_application";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1113,23 +1091,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1137,7 +1108,10 @@ impl RUMAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1147,7 +1121,10 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1169,7 +1146,7 @@ impl RUMAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1186,66 +1163,57 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRUMApplicationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateRUMApplicationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an existing RUM application in your organization.
-    /// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application cannot be re-enabled through the API, and its application ID cannot be reused.
-    /// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
-    pub async fn delete_rum_application(
-        &self,
-        id: String,
-    ) -> Result<(), datadog::Error<DeleteRUMApplicationError>> {
+/// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application cannot be re-enabled through the API, and its application ID cannot be reused.
+/// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
+    pub async fn delete_rum_application(&self, id: String) -> Result<(), datadog::Error<DeleteRUMApplicationError>> {
         match self.delete_rum_application_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an existing RUM application in your organization.
-    /// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application cannot be re-enabled through the API, and its application ID cannot be reused.
-    /// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
-    pub async fn delete_rum_application_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMApplicationError>> {
+/// The application is disabled and its client token is revoked, so the RUM SDK stops sending events for it. The application cannot be re-enabled through the API, and its application ID cannot be reused.
+/// Deleting an application with Product Analytics enabled requires the `product_analytics_apps_write` permission.
+    pub async fn delete_rum_application_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMApplicationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_application";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1258,22 +1226,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1291,56 +1253,33 @@ impl RUMAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRUMApplicationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRUMApplicationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes source maps matching the specified filter criteria. Supports
-    /// dry-run mode to preview which source maps would be deleted without
-    /// performing the actual deletion.
-    pub async fn delete_sourcemaps(
-        &self,
-        mapkind: crate::datadogV2::model::SourcemapMapKind,
-        dry_run: bool,
-        params: DeleteSourcemapsOptionalParams,
-    ) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<DeleteSourcemapsError>>
-    {
-        match self
-            .delete_sourcemaps_with_http_info(mapkind, dry_run, params)
-            .await
-        {
+/// dry-run mode to preview which source maps would be deleted without
+/// performing the actual deletion.
+    pub async fn delete_sourcemaps(&self, mapkind: crate::datadogV2::model::SourcemapMapKind, dry_run: bool, params: DeleteSourcemapsOptionalParams) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<DeleteSourcemapsError>> {
+        match self.delete_sourcemaps_with_http_info(mapkind, dry_run,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes source maps matching the specified filter criteria. Supports
-    /// dry-run mode to preview which source maps would be deleted without
-    /// performing the actual deletion.
-    pub async fn delete_sourcemaps_with_http_info(
-        &self,
-        mapkind: crate::datadogV2::model::SourcemapMapKind,
-        dry_run: bool,
-        params: DeleteSourcemapsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>,
-        datadog::Error<DeleteSourcemapsError>,
-    > {
+/// dry-run mode to preview which source maps would be deleted without
+/// performing the actual deletion.
+    pub async fn delete_sourcemaps_with_http_info(&self, mapkind: crate::datadogV2::model::SourcemapMapKind, dry_run: bool, params: DeleteSourcemapsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>, datadog::Error<DeleteSourcemapsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_sourcemaps";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1352,6 +1291,7 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let symbol_type = params.symbol_type;
         let filter_service = params.filter_service;
@@ -1377,118 +1317,88 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
-        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string() )]);
         if let Some(ref local_query_param) = symbol_type {
-            local_req_builder =
-                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("symbol_type", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_service {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+        if let Some(ref local) = filter_service {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[service]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+        if let Some(ref local) = filter_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[version]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_variant {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+        if let Some(ref local) = filter_variant {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[variant]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_id {
-            for param in local {
+        if let Some(ref local) = filter_id {for param in local {
                 local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_id {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+        if let Some(ref local) = filter_build_id {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_uuid {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+        if let Some(ref local) = filter_uuid {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_platform {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+        if let Some(ref local) = filter_platform {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[platform]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_number {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+        if let Some(ref local) = filter_build_number {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_bundle_name {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+        if let Some(ref local) = filter_bundle_name {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_arch {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+        if let Some(ref local) = filter_arch {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[arch]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_symbol_source {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+        if let Some(ref local) = filter_symbol_source {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+        if let Some(ref local) = filter_origin {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+        if let Some(ref local) = filter_origin_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_filename {
-            local_req_builder =
-                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[filename]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_debug_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_gnu_build_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[gnu_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_go_build_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_file_hash {
-            local_req_builder =
-                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1501,22 +1411,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1528,78 +1432,61 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteSourcemapsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteSourcemapsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the RUM application with the given ID in your organization.
-    /// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
-    pub async fn get_rum_application(
-        &self,
-        id: String,
-    ) -> Result<
-        crate::datadogV2::model::RUMApplicationResponse,
-        datadog::Error<GetRUMApplicationError>,
-    > {
+/// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
+    pub async fn get_rum_application(&self, id: String) -> Result<crate::datadogV2::model::RUMApplicationResponse, datadog::Error<GetRUMApplicationError>> {
         match self.get_rum_application_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the RUM application with the given ID in your organization.
-    /// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
-    pub async fn get_rum_application_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        datadog::Error<GetRUMApplicationError>,
-    > {
+/// Unlike `GetRUMApplications`, the response includes the `client_token` used to initialize the RUM SDK.
+    pub async fn get_rum_application_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>, datadog::Error<GetRUMApplicationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_application";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1612,22 +1499,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1639,123 +1520,86 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRUMApplicationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRUMApplicationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the enabled RUM applications of your organization. Applications deleted with `DeleteRUMApplication` are not returned.
-    /// The response is not paginated and does not include the `client_token`. Use `GetRUMApplication` to retrieve it.
-    /// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
-    pub async fn get_rum_applications(
-        &self,
-        params: GetRUMApplicationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::RUMApplicationsResponse,
-        datadog::Error<GetRUMApplicationsError>,
-    > {
-        match self.get_rum_applications_with_http_info(params).await {
+/// The response is not paginated and does not include the `client_token`. Use `GetRUMApplication` to retrieve it.
+/// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
+    pub async fn get_rum_applications(&self, params: GetRUMApplicationsOptionalParams) -> Result<crate::datadogV2::model::RUMApplicationsResponse, datadog::Error<GetRUMApplicationsError>> {
+        match self.get_rum_applications_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the enabled RUM applications of your organization. Applications deleted with `DeleteRUMApplication` are not returned.
-    /// The response is not paginated and does not include the `client_token`. Use `GetRUMApplication` to retrieve it.
-    /// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
-    pub async fn get_rum_applications_with_http_info(
-        &self,
-        params: GetRUMApplicationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationsResponse>,
-        datadog::Error<GetRUMApplicationsError>,
-    > {
+/// The response is not paginated and does not include the `client_token`. Use `GetRUMApplication` to retrieve it.
+/// Use the `application_id` of an item as the `id` path parameter of the other application operations, and as `@application.id` in RUM event queries.
+    pub async fn get_rum_applications_with_http_info(&self, params: GetRUMApplicationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMApplicationsResponse>, datadog::Error<GetRUMApplicationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_applications";
 
+        
         // unbox and build optional parameters
         let filter_rum_enabled = params.filter_rum_enabled;
         let filter_product_analytics_enabled = params.filter_product_analytics_enabled;
         let filter_error_focused_mode_enabled = params.filter_error_focused_mode_enabled;
         let filter_remote_config_enabled = params.filter_remote_config_enabled;
         let filter_rum_event_processing_state = params.filter_rum_event_processing_state;
-        let filter_product_analytics_retention_state =
-            params.filter_product_analytics_retention_state;
+        let filter_product_analytics_retention_state = params.filter_product_analytics_retention_state;
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_rum_enabled {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rum_enabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rum_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_product_analytics_enabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[product_analytics_enabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[product_analytics_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_error_focused_mode_enabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[error_focused_mode_enabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[error_focused_mode_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_remote_config_enabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[remote_config_enabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[remote_config_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rum_event_processing_state {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[rum_event_processing_state]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[rum_event_processing_state]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_product_analytics_retention_state {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[product_analytics_retention_state]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[product_analytics_retention_state]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1768,22 +1612,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1795,62 +1633,40 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRUMApplicationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRUMApplicationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the repository URL and commit SHA associated with a debug ID or a given service and version.
-    /// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
-    pub async fn get_service_repository_info(
-        &self,
-        body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
-    ) -> Result<
-        crate::datadogV2::model::ServiceRepositoryInfoResponse,
-        datadog::Error<GetServiceRepositoryInfoError>,
-    > {
+/// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
+    pub async fn get_service_repository_info(&self, body: crate::datadogV2::model::ServiceRepositoryInfoRequest) -> Result<crate::datadogV2::model::ServiceRepositoryInfoResponse, datadog::Error<GetServiceRepositoryInfoError>> {
         match self.get_service_repository_info_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the repository URL and commit SHA associated with a debug ID or a given service and version.
-    /// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
-    pub async fn get_service_repository_info_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceRepositoryInfoResponse>,
-        datadog::Error<GetServiceRepositoryInfoError>,
-    > {
+/// Provide either `debug_id`, or both `service` and `version`. When `debug_id` is set, it takes precedence.
+    pub async fn get_service_repository_info_with_http_info(&self, body: crate::datadogV2::model::ServiceRepositoryInfoRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ServiceRepositoryInfoResponse>, datadog::Error<GetServiceRepositoryInfoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_service_repository_info";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1862,19 +1678,23 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/service_repository_info",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1887,23 +1707,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1911,7 +1724,10 @@ impl RUMAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1921,7 +1737,10 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1943,7 +1762,7 @@ impl RUMAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1960,122 +1779,102 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceRepositoryInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ServiceRepositoryInfoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetServiceRepositoryInfoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetServiceRepositoryInfoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves the content of a specific JavaScript source map file. Provide either
-    /// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
-    /// When `debug_id` is provided, filename, service, and version are not required
-    /// and are ignored.
-    ///
-    /// **Examples:** the following commands use the US1 API host. Replace the host
-    /// with the API host for your site, and the filename, service, version, and
-    /// debug ID with values from your organization. Use `--get` so curl sends the
-    /// parameters in the query string.
-    ///
-    /// **1. Retrieve a source map by debug ID**
-    ///
-    /// Provide `debug_id` with a UUID. No filename, service, or version is required.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
-    /// ```
-    ///
-    /// **2. Retrieve a source map by service and version**
-    ///
-    /// Provide `filename` together with `service` and `version`.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "filename=js/bundle.min.js.map" \
-    ///   --data-urlencode "service=my-web-service" \
-    ///   --data-urlencode "version=1.0.0"
-    /// ```
-    pub async fn get_sourcemaps(
-        &self,
-        params: GetSourcemapsOptionalParams,
-    ) -> Result<crate::datadogV2::model::SourcemapFileResponse, datadog::Error<GetSourcemapsError>>
-    {
-        match self.get_sourcemaps_with_http_info(params).await {
+/// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
+/// When `debug_id` is provided, filename, service, and version are not required
+/// and are ignored.
+///
+/// **Examples:** the following commands use the US1 API host. Replace the host
+/// with the API host for your site, and the filename, service, version, and
+/// debug ID with values from your organization. Use `--get` so curl sends the
+/// parameters in the query string.
+///
+/// **1. Retrieve a source map by debug ID**
+///
+/// Provide `debug_id` with a UUID. No filename, service, or version is required.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
+/// ```
+///
+/// **2. Retrieve a source map by service and version**
+///
+/// Provide `filename` together with `service` and `version`.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "filename=js/bundle.min.js.map" \
+///   --data-urlencode "service=my-web-service" \
+///   --data-urlencode "version=1.0.0"
+/// ```
+    pub async fn get_sourcemaps(&self, params: GetSourcemapsOptionalParams) -> Result<crate::datadogV2::model::SourcemapFileResponse, datadog::Error<GetSourcemapsError>> {
+        match self.get_sourcemaps_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves the content of a specific JavaScript source map file. Provide either
-    /// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
-    /// When `debug_id` is provided, filename, service, and version are not required
-    /// and are ignored.
-    ///
-    /// **Examples:** the following commands use the US1 API host. Replace the host
-    /// with the API host for your site, and the filename, service, version, and
-    /// debug ID with values from your organization. Use `--get` so curl sends the
-    /// parameters in the query string.
-    ///
-    /// **1. Retrieve a source map by debug ID**
-    ///
-    /// Provide `debug_id` with a UUID. No filename, service, or version is required.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
-    /// ```
-    ///
-    /// **2. Retrieve a source map by service and version**
-    ///
-    /// Provide `filename` together with `service` and `version`.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "filename=js/bundle.min.js.map" \
-    ///   --data-urlencode "service=my-web-service" \
-    ///   --data-urlencode "version=1.0.0"
-    /// ```
-    pub async fn get_sourcemaps_with_http_info(
-        &self,
-        params: GetSourcemapsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SourcemapFileResponse>,
-        datadog::Error<GetSourcemapsError>,
-    > {
+/// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
+/// When `debug_id` is provided, filename, service, and version are not required
+/// and are ignored.
+///
+/// **Examples:** the following commands use the US1 API host. Replace the host
+/// with the API host for your site, and the filename, service, version, and
+/// debug ID with values from your organization. Use `--get` so curl sends the
+/// parameters in the query string.
+///
+/// **1. Retrieve a source map by debug ID**
+///
+/// Provide `debug_id` with a UUID. No filename, service, or version is required.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
+/// ```
+///
+/// **2. Retrieve a source map by service and version**
+///
+/// Provide `filename` together with `service` and `version`.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "filename=js/bundle.min.js.map" \
+///   --data-urlencode "service=my-web-service" \
+///   --data-urlencode "version=1.0.0"
+/// ```
+    pub async fn get_sourcemaps_with_http_info(&self, params: GetSourcemapsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SourcemapFileResponse>, datadog::Error<GetSourcemapsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_sourcemaps";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2087,6 +1886,7 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let debug_id = params.debug_id;
         let filename = params.filename;
@@ -2097,31 +1897,28 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = debug_id {
-            local_req_builder =
-                local_req_builder.query(&[("debug_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("debug_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filename {
-            local_req_builder =
-                local_req_builder.query(&[("filename", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filename", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = service {
-            local_req_builder =
-                local_req_builder.query(&[("service", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("service", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = version {
-            local_req_builder =
-                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("version", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2134,22 +1931,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2161,63 +1952,46 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SourcemapFileResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapFileResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetSourcemapsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetSourcemapsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the RUM events that match a RUM search query within a time range. Use this endpoint to see your latest RUM events with a simple query. For long filters, use `SearchRUMEvents`. To compute counts, percentiles, or timeseries, use `AggregateRUMEvents`.
-    ///
-    /// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the endpoint searches the last 15 minutes.
-    ///
-    /// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
-    ///
-    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
-    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn list_rum_events(
-        &self,
-        params: ListRUMEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<ListRUMEventsError>>
-    {
-        match self.list_rum_events_with_http_info(params).await {
+///
+/// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the endpoint searches the last 15 minutes.
+///
+/// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
+///
+/// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+/// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn list_rum_events(&self, params: ListRUMEventsOptionalParams) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<ListRUMEventsError>> {
+        match self.list_rum_events_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_rum_events_with_pagination(
-        &self,
-        mut params: ListRUMEventsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<ListRUMEventsError>>,
-    > + '_ {
+        &self, mut params: ListRUMEventsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<ListRUMEventsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.page_limit.is_none() {
@@ -2246,24 +2020,20 @@ impl RUMAPI {
         }
     }
 
+    
     /// Returns the RUM events that match a RUM search query within a time range. Use this endpoint to see your latest RUM events with a simple query. For long filters, use `SearchRUMEvents`. To compute counts, percentiles, or timeseries, use `AggregateRUMEvents`.
-    ///
-    /// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the endpoint searches the last 15 minutes.
-    ///
-    /// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
-    ///
-    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
-    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn list_rum_events_with_http_info(
-        &self,
-        params: ListRUMEventsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
-        datadog::Error<ListRUMEventsError>,
-    > {
+///
+/// The query follows the [RUM search syntax][2]. Without `filter[from]` and `filter[to]`, the endpoint searches the last 15 minutes.
+///
+/// [Results are paginated][1]: `page[limit]` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after` and `links.next`. Request `links.next`, or send `meta.page.after` as `page[cursor]` with the same other parameters, and repeat until they are absent.
+///
+/// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+/// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn list_rum_events_with_http_info(&self, params: ListRUMEventsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>, datadog::Error<ListRUMEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_events";
 
+        
         // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
@@ -2276,39 +2046,34 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2321,22 +2086,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2348,219 +2107,200 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRUMEventsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRUMEventsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves a paginated list of source maps. Send filters as query parameters,
-    /// not in a JSON request body. `mapkind` defaults to `js`.
-    ///
-    /// For JavaScript source maps, choose one of the three request shapes below.
-    ///
-    /// **Examples:** the following commands use the US1 API host. Replace the host with
-    /// the API host for your site, and the service, version, debug ID, and cursor with
-    /// values from your organization. Use `--get` so curl sends the filters in the query
-    /// string; `-X GET` with `--data-urlencode` sends them in the request body instead.
-    ///
-    /// **1. List by service and version**
-    ///
-    /// Provide both `filter[service]` and `filter[version]` to search source maps
-    /// indexed by service and version. Omit `search_by`.
-    ///
-    /// **Pagination:** prefer cursor pagination. Omit `page[after]` and `page[number]`
-    /// on the first request. To get the next page, pass `meta.page.next_cursor` as
-    /// `page[after]`, keeping the same filters. Continue until
-    /// `meta.page.has_more_results` is `false`. Do not decode or modify the cursor.
-    /// Legacy page-number pagination is also supported, starting at `page[number]=1`.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "filter[service]=my-web-service" \
-    ///   --data-urlencode "filter[version]=1.0.0" \
-    ///   --data-urlencode "page[size]=10"
-    /// ```
-    ///
-    /// **2. Find a specific JavaScript debug ID**
-    ///
-    /// Provide `filter[debug_id]` with a UUID. Service and version filters are not
-    /// required. Omit `search_by`.
-    ///
-    /// **Pagination:** the lookup returns at most one result, so no pagination is
-    /// needed. `page[after]` is not supported.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "filter[debug_id]=00000000-0000-4000-8000-000000000001"
-    /// ```
-    ///
-    /// **3. Browse source maps indexed by debug ID**
-    ///
-    /// Set `search_by=debug_id` without specifying a debug ID. Do not send service,
-    /// version, or filename filters in this mode.
-    ///
-    /// **Pagination:** this mode requires cursor pagination; `page[number]` is not
-    /// supported. Omit `page[after]` on the first request. To get the next page, pass
-    /// `meta.page.next_cursor` as `page[after]`, keeping the same search mode and
-    /// filters. Continue until `meta.page.has_more_results` is `false`. Do not decode
-    /// or modify the cursor.
-    ///
-    /// First page:
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "search_by=debug_id" \
-    ///   --data-urlencode "page[size]=10"
-    /// ```
-    ///
-    /// Next page:
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "search_by=debug_id" \
-    ///   --data-urlencode "page[size]=10" \
-    ///   --data-urlencode "page[after]=<meta.page.next_cursor>"
-    /// ```
-    ///
-    /// For other map kinds, use `page[number]`, starting at 1.
-    pub async fn list_sourcemaps(
-        &self,
-        params: ListSourcemapsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListSourcemapsResponse, datadog::Error<ListSourcemapsError>>
-    {
-        match self.list_sourcemaps_with_http_info(params).await {
+/// not in a JSON request body. `mapkind` defaults to `js`.
+///
+/// For JavaScript source maps, choose one of the three request shapes below.
+///
+/// **Examples:** the following commands use the US1 API host. Replace the host with
+/// the API host for your site, and the service, version, debug ID, and cursor with
+/// values from your organization. Use `--get` so curl sends the filters in the query
+/// string; `-X GET` with `--data-urlencode` sends them in the request body instead.
+///
+/// **1. List by service and version**
+///
+/// Provide both `filter[service]` and `filter[version]` to search source maps
+/// indexed by service and version. Omit `search_by`.
+///
+/// **Pagination:** prefer cursor pagination. Omit `page[after]` and `page[number]`
+/// on the first request. To get the next page, pass `meta.page.next_cursor` as
+/// `page[after]`, keeping the same filters. Continue until
+/// `meta.page.has_more_results` is `false`. Do not decode or modify the cursor.
+/// Legacy page-number pagination is also supported, starting at `page[number]=1`.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "filter[service]=my-web-service" \
+///   --data-urlencode "filter[version]=1.0.0" \
+///   --data-urlencode "page[size]=10"
+/// ```
+///
+/// **2. Find a specific JavaScript debug ID**
+///
+/// Provide `filter[debug_id]` with a UUID. Service and version filters are not
+/// required. Omit `search_by`.
+///
+/// **Pagination:** the lookup returns at most one result, so no pagination is
+/// needed. `page[after]` is not supported.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "filter[debug_id]=00000000-0000-4000-8000-000000000001"
+/// ```
+///
+/// **3. Browse source maps indexed by debug ID**
+///
+/// Set `search_by=debug_id` without specifying a debug ID. Do not send service,
+/// version, or filename filters in this mode.
+///
+/// **Pagination:** this mode requires cursor pagination; `page[number]` is not
+/// supported. Omit `page[after]` on the first request. To get the next page, pass
+/// `meta.page.next_cursor` as `page[after]`, keeping the same search mode and
+/// filters. Continue until `meta.page.has_more_results` is `false`. Do not decode
+/// or modify the cursor.
+///
+/// First page:
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "search_by=debug_id" \
+///   --data-urlencode "page[size]=10"
+/// ```
+///
+/// Next page:
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "search_by=debug_id" \
+///   --data-urlencode "page[size]=10" \
+///   --data-urlencode "page[after]=<meta.page.next_cursor>"
+/// ```
+///
+/// For other map kinds, use `page[number]`, starting at 1.
+    pub async fn list_sourcemaps(&self, params: ListSourcemapsOptionalParams) -> Result<crate::datadogV2::model::ListSourcemapsResponse, datadog::Error<ListSourcemapsError>> {
+        match self.list_sourcemaps_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves a paginated list of source maps. Send filters as query parameters,
-    /// not in a JSON request body. `mapkind` defaults to `js`.
-    ///
-    /// For JavaScript source maps, choose one of the three request shapes below.
-    ///
-    /// **Examples:** the following commands use the US1 API host. Replace the host with
-    /// the API host for your site, and the service, version, debug ID, and cursor with
-    /// values from your organization. Use `--get` so curl sends the filters in the query
-    /// string; `-X GET` with `--data-urlencode` sends them in the request body instead.
-    ///
-    /// **1. List by service and version**
-    ///
-    /// Provide both `filter[service]` and `filter[version]` to search source maps
-    /// indexed by service and version. Omit `search_by`.
-    ///
-    /// **Pagination:** prefer cursor pagination. Omit `page[after]` and `page[number]`
-    /// on the first request. To get the next page, pass `meta.page.next_cursor` as
-    /// `page[after]`, keeping the same filters. Continue until
-    /// `meta.page.has_more_results` is `false`. Do not decode or modify the cursor.
-    /// Legacy page-number pagination is also supported, starting at `page[number]=1`.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "filter[service]=my-web-service" \
-    ///   --data-urlencode "filter[version]=1.0.0" \
-    ///   --data-urlencode "page[size]=10"
-    /// ```
-    ///
-    /// **2. Find a specific JavaScript debug ID**
-    ///
-    /// Provide `filter[debug_id]` with a UUID. Service and version filters are not
-    /// required. Omit `search_by`.
-    ///
-    /// **Pagination:** the lookup returns at most one result, so no pagination is
-    /// needed. `page[after]` is not supported.
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "filter[debug_id]=00000000-0000-4000-8000-000000000001"
-    /// ```
-    ///
-    /// **3. Browse source maps indexed by debug ID**
-    ///
-    /// Set `search_by=debug_id` without specifying a debug ID. Do not send service,
-    /// version, or filename filters in this mode.
-    ///
-    /// **Pagination:** this mode requires cursor pagination; `page[number]` is not
-    /// supported. Omit `page[after]` on the first request. To get the next page, pass
-    /// `meta.page.next_cursor` as `page[after]`, keeping the same search mode and
-    /// filters. Continue until `meta.page.has_more_results` is `false`. Do not decode
-    /// or modify the cursor.
-    ///
-    /// First page:
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "search_by=debug_id" \
-    ///   --data-urlencode "page[size]=10"
-    /// ```
-    ///
-    /// Next page:
-    ///
-    /// ```bash
-    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
-    ///   -H "Accept: application/json" \
-    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
-    ///   --data-urlencode "mapkind=js" \
-    ///   --data-urlencode "search_by=debug_id" \
-    ///   --data-urlencode "page[size]=10" \
-    ///   --data-urlencode "page[after]=<meta.page.next_cursor>"
-    /// ```
-    ///
-    /// For other map kinds, use `page[number]`, starting at 1.
-    pub async fn list_sourcemaps_with_http_info(
-        &self,
-        params: ListSourcemapsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListSourcemapsResponse>,
-        datadog::Error<ListSourcemapsError>,
-    > {
+/// not in a JSON request body. `mapkind` defaults to `js`.
+///
+/// For JavaScript source maps, choose one of the three request shapes below.
+///
+/// **Examples:** the following commands use the US1 API host. Replace the host with
+/// the API host for your site, and the service, version, debug ID, and cursor with
+/// values from your organization. Use `--get` so curl sends the filters in the query
+/// string; `-X GET` with `--data-urlencode` sends them in the request body instead.
+///
+/// **1. List by service and version**
+///
+/// Provide both `filter[service]` and `filter[version]` to search source maps
+/// indexed by service and version. Omit `search_by`.
+///
+/// **Pagination:** prefer cursor pagination. Omit `page[after]` and `page[number]`
+/// on the first request. To get the next page, pass `meta.page.next_cursor` as
+/// `page[after]`, keeping the same filters. Continue until
+/// `meta.page.has_more_results` is `false`. Do not decode or modify the cursor.
+/// Legacy page-number pagination is also supported, starting at `page[number]=1`.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "filter[service]=my-web-service" \
+///   --data-urlencode "filter[version]=1.0.0" \
+///   --data-urlencode "page[size]=10"
+/// ```
+///
+/// **2. Find a specific JavaScript debug ID**
+///
+/// Provide `filter[debug_id]` with a UUID. Service and version filters are not
+/// required. Omit `search_by`.
+///
+/// **Pagination:** the lookup returns at most one result, so no pagination is
+/// needed. `page[after]` is not supported.
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "filter[debug_id]=00000000-0000-4000-8000-000000000001"
+/// ```
+///
+/// **3. Browse source maps indexed by debug ID**
+///
+/// Set `search_by=debug_id` without specifying a debug ID. Do not send service,
+/// version, or filename filters in this mode.
+///
+/// **Pagination:** this mode requires cursor pagination; `page[number]` is not
+/// supported. Omit `page[after]` on the first request. To get the next page, pass
+/// `meta.page.next_cursor` as `page[after]`, keeping the same search mode and
+/// filters. Continue until `meta.page.has_more_results` is `false`. Do not decode
+/// or modify the cursor.
+///
+/// First page:
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "search_by=debug_id" \
+///   --data-urlencode "page[size]=10"
+/// ```
+///
+/// Next page:
+///
+/// ```bash
+/// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps/list"> \
+///   -H "Accept: application/json" \
+///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+///   --data-urlencode "mapkind=js" \
+///   --data-urlencode "search_by=debug_id" \
+///   --data-urlencode "page[size]=10" \
+///   --data-urlencode "page[after]=<meta.page.next_cursor>"
+/// ```
+///
+/// For other map kinds, use `page[number]`, starting at 1.
+    pub async fn list_sourcemaps_with_http_info(&self, params: ListSourcemapsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListSourcemapsResponse>, datadog::Error<ListSourcemapsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_sourcemaps";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2572,6 +2312,7 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let search_by = params.search_by;
         let mapkind = params.mapkind;
@@ -2602,136 +2343,101 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/list",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = search_by {
-            local_req_builder =
-                local_req_builder.query(&[("search_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = mapkind {
-            local_req_builder =
-                local_req_builder.query(&[("mapkind", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("mapkind", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = symbol_type {
-            local_req_builder =
-                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("symbol_type", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_after {
-            local_req_builder =
-                local_req_builder.query(&[("page[after]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[after]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_service {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+        if let Some(ref local) = filter_service {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[service]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+        if let Some(ref local) = filter_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[version]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_variant {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+        if let Some(ref local) = filter_variant {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[variant]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_id {
-            for param in local {
+        if let Some(ref local) = filter_id {for param in local {
                 local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_id {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+        if let Some(ref local) = filter_build_id {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_uuid {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+        if let Some(ref local) = filter_uuid {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_platform {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+        if let Some(ref local) = filter_platform {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[platform]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_number {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+        if let Some(ref local) = filter_build_number {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_bundle_name {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+        if let Some(ref local) = filter_bundle_name {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_arch {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+        if let Some(ref local) = filter_arch {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[arch]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_symbol_source {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+        if let Some(ref local) = filter_symbol_source {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+        if let Some(ref local) = filter_origin {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+        if let Some(ref local) = filter_origin_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_filename {
-            local_req_builder =
-                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[filename]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_debug_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_gnu_build_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[gnu_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_go_build_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_file_hash {
-            local_req_builder =
-                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2744,22 +2450,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2771,69 +2471,42 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListSourcemapsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListSourcemapsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListSourcemapsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListSourcemapsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Restores previously deleted source maps matching the specified filter
-    /// criteria. Supports dry-run mode to preview which source maps would be
-    /// restored without performing the actual restoration.
-    pub async fn restore_sourcemaps(
-        &self,
-        mapkind: crate::datadogV2::model::SourcemapMapKind,
-        dry_run: bool,
-        params: RestoreSourcemapsOptionalParams,
-    ) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<RestoreSourcemapsError>>
-    {
-        match self
-            .restore_sourcemaps_with_http_info(mapkind, dry_run, params)
-            .await
-        {
+/// criteria. Supports dry-run mode to preview which source maps would be
+/// restored without performing the actual restoration.
+    pub async fn restore_sourcemaps(&self, mapkind: crate::datadogV2::model::SourcemapMapKind, dry_run: bool, params: RestoreSourcemapsOptionalParams) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<RestoreSourcemapsError>> {
+        match self.restore_sourcemaps_with_http_info(mapkind, dry_run,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Restores previously deleted source maps matching the specified filter
-    /// criteria. Supports dry-run mode to preview which source maps would be
-    /// restored without performing the actual restoration.
-    pub async fn restore_sourcemaps_with_http_info(
-        &self,
-        mapkind: crate::datadogV2::model::SourcemapMapKind,
-        dry_run: bool,
-        params: RestoreSourcemapsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>,
-        datadog::Error<RestoreSourcemapsError>,
-    > {
+/// criteria. Supports dry-run mode to preview which source maps would be
+/// restored without performing the actual restoration.
+    pub async fn restore_sourcemaps_with_http_info(&self, mapkind: crate::datadogV2::model::SourcemapMapKind, dry_run: bool, params: RestoreSourcemapsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>, datadog::Error<RestoreSourcemapsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.restore_sourcemaps";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2845,6 +2518,7 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let symbol_type = params.symbol_type;
         let filter_service = params.filter_service;
@@ -2870,118 +2544,88 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/restore",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
-        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string() )]);
         if let Some(ref local_query_param) = symbol_type {
-            local_req_builder =
-                local_req_builder.query(&[("symbol_type", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("symbol_type", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_service {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+        if let Some(ref local) = filter_service {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[service]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+        if let Some(ref local) = filter_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[version]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_variant {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+        if let Some(ref local) = filter_variant {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[variant]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_id {
-            for param in local {
+        if let Some(ref local) = filter_id {for param in local {
                 local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_id {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+        if let Some(ref local) = filter_build_id {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_uuid {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+        if let Some(ref local) = filter_uuid {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_platform {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+        if let Some(ref local) = filter_platform {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[platform]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_build_number {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+        if let Some(ref local) = filter_build_number {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_bundle_name {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+        if let Some(ref local) = filter_bundle_name {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_arch {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+        if let Some(ref local) = filter_arch {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[arch]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_symbol_source {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+        if let Some(ref local) = filter_symbol_source {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+        if let Some(ref local) = filter_origin {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_origin_version {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+        if let Some(ref local) = filter_origin_version {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_filename {
-            local_req_builder =
-                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[filename]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_debug_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_gnu_build_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[gnu_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_go_build_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_file_hash {
-            local_req_builder =
-                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2994,22 +2638,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3021,63 +2659,46 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RestoreSourcemapsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RestoreSourcemapsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the RUM events that match a RUM search query within a time range, as a list of individual events. Use this endpoint when the filter is too long for a query string, or to set `options`. To compute counts, percentiles, or timeseries instead of reading events, use `AggregateRUMEvents`.
-    ///
-    /// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates, and timestamps in milliseconds.
-    ///
-    /// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
-    ///
-    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
-    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn search_rum_events(
-        &self,
-        body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<SearchRUMEventsError>>
-    {
+///
+/// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates, and timestamps in milliseconds.
+///
+/// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
+///
+/// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+/// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn search_rum_events(&self, body: crate::datadogV2::model::RUMSearchEventsRequest) -> Result<crate::datadogV2::model::RUMEventsResponse, datadog::Error<SearchRUMEventsError>> {
         match self.search_rum_events_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn search_rum_events_with_pagination(
-        &self,
-        mut body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<SearchRUMEventsError>>,
-    > + '_ {
+        &self, mut  body: crate::datadogV2::model::RUMSearchEventsRequest
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::RUMEvent, datadog::Error<SearchRUMEventsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if body.page.is_none() {
@@ -3109,37 +2730,36 @@ impl RUMAPI {
         }
     }
 
+    
     /// Returns the RUM events that match a RUM search query within a time range, as a list of individual events. Use this endpoint when the filter is too long for a query string, or to set `options`. To compute counts, percentiles, or timeseries instead of reading events, use `AggregateRUMEvents`.
-    ///
-    /// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates, and timestamps in milliseconds.
-    ///
-    /// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
-    ///
-    /// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
-    /// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
-    pub async fn search_rum_events_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RUMSearchEventsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>,
-        datadog::Error<SearchRUMEventsError>,
-    > {
+///
+/// The query follows the [RUM search syntax][2]. `filter.from` and `filter.to` accept date math (`now-15m`), ISO 8601 dates, and timestamps in milliseconds.
+///
+/// [Results are paginated][1]: `page.limit` is at most 1000 (default 10). When more results are available, the response contains `meta.page.after`. Send it as `page.cursor`, with the same `filter` and `sort`, to get the next page, and repeat until `meta.page.after` is absent.
+///
+/// [1]: <https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>
+/// [2]: <https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>
+    pub async fn search_rum_events_with_http_info(&self, body: crate::datadogV2::model::RUMSearchEventsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMEventsResponse>, datadog::Error<SearchRUMEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_rum_events";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3152,23 +2772,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3176,7 +2789,10 @@ impl RUMAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3186,7 +2802,10 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3208,7 +2827,7 @@ impl RUMAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3225,80 +2844,62 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMEventsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SearchRUMEventsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SearchRUMEventsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the RUM application with the given ID in your organization.
-    /// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
-    pub async fn update_rum_application(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::RUMApplicationUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMApplicationResponse,
-        datadog::Error<UpdateRUMApplicationError>,
-    > {
+/// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
+    pub async fn update_rum_application(&self, id: String, body: crate::datadogV2::model::RUMApplicationUpdateRequest) -> Result<crate::datadogV2::model::RUMApplicationResponse, datadog::Error<UpdateRUMApplicationError>> {
         match self.update_rum_application_with_http_info(id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the RUM application with the given ID in your organization.
-    /// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
-    pub async fn update_rum_application_with_http_info(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::RUMApplicationUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>,
-        datadog::Error<UpdateRUMApplicationError>,
-    > {
+/// This is a partial update: only the attributes present in the request are changed. `data.id` must match the `id` path parameter.
+    pub async fn update_rum_application_with_http_info(&self, id: String, body: crate::datadogV2::model::RUMApplicationUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMApplicationResponse>, datadog::Error<UpdateRUMApplicationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_application";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3311,23 +2912,16 @@ impl RUMAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3335,7 +2929,10 @@ impl RUMAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3345,7 +2942,10 @@ impl RUMAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3367,7 +2967,7 @@ impl RUMAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3384,26 +2984,17 @@ impl RUMAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMApplicationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRUMApplicationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateRUMApplicationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

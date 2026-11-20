@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the shared dashboard invitation
 #[non_exhaustive]
@@ -24,11 +24,7 @@ pub struct SharedDashboardInvitesDataObjectAttributes {
     #[serde(rename = "invitation_expiry")]
     pub invitation_expiry: Option<chrono::DateTime<chrono::Utc>>,
     /// When the invited user's session expires. null if the invitation has no associated session.
-    #[serde(
-        rename = "session_expiry",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "session_expiry", default, with = "::serde_with::rust::double_option")]
     pub session_expiry: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The unique token of the shared dashboard that was (or is to be) shared.
     #[serde(rename = "share_token")]
@@ -37,7 +33,7 @@ pub struct SharedDashboardInvitesDataObjectAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SharedDashboardInvitesDataObjectAttributes {
@@ -53,45 +49,43 @@ impl SharedDashboardInvitesDataObjectAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn has_session(mut self, value: bool) -> Self {
         self.has_session = Some(value);
         self
     }
-
+    
     pub fn invitation_expiry(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.invitation_expiry = Some(value);
         self
     }
-
+    
     pub fn session_expiry(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.session_expiry = Some(value);
         self
     }
-
+    
     pub fn share_token(mut self, value: String) -> Self {
         self.share_token = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SharedDashboardInvitesDataObjectAttributes {
     fn default() -> Self {
@@ -122,10 +116,7 @@ impl<'de> Deserialize<'de> for SharedDashboardInvitesDataObjectAttributes {
                 let mut invitation_expiry: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut session_expiry: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut share_token: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -135,43 +126,39 @@ impl<'de> Deserialize<'de> for SharedDashboardInvitesDataObjectAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "email" => {
                             if v.is_null() {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "has_session" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_session =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_session = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "invitation_expiry" => {
                             if v.is_null() {
                                 continue;
                             }
-                            invitation_expiry =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            invitation_expiry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "session_expiry" => {
-                            session_expiry =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            session_expiry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "share_token" => {
                             if v.is_null() {
                                 continue;
                             }
-                            share_token =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            share_token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

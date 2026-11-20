@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Group by configuration for retention queries.
 #[non_exhaustive]
@@ -31,14 +31,11 @@ pub struct RetentionGroupBy {
     pub target: crate::datadogV1::model::RetentionGroupByTarget,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RetentionGroupBy {
-    pub fn new(
-        facet: String,
-        target: crate::datadogV1::model::RetentionGroupByTarget,
-    ) -> RetentionGroupBy {
+    pub fn new(facet: String, target: crate::datadogV1::model::RetentionGroupByTarget) -> RetentionGroupBy {
         RetentionGroupBy {
             facet,
             limit: None,
@@ -49,27 +46,30 @@ impl RetentionGroupBy {
             _unparsed: false,
         }
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn should_exclude_missing(mut self, value: bool) -> Self {
         self.should_exclude_missing = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV1::model::RetentionGroupBySort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for RetentionGroupBy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -100,32 +100,31 @@ impl<'de> Deserialize<'de> for RetentionGroupBy {
                     match k.as_str() {
                         "facet" => {
                             facet = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "should_exclude_missing" => {
                             if v.is_null() {
                                 continue;
                             }
-                            should_exclude_missing =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            should_exclude_missing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             if v.is_null() {
                                 continue;
                             }
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _target) = target {
@@ -136,12 +135,10 @@ impl<'de> Deserialize<'de> for RetentionGroupBy {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let facet = facet.ok_or_else(|| M::Error::missing_field("facet"))?;

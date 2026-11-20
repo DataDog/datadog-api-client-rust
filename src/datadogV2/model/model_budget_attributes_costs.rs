@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Aggregated cost data for the budget over the requested period.
 #[non_exhaustive]
@@ -18,24 +18,16 @@ pub struct BudgetAttributesCosts {
     #[serde(rename = "amount", default, with = "::serde_with::rust::double_option")]
     pub amount: Option<Option<f64>>,
     /// The total forecast cost, with any custom forecast overrides applied. Present only when `forecast=true` is requested.
-    #[serde(
-        rename = "forecast",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "forecast", default, with = "::serde_with::rust::double_option")]
     pub forecast: Option<Option<f64>>,
     /// The out-of-the-box ML forecast before custom overrides. Present only when `forecast=true` is requested.
-    #[serde(
-        rename = "ootb_forecast",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "ootb_forecast", default, with = "::serde_with::rust::double_option")]
     pub ootb_forecast: Option<Option<f64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl BudgetAttributesCosts {
@@ -49,35 +41,33 @@ impl BudgetAttributesCosts {
             _unparsed: false,
         }
     }
-
+    
     pub fn actual(mut self, value: Option<f64>) -> Self {
         self.actual = Some(value);
         self
     }
-
+    
     pub fn amount(mut self, value: Option<f64>) -> Self {
         self.amount = Some(value);
         self
     }
-
+    
     pub fn forecast(mut self, value: Option<f64>) -> Self {
         self.forecast = Some(value);
         self
     }
-
+    
     pub fn ootb_forecast(mut self, value: Option<f64>) -> Self {
         self.ootb_forecast = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for BudgetAttributesCosts {
     fn default() -> Self {
@@ -106,10 +96,7 @@ impl<'de> Deserialize<'de> for BudgetAttributesCosts {
                 let mut amount: Option<Option<f64>> = None;
                 let mut forecast: Option<Option<f64>> = None;
                 let mut ootb_forecast: Option<Option<f64>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -119,31 +106,30 @@ impl<'de> Deserialize<'de> for BudgetAttributesCosts {
                                 continue;
                             }
                             actual = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "amount" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             amount = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "forecast" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             forecast = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ootb_forecast" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            ootb_forecast =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ootb_forecast = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

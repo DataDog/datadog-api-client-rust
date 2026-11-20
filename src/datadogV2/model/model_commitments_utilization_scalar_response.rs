@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Response containing scalar utilization metrics for cloud commitment programs.
 #[non_exhaustive]
@@ -16,19 +16,16 @@ pub struct CommitmentsUtilizationScalarResponse {
     pub columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
     /// Array of per-product utilization breakdown entries.
     #[serde(rename = "product_breakdown")]
-    pub product_breakdown:
-        Option<Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>>,
+    pub product_breakdown: Option<Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CommitmentsUtilizationScalarResponse {
-    pub fn new(
-        columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
-    ) -> CommitmentsUtilizationScalarResponse {
+    pub fn new(columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>) -> CommitmentsUtilizationScalarResponse {
         CommitmentsUtilizationScalarResponse {
             columns,
             product_breakdown: None,
@@ -36,23 +33,19 @@ impl CommitmentsUtilizationScalarResponse {
             _unparsed: false,
         }
     }
-
-    pub fn product_breakdown(
-        mut self,
-        value: Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>,
-    ) -> Self {
+    
+    pub fn product_breakdown(mut self, value: Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>) -> Self {
         self.product_breakdown = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CommitmentsUtilizationScalarResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -71,34 +64,27 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationScalarResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut columns: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> =
-                    None;
-                let mut product_breakdown: Option<
-                    Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut columns: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> = None;
+                let mut product_breakdown: Option<Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "columns" => {
                             columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "product_breakdown" => {
                             if v.is_null() {
                                 continue;
                             }
-                            product_breakdown =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_breakdown = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let columns = columns.ok_or_else(|| M::Error::missing_field("columns"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration for a URL that should have distributed tracing enabled.
 #[non_exhaustive]
@@ -21,14 +21,11 @@ pub struct RumSdkConfigTracingUrlConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RumSdkConfigTracingUrlConfig {
-    pub fn new(
-        match_: crate::datadogV2::model::RumSdkConfigMatchOption,
-        propagator_types: Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>,
-    ) -> RumSdkConfigTracingUrlConfig {
+    pub fn new(match_: crate::datadogV2::model::RumSdkConfigMatchOption, propagator_types: Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>) -> RumSdkConfigTracingUrlConfig {
         RumSdkConfigTracingUrlConfig {
             match_,
             propagator_types,
@@ -36,15 +33,14 @@ impl RumSdkConfigTracingUrlConfig {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -64,34 +60,27 @@ impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
                 M: MapAccess<'a>,
             {
                 let mut match_: Option<crate::datadogV2::model::RumSdkConfigMatchOption> = None;
-                let mut propagator_types: Option<
-                    Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut propagator_types: Option<Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "match" => {
                             match_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "propagator_types" => {
-                            propagator_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            propagator_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let match_ = match_.ok_or_else(|| M::Error::missing_field("match_"))?;
-                let propagator_types =
-                    propagator_types.ok_or_else(|| M::Error::missing_field("propagator_types"))?;
+                let propagator_types = propagator_types.ok_or_else(|| M::Error::missing_field("propagator_types"))?;
 
                 let content = RumSdkConfigTracingUrlConfig {
                     match_,

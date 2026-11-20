@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringSuppressionSort {
-    NAME,
-    START_DATE,
-    EXPIRATION_DATE,
-    UPDATE_DATE,
-    ENABLED,
-    NAME_DESCENDING,
-    START_DATE_DESCENDING,
-    EXPIRATION_DATE_DESCENDING,
-    UPDATE_DATE_DESCENDING,
-    CREATION_DATE_DESCENDING,
-    ENABLED_DESCENDING,
+	NAME,
+	START_DATE,
+	EXPIRATION_DATE,
+	UPDATE_DATE,
+	ENABLED,
+	NAME_DESCENDING,
+	START_DATE_DESCENDING,
+	EXPIRATION_DATE_DESCENDING,
+	UPDATE_DATE_DESCENDING,
+	CREATION_DATE_DESCENDING,
+	ENABLED_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -58,21 +59,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "start_date" => Self::START_DATE,
-            "expiration_date" => Self::EXPIRATION_DATE,
-            "update_date" => Self::UPDATE_DATE,
-            "enabled" => Self::ENABLED,
-            "-name" => Self::NAME_DESCENDING,
-            "-start_date" => Self::START_DATE_DESCENDING,
-            "-expiration_date" => Self::EXPIRATION_DATE_DESCENDING,
-            "-update_date" => Self::UPDATE_DATE_DESCENDING,
-            "-creation_date" => Self::CREATION_DATE_DESCENDING,
-            "-enabled" => Self::ENABLED_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"start_date" => Self::START_DATE,"expiration_date" => Self::EXPIRATION_DATE,"update_date" => Self::UPDATE_DATE,"enabled" => Self::ENABLED,"-name" => Self::NAME_DESCENDING,"-start_date" => Self::START_DATE_DESCENDING,"-expiration_date" => Self::EXPIRATION_DATE_DESCENDING,"-update_date" => Self::UPDATE_DATE_DESCENDING,"-creation_date" => Self::CREATION_DATE_DESCENDING,"-enabled" => Self::ENABLED_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

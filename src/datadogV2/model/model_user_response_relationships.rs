@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationships of the user object returned by the API.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct UserResponseRelationships {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UserResponseRelationships {
@@ -41,38 +41,33 @@ impl UserResponseRelationships {
             _unparsed: false,
         }
     }
-
+    
     pub fn org(mut self, value: crate::datadogV2::model::RelationshipToOrganization) -> Self {
         self.org = Some(value);
         self
     }
-
-    pub fn other_orgs(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToOrganizations,
-    ) -> Self {
+    
+    pub fn other_orgs(mut self, value: crate::datadogV2::model::RelationshipToOrganizations) -> Self {
         self.other_orgs = Some(value);
         self
     }
-
+    
     pub fn other_users(mut self, value: crate::datadogV2::model::RelationshipToUsers) -> Self {
         self.other_users = Some(value);
         self
     }
-
+    
     pub fn roles(mut self, value: crate::datadogV2::model::RelationshipToRoles) -> Self {
         self.roles = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UserResponseRelationships {
     fn default() -> Self {
@@ -98,14 +93,10 @@ impl<'de> Deserialize<'de> for UserResponseRelationships {
                 M: MapAccess<'a>,
             {
                 let mut org: Option<crate::datadogV2::model::RelationshipToOrganization> = None;
-                let mut other_orgs: Option<crate::datadogV2::model::RelationshipToOrganizations> =
-                    None;
+                let mut other_orgs: Option<crate::datadogV2::model::RelationshipToOrganizations> = None;
                 let mut other_users: Option<crate::datadogV2::model::RelationshipToUsers> = None;
                 let mut roles: Option<crate::datadogV2::model::RelationshipToRoles> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,31 +106,30 @@ impl<'de> Deserialize<'de> for UserResponseRelationships {
                                 continue;
                             }
                             org = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "other_orgs" => {
                             if v.is_null() {
                                 continue;
                             }
                             other_orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "other_users" => {
                             if v.is_null() {
                                 continue;
                             }
-                            other_users =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            other_users = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "roles" => {
                             if v.is_null() {
                                 continue;
                             }
                             roles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

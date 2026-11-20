@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Extended set of attributes for a single End User Device Monitoring device,
 /// including Cloud Network Monitoring and battery metrics.
@@ -22,7 +22,7 @@ pub struct DeviceDetailsDataAttributes {
     #[serde(rename = "battery_charge_pct")]
     pub battery_charge_pct: Option<i64>,
     /// Rate at which the battery is charging or discharging, in milliamperes.
-    /// Negative values indicate discharge.
+/// Negative values indicate discharge.
     #[serde(rename = "battery_charge_rate")]
     pub battery_charge_rate: Option<i64>,
     /// Whether the device's battery health has degraded to a critical level.
@@ -53,12 +53,12 @@ pub struct DeviceDetailsDataAttributes {
     #[serde(rename = "disk_usage")]
     pub disk_usage: Option<f64>,
     /// Directory information about the employee associated with the device,
-    /// sourced from a customer reference table.
-    /// Absent when no reference table is configured or the device has no match.
+/// sourced from a customer reference table.
+/// Absent when no reference table is configured or the device has no match.
     #[serde(rename = "employee")]
     pub employee: Option<crate::datadogV2::model::DeviceEmployee>,
     /// Location derived from the device's public IP address.
-    /// Absent when no location data is available.
+/// Absent when no location data is available.
     #[serde(rename = "geo_ip")]
     pub geo_ip: Option<crate::datadogV2::model::DeviceGeoIP>,
     /// Last observed IPv4 or IPv6 address of the device.
@@ -92,14 +92,14 @@ pub struct DeviceDetailsDataAttributes {
     #[serde(rename = "model_number")]
     pub model_number: Option<String>,
     /// Operating system family running on the device, as reported by the Datadog Agent
-    /// (for example, `macOS`, `Windows`, or `linux`). Empty when unknown.
+/// (for example, `macOS`, `Windows`, or `linux`). Empty when unknown.
     #[serde(rename = "os")]
     pub os: Option<String>,
     /// Operating system version running on the device.
     #[serde(rename = "os_version")]
     pub os_version: Option<String>,
     /// Number of TCP packets sent by the device over the query window,
-    /// as reported by Cloud Network Monitoring.
+/// as reported by Cloud Network Monitoring.
     #[serde(rename = "packet_sent")]
     pub packet_sent: Option<f64>,
     /// Datadog resource identifier for the device.
@@ -115,7 +115,7 @@ pub struct DeviceDetailsDataAttributes {
     #[serde(rename = "serial_number")]
     pub serial_number: Option<String>,
     /// Health status of the device, computed from its issues and recent telemetry.
-    /// `inactive` means the device stopped reporting. `unknown` means no telemetry is available yet.
+/// `inactive` means the device stopped reporting. `unknown` means no telemetry is available yet.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::DeviceStatus>,
     /// Number of TCP connection attempts canceled by the device over the query window.
@@ -149,7 +149,7 @@ pub struct DeviceDetailsDataAttributes {
     #[serde(rename = "uptime")]
     pub uptime: Option<f64>,
     /// BSSID (MAC address of the access point) of the wireless network the device is
-    /// currently connected to.
+/// currently connected to.
     #[serde(rename = "wlan_bssid")]
     pub wlan_bssid: Option<String>,
     /// Received signal strength indicator of the device's current wireless connection, in dBm.
@@ -162,7 +162,7 @@ pub struct DeviceDetailsDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DeviceDetailsDataAttributes {
@@ -218,245 +218,243 @@ impl DeviceDetailsDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn agent_key(mut self, value: String) -> Self {
         self.agent_key = Some(value);
         self
     }
-
+    
     pub fn agent_version(mut self, value: String) -> Self {
         self.agent_version = Some(value);
         self
     }
-
+    
     pub fn battery_charge_pct(mut self, value: i64) -> Self {
         self.battery_charge_pct = Some(value);
         self
     }
-
+    
     pub fn battery_charge_rate(mut self, value: i64) -> Self {
         self.battery_charge_rate = Some(value);
         self
     }
-
+    
     pub fn battery_critical(mut self, value: bool) -> Self {
         self.battery_critical = Some(value);
         self
     }
-
+    
     pub fn battery_cycle_count(mut self, value: i64) -> Self {
         self.battery_cycle_count = Some(value);
         self
     }
-
+    
     pub fn battery_max_capacity_pct(mut self, value: i64) -> Self {
         self.battery_max_capacity_pct = Some(value);
         self
     }
-
+    
     pub fn cnm_enabled(mut self, value: bool) -> Self {
         self.cnm_enabled = Some(value);
         self
     }
-
+    
     pub fn cpu_cores(mut self, value: i64) -> Self {
         self.cpu_cores = Some(value);
         self
     }
-
+    
     pub fn cpu_logical_processors(mut self, value: i64) -> Self {
         self.cpu_logical_processors = Some(value);
         self
     }
-
+    
     pub fn cpu_model(mut self, value: String) -> Self {
         self.cpu_model = Some(value);
         self
     }
-
+    
     pub fn cpu_usage(mut self, value: f64) -> Self {
         self.cpu_usage = Some(value);
         self
     }
-
+    
     pub fn disk_usage(mut self, value: f64) -> Self {
         self.disk_usage = Some(value);
         self
     }
-
+    
     pub fn employee(mut self, value: crate::datadogV2::model::DeviceEmployee) -> Self {
         self.employee = Some(value);
         self
     }
-
+    
     pub fn geo_ip(mut self, value: crate::datadogV2::model::DeviceGeoIP) -> Self {
         self.geo_ip = Some(value);
         self
     }
-
+    
     pub fn ip_address(mut self, value: String) -> Self {
         self.ip_address = Some(value);
         self
     }
-
+    
     pub fn issues(mut self, value: Vec<String>) -> Self {
         self.issues = Some(value);
         self
     }
-
+    
     pub fn kernel_name(mut self, value: String) -> Self {
         self.kernel_name = Some(value);
         self
     }
-
+    
     pub fn last_reboot(mut self, value: String) -> Self {
         self.last_reboot = Some(value);
         self
     }
-
+    
     pub fn last_seen(mut self, value: String) -> Self {
         self.last_seen = Some(value);
         self
     }
-
+    
     pub fn manufacturer(mut self, value: String) -> Self {
         self.manufacturer = Some(value);
         self
     }
-
+    
     pub fn mem_usage(mut self, value: f64) -> Self {
         self.mem_usage = Some(value);
         self
     }
-
+    
     pub fn memory_total_kb(mut self, value: i64) -> Self {
         self.memory_total_kb = Some(value);
         self
     }
-
+    
     pub fn model_name(mut self, value: String) -> Self {
         self.model_name = Some(value);
         self
     }
-
+    
     pub fn model_number(mut self, value: String) -> Self {
         self.model_number = Some(value);
         self
     }
-
+    
     pub fn os(mut self, value: String) -> Self {
         self.os = Some(value);
         self
     }
-
+    
     pub fn os_version(mut self, value: String) -> Self {
         self.os_version = Some(value);
         self
     }
-
+    
     pub fn packet_sent(mut self, value: f64) -> Self {
         self.packet_sent = Some(value);
         self
     }
-
+    
     pub fn resource_id(mut self, value: String) -> Self {
         self.resource_id = Some(value);
         self
     }
-
+    
     pub fn retransmit(mut self, value: f64) -> Self {
         self.retransmit = Some(value);
         self
     }
-
+    
     pub fn retransmit_pct(mut self, value: f64) -> Self {
         self.retransmit_pct = Some(value);
         self
     }
-
+    
     pub fn serial_number(mut self, value: String) -> Self {
         self.serial_number = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::DeviceStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn tcp_canceled(mut self, value: f64) -> Self {
         self.tcp_canceled = Some(value);
         self
     }
-
+    
     pub fn tcp_established(mut self, value: f64) -> Self {
         self.tcp_established = Some(value);
         self
     }
-
+    
     pub fn tcp_establishment_failure_pct(mut self, value: f64) -> Self {
         self.tcp_establishment_failure_pct = Some(value);
         self
     }
-
+    
     pub fn tcp_establishment_failures(mut self, value: f64) -> Self {
         self.tcp_establishment_failures = Some(value);
         self
     }
-
+    
     pub fn tcp_host_unreachable(mut self, value: f64) -> Self {
         self.tcp_host_unreachable = Some(value);
         self
     }
-
+    
     pub fn tcp_network_unreachable(mut self, value: f64) -> Self {
         self.tcp_network_unreachable = Some(value);
         self
     }
-
+    
     pub fn tcp_refusals(mut self, value: f64) -> Self {
         self.tcp_refusals = Some(value);
         self
     }
-
+    
     pub fn tcp_timeouts(mut self, value: f64) -> Self {
         self.tcp_timeouts = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn uptime(mut self, value: f64) -> Self {
         self.uptime = Some(value);
         self
     }
-
+    
     pub fn wlan_bssid(mut self, value: String) -> Self {
         self.wlan_bssid = Some(value);
         self
     }
-
+    
     pub fn wlan_rssi(mut self, value: f64) -> Self {
         self.wlan_rssi = Some(value);
         self
     }
-
+    
     pub fn wlan_ssid(mut self, value: String) -> Self {
         self.wlan_ssid = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DeviceDetailsDataAttributes {
     fn default() -> Self {
@@ -527,10 +525,7 @@ impl<'de> Deserialize<'de> for DeviceDetailsDataAttributes {
                 let mut wlan_bssid: Option<String> = None;
                 let mut wlan_rssi: Option<f64> = None;
                 let mut wlan_ssid: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -540,210 +535,193 @@ impl<'de> Deserialize<'de> for DeviceDetailsDataAttributes {
                                 continue;
                             }
                             agent_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "agent_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            agent_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "battery_charge_pct" => {
                             if v.is_null() {
                                 continue;
                             }
-                            battery_charge_pct =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            battery_charge_pct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "battery_charge_rate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            battery_charge_rate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            battery_charge_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "battery_critical" => {
                             if v.is_null() {
                                 continue;
                             }
-                            battery_critical =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            battery_critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "battery_cycle_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            battery_cycle_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            battery_cycle_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "battery_max_capacity_pct" => {
                             if v.is_null() {
                                 continue;
                             }
-                            battery_max_capacity_pct =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            battery_max_capacity_pct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cnm_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cnm_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cnm_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cpu_cores" => {
                             if v.is_null() {
                                 continue;
                             }
                             cpu_cores = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cpu_logical_processors" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cpu_logical_processors =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cpu_logical_processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cpu_model" => {
                             if v.is_null() {
                                 continue;
                             }
                             cpu_model = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cpu_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             cpu_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "disk_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             disk_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "employee" => {
                             if v.is_null() {
                                 continue;
                             }
                             employee = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "geo_ip" => {
                             if v.is_null() {
                                 continue;
                             }
                             geo_ip = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ip_address" => {
                             if v.is_null() {
                                 continue;
                             }
                             ip_address = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "issues" => {
                             if v.is_null() {
                                 continue;
                             }
                             issues = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "kernel_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            kernel_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            kernel_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_reboot" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_reboot =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_reboot = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_seen" => {
                             if v.is_null() {
                                 continue;
                             }
                             last_seen = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "manufacturer" => {
                             if v.is_null() {
                                 continue;
                             }
-                            manufacturer =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            manufacturer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mem_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             mem_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "memory_total_kb" => {
                             if v.is_null() {
                                 continue;
                             }
-                            memory_total_kb =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            memory_total_kb = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             model_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model_number" => {
                             if v.is_null() {
                                 continue;
                             }
-                            model_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "os" => {
                             if v.is_null() {
                                 continue;
                             }
                             os = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "os_version" => {
                             if v.is_null() {
                                 continue;
                             }
                             os_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "packet_sent" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            packet_sent =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packet_sent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retransmit" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             retransmit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retransmit_pct" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            retransmit_pct =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            retransmit_pct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serial_number" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serial_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serial_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -751,106 +729,96 @@ impl<'de> Deserialize<'de> for DeviceDetailsDataAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::DeviceStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV2::model::DeviceStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tcp_canceled" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_canceled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_canceled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_established" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_established =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_established = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_establishment_failure_pct" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_establishment_failure_pct =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_establishment_failure_pct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_establishment_failures" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_establishment_failures =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_establishment_failures = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_host_unreachable" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_host_unreachable =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_host_unreachable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_network_unreachable" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_network_unreachable =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_network_unreachable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_refusals" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_refusals =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_refusals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_timeouts" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            tcp_timeouts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_timeouts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "uptime" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "wlan_bssid" => {
                             if v.is_null() {
                                 continue;
                             }
                             wlan_bssid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "wlan_rssi" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             wlan_rssi = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "wlan_ssid" => {
                             if v.is_null() {
                                 continue;
                             }
                             wlan_ssid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,21 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum PersonalAccessTokensSort {
-    NAME_ASCENDING,
-    NAME_DESCENDING,
-    CREATED_AT_ASCENDING,
-    CREATED_AT_DESCENDING,
-    EXPIRES_AT_ASCENDING,
-    EXPIRES_AT_DESCENDING,
-    LAST_USED_AT_ASCENDING,
-    LAST_USED_AT_DESCENDING,
-    LEAKED_ASCENDING,
-    LEAKED_DESCENDING,
+	NAME_ASCENDING,
+	NAME_DESCENDING,
+	CREATED_AT_ASCENDING,
+	CREATED_AT_DESCENDING,
+	EXPIRES_AT_ASCENDING,
+	EXPIRES_AT_DESCENDING,
+	LAST_USED_AT_ASCENDING,
+	LAST_USED_AT_DESCENDING,
+	LEAKED_ASCENDING,
+	LEAKED_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,20 +57,8 @@ impl<'de> Deserialize<'de> for PersonalAccessTokensSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME_ASCENDING,
-            "-name" => Self::NAME_DESCENDING,
-            "created_at" => Self::CREATED_AT_ASCENDING,
-            "-created_at" => Self::CREATED_AT_DESCENDING,
-            "expires_at" => Self::EXPIRES_AT_ASCENDING,
-            "-expires_at" => Self::EXPIRES_AT_DESCENDING,
-            "last_used_at" => Self::LAST_USED_AT_ASCENDING,
-            "-last_used_at" => Self::LAST_USED_AT_DESCENDING,
-            "leaked" => Self::LEAKED_ASCENDING,
-            "-leaked" => Self::LEAKED_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME_ASCENDING,"-name" => Self::NAME_DESCENDING,"created_at" => Self::CREATED_AT_ASCENDING,"-created_at" => Self::CREATED_AT_DESCENDING,"expires_at" => Self::EXPIRES_AT_ASCENDING,"-expires_at" => Self::EXPIRES_AT_DESCENDING,"last_used_at" => Self::LAST_USED_AT_ASCENDING,"-last_used_at" => Self::LAST_USED_AT_DESCENDING,"leaked" => Self::LEAKED_ASCENDING,"-leaked" => Self::LEAKED_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

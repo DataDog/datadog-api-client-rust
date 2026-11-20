@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Details of the global variable to create.
 #[non_exhaustive]
@@ -31,8 +31,7 @@ pub struct SyntheticsGlobalVariableRequest {
     pub name: String,
     /// Parser options to use for retrieving a Synthetic global variable from a Synthetic test. Used in conjunction with `parse_test_public_id`.
     #[serde(rename = "parse_test_options")]
-    pub parse_test_options:
-        Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions>,
+    pub parse_test_options: Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions>,
     /// A Synthetic test ID to use as a test to generate the variable value.
     #[serde(rename = "parse_test_public_id")]
     pub parse_test_public_id: Option<String>,
@@ -46,15 +45,11 @@ pub struct SyntheticsGlobalVariableRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsGlobalVariableRequest {
-    pub fn new(
-        description: String,
-        name: String,
-        tags: Vec<String>,
-    ) -> SyntheticsGlobalVariableRequest {
+    pub fn new(description: String, name: String, tags: Vec<String>) -> SyntheticsGlobalVariableRequest {
         SyntheticsGlobalVariableRequest {
             attributes: None,
             description,
@@ -70,56 +65,49 @@ impl SyntheticsGlobalVariableRequest {
             _unparsed: false,
         }
     }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsGlobalVariableAttributes,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: crate::datadogV1::model::SyntheticsGlobalVariableAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn is_fido(mut self, value: bool) -> Self {
         self.is_fido = Some(value);
         self
     }
-
+    
     pub fn is_totp(mut self, value: bool) -> Self {
         self.is_totp = Some(value);
         self
     }
-
-    pub fn parse_test_options(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions,
-    ) -> Self {
+    
+    pub fn parse_test_options(mut self, value: crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions) -> Self {
         self.parse_test_options = Some(value);
         self
     }
-
+    
     pub fn parse_test_public_id(mut self, value: String) -> Self {
         self.parse_test_public_id = Some(value);
         self
     }
-
+    
     pub fn value(mut self, value: crate::datadogV1::model::SyntheticsGlobalVariableValue) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -138,25 +126,17 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV1::model::SyntheticsGlobalVariableAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV1::model::SyntheticsGlobalVariableAttributes> = None;
                 let mut description: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut is_fido: Option<bool> = None;
                 let mut is_totp: Option<bool> = None;
                 let mut name: Option<String> = None;
-                let mut parse_test_options: Option<
-                    crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions,
-                > = None;
+                let mut parse_test_options: Option<crate::datadogV1::model::SyntheticsGlobalVariableParseTestOptions> = None;
                 let mut parse_test_public_id: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut value: Option<crate::datadogV1::model::SyntheticsGlobalVariableValue> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut value: Option<crate::datadogV1::model::SyntheticsGlobalVariableValue> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,64 +146,60 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_fido" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_fido = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_totp" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_totp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parse_test_options" => {
                             if v.is_null() {
                                 continue;
                             }
-                            parse_test_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            parse_test_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "parse_test_public_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            parse_test_public_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            parse_test_public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
 

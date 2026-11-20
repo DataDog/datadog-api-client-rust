@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems` object.
 #[non_exhaustive]
@@ -25,10 +25,7 @@ pub struct ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
 }
 
 impl ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
-    pub fn new(
-        allocated_tags: Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>,
-        percentage: f64,
-    ) -> ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
+    pub fn new(allocated_tags: Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>, percentage: f64) -> ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
         ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
             allocated_tags,
             percentage,
@@ -36,15 +33,14 @@ impl ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -65,30 +61,25 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesStrategyA
             {
                 let mut allocated_tags: Option<Vec<crate::datadogV2::model::ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>> = None;
                 let mut percentage: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "allocated_tags" => {
-                            allocated_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocated_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "percentage" => {
                             percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let allocated_tags =
-                    allocated_tags.ok_or_else(|| M::Error::missing_field("allocated_tags"))?;
+                let allocated_tags = allocated_tags.ok_or_else(|| M::Error::missing_field("allocated_tags"))?;
                 let percentage = percentage.ok_or_else(|| M::Error::missing_field("percentage"))?;
 
                 let content = ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItems {
@@ -102,8 +93,6 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesStrategyA
             }
         }
 
-        deserializer.deserialize_any(
-            ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsVisitor,
-        )
+        deserializer.deserialize_any(ArbitraryCostUpsertRequestDataAttributesStrategyAllocatedByItemsVisitor)
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Schema of a Custom Costs metadata.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct CustomCostsFileMetadata {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CustomCostsFileMetadata {
@@ -61,63 +61,58 @@ impl CustomCostsFileMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn ai_provider(mut self, value: bool) -> Self {
         self.ai_provider = Some(value);
         self
     }
-
+    
     pub fn billed_cost(mut self, value: f64) -> Self {
         self.billed_cost = Some(value);
         self
     }
-
+    
     pub fn billing_currency(mut self, value: String) -> Self {
         self.billing_currency = Some(value);
         self
     }
-
-    pub fn charge_period(
-        mut self,
-        value: crate::datadogV2::model::CustomCostsFileUsageChargePeriod,
-    ) -> Self {
+    
+    pub fn charge_period(mut self, value: crate::datadogV2::model::CustomCostsFileUsageChargePeriod) -> Self {
         self.charge_period = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn provider_names(mut self, value: Vec<String>) -> Self {
         self.provider_names = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn uploaded_at(mut self, value: f64) -> Self {
         self.uploaded_at = Some(value);
         self
     }
-
+    
     pub fn uploaded_by(mut self, value: crate::datadogV2::model::CustomCostsUser) -> Self {
         self.uploaded_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CustomCostsFileMetadata {
     fn default() -> Self {
@@ -145,18 +140,13 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadata {
                 let mut ai_provider: Option<bool> = None;
                 let mut billed_cost: Option<f64> = None;
                 let mut billing_currency: Option<String> = None;
-                let mut charge_period: Option<
-                    crate::datadogV2::model::CustomCostsFileUsageChargePeriod,
-                > = None;
+                let mut charge_period: Option<crate::datadogV2::model::CustomCostsFileUsageChargePeriod> = None;
                 let mut name: Option<String> = None;
                 let mut provider_names: Option<Vec<String>> = None;
                 let mut status: Option<String> = None;
                 let mut uploaded_at: Option<f64> = None;
                 let mut uploaded_by: Option<crate::datadogV2::model::CustomCostsUser> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -165,68 +155,61 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadata {
                             if v.is_null() {
                                 continue;
                             }
-                            ai_provider =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ai_provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "billed_cost" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            billed_cost =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            billed_cost = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "billing_currency" => {
                             if v.is_null() {
                                 continue;
                             }
-                            billing_currency =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            billing_currency = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "charge_period" => {
                             if v.is_null() {
                                 continue;
                             }
-                            charge_period =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            charge_period = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider_names" => {
                             if v.is_null() {
                                 continue;
                             }
-                            provider_names =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_names = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "uploaded_at" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            uploaded_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            uploaded_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "uploaded_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            uploaded_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            uploaded_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

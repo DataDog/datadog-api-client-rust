@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The number of indexed logs for each hour for a given organization broken down by retention period.
 #[non_exhaustive]
@@ -12,18 +12,10 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageLogsByRetentionHour {
     /// Total logs indexed with this retention period during a given hour.
-    #[serde(
-        rename = "indexed_events_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "indexed_events_count", default, with = "::serde_with::rust::double_option")]
     pub indexed_events_count: Option<Option<i64>>,
     /// Live logs indexed with this retention period during a given hour.
-    #[serde(
-        rename = "live_indexed_events_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "live_indexed_events_count", default, with = "::serde_with::rust::double_option")]
     pub live_indexed_events_count: Option<Option<i64>>,
     /// The organization name.
     #[serde(rename = "org_name")]
@@ -32,24 +24,16 @@ pub struct UsageLogsByRetentionHour {
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// Rehydrated logs indexed with this retention period during a given hour.
-    #[serde(
-        rename = "rehydrated_indexed_events_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "rehydrated_indexed_events_count", default, with = "::serde_with::rust::double_option")]
     pub rehydrated_indexed_events_count: Option<Option<i64>>,
     /// The retention period in days or "custom" for all custom retention usage.
-    #[serde(
-        rename = "retention",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "retention", default, with = "::serde_with::rust::double_option")]
     pub retention: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageLogsByRetentionHour {
@@ -65,45 +49,43 @@ impl UsageLogsByRetentionHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.indexed_events_count = Some(value);
         self
     }
-
+    
     pub fn live_indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.live_indexed_events_count = Some(value);
         self
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn rehydrated_indexed_events_count(mut self, value: Option<i64>) -> Self {
         self.rehydrated_indexed_events_count = Some(value);
         self
     }
-
+    
     pub fn retention(mut self, value: Option<String>) -> Self {
         self.retention = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageLogsByRetentionHour {
     fn default() -> Self {
@@ -134,46 +116,40 @@ impl<'de> Deserialize<'de> for UsageLogsByRetentionHour {
                 let mut public_id: Option<String> = None;
                 let mut rehydrated_indexed_events_count: Option<Option<i64>> = None;
                 let mut retention: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "indexed_events_count" => {
-                            indexed_events_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indexed_events_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "live_indexed_events_count" => {
-                            live_indexed_events_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            live_indexed_events_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rehydrated_indexed_events_count" => {
-                            rehydrated_indexed_events_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydrated_indexed_events_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retention" => {
                             retention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

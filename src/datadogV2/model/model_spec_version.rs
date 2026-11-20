@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SpecVersion {
-    ONE_ZERO,
-    ONE_ONE,
-    ONE_TWO,
-    ONE_THREE,
-    ONE_FOUR,
-    ONE_FIVE,
-    ONE_SIX,
+	ONE_ZERO,
+	ONE_ONE,
+	ONE_TWO,
+	ONE_THREE,
+	ONE_FOUR,
+	ONE_FIVE,
+	ONE_SIX,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for SpecVersion {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "1.0" => Self::ONE_ZERO,
-            "1.1" => Self::ONE_ONE,
-            "1.2" => Self::ONE_TWO,
-            "1.3" => Self::ONE_THREE,
-            "1.4" => Self::ONE_FOUR,
-            "1.5" => Self::ONE_FIVE,
-            "1.6" => Self::ONE_SIX,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"1.0" => Self::ONE_ZERO,"1.1" => Self::ONE_ONE,"1.2" => Self::ONE_TWO,"1.3" => Self::ONE_THREE,"1.4" => Self::ONE_FOUR,"1.5" => Self::ONE_FIVE,"1.6" => Self::ONE_SIX,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

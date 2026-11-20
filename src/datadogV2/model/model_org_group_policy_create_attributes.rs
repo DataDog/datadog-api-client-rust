@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating an org group policy. If `policy_type` is not provided, it defaults to `org_config`. `enforcement_tier` is optional; if not provided, the resulting value depends on `policy_type` and is otherwise unspecified.
 #[non_exhaustive]
@@ -27,14 +27,11 @@ pub struct OrgGroupPolicyCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OrgGroupPolicyCreateAttributes {
-    pub fn new(
-        content: std::collections::BTreeMap<String, serde_json::Value>,
-        policy_name: String,
-    ) -> OrgGroupPolicyCreateAttributes {
+    pub fn new(content: std::collections::BTreeMap<String, serde_json::Value>, policy_name: String) -> OrgGroupPolicyCreateAttributes {
         OrgGroupPolicyCreateAttributes {
             content,
             enforcement_tier: None,
@@ -44,28 +41,24 @@ impl OrgGroupPolicyCreateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn enforcement_tier(
-        mut self,
-        value: crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
-    ) -> Self {
+    
+    pub fn enforcement_tier(mut self, value: crate::datadogV2::model::OrgGroupPolicyEnforcementTier) -> Self {
         self.enforcement_tier = Some(value);
         self
     }
-
+    
     pub fn policy_type(mut self, value: crate::datadogV2::model::OrgGroupPolicyPolicyType) -> Self {
         self.policy_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OrgGroupPolicyCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -84,31 +77,23 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut content: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut enforcement_tier: Option<
-                    crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
-                > = None;
+                let mut content: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut enforcement_tier: Option<crate::datadogV2::model::OrgGroupPolicyEnforcementTier> = None;
                 let mut policy_name: Option<String> = None;
-                let mut policy_type: Option<crate::datadogV2::model::OrgGroupPolicyPolicyType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut policy_type: Option<crate::datadogV2::model::OrgGroupPolicyPolicyType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "content" => {
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enforcement_tier" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enforcement_tier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            enforcement_tier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _enforcement_tier) = enforcement_tier {
                                 match _enforcement_tier {
                                     crate::datadogV2::model::OrgGroupPolicyEnforcementTier::UnparsedObject(_enforcement_tier) => {
@@ -117,17 +102,15 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "policy_name" => {
-                            policy_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            policy_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "policy_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            policy_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            policy_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _policy_type) = policy_type {
                                 match _policy_type {
                                     crate::datadogV2::model::OrgGroupPolicyPolicyType::UnparsedObject(_policy_type) => {
@@ -136,17 +119,16 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let content = content.ok_or_else(|| M::Error::missing_field("content"))?;
-                let policy_name =
-                    policy_name.ok_or_else(|| M::Error::missing_field("policy_name"))?;
+                let policy_name = policy_name.ok_or_else(|| M::Error::missing_field("policy_name"))?;
 
                 let content = OrgGroupPolicyCreateAttributes {
                     content,

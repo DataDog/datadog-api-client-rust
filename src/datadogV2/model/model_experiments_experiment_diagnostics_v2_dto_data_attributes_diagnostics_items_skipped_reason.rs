@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason {
-    NO_ASSIGNMENTS,
-    NO_DIMENSIONAL_DATA,
-    NO_METRIC_DATA,
-    ZERO_VARIANCE,
+	NO_ASSIGNMENTS,
+	NO_DIMENSIONAL_DATA,
+	NO_METRIC_DATA,
+	ZERO_VARIANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,9 +27,7 @@ impl ToString for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnostics
     }
 }
 
-impl Serialize
-    for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason
-{
+impl Serialize for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -40,22 +39,14 @@ impl Serialize
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason
-{
+impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "NO_ASSIGNMENTS" => Self::NO_ASSIGNMENTS,
-            "NO_DIMENSIONAL_DATA" => Self::NO_DIMENSIONAL_DATA,
-            "NO_METRIC_DATA" => Self::NO_METRIC_DATA,
-            "ZERO_VARIANCE" => Self::ZERO_VARIANCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"NO_ASSIGNMENTS" => Self::NO_ASSIGNMENTS,"NO_DIMENSIONAL_DATA" => Self::NO_DIMENSIONAL_DATA,"NO_METRIC_DATA" => Self::NO_METRIC_DATA,"ZERO_VARIANCE" => Self::ZERO_VARIANCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

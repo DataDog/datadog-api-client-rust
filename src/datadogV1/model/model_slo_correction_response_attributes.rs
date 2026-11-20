@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attribute object associated with the SLO correction.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct SLOCorrectionResponseAttributes {
     #[serde(rename = "category")]
     pub category: Option<crate::datadogV1::model::SLOCorrectionCategory>,
     /// The epoch timestamp of when the correction was created at.
-    #[serde(
-        rename = "created_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "created_at", default, with = "::serde_with::rust::double_option")]
     pub created_at: Option<Option<i64>>,
     /// Object describing the creator of the shared element.
     #[serde(rename = "creator")]
@@ -28,42 +24,26 @@ pub struct SLOCorrectionResponseAttributes {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// Length of time (in seconds) for a specified `rrule` recurring SLO correction.
-    #[serde(
-        rename = "duration",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "duration", default, with = "::serde_with::rust::double_option")]
     pub duration: Option<Option<i64>>,
     /// Ending time of the correction in epoch seconds.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
     pub end: Option<Option<i64>>,
     /// The epoch timestamp of when the correction was modified at.
-    #[serde(
-        rename = "modified_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "modified_at", default, with = "::serde_with::rust::double_option")]
     pub modified_at: Option<Option<i64>>,
     /// Modifier of the object.
-    #[serde(
-        rename = "modifier",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "modifier", default, with = "::serde_with::rust::double_option")]
     pub modifier: Option<Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>>,
     /// The recurrence rules as defined in the iCalendar RFC 5545. The supported rules for SLO corrections
-    /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
+/// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule", default, with = "::serde_with::rust::double_option")]
     pub rrule: Option<Option<String>>,
     /// ID of the single SLO that this correction applies to.
     #[serde(rename = "slo_id", default, with = "::serde_with::rust::double_option")]
     pub slo_id: Option<Option<String>>,
     /// Query that matches the SLOs this correction applies to.
-    #[serde(
-        rename = "slo_query",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "slo_query", default, with = "::serde_with::rust::double_option")]
     pub slo_query: Option<Option<String>>,
     /// Starting time of the correction in epoch seconds.
     #[serde(rename = "start")]
@@ -75,7 +55,7 @@ pub struct SLOCorrectionResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SLOCorrectionResponseAttributes {
@@ -98,83 +78,78 @@ impl SLOCorrectionResponseAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn category(mut self, value: crate::datadogV1::model::SLOCorrectionCategory) -> Self {
         self.category = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: Option<i64>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn duration(mut self, value: Option<i64>) -> Self {
         self.duration = Some(value);
         self
     }
-
+    
     pub fn end(mut self, value: Option<i64>) -> Self {
         self.end = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: Option<i64>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
-    pub fn modifier(
-        mut self,
-        value: Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
-    ) -> Self {
+    
+    pub fn modifier(mut self, value: Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>) -> Self {
         self.modifier = Some(value);
         self
     }
-
+    
     pub fn rrule(mut self, value: Option<String>) -> Self {
         self.rrule = Some(value);
         self
     }
-
+    
     pub fn slo_id(mut self, value: Option<String>) -> Self {
         self.slo_id = Some(value);
         self
     }
-
+    
     pub fn slo_query(mut self, value: Option<String>) -> Self {
         self.slo_query = Some(value);
         self
     }
-
+    
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
-
+    
     pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SLOCorrectionResponseAttributes {
     fn default() -> Self {
@@ -206,18 +181,13 @@ impl<'de> Deserialize<'de> for SLOCorrectionResponseAttributes {
                 let mut duration: Option<Option<i64>> = None;
                 let mut end: Option<Option<i64>> = None;
                 let mut modified_at: Option<Option<i64>> = None;
-                let mut modifier: Option<
-                    Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
-                > = None;
+                let mut modifier: Option<Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>> = None;
                 let mut rrule: Option<Option<String>> = None;
                 let mut slo_id: Option<Option<String>> = None;
                 let mut slo_query: Option<Option<String>> = None;
                 let mut start: Option<i64> = None;
                 let mut timezone: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -235,62 +205,60 @@ impl<'de> Deserialize<'de> for SLOCorrectionResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "creator" => {
                             if v.is_null() {
                                 continue;
                             }
                             creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "duration" => {
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modifier" => {
                             modifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rrule" => {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slo_id" => {
                             slo_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slo_query" => {
                             slo_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             if v.is_null() {
                                 continue;
                             }
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timezone" => {
                             if v.is_null() {
                                 continue;
                             }
                             timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

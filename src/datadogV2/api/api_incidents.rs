@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// CreateGlobalIncidentHandleOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::create_global_incident_handle`]
 #[non_exhaustive]
@@ -55,10 +52,7 @@ pub struct CreateIncidentImpactOptionalParams {
 
 impl CreateIncidentImpactOptionalParams {
     /// Specifies which related resources should be included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -234,10 +228,7 @@ pub struct ImportIncidentOptionalParams {
 
 impl ImportIncidentOptionalParams {
     /// Specifies which related object types to include in the response when importing an incident.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentImportRelatedObject>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentImportRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -292,10 +283,7 @@ pub struct ListIncidentImpactsOptionalParams {
 
 impl ListIncidentImpactsOptionalParams {
     /// Specifies which related resources should be included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -377,10 +365,7 @@ pub struct ListIncidentRespondersOptionalParams {
 
 impl ListIncidentRespondersOptionalParams {
     /// Comma-separated related resource types to include. Supported values are `users` and `role_assignments`.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentResponderRelatedObject>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentResponderRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -586,10 +571,7 @@ pub struct PatchIncidentImpactOptionalParams {
 
 impl PatchIncidentImpactOptionalParams {
     /// Specifies which related resources should be included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::IncidentImpactRelatedObject>) -> Self {
         self.include = Some(value);
         self
     }
@@ -744,6 +726,9 @@ impl UpdateIncidentUserDefinedRoleOptionalParams {
     }
 }
 
+
+
+
 /// CreateGlobalIncidentHandleError is a struct for typed errors of method [`IncidentsAPI::create_global_incident_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -753,6 +738,7 @@ pub enum CreateGlobalIncidentHandleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentError is a struct for typed errors of method [`IncidentsAPI::create_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -760,6 +746,7 @@ pub enum CreateIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::create_incident_attachment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -769,6 +756,7 @@ pub enum CreateIncidentAttachmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentConfigurationError is a struct for typed errors of method [`IncidentsAPI::create_incident_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -776,6 +764,7 @@ pub enum CreateIncidentConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentGoogleChatConfigurationError is a struct for typed errors of method [`IncidentsAPI::create_incident_google_chat_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -785,6 +774,7 @@ pub enum CreateIncidentGoogleChatConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentGoogleMeetConfigurationError is a struct for typed errors of method [`IncidentsAPI::create_incident_google_meet_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -792,6 +782,7 @@ pub enum CreateIncidentGoogleMeetConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentImpactError is a struct for typed errors of method [`IncidentsAPI::create_incident_impact`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -801,6 +792,7 @@ pub enum CreateIncidentImpactError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentImpactFieldError is a struct for typed errors of method [`IncidentsAPI::create_incident_impact_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -808,6 +800,7 @@ pub enum CreateIncidentImpactFieldError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::create_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -817,6 +810,7 @@ pub enum CreateIncidentIntegrationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentNotificationRuleError is a struct for typed errors of method [`IncidentsAPI::create_incident_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -825,6 +819,7 @@ pub enum CreateIncidentNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentNotificationTemplateError is a struct for typed errors of method [`IncidentsAPI::create_incident_notification_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -832,6 +827,7 @@ pub enum CreateIncidentNotificationTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentPostmortemAttachmentError is a struct for typed errors of method [`IncidentsAPI::create_incident_postmortem_attachment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -842,6 +838,7 @@ pub enum CreateIncidentPostmortemAttachmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentPostmortemTemplateError is a struct for typed errors of method [`IncidentsAPI::create_incident_postmortem_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -851,6 +848,7 @@ pub enum CreateIncidentPostmortemTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentResponderError is a struct for typed errors of method [`IncidentsAPI::create_incident_responder`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -858,6 +856,7 @@ pub enum CreateIncidentResponderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentRuleError is a struct for typed errors of method [`IncidentsAPI::create_incident_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -867,6 +866,7 @@ pub enum CreateIncidentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentServiceNowRecordError is a struct for typed errors of method [`IncidentsAPI::create_incident_service_now_record`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -874,6 +874,7 @@ pub enum CreateIncidentServiceNowRecordError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::create_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -883,6 +884,7 @@ pub enum CreateIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentTypeError is a struct for typed errors of method [`IncidentsAPI::create_incident_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -890,6 +892,7 @@ pub enum CreateIncidentTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::create_incident_user_defined_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -900,6 +903,7 @@ pub enum CreateIncidentUserDefinedFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateIncidentUserDefinedRoleError is a struct for typed errors of method [`IncidentsAPI::create_incident_user_defined_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -909,6 +913,7 @@ pub enum CreateIncidentUserDefinedRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOnCallPageFromIncidentError is a struct for typed errors of method [`IncidentsAPI::create_on_call_page_from_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -916,6 +921,7 @@ pub enum CreateOnCallPageFromIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreatePageFromIncidentError is a struct for typed errors of method [`IncidentsAPI::create_page_from_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -925,6 +931,7 @@ pub enum CreatePageFromIncidentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTimestampOverrideError is a struct for typed errors of method [`IncidentsAPI::create_timestamp_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -932,6 +939,7 @@ pub enum CreateTimestampOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteGlobalIncidentHandleError is a struct for typed errors of method [`IncidentsAPI::delete_global_incident_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -942,6 +950,7 @@ pub enum DeleteGlobalIncidentHandleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentError is a struct for typed errors of method [`IncidentsAPI::delete_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -949,6 +958,7 @@ pub enum DeleteIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::delete_incident_attachment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -958,6 +968,7 @@ pub enum DeleteIncidentAttachmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentImpactError is a struct for typed errors of method [`IncidentsAPI::delete_incident_impact`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -965,6 +976,7 @@ pub enum DeleteIncidentImpactError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentImpactFieldError is a struct for typed errors of method [`IncidentsAPI::delete_incident_impact_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -974,6 +986,7 @@ pub enum DeleteIncidentImpactFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::delete_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -981,6 +994,7 @@ pub enum DeleteIncidentIntegrationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentNotificationRuleError is a struct for typed errors of method [`IncidentsAPI::delete_incident_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -990,6 +1004,7 @@ pub enum DeleteIncidentNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentNotificationTemplateError is a struct for typed errors of method [`IncidentsAPI::delete_incident_notification_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -997,6 +1012,7 @@ pub enum DeleteIncidentNotificationTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentPostmortemTemplateError is a struct for typed errors of method [`IncidentsAPI::delete_incident_postmortem_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1007,6 +1023,7 @@ pub enum DeleteIncidentPostmortemTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentResponderError is a struct for typed errors of method [`IncidentsAPI::delete_incident_responder`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1014,6 +1031,7 @@ pub enum DeleteIncidentResponderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentRuleError is a struct for typed errors of method [`IncidentsAPI::delete_incident_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1023,6 +1041,7 @@ pub enum DeleteIncidentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::delete_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1031,6 +1050,7 @@ pub enum DeleteIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentTypeError is a struct for typed errors of method [`IncidentsAPI::delete_incident_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1038,6 +1058,7 @@ pub enum DeleteIncidentTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::delete_incident_user_defined_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1048,6 +1069,7 @@ pub enum DeleteIncidentUserDefinedFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteIncidentUserDefinedRoleError is a struct for typed errors of method [`IncidentsAPI::delete_incident_user_defined_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1057,6 +1079,7 @@ pub enum DeleteIncidentUserDefinedRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTimestampOverrideError is a struct for typed errors of method [`IncidentsAPI::delete_timestamp_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1064,6 +1087,7 @@ pub enum DeleteTimestampOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetGlobalIncidentSettingsError is a struct for typed errors of method [`IncidentsAPI::get_global_incident_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1074,6 +1098,7 @@ pub enum GetGlobalIncidentSettingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentError is a struct for typed errors of method [`IncidentsAPI::get_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1081,6 +1106,7 @@ pub enum GetIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetIncidentAIPostmortemError is a struct for typed errors of method [`IncidentsAPI::get_incident_ai_postmortem`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1090,6 +1116,7 @@ pub enum GetIncidentAIPostmortemError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::get_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1097,6 +1124,7 @@ pub enum GetIncidentIntegrationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetIncidentNotificationRuleError is a struct for typed errors of method [`IncidentsAPI::get_incident_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1106,6 +1134,7 @@ pub enum GetIncidentNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentNotificationTemplateError is a struct for typed errors of method [`IncidentsAPI::get_incident_notification_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1113,6 +1142,7 @@ pub enum GetIncidentNotificationTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetIncidentPostmortemTemplateError is a struct for typed errors of method [`IncidentsAPI::get_incident_postmortem_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1123,6 +1153,7 @@ pub enum GetIncidentPostmortemTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentResponderError is a struct for typed errors of method [`IncidentsAPI::get_incident_responder`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1130,6 +1161,7 @@ pub enum GetIncidentResponderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetIncidentRuleError is a struct for typed errors of method [`IncidentsAPI::get_incident_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1139,6 +1171,7 @@ pub enum GetIncidentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::get_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1147,6 +1180,7 @@ pub enum GetIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentTypeError is a struct for typed errors of method [`IncidentsAPI::get_incident_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1154,6 +1188,7 @@ pub enum GetIncidentTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::get_incident_user_defined_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1164,6 +1199,7 @@ pub enum GetIncidentUserDefinedFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetIncidentUserDefinedRoleError is a struct for typed errors of method [`IncidentsAPI::get_incident_user_defined_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1173,6 +1209,7 @@ pub enum GetIncidentUserDefinedRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOrgSettingsByIncidentTypeError is a struct for typed errors of method [`IncidentsAPI::get_org_settings_by_incident_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1181,6 +1218,7 @@ pub enum GetOrgSettingsByIncidentTypeError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ImportIncidentError is a struct for typed errors of method [`IncidentsAPI::import_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1188,6 +1226,7 @@ pub enum ImportIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// LinkPageToIncidentError is a struct for typed errors of method [`IncidentsAPI::link_page_to_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1198,6 +1237,7 @@ pub enum LinkPageToIncidentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListGlobalIncidentHandlesError is a struct for typed errors of method [`IncidentsAPI::list_global_incident_handles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1207,6 +1247,7 @@ pub enum ListGlobalIncidentHandlesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentAttachmentsError is a struct for typed errors of method [`IncidentsAPI::list_incident_attachments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1214,6 +1255,7 @@ pub enum ListIncidentAttachmentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListIncidentImpactFieldsError is a struct for typed errors of method [`IncidentsAPI::list_incident_impact_fields`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1223,6 +1265,7 @@ pub enum ListIncidentImpactFieldsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentImpactsError is a struct for typed errors of method [`IncidentsAPI::list_incident_impacts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1230,6 +1273,7 @@ pub enum ListIncidentImpactsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListIncidentIntegrationsError is a struct for typed errors of method [`IncidentsAPI::list_incident_integrations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1239,6 +1283,7 @@ pub enum ListIncidentIntegrationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentNotificationRulesError is a struct for typed errors of method [`IncidentsAPI::list_incident_notification_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1247,6 +1292,7 @@ pub enum ListIncidentNotificationRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentNotificationTemplatesError is a struct for typed errors of method [`IncidentsAPI::list_incident_notification_templates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1254,6 +1300,7 @@ pub enum ListIncidentNotificationTemplatesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListIncidentPostmortemTemplatesError is a struct for typed errors of method [`IncidentsAPI::list_incident_postmortem_templates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1264,6 +1311,7 @@ pub enum ListIncidentPostmortemTemplatesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentRespondersError is a struct for typed errors of method [`IncidentsAPI::list_incident_responders`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1271,6 +1319,7 @@ pub enum ListIncidentRespondersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListIncidentRulesError is a struct for typed errors of method [`IncidentsAPI::list_incident_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1280,6 +1329,7 @@ pub enum ListIncidentRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentTodosError is a struct for typed errors of method [`IncidentsAPI::list_incident_todos`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1288,6 +1338,7 @@ pub enum ListIncidentTodosError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentTypesError is a struct for typed errors of method [`IncidentsAPI::list_incident_types`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1295,6 +1346,7 @@ pub enum ListIncidentTypesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListIncidentUserDefinedFieldsError is a struct for typed errors of method [`IncidentsAPI::list_incident_user_defined_fields`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1305,6 +1357,7 @@ pub enum ListIncidentUserDefinedFieldsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentUserDefinedRolesError is a struct for typed errors of method [`IncidentsAPI::list_incident_user_defined_roles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1314,6 +1367,7 @@ pub enum ListIncidentUserDefinedRolesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIncidentsError is a struct for typed errors of method [`IncidentsAPI::list_incidents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1321,6 +1375,7 @@ pub enum ListIncidentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOrgSettingsError is a struct for typed errors of method [`IncidentsAPI::list_org_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1330,6 +1385,7 @@ pub enum ListOrgSettingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTimestampOverridesError is a struct for typed errors of method [`IncidentsAPI::list_timestamp_overrides`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1337,6 +1393,7 @@ pub enum ListTimestampOverridesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PatchIncidentImpactError is a struct for typed errors of method [`IncidentsAPI::patch_incident_impact`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1346,6 +1403,7 @@ pub enum PatchIncidentImpactError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SearchIncidentsError is a struct for typed errors of method [`IncidentsAPI::search_incidents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1353,6 +1411,7 @@ pub enum SearchIncidentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateGlobalIncidentHandleError is a struct for typed errors of method [`IncidentsAPI::update_global_incident_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1363,6 +1422,7 @@ pub enum UpdateGlobalIncidentHandleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateGlobalIncidentSettingsError is a struct for typed errors of method [`IncidentsAPI::update_global_incident_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1372,6 +1432,7 @@ pub enum UpdateGlobalIncidentSettingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentError is a struct for typed errors of method [`IncidentsAPI::update_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1379,6 +1440,7 @@ pub enum UpdateIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentAttachmentError is a struct for typed errors of method [`IncidentsAPI::update_incident_attachment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1388,6 +1450,7 @@ pub enum UpdateIncidentAttachmentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentConfigurationError is a struct for typed errors of method [`IncidentsAPI::update_incident_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1395,6 +1458,7 @@ pub enum UpdateIncidentConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentGoogleChatConfigurationError is a struct for typed errors of method [`IncidentsAPI::update_incident_google_chat_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1404,6 +1468,7 @@ pub enum UpdateIncidentGoogleChatConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentGoogleMeetConfigurationError is a struct for typed errors of method [`IncidentsAPI::update_incident_google_meet_configuration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1411,6 +1476,7 @@ pub enum UpdateIncidentGoogleMeetConfigurationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentImpactFieldError is a struct for typed errors of method [`IncidentsAPI::update_incident_impact_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1420,6 +1486,7 @@ pub enum UpdateIncidentImpactFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentIntegrationError is a struct for typed errors of method [`IncidentsAPI::update_incident_integration`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1427,6 +1494,7 @@ pub enum UpdateIncidentIntegrationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentNotificationRuleError is a struct for typed errors of method [`IncidentsAPI::update_incident_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1436,6 +1504,7 @@ pub enum UpdateIncidentNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentNotificationTemplateError is a struct for typed errors of method [`IncidentsAPI::update_incident_notification_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1443,6 +1512,7 @@ pub enum UpdateIncidentNotificationTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentPostmortemTemplateError is a struct for typed errors of method [`IncidentsAPI::update_incident_postmortem_template`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1453,6 +1523,7 @@ pub enum UpdateIncidentPostmortemTemplateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentRuleError is a struct for typed errors of method [`IncidentsAPI::update_incident_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1460,6 +1531,7 @@ pub enum UpdateIncidentRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentTodoError is a struct for typed errors of method [`IncidentsAPI::update_incident_todo`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1469,6 +1541,7 @@ pub enum UpdateIncidentTodoError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentTypeError is a struct for typed errors of method [`IncidentsAPI::update_incident_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1476,6 +1549,7 @@ pub enum UpdateIncidentTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::update_incident_user_defined_field`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1486,6 +1560,7 @@ pub enum UpdateIncidentUserDefinedFieldError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIncidentUserDefinedRoleError is a struct for typed errors of method [`IncidentsAPI::update_incident_user_defined_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1495,6 +1570,7 @@ pub enum UpdateIncidentUserDefinedRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTimestampOverrideError is a struct for typed errors of method [`IncidentsAPI::update_timestamp_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1502,6 +1578,7 @@ pub enum UpdateTimestampOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage incident response, as well as associated attachments, metadata, and todos. See the [Incident Management page](<https://docs.datadoghq.com/service_management/incident_management/>) for more information.
 #[derive(Debug, Clone)]
@@ -1525,7 +1602,8 @@ impl IncidentsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -1570,48 +1648,29 @@ impl IncidentsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new global incident handle.
-    pub async fn create_global_incident_handle(
-        &self,
-        body: crate::datadogV2::model::IncidentHandleRequest,
-        params: CreateGlobalIncidentHandleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentHandleResponse,
-        datadog::Error<CreateGlobalIncidentHandleError>,
-    > {
-        match self
-            .create_global_incident_handle_with_http_info(body, params)
-            .await
-        {
+    pub async fn create_global_incident_handle(&self, body: crate::datadogV2::model::IncidentHandleRequest, params: CreateGlobalIncidentHandleOptionalParams) -> Result<crate::datadogV2::model::IncidentHandleResponse, datadog::Error<CreateGlobalIncidentHandleError>> {
+        match self.create_global_incident_handle_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new global incident handle.
-    pub async fn create_global_incident_handle_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentHandleRequest,
-        params: CreateGlobalIncidentHandleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentHandleResponse>,
-        datadog::Error<CreateGlobalIncidentHandleError>,
-    > {
+    pub async fn create_global_incident_handle_with_http_info(&self, body: crate::datadogV2::model::IncidentHandleRequest, params: CreateGlobalIncidentHandleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentHandleResponse>, datadog::Error<CreateGlobalIncidentHandleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_global_incident_handle";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1623,6 +1682,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1630,20 +1690,20 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1656,23 +1716,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1680,7 +1733,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1690,7 +1746,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1712,7 +1771,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1729,58 +1788,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentHandleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentHandleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateGlobalIncidentHandleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateGlobalIncidentHandleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident.
-    pub async fn create_incident(
-        &self,
-        body: crate::datadogV2::model::IncidentCreateRequest,
-    ) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<CreateIncidentError>>
-    {
+    pub async fn create_incident(&self, body: crate::datadogV2::model::IncidentCreateRequest) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<CreateIncidentError>> {
         match self.create_incident_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident.
-    pub async fn create_incident_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>,
-        datadog::Error<CreateIncidentError>,
-    > {
+    pub async fn create_incident_with_http_info(&self, body: crate::datadogV2::model::IncidentCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>, datadog::Error<CreateIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1792,19 +1831,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1817,23 +1860,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1841,7 +1877,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1851,7 +1890,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1873,7 +1915,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1890,64 +1932,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident attachment.
-    pub async fn create_incident_attachment(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::CreateAttachmentRequest,
-        params: CreateIncidentAttachmentOptionalParams,
-    ) -> Result<crate::datadogV2::model::Attachment, datadog::Error<CreateIncidentAttachmentError>>
-    {
-        match self
-            .create_incident_attachment_with_http_info(incident_id, body, params)
-            .await
-        {
+    pub async fn create_incident_attachment(&self, incident_id: String, body: crate::datadogV2::model::CreateAttachmentRequest, params: CreateIncidentAttachmentOptionalParams) -> Result<crate::datadogV2::model::Attachment, datadog::Error<CreateIncidentAttachmentError>> {
+        match self.create_incident_attachment_with_http_info(incident_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident attachment.
-    pub async fn create_incident_attachment_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::CreateAttachmentRequest,
-        params: CreateIncidentAttachmentOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Attachment>,
-        datadog::Error<CreateIncidentAttachmentError>,
-    > {
+    pub async fn create_incident_attachment_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::CreateAttachmentRequest, params: CreateIncidentAttachmentOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Attachment>, datadog::Error<CreateIncidentAttachmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_attachment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1959,6 +1975,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1966,21 +1983,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1993,23 +2011,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2017,7 +2028,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2027,7 +2041,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2049,7 +2066,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2067,62 +2084,37 @@ impl IncidentsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Attachment>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentAttachmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentAttachmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a configuration for an incident.
-    pub async fn create_incident_configuration(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentConfigurationRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentConfigurationResponse,
-        datadog::Error<CreateIncidentConfigurationError>,
-    > {
-        match self
-            .create_incident_configuration_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_incident_configuration(&self, incident_id: String, body: crate::datadogV2::model::IncidentConfigurationRequest) -> Result<crate::datadogV2::model::IncidentConfigurationResponse, datadog::Error<CreateIncidentConfigurationError>> {
+        match self.create_incident_configuration_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a configuration for an incident.
-    pub async fn create_incident_configuration_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentConfigurationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentConfigurationResponse>,
-        datadog::Error<CreateIncidentConfigurationError>,
-    > {
+    pub async fn create_incident_configuration_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentConfigurationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentConfigurationResponse>, datadog::Error<CreateIncidentConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2134,20 +2126,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/configurations",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2160,23 +2157,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2184,7 +2174,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2194,7 +2187,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2216,7 +2212,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2233,88 +2229,66 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentConfigurationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a Google Chat configuration for incidents.
-    pub async fn create_incident_google_chat_configuration(
-        &self,
-        body: crate::datadogV2::model::IncidentGoogleChatConfigurationRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentGoogleChatConfigurationResponse,
-        datadog::Error<CreateIncidentGoogleChatConfigurationError>,
-    > {
-        match self
-            .create_incident_google_chat_configuration_with_http_info(body)
-            .await
-        {
+    pub async fn create_incident_google_chat_configuration(&self, body: crate::datadogV2::model::IncidentGoogleChatConfigurationRequest) -> Result<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse, datadog::Error<CreateIncidentGoogleChatConfigurationError>> {
+        match self.create_incident_google_chat_configuration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Google Chat configuration for incidents.
-    pub async fn create_incident_google_chat_configuration_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentGoogleChatConfigurationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>,
-        datadog::Error<CreateIncidentGoogleChatConfigurationError>,
-    > {
+    pub async fn create_incident_google_chat_configuration_with_http_info(&self, body: crate::datadogV2::model::IncidentGoogleChatConfigurationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>, datadog::Error<CreateIncidentGoogleChatConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_google_chat_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_incident_google_chat_configuration' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_incident_google_chat_configuration' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/google-chat-configurations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2327,23 +2301,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2351,7 +2318,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2361,7 +2331,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2383,7 +2356,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2400,89 +2373,66 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentGoogleChatConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentGoogleChatConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentGoogleChatConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a Google Meet configuration for incidents.
-    pub async fn create_incident_google_meet_configuration(
-        &self,
-        body: crate::datadogV2::model::IncidentGoogleMeetConfigurationRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse,
-        datadog::Error<CreateIncidentGoogleMeetConfigurationError>,
-    > {
-        match self
-            .create_incident_google_meet_configuration_with_http_info(body)
-            .await
-        {
+    pub async fn create_incident_google_meet_configuration(&self, body: crate::datadogV2::model::IncidentGoogleMeetConfigurationRequest) -> Result<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse, datadog::Error<CreateIncidentGoogleMeetConfigurationError>> {
+        match self.create_incident_google_meet_configuration_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Google Meet configuration for incidents.
-    pub async fn create_incident_google_meet_configuration_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentGoogleMeetConfigurationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>,
-        datadog::Error<CreateIncidentGoogleMeetConfigurationError>,
-    > {
+    pub async fn create_incident_google_meet_configuration_with_http_info(&self, body: crate::datadogV2::model::IncidentGoogleMeetConfigurationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>, datadog::Error<CreateIncidentGoogleMeetConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_google_meet_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_incident_google_meet_configuration' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_incident_google_meet_configuration' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/google-meet-configurations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2495,23 +2445,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2519,7 +2462,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2529,7 +2475,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2551,7 +2500,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2568,71 +2517,42 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentGoogleMeetConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentGoogleMeetConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an impact for an incident.
-    pub async fn create_incident_impact(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentImpactCreateRequest,
-        params: CreateIncidentImpactOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactResponse,
-        datadog::Error<CreateIncidentImpactError>,
-    > {
-        match self
-            .create_incident_impact_with_http_info(incident_id, body, params)
-            .await
-        {
+    pub async fn create_incident_impact(&self, incident_id: String, body: crate::datadogV2::model::IncidentImpactCreateRequest, params: CreateIncidentImpactOptionalParams) -> Result<crate::datadogV2::model::IncidentImpactResponse, datadog::Error<CreateIncidentImpactError>> {
+        match self.create_incident_impact_with_http_info(incident_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an impact for an incident.
-    pub async fn create_incident_impact_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentImpactCreateRequest,
-        params: CreateIncidentImpactOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactResponse>,
-        datadog::Error<CreateIncidentImpactError>,
-    > {
+    pub async fn create_incident_impact_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentImpactCreateRequest, params: CreateIncidentImpactOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactResponse>, datadog::Error<CreateIncidentImpactError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_impact";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -2640,28 +2560,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2674,23 +2588,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2698,7 +2605,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2708,7 +2618,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2730,7 +2643,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2747,60 +2660,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentImpactError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentImpactError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an impact field for incidents.
-    pub async fn create_incident_impact_field(
-        &self,
-        body: crate::datadogV2::model::IncidentImpactFieldRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactFieldResponse,
-        datadog::Error<CreateIncidentImpactFieldError>,
-    > {
+    pub async fn create_incident_impact_field(&self, body: crate::datadogV2::model::IncidentImpactFieldRequest) -> Result<crate::datadogV2::model::IncidentImpactFieldResponse, datadog::Error<CreateIncidentImpactFieldError>> {
         match self.create_incident_impact_field_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an impact field for incidents.
-    pub async fn create_incident_impact_field_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentImpactFieldRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldResponse>,
-        datadog::Error<CreateIncidentImpactFieldError>,
-    > {
+    pub async fn create_incident_impact_field_with_http_info(&self, body: crate::datadogV2::model::IncidentImpactFieldRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldResponse>, datadog::Error<CreateIncidentImpactFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_impact_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2812,19 +2703,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/impact-fields",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2837,23 +2732,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2861,7 +2749,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2871,7 +2762,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2893,7 +2787,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2910,65 +2804,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentImpactFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentImpactFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident integration metadata.
-    pub async fn create_incident_integration(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
-        datadog::Error<CreateIncidentIntegrationError>,
-    > {
-        match self
-            .create_incident_integration_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_incident_integration(&self, incident_id: String, body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataResponse, datadog::Error<CreateIncidentIntegrationError>> {
+        match self.create_incident_integration_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident integration metadata.
-    pub async fn create_incident_integration_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
-        datadog::Error<CreateIncidentIntegrationError>,
-    > {
+    pub async fn create_incident_integration_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentIntegrationMetadataCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>, datadog::Error<CreateIncidentIntegrationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_integration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2980,20 +2847,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3006,23 +2878,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3030,7 +2895,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3040,7 +2908,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3062,7 +2933,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3079,63 +2950,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentIntegrationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new notification rule.
-    pub async fn create_incident_notification_rule(
-        &self,
-        body: crate::datadogV2::model::CreateIncidentNotificationRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationRule,
-        datadog::Error<CreateIncidentNotificationRuleError>,
-    > {
-        match self
-            .create_incident_notification_rule_with_http_info(body)
-            .await
-        {
+    pub async fn create_incident_notification_rule(&self, body: crate::datadogV2::model::CreateIncidentNotificationRuleRequest) -> Result<crate::datadogV2::model::IncidentNotificationRule, datadog::Error<CreateIncidentNotificationRuleError>> {
+        match self.create_incident_notification_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new notification rule.
-    pub async fn create_incident_notification_rule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateIncidentNotificationRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>,
-        datadog::Error<CreateIncidentNotificationRuleError>,
-    > {
+    pub async fn create_incident_notification_rule_with_http_info(&self, body: crate::datadogV2::model::CreateIncidentNotificationRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>, datadog::Error<CreateIncidentNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_notification_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3147,19 +2993,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3172,23 +3022,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3196,7 +3039,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3206,7 +3052,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3228,7 +3077,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3245,88 +3094,66 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new notification template.
-    pub async fn create_incident_notification_template(
-        &self,
-        body: crate::datadogV2::model::CreateIncidentNotificationTemplateRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationTemplate,
-        datadog::Error<CreateIncidentNotificationTemplateError>,
-    > {
-        match self
-            .create_incident_notification_template_with_http_info(body)
-            .await
-        {
+    pub async fn create_incident_notification_template(&self, body: crate::datadogV2::model::CreateIncidentNotificationTemplateRequest) -> Result<crate::datadogV2::model::IncidentNotificationTemplate, datadog::Error<CreateIncidentNotificationTemplateError>> {
+        match self.create_incident_notification_template_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new notification template.
-    pub async fn create_incident_notification_template_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateIncidentNotificationTemplateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>,
-        datadog::Error<CreateIncidentNotificationTemplateError>,
-    > {
+    pub async fn create_incident_notification_template_with_http_info(&self, body: crate::datadogV2::model::CreateIncidentNotificationTemplateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>, datadog::Error<CreateIncidentNotificationTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_notification_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_incident_notification_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_incident_notification_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3339,23 +3166,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3363,7 +3183,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3373,7 +3196,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3395,7 +3221,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3412,99 +3238,76 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentNotificationTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentNotificationTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a postmortem attachment for an incident.
-    ///
-    /// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
-    /// Postmortems created from notebooks need to be formatted using frontend notebook cells,
-    /// in addition to markdown format.
-    pub async fn create_incident_postmortem_attachment(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::PostmortemAttachmentRequest,
-    ) -> Result<
-        crate::datadogV2::model::Attachment,
-        datadog::Error<CreateIncidentPostmortemAttachmentError>,
-    > {
-        match self
-            .create_incident_postmortem_attachment_with_http_info(incident_id, body)
-            .await
-        {
+///
+/// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
+/// Postmortems created from notebooks need to be formatted using frontend notebook cells,
+/// in addition to markdown format.
+    pub async fn create_incident_postmortem_attachment(&self, incident_id: String, body: crate::datadogV2::model::PostmortemAttachmentRequest) -> Result<crate::datadogV2::model::Attachment, datadog::Error<CreateIncidentPostmortemAttachmentError>> {
+        match self.create_incident_postmortem_attachment_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a postmortem attachment for an incident.
-    ///
-    /// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
-    /// Postmortems created from notebooks need to be formatted using frontend notebook cells,
-    /// in addition to markdown format.
-    pub async fn create_incident_postmortem_attachment_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::PostmortemAttachmentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Attachment>,
-        datadog::Error<CreateIncidentPostmortemAttachmentError>,
-    > {
+///
+/// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
+/// Postmortems created from notebooks need to be formatted using frontend notebook cells,
+/// in addition to markdown format.
+    pub async fn create_incident_postmortem_attachment_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::PostmortemAttachmentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::Attachment>, datadog::Error<CreateIncidentPostmortemAttachmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_postmortem_attachment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_incident_postmortem_attachment' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_incident_postmortem_attachment' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/postmortems",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3517,23 +3320,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3541,7 +3337,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3551,7 +3350,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3573,7 +3375,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3591,85 +3393,65 @@ impl IncidentsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Attachment>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentPostmortemAttachmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentPostmortemAttachmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new postmortem template for incidents.
-    pub async fn create_incident_postmortem_template(
-        &self,
-        body: crate::datadogV2::model::PostmortemTemplateRequest,
-    ) -> Result<
-        crate::datadogV2::model::PostmortemTemplateResponse,
-        datadog::Error<CreateIncidentPostmortemTemplateError>,
-    > {
-        match self
-            .create_incident_postmortem_template_with_http_info(body)
-            .await
-        {
+    pub async fn create_incident_postmortem_template(&self, body: crate::datadogV2::model::PostmortemTemplateRequest) -> Result<crate::datadogV2::model::PostmortemTemplateResponse, datadog::Error<CreateIncidentPostmortemTemplateError>> {
+        match self.create_incident_postmortem_template_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new postmortem template for incidents.
-    pub async fn create_incident_postmortem_template_with_http_info(
-        &self,
-        body: crate::datadogV2::model::PostmortemTemplateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>,
-        datadog::Error<CreateIncidentPostmortemTemplateError>,
-    > {
+    pub async fn create_incident_postmortem_template_with_http_info(&self, body: crate::datadogV2::model::PostmortemTemplateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>, datadog::Error<CreateIncidentPostmortemTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_postmortem_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_incident_postmortem_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_incident_postmortem_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3682,23 +3464,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3706,7 +3481,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3716,7 +3494,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3738,7 +3519,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3755,65 +3536,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentPostmortemTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentPostmortemTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a responder to an incident.
-    pub async fn create_incident_responder(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentResponderRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentResponderResponse,
-        datadog::Error<CreateIncidentResponderError>,
-    > {
-        match self
-            .create_incident_responder_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_incident_responder(&self, incident_id: String, body: crate::datadogV2::model::IncidentResponderRequest) -> Result<crate::datadogV2::model::IncidentResponderResponse, datadog::Error<CreateIncidentResponderError>> {
+        match self.create_incident_responder_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a responder to an incident.
-    pub async fn create_incident_responder_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentResponderRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentResponderResponse>,
-        datadog::Error<CreateIncidentResponderError>,
-    > {
+    pub async fn create_incident_responder_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentResponderRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentResponderResponse>, datadog::Error<CreateIncidentResponderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_responder";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3825,20 +3579,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/responders",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3851,23 +3610,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3875,7 +3627,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3885,7 +3640,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3907,7 +3665,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3924,60 +3682,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentResponderResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponderResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentResponderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentResponderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident rule.
-    pub async fn create_incident_rule(
-        &self,
-        body: crate::datadogV2::model::IncidentRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentRuleResponse,
-        datadog::Error<CreateIncidentRuleError>,
-    > {
+    pub async fn create_incident_rule(&self, body: crate::datadogV2::model::IncidentRuleRequest) -> Result<crate::datadogV2::model::IncidentRuleResponse, datadog::Error<CreateIncidentRuleError>> {
         match self.create_incident_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident rule.
-    pub async fn create_incident_rule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>,
-        datadog::Error<CreateIncidentRuleError>,
-    > {
+    pub async fn create_incident_rule_with_http_info(&self, body: crate::datadogV2::model::IncidentRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>, datadog::Error<CreateIncidentRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3989,19 +3725,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4014,23 +3754,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4038,7 +3771,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4048,7 +3784,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4070,7 +3809,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4087,65 +3826,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a ServiceNow record for an incident.
-    pub async fn create_incident_service_now_record(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentServiceNowRecordRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
-        datadog::Error<CreateIncidentServiceNowRecordError>,
-    > {
-        match self
-            .create_incident_service_now_record_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_incident_service_now_record(&self, incident_id: String, body: crate::datadogV2::model::IncidentServiceNowRecordRequest) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataResponse, datadog::Error<CreateIncidentServiceNowRecordError>> {
+        match self.create_incident_service_now_record_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a ServiceNow record for an incident.
-    pub async fn create_incident_service_now_record_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentServiceNowRecordRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
-        datadog::Error<CreateIncidentServiceNowRecordError>,
-    > {
+    pub async fn create_incident_service_now_record_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentServiceNowRecordRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>, datadog::Error<CreateIncidentServiceNowRecordError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_service_now_record";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4157,20 +3869,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/servicenow-records",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4183,23 +3900,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4207,7 +3917,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4217,7 +3930,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4239,7 +3955,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4256,65 +3972,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentServiceNowRecordError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentServiceNowRecordError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident todo.
-    pub async fn create_incident_todo(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentTodoCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTodoResponse,
-        datadog::Error<CreateIncidentTodoError>,
-    > {
-        match self
-            .create_incident_todo_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_incident_todo(&self, incident_id: String, body: crate::datadogV2::model::IncidentTodoCreateRequest) -> Result<crate::datadogV2::model::IncidentTodoResponse, datadog::Error<CreateIncidentTodoError>> {
+        match self.create_incident_todo_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident todo.
-    pub async fn create_incident_todo_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentTodoCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
-        datadog::Error<CreateIncidentTodoError>,
-    > {
+    pub async fn create_incident_todo_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentTodoCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>, datadog::Error<CreateIncidentTodoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_todo";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4326,20 +4015,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4352,23 +4046,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4376,7 +4063,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4386,7 +4076,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4408,7 +4101,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4425,60 +4118,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentTodoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentTodoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident type.
-    pub async fn create_incident_type(
-        &self,
-        body: crate::datadogV2::model::IncidentTypeCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTypeResponse,
-        datadog::Error<CreateIncidentTypeError>,
-    > {
+    pub async fn create_incident_type(&self, body: crate::datadogV2::model::IncidentTypeCreateRequest) -> Result<crate::datadogV2::model::IncidentTypeResponse, datadog::Error<CreateIncidentTypeError>> {
         match self.create_incident_type_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident type.
-    pub async fn create_incident_type_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentTypeCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>,
-        datadog::Error<CreateIncidentTypeError>,
-    > {
+    pub async fn create_incident_type_with_http_info(&self, body: crate::datadogV2::model::IncidentTypeCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>, datadog::Error<CreateIncidentTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_type";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4490,19 +4161,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4515,23 +4190,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4539,7 +4207,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4549,7 +4220,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4571,7 +4245,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4588,65 +4262,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an incident user-defined field.
-    pub async fn create_incident_user_defined_field(
-        &self,
-        body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest,
-        params: CreateIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
-        datadog::Error<CreateIncidentUserDefinedFieldError>,
-    > {
-        match self
-            .create_incident_user_defined_field_with_http_info(body, params)
-            .await
-        {
+    pub async fn create_incident_user_defined_field(&self, body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest, params: CreateIncidentUserDefinedFieldOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedFieldResponse, datadog::Error<CreateIncidentUserDefinedFieldError>> {
+        match self.create_incident_user_defined_field_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an incident user-defined field.
-    pub async fn create_incident_user_defined_field_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest,
-        params: CreateIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
-        datadog::Error<CreateIncidentUserDefinedFieldError>,
-    > {
+    pub async fn create_incident_user_defined_field_with_http_info(&self, body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest, params: CreateIncidentUserDefinedFieldOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>, datadog::Error<CreateIncidentUserDefinedFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_user_defined_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4658,6 +4305,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4665,20 +4313,20 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4691,23 +4339,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4715,7 +4356,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4725,7 +4369,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4747,7 +4394,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4764,65 +4411,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentUserDefinedFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentUserDefinedFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new user-defined role for incidents.
-    pub async fn create_incident_user_defined_role(
-        &self,
-        body: crate::datadogV2::model::IncidentUserDefinedRoleRequest,
-        params: CreateIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedRoleResponse,
-        datadog::Error<CreateIncidentUserDefinedRoleError>,
-    > {
-        match self
-            .create_incident_user_defined_role_with_http_info(body, params)
-            .await
-        {
+    pub async fn create_incident_user_defined_role(&self, body: crate::datadogV2::model::IncidentUserDefinedRoleRequest, params: CreateIncidentUserDefinedRoleOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedRoleResponse, datadog::Error<CreateIncidentUserDefinedRoleError>> {
+        match self.create_incident_user_defined_role_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new user-defined role for incidents.
-    pub async fn create_incident_user_defined_role_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentUserDefinedRoleRequest,
-        params: CreateIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>,
-        datadog::Error<CreateIncidentUserDefinedRoleError>,
-    > {
+    pub async fn create_incident_user_defined_role_with_http_info(&self, body: crate::datadogV2::model::IncidentUserDefinedRoleRequest, params: CreateIncidentUserDefinedRoleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>, datadog::Error<CreateIncidentUserDefinedRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_incident_user_defined_role";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4834,6 +4454,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4841,20 +4462,20 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4867,23 +4488,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4891,7 +4505,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4901,7 +4518,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4923,7 +4543,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4940,65 +4560,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateIncidentUserDefinedRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateIncidentUserDefinedRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an on-call page directly from an incident.
-    pub async fn create_on_call_page_from_incident(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentCreateOnCallPageRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentPageUUIDResponse,
-        datadog::Error<CreateOnCallPageFromIncidentError>,
-    > {
-        match self
-            .create_on_call_page_from_incident_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_on_call_page_from_incident(&self, incident_id: String, body: crate::datadogV2::model::IncidentCreateOnCallPageRequest) -> Result<crate::datadogV2::model::IncidentPageUUIDResponse, datadog::Error<CreateOnCallPageFromIncidentError>> {
+        match self.create_on_call_page_from_incident_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an on-call page directly from an incident.
-    pub async fn create_on_call_page_from_incident_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentCreateOnCallPageRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentPageUUIDResponse>,
-        datadog::Error<CreateOnCallPageFromIncidentError>,
-    > {
+    pub async fn create_on_call_page_from_incident_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentCreateOnCallPageRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentPageUUIDResponse>, datadog::Error<CreateOnCallPageFromIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_on_call_page_from_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5010,20 +4603,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/page",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5036,23 +4634,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5060,7 +4651,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5070,7 +4664,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5092,7 +4689,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5109,71 +4706,44 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentPageUUIDResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentPageUUIDResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOnCallPageFromIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOnCallPageFromIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a page from an incident using the Cases service.
-    ///
-    /// **Deprecated**: This endpoint is deprecated. Use
-    /// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
-    pub async fn create_page_from_incident(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentCreatePageFromIncidentRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentPageUUIDResponse,
-        datadog::Error<CreatePageFromIncidentError>,
-    > {
-        match self
-            .create_page_from_incident_with_http_info(incident_id, body)
-            .await
-        {
+///
+/// **Deprecated**: This endpoint is deprecated. Use
+/// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
+    pub async fn create_page_from_incident(&self, incident_id: String, body: crate::datadogV2::model::IncidentCreatePageFromIncidentRequest) -> Result<crate::datadogV2::model::IncidentPageUUIDResponse, datadog::Error<CreatePageFromIncidentError>> {
+        match self.create_page_from_incident_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a page from an incident using the Cases service.
-    ///
-    /// **Deprecated**: This endpoint is deprecated. Use
-    /// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
-    pub async fn create_page_from_incident_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentCreatePageFromIncidentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentPageUUIDResponse>,
-        datadog::Error<CreatePageFromIncidentError>,
-    > {
+///
+/// **Deprecated**: This endpoint is deprecated. Use
+/// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
+    pub async fn create_page_from_incident_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentCreatePageFromIncidentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentPageUUIDResponse>, datadog::Error<CreatePageFromIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_page_from_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5185,20 +4755,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/cases/page",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5211,23 +4786,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5235,7 +4803,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5245,7 +4816,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5267,7 +4841,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5284,65 +4858,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentPageUUIDResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentPageUUIDResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreatePageFromIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreatePageFromIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a timestamp override for an incident.
-    pub async fn create_timestamp_override(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentTimestampOverrideRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTimestampOverrideResponse,
-        datadog::Error<CreateTimestampOverrideError>,
-    > {
-        match self
-            .create_timestamp_override_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn create_timestamp_override(&self, incident_id: String, body: crate::datadogV2::model::IncidentTimestampOverrideRequest) -> Result<crate::datadogV2::model::IncidentTimestampOverrideResponse, datadog::Error<CreateTimestampOverrideError>> {
+        match self.create_timestamp_override_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a timestamp override for an incident.
-    pub async fn create_timestamp_override_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentTimestampOverrideRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverrideResponse>,
-        datadog::Error<CreateTimestampOverrideError>,
-    > {
+    pub async fn create_timestamp_override_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentTimestampOverrideRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverrideResponse>, datadog::Error<CreateTimestampOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_timestamp_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5354,20 +4901,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/timestamp-overrides",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5380,23 +4932,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5404,7 +4949,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5414,7 +4962,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5436,7 +4987,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5453,44 +5004,32 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverrideResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverrideResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTimestampOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTimestampOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a global incident handle.
-    pub async fn delete_global_incident_handle(
-        &self,
-    ) -> Result<(), datadog::Error<DeleteGlobalIncidentHandleError>> {
+    pub async fn delete_global_incident_handle(&self) -> Result<(), datadog::Error<DeleteGlobalIncidentHandleError>> {
         match self.delete_global_incident_handle_with_http_info().await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a global incident handle.
-    pub async fn delete_global_incident_handle_with_http_info(
-        &self,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGlobalIncidentHandleError>> {
+    pub async fn delete_global_incident_handle_with_http_info(&self) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGlobalIncidentHandleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_global_incident_handle";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5502,18 +5041,22 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5526,22 +5069,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5559,33 +5096,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteGlobalIncidentHandleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteGlobalIncidentHandleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes an existing incident from the users organization.
-    pub async fn delete_incident(
-        &self,
-        incident_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentError>> {
+    pub async fn delete_incident(&self, incident_id: String) -> Result<(), datadog::Error<DeleteIncidentError>> {
         match self.delete_incident_with_http_info(incident_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes an existing incident from the users organization.
-    pub async fn delete_incident_with_http_info(
-        &self,
-        incident_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentError>> {
+    pub async fn delete_incident_with_http_info(&self, incident_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5597,19 +5124,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5622,22 +5154,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5655,36 +5181,21 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn delete_incident_attachment(
-        &self,
-        incident_id: String,
-        attachment_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentAttachmentError>> {
-        match self
-            .delete_incident_attachment_with_http_info(incident_id, attachment_id)
-            .await
-        {
+    
+    pub async fn delete_incident_attachment(&self, incident_id: String, attachment_id: String) -> Result<(), datadog::Error<DeleteIncidentAttachmentError>> {
+        match self.delete_incident_attachment_with_http_info(incident_id, attachment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
-    pub async fn delete_incident_attachment_with_http_info(
-        &self,
-        incident_id: String,
-        attachment_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentAttachmentError>> {
+    
+    pub async fn delete_incident_attachment_with_http_info(&self, incident_id: String, attachment_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentAttachmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_attachment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5696,20 +5207,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            attachment_id = datadog::urlencode(attachment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , attachment_id=
+            datadog::urlencode(attachment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5722,22 +5239,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5755,55 +5266,46 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentAttachmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentAttachmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident impact.
-    pub async fn delete_incident_impact(
-        &self,
-        incident_id: String,
-        impact_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentImpactError>> {
-        match self
-            .delete_incident_impact_with_http_info(incident_id, impact_id)
-            .await
-        {
+    pub async fn delete_incident_impact(&self, incident_id: String, impact_id: String) -> Result<(), datadog::Error<DeleteIncidentImpactError>> {
+        match self.delete_incident_impact_with_http_info(incident_id, impact_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident impact.
-    pub async fn delete_incident_impact_with_http_info(
-        &self,
-        incident_id: String,
-        impact_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactError>> {
+    pub async fn delete_incident_impact_with_http_info(&self, incident_id: String, impact_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_impact";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts/{impact_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            impact_id = datadog::urlencode(impact_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , impact_id=
+            datadog::urlencode(impact_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5816,22 +5318,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5849,36 +5345,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentImpactError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentImpactError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an impact field for incidents.
-    pub async fn delete_incident_impact_field(
-        &self,
-        field_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteIncidentImpactFieldError>> {
-        match self
-            .delete_incident_impact_field_with_http_info(field_id)
-            .await
-        {
+    pub async fn delete_incident_impact_field(&self, field_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteIncidentImpactFieldError>> {
+        match self.delete_incident_impact_field_with_http_info(field_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an impact field for incidents.
-    pub async fn delete_incident_impact_field_with_http_info(
-        &self,
-        field_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactFieldError>> {
+    pub async fn delete_incident_impact_field_with_http_info(&self, field_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_impact_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5890,19 +5373,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/impact-fields/{field_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            field_id = datadog::urlencode(field_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), field_id=
+            datadog::urlencode(field_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5915,22 +5403,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5948,38 +5430,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentImpactFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentImpactFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident integration metadata.
-    pub async fn delete_incident_integration(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentIntegrationError>> {
-        match self
-            .delete_incident_integration_with_http_info(incident_id, integration_metadata_id)
-            .await
-        {
+    pub async fn delete_incident_integration(&self, incident_id: String, integration_metadata_id: String) -> Result<(), datadog::Error<DeleteIncidentIntegrationError>> {
+        match self.delete_incident_integration_with_http_info(incident_id, integration_metadata_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident integration metadata.
-    pub async fn delete_incident_integration_with_http_info(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentIntegrationError>> {
+    pub async fn delete_incident_integration_with_http_info(&self, incident_id: String, integration_metadata_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentIntegrationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_integration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5991,6 +5458,8 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -6000,12 +5469,15 @@ impl IncidentsAPI {
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6018,22 +5490,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6051,39 +5517,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentIntegrationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a notification rule by its ID.
-    pub async fn delete_incident_notification_rule(
-        &self,
-        id: uuid::Uuid,
-        params: DeleteIncidentNotificationRuleOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteIncidentNotificationRuleError>> {
-        match self
-            .delete_incident_notification_rule_with_http_info(id, params)
-            .await
-        {
+    pub async fn delete_incident_notification_rule(&self, id: uuid::Uuid, params: DeleteIncidentNotificationRuleOptionalParams) -> Result<(), datadog::Error<DeleteIncidentNotificationRuleError>> {
+        match self.delete_incident_notification_rule_with_http_info(id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a notification rule by its ID.
-    pub async fn delete_incident_notification_rule_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        params: DeleteIncidentNotificationRuleOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationRuleError>>
-    {
+    pub async fn delete_incident_notification_rule_with_http_info(&self, id: uuid::Uuid, params: DeleteIncidentNotificationRuleOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_notification_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6095,6 +5545,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -6102,20 +5553,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6128,22 +5580,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6161,51 +5607,35 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a notification template by its ID.
-    pub async fn delete_incident_notification_template(
-        &self,
-        id: uuid::Uuid,
-        params: DeleteIncidentNotificationTemplateOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteIncidentNotificationTemplateError>> {
-        match self
-            .delete_incident_notification_template_with_http_info(id, params)
-            .await
-        {
+    pub async fn delete_incident_notification_template(&self, id: uuid::Uuid, params: DeleteIncidentNotificationTemplateOptionalParams) -> Result<(), datadog::Error<DeleteIncidentNotificationTemplateError>> {
+        match self.delete_incident_notification_template_with_http_info(id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a notification template by its ID.
-    pub async fn delete_incident_notification_template_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        params: DeleteIncidentNotificationTemplateOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationTemplateError>>
-    {
+    pub async fn delete_incident_notification_template_with_http_info(&self, id: uuid::Uuid, params: DeleteIncidentNotificationTemplateOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_notification_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_incident_notification_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_incident_notification_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -6213,20 +5643,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6239,22 +5670,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6272,62 +5697,52 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentNotificationTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentNotificationTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a postmortem template.
-    pub async fn delete_incident_postmortem_template(
-        &self,
-        template_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentPostmortemTemplateError>> {
-        match self
-            .delete_incident_postmortem_template_with_http_info(template_id)
-            .await
-        {
+    pub async fn delete_incident_postmortem_template(&self, template_id: String) -> Result<(), datadog::Error<DeleteIncidentPostmortemTemplateError>> {
+        match self.delete_incident_postmortem_template_with_http_info(template_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a postmortem template.
-    pub async fn delete_incident_postmortem_template_with_http_info(
-        &self,
-        template_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentPostmortemTemplateError>>
-    {
+    pub async fn delete_incident_postmortem_template_with_http_info(&self, template_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentPostmortemTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_postmortem_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_incident_postmortem_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_incident_postmortem_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6340,22 +5755,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6373,38 +5782,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentPostmortemTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentPostmortemTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a responder from an incident.
-    pub async fn delete_incident_responder(
-        &self,
-        incident_id: String,
-        responder_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteIncidentResponderError>> {
-        match self
-            .delete_incident_responder_with_http_info(incident_id, responder_id)
-            .await
-        {
+    pub async fn delete_incident_responder(&self, incident_id: String, responder_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteIncidentResponderError>> {
+        match self.delete_incident_responder_with_http_info(incident_id, responder_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a responder from an incident.
-    pub async fn delete_incident_responder_with_http_info(
-        &self,
-        incident_id: String,
-        responder_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentResponderError>> {
+    pub async fn delete_incident_responder_with_http_info(&self, incident_id: String, responder_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentResponderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_responder";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6416,20 +5810,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/responders/{responder_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            responder_id = datadog::urlencode(responder_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , responder_id=
+            datadog::urlencode(responder_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6442,22 +5842,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6475,33 +5869,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentResponderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentResponderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident rule.
-    pub async fn delete_incident_rule(
-        &self,
-        rule_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteIncidentRuleError>> {
+    pub async fn delete_incident_rule(&self, rule_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteIncidentRuleError>> {
         match self.delete_incident_rule_with_http_info(rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident rule.
-    pub async fn delete_incident_rule_with_http_info(
-        &self,
-        rule_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentRuleError>> {
+    pub async fn delete_incident_rule_with_http_info(&self, rule_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6513,19 +5897,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6538,22 +5927,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6571,38 +5954,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident todo.
-    pub async fn delete_incident_todo(
-        &self,
-        incident_id: String,
-        todo_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentTodoError>> {
-        match self
-            .delete_incident_todo_with_http_info(incident_id, todo_id)
-            .await
-        {
+    pub async fn delete_incident_todo(&self, incident_id: String, todo_id: String) -> Result<(), datadog::Error<DeleteIncidentTodoError>> {
+        match self.delete_incident_todo_with_http_info(incident_id, todo_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident todo.
-    pub async fn delete_incident_todo_with_http_info(
-        &self,
-        incident_id: String,
-        todo_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTodoError>> {
+    pub async fn delete_incident_todo_with_http_info(&self, incident_id: String, todo_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTodoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_todo";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6614,20 +5982,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            todo_id = datadog::urlencode(todo_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , todo_id=
+            datadog::urlencode(todo_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6640,22 +6014,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6673,36 +6041,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentTodoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentTodoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident type.
-    pub async fn delete_incident_type(
-        &self,
-        incident_type_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentTypeError>> {
-        match self
-            .delete_incident_type_with_http_info(incident_type_id)
-            .await
-        {
+    pub async fn delete_incident_type(&self, incident_type_id: String) -> Result<(), datadog::Error<DeleteIncidentTypeError>> {
+        match self.delete_incident_type_with_http_info(incident_type_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident type.
-    pub async fn delete_incident_type_with_http_info(
-        &self,
-        incident_type_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTypeError>> {
+    pub async fn delete_incident_type_with_http_info(&self, incident_type_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_type";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6714,19 +6069,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_type_id = datadog::urlencode(incident_type_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_type_id=
+            datadog::urlencode(incident_type_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6739,22 +6099,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6772,37 +6126,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an incident user-defined field.
-    pub async fn delete_incident_user_defined_field(
-        &self,
-        field_id: String,
-    ) -> Result<(), datadog::Error<DeleteIncidentUserDefinedFieldError>> {
-        match self
-            .delete_incident_user_defined_field_with_http_info(field_id)
-            .await
-        {
+    pub async fn delete_incident_user_defined_field(&self, field_id: String) -> Result<(), datadog::Error<DeleteIncidentUserDefinedFieldError>> {
+        match self.delete_incident_user_defined_field_with_http_info(field_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an incident user-defined field.
-    pub async fn delete_incident_user_defined_field_with_http_info(
-        &self,
-        field_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedFieldError>>
-    {
+    pub async fn delete_incident_user_defined_field_with_http_info(&self, field_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_user_defined_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6814,19 +6154,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            field_id = datadog::urlencode(field_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), field_id=
+            datadog::urlencode(field_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6839,22 +6184,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6872,37 +6211,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentUserDefinedFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentUserDefinedFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an existing user-defined role for incidents.
-    pub async fn delete_incident_user_defined_role(
-        &self,
-        role_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteIncidentUserDefinedRoleError>> {
-        match self
-            .delete_incident_user_defined_role_with_http_info(role_id)
-            .await
-        {
+    pub async fn delete_incident_user_defined_role(&self, role_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteIncidentUserDefinedRoleError>> {
+        match self.delete_incident_user_defined_role_with_http_info(role_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an existing user-defined role for incidents.
-    pub async fn delete_incident_user_defined_role_with_http_info(
-        &self,
-        role_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedRoleError>>
-    {
+    pub async fn delete_incident_user_defined_role_with_http_info(&self, role_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_incident_user_defined_role";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6914,19 +6239,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6939,22 +6269,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6972,38 +6296,23 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteIncidentUserDefinedRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteIncidentUserDefinedRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a timestamp override for an incident.
-    pub async fn delete_timestamp_override(
-        &self,
-        incident_id: String,
-        id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteTimestampOverrideError>> {
-        match self
-            .delete_timestamp_override_with_http_info(incident_id, id)
-            .await
-        {
+    pub async fn delete_timestamp_override(&self, incident_id: String, id: uuid::Uuid) -> Result<(), datadog::Error<DeleteTimestampOverrideError>> {
+        match self.delete_timestamp_override_with_http_info(incident_id, id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a timestamp override for an incident.
-    pub async fn delete_timestamp_override_with_http_info(
-        &self,
-        incident_id: String,
-        id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTimestampOverrideError>> {
+    pub async fn delete_timestamp_override_with_http_info(&self, incident_id: String, id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTimestampOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_timestamp_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7015,20 +6324,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/timestamp-overrides/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7041,22 +6356,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7074,45 +6383,29 @@ impl IncidentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTimestampOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTimestampOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve global incident settings for the organization.
-    pub async fn get_global_incident_settings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::GlobalIncidentSettingsResponse,
-        datadog::Error<GetGlobalIncidentSettingsError>,
-    > {
+    pub async fn get_global_incident_settings(&self) -> Result<crate::datadogV2::model::GlobalIncidentSettingsResponse, datadog::Error<GetGlobalIncidentSettingsError>> {
         match self.get_global_incident_settings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve global incident settings for the organization.
-    pub async fn get_global_incident_settings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GlobalIncidentSettingsResponse>,
-        datadog::Error<GetGlobalIncidentSettingsError>,
-    > {
+    pub async fn get_global_incident_settings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::GlobalIncidentSettingsResponse>, datadog::Error<GetGlobalIncidentSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_global_incident_settings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7124,18 +6417,22 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/settings",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7148,22 +6445,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7175,59 +6466,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GlobalIncidentSettingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GlobalIncidentSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetGlobalIncidentSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetGlobalIncidentSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the details of an incident by `incident_id`.
-    pub async fn get_incident(
-        &self,
-        incident_id: String,
-        params: GetIncidentOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<GetIncidentError>> {
-        match self.get_incident_with_http_info(incident_id, params).await {
+    pub async fn get_incident(&self, incident_id: String, params: GetIncidentOptionalParams) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<GetIncidentError>> {
+        match self.get_incident_with_http_info(incident_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the details of an incident by `incident_id`.
-    pub async fn get_incident_with_http_info(
-        &self,
-        incident_id: String,
-        params: GetIncidentOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>,
-        datadog::Error<GetIncidentError>,
-    > {
+    pub async fn get_incident_with_http_info(&self, incident_id: String, params: GetIncidentOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>, datadog::Error<GetIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7239,6 +6509,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -7246,27 +6517,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7279,22 +6544,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7306,61 +6565,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetIncidentError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Generate an AI postmortem for an incident.
-    pub async fn get_incident_ai_postmortem(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        crate::datadogV2::model::IncidentAIPostmortemResponse,
-        datadog::Error<GetIncidentAIPostmortemError>,
-    > {
-        match self
-            .get_incident_ai_postmortem_with_http_info(incident_id)
-            .await
-        {
+    pub async fn get_incident_ai_postmortem(&self, incident_id: String) -> Result<crate::datadogV2::model::IncidentAIPostmortemResponse, datadog::Error<GetIncidentAIPostmortemError>> {
+        match self.get_incident_ai_postmortem_with_http_info(incident_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Generate an AI postmortem for an incident.
-    pub async fn get_incident_ai_postmortem_with_http_info(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentAIPostmortemResponse>,
-        datadog::Error<GetIncidentAIPostmortemError>,
-    > {
+    pub async fn get_incident_ai_postmortem_with_http_info(&self, incident_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentAIPostmortemResponse>, datadog::Error<GetIncidentAIPostmortemError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_ai_postmortem";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7372,19 +6608,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/ai/postmortem",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7397,22 +6638,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7424,65 +6659,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentAIPostmortemResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentAIPostmortemResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentAIPostmortemError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentAIPostmortemError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get incident integration metadata details.
-    pub async fn get_incident_integration(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
-        datadog::Error<GetIncidentIntegrationError>,
-    > {
-        match self
-            .get_incident_integration_with_http_info(incident_id, integration_metadata_id)
-            .await
-        {
+    pub async fn get_incident_integration(&self, incident_id: String, integration_metadata_id: String) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataResponse, datadog::Error<GetIncidentIntegrationError>> {
+        match self.get_incident_integration_with_http_info(incident_id, integration_metadata_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get incident integration metadata details.
-    pub async fn get_incident_integration_with_http_info(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
-        datadog::Error<GetIncidentIntegrationError>,
-    > {
+    pub async fn get_incident_integration_with_http_info(&self, incident_id: String, integration_metadata_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>, datadog::Error<GetIncidentIntegrationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_integration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7494,6 +6702,8 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -7503,12 +6713,15 @@ impl IncidentsAPI {
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7521,22 +6734,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7548,65 +6755,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentIntegrationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves a specific notification rule by its ID.
-    pub async fn get_incident_notification_rule(
-        &self,
-        id: uuid::Uuid,
-        params: GetIncidentNotificationRuleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationRule,
-        datadog::Error<GetIncidentNotificationRuleError>,
-    > {
-        match self
-            .get_incident_notification_rule_with_http_info(id, params)
-            .await
-        {
+    pub async fn get_incident_notification_rule(&self, id: uuid::Uuid, params: GetIncidentNotificationRuleOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationRule, datadog::Error<GetIncidentNotificationRuleError>> {
+        match self.get_incident_notification_rule_with_http_info(id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves a specific notification rule by its ID.
-    pub async fn get_incident_notification_rule_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        params: GetIncidentNotificationRuleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>,
-        datadog::Error<GetIncidentNotificationRuleError>,
-    > {
+    pub async fn get_incident_notification_rule_with_http_info(&self, id: uuid::Uuid, params: GetIncidentNotificationRuleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>, datadog::Error<GetIncidentNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_notification_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7618,6 +6798,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -7625,20 +6806,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7651,22 +6833,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7678,65 +6854,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves a specific notification template by its ID.
-    pub async fn get_incident_notification_template(
-        &self,
-        id: uuid::Uuid,
-        params: GetIncidentNotificationTemplateOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationTemplate,
-        datadog::Error<GetIncidentNotificationTemplateError>,
-    > {
-        match self
-            .get_incident_notification_template_with_http_info(id, params)
-            .await
-        {
+    pub async fn get_incident_notification_template(&self, id: uuid::Uuid, params: GetIncidentNotificationTemplateOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationTemplate, datadog::Error<GetIncidentNotificationTemplateError>> {
+        match self.get_incident_notification_template_with_http_info(id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves a specific notification template by its ID.
-    pub async fn get_incident_notification_template_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        params: GetIncidentNotificationTemplateOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>,
-        datadog::Error<GetIncidentNotificationTemplateError>,
-    > {
+    pub async fn get_incident_notification_template_with_http_info(&self, id: uuid::Uuid, params: GetIncidentNotificationTemplateOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>, datadog::Error<GetIncidentNotificationTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_notification_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7748,6 +6897,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -7755,20 +6905,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7781,22 +6932,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7808,63 +6953,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentNotificationTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentNotificationTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve details of a specific postmortem template.
-    pub async fn get_incident_postmortem_template(
-        &self,
-        template_id: String,
-    ) -> Result<
-        crate::datadogV2::model::PostmortemTemplateResponse,
-        datadog::Error<GetIncidentPostmortemTemplateError>,
-    > {
-        match self
-            .get_incident_postmortem_template_with_http_info(template_id)
-            .await
-        {
+    pub async fn get_incident_postmortem_template(&self, template_id: String) -> Result<crate::datadogV2::model::PostmortemTemplateResponse, datadog::Error<GetIncidentPostmortemTemplateError>> {
+        match self.get_incident_postmortem_template_with_http_info(template_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve details of a specific postmortem template.
-    pub async fn get_incident_postmortem_template_with_http_info(
-        &self,
-        template_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>,
-        datadog::Error<GetIncidentPostmortemTemplateError>,
-    > {
+    pub async fn get_incident_postmortem_template_with_http_info(&self, template_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>, datadog::Error<GetIncidentPostmortemTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_postmortem_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7876,19 +6996,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7901,22 +7026,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7928,65 +7047,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentPostmortemTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentPostmortemTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single responder for an incident.
-    pub async fn get_incident_responder(
-        &self,
-        incident_id: String,
-        responder_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::IncidentResponderResponse,
-        datadog::Error<GetIncidentResponderError>,
-    > {
-        match self
-            .get_incident_responder_with_http_info(incident_id, responder_id)
-            .await
-        {
+    pub async fn get_incident_responder(&self, incident_id: String, responder_id: uuid::Uuid) -> Result<crate::datadogV2::model::IncidentResponderResponse, datadog::Error<GetIncidentResponderError>> {
+        match self.get_incident_responder_with_http_info(incident_id, responder_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single responder for an incident.
-    pub async fn get_incident_responder_with_http_info(
-        &self,
-        incident_id: String,
-        responder_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentResponderResponse>,
-        datadog::Error<GetIncidentResponderError>,
-    > {
+    pub async fn get_incident_responder_with_http_info(&self, incident_id: String, responder_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentResponderResponse>, datadog::Error<GetIncidentResponderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_responder";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7998,20 +7090,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/responders/{responder_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            responder_id = datadog::urlencode(responder_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , responder_id=
+            datadog::urlencode(responder_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8024,22 +7122,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8051,58 +7143,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentResponderResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponderResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentResponderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentResponderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single incident rule by ID.
-    pub async fn get_incident_rule(
-        &self,
-        rule_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::IncidentRuleResponse, datadog::Error<GetIncidentRuleError>>
-    {
+    pub async fn get_incident_rule(&self, rule_id: uuid::Uuid) -> Result<crate::datadogV2::model::IncidentRuleResponse, datadog::Error<GetIncidentRuleError>> {
         match self.get_incident_rule_with_http_info(rule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single incident rule by ID.
-    pub async fn get_incident_rule_with_http_info(
-        &self,
-        rule_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>,
-        datadog::Error<GetIncidentRuleError>,
-    > {
+    pub async fn get_incident_rule_with_http_info(&self, rule_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>, datadog::Error<GetIncidentRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8114,19 +7186,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8139,22 +7216,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8166,63 +7237,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get incident todo details.
-    pub async fn get_incident_todo(
-        &self,
-        incident_id: String,
-        todo_id: String,
-    ) -> Result<crate::datadogV2::model::IncidentTodoResponse, datadog::Error<GetIncidentTodoError>>
-    {
-        match self
-            .get_incident_todo_with_http_info(incident_id, todo_id)
-            .await
-        {
+    pub async fn get_incident_todo(&self, incident_id: String, todo_id: String) -> Result<crate::datadogV2::model::IncidentTodoResponse, datadog::Error<GetIncidentTodoError>> {
+        match self.get_incident_todo_with_http_info(incident_id, todo_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get incident todo details.
-    pub async fn get_incident_todo_with_http_info(
-        &self,
-        incident_id: String,
-        todo_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
-        datadog::Error<GetIncidentTodoError>,
-    > {
+    pub async fn get_incident_todo_with_http_info(&self, incident_id: String, todo_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>, datadog::Error<GetIncidentTodoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_todo";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8234,20 +7280,26 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            todo_id = datadog::urlencode(todo_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , todo_id=
+            datadog::urlencode(todo_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8260,22 +7312,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8287,61 +7333,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentTodoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentTodoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get incident type details.
-    pub async fn get_incident_type(
-        &self,
-        incident_type_id: String,
-    ) -> Result<crate::datadogV2::model::IncidentTypeResponse, datadog::Error<GetIncidentTypeError>>
-    {
-        match self
-            .get_incident_type_with_http_info(incident_type_id)
-            .await
-        {
+    pub async fn get_incident_type(&self, incident_type_id: String) -> Result<crate::datadogV2::model::IncidentTypeResponse, datadog::Error<GetIncidentTypeError>> {
+        match self.get_incident_type_with_http_info(incident_type_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get incident type details.
-    pub async fn get_incident_type_with_http_info(
-        &self,
-        incident_type_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>,
-        datadog::Error<GetIncidentTypeError>,
-    > {
+    pub async fn get_incident_type_with_http_info(&self, incident_type_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>, datadog::Error<GetIncidentTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_type";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8353,19 +7376,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_type_id = datadog::urlencode(incident_type_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_type_id=
+            datadog::urlencode(incident_type_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8378,22 +7406,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8405,65 +7427,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get details of an incident user-defined field.
-    pub async fn get_incident_user_defined_field(
-        &self,
-        field_id: String,
-        params: GetIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
-        datadog::Error<GetIncidentUserDefinedFieldError>,
-    > {
-        match self
-            .get_incident_user_defined_field_with_http_info(field_id, params)
-            .await
-        {
+    pub async fn get_incident_user_defined_field(&self, field_id: String, params: GetIncidentUserDefinedFieldOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedFieldResponse, datadog::Error<GetIncidentUserDefinedFieldError>> {
+        match self.get_incident_user_defined_field_with_http_info(field_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get details of an incident user-defined field.
-    pub async fn get_incident_user_defined_field_with_http_info(
-        &self,
-        field_id: String,
-        params: GetIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
-        datadog::Error<GetIncidentUserDefinedFieldError>,
-    > {
+    pub async fn get_incident_user_defined_field_with_http_info(&self, field_id: String, params: GetIncidentUserDefinedFieldOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>, datadog::Error<GetIncidentUserDefinedFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_user_defined_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8475,6 +7470,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -8482,20 +7478,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            field_id = datadog::urlencode(field_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), field_id=
+            datadog::urlencode(field_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8508,22 +7505,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8535,65 +7526,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentUserDefinedFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentUserDefinedFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a single user-defined role for incidents.
-    pub async fn get_incident_user_defined_role(
-        &self,
-        role_id: uuid::Uuid,
-        params: GetIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedRoleResponse,
-        datadog::Error<GetIncidentUserDefinedRoleError>,
-    > {
-        match self
-            .get_incident_user_defined_role_with_http_info(role_id, params)
-            .await
-        {
+    pub async fn get_incident_user_defined_role(&self, role_id: uuid::Uuid, params: GetIncidentUserDefinedRoleOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedRoleResponse, datadog::Error<GetIncidentUserDefinedRoleError>> {
+        match self.get_incident_user_defined_role_with_http_info(role_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a single user-defined role for incidents.
-    pub async fn get_incident_user_defined_role_with_http_info(
-        &self,
-        role_id: uuid::Uuid,
-        params: GetIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>,
-        datadog::Error<GetIncidentUserDefinedRoleError>,
-    > {
+    pub async fn get_incident_user_defined_role_with_http_info(&self, role_id: uuid::Uuid, params: GetIncidentUserDefinedRoleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>, datadog::Error<GetIncidentUserDefinedRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_incident_user_defined_role";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8605,6 +7569,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -8612,20 +7577,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8638,22 +7604,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8665,65 +7625,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetIncidentUserDefinedRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetIncidentUserDefinedRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the org settings for a specific incident type.
-    pub async fn get_org_settings_by_incident_type(
-        &self,
-        incident_type_id: uuid::Uuid,
-        params: GetOrgSettingsByIncidentTypeOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentOrgSettingsResponse,
-        datadog::Error<GetOrgSettingsByIncidentTypeError>,
-    > {
-        match self
-            .get_org_settings_by_incident_type_with_http_info(incident_type_id, params)
-            .await
-        {
+    pub async fn get_org_settings_by_incident_type(&self, incident_type_id: uuid::Uuid, params: GetOrgSettingsByIncidentTypeOptionalParams) -> Result<crate::datadogV2::model::IncidentOrgSettingsResponse, datadog::Error<GetOrgSettingsByIncidentTypeError>> {
+        match self.get_org_settings_by_incident_type_with_http_info(incident_type_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the org settings for a specific incident type.
-    pub async fn get_org_settings_by_incident_type_with_http_info(
-        &self,
-        incident_type_id: uuid::Uuid,
-        params: GetOrgSettingsByIncidentTypeOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentOrgSettingsResponse>,
-        datadog::Error<GetOrgSettingsByIncidentTypeError>,
-    > {
+    pub async fn get_org_settings_by_incident_type_with_http_info(&self, incident_type_id: uuid::Uuid, params: GetOrgSettingsByIncidentTypeOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentOrgSettingsResponse>, datadog::Error<GetOrgSettingsByIncidentTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_settings_by_incident_type";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8735,6 +7668,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -8742,20 +7676,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}/org-settings",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_type_id = datadog::urlencode(incident_type_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_type_id=
+            datadog::urlencode(incident_type_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8768,22 +7703,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8795,64 +7724,42 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentOrgSettingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentOrgSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOrgSettingsByIncidentTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOrgSettingsByIncidentTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Import an incident from an external system. This endpoint allows you to create incidents with
-    /// historical data such as custom timestamps for detection, declaration, and resolution.
-    /// Imported incidents do not execute integrations or notification rules.
-    pub async fn import_incident(
-        &self,
-        body: crate::datadogV2::model::IncidentImportRequest,
-        params: ImportIncidentOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentImportResponse, datadog::Error<ImportIncidentError>>
-    {
-        match self.import_incident_with_http_info(body, params).await {
+/// historical data such as custom timestamps for detection, declaration, and resolution.
+/// Imported incidents do not execute integrations or notification rules.
+    pub async fn import_incident(&self, body: crate::datadogV2::model::IncidentImportRequest, params: ImportIncidentOptionalParams) -> Result<crate::datadogV2::model::IncidentImportResponse, datadog::Error<ImportIncidentError>> {
+        match self.import_incident_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Import an incident from an external system. This endpoint allows you to create incidents with
-    /// historical data such as custom timestamps for detection, declaration, and resolution.
-    /// Imported incidents do not execute integrations or notification rules.
-    pub async fn import_incident_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentImportRequest,
-        params: ImportIncidentOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImportResponse>,
-        datadog::Error<ImportIncidentError>,
-    > {
+/// historical data such as custom timestamps for detection, declaration, and resolution.
+/// Imported incidents do not execute integrations or notification rules.
+    pub async fn import_incident_with_http_info(&self, body: crate::datadogV2::model::IncidentImportRequest, params: ImportIncidentOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImportResponse>, datadog::Error<ImportIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.import_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8864,6 +7771,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -8871,27 +7779,20 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/import",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8904,23 +7805,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8928,7 +7822,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8938,7 +7835,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8960,7 +7860,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8977,65 +7877,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImportResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImportResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ImportIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ImportIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Link an existing on-call page to an incident.
-    pub async fn link_page_to_incident(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentOnCallPageLinkRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
-        datadog::Error<LinkPageToIncidentError>,
-    > {
-        match self
-            .link_page_to_incident_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn link_page_to_incident(&self, incident_id: String, body: crate::datadogV2::model::IncidentOnCallPageLinkRequest) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataResponse, datadog::Error<LinkPageToIncidentError>> {
+        match self.link_page_to_incident_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Link an existing on-call page to an incident.
-    pub async fn link_page_to_incident_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentOnCallPageLinkRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
-        datadog::Error<LinkPageToIncidentError>,
-    > {
+    pub async fn link_page_to_incident_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentOnCallPageLinkRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>, datadog::Error<LinkPageToIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.link_page_to_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9047,20 +7920,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/pages/link",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9073,23 +7951,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9097,7 +7968,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9107,7 +7981,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9129,7 +8006,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9146,63 +8023,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<LinkPageToIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<LinkPageToIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a list of global incident handles.
-    pub async fn list_global_incident_handles(
-        &self,
-        params: ListGlobalIncidentHandlesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentHandlesResponse,
-        datadog::Error<ListGlobalIncidentHandlesError>,
-    > {
-        match self
-            .list_global_incident_handles_with_http_info(params)
-            .await
-        {
+    pub async fn list_global_incident_handles(&self, params: ListGlobalIncidentHandlesOptionalParams) -> Result<crate::datadogV2::model::IncidentHandlesResponse, datadog::Error<ListGlobalIncidentHandlesError>> {
+        match self.list_global_incident_handles_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a list of global incident handles.
-    pub async fn list_global_incident_handles_with_http_info(
-        &self,
-        params: ListGlobalIncidentHandlesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentHandlesResponse>,
-        datadog::Error<ListGlobalIncidentHandlesError>,
-    > {
+    pub async fn list_global_incident_handles_with_http_info(&self, params: ListGlobalIncidentHandlesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentHandlesResponse>, datadog::Error<ListGlobalIncidentHandlesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_global_incident_handles";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9214,6 +8066,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -9221,19 +8074,19 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9246,22 +8099,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9273,65 +8120,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentHandlesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentHandlesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListGlobalIncidentHandlesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListGlobalIncidentHandlesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List incident attachments.
-    pub async fn list_incident_attachments(
-        &self,
-        incident_id: String,
-        params: ListIncidentAttachmentsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::AttachmentArray,
-        datadog::Error<ListIncidentAttachmentsError>,
-    > {
-        match self
-            .list_incident_attachments_with_http_info(incident_id, params)
-            .await
-        {
+    pub async fn list_incident_attachments(&self, incident_id: String, params: ListIncidentAttachmentsOptionalParams) -> Result<crate::datadogV2::model::AttachmentArray, datadog::Error<ListIncidentAttachmentsError>> {
+        match self.list_incident_attachments_with_http_info(incident_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List incident attachments.
-    pub async fn list_incident_attachments_with_http_info(
-        &self,
-        incident_id: String,
-        params: ListIncidentAttachmentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AttachmentArray>,
-        datadog::Error<ListIncidentAttachmentsError>,
-    > {
+    pub async fn list_incident_attachments_with_http_info(&self, incident_id: String, params: ListIncidentAttachmentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AttachmentArray>, datadog::Error<ListIncidentAttachmentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_attachments";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9343,6 +8163,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_attachment_type = params.filter_attachment_type;
         let include = params.include;
@@ -9351,24 +8172,24 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_attachment_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[attachment_type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[attachment_type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9381,22 +8202,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9409,55 +8224,37 @@ impl IncidentsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::AttachmentArray>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentAttachmentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentAttachmentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all impact fields for incidents.
-    pub async fn list_incident_impact_fields(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactFieldsResponse,
-        datadog::Error<ListIncidentImpactFieldsError>,
-    > {
+    pub async fn list_incident_impact_fields(&self) -> Result<crate::datadogV2::model::IncidentImpactFieldsResponse, datadog::Error<ListIncidentImpactFieldsError>> {
         match self.list_incident_impact_fields_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all impact fields for incidents.
-    pub async fn list_incident_impact_fields_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldsResponse>,
-        datadog::Error<ListIncidentImpactFieldsError>,
-    > {
+    pub async fn list_incident_impact_fields_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldsResponse>, datadog::Error<ListIncidentImpactFieldsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_impact_fields";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9469,18 +8266,22 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/impact-fields",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9493,22 +8294,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9520,68 +8315,42 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentImpactFieldsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentImpactFieldsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all impacts for an incident.
-    pub async fn list_incident_impacts(
-        &self,
-        incident_id: String,
-        params: ListIncidentImpactsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactsResponse,
-        datadog::Error<ListIncidentImpactsError>,
-    > {
-        match self
-            .list_incident_impacts_with_http_info(incident_id, params)
-            .await
-        {
+    pub async fn list_incident_impacts(&self, incident_id: String, params: ListIncidentImpactsOptionalParams) -> Result<crate::datadogV2::model::IncidentImpactsResponse, datadog::Error<ListIncidentImpactsError>> {
+        match self.list_incident_impacts_with_http_info(incident_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all impacts for an incident.
-    pub async fn list_incident_impacts_with_http_info(
-        &self,
-        incident_id: String,
-        params: ListIncidentImpactsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactsResponse>,
-        datadog::Error<ListIncidentImpactsError>,
-    > {
+    pub async fn list_incident_impacts_with_http_info(&self, incident_id: String, params: ListIncidentImpactsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactsResponse>, datadog::Error<ListIncidentImpactsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_impacts";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -9589,27 +8358,21 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9622,22 +8385,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9649,63 +8406,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentImpactsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentImpactsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all integration metadata for an incident.
-    pub async fn list_incident_integrations(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataListResponse,
-        datadog::Error<ListIncidentIntegrationsError>,
-    > {
-        match self
-            .list_incident_integrations_with_http_info(incident_id)
-            .await
-        {
+    pub async fn list_incident_integrations(&self, incident_id: String) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataListResponse, datadog::Error<ListIncidentIntegrationsError>> {
+        match self.list_incident_integrations_with_http_info(incident_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all integration metadata for an incident.
-    pub async fn list_incident_integrations_with_http_info(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>,
-        datadog::Error<ListIncidentIntegrationsError>,
-    > {
+    pub async fn list_incident_integrations_with_http_info(&self, incident_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>, datadog::Error<ListIncidentIntegrationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_integrations";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9717,19 +8449,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9742,22 +8479,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9769,64 +8500,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentIntegrationMetadataListResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentIntegrationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentIntegrationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Lists all notification rules for the organization. Optionally filter by incident type.
-    pub async fn list_incident_notification_rules(
-        &self,
-        params: ListIncidentNotificationRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationRuleArray,
-        datadog::Error<ListIncidentNotificationRulesError>,
-    > {
-        match self
-            .list_incident_notification_rules_with_http_info(params)
-            .await
-        {
+    pub async fn list_incident_notification_rules(&self, params: ListIncidentNotificationRulesOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationRuleArray, datadog::Error<ListIncidentNotificationRulesError>> {
+        match self.list_incident_notification_rules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Lists all notification rules for the organization. Optionally filter by incident type.
-    pub async fn list_incident_notification_rules_with_http_info(
-        &self,
-        params: ListIncidentNotificationRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRuleArray>,
-        datadog::Error<ListIncidentNotificationRulesError>,
-    > {
+    pub async fn list_incident_notification_rules_with_http_info(&self, params: ListIncidentNotificationRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRuleArray>, datadog::Error<ListIncidentNotificationRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_notification_rules";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9838,6 +8543,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -9845,19 +8551,19 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9870,22 +8576,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9897,75 +8597,50 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRuleArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRuleArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentNotificationRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentNotificationRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Lists all notification templates. Optionally filter by incident type.
-    pub async fn list_incident_notification_templates(
-        &self,
-        params: ListIncidentNotificationTemplatesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationTemplateArray,
-        datadog::Error<ListIncidentNotificationTemplatesError>,
-    > {
-        match self
-            .list_incident_notification_templates_with_http_info(params)
-            .await
-        {
+    pub async fn list_incident_notification_templates(&self, params: ListIncidentNotificationTemplatesOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationTemplateArray, datadog::Error<ListIncidentNotificationTemplatesError>> {
+        match self.list_incident_notification_templates_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Lists all notification templates. Optionally filter by incident type.
-    pub async fn list_incident_notification_templates_with_http_info(
-        &self,
-        params: ListIncidentNotificationTemplatesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplateArray>,
-        datadog::Error<ListIncidentNotificationTemplatesError>,
-    > {
+    pub async fn list_incident_notification_templates_with_http_info(&self, params: ListIncidentNotificationTemplatesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplateArray>, datadog::Error<ListIncidentNotificationTemplatesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_notification_templates";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_incident_notification_templates' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_incident_notification_templates' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_incident_type = params.filter_incident_type;
         let include = params.include;
@@ -9974,23 +8649,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_incident_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[incident-type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10003,22 +8677,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10030,63 +8698,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplateArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplateArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentNotificationTemplatesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentNotificationTemplatesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a list of all postmortem templates for incidents.
-    pub async fn list_incident_postmortem_templates(
-        &self,
-        params: ListIncidentPostmortemTemplatesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::PostmortemTemplatesResponse,
-        datadog::Error<ListIncidentPostmortemTemplatesError>,
-    > {
-        match self
-            .list_incident_postmortem_templates_with_http_info(params)
-            .await
-        {
+    pub async fn list_incident_postmortem_templates(&self, params: ListIncidentPostmortemTemplatesOptionalParams) -> Result<crate::datadogV2::model::PostmortemTemplatesResponse, datadog::Error<ListIncidentPostmortemTemplatesError>> {
+        match self.list_incident_postmortem_templates_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a list of all postmortem templates for incidents.
-    pub async fn list_incident_postmortem_templates_with_http_info(
-        &self,
-        params: ListIncidentPostmortemTemplatesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplatesResponse>,
-        datadog::Error<ListIncidentPostmortemTemplatesError>,
-    > {
+    pub async fn list_incident_postmortem_templates_with_http_info(&self, params: ListIncidentPostmortemTemplatesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplatesResponse>, datadog::Error<ListIncidentPostmortemTemplatesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_postmortem_templates";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10098,6 +8741,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_incident_type = params.filter_incident_type;
         let sort = params.sort;
@@ -10106,23 +8750,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_incident_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[incident-type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10135,22 +8778,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10162,65 +8799,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplatesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplatesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentPostmortemTemplatesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentPostmortemTemplatesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all responders for an incident.
-    pub async fn list_incident_responders(
-        &self,
-        incident_id: String,
-        params: ListIncidentRespondersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentRespondersResponse,
-        datadog::Error<ListIncidentRespondersError>,
-    > {
-        match self
-            .list_incident_responders_with_http_info(incident_id, params)
-            .await
-        {
+    pub async fn list_incident_responders(&self, incident_id: String, params: ListIncidentRespondersOptionalParams) -> Result<crate::datadogV2::model::IncidentRespondersResponse, datadog::Error<ListIncidentRespondersError>> {
+        match self.list_incident_responders_with_http_info(incident_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all responders for an incident.
-    pub async fn list_incident_responders_with_http_info(
-        &self,
-        incident_id: String,
-        params: ListIncidentRespondersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentRespondersResponse>,
-        datadog::Error<ListIncidentRespondersError>,
-    > {
+    pub async fn list_incident_responders_with_http_info(&self, incident_id: String, params: ListIncidentRespondersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentRespondersResponse>, datadog::Error<ListIncidentRespondersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_responders";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10232,6 +8842,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_limit = params.page_limit;
@@ -10241,35 +8852,27 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/responders",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10282,22 +8885,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10309,60 +8906,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentRespondersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentRespondersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentRespondersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentRespondersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all incident rules.
-    pub async fn list_incident_rules(
-        &self,
-        params: ListIncidentRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentRulesResponse,
-        datadog::Error<ListIncidentRulesError>,
-    > {
-        match self.list_incident_rules_with_http_info(params).await {
+    pub async fn list_incident_rules(&self, params: ListIncidentRulesOptionalParams) -> Result<crate::datadogV2::model::IncidentRulesResponse, datadog::Error<ListIncidentRulesError>> {
+        match self.list_incident_rules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all incident rules.
-    pub async fn list_incident_rules_with_http_info(
-        &self,
-        params: ListIncidentRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentRulesResponse>,
-        datadog::Error<ListIncidentRulesError>,
-    > {
+    pub async fn list_incident_rules_with_http_info(&self, params: ListIncidentRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentRulesResponse>, datadog::Error<ListIncidentRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_rules";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10374,6 +8949,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_task_id = params.filter_task_id;
         let filter_trigger = params.filter_trigger;
@@ -10383,27 +8959,25 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_task_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[task_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[task_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_trigger {
-            local_req_builder =
-                local_req_builder.query(&[("filter[trigger]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[trigger]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = incident_type_uuid {
-            local_req_builder =
-                local_req_builder.query(&[("incidentTypeUUID", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("incidentTypeUUID", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10416,22 +8990,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10443,60 +9011,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all todos for an incident.
-    pub async fn list_incident_todos(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTodoListResponse,
-        datadog::Error<ListIncidentTodosError>,
-    > {
+    pub async fn list_incident_todos(&self, incident_id: String) -> Result<crate::datadogV2::model::IncidentTodoListResponse, datadog::Error<ListIncidentTodosError>> {
         match self.list_incident_todos_with_http_info(incident_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all todos for an incident.
-    pub async fn list_incident_todos_with_http_info(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTodoListResponse>,
-        datadog::Error<ListIncidentTodosError>,
-    > {
+    pub async fn list_incident_todos_with_http_info(&self, incident_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTodoListResponse>, datadog::Error<ListIncidentTodosError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_todos";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10508,19 +9054,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10533,22 +9084,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10560,60 +9105,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentTodosError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentTodosError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all incident types.
-    pub async fn list_incident_types(
-        &self,
-        params: ListIncidentTypesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTypeListResponse,
-        datadog::Error<ListIncidentTypesError>,
-    > {
-        match self.list_incident_types_with_http_info(params).await {
+    pub async fn list_incident_types(&self, params: ListIncidentTypesOptionalParams) -> Result<crate::datadogV2::model::IncidentTypeListResponse, datadog::Error<ListIncidentTypesError>> {
+        match self.list_incident_types_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all incident types.
-    pub async fn list_incident_types_with_http_info(
-        &self,
-        params: ListIncidentTypesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTypeListResponse>,
-        datadog::Error<ListIncidentTypesError>,
-    > {
+    pub async fn list_incident_types_with_http_info(&self, params: ListIncidentTypesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTypeListResponse>, datadog::Error<ListIncidentTypesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_types";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10625,6 +9148,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include_deleted = params.include_deleted;
 
@@ -10632,19 +9156,19 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_deleted {
-            local_req_builder =
-                local_req_builder.query(&[("include_deleted", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_deleted", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10657,22 +9181,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10684,63 +9202,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentTypesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentTypesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all incident user-defined fields.
-    pub async fn list_incident_user_defined_fields(
-        &self,
-        params: ListIncidentUserDefinedFieldsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedFieldListResponse,
-        datadog::Error<ListIncidentUserDefinedFieldsError>,
-    > {
-        match self
-            .list_incident_user_defined_fields_with_http_info(params)
-            .await
-        {
+    pub async fn list_incident_user_defined_fields(&self, params: ListIncidentUserDefinedFieldsOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedFieldListResponse, datadog::Error<ListIncidentUserDefinedFieldsError>> {
+        match self.list_incident_user_defined_fields_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of all incident user-defined fields.
-    pub async fn list_incident_user_defined_fields_with_http_info(
-        &self,
-        params: ListIncidentUserDefinedFieldsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldListResponse>,
-        datadog::Error<ListIncidentUserDefinedFieldsError>,
-    > {
+    pub async fn list_incident_user_defined_fields_with_http_info(&self, params: ListIncidentUserDefinedFieldsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldListResponse>, datadog::Error<ListIncidentUserDefinedFieldsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_user_defined_fields";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10752,6 +9245,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -10763,35 +9257,31 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_deleted {
-            local_req_builder =
-                local_req_builder.query(&[("include-deleted", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include-deleted", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_incident_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[incident-type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10804,22 +9294,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10831,64 +9315,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentUserDefinedFieldListResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentUserDefinedFieldsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentUserDefinedFieldsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all user-defined roles for incidents.
-    pub async fn list_incident_user_defined_roles(
-        &self,
-        params: ListIncidentUserDefinedRolesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedRolesResponse,
-        datadog::Error<ListIncidentUserDefinedRolesError>,
-    > {
-        match self
-            .list_incident_user_defined_roles_with_http_info(params)
-            .await
-        {
+    pub async fn list_incident_user_defined_roles(&self, params: ListIncidentUserDefinedRolesOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedRolesResponse, datadog::Error<ListIncidentUserDefinedRolesError>> {
+        match self.list_incident_user_defined_roles_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all user-defined roles for incidents.
-    pub async fn list_incident_user_defined_roles_with_http_info(
-        &self,
-        params: ListIncidentUserDefinedRolesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRolesResponse>,
-        datadog::Error<ListIncidentUserDefinedRolesError>,
-    > {
+    pub async fn list_incident_user_defined_roles_with_http_info(&self, params: ListIncidentUserDefinedRolesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRolesResponse>, datadog::Error<ListIncidentUserDefinedRolesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incident_user_defined_roles";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10900,6 +9358,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_incident_type = params.filter_incident_type;
         let include = params.include;
@@ -10908,23 +9367,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_incident_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[incident-type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10937,22 +9395,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10964,59 +9416,39 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRolesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRolesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentUserDefinedRolesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentUserDefinedRolesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all incidents for the user's organization.
-    pub async fn list_incidents(
-        &self,
-        params: ListIncidentsOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentsResponse, datadog::Error<ListIncidentsError>>
-    {
-        match self.list_incidents_with_http_info(params).await {
+    pub async fn list_incidents(&self, params: ListIncidentsOptionalParams) -> Result<crate::datadogV2::model::IncidentsResponse, datadog::Error<ListIncidentsError>> {
+        match self.list_incidents_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_incidents_with_pagination(
-        &self,
-        mut params: ListIncidentsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::IncidentResponseData,
-            datadog::Error<ListIncidentsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListIncidentsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::IncidentResponseData, datadog::Error<ListIncidentsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -11044,14 +9476,9 @@ impl IncidentsAPI {
         }
     }
 
+    
     /// Get all incidents for the user's organization.
-    pub async fn list_incidents_with_http_info(
-        &self,
-        params: ListIncidentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentsResponse>,
-        datadog::Error<ListIncidentsError>,
-    > {
+    pub async fn list_incidents_with_http_info(&self, params: ListIncidentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentsResponse>, datadog::Error<ListIncidentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_incidents";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11063,6 +9490,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_size = params.page_size;
@@ -11072,34 +9500,25 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11112,22 +9531,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -11139,59 +9552,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIncidentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIncidentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List org settings for all incident types.
-    pub async fn list_org_settings(
-        &self,
-        params: ListOrgSettingsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentOrgSettingsListResponse,
-        datadog::Error<ListOrgSettingsError>,
-    > {
-        match self.list_org_settings_with_http_info(params).await {
+    pub async fn list_org_settings(&self, params: ListOrgSettingsOptionalParams) -> Result<crate::datadogV2::model::IncidentOrgSettingsListResponse, datadog::Error<ListOrgSettingsError>> {
+        match self.list_org_settings_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List org settings for all incident types.
-    pub async fn list_org_settings_with_http_info(
-        &self,
-        params: ListOrgSettingsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentOrgSettingsListResponse>,
-        datadog::Error<ListOrgSettingsError>,
-    > {
+    pub async fn list_org_settings_with_http_info(&self, params: ListOrgSettingsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentOrgSettingsListResponse>, datadog::Error<ListOrgSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_settings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11203,6 +9595,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_offset = params.page_offset;
@@ -11213,31 +9606,28 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/org-settings",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_deleted {
-            local_req_builder =
-                local_req_builder.query(&[("include-deleted", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include-deleted", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11250,22 +9640,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -11277,63 +9661,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentOrgSettingsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentOrgSettingsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all timestamp overrides for an incident.
-    pub async fn list_timestamp_overrides(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTimestampOverridesResponse,
-        datadog::Error<ListTimestampOverridesError>,
-    > {
-        match self
-            .list_timestamp_overrides_with_http_info(incident_id)
-            .await
-        {
+    pub async fn list_timestamp_overrides(&self, incident_id: String) -> Result<crate::datadogV2::model::IncidentTimestampOverridesResponse, datadog::Error<ListTimestampOverridesError>> {
+        match self.list_timestamp_overrides_with_http_info(incident_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all timestamp overrides for an incident.
-    pub async fn list_timestamp_overrides_with_http_info(
-        &self,
-        incident_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverridesResponse>,
-        datadog::Error<ListTimestampOverridesError>,
-    > {
+    pub async fn list_timestamp_overrides_with_http_info(&self, incident_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverridesResponse>, datadog::Error<ListTimestampOverridesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_timestamp_overrides";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11345,19 +9704,24 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/timestamp-overrides",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11370,22 +9734,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -11397,69 +9755,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverridesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverridesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTimestampOverridesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTimestampOverridesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an incident impact.
-    pub async fn patch_incident_impact(
-        &self,
-        incident_id: String,
-        impact_id: String,
-        body: crate::datadogV2::model::IncidentImpactPatchRequest,
-        params: PatchIncidentImpactOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactResponse,
-        datadog::Error<PatchIncidentImpactError>,
-    > {
-        match self
-            .patch_incident_impact_with_http_info(incident_id, impact_id, body, params)
-            .await
-        {
+    pub async fn patch_incident_impact(&self, incident_id: String, impact_id: String, body: crate::datadogV2::model::IncidentImpactPatchRequest, params: PatchIncidentImpactOptionalParams) -> Result<crate::datadogV2::model::IncidentImpactResponse, datadog::Error<PatchIncidentImpactError>> {
+        match self.patch_incident_impact_with_http_info(incident_id, impact_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an incident impact.
-    pub async fn patch_incident_impact_with_http_info(
-        &self,
-        incident_id: String,
-        impact_id: String,
-        body: crate::datadogV2::model::IncidentImpactPatchRequest,
-        params: PatchIncidentImpactOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactResponse>,
-        datadog::Error<PatchIncidentImpactError>,
-    > {
+    pub async fn patch_incident_impact_with_http_info(&self, incident_id: String, impact_id: String, body: crate::datadogV2::model::IncidentImpactPatchRequest, params: PatchIncidentImpactOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactResponse>, datadog::Error<PatchIncidentImpactError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_incident_impact";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11471,6 +9798,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -11478,29 +9806,24 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts/{impact_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            impact_id = datadog::urlencode(impact_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , impact_id=
+            datadog::urlencode(impact_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11513,23 +9836,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11537,7 +9853,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11547,7 +9866,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11569,7 +9891,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11586,61 +9908,39 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PatchIncidentImpactError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchIncidentImpactError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search for incidents matching a certain query.
-    pub async fn search_incidents(
-        &self,
-        query: String,
-        params: SearchIncidentsOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentSearchResponse, datadog::Error<SearchIncidentsError>>
-    {
-        match self.search_incidents_with_http_info(query, params).await {
+    pub async fn search_incidents(&self, query: String, params: SearchIncidentsOptionalParams) -> Result<crate::datadogV2::model::IncidentSearchResponse, datadog::Error<SearchIncidentsError>> {
+        match self.search_incidents_with_http_info(query,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn search_incidents_with_pagination(
-        &self,
-        query: String,
-        mut params: SearchIncidentsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::IncidentSearchResponseIncidentsData,
-            datadog::Error<SearchIncidentsError>,
-        >,
-    > + '_ {
+        &self,  query: String, mut params: SearchIncidentsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::IncidentSearchResponseIncidentsData, datadog::Error<SearchIncidentsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -11669,15 +9969,9 @@ impl IncidentsAPI {
         }
     }
 
+    
     /// Search for incidents matching a certain query.
-    pub async fn search_incidents_with_http_info(
-        &self,
-        query: String,
-        params: SearchIncidentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentSearchResponse>,
-        datadog::Error<SearchIncidentsError>,
-    > {
+    pub async fn search_incidents_with_http_info(&self, query: String, params: SearchIncidentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentSearchResponse>, datadog::Error<SearchIncidentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_incidents";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11689,6 +9983,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let sort = params.sort;
@@ -11699,32 +9994,29 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("query", &query.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("query", &query.to_string() )]);
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11737,22 +10029,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -11764,65 +10050,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SearchIncidentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SearchIncidentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing global incident handle.
-    pub async fn update_global_incident_handle(
-        &self,
-        body: crate::datadogV2::model::IncidentHandleRequest,
-        params: UpdateGlobalIncidentHandleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentHandleResponse,
-        datadog::Error<UpdateGlobalIncidentHandleError>,
-    > {
-        match self
-            .update_global_incident_handle_with_http_info(body, params)
-            .await
-        {
+    pub async fn update_global_incident_handle(&self, body: crate::datadogV2::model::IncidentHandleRequest, params: UpdateGlobalIncidentHandleOptionalParams) -> Result<crate::datadogV2::model::IncidentHandleResponse, datadog::Error<UpdateGlobalIncidentHandleError>> {
+        match self.update_global_incident_handle_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing global incident handle.
-    pub async fn update_global_incident_handle_with_http_info(
-        &self,
-        body: crate::datadogV2::model::IncidentHandleRequest,
-        params: UpdateGlobalIncidentHandleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentHandleResponse>,
-        datadog::Error<UpdateGlobalIncidentHandleError>,
-    > {
+    pub async fn update_global_incident_handle_with_http_info(&self, body: crate::datadogV2::model::IncidentHandleRequest, params: UpdateGlobalIncidentHandleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentHandleResponse>, datadog::Error<UpdateGlobalIncidentHandleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_global_incident_handle";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11834,6 +10093,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -11841,20 +10101,20 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11867,23 +10127,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11891,7 +10144,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11901,7 +10157,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11923,7 +10182,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11940,63 +10199,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentHandleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentHandleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateGlobalIncidentHandleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateGlobalIncidentHandleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update global incident settings for the organization.
-    pub async fn update_global_incident_settings(
-        &self,
-        body: crate::datadogV2::model::GlobalIncidentSettingsRequest,
-    ) -> Result<
-        crate::datadogV2::model::GlobalIncidentSettingsResponse,
-        datadog::Error<UpdateGlobalIncidentSettingsError>,
-    > {
-        match self
-            .update_global_incident_settings_with_http_info(body)
-            .await
-        {
+    pub async fn update_global_incident_settings(&self, body: crate::datadogV2::model::GlobalIncidentSettingsRequest) -> Result<crate::datadogV2::model::GlobalIncidentSettingsResponse, datadog::Error<UpdateGlobalIncidentSettingsError>> {
+        match self.update_global_incident_settings_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update global incident settings for the organization.
-    pub async fn update_global_incident_settings_with_http_info(
-        &self,
-        body: crate::datadogV2::model::GlobalIncidentSettingsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GlobalIncidentSettingsResponse>,
-        datadog::Error<UpdateGlobalIncidentSettingsError>,
-    > {
+    pub async fn update_global_incident_settings_with_http_info(&self, body: crate::datadogV2::model::GlobalIncidentSettingsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::GlobalIncidentSettingsResponse>, datadog::Error<UpdateGlobalIncidentSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_global_incident_settings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -12008,19 +10242,23 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/settings",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12033,23 +10271,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12057,7 +10288,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12067,7 +10301,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12089,7 +10326,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12106,65 +10343,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GlobalIncidentSettingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GlobalIncidentSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateGlobalIncidentSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateGlobalIncidentSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an incident. Provide only the attributes that should be updated as this request is a partial update.
-    pub async fn update_incident(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentUpdateRequest,
-        params: UpdateIncidentOptionalParams,
-    ) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<UpdateIncidentError>>
-    {
-        match self
-            .update_incident_with_http_info(incident_id, body, params)
-            .await
-        {
+    pub async fn update_incident(&self, incident_id: String, body: crate::datadogV2::model::IncidentUpdateRequest, params: UpdateIncidentOptionalParams) -> Result<crate::datadogV2::model::IncidentResponse, datadog::Error<UpdateIncidentError>> {
+        match self.update_incident_with_http_info(incident_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an incident. Provide only the attributes that should be updated as this request is a partial update.
-    pub async fn update_incident_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentUpdateRequest,
-        params: UpdateIncidentOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>,
-        datadog::Error<UpdateIncidentError>,
-    > {
+    pub async fn update_incident_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentUpdateRequest, params: UpdateIncidentOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentResponse>, datadog::Error<UpdateIncidentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -12176,6 +10386,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -12183,28 +10394,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12217,23 +10422,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12241,7 +10439,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12251,7 +10452,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12273,7 +10477,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12290,64 +10494,36 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn update_incident_attachment(
-        &self,
-        incident_id: String,
-        attachment_id: String,
-        body: crate::datadogV2::model::PatchAttachmentRequest,
-        params: UpdateIncidentAttachmentOptionalParams,
-    ) -> Result<crate::datadogV2::model::Attachment, datadog::Error<UpdateIncidentAttachmentError>>
-    {
-        match self
-            .update_incident_attachment_with_http_info(incident_id, attachment_id, body, params)
-            .await
-        {
+    
+    pub async fn update_incident_attachment(&self, incident_id: String, attachment_id: String, body: crate::datadogV2::model::PatchAttachmentRequest, params: UpdateIncidentAttachmentOptionalParams) -> Result<crate::datadogV2::model::Attachment, datadog::Error<UpdateIncidentAttachmentError>> {
+        match self.update_incident_attachment_with_http_info(incident_id, attachment_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn update_incident_attachment_with_http_info(
-        &self,
-        incident_id: String,
-        attachment_id: String,
-        body: crate::datadogV2::model::PatchAttachmentRequest,
-        params: UpdateIncidentAttachmentOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Attachment>,
-        datadog::Error<UpdateIncidentAttachmentError>,
-    > {
+    
+    pub async fn update_incident_attachment_with_http_info(&self, incident_id: String, attachment_id: String, body: crate::datadogV2::model::PatchAttachmentRequest, params: UpdateIncidentAttachmentOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Attachment>, datadog::Error<UpdateIncidentAttachmentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_attachment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -12359,6 +10535,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -12366,22 +10543,24 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            attachment_id = datadog::urlencode(attachment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , attachment_id=
+            datadog::urlencode(attachment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12394,23 +10573,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12418,7 +10590,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12428,7 +10603,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12450,7 +10628,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12468,62 +10646,37 @@ impl IncidentsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Attachment>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentAttachmentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentAttachmentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a configuration for an incident.
-    pub async fn update_incident_configuration(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentConfigurationPatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentConfigurationResponse,
-        datadog::Error<UpdateIncidentConfigurationError>,
-    > {
-        match self
-            .update_incident_configuration_with_http_info(incident_id, body)
-            .await
-        {
+    pub async fn update_incident_configuration(&self, incident_id: String, body: crate::datadogV2::model::IncidentConfigurationPatchRequest) -> Result<crate::datadogV2::model::IncidentConfigurationResponse, datadog::Error<UpdateIncidentConfigurationError>> {
+        match self.update_incident_configuration_with_http_info(incident_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a configuration for an incident.
-    pub async fn update_incident_configuration_with_http_info(
-        &self,
-        incident_id: String,
-        body: crate::datadogV2::model::IncidentConfigurationPatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentConfigurationResponse>,
-        datadog::Error<UpdateIncidentConfigurationError>,
-    > {
+    pub async fn update_incident_configuration_with_http_info(&self, incident_id: String, body: crate::datadogV2::model::IncidentConfigurationPatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentConfigurationResponse>, datadog::Error<UpdateIncidentConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -12535,20 +10688,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/configurations",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12561,23 +10719,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12585,7 +10736,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12595,7 +10749,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12617,7 +10774,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12634,91 +10791,68 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentConfigurationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Google Chat configuration for incidents.
-    pub async fn update_incident_google_chat_configuration(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentGoogleChatConfigurationPatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentGoogleChatConfigurationResponse,
-        datadog::Error<UpdateIncidentGoogleChatConfigurationError>,
-    > {
-        match self
-            .update_incident_google_chat_configuration_with_http_info(id, body)
-            .await
-        {
+    pub async fn update_incident_google_chat_configuration(&self, id: uuid::Uuid, body: crate::datadogV2::model::IncidentGoogleChatConfigurationPatchRequest) -> Result<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse, datadog::Error<UpdateIncidentGoogleChatConfigurationError>> {
+        match self.update_incident_google_chat_configuration_with_http_info(id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Google Chat configuration for incidents.
-    pub async fn update_incident_google_chat_configuration_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentGoogleChatConfigurationPatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>,
-        datadog::Error<UpdateIncidentGoogleChatConfigurationError>,
-    > {
+    pub async fn update_incident_google_chat_configuration_with_http_info(&self, id: uuid::Uuid, body: crate::datadogV2::model::IncidentGoogleChatConfigurationPatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>, datadog::Error<UpdateIncidentGoogleChatConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_google_chat_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_incident_google_chat_configuration' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_incident_google_chat_configuration' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/google-chat-configurations/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12731,23 +10865,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12755,7 +10882,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12765,7 +10895,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12787,7 +10920,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12804,92 +10937,68 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentGoogleChatConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentGoogleChatConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentGoogleChatConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentGoogleChatConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Google Meet configuration for incidents.
-    pub async fn update_incident_google_meet_configuration(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentGoogleMeetConfigurationPatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse,
-        datadog::Error<UpdateIncidentGoogleMeetConfigurationError>,
-    > {
-        match self
-            .update_incident_google_meet_configuration_with_http_info(id, body)
-            .await
-        {
+    pub async fn update_incident_google_meet_configuration(&self, id: uuid::Uuid, body: crate::datadogV2::model::IncidentGoogleMeetConfigurationPatchRequest) -> Result<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse, datadog::Error<UpdateIncidentGoogleMeetConfigurationError>> {
+        match self.update_incident_google_meet_configuration_with_http_info(id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Google Meet configuration for incidents.
-    pub async fn update_incident_google_meet_configuration_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentGoogleMeetConfigurationPatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>,
-        datadog::Error<UpdateIncidentGoogleMeetConfigurationError>,
-    > {
+    pub async fn update_incident_google_meet_configuration_with_http_info(&self, id: uuid::Uuid, body: crate::datadogV2::model::IncidentGoogleMeetConfigurationPatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>, datadog::Error<UpdateIncidentGoogleMeetConfigurationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_google_meet_configuration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_incident_google_meet_configuration' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_incident_google_meet_configuration' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/google-meet-configurations/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12902,23 +11011,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12926,7 +11028,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12936,7 +11041,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12958,7 +11066,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12975,66 +11083,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentGoogleMeetConfigurationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentGoogleMeetConfigurationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentGoogleMeetConfigurationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an impact field for incidents.
-    pub async fn update_incident_impact_field(
-        &self,
-        field_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentImpactFieldRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentImpactFieldResponse,
-        datadog::Error<UpdateIncidentImpactFieldError>,
-    > {
-        match self
-            .update_incident_impact_field_with_http_info(field_id, body)
-            .await
-        {
+    pub async fn update_incident_impact_field(&self, field_id: uuid::Uuid, body: crate::datadogV2::model::IncidentImpactFieldRequest) -> Result<crate::datadogV2::model::IncidentImpactFieldResponse, datadog::Error<UpdateIncidentImpactFieldError>> {
+        match self.update_incident_impact_field_with_http_info(field_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an impact field for incidents.
-    pub async fn update_incident_impact_field_with_http_info(
-        &self,
-        field_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentImpactFieldRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldResponse>,
-        datadog::Error<UpdateIncidentImpactFieldError>,
-    > {
+    pub async fn update_incident_impact_field_with_http_info(&self, field_id: uuid::Uuid, body: crate::datadogV2::model::IncidentImpactFieldRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentImpactFieldResponse>, datadog::Error<UpdateIncidentImpactFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_impact_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -13046,20 +11126,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/impact-fields/{field_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            field_id = datadog::urlencode(field_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), field_id=
+            datadog::urlencode(field_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13072,23 +11157,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13096,7 +11174,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13106,7 +11187,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13128,7 +11212,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -13145,67 +11229,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImpactFieldResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentImpactFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentImpactFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing incident integration metadata.
-    pub async fn update_incident_integration(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-        body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentIntegrationMetadataResponse,
-        datadog::Error<UpdateIncidentIntegrationError>,
-    > {
-        match self
-            .update_incident_integration_with_http_info(incident_id, integration_metadata_id, body)
-            .await
-        {
+    pub async fn update_incident_integration(&self, incident_id: String, integration_metadata_id: String, body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest) -> Result<crate::datadogV2::model::IncidentIntegrationMetadataResponse, datadog::Error<UpdateIncidentIntegrationError>> {
+        match self.update_incident_integration_with_http_info(incident_id, integration_metadata_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing incident integration metadata.
-    pub async fn update_incident_integration_with_http_info(
-        &self,
-        incident_id: String,
-        integration_metadata_id: String,
-        body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>,
-        datadog::Error<UpdateIncidentIntegrationError>,
-    > {
+    pub async fn update_incident_integration_with_http_info(&self, incident_id: String, integration_metadata_id: String, body: crate::datadogV2::model::IncidentIntegrationMetadataPatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentIntegrationMetadataResponse>, datadog::Error<UpdateIncidentIntegrationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_integration";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -13217,6 +11272,8 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -13226,13 +11283,16 @@ impl IncidentsAPI {
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13245,23 +11305,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13269,7 +11322,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13279,7 +11335,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13301,7 +11360,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -13318,67 +11377,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentIntegrationMetadataResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentIntegrationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentIntegrationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing notification rule with a complete replacement.
-    pub async fn update_incident_notification_rule(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::PutIncidentNotificationRuleRequest,
-        params: UpdateIncidentNotificationRuleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationRule,
-        datadog::Error<UpdateIncidentNotificationRuleError>,
-    > {
-        match self
-            .update_incident_notification_rule_with_http_info(id, body, params)
-            .await
-        {
+    pub async fn update_incident_notification_rule(&self, id: uuid::Uuid, body: crate::datadogV2::model::PutIncidentNotificationRuleRequest, params: UpdateIncidentNotificationRuleOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationRule, datadog::Error<UpdateIncidentNotificationRuleError>> {
+        match self.update_incident_notification_rule_with_http_info(id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing notification rule with a complete replacement.
-    pub async fn update_incident_notification_rule_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::PutIncidentNotificationRuleRequest,
-        params: UpdateIncidentNotificationRuleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>,
-        datadog::Error<UpdateIncidentNotificationRuleError>,
-    > {
+    pub async fn update_incident_notification_rule_with_http_info(&self, id: uuid::Uuid, body: crate::datadogV2::model::PutIncidentNotificationRuleRequest, params: UpdateIncidentNotificationRuleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationRule>, datadog::Error<UpdateIncidentNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_notification_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -13390,6 +11420,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -13397,21 +11428,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13424,23 +11456,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13448,7 +11473,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13458,7 +11486,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13480,7 +11511,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -13497,79 +11528,50 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing notification template's attributes.
-    pub async fn update_incident_notification_template(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::PatchIncidentNotificationTemplateRequest,
-        params: UpdateIncidentNotificationTemplateOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentNotificationTemplate,
-        datadog::Error<UpdateIncidentNotificationTemplateError>,
-    > {
-        match self
-            .update_incident_notification_template_with_http_info(id, body, params)
-            .await
-        {
+    pub async fn update_incident_notification_template(&self, id: uuid::Uuid, body: crate::datadogV2::model::PatchIncidentNotificationTemplateRequest, params: UpdateIncidentNotificationTemplateOptionalParams) -> Result<crate::datadogV2::model::IncidentNotificationTemplate, datadog::Error<UpdateIncidentNotificationTemplateError>> {
+        match self.update_incident_notification_template_with_http_info(id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing notification template's attributes.
-    pub async fn update_incident_notification_template_with_http_info(
-        &self,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::PatchIncidentNotificationTemplateRequest,
-        params: UpdateIncidentNotificationTemplateOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>,
-        datadog::Error<UpdateIncidentNotificationTemplateError>,
-    > {
+    pub async fn update_incident_notification_template_with_http_info(&self, id: uuid::Uuid, body: crate::datadogV2::model::PatchIncidentNotificationTemplateRequest, params: UpdateIncidentNotificationTemplateOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentNotificationTemplate>, datadog::Error<UpdateIncidentNotificationTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_notification_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_incident_notification_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_incident_notification_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -13577,21 +11579,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13604,23 +11607,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13628,7 +11624,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13638,7 +11637,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13660,7 +11662,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -13677,91 +11679,68 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentNotificationTemplate>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentNotificationTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentNotificationTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing postmortem template.
-    pub async fn update_incident_postmortem_template(
-        &self,
-        template_id: String,
-        body: crate::datadogV2::model::PostmortemTemplateRequest,
-    ) -> Result<
-        crate::datadogV2::model::PostmortemTemplateResponse,
-        datadog::Error<UpdateIncidentPostmortemTemplateError>,
-    > {
-        match self
-            .update_incident_postmortem_template_with_http_info(template_id, body)
-            .await
-        {
+    pub async fn update_incident_postmortem_template(&self, template_id: String, body: crate::datadogV2::model::PostmortemTemplateRequest) -> Result<crate::datadogV2::model::PostmortemTemplateResponse, datadog::Error<UpdateIncidentPostmortemTemplateError>> {
+        match self.update_incident_postmortem_template_with_http_info(template_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing postmortem template.
-    pub async fn update_incident_postmortem_template_with_http_info(
-        &self,
-        template_id: String,
-        body: crate::datadogV2::model::PostmortemTemplateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>,
-        datadog::Error<UpdateIncidentPostmortemTemplateError>,
-    > {
+    pub async fn update_incident_postmortem_template_with_http_info(&self, template_id: String, body: crate::datadogV2::model::PostmortemTemplateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplateResponse>, datadog::Error<UpdateIncidentPostmortemTemplateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_postmortem_template";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_incident_postmortem_template' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_incident_postmortem_template' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            template_id = datadog::urlencode(template_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), template_id=
+            datadog::urlencode(template_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13774,23 +11753,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13798,7 +11770,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13808,7 +11783,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13830,7 +11808,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -13847,65 +11825,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PostmortemTemplateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentPostmortemTemplateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentPostmortemTemplateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an incident rule.
-    pub async fn update_incident_rule(
-        &self,
-        rule_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentRulePatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentRuleResponse,
-        datadog::Error<UpdateIncidentRuleError>,
-    > {
-        match self
-            .update_incident_rule_with_http_info(rule_id, body)
-            .await
-        {
+    pub async fn update_incident_rule(&self, rule_id: uuid::Uuid, body: crate::datadogV2::model::IncidentRulePatchRequest) -> Result<crate::datadogV2::model::IncidentRuleResponse, datadog::Error<UpdateIncidentRuleError>> {
+        match self.update_incident_rule_with_http_info(rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an incident rule.
-    pub async fn update_incident_rule_with_http_info(
-        &self,
-        rule_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentRulePatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>,
-        datadog::Error<UpdateIncidentRuleError>,
-    > {
+    pub async fn update_incident_rule_with_http_info(&self, rule_id: uuid::Uuid, body: crate::datadogV2::model::IncidentRulePatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentRuleResponse>, datadog::Error<UpdateIncidentRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -13917,20 +11868,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -13943,23 +11899,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -13967,7 +11916,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13977,7 +11929,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -13999,7 +11954,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14016,67 +11971,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an incident todo.
-    pub async fn update_incident_todo(
-        &self,
-        incident_id: String,
-        todo_id: String,
-        body: crate::datadogV2::model::IncidentTodoPatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTodoResponse,
-        datadog::Error<UpdateIncidentTodoError>,
-    > {
-        match self
-            .update_incident_todo_with_http_info(incident_id, todo_id, body)
-            .await
-        {
+    pub async fn update_incident_todo(&self, incident_id: String, todo_id: String, body: crate::datadogV2::model::IncidentTodoPatchRequest) -> Result<crate::datadogV2::model::IncidentTodoResponse, datadog::Error<UpdateIncidentTodoError>> {
+        match self.update_incident_todo_with_http_info(incident_id, todo_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an incident todo.
-    pub async fn update_incident_todo_with_http_info(
-        &self,
-        incident_id: String,
-        todo_id: String,
-        body: crate::datadogV2::model::IncidentTodoPatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>,
-        datadog::Error<UpdateIncidentTodoError>,
-    > {
+    pub async fn update_incident_todo_with_http_info(&self, incident_id: String, todo_id: String, body: crate::datadogV2::model::IncidentTodoPatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTodoResponse>, datadog::Error<UpdateIncidentTodoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_todo";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -14088,21 +12014,27 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            todo_id = datadog::urlencode(todo_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , todo_id=
+            datadog::urlencode(todo_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -14115,23 +12047,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -14139,7 +12064,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14149,7 +12077,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14171,7 +12102,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14188,65 +12119,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTodoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentTodoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentTodoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an incident type.
-    pub async fn update_incident_type(
-        &self,
-        incident_type_id: String,
-        body: crate::datadogV2::model::IncidentTypePatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTypeResponse,
-        datadog::Error<UpdateIncidentTypeError>,
-    > {
-        match self
-            .update_incident_type_with_http_info(incident_type_id, body)
-            .await
-        {
+    pub async fn update_incident_type(&self, incident_type_id: String, body: crate::datadogV2::model::IncidentTypePatchRequest) -> Result<crate::datadogV2::model::IncidentTypeResponse, datadog::Error<UpdateIncidentTypeError>> {
+        match self.update_incident_type_with_http_info(incident_type_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an incident type.
-    pub async fn update_incident_type_with_http_info(
-        &self,
-        incident_type_id: String,
-        body: crate::datadogV2::model::IncidentTypePatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>,
-        datadog::Error<UpdateIncidentTypeError>,
-    > {
+    pub async fn update_incident_type_with_http_info(&self, incident_type_id: String, body: crate::datadogV2::model::IncidentTypePatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTypeResponse>, datadog::Error<UpdateIncidentTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_type";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -14258,20 +12162,25 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_type_id = datadog::urlencode(incident_type_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_type_id=
+            datadog::urlencode(incident_type_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -14284,23 +12193,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -14308,7 +12210,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14318,7 +12223,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14340,7 +12248,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14357,67 +12265,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTypeResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an incident user-defined field.
-    pub async fn update_incident_user_defined_field(
-        &self,
-        field_id: String,
-        body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest,
-        params: UpdateIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
-        datadog::Error<UpdateIncidentUserDefinedFieldError>,
-    > {
-        match self
-            .update_incident_user_defined_field_with_http_info(field_id, body, params)
-            .await
-        {
+    pub async fn update_incident_user_defined_field(&self, field_id: String, body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest, params: UpdateIncidentUserDefinedFieldOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedFieldResponse, datadog::Error<UpdateIncidentUserDefinedFieldError>> {
+        match self.update_incident_user_defined_field_with_http_info(field_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an incident user-defined field.
-    pub async fn update_incident_user_defined_field_with_http_info(
-        &self,
-        field_id: String,
-        body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest,
-        params: UpdateIncidentUserDefinedFieldOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
-        datadog::Error<UpdateIncidentUserDefinedFieldError>,
-    > {
+    pub async fn update_incident_user_defined_field_with_http_info(&self, field_id: String, body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest, params: UpdateIncidentUserDefinedFieldOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>, datadog::Error<UpdateIncidentUserDefinedFieldError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_user_defined_field";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -14429,6 +12308,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -14436,21 +12316,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            field_id = datadog::urlencode(field_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), field_id=
+            datadog::urlencode(field_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -14463,23 +12344,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -14487,7 +12361,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14497,7 +12374,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14519,7 +12399,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14536,67 +12416,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentUserDefinedFieldError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentUserDefinedFieldError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing user-defined role for incidents.
-    pub async fn update_incident_user_defined_role(
-        &self,
-        role_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentUserDefinedRolePatchRequest,
-        params: UpdateIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::IncidentUserDefinedRoleResponse,
-        datadog::Error<UpdateIncidentUserDefinedRoleError>,
-    > {
-        match self
-            .update_incident_user_defined_role_with_http_info(role_id, body, params)
-            .await
-        {
+    pub async fn update_incident_user_defined_role(&self, role_id: uuid::Uuid, body: crate::datadogV2::model::IncidentUserDefinedRolePatchRequest, params: UpdateIncidentUserDefinedRoleOptionalParams) -> Result<crate::datadogV2::model::IncidentUserDefinedRoleResponse, datadog::Error<UpdateIncidentUserDefinedRoleError>> {
+        match self.update_incident_user_defined_role_with_http_info(role_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing user-defined role for incidents.
-    pub async fn update_incident_user_defined_role_with_http_info(
-        &self,
-        role_id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentUserDefinedRolePatchRequest,
-        params: UpdateIncidentUserDefinedRoleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>,
-        datadog::Error<UpdateIncidentUserDefinedRoleError>,
-    > {
+    pub async fn update_incident_user_defined_role_with_http_info(&self, role_id: uuid::Uuid, body: crate::datadogV2::model::IncidentUserDefinedRolePatchRequest, params: UpdateIncidentUserDefinedRoleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedRoleResponse>, datadog::Error<UpdateIncidentUserDefinedRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_incident_user_defined_role";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -14608,6 +12459,7 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -14615,21 +12467,22 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -14642,23 +12495,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -14666,7 +12512,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14676,7 +12525,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14698,7 +12550,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14715,67 +12567,38 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedRoleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIncidentUserDefinedRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIncidentUserDefinedRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a timestamp override for an incident.
-    pub async fn update_timestamp_override(
-        &self,
-        incident_id: String,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentTimestampOverridePatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::IncidentTimestampOverrideResponse,
-        datadog::Error<UpdateTimestampOverrideError>,
-    > {
-        match self
-            .update_timestamp_override_with_http_info(incident_id, id, body)
-            .await
-        {
+    pub async fn update_timestamp_override(&self, incident_id: String, id: uuid::Uuid, body: crate::datadogV2::model::IncidentTimestampOverridePatchRequest) -> Result<crate::datadogV2::model::IncidentTimestampOverrideResponse, datadog::Error<UpdateTimestampOverrideError>> {
+        match self.update_timestamp_override_with_http_info(incident_id, id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a timestamp override for an incident.
-    pub async fn update_timestamp_override_with_http_info(
-        &self,
-        incident_id: String,
-        id: uuid::Uuid,
-        body: crate::datadogV2::model::IncidentTimestampOverridePatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverrideResponse>,
-        datadog::Error<UpdateTimestampOverrideError>,
-    > {
+    pub async fn update_timestamp_override_with_http_info(&self, incident_id: String, id: uuid::Uuid, body: crate::datadogV2::model::IncidentTimestampOverridePatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IncidentTimestampOverrideResponse>, datadog::Error<UpdateTimestampOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_timestamp_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -14787,21 +12610,27 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/timestamp-overrides/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            incident_id = datadog::urlencode(incident_id),
-            id = datadog::urlencode(id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), incident_id=
+            datadog::urlencode(incident_id)
+            , id=
+            datadog::urlencode(id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -14814,23 +12643,16 @@ impl IncidentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -14838,7 +12660,10 @@ impl IncidentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14848,7 +12673,10 @@ impl IncidentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -14870,7 +12698,7 @@ impl IncidentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -14887,26 +12715,17 @@ impl IncidentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverrideResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IncidentTimestampOverrideResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTimestampOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTimestampOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

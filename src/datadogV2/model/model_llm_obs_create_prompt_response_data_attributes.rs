@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes returned after creating an Agent Observability prompt and its first version. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
 #[non_exhaustive]
@@ -66,17 +66,11 @@ pub struct LLMObsCreatePromptResponseDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCreatePromptResponseDataAttributes {
-    pub fn new(
-        created_from: String,
-        in_registry: bool,
-        num_versions: i64,
-        prompt_id: String,
-        source: crate::datadogV2::model::LLMObsPromptResponseSource,
-    ) -> LLMObsCreatePromptResponseDataAttributes {
+    pub fn new(created_from: String, in_registry: bool, num_versions: i64, prompt_id: String, source: crate::datadogV2::model::LLMObsPromptResponseSource) -> LLMObsCreatePromptResponseDataAttributes {
         LLMObsCreatePromptResponseDataAttributes {
             author: None,
             config: None,
@@ -99,75 +93,74 @@ impl LLMObsCreatePromptResponseDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn author(mut self, value: String) -> Self {
         self.author = Some(value);
         self
     }
-
+    
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn datasets(mut self, value: Vec<crate::datadogV2::model::LLMObsPromptDataset>) -> Self {
         self.datasets = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn extracted_from(mut self, value: String) -> Self {
         self.extracted_from = Some(value);
         self
     }
-
+    
     pub fn last_seen_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_seen_at = Some(value);
         self
     }
-
+    
     pub fn last_version_created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_version_created_at = Some(value);
         self
     }
-
+    
     pub fn ml_app(mut self, value: String) -> Self {
         self.ml_app = Some(value);
         self
     }
-
+    
     pub fn ml_apps(mut self, value: Vec<String>) -> Self {
         self.ml_apps = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -187,8 +180,7 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
-                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_from: Option<String> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
@@ -204,10 +196,7 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
                 let mut source: Option<crate::datadogV2::model::LLMObsPromptResponseSource> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -217,80 +206,73 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "config" => {
                             if v.is_null() {
                                 continue;
                             }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_from" => {
-                            created_from =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datasets" => {
                             if v.is_null() {
                                 continue;
                             }
                             datasets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "extracted_from" => {
                             if v.is_null() {
                                 continue;
                             }
-                            extracted_from =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            extracted_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "in_registry" => {
-                            in_registry =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            in_registry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_seen_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_seen_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_seen_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_version_created_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_version_created_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_version_created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ml_app" => {
                             if v.is_null() {
                                 continue;
                             }
                             ml_app = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ml_apps" => {
                             if v.is_null() {
                                 continue;
                             }
                             ml_apps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "num_versions" => {
-                            num_versions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            num_versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "prompt_id" => {
                             prompt_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
@@ -301,32 +283,29 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let created_from =
-                    created_from.ok_or_else(|| M::Error::missing_field("created_from"))?;
-                let in_registry =
-                    in_registry.ok_or_else(|| M::Error::missing_field("in_registry"))?;
-                let num_versions =
-                    num_versions.ok_or_else(|| M::Error::missing_field("num_versions"))?;
+                let created_from = created_from.ok_or_else(|| M::Error::missing_field("created_from"))?;
+                let in_registry = in_registry.ok_or_else(|| M::Error::missing_field("in_registry"))?;
+                let num_versions = num_versions.ok_or_else(|| M::Error::missing_field("num_versions"))?;
                 let prompt_id = prompt_id.ok_or_else(|| M::Error::missing_field("prompt_id"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
 

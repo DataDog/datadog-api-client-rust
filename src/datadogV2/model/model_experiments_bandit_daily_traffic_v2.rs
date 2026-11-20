@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An arm's observations and new subjects on one UTC day.
 #[non_exhaustive]
@@ -30,26 +30,18 @@ pub struct ExperimentsBanditDailyTrafficV2 {
     #[serde(rename = "observations")]
     pub observations: i64,
     /// The arm's variant key.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "variant_key")]
     pub variant_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsBanditDailyTrafficV2 {
-    pub fn new(
-        cumulative_new_subjects: i64,
-        cumulative_observations: i64,
-        date: String,
-        feature_flag_variant_id: uuid::Uuid,
-        new_subjects: i64,
-        observations: i64,
-        variant_key: Option<String>,
-    ) -> ExperimentsBanditDailyTrafficV2 {
+    pub fn new(cumulative_new_subjects: i64, cumulative_observations: i64, date: String, feature_flag_variant_id: uuid::Uuid, new_subjects: i64, observations: i64, variant_key: Option<String>) -> ExperimentsBanditDailyTrafficV2 {
         ExperimentsBanditDailyTrafficV2 {
             cumulative_new_subjects,
             cumulative_observations,
@@ -62,15 +54,14 @@ impl ExperimentsBanditDailyTrafficV2 {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsBanditDailyTrafficV2 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,61 +87,46 @@ impl<'de> Deserialize<'de> for ExperimentsBanditDailyTrafficV2 {
                 let mut new_subjects: Option<i64> = None;
                 let mut observations: Option<i64> = None;
                 let mut variant_key: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cumulative_new_subjects" => {
-                            cumulative_new_subjects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cumulative_new_subjects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cumulative_observations" => {
-                            cumulative_observations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cumulative_observations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "date" => {
                             date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "feature_flag_variant_id" => {
-                            feature_flag_variant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            feature_flag_variant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "new_subjects" => {
-                            new_subjects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            new_subjects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "observations" => {
-                            observations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            observations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "variant_key" => {
-                            variant_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            variant_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let cumulative_new_subjects = cumulative_new_subjects
-                    .ok_or_else(|| M::Error::missing_field("cumulative_new_subjects"))?;
-                let cumulative_observations = cumulative_observations
-                    .ok_or_else(|| M::Error::missing_field("cumulative_observations"))?;
+                let cumulative_new_subjects = cumulative_new_subjects.ok_or_else(|| M::Error::missing_field("cumulative_new_subjects"))?;
+                let cumulative_observations = cumulative_observations.ok_or_else(|| M::Error::missing_field("cumulative_observations"))?;
                 let date = date.ok_or_else(|| M::Error::missing_field("date"))?;
-                let feature_flag_variant_id = feature_flag_variant_id
-                    .ok_or_else(|| M::Error::missing_field("feature_flag_variant_id"))?;
-                let new_subjects =
-                    new_subjects.ok_or_else(|| M::Error::missing_field("new_subjects"))?;
-                let observations =
-                    observations.ok_or_else(|| M::Error::missing_field("observations"))?;
-                let variant_key =
-                    variant_key.ok_or_else(|| M::Error::missing_field("variant_key"))?;
+                let feature_flag_variant_id = feature_flag_variant_id.ok_or_else(|| M::Error::missing_field("feature_flag_variant_id"))?;
+                let new_subjects = new_subjects.ok_or_else(|| M::Error::missing_field("new_subjects"))?;
+                let observations = observations.ok_or_else(|| M::Error::missing_field("observations"))?;
+                let variant_key = variant_key.ok_or_else(|| M::Error::missing_field("variant_key"))?;
 
                 let content = ExperimentsBanditDailyTrafficV2 {
                     cumulative_new_subjects,

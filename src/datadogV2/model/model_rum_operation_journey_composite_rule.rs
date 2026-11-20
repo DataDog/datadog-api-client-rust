@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A composite rule combining several predicates. Used as an alternative to `nodes` on a journey
 /// step when several conditions must be matched together, in any order or in a specific order.
@@ -19,7 +19,7 @@ pub struct RUMOperationJourneyCompositeRule {
     #[serde(rename = "config_version")]
     pub config_version: Option<String>,
     /// The rule used to combine the composite rule's predicates. `all_of` requires every predicate
-    /// to match, in any order. `in_order` requires every predicate to match in the given order.
+/// to match, in any order. `in_order` requires every predicate to match in the given order.
     #[serde(rename = "kind")]
     pub kind: crate::datadogV2::model::RUMOperationJourneyCompositeRuleKind,
     /// The maximum time window, in milliseconds, in which all predicates must match.
@@ -32,14 +32,11 @@ pub struct RUMOperationJourneyCompositeRule {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RUMOperationJourneyCompositeRule {
-    pub fn new(
-        kind: crate::datadogV2::model::RUMOperationJourneyCompositeRuleKind,
-        predicates: Vec<crate::datadogV2::model::RUMOperationJourneyPredicate>,
-    ) -> RUMOperationJourneyCompositeRule {
+    pub fn new(kind: crate::datadogV2::model::RUMOperationJourneyCompositeRuleKind, predicates: Vec<crate::datadogV2::model::RUMOperationJourneyPredicate>) -> RUMOperationJourneyCompositeRule {
         RUMOperationJourneyCompositeRule {
             composite_rule_id: None,
             config_version: None,
@@ -50,30 +47,29 @@ impl RUMOperationJourneyCompositeRule {
             _unparsed: false,
         }
     }
-
+    
     pub fn composite_rule_id(mut self, value: String) -> Self {
         self.composite_rule_id = Some(value);
         self
     }
-
+    
     pub fn config_version(mut self, value: String) -> Self {
         self.config_version = Some(value);
         self
     }
-
+    
     pub fn max_window_ms(mut self, value: i64) -> Self {
         self.max_window_ms = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RUMOperationJourneyCompositeRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -94,17 +90,10 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyCompositeRule {
             {
                 let mut composite_rule_id: Option<String> = None;
                 let mut config_version: Option<String> = None;
-                let mut kind: Option<
-                    crate::datadogV2::model::RUMOperationJourneyCompositeRuleKind,
-                > = None;
+                let mut kind: Option<crate::datadogV2::model::RUMOperationJourneyCompositeRuleKind> = None;
                 let mut max_window_ms: Option<i64> = None;
-                let mut predicates: Option<
-                    Vec<crate::datadogV2::model::RUMOperationJourneyPredicate>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut predicates: Option<Vec<crate::datadogV2::model::RUMOperationJourneyPredicate>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,16 +102,14 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyCompositeRule {
                             if v.is_null() {
                                 continue;
                             }
-                            composite_rule_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            composite_rule_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "config_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            config_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "kind" => {
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _kind) = kind {
@@ -133,22 +120,21 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyCompositeRule {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "max_window_ms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_window_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_window_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "predicates" => {
                             predicates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;

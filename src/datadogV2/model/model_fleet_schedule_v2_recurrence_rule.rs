@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines the recurrence pattern for the schedule.
 #[non_exhaustive]
@@ -12,18 +12,18 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetScheduleV2RecurrenceRule {
     /// Days of the week when the schedule triggers. Valid values are
-    /// "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun".
+/// "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun".
     #[serde(rename = "days_of_week")]
     pub days_of_week: Option<Vec<String>>,
     /// Interval between schedule runs in weeks. 1 means the schedule runs every week
-    /// on the specified days. Higher values repeat every N weeks.
+/// on the specified days. Higher values repeat every N weeks.
     #[serde(rename = "interval")]
     pub interval: Option<i64>,
     /// Duration of the maintenance window in minutes.
     #[serde(rename = "maintenance_window_duration")]
     pub maintenance_window_duration: Option<i64>,
     /// Start time of the maintenance window in 24-hour clock format (HHMM).
-    /// Deployments are triggered at this time on the specified days.
+/// Deployments are triggered at this time on the specified days.
     #[serde(rename = "start_maintenance_window")]
     pub start_maintenance_window: Option<String>,
     /// Timezone in IANA Time Zone Database format.
@@ -33,7 +33,7 @@ pub struct FleetScheduleV2RecurrenceRule {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FleetScheduleV2RecurrenceRule {
@@ -48,40 +48,38 @@ impl FleetScheduleV2RecurrenceRule {
             _unparsed: false,
         }
     }
-
+    
     pub fn days_of_week(mut self, value: Vec<String>) -> Self {
         self.days_of_week = Some(value);
         self
     }
-
+    
     pub fn interval(mut self, value: i64) -> Self {
         self.interval = Some(value);
         self
     }
-
+    
     pub fn maintenance_window_duration(mut self, value: i64) -> Self {
         self.maintenance_window_duration = Some(value);
         self
     }
-
+    
     pub fn start_maintenance_window(mut self, value: String) -> Self {
         self.start_maintenance_window = Some(value);
         self
     }
-
+    
     pub fn timezone(mut self, value: String) -> Self {
         self.timezone = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FleetScheduleV2RecurrenceRule {
     fn default() -> Self {
@@ -111,10 +109,7 @@ impl<'de> Deserialize<'de> for FleetScheduleV2RecurrenceRule {
                 let mut maintenance_window_duration: Option<i64> = None;
                 let mut start_maintenance_window: Option<String> = None;
                 let mut timezone: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -123,40 +118,37 @@ impl<'de> Deserialize<'de> for FleetScheduleV2RecurrenceRule {
                             if v.is_null() {
                                 continue;
                             }
-                            days_of_week =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            days_of_week = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "interval" => {
                             if v.is_null() {
                                 continue;
                             }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "maintenance_window_duration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            maintenance_window_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            maintenance_window_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start_maintenance_window" => {
                             if v.is_null() {
                                 continue;
                             }
-                            start_maintenance_window =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            start_maintenance_window = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timezone" => {
                             if v.is_null() {
                                 continue;
                             }
                             timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

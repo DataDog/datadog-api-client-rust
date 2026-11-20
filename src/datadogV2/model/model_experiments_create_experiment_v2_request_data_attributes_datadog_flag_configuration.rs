@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Feature flag, environment, and targeting configuration for a Datadog experiment.
 #[non_exhaustive]
@@ -35,12 +35,7 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigur
 }
 
 impl ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
-    pub fn new(
-        entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPoint>,
-        environment_id: uuid::Uuid,
-        feature_flag_id: uuid::Uuid,
-        targeting_rules: Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
-    ) -> ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
+    pub fn new(entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPoint>, environment_id: uuid::Uuid, feature_flag_id: uuid::Uuid, targeting_rules: Vec<crate::datadogV2::model::ExperimentsTargetingRule>) -> ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
         ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
             entry_point,
             environment_id,
@@ -51,32 +46,27 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration 
             _unparsed: false,
         }
     }
-
+    
     pub fn reset_on_feature_flag_change(mut self, value: bool) -> Self {
         self.reset_on_feature_flag_change = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration
-{
+
+
+impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationVisitor;
-        impl<'a> Visitor<'a>
-            for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationVisitor
-        {
+        impl<'a> Visitor<'a> for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationVisitor {
             type Value = ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -91,73 +81,56 @@ impl<'de> Deserialize<'de>
                 let mut environment_id: Option<uuid::Uuid> = None;
                 let mut feature_flag_id: Option<uuid::Uuid> = None;
                 let mut reset_on_feature_flag_change: Option<bool> = None;
-                let mut targeting_rules: Option<
-                    Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsTargetingRule>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "entry_point" => {
-                            entry_point =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entry_point = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "environment_id" => {
-                            environment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "feature_flag_id" => {
-                            feature_flag_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            feature_flag_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reset_on_feature_flag_change" => {
                             if v.is_null() {
                                 continue;
                             }
-                            reset_on_feature_flag_change =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            reset_on_feature_flag_change = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "targeting_rules" => {
-                            targeting_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            targeting_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let entry_point =
-                    entry_point.ok_or_else(|| M::Error::missing_field("entry_point"))?;
-                let environment_id =
-                    environment_id.ok_or_else(|| M::Error::missing_field("environment_id"))?;
-                let feature_flag_id =
-                    feature_flag_id.ok_or_else(|| M::Error::missing_field("feature_flag_id"))?;
-                let targeting_rules =
-                    targeting_rules.ok_or_else(|| M::Error::missing_field("targeting_rules"))?;
+                let entry_point = entry_point.ok_or_else(|| M::Error::missing_field("entry_point"))?;
+                let environment_id = environment_id.ok_or_else(|| M::Error::missing_field("environment_id"))?;
+                let feature_flag_id = feature_flag_id.ok_or_else(|| M::Error::missing_field("feature_flag_id"))?;
+                let targeting_rules = targeting_rules.ok_or_else(|| M::Error::missing_field("targeting_rules"))?;
 
-                let content =
-                    ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
-                        entry_point,
-                        environment_id,
-                        feature_flag_id,
-                        reset_on_feature_flag_change,
-                        targeting_rules,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
+                    entry_point,
+                    environment_id,
+                    feature_flag_id,
+                    reset_on_feature_flag_change,
+                    targeting_rules,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationVisitor,
-        )
+        deserializer.deserialize_any(ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationVisitor)
     }
 }

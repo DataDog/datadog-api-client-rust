@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AssetType {
-    REPOSITORY,
-    SERVICE,
-    HOST,
-    HOSTIMAGE,
-    IMAGE,
-    SERVERLESSFUNCTION,
+	REPOSITORY,
+	SERVICE,
+	HOST,
+	HOSTIMAGE,
+	IMAGE,
+	SERVERLESSFUNCTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for AssetType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "Repository" => Self::REPOSITORY,
-            "Service" => Self::SERVICE,
-            "Host" => Self::HOST,
-            "HostImage" => Self::HOSTIMAGE,
-            "Image" => Self::IMAGE,
-            "ServerlessFunction" => Self::SERVERLESSFUNCTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"Repository" => Self::REPOSITORY,"Service" => Self::SERVICE,"Host" => Self::HOST,"HostImage" => Self::HOSTIMAGE,"Image" => Self::IMAGE,"ServerlessFunction" => Self::SERVERLESSFUNCTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

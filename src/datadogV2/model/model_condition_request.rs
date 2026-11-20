@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Condition request payload for targeting rules. A condition is either an inline
 /// predicate with `operator`, `attribute`, and `value`, or a reference to a
@@ -20,8 +20,8 @@ pub struct ConditionRequest {
     #[serde(rename = "operator")]
     pub operator: Option<crate::datadogV2::model::ConditionOperator>,
     /// The ID of a saved filter to reference as this condition. Mutually exclusive
-    /// with `operator`, `attribute`, and `value`. When set, the saved filter's
-    /// targeting rules are evaluated in place of an inline predicate.
+/// with `operator`, `attribute`, and `value`. When set, the saved filter's
+/// targeting rules are evaluated in place of an inline predicate.
     #[serde(rename = "saved_filter_id")]
     pub saved_filter_id: Option<uuid::Uuid>,
     /// Values used by the selected operator. Required for inline conditions; omit when `saved_filter_id` is set.
@@ -31,7 +31,7 @@ pub struct ConditionRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ConditionRequest {
@@ -45,35 +45,33 @@ impl ConditionRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn attribute(mut self, value: String) -> Self {
         self.attribute = Some(value);
         self
     }
-
+    
     pub fn operator(mut self, value: crate::datadogV2::model::ConditionOperator) -> Self {
         self.operator = Some(value);
         self
     }
-
+    
     pub fn saved_filter_id(mut self, value: uuid::Uuid) -> Self {
         self.saved_filter_id = Some(value);
         self
     }
-
+    
     pub fn value(mut self, value: Vec<String>) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ConditionRequest {
     fn default() -> Self {
@@ -102,10 +100,7 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                 let mut operator: Option<crate::datadogV2::model::ConditionOperator> = None;
                 let mut saved_filter_id: Option<uuid::Uuid> = None;
                 let mut value: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,7 +110,7 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                                 continue;
                             }
                             attribute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "operator" => {
                             if v.is_null() {
                                 continue;
@@ -123,33 +118,30 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operator) = operator {
                                 match _operator {
-                                    crate::datadogV2::model::ConditionOperator::UnparsedObject(
-                                        _operator,
-                                    ) => {
+                                    crate::datadogV2::model::ConditionOperator::UnparsedObject(_operator) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "saved_filter_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saved_filter_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saved_filter_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

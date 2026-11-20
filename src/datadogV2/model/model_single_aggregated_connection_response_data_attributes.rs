@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for an aggregated connection.
 #[non_exhaustive]
@@ -69,7 +69,7 @@ pub struct SingleAggregatedConnectionResponseDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SingleAggregatedConnectionResponseDataAttributes {
@@ -97,105 +97,103 @@ impl SingleAggregatedConnectionResponseDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn bytes_sent_by_client(mut self, value: i64) -> Self {
         self.bytes_sent_by_client = Some(value);
         self
     }
-
+    
     pub fn bytes_sent_by_server(mut self, value: i64) -> Self {
         self.bytes_sent_by_server = Some(value);
         self
     }
-
+    
     pub fn group_bys(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
         self.group_bys = Some(value);
         self
     }
-
+    
     pub fn packets_sent_by_client(mut self, value: i64) -> Self {
         self.packets_sent_by_client = Some(value);
         self
     }
-
+    
     pub fn packets_sent_by_server(mut self, value: i64) -> Self {
         self.packets_sent_by_server = Some(value);
         self
     }
-
+    
     pub fn rtt_micro_seconds(mut self, value: i64) -> Self {
         self.rtt_micro_seconds = Some(value);
         self
     }
-
+    
     pub fn tcp_closed_connections(mut self, value: i64) -> Self {
         self.tcp_closed_connections = Some(value);
         self
     }
-
+    
     pub fn tcp_delivered_ce(mut self, value: i64) -> Self {
         self.tcp_delivered_ce = Some(value);
         self
     }
-
+    
     pub fn tcp_established_connections(mut self, value: i64) -> Self {
         self.tcp_established_connections = Some(value);
         self
     }
-
+    
     pub fn tcp_probe0_count(mut self, value: i64) -> Self {
         self.tcp_probe0_count = Some(value);
         self
     }
-
+    
     pub fn tcp_rcv_ooo_pack(mut self, value: i64) -> Self {
         self.tcp_rcv_ooo_pack = Some(value);
         self
     }
-
+    
     pub fn tcp_recovery_count(mut self, value: i64) -> Self {
         self.tcp_recovery_count = Some(value);
         self
     }
-
+    
     pub fn tcp_refusals(mut self, value: i64) -> Self {
         self.tcp_refusals = Some(value);
         self
     }
-
+    
     pub fn tcp_reord_seen(mut self, value: i64) -> Self {
         self.tcp_reord_seen = Some(value);
         self
     }
-
+    
     pub fn tcp_resets(mut self, value: i64) -> Self {
         self.tcp_resets = Some(value);
         self
     }
-
+    
     pub fn tcp_retransmits(mut self, value: i64) -> Self {
         self.tcp_retransmits = Some(value);
         self
     }
-
+    
     pub fn tcp_rto_count(mut self, value: i64) -> Self {
         self.tcp_rto_count = Some(value);
         self
     }
-
+    
     pub fn tcp_timeouts(mut self, value: i64) -> Self {
         self.tcp_timeouts = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SingleAggregatedConnectionResponseDataAttributes {
     fn default() -> Self {
@@ -238,10 +236,7 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                 let mut tcp_retransmits: Option<i64> = None;
                 let mut tcp_rto_count: Option<i64> = None;
                 let mut tcp_timeouts: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -250,131 +245,115 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                             if v.is_null() {
                                 continue;
                             }
-                            bytes_sent_by_client =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bytes_sent_by_client = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bytes_sent_by_server" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bytes_sent_by_server =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bytes_sent_by_server = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "group_bys" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_bys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "packets_sent_by_client" => {
                             if v.is_null() {
                                 continue;
                             }
-                            packets_sent_by_client =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packets_sent_by_client = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "packets_sent_by_server" => {
                             if v.is_null() {
                                 continue;
                             }
-                            packets_sent_by_server =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packets_sent_by_server = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rtt_micro_seconds" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rtt_micro_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rtt_micro_seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_closed_connections" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_closed_connections =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_closed_connections = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_delivered_ce" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_delivered_ce =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_delivered_ce = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_established_connections" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_established_connections =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_established_connections = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_probe0_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_probe0_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_probe0_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_rcv_ooo_pack" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_rcv_ooo_pack =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_rcv_ooo_pack = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_recovery_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_recovery_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_recovery_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_refusals" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_refusals =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_refusals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_reord_seen" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_reord_seen =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_reord_seen = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_resets" => {
                             if v.is_null() {
                                 continue;
                             }
                             tcp_resets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tcp_retransmits" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_retransmits =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_retransmits = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_rto_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_rto_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_rto_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tcp_timeouts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tcp_timeouts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tcp_timeouts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

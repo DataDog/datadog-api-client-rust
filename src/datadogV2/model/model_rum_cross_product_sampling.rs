@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The configuration for cross-product retention filters.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct RumCrossProductSampling {
     #[serde(rename = "session_replay_enabled")]
     pub session_replay_enabled: Option<bool>,
     /// The percentage (0-100) of retained sessions with an ingested replay that keep their replay data.
-    /// Values returned by the API are rounded to two decimal places.
+/// Values returned by the API are rounded to two decimal places.
     #[serde(rename = "session_replay_sample_rate")]
     pub session_replay_sample_rate: Option<f64>,
     /// Whether the cross-product retention filter for APM traces is enabled.
@@ -28,7 +28,7 @@ pub struct RumCrossProductSampling {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RumCrossProductSampling {
@@ -42,35 +42,33 @@ impl RumCrossProductSampling {
             _unparsed: false,
         }
     }
-
+    
     pub fn session_replay_enabled(mut self, value: bool) -> Self {
         self.session_replay_enabled = Some(value);
         self
     }
-
+    
     pub fn session_replay_sample_rate(mut self, value: f64) -> Self {
         self.session_replay_sample_rate = Some(value);
         self
     }
-
+    
     pub fn trace_enabled(mut self, value: bool) -> Self {
         self.trace_enabled = Some(value);
         self
     }
-
+    
     pub fn trace_sample_rate(mut self, value: f64) -> Self {
         self.trace_sample_rate = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for RumCrossProductSampling {
     fn default() -> Self {
@@ -99,10 +97,7 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
                 let mut session_replay_sample_rate: Option<f64> = None;
                 let mut trace_enabled: Option<bool> = None;
                 let mut trace_sample_rate: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,35 +106,31 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
                             if v.is_null() {
                                 continue;
                             }
-                            session_replay_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            session_replay_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "session_replay_sample_rate" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            session_replay_sample_rate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            session_replay_sample_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trace_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            trace_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            trace_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trace_sample_rate" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            trace_sample_rate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            trace_sample_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

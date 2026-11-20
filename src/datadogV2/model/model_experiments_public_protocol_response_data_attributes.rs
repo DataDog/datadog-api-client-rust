@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings and defaults supplied by the protocol.
 #[non_exhaustive]
@@ -107,17 +107,7 @@ pub struct ExperimentsPublicProtocolResponseDataAttributes {
 }
 
 impl ExperimentsPublicProtocolResponseDataAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        is_duration_required_to_start: bool,
-        is_equal_split_enforced: bool,
-        is_metric_limit_enabled: bool,
-        is_minimum_duration_enabled: bool,
-        metric_groups: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesMetricGroupsItems>,
-        name: String,
-        status: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus,
-        updated_at: String,
-    ) -> ExperimentsPublicProtocolResponseDataAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, is_duration_required_to_start: bool, is_equal_split_enforced: bool, is_metric_limit_enabled: bool, is_minimum_duration_enabled: bool, metric_groups: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesMetricGroupsItems>, name: String, status: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus, updated_at: String) -> ExperimentsPublicProtocolResponseDataAttributes {
         ExperimentsPublicProtocolResponseDataAttributes {
             analysis_plan: None,
             archived_at: None,
@@ -152,136 +142,114 @@ impl ExperimentsPublicProtocolResponseDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn analysis_plan(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAnalysisPlan,
-    ) -> Self {
+    
+    pub fn analysis_plan(mut self, value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAnalysisPlan) -> Self {
         self.analysis_plan = Some(value);
         self
     }
-
+    
     pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.archived_at = Some(value);
         self
     }
-
-    pub fn assignment_source_default_properties(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>,
-    ) -> Self {
+    
+    pub fn assignment_source_default_properties(mut self, value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>) -> Self {
         self.assignment_source_default_properties = Some(value);
         self
     }
-
+    
     pub fn assignment_source_id(mut self, value: String) -> Self {
         self.assignment_source_id = Some(value);
         self
     }
-
+    
     pub fn default_duration_days(mut self, value: i64) -> Self {
         self.default_duration_days = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn enforcement(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesEnforcement,
-    ) -> Self {
+    
+    pub fn enforcement(mut self, value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesEnforcement) -> Self {
         self.enforcement = Some(value);
         self
     }
-
+    
     pub fn environment_id(mut self, value: String) -> Self {
         self.environment_id = Some(value);
         self
     }
-
+    
     pub fn experiment_count(mut self, value: i64) -> Self {
         self.experiment_count = Some(value);
         self
     }
-
-    pub fn exposure_schedule(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesExposureSchedule,
-    ) -> Self {
+    
+    pub fn exposure_schedule(mut self, value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesExposureSchedule) -> Self {
         self.exposure_schedule = Some(value);
         self
     }
-
+    
     pub fn metric_limit(mut self, value: i64) -> Self {
         self.metric_limit = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
+    
     pub fn minimum_duration_unit(mut self, value: String) -> Self {
         self.minimum_duration_unit = Some(value);
         self
     }
-
+    
     pub fn minimum_duration_value(mut self, value: i64) -> Self {
         self.minimum_duration_value = Some(value);
         self
     }
-
-    pub fn primary_metric(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType,
-    ) -> Self {
+    
+    pub fn primary_metric(mut self, value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType) -> Self {
         self.primary_metric = Some(value);
         self
     }
-
+    
     pub fn primary_metric_id(mut self, value: String) -> Self {
         self.primary_metric_id = Some(value);
         self
     }
-
+    
     pub fn published_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.published_at = Some(value);
         self
     }
-
-    pub fn subject_type(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType,
-    ) -> Self {
+    
+    pub fn subject_type(mut self, value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType) -> Self {
         self.subject_type = Some(value);
         self
     }
-
+    
     pub fn subject_type_id(mut self, value: String) -> Self {
         self.subject_type_id = Some(value);
         self
     }
-
-    pub fn targeting_rules(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesTargetingRulesItems>,
-    ) -> Self {
+    
+    pub fn targeting_rules(mut self, value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesTargetingRulesItems>) -> Self {
         self.targeting_rules = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -324,17 +292,12 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                 let mut primary_metric: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType> = None;
                 let mut primary_metric_id: Option<String> = None;
                 let mut published_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut status: Option<
-                    crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus,
-                > = None;
+                let mut status: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus> = None;
                 let mut subject_type: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType> = None;
                 let mut subject_type_id: Option<String> = None;
                 let mut targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesTargetingRulesItems>> = None;
                 let mut updated_at: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -343,147 +306,125 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            analysis_plan =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            analysis_plan = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "archived_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            archived_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archived_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignment_source_default_properties" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assignment_source_default_properties =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_source_default_properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignment_source_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assignment_source_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_source_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "default_duration_days" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_duration_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_duration_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enforcement" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enforcement =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enforcement = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "environment_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            environment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "experiment_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            experiment_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exposure_schedule" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exposure_schedule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exposure_schedule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_duration_required_to_start" => {
-                            is_duration_required_to_start =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_duration_required_to_start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_equal_split_enforced" => {
-                            is_equal_split_enforced =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_equal_split_enforced = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_metric_limit_enabled" => {
-                            is_metric_limit_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_metric_limit_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_minimum_duration_enabled" => {
-                            is_minimum_duration_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_minimum_duration_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_groups" => {
-                            metric_groups =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_limit" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "minimum_duration_unit" => {
                             if v.is_null() {
                                 continue;
                             }
-                            minimum_duration_unit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimum_duration_unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "minimum_duration_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            minimum_duration_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimum_duration_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "primary_metric" => {
                             if v.is_null() {
                                 continue;
                             }
-                            primary_metric =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            primary_metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "primary_metric_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            primary_metric_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            primary_metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "published_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            published_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            published_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -494,49 +435,41 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "subject_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subject_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject_type_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subject_type_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "targeting_rules" => {
                             if v.is_null() {
                                 continue;
                             }
-                            targeting_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            targeting_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let is_duration_required_to_start = is_duration_required_to_start
-                    .ok_or_else(|| M::Error::missing_field("is_duration_required_to_start"))?;
-                let is_equal_split_enforced = is_equal_split_enforced
-                    .ok_or_else(|| M::Error::missing_field("is_equal_split_enforced"))?;
-                let is_metric_limit_enabled = is_metric_limit_enabled
-                    .ok_or_else(|| M::Error::missing_field("is_metric_limit_enabled"))?;
-                let is_minimum_duration_enabled = is_minimum_duration_enabled
-                    .ok_or_else(|| M::Error::missing_field("is_minimum_duration_enabled"))?;
-                let metric_groups =
-                    metric_groups.ok_or_else(|| M::Error::missing_field("metric_groups"))?;
+                let is_duration_required_to_start = is_duration_required_to_start.ok_or_else(|| M::Error::missing_field("is_duration_required_to_start"))?;
+                let is_equal_split_enforced = is_equal_split_enforced.ok_or_else(|| M::Error::missing_field("is_equal_split_enforced"))?;
+                let is_metric_limit_enabled = is_metric_limit_enabled.ok_or_else(|| M::Error::missing_field("is_metric_limit_enabled"))?;
+                let is_minimum_duration_enabled = is_minimum_duration_enabled.ok_or_else(|| M::Error::missing_field("is_minimum_duration_enabled"))?;
+                let metric_groups = metric_groups.ok_or_else(|| M::Error::missing_field("metric_groups"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;

@@ -1,0 +1,85 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
+
+/// Test-only generated schema for the dashboard versioning proof of concept.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct AnomalyDetectionConfig {
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "detection_sensitivity")]
+    pub detection_sensitivity: crate::datadogV1_20270101::model::AnomalyDetectionConfigDetectionSensitivity,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool
+}
+
+impl AnomalyDetectionConfig {
+    pub fn new(detection_sensitivity: crate::datadogV1_20270101::model::AnomalyDetectionConfigDetectionSensitivity) -> AnomalyDetectionConfig {
+        AnomalyDetectionConfig {
+            detection_sensitivity,
+            _unparsed: false,
+        }
+    }
+    
+}
+
+
+
+impl<'de> Deserialize<'de> for AnomalyDetectionConfig {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct AnomalyDetectionConfigVisitor;
+        impl<'a> Visitor<'a> for AnomalyDetectionConfigVisitor {
+            type Value = AnomalyDetectionConfig;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut detection_sensitivity: Option<crate::datadogV1_20270101::model::AnomalyDetectionConfigDetectionSensitivity> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "detection_sensitivity" => {
+                            detection_sensitivity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _detection_sensitivity) = detection_sensitivity {
+                                match _detection_sensitivity {
+                                    crate::datadogV1_20270101::model::AnomalyDetectionConfigDetectionSensitivity::UnparsedObject(_detection_sensitivity) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        &_ => {
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
+                    }
+                }
+                let detection_sensitivity = detection_sensitivity.ok_or_else(|| M::Error::missing_field("detection_sensitivity"))?;
+
+                let content = AnomalyDetectionConfig {
+                    detection_sensitivity,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(AnomalyDetectionConfigVisitor)
+    }
+}

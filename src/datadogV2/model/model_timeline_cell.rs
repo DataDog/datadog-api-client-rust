@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a timeline cell, representing a single event in a work item's chronological activity log (for example, a comment, status change, or assignment update).
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct TimelineCell {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TimelineCell {
@@ -49,45 +49,43 @@ impl TimelineCell {
             _unparsed: false,
         }
     }
-
+    
     pub fn author(mut self, value: crate::datadogV2::model::TimelineCellAuthor) -> Self {
         self.author = Some(value);
         self
     }
-
+    
     pub fn cell_content(mut self, value: crate::datadogV2::model::TimelineCellContent) -> Self {
         self.cell_content = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn deleted_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.deleted_at = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: crate::datadogV2::model::TimelineCellType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TimelineCell {
     fn default() -> Self {
@@ -118,10 +116,7 @@ impl<'de> Deserialize<'de> for TimelineCell {
                 let mut deleted_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut type_: Option<crate::datadogV2::model::TimelineCellType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -133,21 +128,18 @@ impl<'de> Deserialize<'de> for TimelineCell {
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _author) = author {
                                 match _author {
-                                    crate::datadogV2::model::TimelineCellAuthor::UnparsedObject(
-                                        _author,
-                                    ) => {
+                                    crate::datadogV2::model::TimelineCellAuthor::UnparsedObject(_author) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "cell_content" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cell_content =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            cell_content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _cell_content) = cell_content {
                                 match _cell_content {
                                     crate::datadogV2::model::TimelineCellContent::UnparsedObject(_cell_content) => {
@@ -156,26 +148,25 @@ impl<'de> Deserialize<'de> for TimelineCell {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "deleted_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             deleted_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -183,20 +174,18 @@ impl<'de> Deserialize<'de> for TimelineCell {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TimelineCellType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::TimelineCellType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

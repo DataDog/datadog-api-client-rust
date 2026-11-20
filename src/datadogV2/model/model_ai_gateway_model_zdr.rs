@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The Datadog side of a model's zero data retention eligibility. The customer side is the provider's
 /// `zdr_eligible` setting.
@@ -13,8 +13,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayModelZdr {
     /// Datadog's coverage of the model's operations under zero data retention. A model is eligible when
-    /// coverage is `full` and its provider's `zdr_eligible` is `true`. `partial` means only the
-    /// `covered_operations` can be served: requests on other operations are not dispatched to it.
+/// coverage is `full` and its provider's `zdr_eligible` is `true`. `partial` means only the
+/// `covered_operations` can be served: requests on other operations are not dispatched to it.
     #[serde(rename = "coverage")]
     pub coverage: crate::datadogV2::model::AiGatewayModelZdrCoverage,
     /// Operations covered by zero data retention.
@@ -27,7 +27,7 @@ pub struct AiGatewayModelZdr {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayModelZdr {
@@ -40,25 +40,24 @@ impl AiGatewayModelZdr {
             _unparsed: false,
         }
     }
-
+    
     pub fn covered_operations(mut self, value: Vec<String>) -> Self {
         self.covered_operations = Some(value);
         self
     }
-
+    
     pub fn uncovered_operations(mut self, value: Vec<String>) -> Self {
         self.uncovered_operations = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayModelZdr {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -80,10 +79,7 @@ impl<'de> Deserialize<'de> for AiGatewayModelZdr {
                 let mut coverage: Option<crate::datadogV2::model::AiGatewayModelZdrCoverage> = None;
                 let mut covered_operations: Option<Vec<String>> = None;
                 let mut uncovered_operations: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,26 +94,24 @@ impl<'de> Deserialize<'de> for AiGatewayModelZdr {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "covered_operations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            covered_operations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            covered_operations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "uncovered_operations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            uncovered_operations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            uncovered_operations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let coverage = coverage.ok_or_else(|| M::Error::missing_field("coverage"))?;

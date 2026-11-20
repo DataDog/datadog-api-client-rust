@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Diagnostic check results and their evaluation state.
 #[non_exhaustive]
@@ -31,10 +31,7 @@ pub struct ExperimentsExperimentDiagnosticsV2DTODataAttributes {
 }
 
 impl ExperimentsExperimentDiagnosticsV2DTODataAttributes {
-    pub fn new(
-        diagnostics: Vec<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems>,
-        state: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesState,
-    ) -> ExperimentsExperimentDiagnosticsV2DTODataAttributes {
+    pub fn new(diagnostics: Vec<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems>, state: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesState) -> ExperimentsExperimentDiagnosticsV2DTODataAttributes {
         ExperimentsExperimentDiagnosticsV2DTODataAttributes {
             diagnostics,
             evaluated_at: None,
@@ -44,30 +41,24 @@ impl ExperimentsExperimentDiagnosticsV2DTODataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn evaluated_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.evaluated_at = Some(value);
         self
     }
-
-    pub fn result(
-        mut self,
-        value: Option<
-            crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesResult,
-        >,
-    ) -> Self {
+    
+    pub fn result(mut self, value: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesResult>) -> Self {
         self.result = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,22 +81,17 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                 let mut evaluated_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut result: Option<Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesResult>> = None;
                 let mut state: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesState> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "diagnostics" => {
-                            diagnostics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            diagnostics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evaluated_at" => {
-                            evaluated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evaluated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "result" => {
                             result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _result) = result {
@@ -116,7 +102,7 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "state" => {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _state) = state {
@@ -127,16 +113,15 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let diagnostics =
-                    diagnostics.ok_or_else(|| M::Error::missing_field("diagnostics"))?;
+                let diagnostics = diagnostics.ok_or_else(|| M::Error::missing_field("diagnostics"))?;
                 let state = state.ok_or_else(|| M::Error::missing_field("state"))?;
 
                 let content = ExperimentsExperimentDiagnosticsV2DTODataAttributes {

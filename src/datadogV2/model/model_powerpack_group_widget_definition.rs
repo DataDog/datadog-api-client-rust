@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Powerpack group widget object.
 #[non_exhaustive]
@@ -30,15 +30,11 @@ pub struct PowerpackGroupWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PowerpackGroupWidgetDefinition {
-    pub fn new(
-        layout_type: String,
-        type_: String,
-        widgets: Vec<crate::datadogV2::model::PowerpackInnerWidgets>,
-    ) -> PowerpackGroupWidgetDefinition {
+    pub fn new(layout_type: String, type_: String, widgets: Vec<crate::datadogV2::model::PowerpackInnerWidgets>) -> PowerpackGroupWidgetDefinition {
         PowerpackGroupWidgetDefinition {
             layout_type,
             show_title: None,
@@ -49,25 +45,24 @@ impl PowerpackGroupWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn show_title(mut self, value: bool) -> Self {
         self.show_title = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for PowerpackGroupWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -91,45 +86,40 @@ impl<'de> Deserialize<'de> for PowerpackGroupWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut widgets: Option<Vec<crate::datadogV2::model::PowerpackInnerWidgets>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "layout_type" => {
-                            layout_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            layout_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_title" => {
                             if v.is_null() {
                                 continue;
                             }
                             show_title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "widgets" => {
                             widgets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let layout_type =
-                    layout_type.ok_or_else(|| M::Error::missing_field("layout_type"))?;
+                let layout_type = layout_type.ok_or_else(|| M::Error::missing_field("layout_type"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let widgets = widgets.ok_or_else(|| M::Error::missing_field("widgets"))?;
 

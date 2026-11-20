@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating a change request.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct ChangeRequestUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChangeRequestUpdateAttributes {
@@ -49,51 +49,43 @@ impl ChangeRequestUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn change_request_plan(mut self, value: String) -> Self {
         self.change_request_plan = Some(value);
         self
     }
-
-    pub fn change_request_risk(
-        mut self,
-        value: crate::datadogV2::model::ChangeRequestRiskLevel,
-    ) -> Self {
+    
+    pub fn change_request_risk(mut self, value: crate::datadogV2::model::ChangeRequestRiskLevel) -> Self {
         self.change_request_risk = Some(value);
         self
     }
-
-    pub fn change_request_type(
-        mut self,
-        value: crate::datadogV2::model::ChangeRequestChangeType,
-    ) -> Self {
+    
+    pub fn change_request_type(mut self, value: crate::datadogV2::model::ChangeRequestChangeType) -> Self {
         self.change_request_type = Some(value);
         self
     }
-
+    
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ChangeRequestUpdateAttributes {
     fn default() -> Self {
@@ -119,19 +111,12 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut change_request_plan: Option<String> = None;
-                let mut change_request_risk: Option<
-                    crate::datadogV2::model::ChangeRequestRiskLevel,
-                > = None;
-                let mut change_request_type: Option<
-                    crate::datadogV2::model::ChangeRequestChangeType,
-                > = None;
+                let mut change_request_risk: Option<crate::datadogV2::model::ChangeRequestRiskLevel> = None;
+                let mut change_request_type: Option<crate::datadogV2::model::ChangeRequestChangeType> = None;
                 let mut end_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut id: Option<String> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,15 +125,13 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            change_request_plan =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            change_request_plan = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "change_request_risk" => {
                             if v.is_null() {
                                 continue;
                             }
-                            change_request_risk =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            change_request_risk = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _change_request_risk) = change_request_risk {
                                 match _change_request_risk {
                                     crate::datadogV2::model::ChangeRequestRiskLevel::UnparsedObject(_change_request_risk) => {
@@ -157,13 +140,12 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "change_request_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            change_request_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            change_request_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _change_request_type) = change_request_type {
                                 match _change_request_type {
                                     crate::datadogV2::model::ChangeRequestChangeType::UnparsedObject(_change_request_type) => {
@@ -172,30 +154,30 @@ impl<'de> Deserialize<'de> for ChangeRequestUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "end_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             end_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single edit operation within a fix suggestion for a rule violation.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnalysisEdit {
     /// The content to insert or replace at the specified position, if applicable.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "content")]
     pub content: Option<String>,
     /// The type of code edit to apply when fixing a violation.
@@ -28,16 +28,11 @@ pub struct AnalysisEdit {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AnalysisEdit {
-    pub fn new(
-        content: Option<String>,
-        edit_type: crate::datadogV2::model::AnalysisEditType,
-        end: crate::datadogV2::model::AnalysisPosition,
-        start: crate::datadogV2::model::AnalysisPosition,
-    ) -> AnalysisEdit {
+    pub fn new(content: Option<String>, edit_type: crate::datadogV2::model::AnalysisEditType, end: crate::datadogV2::model::AnalysisPosition, start: crate::datadogV2::model::AnalysisPosition) -> AnalysisEdit {
         AnalysisEdit {
             content,
             edit_type,
@@ -47,15 +42,14 @@ impl AnalysisEdit {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AnalysisEdit {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,41 +72,36 @@ impl<'de> Deserialize<'de> for AnalysisEdit {
                 let mut edit_type: Option<crate::datadogV2::model::AnalysisEditType> = None;
                 let mut end: Option<crate::datadogV2::model::AnalysisPosition> = None;
                 let mut start: Option<crate::datadogV2::model::AnalysisPosition> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "content" => {
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "edit_type" => {
                             edit_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _edit_type) = edit_type {
                                 match _edit_type {
-                                    crate::datadogV2::model::AnalysisEditType::UnparsedObject(
-                                        _edit_type,
-                                    ) => {
+                                    crate::datadogV2::model::AnalysisEditType::UnparsedObject(_edit_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let content = content.ok_or_else(|| M::Error::missing_field("content"))?;

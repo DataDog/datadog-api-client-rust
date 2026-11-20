@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating GCP scan options configuration.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct GcpScanOptionsInputUpdateDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GcpScanOptionsInputUpdateDataAttributes {
@@ -41,35 +41,33 @@ impl GcpScanOptionsInputUpdateDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn cloud_function(mut self, value: bool) -> Self {
         self.cloud_function = Some(value);
         self
     }
-
+    
     pub fn compliance_host(mut self, value: bool) -> Self {
         self.compliance_host = Some(value);
         self
     }
-
+    
     pub fn vuln_containers_os(mut self, value: bool) -> Self {
         self.vuln_containers_os = Some(value);
         self
     }
-
+    
     pub fn vuln_host_os(mut self, value: bool) -> Self {
         self.vuln_host_os = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for GcpScanOptionsInputUpdateDataAttributes {
     fn default() -> Self {
@@ -98,10 +96,7 @@ impl<'de> Deserialize<'de> for GcpScanOptionsInputUpdateDataAttributes {
                 let mut compliance_host: Option<bool> = None;
                 let mut vuln_containers_os: Option<bool> = None;
                 let mut vuln_host_os: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -110,35 +105,31 @@ impl<'de> Deserialize<'de> for GcpScanOptionsInputUpdateDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            cloud_function =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_function = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "compliance_host" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compliance_host =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compliance_host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_containers_os" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vuln_containers_os =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_containers_os = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_host_os" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vuln_host_os =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_host_os = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

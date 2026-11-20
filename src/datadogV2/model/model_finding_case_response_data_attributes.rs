@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the case.
 #[non_exhaustive]
@@ -75,7 +75,7 @@ pub struct FindingCaseResponseDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FindingCaseResponseDataAttributes {
@@ -105,118 +105,113 @@ impl FindingCaseResponseDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.archived_at = Some(value);
         self
     }
-
+    
     pub fn assigned_to(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.assigned_to = Some(value);
         self
     }
-
+    
     pub fn attributes(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn closed_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.closed_at = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn creation_source(mut self, value: String) -> Self {
         self.creation_source = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn due_date(mut self, value: String) -> Self {
         self.due_date = Some(value);
         self
     }
-
+    
     pub fn insights(mut self, value: Vec<crate::datadogV2::model::CaseInsightsItems>) -> Self {
         self.insights = Some(value);
         self
     }
-
+    
     pub fn jira_issue(mut self, value: crate::datadogV2::model::FindingJiraIssue) -> Self {
         self.jira_issue = Some(value);
         self
     }
-
+    
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
-
+    
     pub fn linear_issue(mut self, value: crate::datadogV2::model::FindingLinearIssue) -> Self {
         self.linear_issue = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn priority(mut self, value: String) -> Self {
         self.priority = Some(value);
         self
     }
-
-    pub fn servicenow_ticket(
-        mut self,
-        value: crate::datadogV2::model::FindingServiceNowTicket,
-    ) -> Self {
+    
+    pub fn servicenow_ticket(mut self, value: crate::datadogV2::model::FindingServiceNowTicket) -> Self {
         self.servicenow_ticket = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn status_group(mut self, value: String) -> Self {
         self.status_group = Some(value);
         self
     }
-
+    
     pub fn status_name(mut self, value: String) -> Self {
         self.status_name = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FindingCaseResponseDataAttributes {
     fn default() -> Self {
@@ -255,18 +250,13 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                 let mut linear_issue: Option<crate::datadogV2::model::FindingLinearIssue> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut priority: Option<String> = None;
-                let mut servicenow_ticket: Option<
-                    crate::datadogV2::model::FindingServiceNowTicket,
-                > = None;
+                let mut servicenow_ticket: Option<crate::datadogV2::model::FindingServiceNowTicket> = None;
                 let mut status: Option<String> = None;
                 let mut status_group: Option<String> = None;
                 let mut status_name: Option<String> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -275,136 +265,127 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            archived_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archived_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assigned_to" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assigned_to =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assigned_to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "attributes" => {
                             if v.is_null() {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "closed_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             closed_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "creation_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            creation_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            creation_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "due_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             due_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "insights" => {
                             if v.is_null() {
                                 continue;
                             }
                             insights = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "jira_issue" => {
                             if v.is_null() {
                                 continue;
                             }
                             jira_issue = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "key" => {
                             if v.is_null() {
                                 continue;
                             }
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "linear_issue" => {
                             if v.is_null() {
                                 continue;
                             }
-                            linear_issue =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            linear_issue = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "servicenow_ticket" => {
                             if v.is_null() {
                                 continue;
                             }
-                            servicenow_ticket =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            servicenow_ticket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status_group" => {
                             if v.is_null() {
                                 continue;
                             }
-                            status_group =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            status_group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            status_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            status_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

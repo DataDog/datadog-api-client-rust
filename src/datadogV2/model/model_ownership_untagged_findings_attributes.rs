@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The counts of findings without a team tag by ownership confidence.
 #[non_exhaustive]
@@ -27,16 +27,11 @@ pub struct OwnershipUntaggedFindingsAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OwnershipUntaggedFindingsAttributes {
-    pub fn new(
-        high_confidence: i64,
-        low_confidence: i64,
-        medium_confidence: i64,
-        total: i64,
-    ) -> OwnershipUntaggedFindingsAttributes {
+    pub fn new(high_confidence: i64, low_confidence: i64, medium_confidence: i64, total: i64) -> OwnershipUntaggedFindingsAttributes {
         OwnershipUntaggedFindingsAttributes {
             high_confidence,
             low_confidence,
@@ -46,15 +41,14 @@ impl OwnershipUntaggedFindingsAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OwnershipUntaggedFindingsAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,42 +71,33 @@ impl<'de> Deserialize<'de> for OwnershipUntaggedFindingsAttributes {
                 let mut low_confidence: Option<i64> = None;
                 let mut medium_confidence: Option<i64> = None;
                 let mut total: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "high_confidence" => {
-                            high_confidence =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            high_confidence = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "low_confidence" => {
-                            low_confidence =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            low_confidence = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "medium_confidence" => {
-                            medium_confidence =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            medium_confidence = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total" => {
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let high_confidence =
-                    high_confidence.ok_or_else(|| M::Error::missing_field("high_confidence"))?;
-                let low_confidence =
-                    low_confidence.ok_or_else(|| M::Error::missing_field("low_confidence"))?;
-                let medium_confidence = medium_confidence
-                    .ok_or_else(|| M::Error::missing_field("medium_confidence"))?;
+                let high_confidence = high_confidence.ok_or_else(|| M::Error::missing_field("high_confidence"))?;
+                let low_confidence = low_confidence.ok_or_else(|| M::Error::missing_field("low_confidence"))?;
+                let medium_confidence = medium_confidence.ok_or_else(|| M::Error::missing_field("medium_confidence"))?;
                 let total = total.ok_or_else(|| M::Error::missing_field("total"))?;
 
                 let content = OwnershipUntaggedFindingsAttributes {

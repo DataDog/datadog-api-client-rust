@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentSeverity {
-    UNKNOWN,
-    SEV_0,
-    SEV_1,
-    SEV_2,
-    SEV_3,
-    SEV_4,
-    SEV_5,
+	UNKNOWN,
+	SEV_0,
+	SEV_1,
+	SEV_2,
+	SEV_3,
+	SEV_4,
+	SEV_5,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for IncidentSeverity {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "UNKNOWN" => Self::UNKNOWN,
-            "SEV-0" => Self::SEV_0,
-            "SEV-1" => Self::SEV_1,
-            "SEV-2" => Self::SEV_2,
-            "SEV-3" => Self::SEV_3,
-            "SEV-4" => Self::SEV_4,
-            "SEV-5" => Self::SEV_5,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"UNKNOWN" => Self::UNKNOWN,"SEV-0" => Self::SEV_0,"SEV-1" => Self::SEV_1,"SEV-2" => Self::SEV_2,"SEV-3" => Self::SEV_3,"SEV-4" => Self::SEV_4,"SEV-5" => Self::SEV_5,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

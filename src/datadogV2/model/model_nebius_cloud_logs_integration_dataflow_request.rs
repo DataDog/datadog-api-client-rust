@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Logs from your Nebius tenant: Kubernetes control plane and audit logs, tenant-level audit events, compute serial console logs, cloud apps and AI inference logs, PostgreSQL logs, and MLflow logs, collected from the services named in `settings.enabled_services`. `enabled_services` is the sole source of truth for what is collected; `enabled` set to `false` stops log collection, while `true` on its own changes nothing. Defaults to no services.
 #[non_exhaustive]
@@ -16,11 +16,10 @@ pub struct NebiusCloudLogsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     /// Settings of the logs dataflow. Only the fields provided are changed.
     #[serde(rename = "settings")]
-    pub settings:
-        Option<crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest>,
+    pub settings: Option<crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudLogsIntegrationDataflowRequest {
@@ -31,20 +30,19 @@ impl NebiusCloudLogsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest) -> Self {
         self.settings = Some(value);
         self
     }
+    
 }
+
 
 impl Default for NebiusCloudLogsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -70,9 +68,7 @@ impl<'de> Deserialize<'de> for NebiusCloudLogsIntegrationDataflowRequest {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut settings: Option<
-                    crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest,
-                > = None;
+                let mut settings: Option<crate::datadogV2::model::NebiusCloudLogsIntegrationDataflowSettingsRequest> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -82,18 +78,16 @@ impl<'de> Deserialize<'de> for NebiusCloudLogsIntegrationDataflowRequest {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 
 /// ListModelLabProjectsOptionalParams is a struct for passing parameters to the method [`ModelLabAPIAPI::list_model_lab_projects`]
 #[non_exhaustive]
@@ -180,6 +180,9 @@ impl ListModelLabRunsOptionalParams {
     }
 }
 
+
+
+
 /// AddModelLabProjectOwnerError is a struct for typed errors of method [`ModelLabAPIAPI::add_model_lab_project_owner`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -188,6 +191,7 @@ pub enum AddModelLabProjectOwnerError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteModelLabRunError is a struct for typed errors of method [`ModelLabAPIAPI::delete_model_lab_run`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -198,6 +202,7 @@ pub enum DeleteModelLabRunError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetModelLabArtifactContentError is a struct for typed errors of method [`ModelLabAPIAPI::get_model_lab_artifact_content`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -206,6 +211,7 @@ pub enum GetModelLabArtifactContentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetModelLabProjectError is a struct for typed errors of method [`ModelLabAPIAPI::get_model_lab_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -216,6 +222,7 @@ pub enum GetModelLabProjectError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetModelLabRunError is a struct for typed errors of method [`ModelLabAPIAPI::get_model_lab_run`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -224,6 +231,7 @@ pub enum GetModelLabRunError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListModelLabProjectArtifactsError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_project_artifacts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -234,6 +242,7 @@ pub enum ListModelLabProjectArtifactsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListModelLabProjectFacetKeysError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_project_facet_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -242,6 +251,7 @@ pub enum ListModelLabProjectFacetKeysError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListModelLabProjectFacetValuesError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_project_facet_values`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -252,6 +262,7 @@ pub enum ListModelLabProjectFacetValuesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListModelLabProjectsError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_projects`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -260,6 +271,7 @@ pub enum ListModelLabProjectsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListModelLabRunArtifactsError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_run_artifacts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -270,6 +282,7 @@ pub enum ListModelLabRunArtifactsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListModelLabRunFacetKeysError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_run_facet_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -278,6 +291,7 @@ pub enum ListModelLabRunFacetKeysError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListModelLabRunFacetValuesError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_run_facet_values`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -288,6 +302,7 @@ pub enum ListModelLabRunFacetValuesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListModelLabRunsError is a struct for typed errors of method [`ModelLabAPIAPI::list_model_lab_runs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -296,6 +311,7 @@ pub enum ListModelLabRunsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PinModelLabRunError is a struct for typed errors of method [`ModelLabAPIAPI::pin_model_lab_run`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -306,6 +322,7 @@ pub enum PinModelLabRunError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RemoveModelLabProjectOwnerError is a struct for typed errors of method [`ModelLabAPIAPI::remove_model_lab_project_owner`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -314,6 +331,7 @@ pub enum RemoveModelLabProjectOwnerError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// StarModelLabProjectError is a struct for typed errors of method [`ModelLabAPIAPI::star_model_lab_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -324,6 +342,7 @@ pub enum StarModelLabProjectError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnpinModelLabRunError is a struct for typed errors of method [`ModelLabAPIAPI::unpin_model_lab_run`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -333,6 +352,7 @@ pub enum UnpinModelLabRunError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnstarModelLabProjectError is a struct for typed errors of method [`ModelLabAPIAPI::unstar_model_lab_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -341,6 +361,7 @@ pub enum UnstarModelLabProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage Model Lab projects, runs, artifacts, and facets for ML experiment tracking.
 #[derive(Debug, Clone)]
@@ -364,7 +385,8 @@ impl ModelLabAPIAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -409,40 +431,29 @@ impl ModelLabAPIAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Add a user as an owner of a Model Lab project. The user must belong to the
-    /// project's organization. The project's creator is always an owner, so adding
-    /// the creator, or a user who is already an owner, has no effect.
-    /// A project can have at most 50 owners besides its creator.
-    pub async fn add_model_lab_project_owner(
-        &self,
-        project_id: i64,
-        user_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<AddModelLabProjectOwnerError>> {
-        match self
-            .add_model_lab_project_owner_with_http_info(project_id, user_id)
-            .await
-        {
+/// project's organization. The project's creator is always an owner, so adding
+/// the creator, or a user who is already an owner, has no effect.
+/// A project can have at most 50 owners besides its creator.
+    pub async fn add_model_lab_project_owner(&self, project_id: i64, user_id: uuid::Uuid) -> Result<(), datadog::Error<AddModelLabProjectOwnerError>> {
+        match self.add_model_lab_project_owner_with_http_info(project_id, user_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a user as an owner of a Model Lab project. The user must belong to the
-    /// project's organization. The project's creator is always an owner, so adding
-    /// the creator, or a user who is already an owner, has no effect.
-    /// A project can have at most 50 owners besides its creator.
-    pub async fn add_model_lab_project_owner_with_http_info(
-        &self,
-        project_id: i64,
-        user_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddModelLabProjectOwnerError>> {
+/// project's organization. The project's creator is always an owner, so adding
+/// the creator, or a user who is already an owner, has no effect.
+/// A project can have at most 50 owners besides its creator.
+    pub async fn add_model_lab_project_owner_with_http_info(&self, project_id: i64, user_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<AddModelLabProjectOwnerError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_model_lab_project_owner";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -454,20 +465,26 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/owners/{user_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id,
-            user_id = datadog::urlencode(user_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            , user_id=
+            datadog::urlencode(user_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -480,22 +497,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -513,33 +524,23 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<AddModelLabProjectOwnerError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddModelLabProjectOwnerError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Model Lab run by its ID.
-    pub async fn delete_model_lab_run(
-        &self,
-        run_id: i64,
-    ) -> Result<(), datadog::Error<DeleteModelLabRunError>> {
+    pub async fn delete_model_lab_run(&self, run_id: i64) -> Result<(), datadog::Error<DeleteModelLabRunError>> {
         match self.delete_model_lab_run_with_http_info(run_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Model Lab run by its ID.
-    pub async fn delete_model_lab_run_with_http_info(
-        &self,
-        run_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteModelLabRunError>> {
+    pub async fn delete_model_lab_run_with_http_info(&self, run_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteModelLabRunError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_model_lab_run";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -551,19 +552,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = run_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            run_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -576,22 +582,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -609,47 +609,29 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteModelLabRunError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteModelLabRunError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Download the raw content of a Model Lab artifact file.
-    pub async fn get_model_lab_artifact_content(
-        &self,
-        project_id: String,
-        artifact_path: String,
-    ) -> Result<Vec<u8>, datadog::Error<GetModelLabArtifactContentError>> {
-        match self
-            .get_model_lab_artifact_content_with_http_info(project_id, artifact_path)
-            .await
-        {
+    pub async fn get_model_lab_artifact_content(&self, project_id: String, artifact_path: String) -> Result<Vec<u8>, datadog::Error<GetModelLabArtifactContentError>> {
+        match self.get_model_lab_artifact_content_with_http_info(project_id, artifact_path).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Download the raw content of a Model Lab artifact file.
-    pub async fn get_model_lab_artifact_content_with_http_info(
-        &self,
-        project_id: String,
-        artifact_path: String,
-    ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetModelLabArtifactContentError>>
-    {
+    pub async fn get_model_lab_artifact_content_with_http_info(&self, project_id: String, artifact_path: String) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetModelLabArtifactContentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_model_lab_artifact_content";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -661,22 +643,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/artifacts/content",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("project_id", &project_id.to_string())]);
-        local_req_builder =
-            local_req_builder.query(&[("artifact_path", &artifact_path.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("project_id", &project_id.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("artifact_path", &artifact_path.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -689,22 +673,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -722,47 +700,29 @@ impl ModelLabAPIAPI {
                 entity: Some(local_content.into_bytes()),
             })
         } else {
-            let local_entity: Option<GetModelLabArtifactContentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetModelLabArtifactContentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single Model Lab project by its ID.
-    pub async fn get_model_lab_project(
-        &self,
-        project_id: i64,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabProjectResponse,
-        datadog::Error<GetModelLabProjectError>,
-    > {
+    pub async fn get_model_lab_project(&self, project_id: i64) -> Result<crate::datadogV2::model::ModelLabProjectResponse, datadog::Error<GetModelLabProjectError>> {
         match self.get_model_lab_project_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single Model Lab project by its ID.
-    pub async fn get_model_lab_project_with_http_info(
-        &self,
-        project_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectResponse>,
-        datadog::Error<GetModelLabProjectError>,
-    > {
+    pub async fn get_model_lab_project_with_http_info(&self, project_id: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectResponse>, datadog::Error<GetModelLabProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_model_lab_project";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -774,19 +734,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -799,22 +764,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -826,58 +785,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetModelLabProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetModelLabProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single Model Lab run by its ID.
-    pub async fn get_model_lab_run(
-        &self,
-        run_id: i64,
-    ) -> Result<crate::datadogV2::model::ModelLabRunResponse, datadog::Error<GetModelLabRunError>>
-    {
+    pub async fn get_model_lab_run(&self, run_id: i64) -> Result<crate::datadogV2::model::ModelLabRunResponse, datadog::Error<GetModelLabRunError>> {
         match self.get_model_lab_run_with_http_info(run_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single Model Lab run by its ID.
-    pub async fn get_model_lab_run_with_http_info(
-        &self,
-        run_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabRunResponse>,
-        datadog::Error<GetModelLabRunError>,
-    > {
+    pub async fn get_model_lab_run_with_http_info(&self, run_id: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabRunResponse>, datadog::Error<GetModelLabRunError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_model_lab_run";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -889,19 +828,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = run_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            run_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -914,22 +858,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -941,63 +879,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetModelLabRunError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetModelLabRunError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all artifact files for a specific Model Lab project.
-    pub async fn list_model_lab_project_artifacts(
-        &self,
-        project_id: i64,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabProjectArtifactsResponse,
-        datadog::Error<ListModelLabProjectArtifactsError>,
-    > {
-        match self
-            .list_model_lab_project_artifacts_with_http_info(project_id)
-            .await
-        {
+    pub async fn list_model_lab_project_artifacts(&self, project_id: i64) -> Result<crate::datadogV2::model::ModelLabProjectArtifactsResponse, datadog::Error<ListModelLabProjectArtifactsError>> {
+        match self.list_model_lab_project_artifacts_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all artifact files for a specific Model Lab project.
-    pub async fn list_model_lab_project_artifacts_with_http_info(
-        &self,
-        project_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectArtifactsResponse>,
-        datadog::Error<ListModelLabProjectArtifactsError>,
-    > {
+    pub async fn list_model_lab_project_artifacts_with_http_info(&self, project_id: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectArtifactsResponse>, datadog::Error<ListModelLabProjectArtifactsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_project_artifacts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1009,19 +922,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/artifacts",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1034,22 +952,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1061,61 +973,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectArtifactsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectArtifactsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabProjectArtifactsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabProjectArtifactsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all available facet keys for filtering Model Lab projects.
-    pub async fn list_model_lab_project_facet_keys(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabFacetKeysResponse,
-        datadog::Error<ListModelLabProjectFacetKeysError>,
-    > {
-        match self
-            .list_model_lab_project_facet_keys_with_http_info()
-            .await
-        {
+    pub async fn list_model_lab_project_facet_keys(&self) -> Result<crate::datadogV2::model::ModelLabFacetKeysResponse, datadog::Error<ListModelLabProjectFacetKeysError>> {
+        match self.list_model_lab_project_facet_keys_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all available facet keys for filtering Model Lab projects.
-    pub async fn list_model_lab_project_facet_keys_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetKeysResponse>,
-        datadog::Error<ListModelLabProjectFacetKeysError>,
-    > {
+    pub async fn list_model_lab_project_facet_keys_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetKeysResponse>, datadog::Error<ListModelLabProjectFacetKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_project_facet_keys";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1127,18 +1016,22 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/project-facet-keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1151,22 +1044,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1178,92 +1065,67 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetKeysResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetKeysResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabProjectFacetKeysError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabProjectFacetKeysError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List available facet values for a specific project facet key.
-    pub async fn list_model_lab_project_facet_values(
-        &self,
-        facet_type: crate::datadogV2::model::ModelLabProjectFacetType,
-        facet_name: String,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabFacetValuesResponse,
-        datadog::Error<ListModelLabProjectFacetValuesError>,
-    > {
-        match self
-            .list_model_lab_project_facet_values_with_http_info(facet_type, facet_name)
-            .await
-        {
+    pub async fn list_model_lab_project_facet_values(&self, facet_type: crate::datadogV2::model::ModelLabProjectFacetType, facet_name: String) -> Result<crate::datadogV2::model::ModelLabFacetValuesResponse, datadog::Error<ListModelLabProjectFacetValuesError>> {
+        match self.list_model_lab_project_facet_values_with_http_info(facet_type, facet_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List available facet values for a specific project facet key.
-    pub async fn list_model_lab_project_facet_values_with_http_info(
-        &self,
-        facet_type: crate::datadogV2::model::ModelLabProjectFacetType,
-        facet_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetValuesResponse>,
-        datadog::Error<ListModelLabProjectFacetValuesError>,
-    > {
+    pub async fn list_model_lab_project_facet_values_with_http_info(&self, facet_type: crate::datadogV2::model::ModelLabProjectFacetType, facet_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetValuesResponse>, datadog::Error<ListModelLabProjectFacetValuesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_project_facet_values";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_model_lab_project_facet_values' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_model_lab_project_facet_values' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/project-facet-values",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("facet_type", &facet_type.to_string())]);
-        local_req_builder = local_req_builder.query(&[("facet_name", &facet_name.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("facet_type", &facet_type.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("facet_name", &facet_name.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1276,22 +1138,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1303,60 +1159,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetValuesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetValuesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabProjectFacetValuesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabProjectFacetValuesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Model Lab projects for the current organization.
-    pub async fn list_model_lab_projects(
-        &self,
-        params: ListModelLabProjectsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabProjectsResponse,
-        datadog::Error<ListModelLabProjectsError>,
-    > {
-        match self.list_model_lab_projects_with_http_info(params).await {
+    pub async fn list_model_lab_projects(&self, params: ListModelLabProjectsOptionalParams) -> Result<crate::datadogV2::model::ModelLabProjectsResponse, datadog::Error<ListModelLabProjectsError>> {
+        match self.list_model_lab_projects_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Model Lab projects for the current organization.
-    pub async fn list_model_lab_projects_with_http_info(
-        &self,
-        params: ListModelLabProjectsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectsResponse>,
-        datadog::Error<ListModelLabProjectsError>,
-    > {
+    pub async fn list_model_lab_projects_with_http_info(&self, params: ListModelLabProjectsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabProjectsResponse>, datadog::Error<ListModelLabProjectsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_projects";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1368,6 +1202,7 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter = params.filter;
         let filter_owner_id = params.filter_owner_id;
@@ -1380,39 +1215,34 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_owner_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[owner_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[owner_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1425,22 +1255,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1452,65 +1276,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabProjectsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabProjectsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabProjectsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List artifact files for a specific Model Lab run.
-    pub async fn list_model_lab_run_artifacts(
-        &self,
-        run_id: i64,
-        params: ListModelLabRunArtifactsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabRunArtifactsResponse,
-        datadog::Error<ListModelLabRunArtifactsError>,
-    > {
-        match self
-            .list_model_lab_run_artifacts_with_http_info(run_id, params)
-            .await
-        {
+    pub async fn list_model_lab_run_artifacts(&self, run_id: i64, params: ListModelLabRunArtifactsOptionalParams) -> Result<crate::datadogV2::model::ModelLabRunArtifactsResponse, datadog::Error<ListModelLabRunArtifactsError>> {
+        match self.list_model_lab_run_artifacts_with_http_info(run_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List artifact files for a specific Model Lab run.
-    pub async fn list_model_lab_run_artifacts_with_http_info(
-        &self,
-        run_id: i64,
-        params: ListModelLabRunArtifactsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabRunArtifactsResponse>,
-        datadog::Error<ListModelLabRunArtifactsError>,
-    > {
+    pub async fn list_model_lab_run_artifacts_with_http_info(&self, run_id: i64, params: ListModelLabRunArtifactsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabRunArtifactsResponse>, datadog::Error<ListModelLabRunArtifactsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_run_artifacts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1522,6 +1319,7 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let path = params.path;
 
@@ -1529,20 +1327,21 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/artifacts",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = run_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            run_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = path {
-            local_req_builder =
-                local_req_builder.query(&[("path", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("path", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1555,22 +1354,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1582,63 +1375,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunArtifactsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunArtifactsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabRunArtifactsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabRunArtifactsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all available facet keys for filtering Model Lab runs.
-    pub async fn list_model_lab_run_facet_keys(
-        &self,
-        filter_project_id: i64,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabFacetKeysResponse,
-        datadog::Error<ListModelLabRunFacetKeysError>,
-    > {
-        match self
-            .list_model_lab_run_facet_keys_with_http_info(filter_project_id)
-            .await
-        {
+    pub async fn list_model_lab_run_facet_keys(&self, filter_project_id: i64) -> Result<crate::datadogV2::model::ModelLabFacetKeysResponse, datadog::Error<ListModelLabRunFacetKeysError>> {
+        match self.list_model_lab_run_facet_keys_with_http_info(filter_project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all available facet keys for filtering Model Lab runs.
-    pub async fn list_model_lab_run_facet_keys_with_http_info(
-        &self,
-        filter_project_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetKeysResponse>,
-        datadog::Error<ListModelLabRunFacetKeysError>,
-    > {
+    pub async fn list_model_lab_run_facet_keys_with_http_info(&self, filter_project_id: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetKeysResponse>, datadog::Error<ListModelLabRunFacetKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_run_facet_keys";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1650,21 +1418,23 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/facet-keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[project_id]", &filter_project_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[project_id]", &filter_project_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1677,22 +1447,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1704,71 +1468,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetKeysResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetKeysResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabRunFacetKeysError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabRunFacetKeysError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List available facet values for a specific run facet key.
-    pub async fn list_model_lab_run_facet_values(
-        &self,
-        filter_project_id: i64,
-        facet_type: crate::datadogV2::model::ModelLabFacetType,
-        facet_name: String,
-    ) -> Result<
-        crate::datadogV2::model::ModelLabFacetValuesResponse,
-        datadog::Error<ListModelLabRunFacetValuesError>,
-    > {
-        match self
-            .list_model_lab_run_facet_values_with_http_info(
-                filter_project_id,
-                facet_type,
-                facet_name,
-            )
-            .await
-        {
+    pub async fn list_model_lab_run_facet_values(&self, filter_project_id: i64, facet_type: crate::datadogV2::model::ModelLabFacetType, facet_name: String) -> Result<crate::datadogV2::model::ModelLabFacetValuesResponse, datadog::Error<ListModelLabRunFacetValuesError>> {
+        match self.list_model_lab_run_facet_values_with_http_info(filter_project_id, facet_type, facet_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List available facet values for a specific run facet key.
-    pub async fn list_model_lab_run_facet_values_with_http_info(
-        &self,
-        filter_project_id: i64,
-        facet_type: crate::datadogV2::model::ModelLabFacetType,
-        facet_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetValuesResponse>,
-        datadog::Error<ListModelLabRunFacetValuesError>,
-    > {
+    pub async fn list_model_lab_run_facet_values_with_http_info(&self, filter_project_id: i64, facet_type: crate::datadogV2::model::ModelLabFacetType, facet_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabFacetValuesResponse>, datadog::Error<ListModelLabRunFacetValuesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_run_facet_values";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1780,23 +1511,25 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/facet-values",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[project_id]", &filter_project_id.to_string())]);
-        local_req_builder = local_req_builder.query(&[("facet_type", &facet_type.to_string())]);
-        local_req_builder = local_req_builder.query(&[("facet_name", &facet_name.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[project_id]", &filter_project_id.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("facet_type", &facet_type.to_string() )]);
+        local_req_builder = local_req_builder.query(&[("facet_name", &facet_name.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1809,22 +1542,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1836,58 +1563,38 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetValuesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabFacetValuesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabRunFacetValuesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabRunFacetValuesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Model Lab runs for the current organization.
-    pub async fn list_model_lab_runs(
-        &self,
-        params: ListModelLabRunsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ModelLabRunsResponse, datadog::Error<ListModelLabRunsError>>
-    {
-        match self.list_model_lab_runs_with_http_info(params).await {
+    pub async fn list_model_lab_runs(&self, params: ListModelLabRunsOptionalParams) -> Result<crate::datadogV2::model::ModelLabRunsResponse, datadog::Error<ListModelLabRunsError>> {
+        match self.list_model_lab_runs_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Model Lab runs for the current organization.
-    pub async fn list_model_lab_runs_with_http_info(
-        &self,
-        params: ListModelLabRunsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ModelLabRunsResponse>,
-        datadog::Error<ListModelLabRunsError>,
-    > {
+    pub async fn list_model_lab_runs_with_http_info(&self, params: ListModelLabRunsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ModelLabRunsResponse>, datadog::Error<ListModelLabRunsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_model_lab_runs";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1899,6 +1606,7 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_id = params.filter_id;
         let filter = params.filter;
@@ -1919,71 +1627,58 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_owner_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[owner_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[owner_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[status]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_project_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[project_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[project_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_params {
-            local_req_builder =
-                local_req_builder.query(&[("filter[params]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[params]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_parent_run_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[parent_run_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[parent_run_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = pinned_first {
-            local_req_builder =
-                local_req_builder.query(&[("pinned_first", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("pinned_first", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_pinned {
-            local_req_builder =
-                local_req_builder.query(&[("include_pinned", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_pinned", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_descendant_matches {
-            local_req_builder = local_req_builder
-                .query(&[("include_descendant_matches", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_descendant_matches", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1996,22 +1691,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2023,46 +1712,32 @@ impl ModelLabAPIAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ModelLabRunsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListModelLabRunsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListModelLabRunsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Pin a Model Lab run for the current user.
-    pub async fn pin_model_lab_run(
-        &self,
-        run_id: i64,
-    ) -> Result<(), datadog::Error<PinModelLabRunError>> {
+    pub async fn pin_model_lab_run(&self, run_id: i64) -> Result<(), datadog::Error<PinModelLabRunError>> {
         match self.pin_model_lab_run_with_http_info(run_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Pin a Model Lab run for the current user.
-    pub async fn pin_model_lab_run_with_http_info(
-        &self,
-        run_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<PinModelLabRunError>> {
+    pub async fn pin_model_lab_run_with_http_info(&self, run_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<PinModelLabRunError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.pin_model_lab_run";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2074,19 +1749,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/pin",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = run_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            run_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2099,22 +1779,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2132,42 +1806,27 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<PinModelLabRunError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PinModelLabRunError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a user from the owners of a Model Lab project. Removing a user who
-    /// isn't an owner has no effect. The project's creator is always an owner and
-    /// can't be removed.
-    pub async fn remove_model_lab_project_owner(
-        &self,
-        project_id: i64,
-        user_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<RemoveModelLabProjectOwnerError>> {
-        match self
-            .remove_model_lab_project_owner_with_http_info(project_id, user_id)
-            .await
-        {
+/// isn't an owner has no effect. The project's creator is always an owner and
+/// can't be removed.
+    pub async fn remove_model_lab_project_owner(&self, project_id: i64, user_id: uuid::Uuid) -> Result<(), datadog::Error<RemoveModelLabProjectOwnerError>> {
+        match self.remove_model_lab_project_owner_with_http_info(project_id, user_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a user from the owners of a Model Lab project. Removing a user who
-    /// isn't an owner has no effect. The project's creator is always an owner and
-    /// can't be removed.
-    pub async fn remove_model_lab_project_owner_with_http_info(
-        &self,
-        project_id: i64,
-        user_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveModelLabProjectOwnerError>> {
+/// isn't an owner has no effect. The project's creator is always an owner and
+/// can't be removed.
+    pub async fn remove_model_lab_project_owner_with_http_info(&self, project_id: i64, user_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveModelLabProjectOwnerError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_model_lab_project_owner";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2179,20 +1838,26 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/owners/{user_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id,
-            user_id = datadog::urlencode(user_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            , user_id=
+            datadog::urlencode(user_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2205,22 +1870,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2238,33 +1897,23 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveModelLabProjectOwnerError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveModelLabProjectOwnerError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Star a Model Lab project for the current user.
-    pub async fn star_model_lab_project(
-        &self,
-        project_id: i64,
-    ) -> Result<(), datadog::Error<StarModelLabProjectError>> {
+    pub async fn star_model_lab_project(&self, project_id: i64) -> Result<(), datadog::Error<StarModelLabProjectError>> {
         match self.star_model_lab_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Star a Model Lab project for the current user.
-    pub async fn star_model_lab_project_with_http_info(
-        &self,
-        project_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<StarModelLabProjectError>> {
+    pub async fn star_model_lab_project_with_http_info(&self, project_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<StarModelLabProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.star_model_lab_project";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2276,19 +1925,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/star",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2301,22 +1955,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2334,33 +1982,23 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<StarModelLabProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<StarModelLabProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove the pin from a Model Lab run for the current user.
-    pub async fn unpin_model_lab_run(
-        &self,
-        run_id: i64,
-    ) -> Result<(), datadog::Error<UnpinModelLabRunError>> {
+    pub async fn unpin_model_lab_run(&self, run_id: i64) -> Result<(), datadog::Error<UnpinModelLabRunError>> {
         match self.unpin_model_lab_run_with_http_info(run_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove the pin from a Model Lab run for the current user.
-    pub async fn unpin_model_lab_run_with_http_info(
-        &self,
-        run_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnpinModelLabRunError>> {
+    pub async fn unpin_model_lab_run_with_http_info(&self, run_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<UnpinModelLabRunError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unpin_model_lab_run";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2372,19 +2010,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/pin",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = run_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            run_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2397,22 +2040,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2430,36 +2067,23 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnpinModelLabRunError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnpinModelLabRunError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove the star from a Model Lab project for the current user.
-    pub async fn unstar_model_lab_project(
-        &self,
-        project_id: i64,
-    ) -> Result<(), datadog::Error<UnstarModelLabProjectError>> {
-        match self
-            .unstar_model_lab_project_with_http_info(project_id)
-            .await
-        {
+    pub async fn unstar_model_lab_project(&self, project_id: i64) -> Result<(), datadog::Error<UnstarModelLabProjectError>> {
+        match self.unstar_model_lab_project_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove the star from a Model Lab project for the current user.
-    pub async fn unstar_model_lab_project_with_http_info(
-        &self,
-        project_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnstarModelLabProjectError>> {
+    pub async fn unstar_model_lab_project_with_http_info(&self, project_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<UnstarModelLabProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unstar_model_lab_project";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2471,19 +2095,24 @@ impl ModelLabAPIAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/star",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = project_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            project_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2496,22 +2125,16 @@ impl ModelLabAPIAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2529,13 +2152,8 @@ impl ModelLabAPIAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnstarModelLabProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnstarModelLabProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

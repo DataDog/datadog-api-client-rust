@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// ExecuteDdsqlTabularQueryError is a struct for typed errors of method [`DDSQLAPI::execute_ddsql_tabular_query`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum ExecuteDdsqlTabularQueryError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// FetchDdsqlTabularQueryError is a struct for typed errors of method [`DDSQLAPI::fetch_ddsql_tabular_query`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -27,6 +28,7 @@ pub enum FetchDdsqlTabularQueryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Execute DDSQL queries against the Datadog data catalog and poll for their results.
 /// Queries are dispatched asynchronously: the initial request may return a `running` state with
@@ -53,7 +55,8 @@ impl DDSQLAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -98,77 +101,67 @@ impl DDSQLAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Submit a DDSQL statement and return either a `running` state with an opaque `query_id`
-    /// for the client to poll, or a `completed` state with the column-major result set inlined
-    /// when the query finishes quickly enough to be served synchronously.
-    ///
-    /// For a scoped application key, include `timeseries_query` in its scopes.
-    /// A query that does not read a data source, such as `SELECT 1`, requires no additional
-    /// data-source permissions. Queries that read data sources also require the user or
-    /// service account that owns the application key to have the corresponding data access
-    /// permissions through their roles. The `timeseries_query` permission does not grant
-    /// access to the underlying data sources.
-    pub async fn execute_ddsql_tabular_query(
-        &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryRequest,
-    ) -> Result<
-        crate::datadogV2::model::DdsqlTabularQueryResponse,
-        datadog::Error<ExecuteDdsqlTabularQueryError>,
-    > {
+/// for the client to poll, or a `completed` state with the column-major result set inlined
+/// when the query finishes quickly enough to be served synchronously.
+///
+/// For a scoped application key, include `timeseries_query` in its scopes.
+/// A query that does not read a data source, such as `SELECT 1`, requires no additional
+/// data-source permissions. Queries that read data sources also require the user or
+/// service account that owns the application key to have the corresponding data access
+/// permissions through their roles. The `timeseries_query` permission does not grant
+/// access to the underlying data sources.
+    pub async fn execute_ddsql_tabular_query(&self, body: crate::datadogV2::model::DdsqlTabularQueryRequest) -> Result<crate::datadogV2::model::DdsqlTabularQueryResponse, datadog::Error<ExecuteDdsqlTabularQueryError>> {
         match self.execute_ddsql_tabular_query_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Submit a DDSQL statement and return either a `running` state with an opaque `query_id`
-    /// for the client to poll, or a `completed` state with the column-major result set inlined
-    /// when the query finishes quickly enough to be served synchronously.
-    ///
-    /// For a scoped application key, include `timeseries_query` in its scopes.
-    /// A query that does not read a data source, such as `SELECT 1`, requires no additional
-    /// data-source permissions. Queries that read data sources also require the user or
-    /// service account that owns the application key to have the corresponding data access
-    /// permissions through their roles. The `timeseries_query` permission does not grant
-    /// access to the underlying data sources.
-    pub async fn execute_ddsql_tabular_query_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>,
-        datadog::Error<ExecuteDdsqlTabularQueryError>,
-    > {
+/// for the client to poll, or a `completed` state with the column-major result set inlined
+/// when the query finishes quickly enough to be served synchronously.
+///
+/// For a scoped application key, include `timeseries_query` in its scopes.
+/// A query that does not read a data source, such as `SELECT 1`, requires no additional
+/// data-source permissions. Queries that read data sources also require the user or
+/// service account that owns the application key to have the corresponding data access
+/// permissions through their roles. The `timeseries_query` permission does not grant
+/// access to the underlying data sources.
+    pub async fn execute_ddsql_tabular_query_with_http_info(&self, body: crate::datadogV2::model::DdsqlTabularQueryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>, datadog::Error<ExecuteDdsqlTabularQueryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.execute_ddsql_tabular_query";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ddsql/query/tabular",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -181,23 +174,16 @@ impl DDSQLAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -205,7 +191,10 @@ impl DDSQLAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -215,7 +204,10 @@ impl DDSQLAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -237,7 +229,7 @@ impl DDSQLAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -254,92 +246,74 @@ impl DDSQLAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ExecuteDdsqlTabularQueryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ExecuteDdsqlTabularQueryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Poll a previously submitted DDSQL query for results. Pass the opaque `query_id` returned
-    /// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
-    /// returned `state: running`) and the server returns either a `running` state to poll again
-    /// or a `completed` state with the column-major result set inlined.
-    ///
-    /// For a scoped application key, include `timeseries_query` in its scopes.
-    /// Fetch results as the same user and organization that submitted the query.
-    /// The user or service account that owns the application key must have the data access
-    /// permissions required by the queried data sources through their roles.
-    pub async fn fetch_ddsql_tabular_query(
-        &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest,
-    ) -> Result<
-        crate::datadogV2::model::DdsqlTabularQueryResponse,
-        datadog::Error<FetchDdsqlTabularQueryError>,
-    > {
+/// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
+/// returned `state: running`) and the server returns either a `running` state to poll again
+/// or a `completed` state with the column-major result set inlined.
+///
+/// For a scoped application key, include `timeseries_query` in its scopes.
+/// Fetch results as the same user and organization that submitted the query.
+/// The user or service account that owns the application key must have the data access
+/// permissions required by the queried data sources through their roles.
+    pub async fn fetch_ddsql_tabular_query(&self, body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest) -> Result<crate::datadogV2::model::DdsqlTabularQueryResponse, datadog::Error<FetchDdsqlTabularQueryError>> {
         match self.fetch_ddsql_tabular_query_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Poll a previously submitted DDSQL query for results. Pass the opaque `query_id` returned
-    /// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
-    /// returned `state: running`) and the server returns either a `running` state to poll again
-    /// or a `completed` state with the column-major result set inlined.
-    ///
-    /// For a scoped application key, include `timeseries_query` in its scopes.
-    /// Fetch results as the same user and organization that submitted the query.
-    /// The user or service account that owns the application key must have the data access
-    /// permissions required by the queried data sources through their roles.
-    pub async fn fetch_ddsql_tabular_query_with_http_info(
-        &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>,
-        datadog::Error<FetchDdsqlTabularQueryError>,
-    > {
+/// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
+/// returned `state: running`) and the server returns either a `running` state to poll again
+/// or a `completed` state with the column-major result set inlined.
+///
+/// For a scoped application key, include `timeseries_query` in its scopes.
+/// Fetch results as the same user and organization that submitted the query.
+/// The user or service account that owns the application key must have the data access
+/// permissions required by the queried data sources through their roles.
+    pub async fn fetch_ddsql_tabular_query_with_http_info(&self, body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>, datadog::Error<FetchDdsqlTabularQueryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.fetch_ddsql_tabular_query";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ddsql/query/tabular/fetch",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -352,23 +326,16 @@ impl DDSQLAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -376,7 +343,10 @@ impl DDSQLAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -386,7 +356,10 @@ impl DDSQLAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -408,7 +381,7 @@ impl DDSQLAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -425,26 +398,17 @@ impl DDSQLAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<FetchDdsqlTabularQueryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<FetchDdsqlTabularQueryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

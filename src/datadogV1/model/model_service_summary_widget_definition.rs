@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The service summary displays the graphs of a chosen service in your dashboard.
 #[non_exhaustive]
@@ -66,16 +66,11 @@ pub struct ServiceSummaryWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ServiceSummaryWidgetDefinition {
-    pub fn new(
-        env: String,
-        service: String,
-        span_name: String,
-        type_: crate::datadogV1::model::ServiceSummaryWidgetDefinitionType,
-    ) -> ServiceSummaryWidgetDefinition {
+    pub fn new(env: String, service: String, span_name: String, type_: crate::datadogV1::model::ServiceSummaryWidgetDefinitionType) -> ServiceSummaryWidgetDefinition {
         ServiceSummaryWidgetDefinition {
             description: None,
             display_format: None,
@@ -98,83 +93,79 @@ impl ServiceSummaryWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn display_format(
-        mut self,
-        value: crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
-    ) -> Self {
+    
+    pub fn display_format(mut self, value: crate::datadogV1::model::WidgetServiceSummaryDisplayFormat) -> Self {
         self.display_format = Some(value);
         self
     }
-
+    
     pub fn show_breakdown(mut self, value: bool) -> Self {
         self.show_breakdown = Some(value);
         self
     }
-
+    
     pub fn show_distribution(mut self, value: bool) -> Self {
         self.show_distribution = Some(value);
         self
     }
-
+    
     pub fn show_errors(mut self, value: bool) -> Self {
         self.show_errors = Some(value);
         self
     }
-
+    
     pub fn show_hits(mut self, value: bool) -> Self {
         self.show_hits = Some(value);
         self
     }
-
+    
     pub fn show_latency(mut self, value: bool) -> Self {
         self.show_latency = Some(value);
         self
     }
-
+    
     pub fn show_resource_list(mut self, value: bool) -> Self {
         self.show_resource_list = Some(value);
         self
     }
-
+    
     pub fn size_format(mut self, value: crate::datadogV1::model::WidgetSizeFormat) -> Self {
         self.size_format = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -194,9 +185,7 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut description: Option<String> = None;
-                let mut display_format: Option<
-                    crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
-                > = None;
+                let mut display_format: Option<crate::datadogV1::model::WidgetServiceSummaryDisplayFormat> = None;
                 let mut env: Option<String> = None;
                 let mut service: Option<String> = None;
                 let mut show_breakdown: Option<bool> = None;
@@ -211,12 +200,8 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::ServiceSummaryWidgetDefinitionType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::ServiceSummaryWidgetDefinitionType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -225,15 +210,13 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            display_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _display_format) = display_format {
                                 match _display_format {
                                     crate::datadogV1::model::WidgetServiceSummaryDisplayFormat::UnparsedObject(_display_format) => {
@@ -242,74 +225,66 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "env" => {
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_breakdown" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_breakdown =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_breakdown = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_distribution" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_distribution =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_distribution = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_errors" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_errors =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_hits" => {
                             if v.is_null() {
                                 continue;
                             }
                             show_hits = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_latency" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_latency =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_latency = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_resource_list" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_resource_list =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_resource_list = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "size_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            size_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            size_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _size_format) = size_format {
                                 match _size_format {
-                                    crate::datadogV1::model::WidgetSizeFormat::UnparsedObject(
-                                        _size_format,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetSizeFormat::UnparsedObject(_size_format) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "span_name" => {
                             span_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -319,40 +294,37 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -363,12 +335,12 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let env = env.ok_or_else(|| M::Error::missing_field("env"))?;

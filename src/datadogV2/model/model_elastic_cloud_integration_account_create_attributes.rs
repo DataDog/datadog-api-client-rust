@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Writable attributes used to create an Elastic Cloud integration account.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ElasticCloudIntegrationAccountCreateAttributes {
     /// Authentication for creating the Elastic Cloud integration account. Exactly one method is set.
     #[serde(rename = "authentication")]
-    pub authentication:
-        crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest,
+    pub authentication: crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest,
     /// Data Datadog collects from Elastic Cloud, keyed by dataflow id. Node-level cluster statistics are always collected; each dataflow here adds a further set of metrics on top of that baseline, so set `enabled` to start or stop it. Defaults listed on each dataflow apply when the account is created; on update, omitted fields keep their current values. Every dataflow queries the deployment as the user in `authentication`, so that user's role must hold the required Elasticsearch privileges; a dataflow enabled without them is stored but collects no data.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::ElasticCloudIntegrationDataflowsRequest>,
@@ -28,15 +27,11 @@ pub struct ElasticCloudIntegrationAccountCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ElasticCloudIntegrationAccountCreateAttributes {
-    pub fn new(
-        authentication: crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest,
-        name: String,
-        settings: crate::datadogV2::model::ElasticCloudIntegrationAccountSettingsRequest,
-    ) -> ElasticCloudIntegrationAccountCreateAttributes {
+    pub fn new(authentication: crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest, name: String, settings: crate::datadogV2::model::ElasticCloudIntegrationAccountSettingsRequest) -> ElasticCloudIntegrationAccountCreateAttributes {
         ElasticCloudIntegrationAccountCreateAttributes {
             authentication,
             dataflows: None,
@@ -46,23 +41,19 @@ impl ElasticCloudIntegrationAccountCreateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn dataflows(
-        mut self,
-        value: crate::datadogV2::model::ElasticCloudIntegrationDataflowsRequest,
-    ) -> Self {
+    
+    pub fn dataflows(mut self, value: crate::datadogV2::model::ElasticCloudIntegrationDataflowsRequest) -> Self {
         self.dataflows = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,27 +72,17 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut authentication: Option<
-                    crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest,
-                > = None;
-                let mut dataflows: Option<
-                    crate::datadogV2::model::ElasticCloudIntegrationDataflowsRequest,
-                > = None;
+                let mut authentication: Option<crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest> = None;
+                let mut dataflows: Option<crate::datadogV2::model::ElasticCloudIntegrationDataflowsRequest> = None;
                 let mut name: Option<String> = None;
-                let mut settings: Option<
-                    crate::datadogV2::model::ElasticCloudIntegrationAccountSettingsRequest,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut settings: Option<crate::datadogV2::model::ElasticCloudIntegrationAccountSettingsRequest> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "authentication" => {
-                            authentication =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            authentication = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _authentication) = authentication {
                                 match _authentication {
                                     crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest::UnparsedObject(_authentication) => {
@@ -110,28 +91,27 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "dataflows" => {
                             if v.is_null() {
                                 continue;
                             }
                             dataflows = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let authentication =
-                    authentication.ok_or_else(|| M::Error::missing_field("authentication"))?;
+                let authentication = authentication.ok_or_else(|| M::Error::missing_field("authentication"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let settings = settings.ok_or_else(|| M::Error::missing_field("settings"))?;
 

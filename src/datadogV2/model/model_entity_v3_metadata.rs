@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of Entity V3 Metadata object.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct EntityV3Metadata {
     /// The additional owners of the entity, usually a team.
     #[serde(rename = "additionalOwners")]
-    pub additional_owners:
-        Option<Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>>,
+    pub additional_owners: Option<Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>>,
     /// A list of contacts for the entity.
     #[serde(rename = "contacts")]
     pub contacts: Option<Vec<crate::datadogV2::model::EntityV3MetadataContactsItems>>,
@@ -50,7 +49,7 @@ pub struct EntityV3Metadata {
     pub tags: Option<Vec<String>>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl EntityV3Metadata {
@@ -71,71 +70,65 @@ impl EntityV3Metadata {
             _unparsed: false,
         }
     }
-
-    pub fn additional_owners(
-        mut self,
-        value: Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>,
-    ) -> Self {
+    
+    pub fn additional_owners(mut self, value: Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>) -> Self {
         self.additional_owners = Some(value);
         self
     }
-
-    pub fn contacts(
-        mut self,
-        value: Vec<crate::datadogV2::model::EntityV3MetadataContactsItems>,
-    ) -> Self {
+    
+    pub fn contacts(mut self, value: Vec<crate::datadogV2::model::EntityV3MetadataContactsItems>) -> Self {
         self.contacts = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn inherit_from(mut self, value: String) -> Self {
         self.inherit_from = Some(value);
         self
     }
-
-    pub fn links(
-        mut self,
-        value: Vec<crate::datadogV2::model::EntityV3MetadataLinksItems>,
-    ) -> Self {
+    
+    pub fn links(mut self, value: Vec<crate::datadogV2::model::EntityV3MetadataLinksItems>) -> Self {
         self.links = Some(value);
         self
     }
-
+    
     pub fn managed(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.managed = Some(value);
         self
     }
-
+    
     pub fn namespace(mut self, value: String) -> Self {
         self.namespace = Some(value);
         self
     }
-
+    
     pub fn owner(mut self, value: String) -> Self {
         self.owner = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for EntityV3Metadata {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -154,20 +147,14 @@ impl<'de> Deserialize<'de> for EntityV3Metadata {
             where
                 M: MapAccess<'a>,
             {
-                let mut additional_owners: Option<
-                    Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>,
-                > = None;
-                let mut contacts: Option<
-                    Vec<crate::datadogV2::model::EntityV3MetadataContactsItems>,
-                > = None;
+                let mut additional_owners: Option<Vec<crate::datadogV2::model::EntityV3MetadataAdditionalOwnersItems>> = None;
+                let mut contacts: Option<Vec<crate::datadogV2::model::EntityV3MetadataContactsItems>> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inherit_from: Option<String> = None;
-                let mut links: Option<Vec<crate::datadogV2::model::EntityV3MetadataLinksItems>> =
-                    None;
-                let mut managed: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut links: Option<Vec<crate::datadogV2::model::EntityV3MetadataLinksItems>> = None;
+                let mut managed: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut name: Option<String> = None;
                 let mut namespace: Option<String> = None;
                 let mut owner: Option<String> = None;
@@ -180,80 +167,74 @@ impl<'de> Deserialize<'de> for EntityV3Metadata {
                             if v.is_null() {
                                 continue;
                             }
-                            additional_owners =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            additional_owners = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "contacts" => {
                             if v.is_null() {
                                 continue;
                             }
                             contacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "displayName" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inheritFrom" => {
                             if v.is_null() {
                                 continue;
                             }
-                            inherit_from =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            inherit_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "links" => {
                             if v.is_null() {
                                 continue;
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "managed" => {
                             if v.is_null() {
                                 continue;
                             }
                             managed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "namespace" => {
                             if v.is_null() {
                                 continue;
                             }
                             namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "owner" => {
                             if v.is_null() {
                                 continue;
                             }
                             owner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

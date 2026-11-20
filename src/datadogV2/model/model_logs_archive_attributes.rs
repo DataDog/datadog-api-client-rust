@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes associated with the archive.
 #[non_exhaustive]
@@ -15,11 +15,11 @@ pub struct LogsArchiveAttributes {
     #[serde(rename = "compression_method")]
     pub compression_method: Option<crate::datadogV2::model::LogsArchiveAttributesCompressionMethod>,
     /// An archive's destination.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "destination")]
     pub destination: Option<crate::datadogV2::model::LogsArchiveDestination>,
     /// To store the tags in the archive, set the value "true".
-    /// If it is set to "false", the tags will be deleted when the logs are sent to the archive.
+/// If it is set to "false", the tags will be deleted when the logs are sent to the archive.
     #[serde(rename = "include_tags")]
     pub include_tags: Option<bool>,
     /// An array of attributes to use as lookup keys for the archive.
@@ -35,11 +35,7 @@ pub struct LogsArchiveAttributes {
     #[serde(rename = "query")]
     pub query: String,
     /// Maximum scan size for rehydration from this archive.
-    #[serde(
-        rename = "rehydration_max_scan_size_in_gb",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "rehydration_max_scan_size_in_gb", default, with = "::serde_with::rust::double_option")]
     pub rehydration_max_scan_size_in_gb: Option<Option<i64>>,
     /// An array of tags to add to rehydrated logs from an archive.
     #[serde(rename = "rehydration_tags")]
@@ -51,15 +47,11 @@ pub struct LogsArchiveAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsArchiveAttributes {
-    pub fn new(
-        destination: Option<crate::datadogV2::model::LogsArchiveDestination>,
-        name: String,
-        query: String,
-    ) -> LogsArchiveAttributes {
+    pub fn new(destination: Option<crate::datadogV2::model::LogsArchiveDestination>, name: String, query: String) -> LogsArchiveAttributes {
         LogsArchiveAttributes {
             compression_method: None,
             destination,
@@ -75,53 +67,49 @@ impl LogsArchiveAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn compression_method(
-        mut self,
-        value: crate::datadogV2::model::LogsArchiveAttributesCompressionMethod,
-    ) -> Self {
+    
+    pub fn compression_method(mut self, value: crate::datadogV2::model::LogsArchiveAttributesCompressionMethod) -> Self {
         self.compression_method = Some(value);
         self
     }
-
+    
     pub fn include_tags(mut self, value: bool) -> Self {
         self.include_tags = Some(value);
         self
     }
-
+    
     pub fn lookup_attributes(mut self, value: Vec<String>) -> Self {
         self.lookup_attributes = Some(value);
         self
     }
-
+    
     pub fn partitioning_attributes(mut self, value: Vec<String>) -> Self {
         self.partitioning_attributes = Some(value);
         self
     }
-
+    
     pub fn rehydration_max_scan_size_in_gb(mut self, value: Option<i64>) -> Self {
         self.rehydration_max_scan_size_in_gb = Some(value);
         self
     }
-
+    
     pub fn rehydration_tags(mut self, value: Vec<String>) -> Self {
         self.rehydration_tags = Some(value);
         self
     }
-
+    
     pub fn state(mut self, value: crate::datadogV2::model::LogsArchiveState) -> Self {
         self.state = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsArchiveAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -140,12 +128,8 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut compression_method: Option<
-                    crate::datadogV2::model::LogsArchiveAttributesCompressionMethod,
-                > = None;
-                let mut destination: Option<
-                    Option<crate::datadogV2::model::LogsArchiveDestination>,
-                > = None;
+                let mut compression_method: Option<crate::datadogV2::model::LogsArchiveAttributesCompressionMethod> = None;
+                let mut destination: Option<Option<crate::datadogV2::model::LogsArchiveDestination>> = None;
                 let mut include_tags: Option<bool> = None;
                 let mut lookup_attributes: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -154,10 +138,7 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                 let mut rehydration_max_scan_size_in_gb: Option<Option<i64>> = None;
                 let mut rehydration_tags: Option<Vec<String>> = None;
                 let mut state: Option<crate::datadogV2::model::LogsArchiveState> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,8 +147,7 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            compression_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            compression_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _compression_method) = compression_method {
                                 match _compression_method {
                                     crate::datadogV2::model::LogsArchiveAttributesCompressionMethod::UnparsedObject(_compression_method) => {
@@ -176,10 +156,9 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "destination" => {
-                            destination =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            destination = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _destination) = destination {
                                 match _destination {
                                     Some(crate::datadogV2::model::LogsArchiveDestination::UnparsedObject(_destination)) => {
@@ -188,45 +167,40 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "include_tags" => {
                             if v.is_null() {
                                 continue;
                             }
-                            include_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            include_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lookup_attributes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            lookup_attributes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lookup_attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "partitioning_attributes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            partitioning_attributes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            partitioning_attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rehydration_max_scan_size_in_gb" => {
-                            rehydration_max_scan_size_in_gb =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydration_max_scan_size_in_gb = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rehydration_tags" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rehydration_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydration_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "state" => {
                             if v.is_null() {
                                 continue;
@@ -234,24 +208,21 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _state) = state {
                                 match _state {
-                                    crate::datadogV2::model::LogsArchiveState::UnparsedObject(
-                                        _state,
-                                    ) => {
+                                    crate::datadogV2::model::LogsArchiveState::UnparsedObject(_state) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let destination =
-                    destination.ok_or_else(|| M::Error::missing_field("destination"))?;
+                let destination = destination.ok_or_else(|| M::Error::missing_field("destination"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 

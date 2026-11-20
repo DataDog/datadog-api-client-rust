@@ -2,34 +2,35 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Language {
-    PYTHON,
-    JAVASCRIPT,
-    TYPESCRIPT,
-    JAVA,
-    GO,
-    YAML,
-    RUBY,
-    CSHARP,
-    PHP,
-    KOTLIN,
-    SWIFT,
-    DART,
-    DOCKERFILE,
-    ELIXIR,
-    JSON,
-    RUST,
-    TERRAFORM,
-    STARLARK,
-    BASH,
-    MARKDOWN,
-    APEX,
-    R,
-    SQL,
+	PYTHON,
+	JAVASCRIPT,
+	TYPESCRIPT,
+	JAVA,
+	GO,
+	YAML,
+	RUBY,
+	CSHARP,
+	PHP,
+	KOTLIN,
+	SWIFT,
+	DART,
+	DOCKERFILE,
+	ELIXIR,
+	JSON,
+	RUST,
+	TERRAFORM,
+	STARLARK,
+	BASH,
+	MARKDOWN,
+	APEX,
+	R,
+	SQL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -82,33 +83,8 @@ impl<'de> Deserialize<'de> for Language {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "PYTHON" => Self::PYTHON,
-            "JAVASCRIPT" => Self::JAVASCRIPT,
-            "TYPESCRIPT" => Self::TYPESCRIPT,
-            "JAVA" => Self::JAVA,
-            "GO" => Self::GO,
-            "YAML" => Self::YAML,
-            "RUBY" => Self::RUBY,
-            "CSHARP" => Self::CSHARP,
-            "PHP" => Self::PHP,
-            "KOTLIN" => Self::KOTLIN,
-            "SWIFT" => Self::SWIFT,
-            "DART" => Self::DART,
-            "DOCKERFILE" => Self::DOCKERFILE,
-            "ELIXIR" => Self::ELIXIR,
-            "JSON" => Self::JSON,
-            "RUST" => Self::RUST,
-            "TERRAFORM" => Self::TERRAFORM,
-            "STARLARK" => Self::STARLARK,
-            "BASH" => Self::BASH,
-            "MARKDOWN" => Self::MARKDOWN,
-            "APEX" => Self::APEX,
-            "R" => Self::R,
-            "SQL" => Self::SQL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"PYTHON" => Self::PYTHON,"JAVASCRIPT" => Self::JAVASCRIPT,"TYPESCRIPT" => Self::TYPESCRIPT,"JAVA" => Self::JAVA,"GO" => Self::GO,"YAML" => Self::YAML,"RUBY" => Self::RUBY,"CSHARP" => Self::CSHARP,"PHP" => Self::PHP,"KOTLIN" => Self::KOTLIN,"SWIFT" => Self::SWIFT,"DART" => Self::DART,"DOCKERFILE" => Self::DOCKERFILE,"ELIXIR" => Self::ELIXIR,"JSON" => Self::JSON,"RUST" => Self::RUST,"TERRAFORM" => Self::TERRAFORM,"STARLARK" => Self::STARLARK,"BASH" => Self::BASH,"MARKDOWN" => Self::MARKDOWN,"APEX" => Self::APEX,"R" => Self::R,"SQL" => Self::SQL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

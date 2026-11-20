@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A JSON:API resource for an WAF exclusion filter.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ApplicationSecurityWafExclusionFilterResource {
     /// Attributes describing a WAF exclusion filter.
     #[serde(rename = "attributes")]
-    pub attributes:
-        Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes>,
+    pub attributes: Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes>,
     /// The identifier of the WAF exclusion filter.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -25,7 +24,7 @@ pub struct ApplicationSecurityWafExclusionFilterResource {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ApplicationSecurityWafExclusionFilterResource {
@@ -38,36 +37,28 @@ impl ApplicationSecurityWafExclusionFilterResource {
             _unparsed: false,
         }
     }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterType,
-    ) -> Self {
+    
+    pub fn type_(mut self, value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ApplicationSecurityWafExclusionFilterResource {
     fn default() -> Self {
@@ -92,17 +83,10 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterResource {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ApplicationSecurityWafExclusionFilterType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -112,13 +96,13 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterResource {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -132,12 +116,12 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterResource {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

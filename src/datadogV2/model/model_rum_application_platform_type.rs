@@ -2,31 +2,32 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RUMApplicationPlatformType {
-    BROWSER,
-    IOS,
-    ANDROID,
-    REACT_NATIVE,
-    FLUTTER,
-    ROKU,
-    ELECTRON,
-    UNITY,
-    KOTLIN_MULTIPLATFORM,
-    REACT,
-    NEXTJS,
-    ANGULAR,
-    VUEJS,
-    NUXT,
-    TANSTACK,
-    MAUI,
-    SALESFORCE_LWC,
-    SHOPIFY,
-    CPP,
-    UNREAL,
+	BROWSER,
+	IOS,
+	ANDROID,
+	REACT_NATIVE,
+	FLUTTER,
+	ROKU,
+	ELECTRON,
+	UNITY,
+	KOTLIN_MULTIPLATFORM,
+	REACT,
+	NEXTJS,
+	ANGULAR,
+	VUEJS,
+	NUXT,
+	TANSTACK,
+	MAUI,
+	SALESFORCE_LWC,
+	SHOPIFY,
+	CPP,
+	UNREAL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -76,30 +77,8 @@ impl<'de> Deserialize<'de> for RUMApplicationPlatformType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "browser" => Self::BROWSER,
-            "ios" => Self::IOS,
-            "android" => Self::ANDROID,
-            "react-native" => Self::REACT_NATIVE,
-            "flutter" => Self::FLUTTER,
-            "roku" => Self::ROKU,
-            "electron" => Self::ELECTRON,
-            "unity" => Self::UNITY,
-            "kotlin-multiplatform" => Self::KOTLIN_MULTIPLATFORM,
-            "react" => Self::REACT,
-            "nextjs" => Self::NEXTJS,
-            "angular" => Self::ANGULAR,
-            "vuejs" => Self::VUEJS,
-            "nuxt" => Self::NUXT,
-            "tanstack" => Self::TANSTACK,
-            "maui" => Self::MAUI,
-            "salesforce-lwc" => Self::SALESFORCE_LWC,
-            "shopify" => Self::SHOPIFY,
-            "cpp" => Self::CPP,
-            "unreal" => Self::UNREAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"browser" => Self::BROWSER,"ios" => Self::IOS,"android" => Self::ANDROID,"react-native" => Self::REACT_NATIVE,"flutter" => Self::FLUTTER,"roku" => Self::ROKU,"electron" => Self::ELECTRON,"unity" => Self::UNITY,"kotlin-multiplatform" => Self::KOTLIN_MULTIPLATFORM,"react" => Self::REACT,"nextjs" => Self::NEXTJS,"angular" => Self::ANGULAR,"vuejs" => Self::VUEJS,"nuxt" => Self::NUXT,"tanstack" => Self::TANSTACK,"maui" => Self::MAUI,"salesforce-lwc" => Self::SALESFORCE_LWC,"shopify" => Self::SHOPIFY,"cpp" => Self::CPP,"unreal" => Self::UNREAL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Team notification rule attributes
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct TeamNotificationRuleAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TeamNotificationRuleAttributes {
@@ -45,55 +45,38 @@ impl TeamNotificationRuleAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn email(
-        mut self,
-        value: crate::datadogV2::model::TeamNotificationRuleAttributesEmail,
-    ) -> Self {
+    
+    pub fn email(mut self, value: crate::datadogV2::model::TeamNotificationRuleAttributesEmail) -> Self {
         self.email = Some(value);
         self
     }
-
-    pub fn ms_teams(
-        mut self,
-        value: crate::datadogV2::model::TeamNotificationRuleAttributesMsTeams,
-    ) -> Self {
+    
+    pub fn ms_teams(mut self, value: crate::datadogV2::model::TeamNotificationRuleAttributesMsTeams) -> Self {
         self.ms_teams = Some(value);
         self
     }
-
-    pub fn pagerduty(
-        mut self,
-        value: crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty,
-    ) -> Self {
+    
+    pub fn pagerduty(mut self, value: crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty) -> Self {
         self.pagerduty = Some(value);
         self
     }
-
-    pub fn servicenow(
-        mut self,
-        value: crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow,
-    ) -> Self {
+    
+    pub fn servicenow(mut self, value: crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow) -> Self {
         self.servicenow = Some(value);
         self
     }
-
-    pub fn slack(
-        mut self,
-        value: crate::datadogV2::model::TeamNotificationRuleAttributesSlack,
-    ) -> Self {
+    
+    pub fn slack(mut self, value: crate::datadogV2::model::TeamNotificationRuleAttributesSlack) -> Self {
         self.slack = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TeamNotificationRuleAttributes {
     fn default() -> Self {
@@ -118,25 +101,12 @@ impl<'de> Deserialize<'de> for TeamNotificationRuleAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut email: Option<
-                    crate::datadogV2::model::TeamNotificationRuleAttributesEmail,
-                > = None;
-                let mut ms_teams: Option<
-                    crate::datadogV2::model::TeamNotificationRuleAttributesMsTeams,
-                > = None;
-                let mut pagerduty: Option<
-                    crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty,
-                > = None;
-                let mut servicenow: Option<
-                    crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow,
-                > = None;
-                let mut slack: Option<
-                    crate::datadogV2::model::TeamNotificationRuleAttributesSlack,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut email: Option<crate::datadogV2::model::TeamNotificationRuleAttributesEmail> = None;
+                let mut ms_teams: Option<crate::datadogV2::model::TeamNotificationRuleAttributesMsTeams> = None;
+                let mut pagerduty: Option<crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty> = None;
+                let mut servicenow: Option<crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow> = None;
+                let mut slack: Option<crate::datadogV2::model::TeamNotificationRuleAttributesSlack> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -146,36 +116,36 @@ impl<'de> Deserialize<'de> for TeamNotificationRuleAttributes {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ms_teams" => {
                             if v.is_null() {
                                 continue;
                             }
                             ms_teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pagerduty" => {
                             if v.is_null() {
                                 continue;
                             }
                             pagerduty = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "servicenow" => {
                             if v.is_null() {
                                 continue;
                             }
                             servicenow = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "slack" => {
                             if v.is_null() {
                                 continue;
                             }
                             slack = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

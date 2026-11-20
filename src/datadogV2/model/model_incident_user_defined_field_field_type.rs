@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentUserDefinedFieldFieldType {
-    DROPDOWN,
-    MULTISELECT,
-    TEXTBOX,
-    TEXTARRAY,
-    METRICTAG,
-    AUTOCOMPLETE,
-    NUMBER,
-    DATETIME,
+	DROPDOWN,
+	MULTISELECT,
+	TEXTBOX,
+	TEXTARRAY,
+	METRICTAG,
+	AUTOCOMPLETE,
+	NUMBER,
+	DATETIME,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -43,18 +44,8 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedFieldFieldType {
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            1 => Self::DROPDOWN,
-            2 => Self::MULTISELECT,
-            3 => Self::TEXTBOX,
-            4 => Self::TEXTARRAY,
-            5 => Self::METRICTAG,
-            6 => Self::AUTOCOMPLETE,
-            7 => Self::NUMBER,
-            8 => Self::DATETIME,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {1 => Self::DROPDOWN,2 => Self::MULTISELECT,3 => Self::TEXTBOX,4 => Self::TEXTARRAY,5 => Self::METRICTAG,6 => Self::AUTOCOMPLETE,7 => Self::NUMBER,8 => Self::DATETIME,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

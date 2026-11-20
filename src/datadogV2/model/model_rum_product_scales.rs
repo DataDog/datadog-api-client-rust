@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Product Scales configuration for the RUM application.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct RUMProductScales {
     /// Product Analytics retention scale configuration.
     #[serde(rename = "product_analytics_retention_scale")]
-    pub product_analytics_retention_scale:
-        Option<crate::datadogV2::model::RUMProductAnalyticsRetentionScale>,
+    pub product_analytics_retention_scale: Option<crate::datadogV2::model::RUMProductAnalyticsRetentionScale>,
     /// RUM event processing scale configuration.
     #[serde(rename = "rum_event_processing_scale")]
     pub rum_event_processing_scale: Option<crate::datadogV2::model::RUMEventProcessingScale>,
@@ -22,7 +21,7 @@ pub struct RUMProductScales {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RUMProductScales {
@@ -34,31 +33,23 @@ impl RUMProductScales {
             _unparsed: false,
         }
     }
-
-    pub fn product_analytics_retention_scale(
-        mut self,
-        value: crate::datadogV2::model::RUMProductAnalyticsRetentionScale,
-    ) -> Self {
+    
+    pub fn product_analytics_retention_scale(mut self, value: crate::datadogV2::model::RUMProductAnalyticsRetentionScale) -> Self {
         self.product_analytics_retention_scale = Some(value);
         self
     }
-
-    pub fn rum_event_processing_scale(
-        mut self,
-        value: crate::datadogV2::model::RUMEventProcessingScale,
-    ) -> Self {
+    
+    pub fn rum_event_processing_scale(mut self, value: crate::datadogV2::model::RUMEventProcessingScale) -> Self {
         self.rum_event_processing_scale = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for RUMProductScales {
     fn default() -> Self {
@@ -83,16 +74,9 @@ impl<'de> Deserialize<'de> for RUMProductScales {
             where
                 M: MapAccess<'a>,
             {
-                let mut product_analytics_retention_scale: Option<
-                    crate::datadogV2::model::RUMProductAnalyticsRetentionScale,
-                > = None;
-                let mut rum_event_processing_scale: Option<
-                    crate::datadogV2::model::RUMEventProcessingScale,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut product_analytics_retention_scale: Option<crate::datadogV2::model::RUMProductAnalyticsRetentionScale> = None;
+                let mut rum_event_processing_scale: Option<crate::datadogV2::model::RUMEventProcessingScale> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,21 +85,19 @@ impl<'de> Deserialize<'de> for RUMProductScales {
                             if v.is_null() {
                                 continue;
                             }
-                            product_analytics_retention_scale =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_analytics_retention_scale = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_event_processing_scale" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_event_processing_scale =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_event_processing_scale = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

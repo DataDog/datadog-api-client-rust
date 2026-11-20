@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration for Continuous Testing.
 #[non_exhaustive]
@@ -60,7 +60,7 @@ pub struct SyntheticsCITest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsCITest {
@@ -85,85 +85,84 @@ impl SyntheticsCITest {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_insecure_certificates(mut self, value: bool) -> Self {
         self.allow_insecure_certificates = Some(value);
         self
     }
-
+    
     pub fn basic_auth(mut self, value: crate::datadogV1::model::SyntheticsBasicAuth) -> Self {
         self.basic_auth = Some(value);
         self
     }
-
+    
     pub fn body(mut self, value: String) -> Self {
         self.body = Some(value);
         self
     }
-
+    
     pub fn body_type(mut self, value: String) -> Self {
         self.body_type = Some(value);
         self
     }
-
+    
     pub fn cookies(mut self, value: String) -> Self {
         self.cookies = Some(value);
         self
     }
-
+    
     pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
-
+    
     pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
         self
     }
-
+    
     pub fn headers(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.headers = Some(value);
         self
     }
-
+    
     pub fn locations(mut self, value: Vec<String>) -> Self {
         self.locations = Some(value);
         self
     }
-
+    
     pub fn metadata(mut self, value: crate::datadogV1::model::SyntheticsCIBatchMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
         self
     }
-
+    
     pub fn start_url(mut self, value: String) -> Self {
         self.start_url = Some(value);
         self
     }
-
+    
     pub fn variables(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.variables = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsCITest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -197,10 +196,7 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                 let mut start_url: Option<String> = None;
                 let mut variables: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -209,9 +205,8 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_insecure_certificates =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_insecure_certificates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "basicAuth" => {
                             if v.is_null() {
                                 continue;
@@ -225,88 +220,87 @@ impl<'de> Deserialize<'de> for SyntheticsCITest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "body" => {
                             if v.is_null() {
                                 continue;
                             }
                             body = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bodyType" => {
                             if v.is_null() {
                                 continue;
                             }
                             body_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cookies" => {
                             if v.is_null() {
                                 continue;
                             }
                             cookies = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "deviceIds" => {
                             if v.is_null() {
                                 continue;
                             }
                             device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "followRedirects" => {
                             if v.is_null() {
                                 continue;
                             }
-                            follow_redirects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            follow_redirects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "headers" => {
                             if v.is_null() {
                                 continue;
                             }
                             headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "locations" => {
                             if v.is_null() {
                                 continue;
                             }
                             locations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retry" => {
                             if v.is_null() {
                                 continue;
                             }
                             retry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "startUrl" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variables" => {
                             if v.is_null() {
                                 continue;
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let public_id = public_id.ok_or_else(|| M::Error::missing_field("public_id"))?;

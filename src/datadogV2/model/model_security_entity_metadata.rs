@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata about the entity from cloud providers
 #[non_exhaustive]
@@ -39,17 +39,11 @@ pub struct SecurityEntityMetadata {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityEntityMetadata {
-    pub fn new(
-        environments: Vec<String>,
-        mitre_tactics: Vec<String>,
-        mitre_techniques: Vec<String>,
-        services: Vec<String>,
-        sources: Vec<String>,
-    ) -> SecurityEntityMetadata {
+    pub fn new(environments: Vec<String>, mitre_tactics: Vec<String>, mitre_techniques: Vec<String>, services: Vec<String>, sources: Vec<String>) -> SecurityEntityMetadata {
         SecurityEntityMetadata {
             account_id: None,
             environments,
@@ -63,30 +57,29 @@ impl SecurityEntityMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
-
+    
     pub fn project_id(mut self, value: String) -> Self {
         self.project_id = Some(value);
         self
     }
-
+    
     pub fn subscription_id(mut self, value: String) -> Self {
         self.subscription_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityEntityMetadata {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -113,10 +106,7 @@ impl<'de> Deserialize<'de> for SecurityEntityMetadata {
                 let mut services: Option<Vec<String>> = None;
                 let mut sources: Option<Vec<String>> = None;
                 let mut subscription_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,51 +116,44 @@ impl<'de> Deserialize<'de> for SecurityEntityMetadata {
                                 continue;
                             }
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "environments" => {
-                            environments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mitreTactics" => {
-                            mitre_tactics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mitre_tactics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mitreTechniques" => {
-                            mitre_techniques =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mitre_techniques = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "projectID" => {
                             if v.is_null() {
                                 continue;
                             }
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "services" => {
                             services = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subscriptionID" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subscription_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subscription_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let environments =
-                    environments.ok_or_else(|| M::Error::missing_field("environments"))?;
-                let mitre_tactics =
-                    mitre_tactics.ok_or_else(|| M::Error::missing_field("mitre_tactics"))?;
-                let mitre_techniques =
-                    mitre_techniques.ok_or_else(|| M::Error::missing_field("mitre_techniques"))?;
+                let environments = environments.ok_or_else(|| M::Error::missing_field("environments"))?;
+                let mitre_tactics = mitre_tactics.ok_or_else(|| M::Error::missing_field("mitre_tactics"))?;
+                let mitre_techniques = mitre_techniques.ok_or_else(|| M::Error::missing_field("mitre_techniques"))?;
                 let services = services.ok_or_else(|| M::Error::missing_field("services"))?;
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
 

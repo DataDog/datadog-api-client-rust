@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an environment.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct EnvironmentAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl EnvironmentAttributes {
@@ -53,45 +53,44 @@ impl EnvironmentAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn is_production(mut self, value: bool) -> Self {
         self.is_production = Some(value);
         self
     }
-
+    
     pub fn observe_full_evaluation_data(mut self, value: bool) -> Self {
         self.observe_full_evaluation_data = Some(value);
         self
     }
-
+    
     pub fn queries(mut self, value: Vec<String>) -> Self {
         self.queries = Some(value);
         self
     }
-
+    
     pub fn require_feature_flag_approval(mut self, value: bool) -> Self {
         self.require_feature_flag_approval = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for EnvironmentAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -117,10 +116,7 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                 let mut queries: Option<Vec<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -130,48 +126,45 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_production" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_production =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_production = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "observe_full_evaluation_data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            observe_full_evaluation_data =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            observe_full_evaluation_data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "queries" => {
                             if v.is_null() {
                                 continue;
                             }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "require_feature_flag_approval" => {
                             if v.is_null() {
                                 continue;
                             }
-                            require_feature_flag_approval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            require_feature_flag_approval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

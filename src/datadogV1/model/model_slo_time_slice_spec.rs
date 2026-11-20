@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A time-slice SLI specification.
 #[non_exhaustive]
@@ -12,12 +12,12 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOTimeSliceSpec {
     /// The time-slice condition, composed of 3 parts: 1. the metric timeseries query, 2. the comparator,
-    /// and 3. the threshold. Optionally, a fourth part, the query interval, can be provided.
+/// and 3. the threshold. Optionally, a fourth part, the query interval, can be provided.
     #[serde(rename = "time_slice")]
     pub time_slice: crate::datadogV1::model::SLOTimeSliceCondition,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SLOTimeSliceSpec {
@@ -27,7 +27,10 @@ impl SLOTimeSliceSpec {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for SLOTimeSliceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -53,12 +56,10 @@ impl<'de> Deserialize<'de> for SLOTimeSliceSpec {
                     match k.as_str() {
                         "time_slice" => {
                             time_slice = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let time_slice = time_slice.ok_or_else(|| M::Error::missing_field("time_slice"))?;

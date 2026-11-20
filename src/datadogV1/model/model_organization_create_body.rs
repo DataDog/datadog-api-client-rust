@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing an organization to create.
 #[non_exhaustive]
@@ -12,21 +12,21 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrganizationCreateBody {
     /// A JSON array of billing type.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "billing")]
     pub billing: Option<crate::datadogV1::model::OrganizationBilling>,
     /// The name of the new child-organization, limited to 32 characters.
     #[serde(rename = "name")]
     pub name: String,
     /// Subscription definition.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "subscription")]
     pub subscription: Option<crate::datadogV1::model::OrganizationSubscription>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OrganizationCreateBody {
@@ -40,30 +40,26 @@ impl OrganizationCreateBody {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn billing(mut self, value: crate::datadogV1::model::OrganizationBilling) -> Self {
         self.billing = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn subscription(
-        mut self,
-        value: crate::datadogV1::model::OrganizationSubscription,
-    ) -> Self {
+    pub fn subscription(mut self, value: crate::datadogV1::model::OrganizationSubscription) -> Self {
         self.subscription = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OrganizationCreateBody {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -84,12 +80,8 @@ impl<'de> Deserialize<'de> for OrganizationCreateBody {
             {
                 let mut billing: Option<crate::datadogV1::model::OrganizationBilling> = None;
                 let mut name: Option<String> = None;
-                let mut subscription: Option<crate::datadogV1::model::OrganizationSubscription> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut subscription: Option<crate::datadogV1::model::OrganizationSubscription> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -99,22 +91,21 @@ impl<'de> Deserialize<'de> for OrganizationCreateBody {
                                 continue;
                             }
                             billing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subscription" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subscription =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subscription = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

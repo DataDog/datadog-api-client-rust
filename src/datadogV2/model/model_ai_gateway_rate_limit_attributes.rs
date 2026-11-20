@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an AI Gateway rate limit.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRateLimitAttributes {
     /// Maximum priced spend per rolling minute, in microcents of 1e-8 USD each, shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit cost.
-    #[serde(
-        rename = "cost_microcents_per_minute",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "cost_microcents_per_minute", default, with = "::serde_with::rust::double_option")]
     pub cost_microcents_per_minute: Option<Option<i64>>,
     /// Creation timestamp.
     #[serde(rename = "created_at")]
@@ -28,11 +24,7 @@ pub struct AiGatewayRateLimitAttributes {
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// Maximum input tokens per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit input tokens.
-    #[serde(
-        rename = "input_tokens_per_minute",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "input_tokens_per_minute", default, with = "::serde_with::rust::double_option")]
     pub input_tokens_per_minute: Option<Option<i64>>,
     /// Whether the selector gives each matching value its own allowance, that is, whether it has at least one per_value entry. Returned even when scope_restricted hides the selector.
     #[serde(rename = "is_template")]
@@ -41,28 +33,16 @@ pub struct AiGatewayRateLimitAttributes {
     #[serde(rename = "mode")]
     pub mode: crate::datadogV2::model::AiGatewayRateLimitMode,
     /// Datadog monitor that alerts on this rule. Null until one is provisioned.
-    #[serde(
-        rename = "monitor_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "monitor_id", default, with = "::serde_with::rust::double_option")]
     pub monitor_id: Option<Option<i64>>,
     /// Rate limit name.
     #[serde(rename = "name")]
     pub name: String,
     /// Maximum output tokens per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit output tokens.
-    #[serde(
-        rename = "output_tokens_per_minute",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "output_tokens_per_minute", default, with = "::serde_with::rust::double_option")]
     pub output_tokens_per_minute: Option<Option<i64>>,
     /// Maximum requests per rolling minute shared by all matching traffic, or per counter for a template rate limit. Null when this rule does not limit requests.
-    #[serde(
-        rename = "requests_per_minute",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "requests_per_minute", default, with = "::serde_with::rust::double_option")]
     pub requests_per_minute: Option<Option<i64>>,
     /// Increases on every change to the definition.
     #[serde(rename = "revision")]
@@ -71,21 +51,13 @@ pub struct AiGatewayRateLimitAttributes {
     #[serde(rename = "scope_restricted")]
     pub scope_restricted: bool,
     /// Dimension rules for a template rate limit, which gives each matched user, Team, or value its own allowance with the rule's limits. Can't be combined with user_id, team_id, or tags, and can't be changed after creation. Omit for a rule with one shared allowance.
-    #[serde(
-        rename = "selector",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "selector", default, with = "::serde_with::rust::double_option")]
     pub selector: Option<Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>>,
     /// Optional scope tags, such as provider, model, ml_app, or custom dimensions. A request matches when it has all of these tags.
     #[serde(rename = "tags")]
     pub tags: std::collections::BTreeMap<String, String>,
     /// Optional Team UUID. Count only requests attributed to this Datadog Team.
-    #[serde(
-        rename = "team_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "team_id", default, with = "::serde_with::rust::double_option")]
     pub team_id: Option<Option<uuid::Uuid>>,
     /// Dimensions of the selector's per_value entries, such as user_id or tag:env, each matching value of which gets its own allowance. Empty unless is_template is true. Returned even when scope_restricted hides the selector.
     #[serde(rename = "template_split_dims")]
@@ -97,11 +69,7 @@ pub struct AiGatewayRateLimitAttributes {
     #[serde(rename = "updated_by")]
     pub updated_by: String,
     /// Optional user UUID. Count only this user's requests.
-    #[serde(
-        rename = "user_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "user_id", default, with = "::serde_with::rust::double_option")]
     pub user_id: Option<Option<uuid::Uuid>>,
     /// Limits over rolling windows longer than a minute. Each limit counts the rule's matching traffic, or each counter of a template rate limit, over its window. Per-minute limits are in the `*_per_minute` fields. This list is empty when the rule has no window limits.
     #[serde(rename = "window_limits")]
@@ -110,24 +78,11 @@ pub struct AiGatewayRateLimitAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRateLimitAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        enabled: bool,
-        is_template: bool,
-        mode: crate::datadogV2::model::AiGatewayRateLimitMode,
-        name: String,
-        revision: i64,
-        scope_restricted: bool,
-        tags: std::collections::BTreeMap<String, String>,
-        template_split_dims: Vec<String>,
-        updated_at: chrono::DateTime<chrono::Utc>,
-        updated_by: String,
-    ) -> AiGatewayRateLimitAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: String, enabled: bool, is_template: bool, mode: crate::datadogV2::model::AiGatewayRateLimitMode, name: String, revision: i64, scope_restricted: bool, tags: std::collections::BTreeMap<String, String>, template_split_dims: Vec<String>, updated_at: chrono::DateTime<chrono::Utc>, updated_by: String) -> AiGatewayRateLimitAttributes {
         AiGatewayRateLimitAttributes {
             cost_microcents_per_minute: None,
             created_at,
@@ -154,66 +109,59 @@ impl AiGatewayRateLimitAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn cost_microcents_per_minute(mut self, value: Option<i64>) -> Self {
         self.cost_microcents_per_minute = Some(value);
         self
     }
-
+    
     pub fn input_tokens_per_minute(mut self, value: Option<i64>) -> Self {
         self.input_tokens_per_minute = Some(value);
         self
     }
-
+    
     pub fn monitor_id(mut self, value: Option<i64>) -> Self {
         self.monitor_id = Some(value);
         self
     }
-
+    
     pub fn output_tokens_per_minute(mut self, value: Option<i64>) -> Self {
         self.output_tokens_per_minute = Some(value);
         self
     }
-
+    
     pub fn requests_per_minute(mut self, value: Option<i64>) -> Self {
         self.requests_per_minute = Some(value);
         self
     }
-
-    pub fn selector(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
-    ) -> Self {
+    
+    pub fn selector(mut self, value: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>) -> Self {
         self.selector = Some(value);
         self
     }
-
+    
     pub fn team_id(mut self, value: Option<uuid::Uuid>) -> Self {
         self.team_id = Some(value);
         self
     }
-
+    
     pub fn user_id(mut self, value: Option<uuid::Uuid>) -> Self {
         self.user_id = Some(value);
         self
     }
-
-    pub fn window_limits(
-        mut self,
-        value: Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
-    ) -> Self {
+    
+    pub fn window_limits(mut self, value: Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>) -> Self {
         self.window_limits = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -245,47 +193,37 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                 let mut requests_per_minute: Option<Option<i64>> = None;
                 let mut revision: Option<i64> = None;
                 let mut scope_restricted: Option<bool> = None;
-                let mut selector: Option<
-                    Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>,
-                > = None;
+                let mut selector: Option<Option<Vec<crate::datadogV2::model::AiGatewayRateLimitSelectorEntry>>> = None;
                 let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut team_id: Option<Option<uuid::Uuid>> = None;
                 let mut template_split_dims: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
                 let mut user_id: Option<Option<uuid::Uuid>> = None;
-                let mut window_limits: Option<
-                    Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut window_limits: Option<Vec<crate::datadogV2::model::AiGatewayRateLimitWindowLimit>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cost_microcents_per_minute" => {
-                            cost_microcents_per_minute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cost_microcents_per_minute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "input_tokens_per_minute" => {
-                            input_tokens_per_minute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            input_tokens_per_minute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_template" => {
-                            is_template =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mode" => {
                             mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mode) = mode {
@@ -296,77 +234,69 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "monitor_id" => {
                             monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "output_tokens_per_minute" => {
-                            output_tokens_per_minute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            output_tokens_per_minute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requests_per_minute" => {
-                            requests_per_minute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            requests_per_minute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "revision" => {
                             revision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope_restricted" => {
-                            scope_restricted =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scope_restricted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "selector" => {
                             selector = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team_id" => {
                             team_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "template_split_dims" => {
-                            template_split_dims =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            template_split_dims = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_by" => {
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_id" => {
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "window_limits" => {
                             if v.is_null() {
                                 continue;
                             }
-                            window_limits =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            window_limits = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let is_template =
-                    is_template.ok_or_else(|| M::Error::missing_field("is_template"))?;
+                let is_template = is_template.ok_or_else(|| M::Error::missing_field("is_template"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let revision = revision.ok_or_else(|| M::Error::missing_field("revision"))?;
-                let scope_restricted =
-                    scope_restricted.ok_or_else(|| M::Error::missing_field("scope_restricted"))?;
+                let scope_restricted = scope_restricted.ok_or_else(|| M::Error::missing_field("scope_restricted"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
-                let template_split_dims = template_split_dims
-                    .ok_or_else(|| M::Error::missing_field("template_split_dims"))?;
+                let template_split_dims = template_split_dims.ok_or_else(|| M::Error::missing_field("template_split_dims"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
                 let updated_by = updated_by.ok_or_else(|| M::Error::missing_field("updated_by"))?;
 

@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ReferenceTableSourceType {
-    LOCAL_FILE,
-    S3,
-    GCS,
-    AZURE,
-    SERVICENOW,
-    SALESFORCE,
-    DATABRICKS,
-    SNOWFLAKE,
+	LOCAL_FILE,
+	S3,
+	GCS,
+	AZURE,
+	SERVICENOW,
+	SALESFORCE,
+	DATABRICKS,
+	SNOWFLAKE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for ReferenceTableSourceType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "LOCAL_FILE" => Self::LOCAL_FILE,
-            "S3" => Self::S3,
-            "GCS" => Self::GCS,
-            "AZURE" => Self::AZURE,
-            "SERVICENOW" => Self::SERVICENOW,
-            "SALESFORCE" => Self::SALESFORCE,
-            "DATABRICKS" => Self::DATABRICKS,
-            "SNOWFLAKE" => Self::SNOWFLAKE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"LOCAL_FILE" => Self::LOCAL_FILE,"S3" => Self::S3,"GCS" => Self::GCS,"AZURE" => Self::AZURE,"SERVICENOW" => Self::SERVICENOW,"SALESFORCE" => Self::SALESFORCE,"DATABRICKS" => Self::DATABRICKS,"SNOWFLAKE" => Self::SNOWFLAKE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

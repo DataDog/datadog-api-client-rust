@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The incident-type-scoped behavior settings. All fields are optional on update. Any field omitted from a PATCH request keeps its current value. This object is read-only on the incident type resource itself and is only mutated through the update (PATCH) endpoint.
 #[non_exhaustive]
@@ -39,7 +39,7 @@ pub struct IncidentTypeConfiguration {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentTypeConfiguration {
@@ -57,55 +57,53 @@ impl IncidentTypeConfiguration {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_incident_deletion(mut self, value: bool) -> Self {
         self.allow_incident_deletion = Some(value);
         self
     }
-
+    
     pub fn allow_workflows(mut self, value: bool) -> Self {
         self.allow_workflows = Some(value);
         self
     }
-
+    
     pub fn create_message(mut self, value: String) -> Self {
         self.create_message = Some(value);
         self
     }
-
+    
     pub fn editable_timestamps(mut self, value: bool) -> Self {
         self.editable_timestamps = Some(value);
         self
     }
-
+    
     pub fn private_incidents(mut self, value: bool) -> Self {
         self.private_incidents = Some(value);
         self
     }
-
+    
     pub fn private_incidents_by_default(mut self, value: bool) -> Self {
         self.private_incidents_by_default = Some(value);
         self
     }
-
+    
     pub fn slug_source(mut self, value: crate::datadogV2::model::IncidentTypeSlugSource) -> Self {
         self.slug_source = Some(value);
         self
     }
-
+    
     pub fn test_incidents(mut self, value: bool) -> Self {
         self.test_incidents = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentTypeConfiguration {
     fn default() -> Self {
@@ -138,10 +136,7 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                 let mut private_incidents_by_default: Option<bool> = None;
                 let mut slug_source: Option<crate::datadogV2::model::IncidentTypeSlugSource> = None;
                 let mut test_incidents: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -150,50 +145,43 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_incident_deletion =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_incident_deletion = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "allow_workflows" => {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_workflows =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_workflows = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "create_message" => {
                             if v.is_null() {
                                 continue;
                             }
-                            create_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            create_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "editable_timestamps" => {
                             if v.is_null() {
                                 continue;
                             }
-                            editable_timestamps =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            editable_timestamps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "private_incidents" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_incidents =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_incidents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "private_incidents_by_default" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_incidents_by_default =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_incidents_by_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "slug_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            slug_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            slug_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _slug_source) = slug_source {
                                 match _slug_source {
                                     crate::datadogV2::model::IncidentTypeSlugSource::UnparsedObject(_slug_source) => {
@@ -202,19 +190,18 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "test_incidents" => {
                             if v.is_null() {
                                 continue;
                             }
-                            test_incidents =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            test_incidents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

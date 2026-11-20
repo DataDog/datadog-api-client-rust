@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Failure-rate-based rule for the disabled policy.
 #[non_exhaustive]
@@ -21,10 +21,9 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule {
     #[serde(rename = "min_runs")]
     pub min_runs: Option<i64>,
     /// Test status that the disable policy applies to.
-    /// Must be either `active` or `quarantined`.
+/// Must be either `active` or `quarantined`.
     #[serde(rename = "status")]
-    pub status:
-        Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledStatus>,
+    pub status: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledStatus>,
     /// Failure rate threshold (0.0–1.0) above which the rule triggers.
     #[serde(rename = "threshold")]
     pub threshold: Option<f64>,
@@ -32,7 +31,7 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule {
@@ -47,43 +46,38 @@ impl TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule {
             _unparsed: false,
         }
     }
-
+    
     pub fn branches(mut self, value: Vec<String>) -> Self {
         self.branches = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn min_runs(mut self, value: i64) -> Self {
         self.min_runs = Some(value);
         self
     }
-
-    pub fn status(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledStatus,
-    ) -> Self {
+    
+    pub fn status(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn threshold(mut self, value: f64) -> Self {
         self.threshold = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule {
     fn default() -> Self {
@@ -97,9 +91,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
         D: Deserializer<'de>,
     {
         struct TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRuleVisitor;
-        impl<'a> Visitor<'a>
-            for TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRuleVisitor
-        {
+        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRuleVisitor {
             type Value = TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -115,10 +107,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
                 let mut min_runs: Option<i64> = None;
                 let mut status: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledStatus> = None;
                 let mut threshold: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -128,19 +117,19 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
                                 continue;
                             }
                             branches = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "min_runs" => {
                             if v.is_null() {
                                 continue;
                             }
                             min_runs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -154,18 +143,18 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "threshold" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
@@ -183,8 +172,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
             }
         }
 
-        deserializer.deserialize_any(
-            TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRuleVisitor,
-        )
+        deserializer.deserialize_any(TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRuleVisitor)
     }
 }

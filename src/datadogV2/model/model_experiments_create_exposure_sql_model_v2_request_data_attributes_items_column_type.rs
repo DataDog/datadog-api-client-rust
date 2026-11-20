@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsCreateExposureSQLModelV2RequestDataAttributesItemsColumnType {
-    STRING,
-    INTEGER,
-    FLOAT,
-    BOOLEAN,
-    DATE,
-    TIMESTAMP,
+	STRING,
+	INTEGER,
+	FLOAT,
+	BOOLEAN,
+	DATE,
+	TIMESTAMP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,24 +43,14 @@ impl Serialize for ExperimentsCreateExposureSQLModelV2RequestDataAttributesItems
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsCreateExposureSQLModelV2RequestDataAttributesItemsColumnType
-{
+impl<'de> Deserialize<'de> for ExperimentsCreateExposureSQLModelV2RequestDataAttributesItemsColumnType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "STRING" => Self::STRING,
-            "INTEGER" => Self::INTEGER,
-            "FLOAT" => Self::FLOAT,
-            "BOOLEAN" => Self::BOOLEAN,
-            "DATE" => Self::DATE,
-            "TIMESTAMP" => Self::TIMESTAMP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"STRING" => Self::STRING,"INTEGER" => Self::INTEGER,"FLOAT" => Self::FLOAT,"BOOLEAN" => Self::BOOLEAN,"DATE" => Self::DATE,"TIMESTAMP" => Self::TIMESTAMP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

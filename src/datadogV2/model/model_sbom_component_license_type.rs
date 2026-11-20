@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SBOMComponentLicenseType {
-    NETWORK_STRONG_COPYLEFT,
-    NON_STANDARD_COPYLEFT,
-    OTHER_NON_FREE,
-    OTHER_NON_STANDARD,
-    PERMISSIVE,
-    PUBLIC_DOMAIN,
-    STRONG_COPYLEFT,
-    WEAK_COPYLEFT,
+	NETWORK_STRONG_COPYLEFT,
+	NON_STANDARD_COPYLEFT,
+	OTHER_NON_FREE,
+	OTHER_NON_STANDARD,
+	PERMISSIVE,
+	PUBLIC_DOMAIN,
+	STRONG_COPYLEFT,
+	WEAK_COPYLEFT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SBOMComponentLicenseType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "network_strong_copyleft" => Self::NETWORK_STRONG_COPYLEFT,
-            "non_standard_copyleft" => Self::NON_STANDARD_COPYLEFT,
-            "other_non_free" => Self::OTHER_NON_FREE,
-            "other_non_standard" => Self::OTHER_NON_STANDARD,
-            "permissive" => Self::PERMISSIVE,
-            "public_domain" => Self::PUBLIC_DOMAIN,
-            "strong_copyleft" => Self::STRONG_COPYLEFT,
-            "weak_copyleft" => Self::WEAK_COPYLEFT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"network_strong_copyleft" => Self::NETWORK_STRONG_COPYLEFT,"non_standard_copyleft" => Self::NON_STANDARD_COPYLEFT,"other_non_free" => Self::OTHER_NON_FREE,"other_non_standard" => Self::OTHER_NON_STANDARD,"permissive" => Self::PERMISSIVE,"public_domain" => Self::PUBLIC_DOMAIN,"strong_copyleft" => Self::STRONG_COPYLEFT,"weak_copyleft" => Self::WEAK_COPYLEFT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

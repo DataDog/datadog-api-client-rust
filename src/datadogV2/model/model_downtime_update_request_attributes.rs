@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the downtime to update.
 #[non_exhaustive]
@@ -12,20 +12,12 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeUpdateRequestAttributes {
     /// The timezone in which to display the downtime's start and end times in Datadog applications. This is not used
-    /// as an offset for scheduling.
-    #[serde(
-        rename = "display_timezone",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// as an offset for scheduling.
+    #[serde(rename = "display_timezone", default, with = "::serde_with::rust::double_option")]
     pub display_timezone: Option<Option<String>>,
     /// A message to include with notifications for this downtime. Email notifications can be sent to specific users
-    /// by using the same `@username` notation as events.
-    #[serde(
-        rename = "message",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// by using the same `@username` notation as events.
+    #[serde(rename = "message", default, with = "::serde_with::rust::double_option")]
     pub message: Option<Option<String>>,
     /// Monitor identifier for the downtime.
     #[serde(rename = "monitor_identifier")]
@@ -49,7 +41,7 @@ pub struct DowntimeUpdateRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DowntimeUpdateRequestAttributes {
@@ -67,67 +59,53 @@ impl DowntimeUpdateRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn display_timezone(mut self, value: Option<String>) -> Self {
         self.display_timezone = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: Option<String>) -> Self {
         self.message = Some(value);
         self
     }
-
-    pub fn monitor_identifier(
-        mut self,
-        value: crate::datadogV2::model::DowntimeMonitorIdentifier,
-    ) -> Self {
+    
+    pub fn monitor_identifier(mut self, value: crate::datadogV2::model::DowntimeMonitorIdentifier) -> Self {
         self.monitor_identifier = Some(value);
         self
     }
-
+    
     pub fn mute_first_recovery_notification(mut self, value: bool) -> Self {
         self.mute_first_recovery_notification = Some(value);
         self
     }
-
-    pub fn notify_end_states(
-        mut self,
-        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
-    ) -> Self {
+    
+    pub fn notify_end_states(mut self, value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>) -> Self {
         self.notify_end_states = Some(value);
         self
     }
-
-    pub fn notify_end_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
-    ) -> Self {
+    
+    pub fn notify_end_types(mut self, value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>) -> Self {
         self.notify_end_types = Some(value);
         self
     }
-
-    pub fn schedule(
-        mut self,
-        value: crate::datadogV2::model::DowntimeScheduleUpdateRequest,
-    ) -> Self {
+    
+    pub fn schedule(mut self, value: crate::datadogV2::model::DowntimeScheduleUpdateRequest) -> Self {
         self.schedule = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DowntimeUpdateRequestAttributes {
     fn default() -> Self {
@@ -154,40 +132,28 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
             {
                 let mut display_timezone: Option<Option<String>> = None;
                 let mut message: Option<Option<String>> = None;
-                let mut monitor_identifier: Option<
-                    crate::datadogV2::model::DowntimeMonitorIdentifier,
-                > = None;
+                let mut monitor_identifier: Option<crate::datadogV2::model::DowntimeMonitorIdentifier> = None;
                 let mut mute_first_recovery_notification: Option<bool> = None;
-                let mut notify_end_states: Option<
-                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>,
-                > = None;
-                let mut notify_end_types: Option<
-                    Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
-                > = None;
-                let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleUpdateRequest> =
-                    None;
+                let mut notify_end_states: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateTypes>> = None;
+                let mut notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>> = None;
+                let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleUpdateRequest> = None;
                 let mut scope: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "display_timezone" => {
-                            display_timezone =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "monitor_identifier" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_identifier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            monitor_identifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _monitor_identifier) = monitor_identifier {
                                 match _monitor_identifier {
                                     crate::datadogV2::model::DowntimeMonitorIdentifier::UnparsedObject(_monitor_identifier) => {
@@ -196,28 +162,25 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "mute_first_recovery_notification" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mute_first_recovery_notification =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mute_first_recovery_notification = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_end_states" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_end_states =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_end_states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notify_end_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notify_end_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notify_end_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "schedule" => {
                             if v.is_null() {
                                 continue;
@@ -231,18 +194,18 @@ impl<'de> Deserialize<'de> for DowntimeUpdateRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

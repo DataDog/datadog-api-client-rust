@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for the flaky tests search request.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct FlakyTestsSearchRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FlakyTestsSearchRequestAttributes {
@@ -37,30 +37,28 @@ impl FlakyTestsSearchRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn filter(mut self, value: crate::datadogV2::model::FlakyTestsSearchFilter) -> Self {
         self.filter = Some(value);
         self
     }
-
+    
     pub fn page(mut self, value: crate::datadogV2::model::FlakyTestsSearchPageOptions) -> Self {
         self.page = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV2::model::FlakyTestsSearchSort) -> Self {
         self.sort = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FlakyTestsSearchRequestAttributes {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
                 let mut filter: Option<crate::datadogV2::model::FlakyTestsSearchFilter> = None;
                 let mut page: Option<crate::datadogV2::model::FlakyTestsSearchPageOptions> = None;
                 let mut sort: Option<crate::datadogV2::model::FlakyTestsSearchSort> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,13 +96,13 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
                                 continue;
                             }
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "page" => {
                             if v.is_null() {
                                 continue;
                             }
                             page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
@@ -121,12 +116,12 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

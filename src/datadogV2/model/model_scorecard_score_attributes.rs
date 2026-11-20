@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a scorecard score.
 #[non_exhaustive]
@@ -45,7 +45,7 @@ pub struct ScorecardScoreAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ScorecardScoreAttributes {
@@ -65,68 +65,63 @@ impl ScorecardScoreAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn aggregation(
-        mut self,
-        value: crate::datadogV2::model::ScorecardScoresAggregation,
-    ) -> Self {
+    
+    pub fn aggregation(mut self, value: crate::datadogV2::model::ScorecardScoresAggregation) -> Self {
         self.aggregation = Some(value);
         self
     }
-
+    
     pub fn denominator(mut self, value: i64) -> Self {
         self.denominator = Some(value);
         self
     }
-
+    
     pub fn level(mut self, value: i64) -> Self {
         self.level = Some(value);
         self
     }
-
+    
     pub fn numerator(mut self, value: i64) -> Self {
         self.numerator = Some(value);
         self
     }
-
+    
     pub fn score(mut self, value: f64) -> Self {
         self.score = Some(value);
         self
     }
-
+    
     pub fn total_entities(mut self, value: i64) -> Self {
         self.total_entities = Some(value);
         self
     }
-
+    
     pub fn total_fail(mut self, value: i64) -> Self {
         self.total_fail = Some(value);
         self
     }
-
+    
     pub fn total_no_data(mut self, value: i64) -> Self {
         self.total_no_data = Some(value);
         self
     }
-
+    
     pub fn total_pass(mut self, value: i64) -> Self {
         self.total_pass = Some(value);
         self
     }
-
+    
     pub fn total_skip(mut self, value: i64) -> Self {
         self.total_skip = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ScorecardScoreAttributes {
     fn default() -> Self {
@@ -151,8 +146,7 @@ impl<'de> Deserialize<'de> for ScorecardScoreAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation: Option<crate::datadogV2::model::ScorecardScoresAggregation> =
-                    None;
+                let mut aggregation: Option<crate::datadogV2::model::ScorecardScoresAggregation> = None;
                 let mut denominator: Option<i64> = None;
                 let mut level: Option<i64> = None;
                 let mut numerator: Option<i64> = None;
@@ -162,10 +156,7 @@ impl<'de> Deserialize<'de> for ScorecardScoreAttributes {
                 let mut total_no_data: Option<i64> = None;
                 let mut total_pass: Option<i64> = None;
                 let mut total_skip: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -174,8 +165,7 @@ impl<'de> Deserialize<'de> for ScorecardScoreAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation) = aggregation {
                                 match _aggregation {
                                     crate::datadogV2::model::ScorecardScoresAggregation::UnparsedObject(_aggregation) => {
@@ -184,69 +174,66 @@ impl<'de> Deserialize<'de> for ScorecardScoreAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "denominator" => {
                             if v.is_null() {
                                 continue;
                             }
-                            denominator =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            denominator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "level" => {
                             if v.is_null() {
                                 continue;
                             }
                             level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "numerator" => {
                             if v.is_null() {
                                 continue;
                             }
                             numerator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "score" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_entities" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_entities =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_entities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total_fail" => {
                             if v.is_null() {
                                 continue;
                             }
                             total_fail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_no_data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_no_data =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_no_data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total_pass" => {
                             if v.is_null() {
                                 continue;
                             }
                             total_pass = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_skip" => {
                             if v.is_null() {
                                 continue;
                             }
                             total_skip = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

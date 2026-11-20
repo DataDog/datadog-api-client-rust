@@ -1,9 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+
+
+
 
 /// GetStegadographyWidgetsError is a struct for typed errors of method [`StegadographyAPI::get_stegadography_widgets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -13,6 +16,7 @@ pub enum GetStegadographyWidgetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Extract watermarks embedded in dashboard screenshots to retrieve cached widget state.
 #[derive(Debug, Clone)]
@@ -36,7 +40,8 @@ impl StegadographyAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -81,68 +86,55 @@ impl StegadographyAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Extracts watermarks from a PNG image and returns the cached widget data
-    /// associated with each watermark found. The image must be uploaded as a
-    /// `multipart/form-data` request with the file in the `image` field.
-    /// Only widgets belonging to the authenticated organization are returned.
-    pub async fn get_stegadography_widgets(
-        &self,
-        image: Vec<u8>,
-    ) -> Result<
-        crate::datadogV2::model::StegadographyGetWidgetsResponse,
-        datadog::Error<GetStegadographyWidgetsError>,
-    > {
+/// associated with each watermark found. The image must be uploaded as a
+/// `multipart/form-data` request with the file in the `image` field.
+/// Only widgets belonging to the authenticated organization are returned.
+    pub async fn get_stegadography_widgets(&self, image: Vec<u8>) -> Result<crate::datadogV2::model::StegadographyGetWidgetsResponse, datadog::Error<GetStegadographyWidgetsError>> {
         match self.get_stegadography_widgets_with_http_info(image).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Extracts watermarks from a PNG image and returns the cached widget data
-    /// associated with each watermark found. The image must be uploaded as a
-    /// `multipart/form-data` request with the file in the `image` field.
-    /// Only widgets belonging to the authenticated organization are returned.
-    pub async fn get_stegadography_widgets_with_http_info(
-        &self,
-        image: Vec<u8>,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::StegadographyGetWidgetsResponse>,
-        datadog::Error<GetStegadographyWidgetsError>,
-    > {
+/// associated with each watermark found. The image must be uploaded as a
+/// `multipart/form-data` request with the file in the `image` field.
+/// Only widgets belonging to the authenticated organization are returned.
+    pub async fn get_stegadography_widgets_with_http_info(&self, image: Vec<u8>) -> Result<datadog::ResponseContent<crate::datadogV2::model::StegadographyGetWidgetsResponse>, datadog::Error<GetStegadographyWidgetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_stegadography_widgets";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/stegadography/get-widgets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Content-Type",
-            HeaderValue::from_static("multipart/form-data"),
-        );
+        headers.insert("Content-Type", HeaderValue::from_static("multipart/form-data"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -155,23 +147,16 @@ impl StegadographyAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build form parameters
         let mut local_form = form_data_builder::FormData::new(Vec::new());
         let cursor = std::io::Cursor::new(image);
@@ -203,26 +188,17 @@ impl StegadographyAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::StegadographyGetWidgetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::StegadographyGetWidgetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetStegadographyWidgetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetStegadographyWidgetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

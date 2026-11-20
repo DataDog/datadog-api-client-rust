@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// SLO count definition using a total events formula alongside a good events formula.
 #[non_exhaustive]
@@ -21,15 +21,11 @@ pub struct SLOCountDefinitionWithTotalEventsFormula {
     pub total_events_formula: crate::datadogV1::model::SLOFormula,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SLOCountDefinitionWithTotalEventsFormula {
-    pub fn new(
-        good_events_formula: crate::datadogV1::model::SLOFormula,
-        queries: Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>,
-        total_events_formula: crate::datadogV1::model::SLOFormula,
-    ) -> SLOCountDefinitionWithTotalEventsFormula {
+    pub fn new(good_events_formula: crate::datadogV1::model::SLOFormula, queries: Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>, total_events_formula: crate::datadogV1::model::SLOFormula) -> SLOCountDefinitionWithTotalEventsFormula {
         SLOCountDefinitionWithTotalEventsFormula {
             good_events_formula,
             queries,
@@ -37,7 +33,10 @@ impl SLOCountDefinitionWithTotalEventsFormula {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for SLOCountDefinitionWithTotalEventsFormula {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -57,37 +56,29 @@ impl<'de> Deserialize<'de> for SLOCountDefinitionWithTotalEventsFormula {
                 M: MapAccess<'a>,
             {
                 let mut good_events_formula: Option<crate::datadogV1::model::SLOFormula> = None;
-                let mut queries: Option<
-                    Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>,
-                > = None;
+                let mut queries: Option<Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>> = None;
                 let mut total_events_formula: Option<crate::datadogV1::model::SLOFormula> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "good_events_formula" => {
-                            good_events_formula =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            good_events_formula = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "queries" => {
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_events_formula" => {
-                            total_events_formula =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_events_formula = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let good_events_formula = good_events_formula
-                    .ok_or_else(|| M::Error::missing_field("good_events_formula"))?;
+                let good_events_formula = good_events_formula.ok_or_else(|| M::Error::missing_field("good_events_formula"))?;
                 let queries = queries.ok_or_else(|| M::Error::missing_field("queries"))?;
-                let total_events_formula = total_events_formula
-                    .ok_or_else(|| M::Error::missing_field("total_events_formula"))?;
+                let total_events_formula = total_events_formula.ok_or_else(|| M::Error::missing_field("total_events_formula"))?;
 
                 let content = SLOCountDefinitionWithTotalEventsFormula {
                     good_events_formula,

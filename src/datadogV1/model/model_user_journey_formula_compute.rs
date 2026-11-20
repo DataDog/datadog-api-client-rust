@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Compute configuration for User Journey formula queries.
 #[non_exhaustive]
@@ -25,13 +25,11 @@ pub struct UserJourneyFormulaCompute {
     pub target: Option<crate::datadogV1::model::UserJourneySearchTarget>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UserJourneyFormulaCompute {
-    pub fn new(
-        aggregation: crate::datadogV1::model::FormulaAndFunctionEventAggregation,
-    ) -> UserJourneyFormulaCompute {
+    pub fn new(aggregation: crate::datadogV1::model::FormulaAndFunctionEventAggregation) -> UserJourneyFormulaCompute {
         UserJourneyFormulaCompute {
             aggregation,
             interval: None,
@@ -40,25 +38,25 @@ impl UserJourneyFormulaCompute {
             _unparsed: false,
         }
     }
-
+    
     pub fn interval(mut self, value: f64) -> Self {
         self.interval = Some(value);
         self
     }
-
-    pub fn metric(
-        mut self,
-        value: crate::datadogV1::model::UserJourneyFormulaComputeMetric,
-    ) -> Self {
+    
+    pub fn metric(mut self, value: crate::datadogV1::model::UserJourneyFormulaComputeMetric) -> Self {
         self.metric = Some(value);
         self
     }
-
+    
     pub fn target(mut self, value: crate::datadogV1::model::UserJourneySearchTarget) -> Self {
         self.target = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for UserJourneyFormulaCompute {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,20 +75,16 @@ impl<'de> Deserialize<'de> for UserJourneyFormulaCompute {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation: Option<
-                    crate::datadogV1::model::FormulaAndFunctionEventAggregation,
-                > = None;
+                let mut aggregation: Option<crate::datadogV1::model::FormulaAndFunctionEventAggregation> = None;
                 let mut interval: Option<f64> = None;
-                let mut metric: Option<crate::datadogV1::model::UserJourneyFormulaComputeMetric> =
-                    None;
+                let mut metric: Option<crate::datadogV1::model::UserJourneyFormulaComputeMetric> = None;
                 let mut target: Option<crate::datadogV1::model::UserJourneySearchTarget> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aggregation" => {
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation) = aggregation {
                                 match _aggregation {
                                     crate::datadogV1::model::FormulaAndFunctionEventAggregation::UnparsedObject(_aggregation) => {
@@ -99,13 +93,13 @@ impl<'de> Deserialize<'de> for UserJourneyFormulaCompute {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "interval" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             if v.is_null() {
                                 continue;
@@ -119,22 +113,19 @@ impl<'de> Deserialize<'de> for UserJourneyFormulaCompute {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
                             }
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let aggregation =
-                    aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
+                let aggregation = aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
 
                 let content = UserJourneyFormulaCompute {
                     aggregation,

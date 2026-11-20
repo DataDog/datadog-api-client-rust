@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of the deployment event.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORADeploymentObjectAttributes {
     /// A list of user-defined tags. The tags must follow the `key:value` pattern. Up to 100 may be added per event.
-    #[serde(
-        rename = "custom_tags",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "custom_tags", default, with = "::serde_with::rust::double_option")]
     pub custom_tags: Option<Option<Vec<String>>>,
     /// Environment name to where the service was deployed.
     #[serde(rename = "env")]
@@ -43,14 +39,11 @@ pub struct DORADeploymentObjectAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DORADeploymentObjectAttributes {
-    pub fn new(
-        service: String,
-        started_at: chrono::DateTime<chrono::Utc>,
-    ) -> DORADeploymentObjectAttributes {
+    pub fn new(service: String, started_at: chrono::DateTime<chrono::Utc>) -> DORADeploymentObjectAttributes {
         DORADeploymentObjectAttributes {
             custom_tags: None,
             env: None,
@@ -64,45 +57,44 @@ impl DORADeploymentObjectAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn custom_tags(mut self, value: Option<Vec<String>>) -> Self {
         self.custom_tags = Some(value);
         self
     }
-
+    
     pub fn env(mut self, value: String) -> Self {
         self.env = Some(value);
         self
     }
-
+    
     pub fn finished_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.finished_at = Some(value);
         self
     }
-
+    
     pub fn git(mut self, value: crate::datadogV2::model::DORAGitInfoResponse) -> Self {
         self.git = Some(value);
         self
     }
-
+    
     pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: String) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -129,60 +121,55 @@ impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
                 let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut team: Option<String> = None;
                 let mut version: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "custom_tags" => {
-                            custom_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "env" => {
                             if v.is_null() {
                                 continue;
                             }
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "finished_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            finished_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            finished_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "git" => {
                             if v.is_null() {
                                 continue;
                             }
                             git = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "started_at" => {
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team" => {
                             if v.is_null() {
                                 continue;
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let service = service.ok_or_else(|| M::Error::missing_field("service"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The heatgrid visualization displays values for each group over time using color.
 #[non_exhaustive]
@@ -49,15 +49,11 @@ pub struct HeatgridWidgetDefinition {
     pub type_: crate::datadogV1::model::HeatgridWidgetDefinitionType,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HeatgridWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::HeatgridWidgetRequest>,
-        sort: crate::datadogV1::model::HeatgridSort,
-        type_: crate::datadogV1::model::HeatgridWidgetDefinitionType,
-    ) -> HeatgridWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::HeatgridWidgetRequest>, sort: crate::datadogV1::model::HeatgridSort, type_: crate::datadogV1::model::HeatgridWidgetDefinitionType) -> HeatgridWidgetDefinition {
         HeatgridWidgetDefinition {
             color: None,
             custom_links: None,
@@ -74,52 +70,55 @@ impl HeatgridWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn color(mut self, value: crate::datadogV1::model::HeatgridColorConfig) -> Self {
         self.color = Some(value);
         self
     }
-
+    
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn label_column(mut self, value: crate::datadogV1::model::HeatgridLabelColumn) -> Self {
         self.label_column = Some(value);
         self
     }
-
+    
     pub fn legend(mut self, value: crate::datadogV1::model::HeatgridLegend) -> Self {
         self.legend = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for HeatgridWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -143,8 +142,7 @@ impl<'de> Deserialize<'de> for HeatgridWidgetDefinition {
                 let mut description: Option<String> = None;
                 let mut label_column: Option<crate::datadogV1::model::HeatgridLabelColumn> = None;
                 let mut legend: Option<crate::datadogV1::model::HeatgridLegend> = None;
-                let mut requests: Option<Vec<crate::datadogV1::model::HeatgridWidgetRequest>> =
-                    None;
+                let mut requests: Option<Vec<crate::datadogV1::model::HeatgridWidgetRequest>> = None;
                 let mut sort: Option<crate::datadogV1::model::HeatgridSort> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
@@ -168,40 +166,37 @@ impl<'de> Deserialize<'de> for HeatgridWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "custom_links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            label_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            label_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "legend" => {
                             if v.is_null() {
                                 continue;
                             }
                             legend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sort" => {
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -211,40 +206,37 @@ impl<'de> Deserialize<'de> for HeatgridWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -255,12 +247,10 @@ impl<'de> Deserialize<'de> for HeatgridWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OutputSchemaParametersType {
-    STRING,
-    NUMBER,
-    BOOLEAN,
-    OBJECT,
-    ARRAY_STRING,
-    ARRAY_NUMBER,
-    ARRAY_BOOLEAN,
-    ARRAY_OBJECT,
+	STRING,
+	NUMBER,
+	BOOLEAN,
+	OBJECT,
+	ARRAY_STRING,
+	ARRAY_NUMBER,
+	ARRAY_BOOLEAN,
+	ARRAY_OBJECT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for OutputSchemaParametersType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "STRING" => Self::STRING,
-            "NUMBER" => Self::NUMBER,
-            "BOOLEAN" => Self::BOOLEAN,
-            "OBJECT" => Self::OBJECT,
-            "ARRAY_STRING" => Self::ARRAY_STRING,
-            "ARRAY_NUMBER" => Self::ARRAY_NUMBER,
-            "ARRAY_BOOLEAN" => Self::ARRAY_BOOLEAN,
-            "ARRAY_OBJECT" => Self::ARRAY_OBJECT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"STRING" => Self::STRING,"NUMBER" => Self::NUMBER,"BOOLEAN" => Self::BOOLEAN,"OBJECT" => Self::OBJECT,"ARRAY_STRING" => Self::ARRAY_STRING,"ARRAY_NUMBER" => Self::ARRAY_NUMBER,"ARRAY_BOOLEAN" => Self::ARRAY_BOOLEAN,"ARRAY_OBJECT" => Self::ARRAY_OBJECT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

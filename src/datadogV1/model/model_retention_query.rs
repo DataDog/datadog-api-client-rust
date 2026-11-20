@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Retention query definition.
 #[non_exhaustive]
@@ -31,15 +31,11 @@ pub struct RetentionQuery {
     pub search: crate::datadogV1::model::RetentionSearch,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RetentionQuery {
-    pub fn new(
-        compute: crate::datadogV1::model::RetentionCompute,
-        data_source: crate::datadogV1::model::RetentionDataSource,
-        search: crate::datadogV1::model::RetentionSearch,
-    ) -> RetentionQuery {
+    pub fn new(compute: crate::datadogV1::model::RetentionCompute, data_source: crate::datadogV1::model::RetentionDataSource, search: crate::datadogV1::model::RetentionSearch) -> RetentionQuery {
         RetentionQuery {
             compute,
             data_source,
@@ -50,22 +46,25 @@ impl RetentionQuery {
             _unparsed: false,
         }
     }
-
+    
     pub fn filters(mut self, value: crate::datadogV1::model::RetentionFilters) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn group_by(mut self, value: Vec<crate::datadogV1::model::RetentionGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for RetentionQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,10 +95,9 @@ impl<'de> Deserialize<'de> for RetentionQuery {
                     match k.as_str() {
                         "compute" => {
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::RetentionDataSource::UnparsedObject(_data_source) => {
@@ -108,38 +106,35 @@ impl<'de> Deserialize<'de> for RetentionQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let compute = compute.ok_or_else(|| M::Error::missing_field("compute"))?;
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let search = search.ok_or_else(|| M::Error::missing_field("search"))?;
 
                 let content = RetentionQuery {

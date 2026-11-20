@@ -1,15 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListReportSchedulesOptionalParams is a struct for passing parameters to the method [`ReportSchedulesAPI::list_report_schedules`]
 #[non_exhaustive]
@@ -55,6 +52,9 @@ impl ListReportSchedulesOptionalParams {
     }
 }
 
+
+
+
 /// CreateReportScheduleError is a struct for typed errors of method [`ReportSchedulesAPI::create_report_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -63,6 +63,7 @@ pub enum CreateReportScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteReportScheduleError is a struct for typed errors of method [`ReportSchedulesAPI::delete_report_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -73,6 +74,7 @@ pub enum DeleteReportScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetReportScheduleError is a struct for typed errors of method [`ReportSchedulesAPI::get_report_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -81,6 +83,7 @@ pub enum GetReportScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetReportSchedulesForResourceError is a struct for typed errors of method [`ReportSchedulesAPI::get_report_schedules_for_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -91,6 +94,7 @@ pub enum GetReportSchedulesForResourceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDatasetReportSchedulesError is a struct for typed errors of method [`ReportSchedulesAPI::list_dataset_report_schedules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -99,6 +103,7 @@ pub enum ListDatasetReportSchedulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListReportSchedulesError is a struct for typed errors of method [`ReportSchedulesAPI::list_report_schedules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,6 +114,7 @@ pub enum ListReportSchedulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// PatchReportScheduleError is a struct for typed errors of method [`ReportSchedulesAPI::patch_report_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -117,6 +123,7 @@ pub enum PatchReportScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PrintReportError is a struct for typed errors of method [`ReportSchedulesAPI::print_report`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -127,6 +134,7 @@ pub enum PrintReportError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ToggleReportScheduleError is a struct for typed errors of method [`ReportSchedulesAPI::toggle_report_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -135,6 +143,7 @@ pub enum ToggleReportScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Create and manage scheduled reports. A scheduled report renders a dashboard or integration
 /// dashboard on a recurring cadence and delivers it to a set of recipients over email, Slack,
@@ -160,7 +169,8 @@ impl ReportSchedulesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -205,49 +215,35 @@ impl ReportSchedulesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new scheduled report. A schedule renders a dashboard or integration dashboard
-    /// on a recurring cadence and delivers it to the configured recipients over email, Slack,
-    /// or Microsoft Teams.
-    /// Requires the `generate_dashboard_reports` permission.
-    pub async fn create_report_schedule(
-        &self,
-        body: crate::datadogV2::model::ReportScheduleCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleResponse,
-        datadog::Error<CreateReportScheduleError>,
-    > {
+/// on a recurring cadence and delivers it to the configured recipients over email, Slack,
+/// or Microsoft Teams.
+/// Requires the `generate_dashboard_reports` permission.
+    pub async fn create_report_schedule(&self, body: crate::datadogV2::model::ReportScheduleCreateRequest) -> Result<crate::datadogV2::model::ReportScheduleResponse, datadog::Error<CreateReportScheduleError>> {
         match self.create_report_schedule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new scheduled report. A schedule renders a dashboard or integration dashboard
-    /// on a recurring cadence and delivers it to the configured recipients over email, Slack,
-    /// or Microsoft Teams.
-    /// Requires the `generate_dashboard_reports` permission.
-    pub async fn create_report_schedule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ReportScheduleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>,
-        datadog::Error<CreateReportScheduleError>,
-    > {
+/// on a recurring cadence and delivers it to the configured recipients over email, Slack,
+/// or Microsoft Teams.
+/// Requires the `generate_dashboard_reports` permission.
+    pub async fn create_report_schedule_with_http_info(&self, body: crate::datadogV2::model::ReportScheduleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>, datadog::Error<CreateReportScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_report_schedule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -259,19 +255,23 @@ impl ReportSchedulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -284,23 +284,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -308,7 +301,10 @@ impl ReportSchedulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -318,7 +314,10 @@ impl ReportSchedulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -340,7 +339,7 @@ impl ReportSchedulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -357,81 +356,61 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateReportScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateReportScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a report schedule by its unique identifier. The response returns the deleted schedule.
-    /// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
-    pub async fn delete_report_schedule(
-        &self,
-        schedule_uuid: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleResponse,
-        datadog::Error<DeleteReportScheduleError>,
-    > {
-        match self
-            .delete_report_schedule_with_http_info(schedule_uuid)
-            .await
-        {
+/// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
+    pub async fn delete_report_schedule(&self, schedule_uuid: uuid::Uuid) -> Result<crate::datadogV2::model::ReportScheduleResponse, datadog::Error<DeleteReportScheduleError>> {
+        match self.delete_report_schedule_with_http_info(schedule_uuid).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a report schedule by its unique identifier. The response returns the deleted schedule.
-    /// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
-    pub async fn delete_report_schedule_with_http_info(
-        &self,
-        schedule_uuid: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>,
-        datadog::Error<DeleteReportScheduleError>,
-    > {
+/// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
+    pub async fn delete_report_schedule_with_http_info(&self, schedule_uuid: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>, datadog::Error<DeleteReportScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_report_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_uuid=
+            datadog::urlencode(schedule_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -444,22 +423,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -471,78 +444,61 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteReportScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteReportScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a report schedule by its unique identifier.
-    /// Requires a reporting read permission appropriate to the targeted resource type.
-    pub async fn get_report_schedule(
-        &self,
-        schedule_uuid: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleResponse,
-        datadog::Error<GetReportScheduleError>,
-    > {
+/// Requires a reporting read permission appropriate to the targeted resource type.
+    pub async fn get_report_schedule(&self, schedule_uuid: uuid::Uuid) -> Result<crate::datadogV2::model::ReportScheduleResponse, datadog::Error<GetReportScheduleError>> {
         match self.get_report_schedule_with_http_info(schedule_uuid).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a report schedule by its unique identifier.
-    /// Requires a reporting read permission appropriate to the targeted resource type.
-    pub async fn get_report_schedule_with_http_info(
-        &self,
-        schedule_uuid: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>,
-        datadog::Error<GetReportScheduleError>,
-    > {
+/// Requires a reporting read permission appropriate to the targeted resource type.
+    pub async fn get_report_schedule_with_http_info(&self, schedule_uuid: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>, datadog::Error<GetReportScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_report_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_uuid=
+            datadog::urlencode(schedule_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -555,22 +511,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -582,84 +532,63 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetReportScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetReportScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all report schedules that target a dashboard or integration dashboard resource.
-    /// Requires a reporting read permission appropriate to the targeted resource type.
-    pub async fn get_report_schedules_for_resource(
-        &self,
-        resource_type: crate::datadogV2::model::ReportScheduleResourceType,
-        resource_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleListResponse,
-        datadog::Error<GetReportSchedulesForResourceError>,
-    > {
-        match self
-            .get_report_schedules_for_resource_with_http_info(resource_type, resource_id)
-            .await
-        {
+/// Requires a reporting read permission appropriate to the targeted resource type.
+    pub async fn get_report_schedules_for_resource(&self, resource_type: crate::datadogV2::model::ReportScheduleResourceType, resource_id: String) -> Result<crate::datadogV2::model::ReportScheduleListResponse, datadog::Error<GetReportSchedulesForResourceError>> {
+        match self.get_report_schedules_for_resource_with_http_info(resource_type, resource_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all report schedules that target a dashboard or integration dashboard resource.
-    /// Requires a reporting read permission appropriate to the targeted resource type.
-    pub async fn get_report_schedules_for_resource_with_http_info(
-        &self,
-        resource_type: crate::datadogV2::model::ReportScheduleResourceType,
-        resource_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleListResponse>,
-        datadog::Error<GetReportSchedulesForResourceError>,
-    > {
+/// Requires a reporting read permission appropriate to the targeted resource type.
+    pub async fn get_report_schedules_for_resource_with_http_info(&self, resource_type: crate::datadogV2::model::ReportScheduleResourceType, resource_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleListResponse>, datadog::Error<GetReportSchedulesForResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_report_schedules_for_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{resource_type}/{resource_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            resource_type = datadog::urlencode(resource_type.to_string()),
-            resource_id = datadog::urlencode(resource_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), resource_type=
+            datadog::urlencode(resource_type.to_string())
+            , resource_id=
+            datadog::urlencode(resource_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -672,22 +601,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -699,83 +622,63 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetReportSchedulesForResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetReportSchedulesForResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve all report schedules for a given published dataset.
-    /// Returns report schedules belonging to the authenticated user's organization that target the specified dataset.
-    /// Requires the `generate_log_reports` or `manage_log_reports` permission.
-    pub async fn list_dataset_report_schedules(
-        &self,
-        dataset_id: String,
-    ) -> Result<
-        crate::datadogV2::model::DatasetReportScheduleListResponse,
-        datadog::Error<ListDatasetReportSchedulesError>,
-    > {
-        match self
-            .list_dataset_report_schedules_with_http_info(dataset_id)
-            .await
-        {
+/// Returns report schedules belonging to the authenticated user's organization that target the specified dataset.
+/// Requires the `generate_log_reports` or `manage_log_reports` permission.
+    pub async fn list_dataset_report_schedules(&self, dataset_id: String) -> Result<crate::datadogV2::model::DatasetReportScheduleListResponse, datadog::Error<ListDatasetReportSchedulesError>> {
+        match self.list_dataset_report_schedules_with_http_info(dataset_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve all report schedules for a given published dataset.
-    /// Returns report schedules belonging to the authenticated user's organization that target the specified dataset.
-    /// Requires the `generate_log_reports` or `manage_log_reports` permission.
-    pub async fn list_dataset_report_schedules_with_http_info(
-        &self,
-        dataset_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DatasetReportScheduleListResponse>,
-        datadog::Error<ListDatasetReportSchedulesError>,
-    > {
+/// Returns report schedules belonging to the authenticated user's organization that target the specified dataset.
+/// Requires the `generate_log_reports` or `manage_log_reports` permission.
+    pub async fn list_dataset_report_schedules_with_http_info(&self, dataset_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::DatasetReportScheduleListResponse>, datadog::Error<ListDatasetReportSchedulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_dataset_report_schedules";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/dataset/{dataset_id}/schedules",
-            local_configuration.get_operation_host(local_operation_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -788,22 +691,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -815,67 +712,46 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DatasetReportScheduleListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::DatasetReportScheduleListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDatasetReportSchedulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDatasetReportSchedulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List dashboard and integration dashboard report schedules for the organization.
-    /// The response is paginated and can be filtered by title, author UUID, or recipients.
-    /// Requires the `generate_dashboard_reports` permission.
-    pub async fn list_report_schedules(
-        &self,
-        params: ListReportSchedulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleListResponse,
-        datadog::Error<ListReportSchedulesError>,
-    > {
-        match self.list_report_schedules_with_http_info(params).await {
+/// The response is paginated and can be filtered by title, author UUID, or recipients.
+/// Requires the `generate_dashboard_reports` permission.
+    pub async fn list_report_schedules(&self, params: ListReportSchedulesOptionalParams) -> Result<crate::datadogV2::model::ReportScheduleListResponse, datadog::Error<ListReportSchedulesError>> {
+        match self.list_report_schedules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List dashboard and integration dashboard report schedules for the organization.
-    /// The response is paginated and can be filtered by title, author UUID, or recipients.
-    /// Requires the `generate_dashboard_reports` permission.
-    pub async fn list_report_schedules_with_http_info(
-        &self,
-        params: ListReportSchedulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleListResponse>,
-        datadog::Error<ListReportSchedulesError>,
-    > {
+/// The response is paginated and can be filtered by title, author UUID, or recipients.
+/// Requires the `generate_dashboard_reports` permission.
+    pub async fn list_report_schedules_with_http_info(&self, params: ListReportSchedulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleListResponse>, datadog::Error<ListReportSchedulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_report_schedules";
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
@@ -887,35 +763,31 @@ impl ReportSchedulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/list",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_title {
-            local_req_builder =
-                local_req_builder.query(&[("filter[title]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[title]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_author_uuid {
-            local_req_builder =
-                local_req_builder.query(&[("filter[author_uuid]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[author_uuid]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_recipients {
-            local_req_builder =
-                local_req_builder.query(&[("filter[recipients]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[recipients]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -928,22 +800,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -955,71 +821,44 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListReportSchedulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListReportSchedulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing scheduled report by its identifier. The editable attributes
-    /// are replaced with the supplied values; the targeted resource (`resource_id` and
-    /// `resource_type`) cannot be changed after creation.
-    /// Requires the `generate_dashboard_reports` permission and schedule ownership.
-    pub async fn patch_report_schedule(
-        &self,
-        schedule_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::ReportSchedulePatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleResponse,
-        datadog::Error<PatchReportScheduleError>,
-    > {
-        match self
-            .patch_report_schedule_with_http_info(schedule_uuid, body)
-            .await
-        {
+/// are replaced with the supplied values; the targeted resource (`resource_id` and
+/// `resource_type`) cannot be changed after creation.
+/// Requires the `generate_dashboard_reports` permission and schedule ownership.
+    pub async fn patch_report_schedule(&self, schedule_uuid: uuid::Uuid, body: crate::datadogV2::model::ReportSchedulePatchRequest) -> Result<crate::datadogV2::model::ReportScheduleResponse, datadog::Error<PatchReportScheduleError>> {
+        match self.patch_report_schedule_with_http_info(schedule_uuid, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing scheduled report by its identifier. The editable attributes
-    /// are replaced with the supplied values; the targeted resource (`resource_id` and
-    /// `resource_type`) cannot be changed after creation.
-    /// Requires the `generate_dashboard_reports` permission and schedule ownership.
-    pub async fn patch_report_schedule_with_http_info(
-        &self,
-        schedule_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::ReportSchedulePatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>,
-        datadog::Error<PatchReportScheduleError>,
-    > {
+/// are replaced with the supplied values; the targeted resource (`resource_id` and
+/// `resource_type`) cannot be changed after creation.
+/// Requires the `generate_dashboard_reports` permission and schedule ownership.
+    pub async fn patch_report_schedule_with_http_info(&self, schedule_uuid: uuid::Uuid, body: crate::datadogV2::model::ReportSchedulePatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>, datadog::Error<PatchReportScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_report_schedule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1031,20 +870,25 @@ impl ReportSchedulesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_uuid=
+            datadog::urlencode(schedule_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1057,23 +901,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1081,7 +918,10 @@ impl ReportSchedulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1091,7 +931,10 @@ impl ReportSchedulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1113,7 +956,7 @@ impl ReportSchedulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1130,78 +973,62 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PatchReportScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchReportScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Initiate a one-off, print-only report for a dashboard or integration dashboard.
-    /// The report is rendered as a PDF and made available for download through the URL returned in the response.
-    /// Requires a reporting permission appropriate to the targeted resource type.
-    pub async fn print_report(
-        &self,
-        body: crate::datadogV2::model::PrintReportRequest,
-    ) -> Result<crate::datadogV2::model::PrintReportResponse, datadog::Error<PrintReportError>>
-    {
+/// The report is rendered as a PDF and made available for download through the URL returned in the response.
+/// Requires a reporting permission appropriate to the targeted resource type.
+    pub async fn print_report(&self, body: crate::datadogV2::model::PrintReportRequest) -> Result<crate::datadogV2::model::PrintReportResponse, datadog::Error<PrintReportError>> {
         match self.print_report_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Initiate a one-off, print-only report for a dashboard or integration dashboard.
-    /// The report is rendered as a PDF and made available for download through the URL returned in the response.
-    /// Requires a reporting permission appropriate to the targeted resource type.
-    pub async fn print_report_with_http_info(
-        &self,
-        body: crate::datadogV2::model::PrintReportRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PrintReportResponse>,
-        datadog::Error<PrintReportError>,
-    > {
+/// The report is rendered as a PDF and made available for download through the URL returned in the response.
+/// Requires a reporting permission appropriate to the targeted resource type.
+    pub async fn print_report_with_http_info(&self, body: crate::datadogV2::model::PrintReportRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::PrintReportResponse>, datadog::Error<PrintReportError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.print_report";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/print",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1214,23 +1041,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1238,7 +1058,10 @@ impl ReportSchedulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1248,7 +1071,10 @@ impl ReportSchedulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1270,7 +1096,7 @@ impl ReportSchedulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1287,83 +1113,62 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PrintReportResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PrintReportResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<PrintReportError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Activate or pause a report schedule by setting its status to `active` or `inactive`.
-    /// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
-    pub async fn toggle_report_schedule(
-        &self,
-        schedule_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::ReportScheduleToggleRequest,
-    ) -> Result<
-        crate::datadogV2::model::ReportScheduleResponse,
-        datadog::Error<ToggleReportScheduleError>,
-    > {
-        match self
-            .toggle_report_schedule_with_http_info(schedule_uuid, body)
-            .await
-        {
+/// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
+    pub async fn toggle_report_schedule(&self, schedule_uuid: uuid::Uuid, body: crate::datadogV2::model::ReportScheduleToggleRequest) -> Result<crate::datadogV2::model::ReportScheduleResponse, datadog::Error<ToggleReportScheduleError>> {
+        match self.toggle_report_schedule_with_http_info(schedule_uuid, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Activate or pause a report schedule by setting its status to `active` or `inactive`.
-    /// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
-    pub async fn toggle_report_schedule_with_http_info(
-        &self,
-        schedule_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::ReportScheduleToggleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>,
-        datadog::Error<ToggleReportScheduleError>,
-    > {
+/// Requires a reporting write permission appropriate to the targeted resource type and schedule ownership.
+    pub async fn toggle_report_schedule_with_http_info(&self, schedule_uuid: uuid::Uuid, body: crate::datadogV2::model::ReportScheduleToggleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ReportScheduleResponse>, datadog::Error<ToggleReportScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.toggle_report_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}/toggle",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_uuid=
+            datadog::urlencode(schedule_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1376,23 +1181,16 @@ impl ReportSchedulesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1400,7 +1198,10 @@ impl ReportSchedulesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1410,7 +1211,10 @@ impl ReportSchedulesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1432,7 +1236,7 @@ impl ReportSchedulesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1449,26 +1253,17 @@ impl ReportSchedulesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ReportScheduleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ToggleReportScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ToggleReportScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

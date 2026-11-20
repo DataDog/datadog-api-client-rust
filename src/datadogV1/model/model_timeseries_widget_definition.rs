@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The timeseries visualization allows you to display the evolution of one or more metrics, log events, or Indexed Spans over time.
 #[non_exhaustive]
@@ -18,7 +18,7 @@ pub struct TimeseriesWidgetDefinition {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// List of widget events. Deprecated - Use `overlay` request type instead.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV1::model::WidgetEvent>>,
     /// Columns displayed in the legend.
@@ -64,14 +64,11 @@ pub struct TimeseriesWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TimeseriesWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::TimeseriesWidgetRequest>,
-        type_: crate::datadogV1::model::TimeseriesWidgetDefinitionType,
-    ) -> TimeseriesWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::TimeseriesWidgetRequest>, type_: crate::datadogV1::model::TimeseriesWidgetDefinitionType) -> TimeseriesWidgetDefinition {
         #[allow(deprecated)]
         TimeseriesWidgetDefinition {
             custom_links: None,
@@ -94,105 +91,98 @@ impl TimeseriesWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn events(mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> Self {
         self.events = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn legend_columns(
-        mut self,
-        value: Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>,
-    ) -> Self {
+    pub fn legend_columns(mut self, value: Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>) -> Self {
         self.legend_columns = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn legend_layout(
-        mut self,
-        value: crate::datadogV1::model::TimeseriesWidgetLegendLayout,
-    ) -> Self {
+    pub fn legend_layout(mut self, value: crate::datadogV1::model::TimeseriesWidgetLegendLayout) -> Self {
         self.legend_layout = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn markers(mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> Self {
         self.markers = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn right_yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.right_yaxis = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -214,29 +204,20 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
                 let mut description: Option<String> = None;
                 let mut events: Option<Vec<crate::datadogV1::model::WidgetEvent>> = None;
-                let mut legend_columns: Option<
-                    Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>,
-                > = None;
-                let mut legend_layout: Option<
-                    crate::datadogV1::model::TimeseriesWidgetLegendLayout,
-                > = None;
+                let mut legend_columns: Option<Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>> = None;
+                let mut legend_layout: Option<crate::datadogV1::model::TimeseriesWidgetLegendLayout> = None;
                 let mut legend_size: Option<String> = None;
                 let mut markers: Option<Vec<crate::datadogV1::model::WidgetMarker>> = None;
-                let mut requests: Option<Vec<crate::datadogV1::model::TimeseriesWidgetRequest>> =
-                    None;
+                let mut requests: Option<Vec<crate::datadogV1::model::TimeseriesWidgetRequest>> = None;
                 let mut right_yaxis: Option<crate::datadogV1::model::WidgetAxis> = None;
                 let mut show_legend: Option<bool> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::TimeseriesWidgetDefinitionType> =
-                    None;
+                let mut type_: Option<crate::datadogV1::model::TimeseriesWidgetDefinitionType> = None;
                 let mut yaxis: Option<crate::datadogV1::model::WidgetAxis> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -245,35 +226,31 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "events" => {
                             if v.is_null() {
                                 continue;
                             }
                             events = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "legend_columns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            legend_columns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            legend_columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "legend_layout" => {
                             if v.is_null() {
                                 continue;
                             }
-                            legend_layout =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            legend_layout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _legend_layout) = legend_layout {
                                 match _legend_layout {
                                     crate::datadogV1::model::TimeseriesWidgetLegendLayout::UnparsedObject(_legend_layout) => {
@@ -282,37 +259,34 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "legend_size" => {
                             if v.is_null() {
                                 continue;
                             }
-                            legend_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            legend_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "markers" => {
                             if v.is_null() {
                                 continue;
                             }
                             markers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "right_yaxis" => {
                             if v.is_null() {
                                 continue;
                             }
-                            right_yaxis =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            right_yaxis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_legend" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_legend =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_legend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -322,40 +296,37 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -366,18 +337,18 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "yaxis" => {
                             if v.is_null() {
                                 continue;
                             }
                             yaxis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

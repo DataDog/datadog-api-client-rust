@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateAWSCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_aws_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -20,6 +20,7 @@ pub enum CreateAWSCloudAuthIntakeMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateAWSCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_aws_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -28,6 +29,7 @@ pub enum CreateAWSCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateGitHubCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_git_hub_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,6 +40,7 @@ pub enum CreateGitHubCloudAuthIntakeMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateGitHubCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_git_hub_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -46,6 +49,7 @@ pub enum CreateGitHubCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateOIDCCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_oidc_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -56,6 +60,7 @@ pub enum CreateOIDCCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOIDCCloudAuthProviderError is a struct for typed errors of method [`CloudAuthenticationAPI::create_oidc_cloud_auth_provider`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -64,6 +69,7 @@ pub enum CreateOIDCCloudAuthProviderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateTerraformCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::create_terraform_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -74,6 +80,7 @@ pub enum CreateTerraformCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAWSCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_aws_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -82,6 +89,7 @@ pub enum DeleteAWSCloudAuthIntakeMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAWSCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_aws_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -92,6 +100,7 @@ pub enum DeleteAWSCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteGitHubCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_git_hub_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -100,6 +109,7 @@ pub enum DeleteGitHubCloudAuthIntakeMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteGitHubCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_git_hub_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -110,6 +120,7 @@ pub enum DeleteGitHubCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOIDCCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_oidc_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -118,6 +129,7 @@ pub enum DeleteOIDCCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOIDCCloudAuthProviderError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_oidc_cloud_auth_provider`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -128,6 +140,7 @@ pub enum DeleteOIDCCloudAuthProviderError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTerraformCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::delete_terraform_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -136,6 +149,7 @@ pub enum DeleteTerraformCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAWSCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_aws_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -146,6 +160,7 @@ pub enum GetAWSCloudAuthIntakeMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAWSCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_aws_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -154,6 +169,7 @@ pub enum GetAWSCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetGitHubCloudAuthIntakeMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_git_hub_cloud_auth_intake_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -164,6 +180,7 @@ pub enum GetGitHubCloudAuthIntakeMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetGitHubCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_git_hub_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -172,6 +189,7 @@ pub enum GetGitHubCloudAuthPersonaMappingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOIDCCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_oidc_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -182,6 +200,7 @@ pub enum GetOIDCCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOIDCCloudAuthProviderError is a struct for typed errors of method [`CloudAuthenticationAPI::get_oidc_cloud_auth_provider`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -190,6 +209,7 @@ pub enum GetOIDCCloudAuthProviderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTerraformCloudAuthPersonaMappingError is a struct for typed errors of method [`CloudAuthenticationAPI::get_terraform_cloud_auth_persona_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -200,6 +220,7 @@ pub enum GetTerraformCloudAuthPersonaMappingError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAWSCloudAuthIntakeMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_aws_cloud_auth_intake_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -208,6 +229,7 @@ pub enum ListAWSCloudAuthIntakeMappingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAWSCloudAuthPersonaMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_aws_cloud_auth_persona_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -218,6 +240,7 @@ pub enum ListAWSCloudAuthPersonaMappingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListGitHubCloudAuthIntakeMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_git_hub_cloud_auth_intake_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -226,6 +249,7 @@ pub enum ListGitHubCloudAuthIntakeMappingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListGitHubCloudAuthPersonaMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_git_hub_cloud_auth_persona_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -236,6 +260,7 @@ pub enum ListGitHubCloudAuthPersonaMappingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOIDCCloudAuthPersonaMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_oidc_cloud_auth_persona_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -244,6 +269,7 @@ pub enum ListOIDCCloudAuthPersonaMappingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOIDCCloudAuthProvidersError is a struct for typed errors of method [`CloudAuthenticationAPI::list_oidc_cloud_auth_providers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -254,6 +280,7 @@ pub enum ListOIDCCloudAuthProvidersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTerraformCloudAuthPersonaMappingsError is a struct for typed errors of method [`CloudAuthenticationAPI::list_terraform_cloud_auth_persona_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -262,6 +289,7 @@ pub enum ListTerraformCloudAuthPersonaMappingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure AWS, GitHub, HCP Terraform, and Custom OIDC cloud authentication for persona and intake authentication through the Datadog API.
 #[derive(Debug, Clone)]
@@ -285,7 +313,8 @@ impl CloudAuthenticationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -330,71 +359,57 @@ impl CloudAuthenticationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create an AWS cloud authentication intake mapping to authorize an AWS ARN pattern for Agent authentication. The AWS account must already be integrated with Datadog, and managed API key rotation must be enabled for the organization. Patterns that conflict with existing intake or persona mappings are rejected.
-    pub async fn create_aws_cloud_auth_intake_mapping(
-        &self,
-        body: crate::datadogV2::model::AWSCloudAuthIntakeMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse,
-        datadog::Error<CreateAWSCloudAuthIntakeMappingError>,
-    > {
-        match self
-            .create_aws_cloud_auth_intake_mapping_with_http_info(body)
-            .await
-        {
+    pub async fn create_aws_cloud_auth_intake_mapping(&self, body: crate::datadogV2::model::AWSCloudAuthIntakeMappingCreateRequest) -> Result<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse, datadog::Error<CreateAWSCloudAuthIntakeMappingError>> {
+        match self.create_aws_cloud_auth_intake_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an AWS cloud authentication intake mapping to authorize an AWS ARN pattern for Agent authentication. The AWS account must already be integrated with Datadog, and managed API key rotation must be enabled for the organization. Patterns that conflict with existing intake or persona mappings are rejected.
-    pub async fn create_aws_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSCloudAuthIntakeMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>,
-        datadog::Error<CreateAWSCloudAuthIntakeMappingError>,
-    > {
+    pub async fn create_aws_cloud_auth_intake_mapping_with_http_info(&self, body: crate::datadogV2::model::AWSCloudAuthIntakeMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>, datadog::Error<CreateAWSCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_aws_cloud_auth_intake_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_aws_cloud_auth_intake_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/intake_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -407,23 +422,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -431,7 +439,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -441,7 +452,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -463,7 +477,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -480,88 +494,66 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an AWS cloud authentication persona mapping. This endpoint associates an AWS IAM principal with a Datadog user.
-    pub async fn create_aws_cloud_auth_persona_mapping(
-        &self,
-        body: crate::datadogV2::model::AWSCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse,
-        datadog::Error<CreateAWSCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .create_aws_cloud_auth_persona_mapping_with_http_info(body)
-            .await
-        {
+    pub async fn create_aws_cloud_auth_persona_mapping(&self, body: crate::datadogV2::model::AWSCloudAuthPersonaMappingCreateRequest) -> Result<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse, datadog::Error<CreateAWSCloudAuthPersonaMappingError>> {
+        match self.create_aws_cloud_auth_persona_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an AWS cloud authentication persona mapping. This endpoint associates an AWS IAM principal with a Datadog user.
-    pub async fn create_aws_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>,
-        datadog::Error<CreateAWSCloudAuthPersonaMappingError>,
-    > {
+    pub async fn create_aws_cloud_auth_persona_mapping_with_http_info(&self, body: crate::datadogV2::model::AWSCloudAuthPersonaMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>, datadog::Error<CreateAWSCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_aws_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_aws_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -574,23 +566,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -598,7 +583,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -608,7 +596,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -630,7 +621,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -647,88 +638,66 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a GitHub cloud authentication intake mapping. This endpoint entitles a matching GitHub Actions OIDC principal to request Datadog API keys.
-    pub async fn create_git_hub_cloud_auth_intake_mapping(
-        &self,
-        body: crate::datadogV2::model::GitHubCloudAuthIntakeMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse,
-        datadog::Error<CreateGitHubCloudAuthIntakeMappingError>,
-    > {
-        match self
-            .create_git_hub_cloud_auth_intake_mapping_with_http_info(body)
-            .await
-        {
+    pub async fn create_git_hub_cloud_auth_intake_mapping(&self, body: crate::datadogV2::model::GitHubCloudAuthIntakeMappingCreateRequest) -> Result<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse, datadog::Error<CreateGitHubCloudAuthIntakeMappingError>> {
+        match self.create_git_hub_cloud_auth_intake_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a GitHub cloud authentication intake mapping. This endpoint entitles a matching GitHub Actions OIDC principal to request Datadog API keys.
-    pub async fn create_git_hub_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::GitHubCloudAuthIntakeMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>,
-        datadog::Error<CreateGitHubCloudAuthIntakeMappingError>,
-    > {
+    pub async fn create_git_hub_cloud_auth_intake_mapping_with_http_info(&self, body: crate::datadogV2::model::GitHubCloudAuthIntakeMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>, datadog::Error<CreateGitHubCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_git_hub_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_git_hub_cloud_auth_intake_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_git_hub_cloud_auth_intake_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/intake_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -741,23 +710,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -765,7 +727,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -775,7 +740,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -797,7 +765,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -814,89 +782,66 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateGitHubCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateGitHubCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a GitHub cloud authentication persona mapping. This endpoint associates a GitHub Actions OIDC principal with a Datadog user. The mapped principal can request an impersonation token.
-    pub async fn create_git_hub_cloud_auth_persona_mapping(
-        &self,
-        body: crate::datadogV2::model::GitHubCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse,
-        datadog::Error<CreateGitHubCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .create_git_hub_cloud_auth_persona_mapping_with_http_info(body)
-            .await
-        {
+    pub async fn create_git_hub_cloud_auth_persona_mapping(&self, body: crate::datadogV2::model::GitHubCloudAuthPersonaMappingCreateRequest) -> Result<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse, datadog::Error<CreateGitHubCloudAuthPersonaMappingError>> {
+        match self.create_git_hub_cloud_auth_persona_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a GitHub cloud authentication persona mapping. This endpoint associates a GitHub Actions OIDC principal with a Datadog user. The mapped principal can request an impersonation token.
-    pub async fn create_git_hub_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::GitHubCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>,
-        datadog::Error<CreateGitHubCloudAuthPersonaMappingError>,
-    > {
+    pub async fn create_git_hub_cloud_auth_persona_mapping_with_http_info(&self, body: crate::datadogV2::model::GitHubCloudAuthPersonaMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>, datadog::Error<CreateGitHubCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_git_hub_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_git_hub_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_git_hub_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -909,23 +854,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -933,7 +871,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -943,7 +884,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -965,7 +909,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -982,89 +926,66 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateGitHubCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateGitHubCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Map token claims from a registered Custom OIDC provider to a Datadog user or service account. The caller must be authorized to map to the target account.
-    pub async fn create_oidc_cloud_auth_persona_mapping(
-        &self,
-        body: crate::datadogV2::model::OIDCCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse,
-        datadog::Error<CreateOIDCCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .create_oidc_cloud_auth_persona_mapping_with_http_info(body)
-            .await
-        {
+    pub async fn create_oidc_cloud_auth_persona_mapping(&self, body: crate::datadogV2::model::OIDCCloudAuthPersonaMappingCreateRequest) -> Result<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse, datadog::Error<CreateOIDCCloudAuthPersonaMappingError>> {
+        match self.create_oidc_cloud_auth_persona_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Map token claims from a registered Custom OIDC provider to a Datadog user or service account. The caller must be authorized to map to the target account.
-    pub async fn create_oidc_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OIDCCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>,
-        datadog::Error<CreateOIDCCloudAuthPersonaMappingError>,
-    > {
+    pub async fn create_oidc_cloud_auth_persona_mapping_with_http_info(&self, body: crate::datadogV2::model::OIDCCloudAuthPersonaMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>, datadog::Error<CreateOIDCCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_oidc_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_oidc_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_oidc_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1077,23 +998,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1101,7 +1015,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1111,7 +1028,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1133,7 +1053,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1150,63 +1070,38 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOIDCCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOIDCCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Register an OIDC issuer, signing-key discovery configuration, and accepted audiences. Provider names and issuer URLs must be unique within the organization.
-    pub async fn create_oidc_cloud_auth_provider(
-        &self,
-        body: crate::datadogV2::model::OIDCCloudAuthProviderCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthProviderResponse,
-        datadog::Error<CreateOIDCCloudAuthProviderError>,
-    > {
-        match self
-            .create_oidc_cloud_auth_provider_with_http_info(body)
-            .await
-        {
+    pub async fn create_oidc_cloud_auth_provider(&self, body: crate::datadogV2::model::OIDCCloudAuthProviderCreateRequest) -> Result<crate::datadogV2::model::OIDCCloudAuthProviderResponse, datadog::Error<CreateOIDCCloudAuthProviderError>> {
+        match self.create_oidc_cloud_auth_provider_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Register an OIDC issuer, signing-key discovery configuration, and accepted audiences. Provider names and issuer URLs must be unique within the organization.
-    pub async fn create_oidc_cloud_auth_provider_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OIDCCloudAuthProviderCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProviderResponse>,
-        datadog::Error<CreateOIDCCloudAuthProviderError>,
-    > {
+    pub async fn create_oidc_cloud_auth_provider_with_http_info(&self, body: crate::datadogV2::model::OIDCCloudAuthProviderCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProviderResponse>, datadog::Error<CreateOIDCCloudAuthProviderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_oidc_cloud_auth_provider";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1218,19 +1113,23 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/provider",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1243,23 +1142,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1267,7 +1159,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1277,7 +1172,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1299,7 +1197,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1316,92 +1214,70 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProviderResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProviderResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOIDCCloudAuthProviderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOIDCCloudAuthProviderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an HCP Terraform persona mapping. The mapping associates a Datadog user or service account with workload identity tokens from an HCP Terraform issuer whose `sub` claim matches `sub_pattern`.
-    ///
-    /// The response includes the `audience` value to set as the `TFC_WORKLOAD_IDENTITY_AUDIENCE_DATADOG` environment variable in HCP Terraform. The API returns a 409 error if the pattern duplicates an existing mapping, or if it can match the same token as an existing mapping for a different account.
-    pub async fn create_terraform_cloud_auth_persona_mapping(
-        &self,
-        body: crate::datadogV2::model::TerraformCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse,
-        datadog::Error<CreateTerraformCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .create_terraform_cloud_auth_persona_mapping_with_http_info(body)
-            .await
-        {
+///
+/// The response includes the `audience` value to set as the `TFC_WORKLOAD_IDENTITY_AUDIENCE_DATADOG` environment variable in HCP Terraform. The API returns a 409 error if the pattern duplicates an existing mapping, or if it can match the same token as an existing mapping for a different account.
+    pub async fn create_terraform_cloud_auth_persona_mapping(&self, body: crate::datadogV2::model::TerraformCloudAuthPersonaMappingCreateRequest) -> Result<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse, datadog::Error<CreateTerraformCloudAuthPersonaMappingError>> {
+        match self.create_terraform_cloud_auth_persona_mapping_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an HCP Terraform persona mapping. The mapping associates a Datadog user or service account with workload identity tokens from an HCP Terraform issuer whose `sub` claim matches `sub_pattern`.
-    ///
-    /// The response includes the `audience` value to set as the `TFC_WORKLOAD_IDENTITY_AUDIENCE_DATADOG` environment variable in HCP Terraform. The API returns a 409 error if the pattern duplicates an existing mapping, or if it can match the same token as an existing mapping for a different account.
-    pub async fn create_terraform_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TerraformCloudAuthPersonaMappingCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>,
-        datadog::Error<CreateTerraformCloudAuthPersonaMappingError>,
-    > {
+///
+/// The response includes the `audience` value to set as the `TFC_WORKLOAD_IDENTITY_AUDIENCE_DATADOG` environment variable in HCP Terraform. The API returns a 409 error if the pattern duplicates an existing mapping, or if it can match the same token as an existing mapping for a different account.
+    pub async fn create_terraform_cloud_auth_persona_mapping_with_http_info(&self, body: crate::datadogV2::model::TerraformCloudAuthPersonaMappingCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>, datadog::Error<CreateTerraformCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_terraform_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_terraform_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_terraform_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/terraform/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1414,23 +1290,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1438,7 +1307,10 @@ impl CloudAuthenticationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1448,7 +1320,10 @@ impl CloudAuthenticationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1470,7 +1345,7 @@ impl CloudAuthenticationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1487,76 +1362,61 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTerraformCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTerraformCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AWS cloud authentication intake mapping by ID.
-    pub async fn delete_aws_cloud_auth_intake_mapping(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<(), datadog::Error<DeleteAWSCloudAuthIntakeMappingError>> {
-        match self
-            .delete_aws_cloud_auth_intake_mapping_with_http_info(intake_mapping_id)
-            .await
-        {
+    pub async fn delete_aws_cloud_auth_intake_mapping(&self, intake_mapping_id: String) -> Result<(), datadog::Error<DeleteAWSCloudAuthIntakeMappingError>> {
+        match self.delete_aws_cloud_auth_intake_mapping_with_http_info(intake_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AWS cloud authentication intake mapping by ID.
-    pub async fn delete_aws_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSCloudAuthIntakeMappingError>>
-    {
+    pub async fn delete_aws_cloud_auth_intake_mapping_with_http_info(&self, intake_mapping_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_aws_cloud_auth_intake_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_aws_cloud_auth_intake_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/intake_mapping/{intake_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            intake_mapping_id = datadog::urlencode(intake_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), intake_mapping_id=
+            datadog::urlencode(intake_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1569,22 +1429,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1602,62 +1456,52 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAWSCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AWS cloud authentication persona mapping by ID. This removes the association between an AWS IAM principal and a Datadog user.
-    pub async fn delete_aws_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<(), datadog::Error<DeleteAWSCloudAuthPersonaMappingError>> {
-        match self
-            .delete_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn delete_aws_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<(), datadog::Error<DeleteAWSCloudAuthPersonaMappingError>> {
+        match self.delete_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AWS cloud authentication persona mapping by ID. This removes the association between an AWS IAM principal and a Datadog user.
-    pub async fn delete_aws_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSCloudAuthPersonaMappingError>>
-    {
+    pub async fn delete_aws_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_aws_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_aws_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1670,22 +1514,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1703,62 +1541,52 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAWSCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a GitHub cloud authentication intake mapping by ID. This removes a GitHub Actions OIDC principal's entitlement to request Datadog API keys.
-    pub async fn delete_git_hub_cloud_auth_intake_mapping(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<(), datadog::Error<DeleteGitHubCloudAuthIntakeMappingError>> {
-        match self
-            .delete_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id)
-            .await
-        {
+    pub async fn delete_git_hub_cloud_auth_intake_mapping(&self, intake_mapping_id: String) -> Result<(), datadog::Error<DeleteGitHubCloudAuthIntakeMappingError>> {
+        match self.delete_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a GitHub cloud authentication intake mapping by ID. This removes a GitHub Actions OIDC principal's entitlement to request Datadog API keys.
-    pub async fn delete_git_hub_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGitHubCloudAuthIntakeMappingError>>
-    {
+    pub async fn delete_git_hub_cloud_auth_intake_mapping_with_http_info(&self, intake_mapping_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGitHubCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_git_hub_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_git_hub_cloud_auth_intake_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_git_hub_cloud_auth_intake_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/intake_mapping/{intake_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            intake_mapping_id = datadog::urlencode(intake_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), intake_mapping_id=
+            datadog::urlencode(intake_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1771,22 +1599,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1804,64 +1626,52 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteGitHubCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteGitHubCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a GitHub cloud authentication persona mapping by ID. This removes the association between a GitHub Actions OIDC principal and a Datadog user.
-    pub async fn delete_git_hub_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<(), datadog::Error<DeleteGitHubCloudAuthPersonaMappingError>> {
-        match self
-            .delete_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn delete_git_hub_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<(), datadog::Error<DeleteGitHubCloudAuthPersonaMappingError>> {
+        match self.delete_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a GitHub cloud authentication persona mapping by ID. This removes the association between a GitHub Actions OIDC principal and a Datadog user.
-    pub async fn delete_git_hub_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteGitHubCloudAuthPersonaMappingError>,
-    > {
+    pub async fn delete_git_hub_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGitHubCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_git_hub_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_git_hub_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_git_hub_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1874,22 +1684,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1907,62 +1711,52 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteGitHubCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteGitHubCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Custom OIDC persona mapping.
-    pub async fn delete_oidc_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOIDCCloudAuthPersonaMappingError>> {
-        match self
-            .delete_oidc_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn delete_oidc_cloud_auth_persona_mapping(&self, persona_mapping_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOIDCCloudAuthPersonaMappingError>> {
+        match self.delete_oidc_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Custom OIDC persona mapping.
-    pub async fn delete_oidc_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOIDCCloudAuthPersonaMappingError>>
-    {
+    pub async fn delete_oidc_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOIDCCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_oidc_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_oidc_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_oidc_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1975,22 +1769,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2008,37 +1796,23 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOIDCCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOIDCCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Custom OIDC provider. Delete all persona and intake mappings referencing it first; otherwise the request returns a conflict.
-    pub async fn delete_oidc_cloud_auth_provider(
-        &self,
-        provider_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOIDCCloudAuthProviderError>> {
-        match self
-            .delete_oidc_cloud_auth_provider_with_http_info(provider_id)
-            .await
-        {
+    pub async fn delete_oidc_cloud_auth_provider(&self, provider_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOIDCCloudAuthProviderError>> {
+        match self.delete_oidc_cloud_auth_provider_with_http_info(provider_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Custom OIDC provider. Delete all persona and intake mappings referencing it first; otherwise the request returns a conflict.
-    pub async fn delete_oidc_cloud_auth_provider_with_http_info(
-        &self,
-        provider_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOIDCCloudAuthProviderError>>
-    {
+    pub async fn delete_oidc_cloud_auth_provider_with_http_info(&self, provider_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOIDCCloudAuthProviderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_oidc_cloud_auth_provider";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2050,19 +1824,24 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/provider/{provider_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            provider_id = datadog::urlencode(provider_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), provider_id=
+            datadog::urlencode(provider_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2075,22 +1854,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2108,64 +1881,52 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOIDCCloudAuthProviderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOIDCCloudAuthProviderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an HCP Terraform persona mapping by ID. Workload identity tokens that matched only this mapping can no longer be exchanged.
-    pub async fn delete_terraform_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<(), datadog::Error<DeleteTerraformCloudAuthPersonaMappingError>> {
-        match self
-            .delete_terraform_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn delete_terraform_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<(), datadog::Error<DeleteTerraformCloudAuthPersonaMappingError>> {
+        match self.delete_terraform_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an HCP Terraform persona mapping by ID. Workload identity tokens that matched only this mapping can no longer be exchanged.
-    pub async fn delete_terraform_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteTerraformCloudAuthPersonaMappingError>,
-    > {
+    pub async fn delete_terraform_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTerraformCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_terraform_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_terraform_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_terraform_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/terraform/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2178,22 +1939,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2211,50 +1966,29 @@ impl CloudAuthenticationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTerraformCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTerraformCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an AWS cloud authentication intake mapping by ID.
-    pub async fn get_aws_cloud_auth_intake_mapping(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse,
-        datadog::Error<GetAWSCloudAuthIntakeMappingError>,
-    > {
-        match self
-            .get_aws_cloud_auth_intake_mapping_with_http_info(intake_mapping_id)
-            .await
-        {
+    pub async fn get_aws_cloud_auth_intake_mapping(&self, intake_mapping_id: String) -> Result<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse, datadog::Error<GetAWSCloudAuthIntakeMappingError>> {
+        match self.get_aws_cloud_auth_intake_mapping_with_http_info(intake_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an AWS cloud authentication intake mapping by ID.
-    pub async fn get_aws_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>,
-        datadog::Error<GetAWSCloudAuthIntakeMappingError>,
-    > {
+    pub async fn get_aws_cloud_auth_intake_mapping_with_http_info(&self, intake_mapping_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>, datadog::Error<GetAWSCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2266,19 +2000,24 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/intake_mapping/{intake_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            intake_mapping_id = datadog::urlencode(intake_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), intake_mapping_id=
+            datadog::urlencode(intake_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2291,22 +2030,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2318,63 +2051,38 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific AWS cloud authentication persona mapping by ID. This endpoint retrieves a single configured persona mapping that associates an AWS IAM principal with a Datadog user.
-    pub async fn get_aws_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse,
-        datadog::Error<GetAWSCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .get_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn get_aws_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse, datadog::Error<GetAWSCloudAuthPersonaMappingError>> {
+        match self.get_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific AWS cloud authentication persona mapping by ID. This endpoint retrieves a single configured persona mapping that associates an AWS IAM principal with a Datadog user.
-    pub async fn get_aws_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>,
-        datadog::Error<GetAWSCloudAuthPersonaMappingError>,
-    > {
+    pub async fn get_aws_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>, datadog::Error<GetAWSCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2386,19 +2094,24 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2411,22 +2124,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2438,88 +2145,67 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific GitHub cloud authentication intake mapping by ID. This endpoint retrieves a single configured intake mapping that entitles a matching GitHub Actions OIDC principal to request Datadog API keys.
-    pub async fn get_git_hub_cloud_auth_intake_mapping(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse,
-        datadog::Error<GetGitHubCloudAuthIntakeMappingError>,
-    > {
-        match self
-            .get_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id)
-            .await
-        {
+    pub async fn get_git_hub_cloud_auth_intake_mapping(&self, intake_mapping_id: String) -> Result<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse, datadog::Error<GetGitHubCloudAuthIntakeMappingError>> {
+        match self.get_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific GitHub cloud authentication intake mapping by ID. This endpoint retrieves a single configured intake mapping that entitles a matching GitHub Actions OIDC principal to request Datadog API keys.
-    pub async fn get_git_hub_cloud_auth_intake_mapping_with_http_info(
-        &self,
-        intake_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>,
-        datadog::Error<GetGitHubCloudAuthIntakeMappingError>,
-    > {
+    pub async fn get_git_hub_cloud_auth_intake_mapping_with_http_info(&self, intake_mapping_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>, datadog::Error<GetGitHubCloudAuthIntakeMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_git_hub_cloud_auth_intake_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_git_hub_cloud_auth_intake_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_git_hub_cloud_auth_intake_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/intake_mapping/{intake_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            intake_mapping_id = datadog::urlencode(intake_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), intake_mapping_id=
+            datadog::urlencode(intake_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2532,22 +2218,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2559,89 +2239,67 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthIntakeMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetGitHubCloudAuthIntakeMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetGitHubCloudAuthIntakeMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific GitHub cloud authentication persona mapping by ID. This endpoint retrieves a single configured persona mapping that associates a GitHub Actions OIDC principal with a Datadog user. The mapped principal can request an impersonation token.
-    pub async fn get_git_hub_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse,
-        datadog::Error<GetGitHubCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .get_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn get_git_hub_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse, datadog::Error<GetGitHubCloudAuthPersonaMappingError>> {
+        match self.get_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific GitHub cloud authentication persona mapping by ID. This endpoint retrieves a single configured persona mapping that associates a GitHub Actions OIDC principal with a Datadog user. The mapped principal can request an impersonation token.
-    pub async fn get_git_hub_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>,
-        datadog::Error<GetGitHubCloudAuthPersonaMappingError>,
-    > {
+    pub async fn get_git_hub_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>, datadog::Error<GetGitHubCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_git_hub_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_git_hub_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_git_hub_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2654,22 +2312,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2681,89 +2333,67 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetGitHubCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetGitHubCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Custom OIDC persona mapping by UUID.
-    pub async fn get_oidc_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse,
-        datadog::Error<GetOIDCCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .get_oidc_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn get_oidc_cloud_auth_persona_mapping(&self, persona_mapping_id: uuid::Uuid) -> Result<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse, datadog::Error<GetOIDCCloudAuthPersonaMappingError>> {
+        match self.get_oidc_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Custom OIDC persona mapping by UUID.
-    pub async fn get_oidc_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>,
-        datadog::Error<GetOIDCCloudAuthPersonaMappingError>,
-    > {
+    pub async fn get_oidc_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>, datadog::Error<GetOIDCCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_oidc_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_oidc_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_oidc_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2776,22 +2406,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2803,63 +2427,38 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOIDCCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOIDCCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Custom OIDC provider by UUID.
-    pub async fn get_oidc_cloud_auth_provider(
-        &self,
-        provider_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthProviderResponse,
-        datadog::Error<GetOIDCCloudAuthProviderError>,
-    > {
-        match self
-            .get_oidc_cloud_auth_provider_with_http_info(provider_id)
-            .await
-        {
+    pub async fn get_oidc_cloud_auth_provider(&self, provider_id: uuid::Uuid) -> Result<crate::datadogV2::model::OIDCCloudAuthProviderResponse, datadog::Error<GetOIDCCloudAuthProviderError>> {
+        match self.get_oidc_cloud_auth_provider_with_http_info(provider_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Custom OIDC provider by UUID.
-    pub async fn get_oidc_cloud_auth_provider_with_http_info(
-        &self,
-        provider_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProviderResponse>,
-        datadog::Error<GetOIDCCloudAuthProviderError>,
-    > {
+    pub async fn get_oidc_cloud_auth_provider_with_http_info(&self, provider_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProviderResponse>, datadog::Error<GetOIDCCloudAuthProviderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_oidc_cloud_auth_provider";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2871,19 +2470,24 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/provider/{provider_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            provider_id = datadog::urlencode(provider_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), provider_id=
+            datadog::urlencode(provider_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2896,22 +2500,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2923,88 +2521,67 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProviderResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProviderResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOIDCCloudAuthProviderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOIDCCloudAuthProviderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an HCP Terraform persona mapping by ID.
-    pub async fn get_terraform_cloud_auth_persona_mapping(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse,
-        datadog::Error<GetTerraformCloudAuthPersonaMappingError>,
-    > {
-        match self
-            .get_terraform_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)
-            .await
-        {
+    pub async fn get_terraform_cloud_auth_persona_mapping(&self, persona_mapping_id: String) -> Result<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse, datadog::Error<GetTerraformCloudAuthPersonaMappingError>> {
+        match self.get_terraform_cloud_auth_persona_mapping_with_http_info(persona_mapping_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an HCP Terraform persona mapping by ID.
-    pub async fn get_terraform_cloud_auth_persona_mapping_with_http_info(
-        &self,
-        persona_mapping_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>,
-        datadog::Error<GetTerraformCloudAuthPersonaMappingError>,
-    > {
+    pub async fn get_terraform_cloud_auth_persona_mapping_with_http_info(&self, persona_mapping_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>, datadog::Error<GetTerraformCloudAuthPersonaMappingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_terraform_cloud_auth_persona_mapping";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_terraform_cloud_auth_persona_mapping' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_terraform_cloud_auth_persona_mapping' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/terraform/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            persona_mapping_id = datadog::urlencode(persona_mapping_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), persona_mapping_id=
+            datadog::urlencode(persona_mapping_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3017,22 +2594,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3044,86 +2615,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TerraformCloudAuthPersonaMappingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTerraformCloudAuthPersonaMappingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTerraformCloudAuthPersonaMappingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List AWS cloud authentication intake mappings configured for the organization.
-    pub async fn list_aws_cloud_auth_intake_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse,
-        datadog::Error<ListAWSCloudAuthIntakeMappingsError>,
-    > {
-        match self
-            .list_aws_cloud_auth_intake_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_aws_cloud_auth_intake_mappings(&self) -> Result<crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse, datadog::Error<ListAWSCloudAuthIntakeMappingsError>> {
+        match self.list_aws_cloud_auth_intake_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List AWS cloud authentication intake mappings configured for the organization.
-    pub async fn list_aws_cloud_auth_intake_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse>,
-        datadog::Error<ListAWSCloudAuthIntakeMappingsError>,
-    > {
+    pub async fn list_aws_cloud_auth_intake_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse>, datadog::Error<ListAWSCloudAuthIntakeMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_cloud_auth_intake_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_aws_cloud_auth_intake_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_aws_cloud_auth_intake_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/intake_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3136,22 +2686,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3163,85 +2707,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthIntakeMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSCloudAuthIntakeMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSCloudAuthIntakeMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all AWS cloud authentication persona mappings. This endpoint retrieves all configured persona mappings that associate AWS IAM principals with Datadog users.
-    pub async fn list_aws_cloud_auth_persona_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse,
-        datadog::Error<ListAWSCloudAuthPersonaMappingsError>,
-    > {
-        match self
-            .list_aws_cloud_auth_persona_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_aws_cloud_auth_persona_mappings(&self) -> Result<crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse, datadog::Error<ListAWSCloudAuthPersonaMappingsError>> {
+        match self.list_aws_cloud_auth_persona_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all AWS cloud authentication persona mappings. This endpoint retrieves all configured persona mappings that associate AWS IAM principals with Datadog users.
-    pub async fn list_aws_cloud_auth_persona_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse>,
-        datadog::Error<ListAWSCloudAuthPersonaMappingsError>,
-    > {
+    pub async fn list_aws_cloud_auth_persona_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse>, datadog::Error<ListAWSCloudAuthPersonaMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_cloud_auth_persona_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_aws_cloud_auth_persona_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_aws_cloud_auth_persona_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/aws/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3254,22 +2778,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3281,85 +2799,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCloudAuthPersonaMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSCloudAuthPersonaMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSCloudAuthPersonaMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all GitHub cloud authentication intake mappings. This endpoint retrieves all configured intake mappings that entitle matching GitHub Actions OIDC principals to request Datadog API keys.
-    pub async fn list_git_hub_cloud_auth_intake_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse,
-        datadog::Error<ListGitHubCloudAuthIntakeMappingsError>,
-    > {
-        match self
-            .list_git_hub_cloud_auth_intake_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_git_hub_cloud_auth_intake_mappings(&self) -> Result<crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse, datadog::Error<ListGitHubCloudAuthIntakeMappingsError>> {
+        match self.list_git_hub_cloud_auth_intake_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all GitHub cloud authentication intake mappings. This endpoint retrieves all configured intake mappings that entitle matching GitHub Actions OIDC principals to request Datadog API keys.
-    pub async fn list_git_hub_cloud_auth_intake_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse>,
-        datadog::Error<ListGitHubCloudAuthIntakeMappingsError>,
-    > {
+    pub async fn list_git_hub_cloud_auth_intake_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse>, datadog::Error<ListGitHubCloudAuthIntakeMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_git_hub_cloud_auth_intake_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_git_hub_cloud_auth_intake_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_git_hub_cloud_auth_intake_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/intake_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3372,22 +2870,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3399,86 +2891,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthIntakeMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListGitHubCloudAuthIntakeMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListGitHubCloudAuthIntakeMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all GitHub cloud authentication persona mappings. This endpoint retrieves all configured persona mappings that associate GitHub Actions OpenID Connect (OIDC) principals with Datadog users. Mapped principals can request impersonation tokens.
-    pub async fn list_git_hub_cloud_auth_persona_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse,
-        datadog::Error<ListGitHubCloudAuthPersonaMappingsError>,
-    > {
-        match self
-            .list_git_hub_cloud_auth_persona_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_git_hub_cloud_auth_persona_mappings(&self) -> Result<crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse, datadog::Error<ListGitHubCloudAuthPersonaMappingsError>> {
+        match self.list_git_hub_cloud_auth_persona_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all GitHub cloud authentication persona mappings. This endpoint retrieves all configured persona mappings that associate GitHub Actions OpenID Connect (OIDC) principals with Datadog users. Mapped principals can request impersonation tokens.
-    pub async fn list_git_hub_cloud_auth_persona_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse>,
-        datadog::Error<ListGitHubCloudAuthPersonaMappingsError>,
-    > {
+    pub async fn list_git_hub_cloud_auth_persona_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse>, datadog::Error<ListGitHubCloudAuthPersonaMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_git_hub_cloud_auth_persona_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_git_hub_cloud_auth_persona_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_git_hub_cloud_auth_persona_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/github/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3491,22 +2962,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3518,86 +2983,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GitHubCloudAuthPersonaMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListGitHubCloudAuthPersonaMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListGitHubCloudAuthPersonaMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Custom OIDC persona mappings in the organization.
-    pub async fn list_oidc_cloud_auth_persona_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse,
-        datadog::Error<ListOIDCCloudAuthPersonaMappingsError>,
-    > {
-        match self
-            .list_oidc_cloud_auth_persona_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_oidc_cloud_auth_persona_mappings(&self) -> Result<crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse, datadog::Error<ListOIDCCloudAuthPersonaMappingsError>> {
+        match self.list_oidc_cloud_auth_persona_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Custom OIDC persona mappings in the organization.
-    pub async fn list_oidc_cloud_auth_persona_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse>,
-        datadog::Error<ListOIDCCloudAuthPersonaMappingsError>,
-    > {
+    pub async fn list_oidc_cloud_auth_persona_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse>, datadog::Error<ListOIDCCloudAuthPersonaMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_oidc_cloud_auth_persona_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_oidc_cloud_auth_persona_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_oidc_cloud_auth_persona_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3610,22 +3054,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3637,59 +3075,38 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthPersonaMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOIDCCloudAuthPersonaMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOIDCCloudAuthPersonaMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Custom OIDC providers in the organization.
-    pub async fn list_oidc_cloud_auth_providers(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OIDCCloudAuthProvidersResponse,
-        datadog::Error<ListOIDCCloudAuthProvidersError>,
-    > {
+    pub async fn list_oidc_cloud_auth_providers(&self) -> Result<crate::datadogV2::model::OIDCCloudAuthProvidersResponse, datadog::Error<ListOIDCCloudAuthProvidersError>> {
         match self.list_oidc_cloud_auth_providers_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Custom OIDC providers in the organization.
-    pub async fn list_oidc_cloud_auth_providers_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProvidersResponse>,
-        datadog::Error<ListOIDCCloudAuthProvidersError>,
-    > {
+    pub async fn list_oidc_cloud_auth_providers_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCCloudAuthProvidersResponse>, datadog::Error<ListOIDCCloudAuthProvidersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_oidc_cloud_auth_providers";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3701,18 +3118,22 @@ impl CloudAuthenticationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/oidc/provider",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3725,22 +3146,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3752,87 +3167,65 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProvidersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCCloudAuthProvidersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOIDCCloudAuthProvidersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOIDCCloudAuthProvidersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all HCP Terraform persona mappings in the organization. Each mapping associates an HCP Terraform workload identity token issuer and `sub` claim pattern with a Datadog user or service account.
-    pub async fn list_terraform_cloud_auth_persona_mappings(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse,
-        datadog::Error<ListTerraformCloudAuthPersonaMappingsError>,
-    > {
-        match self
-            .list_terraform_cloud_auth_persona_mappings_with_http_info()
-            .await
-        {
+    pub async fn list_terraform_cloud_auth_persona_mappings(&self) -> Result<crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse, datadog::Error<ListTerraformCloudAuthPersonaMappingsError>> {
+        match self.list_terraform_cloud_auth_persona_mappings_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all HCP Terraform persona mappings in the organization. Each mapping associates an HCP Terraform workload identity token issuer and `sub` claim pattern with a Datadog user or service account.
-    pub async fn list_terraform_cloud_auth_persona_mappings_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse,
-        >,
-        datadog::Error<ListTerraformCloudAuthPersonaMappingsError>,
-    > {
+    pub async fn list_terraform_cloud_auth_persona_mappings_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse>, datadog::Error<ListTerraformCloudAuthPersonaMappingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_terraform_cloud_auth_persona_mappings";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_terraform_cloud_auth_persona_mappings' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_terraform_cloud_auth_persona_mappings' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/wif/terraform/persona_mapping",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3845,22 +3238,16 @@ impl CloudAuthenticationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3872,27 +3259,17 @@ impl CloudAuthenticationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TerraformCloudAuthPersonaMappingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTerraformCloudAuthPersonaMappingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTerraformCloudAuthPersonaMappingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

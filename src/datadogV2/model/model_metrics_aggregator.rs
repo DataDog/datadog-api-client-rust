@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MetricsAggregator {
-    AVG,
-    MIN,
-    MAX,
-    SUM,
-    LAST,
-    PERCENTILE,
-    MEAN,
-    L2NORM,
-    AREA,
+	AVG,
+	MIN,
+	MAX,
+	SUM,
+	LAST,
+	PERCENTILE,
+	MEAN,
+	L2NORM,
+	AREA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for MetricsAggregator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "avg" => Self::AVG,
-            "min" => Self::MIN,
-            "max" => Self::MAX,
-            "sum" => Self::SUM,
-            "last" => Self::LAST,
-            "percentile" => Self::PERCENTILE,
-            "mean" => Self::MEAN,
-            "l2norm" => Self::L2NORM,
-            "area" => Self::AREA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"avg" => Self::AVG,"min" => Self::MIN,"max" => Self::MAX,"sum" => Self::SUM,"last" => Self::LAST,"percentile" => Self::PERCENTILE,"mean" => Self::MEAN,"l2norm" => Self::L2NORM,"area" => Self::AREA,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

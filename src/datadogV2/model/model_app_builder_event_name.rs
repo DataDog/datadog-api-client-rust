@@ -2,21 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AppBuilderEventName {
-    PAGECHANGE,
-    TABLEROWCLICK,
-    TABLEROWBUTTONCLICK,
-    CHANGE,
-    SUBMIT,
-    CLICK,
-    TOGGLEOPEN,
-    CLOSE,
-    OPEN,
-    EXECUTIONFINISHED,
+	PAGECHANGE,
+	TABLEROWCLICK,
+	TABLEROWBUTTONCLICK,
+	CHANGE,
+	SUBMIT,
+	CLICK,
+	TOGGLEOPEN,
+	CLOSE,
+	OPEN,
+	EXECUTIONFINISHED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,20 +57,8 @@ impl<'de> Deserialize<'de> for AppBuilderEventName {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "pageChange" => Self::PAGECHANGE,
-            "tableRowClick" => Self::TABLEROWCLICK,
-            "_tableRowButtonClick" => Self::TABLEROWBUTTONCLICK,
-            "change" => Self::CHANGE,
-            "submit" => Self::SUBMIT,
-            "click" => Self::CLICK,
-            "toggleOpen" => Self::TOGGLEOPEN,
-            "close" => Self::CLOSE,
-            "open" => Self::OPEN,
-            "executionFinished" => Self::EXECUTIONFINISHED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"pageChange" => Self::PAGECHANGE,"tableRowClick" => Self::TABLEROWCLICK,"_tableRowButtonClick" => Self::TABLEROWBUTTONCLICK,"change" => Self::CHANGE,"submit" => Self::SUBMIT,"click" => Self::CLICK,"toggleOpen" => Self::TOGGLEOPEN,"close" => Self::CLOSE,"open" => Self::OPEN,"executionFinished" => Self::EXECUTIONFINISHED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

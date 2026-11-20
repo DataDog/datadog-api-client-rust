@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsPatternsRunsListType {
-    LIST_TOPIC_DISCOVERY_RUNS_RESPONSE,
+	LIST_TOPIC_DISCOVERY_RUNS_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for LLMObsPatternsRunsListType {
     fn to_string(&self) -> String {
         match self {
-            Self::LIST_TOPIC_DISCOVERY_RUNS_RESPONSE => {
-                String::from("list_topic_discovery_runs_response")
-            }
+            Self::LIST_TOPIC_DISCOVERY_RUNS_RESPONSE => String::from("list_topic_discovery_runs_response"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for LLMObsPatternsRunsListType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "list_topic_discovery_runs_response" => Self::LIST_TOPIC_DISCOVERY_RUNS_RESPONSE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"list_topic_discovery_runs_response" => Self::LIST_TOPIC_DISCOVERY_RUNS_RESPONSE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

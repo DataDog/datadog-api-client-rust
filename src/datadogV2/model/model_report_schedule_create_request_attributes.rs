@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The configuration of the report schedule to create.
 #[non_exhaustive]
@@ -12,15 +12,15 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ReportScheduleCreateRequestAttributes {
     /// How a PDF-export report is delivered. `pdf` attaches a PDF file, `png` embeds
-    /// an inline PNG image, and `pdf_and_png` delivers both.
+/// an inline PNG image, and `pdf_and_png` delivers both.
     #[serde(rename = "delivery_format")]
     pub delivery_format: Option<crate::datadogV2::model::ReportScheduleDeliveryFormat>,
     /// A description of the report, up to 4096 characters.
     #[serde(rename = "description")]
     pub description: String,
     /// The recipients of the report. Each entry is an email address, a Slack channel
-    /// reference in the form `slack:{team_id}.{channel_id}.{channel_name}`, or a Microsoft
-    /// Teams channel reference in the form `teams:{tenant_id}|{team_id}|{channel_id}`.
+/// reference in the form `slack:{team_id}.{channel_id}.{channel_name}`, or a Microsoft
+/// Teams channel reference in the form `teams:{tenant_id}|{team_id}|{channel_id}`.
     #[serde(rename = "recipients")]
     pub recipients: Vec<String>,
     /// The identifier of the dashboard or integration dashboard to render in the report.
@@ -51,21 +51,11 @@ pub struct ReportScheduleCreateRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ReportScheduleCreateRequestAttributes {
-    pub fn new(
-        description: String,
-        recipients: Vec<String>,
-        resource_id: String,
-        resource_type: crate::datadogV2::model::ReportScheduleResourceType,
-        rrule: String,
-        template_variables: Vec<crate::datadogV2::model::ReportScheduleTemplateVariable>,
-        timeframe: String,
-        timezone: String,
-        title: String,
-    ) -> ReportScheduleCreateRequestAttributes {
+    pub fn new(description: String, recipients: Vec<String>, resource_id: String, resource_type: crate::datadogV2::model::ReportScheduleResourceType, rrule: String, template_variables: Vec<crate::datadogV2::model::ReportScheduleTemplateVariable>, timeframe: String, timezone: String, title: String) -> ReportScheduleCreateRequestAttributes {
         ReportScheduleCreateRequestAttributes {
             delivery_format: None,
             description,
@@ -82,28 +72,24 @@ impl ReportScheduleCreateRequestAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn delivery_format(
-        mut self,
-        value: crate::datadogV2::model::ReportScheduleDeliveryFormat,
-    ) -> Self {
+    
+    pub fn delivery_format(mut self, value: crate::datadogV2::model::ReportScheduleDeliveryFormat) -> Self {
         self.delivery_format = Some(value);
         self
     }
-
+    
     pub fn tab_id(mut self, value: uuid::Uuid) -> Self {
         self.tab_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ReportScheduleCreateRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -122,26 +108,18 @@ impl<'de> Deserialize<'de> for ReportScheduleCreateRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut delivery_format: Option<
-                    crate::datadogV2::model::ReportScheduleDeliveryFormat,
-                > = None;
+                let mut delivery_format: Option<crate::datadogV2::model::ReportScheduleDeliveryFormat> = None;
                 let mut description: Option<String> = None;
                 let mut recipients: Option<Vec<String>> = None;
                 let mut resource_id: Option<String> = None;
-                let mut resource_type: Option<crate::datadogV2::model::ReportScheduleResourceType> =
-                    None;
+                let mut resource_type: Option<crate::datadogV2::model::ReportScheduleResourceType> = None;
                 let mut rrule: Option<String> = None;
                 let mut tab_id: Option<uuid::Uuid> = None;
-                let mut template_variables: Option<
-                    Vec<crate::datadogV2::model::ReportScheduleTemplateVariable>,
-                > = None;
+                let mut template_variables: Option<Vec<crate::datadogV2::model::ReportScheduleTemplateVariable>> = None;
                 let mut timeframe: Option<String> = None;
                 let mut timezone: Option<String> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -150,8 +128,7 @@ impl<'de> Deserialize<'de> for ReportScheduleCreateRequestAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            delivery_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            delivery_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _delivery_format) = delivery_format {
                                 match _delivery_format {
                                     crate::datadogV2::model::ReportScheduleDeliveryFormat::UnparsedObject(_delivery_format) => {
@@ -160,21 +137,18 @@ impl<'de> Deserialize<'de> for ReportScheduleCreateRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "recipients" => {
                             recipients = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource_id" => {
-                            resource_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_type" => {
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _resource_type) = resource_type {
                                 match _resource_type {
                                     crate::datadogV2::model::ReportScheduleResourceType::UnparsedObject(_resource_type) => {
@@ -183,46 +157,41 @@ impl<'de> Deserialize<'de> for ReportScheduleCreateRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "rrule" => {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tab_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             tab_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "template_variables" => {
-                            template_variables =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            template_variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeframe" => {
                             timeframe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timezone" => {
                             timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let recipients = recipients.ok_or_else(|| M::Error::missing_field("recipients"))?;
-                let resource_id =
-                    resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
-                let resource_type =
-                    resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
+                let resource_id = resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
+                let resource_type = resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let rrule = rrule.ok_or_else(|| M::Error::missing_field("rrule"))?;
-                let template_variables = template_variables
-                    .ok_or_else(|| M::Error::missing_field("template_variables"))?;
+                let template_variables = template_variables.ok_or_else(|| M::Error::missing_field("template_variables"))?;
                 let timeframe = timeframe.ok_or_else(|| M::Error::missing_field("timeframe"))?;
                 let timezone = timezone.ok_or_else(|| M::Error::missing_field("timezone"))?;
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;

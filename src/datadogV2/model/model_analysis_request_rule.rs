@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A static analysis rule to apply during code analysis. Clients forward complete rule
 /// objects returned by the rulesets endpoints, so every member of that resource is
@@ -51,11 +51,7 @@ pub struct AnalysisRequestRule {
     #[serde(rename = "documentation_url")]
     pub documentation_url: Option<String>,
     /// The code entity type checked by the rule, applicable when rule type is `AST_CHECK`.
-    #[serde(
-        rename = "entity_checked",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "entity_checked", default, with = "::serde_with::rust::double_option")]
     pub entity_checked: Option<Option<String>>,
     /// The unique identifier of the rule.
     #[serde(rename = "id")]
@@ -109,20 +105,11 @@ pub struct AnalysisRequestRule {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AnalysisRequestRule {
-    pub fn new(
-        category: String,
-        checksum: String,
-        code: String,
-        id: String,
-        language: String,
-        severity: String,
-        tree_sitter_query: String,
-        type_: String,
-    ) -> AnalysisRequestRule {
+    pub fn new(category: String, checksum: String, code: String, id: String, language: String, severity: String, tree_sitter_query: String, type_: String) -> AnalysisRequestRule {
         AnalysisRequestRule {
             arguments: None,
             category,
@@ -156,118 +143,114 @@ impl AnalysisRequestRule {
             _unparsed: false,
         }
     }
-
-    pub fn arguments(
-        mut self,
-        value: Vec<crate::datadogV2::model::AnalysisRequestRuleArgument>,
-    ) -> Self {
+    
+    pub fn arguments(mut self, value: Vec<crate::datadogV2::model::AnalysisRequestRuleArgument>) -> Self {
         self.arguments = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
-
+    
     pub fn creation_message(mut self, value: String) -> Self {
         self.creation_message = Some(value);
         self
     }
-
+    
     pub fn cve(mut self, value: String) -> Self {
         self.cve = Some(value);
         self
     }
-
+    
     pub fn cwe(mut self, value: String) -> Self {
         self.cwe = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn documentation_url(mut self, value: String) -> Self {
         self.documentation_url = Some(value);
         self
     }
-
+    
     pub fn entity_checked(mut self, value: Option<String>) -> Self {
         self.entity_checked = Some(value);
         self
     }
-
+    
     pub fn is_published(mut self, value: bool) -> Self {
         self.is_published = Some(value);
         self
     }
-
+    
     pub fn is_testing(mut self, value: bool) -> Self {
         self.is_testing = Some(value);
         self
     }
-
+    
     pub fn last_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.last_updated_at = Some(value);
         self
     }
-
+    
     pub fn last_updated_by(mut self, value: String) -> Self {
         self.last_updated_by = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn regex(mut self, value: Option<String>) -> Self {
         self.regex = Some(value);
         self
     }
-
+    
     pub fn short_description(mut self, value: String) -> Self {
         self.short_description = Some(value);
         self
     }
-
+    
     pub fn should_use_ai_fix(mut self, value: bool) -> Self {
         self.should_use_ai_fix = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn tests(mut self, value: Vec<crate::datadogV2::model::AnalysisRequestRuleTest>) -> Self {
         self.tests = Some(value);
         self
     }
-
+    
     pub fn version_id(mut self, value: i64) -> Self {
         self.version_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AnalysisRequestRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -286,9 +269,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
             where
                 M: MapAccess<'a>,
             {
-                let mut arguments: Option<
-                    Vec<crate::datadogV2::model::AnalysisRequestRuleArgument>,
-                > = None;
+                let mut arguments: Option<Vec<crate::datadogV2::model::AnalysisRequestRuleArgument>> = None;
                 let mut category: Option<String> = None;
                 let mut checksum: Option<String> = None;
                 let mut code: Option<String> = None;
@@ -316,10 +297,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                 let mut tree_sitter_query: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut version_id: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -329,154 +307,144 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                                 continue;
                             }
                             arguments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "category" => {
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "checksum" => {
                             checksum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "code" => {
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "creation_message" => {
                             if v.is_null() {
                                 continue;
                             }
-                            creation_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            creation_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cve" => {
                             if v.is_null() {
                                 continue;
                             }
                             cve = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cwe" => {
                             if v.is_null() {
                                 continue;
                             }
                             cwe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "documentation_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            documentation_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            documentation_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entity_checked" => {
-                            entity_checked =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_checked = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_published" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_published =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_published = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_testing" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_testing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "language" => {
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_updated_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "regex" => {
                             regex = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "severity" => {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "short_description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            short_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            short_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "should_use_ai_fix" => {
                             if v.is_null() {
                                 continue;
                             }
-                            should_use_ai_fix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            should_use_ai_fix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tests" => {
                             if v.is_null() {
                                 continue;
                             }
                             tests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tree_sitter_query" => {
-                            tree_sitter_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tree_sitter_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             version_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
@@ -485,8 +453,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let language = language.ok_or_else(|| M::Error::missing_field("language"))?;
                 let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
-                let tree_sitter_query = tree_sitter_query
-                    .ok_or_else(|| M::Error::missing_field("tree_sitter_query"))?;
+                let tree_sitter_query = tree_sitter_query.ok_or_else(|| M::Error::missing_field("tree_sitter_query"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = AnalysisRequestRule {

@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsCustomEvalConfigEvalScope {
-    SPAN,
-    TRACE,
-    TRACE_FAN_OUT,
-    SESSION,
+	SPAN,
+	TRACE,
+	TRACE_FAN_OUT,
+	SESSION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigEvalScope {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "span" => Self::SPAN,
-            "trace" => Self::TRACE,
-            "trace_fan_out" => Self::TRACE_FAN_OUT,
-            "session" => Self::SESSION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"span" => Self::SPAN,"trace" => Self::TRACE,"trace_fan_out" => Self::TRACE_FAN_OUT,"session" => Self::SESSION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

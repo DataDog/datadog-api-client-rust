@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorFormulaAndFunctionMetricsAggregator {
-    AVG,
-    MIN,
-    MAX,
-    SUM,
-    LAST,
-    MEAN,
-    AREA,
-    L2NORM,
-    PERCENTILE,
-    STDDEV,
-    COUNT_UNIQUE,
+	AVG,
+	MIN,
+	MAX,
+	SUM,
+	LAST,
+	MEAN,
+	AREA,
+	L2NORM,
+	PERCENTILE,
+	STDDEV,
+	COUNT_UNIQUE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -58,21 +59,8 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionMetricsAggregator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "avg" => Self::AVG,
-            "min" => Self::MIN,
-            "max" => Self::MAX,
-            "sum" => Self::SUM,
-            "last" => Self::LAST,
-            "mean" => Self::MEAN,
-            "area" => Self::AREA,
-            "l2norm" => Self::L2NORM,
-            "percentile" => Self::PERCENTILE,
-            "stddev" => Self::STDDEV,
-            "count_unique" => Self::COUNT_UNIQUE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"avg" => Self::AVG,"min" => Self::MIN,"max" => Self::MAX,"sum" => Self::SUM,"last" => Self::LAST,"mean" => Self::MEAN,"area" => Self::AREA,"l2norm" => Self::L2NORM,"percentile" => Self::PERCENTILE,"stddev" => Self::STDDEV,"count_unique" => Self::COUNT_UNIQUE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

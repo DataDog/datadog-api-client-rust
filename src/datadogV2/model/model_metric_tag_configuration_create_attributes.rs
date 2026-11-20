@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the definition of a metric tag configuration to be created.
 #[non_exhaustive]
@@ -15,12 +15,12 @@ pub struct MetricTagConfigurationCreateAttributes {
     #[serde(rename = "aggregations")]
     pub aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>>,
     /// When set to true, the configuration will exclude the configured tags and include any other submitted tags.
-    /// When set to false, the configuration will include the configured tags and exclude any other submitted tags.
-    /// Defaults to false. Requires `tags` property.
+/// When set to false, the configuration will include the configured tags and exclude any other submitted tags.
+/// Defaults to false. Requires `tags` property.
     #[serde(rename = "exclude_tags_mode")]
     pub exclude_tags_mode: Option<bool>,
     /// Include percentile aggregations for metric types `distribution`, `exponential_histogram`,
-    /// and `explicit_histogram`. Omit this field to keep the current setting.
+/// and `explicit_histogram`. Omit this field to keep the current setting.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
     /// The metric's type. Contact your Customer Success Manager for instructions on using native histogram types.
@@ -33,14 +33,11 @@ pub struct MetricTagConfigurationCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MetricTagConfigurationCreateAttributes {
-    pub fn new(
-        metric_type: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
-        tags: Vec<String>,
-    ) -> MetricTagConfigurationCreateAttributes {
+    pub fn new(metric_type: crate::datadogV2::model::MetricTagConfigurationMetricTypes, tags: Vec<String>) -> MetricTagConfigurationCreateAttributes {
         MetricTagConfigurationCreateAttributes {
             aggregations: None,
             exclude_tags_mode: None,
@@ -51,33 +48,29 @@ impl MetricTagConfigurationCreateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn aggregations(
-        mut self,
-        value: Vec<crate::datadogV2::model::MetricCustomAggregation>,
-    ) -> Self {
+    
+    pub fn aggregations(mut self, value: Vec<crate::datadogV2::model::MetricCustomAggregation>) -> Self {
         self.aggregations = Some(value);
         self
     }
-
+    
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
-
+    
     pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,19 +89,12 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregations: Option<
-                    Vec<crate::datadogV2::model::MetricCustomAggregation>,
-                > = None;
+                let mut aggregations: Option<Vec<crate::datadogV2::model::MetricCustomAggregation>> = None;
                 let mut exclude_tags_mode: Option<bool> = None;
                 let mut include_percentiles: Option<bool> = None;
-                let mut metric_type: Option<
-                    crate::datadogV2::model::MetricTagConfigurationMetricTypes,
-                > = None;
+                let mut metric_type: Option<crate::datadogV2::model::MetricTagConfigurationMetricTypes> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,26 +103,22 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exclude_tags_mode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exclude_tags_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exclude_tags_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "include_percentiles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            include_percentiles =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            include_percentiles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_type" => {
-                            metric_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            metric_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric_type) = metric_type {
                                 match _metric_type {
                                     crate::datadogV2::model::MetricTagConfigurationMetricTypes::UnparsedObject(_metric_type) => {
@@ -145,19 +127,18 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let metric_type =
-                    metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
+                let metric_type = metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
 
                 let content = MetricTagConfigurationCreateAttributes {

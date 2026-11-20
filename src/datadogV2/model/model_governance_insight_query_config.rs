@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query execution context for running insight queries directly.
 #[non_exhaustive]
@@ -30,14 +30,11 @@ pub struct GovernanceInsightQueryConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GovernanceInsightQueryConfig {
-    pub fn new(
-        comparison_shift: String,
-        effective_time_window_days: i64,
-    ) -> GovernanceInsightQueryConfig {
+    pub fn new(comparison_shift: String, effective_time_window_days: i64) -> GovernanceInsightQueryConfig {
         GovernanceInsightQueryConfig {
             chart_type: None,
             comparison_shift,
@@ -48,33 +45,29 @@ impl GovernanceInsightQueryConfig {
             _unparsed: false,
         }
     }
-
+    
     pub fn chart_type(mut self, value: String) -> Self {
         self.chart_type = Some(value);
         self
     }
-
+    
     pub fn default_value(mut self, value: i64) -> Self {
         self.default_value = Some(value);
         self
     }
-
-    pub fn directionality(
-        mut self,
-        value: crate::datadogV2::model::GovernanceInsightDirectionality,
-    ) -> Self {
+    
+    pub fn directionality(mut self, value: crate::datadogV2::model::GovernanceInsightDirectionality) -> Self {
         self.directionality = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,14 +89,9 @@ impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
                 let mut chart_type: Option<String> = None;
                 let mut comparison_shift: Option<String> = None;
                 let mut default_value: Option<i64> = None;
-                let mut directionality: Option<
-                    crate::datadogV2::model::GovernanceInsightDirectionality,
-                > = None;
+                let mut directionality: Option<crate::datadogV2::model::GovernanceInsightDirectionality> = None;
                 let mut effective_time_window_days: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,24 +101,21 @@ impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
                                 continue;
                             }
                             chart_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "comparison_shift" => {
-                            comparison_shift =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            comparison_shift = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "directionality" => {
                             if v.is_null() {
                                 continue;
                             }
-                            directionality =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            directionality = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _directionality) = directionality {
                                 match _directionality {
                                     crate::datadogV2::model::GovernanceInsightDirectionality::UnparsedObject(_directionality) => {
@@ -139,22 +124,19 @@ impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "effective_time_window_days" => {
-                            effective_time_window_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            effective_time_window_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let comparison_shift =
-                    comparison_shift.ok_or_else(|| M::Error::missing_field("comparison_shift"))?;
-                let effective_time_window_days = effective_time_window_days
-                    .ok_or_else(|| M::Error::missing_field("effective_time_window_days"))?;
+                let comparison_shift = comparison_shift.ok_or_else(|| M::Error::missing_field("comparison_shift"))?;
+                let effective_time_window_days = effective_time_window_days.ok_or_else(|| M::Error::missing_field("effective_time_window_days"))?;
 
                 let content = GovernanceInsightQueryConfig {
                     chart_type,

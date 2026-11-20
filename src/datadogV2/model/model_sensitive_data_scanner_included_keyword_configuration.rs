@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object defining a set of keywords and a number of characters that help reduce noise.
 /// You can provide a list of keywords you would like to check within a defined proximity of the matching pattern.
@@ -15,29 +15,26 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SensitiveDataScannerIncludedKeywordConfiguration {
     /// The number of characters behind a match detected by Sensitive Data Scanner to look for the keywords defined.
-    /// `character_count` should be greater than the maximum length of a keyword defined for a rule.
+/// `character_count` should be greater than the maximum length of a keyword defined for a rule.
     #[serde(rename = "character_count")]
     pub character_count: i64,
     /// Keyword list that will be checked during scanning in order to validate a match.
-    /// The number of keywords in the list must be less than or equal to 30.
+/// The number of keywords in the list must be less than or equal to 30.
     #[serde(rename = "keywords")]
     pub keywords: Vec<String>,
     /// Should the rule use the underlying standard pattern keyword configuration. If set to `true`, the rule must be tied
-    /// to a standard pattern. If set to `false`, the specified keywords and `character_count` are applied.
+/// to a standard pattern. If set to `false`, the specified keywords and `character_count` are applied.
     #[serde(rename = "use_recommended_keywords")]
     pub use_recommended_keywords: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SensitiveDataScannerIncludedKeywordConfiguration {
-    pub fn new(
-        character_count: i64,
-        keywords: Vec<String>,
-    ) -> SensitiveDataScannerIncludedKeywordConfiguration {
+    pub fn new(character_count: i64, keywords: Vec<String>) -> SensitiveDataScannerIncludedKeywordConfiguration {
         SensitiveDataScannerIncludedKeywordConfiguration {
             character_count,
             keywords,
@@ -46,20 +43,19 @@ impl SensitiveDataScannerIncludedKeywordConfiguration {
             _unparsed: false,
         }
     }
-
+    
     pub fn use_recommended_keywords(mut self, value: bool) -> Self {
         self.use_recommended_keywords = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SensitiveDataScannerIncludedKeywordConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,37 +77,31 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerIncludedKeywordConfiguration 
                 let mut character_count: Option<i64> = None;
                 let mut keywords: Option<Vec<String>> = None;
                 let mut use_recommended_keywords: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "character_count" => {
-                            character_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            character_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "keywords" => {
                             keywords = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "use_recommended_keywords" => {
                             if v.is_null() {
                                 continue;
                             }
-                            use_recommended_keywords =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            use_recommended_keywords = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let character_count =
-                    character_count.ok_or_else(|| M::Error::missing_field("character_count"))?;
+                let character_count = character_count.ok_or_else(|| M::Error::missing_field("character_count"))?;
                 let keywords = keywords.ok_or_else(|| M::Error::missing_field("keywords"))?;
 
                 let content = SensitiveDataScannerIncludedKeywordConfiguration {

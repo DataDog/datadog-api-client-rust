@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Create, edit, and disable users.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct User {
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
-    #[serde(
-        rename = "access_role",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "access_role", default, with = "::serde_with::rust::double_option")]
     pub access_role: Option<Option<crate::datadogV1::model::AccessRole>>,
     /// The new disabled status of the user.
     #[serde(rename = "disabled")]
@@ -40,7 +36,7 @@ pub struct User {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl User {
@@ -57,50 +53,48 @@ impl User {
             _unparsed: false,
         }
     }
-
+    
     pub fn access_role(mut self, value: Option<crate::datadogV1::model::AccessRole>) -> Self {
         self.access_role = Some(value);
         self
     }
-
+    
     pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
-
+    
     pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn verified(mut self, value: bool) -> Self {
         self.verified = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for User {
     fn default() -> Self {
@@ -132,69 +126,63 @@ impl<'de> Deserialize<'de> for User {
                 let mut icon: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut verified: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "access_role" => {
-                            access_role =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            access_role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _access_role) = access_role {
                                 match _access_role {
-                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(
-                                        _access_role,
-                                    )) => {
+                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(_access_role)) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "disabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "email" => {
                             if v.is_null() {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "handle" => {
                             if v.is_null() {
                                 continue;
                             }
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "icon" => {
                             if v.is_null() {
                                 continue;
                             }
                             icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "verified" => {
                             if v.is_null() {
                                 continue;
                             }
                             verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

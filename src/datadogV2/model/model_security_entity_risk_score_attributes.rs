@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an entity risk score.
 #[non_exhaustive]
@@ -63,24 +63,11 @@ pub struct SecurityEntityRiskScoreAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityEntityRiskScoreAttributes {
-    pub fn new(
-        account_ids: Vec<String>,
-        config_risks: crate::datadogV2::model::SecurityEntityConfigRisks,
-        entity_metadata: crate::datadogV2::model::SecurityEntityMetadata,
-        entity_providers: Vec<String>,
-        entity_sub_types: Vec<String>,
-        first_detected: i64,
-        last_activity_title: String,
-        last_detected: i64,
-        risk_score: i64,
-        risk_score_evolution: i64,
-        severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
-        signals_detected: i64,
-    ) -> SecurityEntityRiskScoreAttributes {
+    pub fn new(account_ids: Vec<String>, config_risks: crate::datadogV2::model::SecurityEntityConfigRisks, entity_metadata: crate::datadogV2::model::SecurityEntityMetadata, entity_providers: Vec<String>, entity_sub_types: Vec<String>, first_detected: i64, last_activity_title: String, last_detected: i64, risk_score: i64, risk_score_evolution: i64, severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity, signals_detected: i64) -> SecurityEntityRiskScoreAttributes {
         SecurityEntityRiskScoreAttributes {
             account_ids,
             config_risks,
@@ -102,35 +89,34 @@ impl SecurityEntityRiskScoreAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn entity_name(mut self, value: String) -> Self {
         self.entity_name = Some(value);
         self
     }
-
+    
     pub fn entity_roles(mut self, value: Vec<String>) -> Self {
         self.entity_roles = Some(value);
         self
     }
-
+    
     pub fn entity_type(mut self, value: String) -> Self {
         self.entity_type = Some(value);
         self
     }
-
+    
     pub fn entity_types(mut self, value: Vec<String>) -> Self {
         self.entity_types = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -150,10 +136,8 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                 M: MapAccess<'a>,
             {
                 let mut account_ids: Option<Vec<String>> = None;
-                let mut config_risks: Option<crate::datadogV2::model::SecurityEntityConfigRisks> =
-                    None;
-                let mut entity_metadata: Option<crate::datadogV2::model::SecurityEntityMetadata> =
-                    None;
+                let mut config_risks: Option<crate::datadogV2::model::SecurityEntityConfigRisks> = None;
+                let mut entity_metadata: Option<crate::datadogV2::model::SecurityEntityMetadata> = None;
                 let mut entity_name: Option<String> = None;
                 let mut entity_providers: Option<Vec<String>> = None;
                 let mut entity_roles: Option<Vec<String>> = None;
@@ -165,85 +149,67 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                 let mut last_detected: Option<i64> = None;
                 let mut risk_score: Option<i64> = None;
                 let mut risk_score_evolution: Option<i64> = None;
-                let mut severity: Option<
-                    crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
-                > = None;
+                let mut severity: Option<crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity> = None;
                 let mut signals_detected: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "accountIds" => {
-                            account_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "configRisks" => {
-                            config_risks =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_risks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityMetadata" => {
-                            entity_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityName" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityProviders" => {
-                            entity_providers =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_providers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityRoles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_roles =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_roles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entitySubTypes" => {
-                            entity_sub_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_sub_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityType" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entityTypes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entity_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entity_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "firstDetected" => {
-                            first_detected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_detected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lastActivityTitle" => {
-                            last_activity_title =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_activity_title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lastDetected" => {
-                            last_detected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_detected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "riskScore" => {
                             risk_score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "riskScoreEvolution" => {
-                            risk_score_evolution =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            risk_score_evolution = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "severity" => {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _severity) = severity {
@@ -254,40 +220,29 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "signalsDetected" => {
-                            signals_detected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            signals_detected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let account_ids =
-                    account_ids.ok_or_else(|| M::Error::missing_field("account_ids"))?;
-                let config_risks =
-                    config_risks.ok_or_else(|| M::Error::missing_field("config_risks"))?;
-                let entity_metadata =
-                    entity_metadata.ok_or_else(|| M::Error::missing_field("entity_metadata"))?;
-                let entity_providers =
-                    entity_providers.ok_or_else(|| M::Error::missing_field("entity_providers"))?;
-                let entity_sub_types =
-                    entity_sub_types.ok_or_else(|| M::Error::missing_field("entity_sub_types"))?;
-                let first_detected =
-                    first_detected.ok_or_else(|| M::Error::missing_field("first_detected"))?;
-                let last_activity_title = last_activity_title
-                    .ok_or_else(|| M::Error::missing_field("last_activity_title"))?;
-                let last_detected =
-                    last_detected.ok_or_else(|| M::Error::missing_field("last_detected"))?;
+                let account_ids = account_ids.ok_or_else(|| M::Error::missing_field("account_ids"))?;
+                let config_risks = config_risks.ok_or_else(|| M::Error::missing_field("config_risks"))?;
+                let entity_metadata = entity_metadata.ok_or_else(|| M::Error::missing_field("entity_metadata"))?;
+                let entity_providers = entity_providers.ok_or_else(|| M::Error::missing_field("entity_providers"))?;
+                let entity_sub_types = entity_sub_types.ok_or_else(|| M::Error::missing_field("entity_sub_types"))?;
+                let first_detected = first_detected.ok_or_else(|| M::Error::missing_field("first_detected"))?;
+                let last_activity_title = last_activity_title.ok_or_else(|| M::Error::missing_field("last_activity_title"))?;
+                let last_detected = last_detected.ok_or_else(|| M::Error::missing_field("last_detected"))?;
                 let risk_score = risk_score.ok_or_else(|| M::Error::missing_field("risk_score"))?;
-                let risk_score_evolution = risk_score_evolution
-                    .ok_or_else(|| M::Error::missing_field("risk_score_evolution"))?;
+                let risk_score_evolution = risk_score_evolution.ok_or_else(|| M::Error::missing_field("risk_score_evolution"))?;
                 let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
-                let signals_detected =
-                    signals_detected.ok_or_else(|| M::Error::missing_field("signals_detected"))?;
+                let signals_detected = signals_detected.ok_or_else(|| M::Error::missing_field("signals_detected"))?;
 
                 let content = SecurityEntityRiskScoreAttributes {
                     account_ids,

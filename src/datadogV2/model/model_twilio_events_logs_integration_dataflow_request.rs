@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Twilio Event resource logs, which record virtually every action taken in your Twilio account, such as provisioning a phone number, changing account security settings, or deleting a recording. Actions are recorded whether they came from the REST API, a user in the Twilio Console, or Twilio itself. [Cloud SIEM](<https://docs.datadoghq.com/security/cloud_siem/>) analyzes and correlates these logs to detect threats in real time.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct TwilioEventsLogsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TwilioEventsLogsIntegrationDataflowRequest {
@@ -26,12 +26,14 @@ impl TwilioEventsLogsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for TwilioEventsLogsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -66,16 +68,17 @@ impl<'de> Deserialize<'de> for TwilioEventsLogsIntegrationDataflowRequest {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content = TwilioEventsLogsIntegrationDataflowRequest { enabled, _unparsed };
+                let content = TwilioEventsLogsIntegrationDataflowRequest {
+                    enabled,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

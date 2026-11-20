@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating a new OCI tenancy integration configuration, including credentials, region settings, and collection options.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct CreateTenancyConfigDataAttributes {
     #[serde(rename = "auth_credentials")]
     pub auth_credentials: crate::datadogV2::model::CreateTenancyConfigDataAttributesAuthCredentials,
     /// Version number of the integration the tenancy is integrated with
-    #[serde(
-        rename = "config_version",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "config_version", default, with = "::serde_with::rust::double_option")]
     pub config_version: Option<Option<i64>>,
     /// Whether cost data collection from OCI is enabled for the tenancy.
     #[serde(rename = "cost_collection_enabled")]
@@ -38,12 +34,10 @@ pub struct CreateTenancyConfigDataAttributes {
     pub logs_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesLogsConfig>,
     /// Metrics collection configuration for an OCI tenancy, controlling which compartments and services are included or excluded.
     #[serde(rename = "metrics_config")]
-    pub metrics_config:
-        Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig>,
+    pub metrics_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig>,
     /// Region configuration for an OCI tenancy, specifying which regions are available, enabled, or disabled for data collection.
     #[serde(rename = "regions_config")]
-    pub regions_config:
-        Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig>,
+    pub regions_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig>,
     /// Whether resource collection from OCI is enabled for the tenancy.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
@@ -54,15 +48,11 @@ pub struct CreateTenancyConfigDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateTenancyConfigDataAttributes {
-    pub fn new(
-        auth_credentials: crate::datadogV2::model::CreateTenancyConfigDataAttributesAuthCredentials,
-        home_region: String,
-        user_ocid: String,
-    ) -> CreateTenancyConfigDataAttributes {
+    pub fn new(auth_credentials: crate::datadogV2::model::CreateTenancyConfigDataAttributesAuthCredentials, home_region: String, user_ocid: String) -> CreateTenancyConfigDataAttributes {
         CreateTenancyConfigDataAttributes {
             auth_credentials,
             config_version: None,
@@ -79,64 +69,54 @@ impl CreateTenancyConfigDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn config_version(mut self, value: Option<i64>) -> Self {
         self.config_version = Some(value);
         self
     }
-
+    
     pub fn cost_collection_enabled(mut self, value: bool) -> Self {
         self.cost_collection_enabled = Some(value);
         self
     }
-
+    
     pub fn dd_compartment_id(mut self, value: String) -> Self {
         self.dd_compartment_id = Some(value);
         self
     }
-
+    
     pub fn dd_stack_id(mut self, value: String) -> Self {
         self.dd_stack_id = Some(value);
         self
     }
-
-    pub fn logs_config(
-        mut self,
-        value: crate::datadogV2::model::CreateTenancyConfigDataAttributesLogsConfig,
-    ) -> Self {
+    
+    pub fn logs_config(mut self, value: crate::datadogV2::model::CreateTenancyConfigDataAttributesLogsConfig) -> Self {
         self.logs_config = Some(value);
         self
     }
-
-    pub fn metrics_config(
-        mut self,
-        value: crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig,
-    ) -> Self {
+    
+    pub fn metrics_config(mut self, value: crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig) -> Self {
         self.metrics_config = Some(value);
         self
     }
-
-    pub fn regions_config(
-        mut self,
-        value: crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig,
-    ) -> Self {
+    
+    pub fn regions_config(mut self, value: crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig) -> Self {
         self.regions_config = Some(value);
         self
     }
-
+    
     pub fn resource_collection_enabled(mut self, value: bool) -> Self {
         self.resource_collection_enabled = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateTenancyConfigDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -155,108 +135,85 @@ impl<'de> Deserialize<'de> for CreateTenancyConfigDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_credentials: Option<
-                    crate::datadogV2::model::CreateTenancyConfigDataAttributesAuthCredentials,
-                > = None;
+                let mut auth_credentials: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesAuthCredentials> = None;
                 let mut config_version: Option<Option<i64>> = None;
                 let mut cost_collection_enabled: Option<bool> = None;
                 let mut dd_compartment_id: Option<String> = None;
                 let mut dd_stack_id: Option<String> = None;
                 let mut home_region: Option<String> = None;
-                let mut logs_config: Option<
-                    crate::datadogV2::model::CreateTenancyConfigDataAttributesLogsConfig,
-                > = None;
-                let mut metrics_config: Option<
-                    crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig,
-                > = None;
-                let mut regions_config: Option<
-                    crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig,
-                > = None;
+                let mut logs_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesLogsConfig> = None;
+                let mut metrics_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesMetricsConfig> = None;
+                let mut regions_config: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributesRegionsConfig> = None;
                 let mut resource_collection_enabled: Option<bool> = None;
                 let mut user_ocid: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "auth_credentials" => {
-                            auth_credentials =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auth_credentials = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "config_version" => {
-                            config_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cost_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cost_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cost_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dd_compartment_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dd_compartment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dd_compartment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dd_stack_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dd_stack_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dd_stack_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "home_region" => {
-                            home_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            home_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metrics_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metrics_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "regions_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            regions_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            regions_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_collection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_collection_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_collection_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user_ocid" => {
                             user_ocid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let auth_credentials =
-                    auth_credentials.ok_or_else(|| M::Error::missing_field("auth_credentials"))?;
-                let home_region =
-                    home_region.ok_or_else(|| M::Error::missing_field("home_region"))?;
+                let auth_credentials = auth_credentials.ok_or_else(|| M::Error::missing_field("auth_credentials"))?;
+                let home_region = home_region.ok_or_else(|| M::Error::missing_field("home_region"))?;
                 let user_ocid = user_ocid.ok_or_else(|| M::Error::missing_field("user_ocid"))?;
 
                 let content = CreateTenancyConfigDataAttributes {

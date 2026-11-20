@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CustomRuleRevisionAttributesCategory {
-    SECURITY,
-    BEST_PRACTICES,
-    CODE_STYLE,
-    ERROR_PRONE,
-    PERFORMANCE,
+	SECURITY,
+	BEST_PRACTICES,
+	CODE_STYLE,
+	ERROR_PRONE,
+	PERFORMANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributesCategory {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "SECURITY" => Self::SECURITY,
-            "BEST_PRACTICES" => Self::BEST_PRACTICES,
-            "CODE_STYLE" => Self::CODE_STYLE,
-            "ERROR_PRONE" => Self::ERROR_PRONE,
-            "PERFORMANCE" => Self::PERFORMANCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"SECURITY" => Self::SECURITY,"BEST_PRACTICES" => Self::BEST_PRACTICES,"CODE_STYLE" => Self::CODE_STYLE,"ERROR_PRONE" => Self::ERROR_PRONE,"PERFORMANCE" => Self::PERFORMANCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

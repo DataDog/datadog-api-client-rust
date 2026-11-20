@@ -2,22 +2,23 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayKnownProvider {
-    CUSTOM,
-    ANTHROPIC,
-    OPENAI,
-    AZURE_OPENAI,
-    BEDROCK,
-    GEMINI,
-    BASETEN,
-    FIREWORKS,
-    TOGETHER,
-    TYPESAFE,
-    AZURE_FOUNDRY,
+	CUSTOM,
+	ANTHROPIC,
+	OPENAI,
+	AZURE_OPENAI,
+	BEDROCK,
+	GEMINI,
+	BASETEN,
+	FIREWORKS,
+	TOGETHER,
+	TYPESAFE,
+	AZURE_FOUNDRY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -58,21 +59,8 @@ impl<'de> Deserialize<'de> for AiGatewayKnownProvider {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "custom" => Self::CUSTOM,
-            "anthropic" => Self::ANTHROPIC,
-            "openai" => Self::OPENAI,
-            "azure_openai" => Self::AZURE_OPENAI,
-            "bedrock" => Self::BEDROCK,
-            "gemini" => Self::GEMINI,
-            "baseten" => Self::BASETEN,
-            "fireworks" => Self::FIREWORKS,
-            "together" => Self::TOGETHER,
-            "typesafe" => Self::TYPESAFE,
-            "azure_foundry" => Self::AZURE_FOUNDRY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"custom" => Self::CUSTOM,"anthropic" => Self::ANTHROPIC,"openai" => Self::OPENAI,"azure_openai" => Self::AZURE_OPENAI,"bedrock" => Self::BEDROCK,"gemini" => Self::GEMINI,"baseten" => Self::BASETEN,"fireworks" => Self::FIREWORKS,"together" => Self::TOGETHER,"typesafe" => Self::TYPESAFE,"azure_foundry" => Self::AZURE_FOUNDRY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

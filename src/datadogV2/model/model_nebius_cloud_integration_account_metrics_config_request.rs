@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration for metric collection from this Nebius Cloud account.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct NebiusCloudIntegrationAccountMetricsConfigRequest {
     pub cluster_filters: Option<Vec<String>>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NebiusCloudIntegrationAccountMetricsConfigRequest {
@@ -26,12 +26,14 @@ impl NebiusCloudIntegrationAccountMetricsConfigRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn cluster_filters(mut self, value: Vec<String>) -> Self {
         self.cluster_filters = Some(value);
         self
     }
+    
 }
+
 
 impl Default for NebiusCloudIntegrationAccountMetricsConfigRequest {
     fn default() -> Self {
@@ -65,14 +67,11 @@ impl<'de> Deserialize<'de> for NebiusCloudIntegrationAccountMetricsConfigRequest
                             if v.is_null() {
                                 continue;
                             }
-                            cluster_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cluster_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

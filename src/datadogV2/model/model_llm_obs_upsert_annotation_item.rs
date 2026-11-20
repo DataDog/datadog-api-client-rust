@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single annotation to create or update. The annotation is matched by
 /// `interaction_id` and the requesting user's identity.
@@ -13,37 +13,30 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsUpsertAnnotationItem {
     /// Caller-supplied name or identifier for the external person or automated system that produced the labels.
-    /// The value is an opaque string with no required format. Use a stable, recognizable value for the same
-    /// producer across annotations.
-    /// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
-    /// resolved against Datadog users.
-    /// Omit this field or set it to `null` to preserve existing attribution. Set it to an empty string to clear
-    /// attribution.
-    #[serde(
-        rename = "annotator",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// The value is an opaque string with no required format. Use a stable, recognizable value for the same
+/// producer across annotations.
+/// The value is stored and returned as provided. It is not a Datadog user ID or login, and it is not
+/// resolved against Datadog users.
+/// Omit this field or set it to `null` to preserve existing attribution. Set it to an empty string to clear
+/// attribution.
+    #[serde(rename = "annotator", default, with = "::serde_with::rust::double_option")]
     pub annotator: Option<Option<String>>,
     /// ID of the interaction to annotate.
     #[serde(rename = "interaction_id")]
     pub interaction_id: String,
     /// Label values for this annotation. Each entry references a label schema by ID
-    /// and provides the corresponding value validated against the schema type constraints.
+/// and provides the corresponding value validated against the schema type constraints.
     #[serde(rename = "label_values")]
     pub label_values: Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsUpsertAnnotationItem {
-    pub fn new(
-        interaction_id: String,
-        label_values: Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>,
-    ) -> LLMObsUpsertAnnotationItem {
+    pub fn new(interaction_id: String, label_values: Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>) -> LLMObsUpsertAnnotationItem {
         LLMObsUpsertAnnotationItem {
             annotator: None,
             interaction_id,
@@ -52,20 +45,19 @@ impl LLMObsUpsertAnnotationItem {
             _unparsed: false,
         }
     }
-
+    
     pub fn annotator(mut self, value: Option<String>) -> Self {
         self.annotator = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsUpsertAnnotationItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -86,39 +78,30 @@ impl<'de> Deserialize<'de> for LLMObsUpsertAnnotationItem {
             {
                 let mut annotator: Option<Option<String>> = None;
                 let mut interaction_id: Option<String> = None;
-                let mut label_values: Option<
-                    Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut label_values: Option<Vec<crate::datadogV2::model::LLMObsAnnotationLabelValue>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "annotator" => {
                             annotator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "interaction_id" => {
-                            interaction_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            interaction_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label_values" => {
-                            label_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            label_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let interaction_id =
-                    interaction_id.ok_or_else(|| M::Error::missing_field("interaction_id"))?;
-                let label_values =
-                    label_values.ok_or_else(|| M::Error::missing_field("label_values"))?;
+                let interaction_id = interaction_id.ok_or_else(|| M::Error::missing_field("interaction_id"))?;
+                let label_values = label_values.ok_or_else(|| M::Error::missing_field("label_values"))?;
 
                 let content = LLMObsUpsertAnnotationItem {
                     annotator,

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Revisions and confirmation used to delete the override.
 #[non_exhaustive]
@@ -25,27 +25,23 @@ pub struct AiGatewayCaptureDeleteRequestDataAttributes {
     pub name: Option<String>,
     /// Proposed operation for preview. Write endpoints infer it from the HTTP method.
     #[serde(rename = "operation")]
-    pub operation:
-        Option<crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation>,
+    pub operation: Option<crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation>,
     /// Current override revision, required for replacement or deletion.
     #[serde(rename = "revision")]
     pub revision: i64,
     /// All selected filters combine with AND, with one value per filter. The `model` and `provider` tags apply to each actual direct or routed attempt, including fallback destinations. Routes are not selectable filters. At least one filter is required.
-    /// If any matching override uses `metadata_only`, that mode applies. Otherwise, if any matching override uses `full_capture`, that mode applies. The organization default applies only when no override matches. Overrides have no priority or specificity ordering.
+/// If any matching override uses `metadata_only`, that mode applies. Otherwise, if any matching override uses `full_capture`, that mode applies. The organization default applies only when no override matches. Overrides have no priority or specificity ordering.
     #[serde(rename = "scope")]
     pub scope: Option<crate::datadogV2::model::AiGatewayCaptureScope>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayCaptureDeleteRequestDataAttributes {
-    pub fn new(
-        configuration_revision: String,
-        revision: i64,
-    ) -> AiGatewayCaptureDeleteRequestDataAttributes {
+    pub fn new(configuration_revision: String, revision: i64) -> AiGatewayCaptureDeleteRequestDataAttributes {
         AiGatewayCaptureDeleteRequestDataAttributes {
             configuration_revision,
             confirm_full_capture: None,
@@ -58,46 +54,39 @@ impl AiGatewayCaptureDeleteRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn confirm_full_capture(mut self, value: bool) -> Self {
         self.confirm_full_capture = Some(value);
         self
     }
-
-    pub fn mode(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesMode,
-    ) -> Self {
+    
+    pub fn mode(mut self, value: crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesMode) -> Self {
         self.mode = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn operation(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation,
-    ) -> Self {
+    
+    pub fn operation(mut self, value: crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation) -> Self {
         self.operation = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: crate::datadogV2::model::AiGatewayCaptureScope) -> Self {
         self.scope = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayCaptureDeleteRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -118,34 +107,25 @@ impl<'de> Deserialize<'de> for AiGatewayCaptureDeleteRequestDataAttributes {
             {
                 let mut configuration_revision: Option<String> = None;
                 let mut confirm_full_capture: Option<bool> = None;
-                let mut mode: Option<
-                    crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesMode,
-                > = None;
+                let mut mode: Option<crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesMode> = None;
                 let mut name: Option<String> = None;
-                let mut operation: Option<
-                    crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation,
-                > = None;
+                let mut operation: Option<crate::datadogV2::model::AiGatewayCaptureDeleteRequestDataAttributesOperation> = None;
                 let mut revision: Option<i64> = None;
                 let mut scope: Option<crate::datadogV2::model::AiGatewayCaptureScope> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "configuration_revision" => {
-                            configuration_revision =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            configuration_revision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "confirm_full_capture" => {
                             if v.is_null() {
                                 continue;
                             }
-                            confirm_full_capture =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            confirm_full_capture = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mode" => {
                             if v.is_null() {
                                 continue;
@@ -159,13 +139,13 @@ impl<'de> Deserialize<'de> for AiGatewayCaptureDeleteRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "operation" => {
                             if v.is_null() {
                                 continue;
@@ -179,25 +159,24 @@ impl<'de> Deserialize<'de> for AiGatewayCaptureDeleteRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "revision" => {
                             revision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let configuration_revision = configuration_revision
-                    .ok_or_else(|| M::Error::missing_field("configuration_revision"))?;
+                let configuration_revision = configuration_revision.ok_or_else(|| M::Error::missing_field("configuration_revision"))?;
                 let revision = revision.ok_or_else(|| M::Error::missing_field("revision"))?;
 
                 let content = AiGatewayCaptureDeleteRequestDataAttributes {

@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Severity override to apply to the findings.
 /// Set `action` to `set` to apply a manual severity override with the given `value`.
@@ -10,9 +10,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum SeverityOverrideAttributes {
-    SeverityOverrideSet(Box<crate::datadogV2::model::SeverityOverrideSet>),
-    SeverityOverrideClear(Box<crate::datadogV2::model::SeverityOverrideClear>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	SeverityOverrideSet(Box<crate::datadogV2::model::SeverityOverrideSet>),
+	SeverityOverrideClear(Box<crate::datadogV2::model::SeverityOverrideClear>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for SeverityOverrideAttributes {
@@ -21,23 +21,17 @@ impl<'de> Deserialize<'de> for SeverityOverrideAttributes {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SeverityOverrideSet>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SeverityOverrideSet>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(SeverityOverrideAttributes::SeverityOverrideSet(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SeverityOverrideClear>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SeverityOverrideClear>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(SeverityOverrideAttributes::SeverityOverrideClear(_v));
             }
         }
-
-        return Ok(SeverityOverrideAttributes::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(SeverityOverrideAttributes::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

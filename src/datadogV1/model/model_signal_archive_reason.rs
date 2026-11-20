@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SignalArchiveReason {
-    NONE,
-    FALSE_POSITIVE,
-    TESTING_OR_MAINTENANCE,
-    INVESTIGATED_CASE_OPENED,
-    TRUE_POSITIVE_BENIGN,
-    TRUE_POSITIVE_MALICIOUS,
-    OTHER,
+	NONE,
+	FALSE_POSITIVE,
+	TESTING_OR_MAINTENANCE,
+	INVESTIGATED_CASE_OPENED,
+	TRUE_POSITIVE_BENIGN,
+	TRUE_POSITIVE_MALICIOUS,
+	OTHER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for SignalArchiveReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "none" => Self::NONE,
-            "false_positive" => Self::FALSE_POSITIVE,
-            "testing_or_maintenance" => Self::TESTING_OR_MAINTENANCE,
-            "investigated_case_opened" => Self::INVESTIGATED_CASE_OPENED,
-            "true_positive_benign" => Self::TRUE_POSITIVE_BENIGN,
-            "true_positive_malicious" => Self::TRUE_POSITIVE_MALICIOUS,
-            "other" => Self::OTHER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"none" => Self::NONE,"false_positive" => Self::FALSE_POSITIVE,"testing_or_maintenance" => Self::TESTING_OR_MAINTENANCE,"investigated_case_opened" => Self::INVESTIGATED_CASE_OPENED,"true_positive_benign" => Self::TRUE_POSITIVE_BENIGN,"true_positive_malicious" => Self::TRUE_POSITIVE_MALICIOUS,"other" => Self::OTHER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

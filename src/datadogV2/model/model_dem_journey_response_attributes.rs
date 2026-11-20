@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes returned in a DEM journey response.
 #[non_exhaustive]
@@ -18,7 +18,7 @@ pub struct DemJourneyResponseAttributes {
     #[serde(rename = "created_by")]
     pub created_by: crate::datadogV2::model::DemUser,
     /// An optional human-readable description of the journey.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// The RUM definition for a DEM journey.
@@ -37,7 +37,7 @@ pub struct DemJourneyResponseAttributes {
     #[serde(rename = "test_suite")]
     pub test_suite: crate::datadogV2::model::DemTestSuiteNested,
     /// The timestamp when the journey was last updated.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
     /// A Datadog user associated with a DEM operation.
@@ -50,23 +50,11 @@ pub struct DemJourneyResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DemJourneyResponseAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: crate::datadogV2::model::DemUser,
-        description: Option<String>,
-        journey_rum: crate::datadogV2::model::DemJourneyRum,
-        name: String,
-        org_id: i64,
-        tags: Vec<String>,
-        test_suite: crate::datadogV2::model::DemTestSuiteNested,
-        updated_at: Option<chrono::DateTime<chrono::Utc>>,
-        updated_by: crate::datadogV2::model::DemUser,
-        variants: Vec<crate::datadogV2::model::DemVariant>,
-    ) -> DemJourneyResponseAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: crate::datadogV2::model::DemUser, description: Option<String>, journey_rum: crate::datadogV2::model::DemJourneyRum, name: String, org_id: i64, tags: Vec<String>, test_suite: crate::datadogV2::model::DemTestSuiteNested, updated_at: Option<chrono::DateTime<chrono::Utc>>, updated_by: crate::datadogV2::model::DemUser, variants: Vec<crate::datadogV2::model::DemVariant>) -> DemJourneyResponseAttributes {
         DemJourneyResponseAttributes {
             created_at,
             created_by,
@@ -83,15 +71,14 @@ impl DemJourneyResponseAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DemJourneyResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -121,62 +108,55 @@ impl<'de> Deserialize<'de> for DemJourneyResponseAttributes {
                 let mut updated_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut updated_by: Option<crate::datadogV2::model::DemUser> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::DemVariant>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "journey_rum" => {
-                            journey_rum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            journey_rum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_id" => {
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "test_suite" => {
                             test_suite = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_by" => {
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variants" => {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let journey_rum =
-                    journey_rum.ok_or_else(|| M::Error::missing_field("journey_rum"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let journey_rum = journey_rum.ok_or_else(|| M::Error::missing_field("journey_rum"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;

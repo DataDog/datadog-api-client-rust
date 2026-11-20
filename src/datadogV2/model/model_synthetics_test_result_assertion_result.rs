@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An individual assertion result from a Synthetic test.
 #[non_exhaustive]
@@ -45,7 +45,7 @@ pub struct SyntheticsTestResultAssertionResult {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultAssertionResult {
@@ -65,65 +65,63 @@ impl SyntheticsTestResultAssertionResult {
             _unparsed: false,
         }
     }
-
+    
     pub fn actual(mut self, value: serde_json::Value) -> Self {
         self.actual = Some(value);
         self
     }
-
+    
     pub fn error_message(mut self, value: String) -> Self {
         self.error_message = Some(value);
         self
     }
-
+    
     pub fn expected(mut self, value: serde_json::Value) -> Self {
         self.expected = Some(value);
         self
     }
-
+    
     pub fn operator(mut self, value: String) -> Self {
         self.operator = Some(value);
         self
     }
-
+    
     pub fn property(mut self, value: String) -> Self {
         self.property = Some(value);
         self
     }
-
+    
     pub fn target(mut self, value: serde_json::Value) -> Self {
         self.target = Some(value);
         self
     }
-
+    
     pub fn target_path(mut self, value: String) -> Self {
         self.target_path = Some(value);
         self
     }
-
+    
     pub fn target_path_operator(mut self, value: String) -> Self {
         self.target_path_operator = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn valid(mut self, value: bool) -> Self {
         self.valid = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultAssertionResult {
     fn default() -> Self {
@@ -158,10 +156,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAssertionResult {
                 let mut target_path_operator: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut valid: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -171,69 +166,66 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAssertionResult {
                                 continue;
                             }
                             actual = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error_message" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "expected" => {
                             if v.is_null() {
                                 continue;
                             }
                             expected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "operator" => {
                             if v.is_null() {
                                 continue;
                             }
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "property" => {
                             if v.is_null() {
                                 continue;
                             }
                             property = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
                             }
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target_path" => {
                             if v.is_null() {
                                 continue;
                             }
-                            target_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target_path_operator" => {
                             if v.is_null() {
                                 continue;
                             }
-                            target_path_operator =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_path_operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid" => {
                             if v.is_null() {
                                 continue;
                             }
                             valid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Incident type's attributes for updates.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct IncidentTypeUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentTypeUpdateAttributes {
@@ -61,63 +61,58 @@ impl IncidentTypeUpdateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn configuration(
-        mut self,
-        value: crate::datadogV2::model::IncidentTypeConfiguration,
-    ) -> Self {
+    
+    pub fn configuration(mut self, value: crate::datadogV2::model::IncidentTypeConfiguration) -> Self {
         self.configuration = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn is_default(mut self, value: bool) -> Self {
         self.is_default = Some(value);
         self
     }
-
+    
     pub fn last_modified_by(mut self, value: String) -> Self {
         self.last_modified_by = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn prefix(mut self, value: String) -> Self {
         self.prefix = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentTypeUpdateAttributes {
     fn default() -> Self {
@@ -142,8 +137,7 @@ impl<'de> Deserialize<'de> for IncidentTypeUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut configuration: Option<crate::datadogV2::model::IncidentTypeConfiguration> =
-                    None;
+                let mut configuration: Option<crate::datadogV2::model::IncidentTypeConfiguration> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut description: Option<String> = None;
@@ -152,10 +146,7 @@ impl<'de> Deserialize<'de> for IncidentTypeUpdateAttributes {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut prefix: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -164,65 +155,61 @@ impl<'de> Deserialize<'de> for IncidentTypeUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            configuration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "createdAt" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "createdBy" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_default" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "lastModifiedBy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modifiedAt" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prefix" => {
                             if v.is_null() {
                                 continue;
                             }
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

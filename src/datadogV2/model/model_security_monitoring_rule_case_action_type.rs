@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleCaseActionType {
-    BLOCK_IP,
-    BLOCK_USER,
-    USER_BEHAVIOR,
-    FLAG_IP,
+	BLOCK_IP,
+	BLOCK_USER,
+	USER_BEHAVIOR,
+	FLAG_IP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "block_ip" => Self::BLOCK_IP,
-            "block_user" => Self::BLOCK_USER,
-            "user_behavior" => Self::USER_BEHAVIOR,
-            "flag_ip" => Self::FLAG_IP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"block_ip" => Self::BLOCK_IP,"block_user" => Self::BLOCK_USER,"user_behavior" => Self::USER_BEHAVIOR,"flag_ip" => Self::FLAG_IP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

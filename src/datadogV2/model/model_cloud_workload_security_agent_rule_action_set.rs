@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The set action applied on the scope matching the rule
 #[non_exhaustive]
@@ -51,7 +51,7 @@ pub struct CloudWorkloadSecurityAgentRuleActionSet {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CloudWorkloadSecurityAgentRuleActionSet {
@@ -73,78 +73,73 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
             _unparsed: false,
         }
     }
-
+    
     pub fn append(mut self, value: bool) -> Self {
         self.append = Some(value);
         self
     }
-
+    
     pub fn default_value(mut self, value: String) -> Self {
         self.default_value = Some(value);
         self
     }
-
+    
     pub fn expression(mut self, value: String) -> Self {
         self.expression = Some(value);
         self
     }
-
+    
     pub fn field(mut self, value: String) -> Self {
         self.field = Some(value);
         self
     }
-
+    
     pub fn inherited(mut self, value: bool) -> Self {
         self.inherited = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn private(mut self, value: bool) -> Self {
         self.private = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn scope_field(mut self, value: String) -> Self {
         self.scope_field = Some(value);
         self
     }
-
+    
     pub fn size(mut self, value: i64) -> Self {
         self.size = Some(value);
         self
     }
-
+    
     pub fn ttl(mut self, value: i64) -> Self {
         self.ttl = Some(value);
         self
     }
-
-    pub fn value(
-        mut self,
-        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue,
-    ) -> Self {
+    
+    pub fn value(mut self, value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CloudWorkloadSecurityAgentRuleActionSet {
     fn default() -> Self {
@@ -180,13 +175,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                 let mut scope_field: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut ttl: Option<i64> = None;
-                let mut value: Option<
-                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut value: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSetValue> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,69 +186,67 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                                 continue;
                             }
                             append = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "default_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "expression" => {
                             if v.is_null() {
                                 continue;
                             }
                             expression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "field" => {
                             if v.is_null() {
                                 continue;
                             }
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inherited" => {
                             if v.is_null() {
                                 continue;
                             }
                             inherited = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "private" => {
                             if v.is_null() {
                                 continue;
                             }
                             private = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope_field" => {
                             if v.is_null() {
                                 continue;
                             }
-                            scope_field =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scope_field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "size" => {
                             if v.is_null() {
                                 continue;
                             }
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ttl" => {
                             if v.is_null() {
                                 continue;
                             }
                             ttl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
@@ -272,12 +260,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
