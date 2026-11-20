@@ -20,6 +20,9 @@ pub struct ScatterPlotWidgetDefinition {
     /// The description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Color palette to apply to the widget. Supported values include `datadog16`, `datadog32`, `semantic`, `classic`, and `dog_classic`. A guide to the available color palettes can be found at <https://docs.datadoghq.com/dashboards/guide/widget_colors>
+    #[serde(rename = "palette")]
+    pub palette: Option<String>,
     /// Widget definition.
     #[serde(rename = "requests")]
     pub requests: crate::datadogV1::model::ScatterPlotWidgetDefinitionRequests,
@@ -60,6 +63,7 @@ impl ScatterPlotWidgetDefinition {
             color_by_groups: None,
             custom_links: None,
             description: None,
+            palette: None,
             requests,
             time: None,
             title: None,
@@ -85,6 +89,11 @@ impl ScatterPlotWidgetDefinition {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn palette(mut self, value: String) -> Self {
+        self.palette = Some(value);
         self
     }
 
@@ -147,6 +156,7 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinition {
                 let mut color_by_groups: Option<Vec<String>> = None;
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
                 let mut description: Option<String> = None;
+                let mut palette: Option<String> = None;
                 let mut requests: Option<
                     crate::datadogV1::model::ScatterPlotWidgetDefinitionRequests,
                 > = None;
@@ -186,6 +196,12 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinition {
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "palette" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            palette = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -270,6 +286,7 @@ impl<'de> Deserialize<'de> for ScatterPlotWidgetDefinition {
                     color_by_groups,
                     custom_links,
                     description,
+                    palette,
                     requests,
                     time,
                     title,
