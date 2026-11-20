@@ -11,16 +11,24 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricIngestedIndexedVolumeAttributes {
-    /// Estimated average hourly number of indexed time series for the given metric over the last hour. For organizations on Metric Name Pricing, this represents the estimated sum of indexed data points over the last hour.
-    #[serde(rename = "indexed_volume")]
-    pub indexed_volume: Option<i64>,
+    /// Estimated average hourly number of indexed time series for the given metric over the last hour. For organizations on Metric Name Pricing, this represents the estimated sum of indexed data points over the last hour. This value is `null` when no estimated usage data is available for the metric.
+    #[serde(
+        rename = "indexed_volume",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub indexed_volume: Option<Option<i64>>,
     /// Change in `indexed_volume` compared with the previous hour: the last hour's value minus the value for
     /// the hour before. Negative when volume decreased.
     #[serde(rename = "indexed_volume_delta")]
     pub indexed_volume_delta: Option<i64>,
-    /// Estimated average hourly number of ingested time series for the given metric over the last hour. This value is `0` for metrics not configured with Metrics Without Limits. For organizations on Metric Name Pricing, this represents the estimated sum of ingested data points over the last hour.
-    #[serde(rename = "ingested_volume")]
-    pub ingested_volume: Option<i64>,
+    /// Estimated average hourly number of ingested time series for the given metric over the last hour. This value is `0` for metrics not configured with Metrics Without Limits. For organizations on Metric Name Pricing, this represents the estimated sum of ingested data points over the last hour. This value can be `null` when ingested volume is not available for the metric.
+    #[serde(
+        rename = "ingested_volume",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub ingested_volume: Option<Option<i64>>,
     /// Change in `ingested_volume` compared with the previous hour: the last hour's value minus the value for
     /// the hour before. Negative when volume decreased.
     #[serde(rename = "ingested_volume_delta")]
@@ -44,7 +52,7 @@ impl MetricIngestedIndexedVolumeAttributes {
         }
     }
 
-    pub fn indexed_volume(mut self, value: i64) -> Self {
+    pub fn indexed_volume(mut self, value: Option<i64>) -> Self {
         self.indexed_volume = Some(value);
         self
     }
@@ -54,7 +62,7 @@ impl MetricIngestedIndexedVolumeAttributes {
         self
     }
 
-    pub fn ingested_volume(mut self, value: i64) -> Self {
+    pub fn ingested_volume(mut self, value: Option<i64>) -> Self {
         self.ingested_volume = Some(value);
         self
     }
@@ -96,9 +104,9 @@ impl<'de> Deserialize<'de> for MetricIngestedIndexedVolumeAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut indexed_volume: Option<i64> = None;
+                let mut indexed_volume: Option<Option<i64>> = None;
                 let mut indexed_volume_delta: Option<i64> = None;
-                let mut ingested_volume: Option<i64> = None;
+                let mut ingested_volume: Option<Option<i64>> = None;
                 let mut ingested_volume_delta: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -109,9 +117,6 @@ impl<'de> Deserialize<'de> for MetricIngestedIndexedVolumeAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "indexed_volume" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             indexed_volume =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -123,9 +128,6 @@ impl<'de> Deserialize<'de> for MetricIngestedIndexedVolumeAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ingested_volume" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             ingested_volume =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
